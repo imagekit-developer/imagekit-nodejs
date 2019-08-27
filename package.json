@@ -1,0 +1,23 @@
+{
+  "name": "imagekit",
+  "version": "1.5.0",
+  "author": "ImageKit",
+  "description": "NodeJS package for ImageKit",
+  "repository": {
+    "type": "git",
+    "url": "gitlab.com/imagekit/imagekit-sdks.git"
+  },
+  "license": "MIT",
+  "main": "src",
+  "devDependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.17.1",
+    "multer": "~1.2.0",
+    "pug": "^2.0.4"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "q": "~1.4.1",
+    "request": "^2.88.0"
+  }
+}
