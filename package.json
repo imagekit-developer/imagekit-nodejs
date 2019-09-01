@@ -10,6 +10,8 @@
   "homepage": "https://imagekit.io",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "request": "^2.88.0",
+    "uuid": "^3.3.3"
   }
 }
