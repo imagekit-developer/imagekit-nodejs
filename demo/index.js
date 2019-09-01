@@ -30,10 +30,11 @@ var imageURL = imagekit.url({
 
 var authenticationParameters = imagekit.getAuthenticationParameters("your_token");
 
-imagekit.purgeCache("full_url", function(err, body) { /*console.log(arguments);*/ });
-imagekit.getPurgeCacheStatus("cache_request_id", function(err, body) { /*console.log(arguments);*/ });
-imagekit.deleteFile("file_id", function(err, body) { /*console.log(arguments);*/ });
-imagekit.getFileDetails("file_id", function(err, body) {  /*console.log(arguments);*/ });
-imagekit.getFileMetadata("file_id", function(err, body) {  /*console.log(arguments);*/ });
-imagekit.updateFileDetails("file_id", { tags : ['image_tag'] }, function(err, body) { /*console.log(arguments);*/ });
-imagekit.upload({file : "your_file", fileName : "your_file_name.jpg"}, function(err, body) { /*console.log(arguments);*/ });
+imagekit.purgeCache("full_url", function(err, result) { /*console.log(arguments);*/ });
+imagekit.getPurgeCacheStatus("cache_request_id", function(err, result) { /*console.log(arguments);*/ });
+imagekit.deleteFile("file_id", function(err, result) { /*console.log(arguments);*/ });
+imagekit.listFiles({}, function(err, result) { /* console.log(arguments) */ });
+imagekit.getFileDetails("file_id", function(err, result) {  /*console.log(arguments);*/ });
+imagekit.getFileMetadata("file_id", function(err, result) {  /*console.log(arguments);*/ });
+imagekit.updateFileDetails("file_id", { tags : ['image_tag'] }, function(err, result) { /*console.log(arguments);*/ });
+imagekit.upload({file : "your_file", fileName : "your_file_name.jpg"}, function(err, result) { /*console.log(arguments);*/ });
