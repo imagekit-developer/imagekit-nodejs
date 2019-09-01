@@ -71,6 +71,7 @@ https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg?tr=h-300%2Cw-
 
 
 The `.url()` method accepts the following parameters
+
 | Option           | Description                    |
 | :----------------| :----------------------------- |
 | urlEndpoint      | Optional. The base URL to be appended before the path of the image. If not specified, the URL Endpoint specified at the time of SDK initialization is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
@@ -313,3 +314,11 @@ Returns
 ```
 
 Both the `token` and `timestamp` parameters are optional. If not specified the SDK uses the [uuid](https://www.npmjs.com/package/uuid) package to generate a random token and also generates a valid timestamp internally. The value of the `token` and `timestamp` used to generate the signature are always returned in the response, no matter if they are provided as an input to this method or not.
+
+## Support
+
+For any feedback or to report any issues or general implementation support please reach out to [support@imagekit.io](mailto:support@imagekit.io)
+
+## License
+
+Released under the MIT license.
