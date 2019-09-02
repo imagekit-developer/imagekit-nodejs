@@ -26,9 +26,10 @@ module.exports.buildURL = function(opts) {
     }
 
     //Create correct query parameters
-    var parsedURL, isSrcParameterUsedForURL;
+    var parsedURL, isSrcParameterUsedForURL, parsedHost;
     if(opts.path) {
         parsedURL = url.parse(opts.path);
+        parsedHost = url.parse(opts.urlEndpoint);
     } else {
         parsedURL = url.parse(opts.src);
         isSrcParameterUsedForURL = true;
@@ -42,9 +43,11 @@ module.exports.buildURL = function(opts) {
     //Initial URL Construction Object
     var urlObject = {host : "", pathname : "", search : ""};
     if(opts.path) {
-        urlObject.host = opts.urlEndpoint;
+        urlObject.protocol = parsedHost.protocol;
+        urlObject.host = opts.urlEndpoint.replace(urlObject.protocol + "//", "");
     } else if(opts.src) {
-        urlObject.host = [parsedURL.protocol, "//", parsedURL.auth, parsedURL.auth ? "@" : "" ,parsedURL.host].join("");
+        urlObject.host = [parsedURL.auth, parsedURL.auth ? "@" : "" ,parsedURL.host].join("");
+        urlObject.protocol = parsedURL.protocol;
     }
     urlObject.pathname = parsedURL.pathname;
 

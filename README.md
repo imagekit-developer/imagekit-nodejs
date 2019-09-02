@@ -24,15 +24,10 @@ var imagekit = new ImageKit({
 You can use this NodeJS SDK for 3 different kinds of functions - URL generation, file uploads and file management. The usage of the SDK has been explained below
 
 ### URL Generation
-There are two ways of creating a URL with the SDK. 
 
-The first method allows you to create a URL using the path where the image exists and the URL endpoint you want to use to access the image. You can refer to the documentation [here](https://docs.imagekit.io/imagekit-docs/url-endpoints) to read more about URL endpoints in ImageKit and the section about [image origins](https://docs.imagekit.io/imagekit-docs/configure-origin) to understand about paths with different kinds of origins.
+**1. Using image path and image hostname or endpoint**
 
-The second method allows you to add transformation parameters to an existing, complete URL that is already mapped to ImageKit. This method should be used if you have the complete URL mapped to ImageKit stored in your database.
-
-#### Creating Normal URL
-
-**1. Using `path` and `urlEndpoint` parameters**
+This method allows you to create a URL using the `path` where the image exists and the URL endpoint (`urlEndpoint`) you want to use to access the image. You can refer to the documentation [here](https://docs.imagekit.io/imagekit-docs/url-endpoints) to read more about URL endpoints in ImageKit and the section about [image origins](https://docs.imagekit.io/imagekit-docs/configure-origin) to understand about paths with different kinds of origins.
 
 ```
 var imageURL = imagekit.url({
@@ -51,7 +46,10 @@ This results in a URL like
 https://ik.imagekit.io/your_imagekit_id/endpoint/tr:h-300,w-400/default-image.jpg
 ```
 
-**2. Using the `src` parameter**
+**2. Using full image URL**
+
+This method allows you to add transformation parameters to an existing, complete URL that is already mapped to ImageKit using the `src` parameter. This method should be used if you have the complete URL mapped to ImageKit stored in your database.
+
 
 ```
 var imageURL = imagekit.url({
@@ -296,24 +294,24 @@ imagekit.getPurgeCacheStatus("cache_request_id", function(err, result) {
 
 ### Authentication Parameter Generation
 
-In case you are looking to implement client-side file upload, you are going to need a token, timestamp and a valid signature for that upload. The SDK provides a simple method that you can use in your code to generate these authentication parameters for you.
+In case you are looking to implement client-side file upload, you are going to need a token, expiry timestamp and a valid signature for that upload. The SDK provides a simple method that you can use in your code to generate these authentication parameters for you.
 
 *Note: The Private API Key should never be exposed in any client-side code. You must always generate these authentication parameters on the server-side*
 
 ```
-var authenticationParameters = imagekit.getAuthenticationParameters(token, timestamp);
+var authenticationParameters = imagekit.getAuthenticationParameters(token, expire);
 ```
 
 Returns
 ```
 {
     token : "unique_token",
-    timestamp : "valid_timestamp",
+    expire : "valid_expiry_timestamp",
     signature : "generated_signature"
 }
 ```
 
-Both the `token` and `timestamp` parameters are optional. If not specified the SDK uses the [uuid](https://www.npmjs.com/package/uuid) package to generate a random token and also generates a valid timestamp internally. The value of the `token` and `timestamp` used to generate the signature are always returned in the response, no matter if they are provided as an input to this method or not.
+Both the `token` and `expire` parameters are optional. If not specified the SDK uses the [uuid](https://www.npmjs.com/package/uuid) package to generate a random token and also generates a valid expiry timestamp internally. The value of the `token` and `expire` used to generate the signature are always returned in the response, no matter if they are provided as an input to this method or not.
 
 ## Support
 
