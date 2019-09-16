@@ -161,5 +161,5 @@ function getSignatureTimestamp(seconds) {
 function getSignature(opts) {
     if(!opts.privateKey || !opts.url || !opts.urlEndpoint) return "";
 
-    return crypto.createHmac('sha1', opts.privateKey).update(opts.url.replace(opts.urlEndpoint, "") + (opts.expiryTimestamp ? opts.expiryTimestamp : "9999999999")).digest('hex');
+    return crypto.createHmac('sha1', opts.privateKey).update(opts.url.replace(opts.urlEndpoint, "") + opts.expiryTimestamp).digest('hex');
 }
