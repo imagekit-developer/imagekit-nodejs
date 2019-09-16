@@ -93,14 +93,11 @@ module.exports.buildURL = function(opts) {
             expiryTimestamp : expiryTimestamp
         });
 
-        if(opts.signed === true) {
-            if(expiryTimestamp && expiryTimestamp != DEFAULT_TIMESTAMP) {
-                queryParameters.set(TIMESTAMP_PARAMETER, expiryTimestamp);
-            }
-            queryParameters.set(SIGNATURE_PARAMETER, urlSignature);
-            urlObject.search = queryParameters.toString();
+        if(expiryTimestamp && expiryTimestamp != DEFAULT_TIMESTAMP) {
+            queryParameters.set(TIMESTAMP_PARAMETER, expiryTimestamp);
         }
-
+        queryParameters.set(SIGNATURE_PARAMETER, urlSignature);
+        urlObject.search = queryParameters.toString();
     }
 
     
