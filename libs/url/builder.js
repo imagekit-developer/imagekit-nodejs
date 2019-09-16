@@ -73,25 +73,37 @@ module.exports.buildURL = function(opts) {
     urlObject.search = queryParameters.toString();
 
     // Signature String and Timestamp
-    if(opts.signed === true) {
+    // We can do this only for URLs that are created using urlEndpoint and path parameter
+    // because we need to know the endpoint to be able to remove it from the URL to create a signature
+    // for the remaining. With the src parameter, we would not know the "pattern" in the URL
+    var expiryTimestamp;
+    if(opts.signed === true && !isSrcParameterUsedForURL) {
         if(opts.expireSeconds) {
-            queryParameters.set(TIMESTAMP_PARAMETER, getSignatureTimestamp(opts.expireSeconds));
+            expiryTimestamp = getSignatureTimestamp(opts.expireSeconds);
+        } else {
+            expiryTimestamp = DEFAULT_TIMESTAMP;
+        }
+
+        var intermediateURL = url.format(urlObject);
+
+        var urlSignature = getSignature({
+            privateKey : opts.privateKey,
+            url : intermediateURL,
+            urlEndpoint : opts.urlEndpoint,
+            expiryTimestamp : expiryTimestamp
+        });
+
+        if(opts.signed === true) {
+            if(expiryTimestamp && expiryTimestamp != DEFAULT_TIMESTAMP) {
+                queryParameters.set(TIMESTAMP_PARAMETER, expiryTimestamp);
+            }
+            queryParameters.set(SIGNATURE_PARAMETER, urlSignature);
             urlObject.search = queryParameters.toString();
         }
+
     }
 
-    var intermediateURL = url.format(urlObject);
-
-    var urlSignature = getSignature({
-        privateKey : opts.privateKey,
-        url : intermediateURL
-    });
-
-    if(opts.signed === true) {
-        queryParameters.set(SIGNATURE_PARAMETER, urlSignature);
-        urlObject.search = queryParameters.toString();
-    }
-
+    
     return url.format(urlObject);
 };
 
@@ -147,7 +159,7 @@ function getSignatureTimestamp(seconds) {
 }
 
 function getSignature(opts) {
-    if(!opts.privateKey || !opts.url) return "";
+    if(!opts.privateKey || !opts.url || !opts.urlEndpoint) return "";
 
-    return crypto.createHmac('sha1', opts.privateKey).update(opts.url.replace(PROTOCOL_QUERY, "")).digest('hex');
+    return crypto.createHmac('sha1', opts.privateKey).update(opts.url.replace(opts.urlEndpoint, "") + (opts.expiryTimestamp ? opts.expiryTimestamp : "9999999999")).digest('hex');
 }
