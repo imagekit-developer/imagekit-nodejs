@@ -6,7 +6,11 @@ ImageKit is a complete image optimization and transformation solution that comes
 
 ## Installation
 
-`npm install imagekit`
+Use the following command to download this module. Use the optional `--save` parameter if you wish to save the dependency in your `package.json` file.
+
+```
+npm install imagekit
+```
 
 ## Initialization
 
@@ -34,8 +38,8 @@ var imageURL = imagekit.url({
     path : "/default-image.jpg",
     urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/endpoint/",
     transformation : [{
-        "HEIGHT" : "300",
-        "WIDTH" : "400"
+        "height" : "300",
+        "width" : "400"
     }]
 });
 ```
@@ -55,8 +59,8 @@ This method allows you to add transformation parameters to an existing, complete
 var imageURL = imagekit.url({
     src : "https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg",
     transformation : [{
-        "HEIGHT" : "300",
-        "WIDTH" : "400"
+        "height" : "300",
+        "width" : "400"
     }]
 });
 ```
@@ -89,10 +93,10 @@ var imageURL = imagekit.url({
     path : "/default-image.jpg",
     urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/endpoint/",
     transformation : [{
-        "HEIGHT" : "300",
-        "WIDTH" : "400"
+        "height" : "300",
+        "width" : "400"
     }, {
-        "ROTATION" : 90
+        "rotation" : 90
     }],
     transformationPosition : "query"
 });
@@ -109,10 +113,10 @@ There are some transforms like [Sharpening](https://docs.imagekit.io/imagekit-do
 var imageURL = imagekit.url({
     src : "https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg",
     transformation : [{
-        "FORMAT" : "jpg",
-        "PROGRESSIVE" : "true",
-        "EFFECT_SHARPEN" : "-",
-        "EFFECT_CONTRAST" : "1"
+        "format" : "jpg",
+        "progressive" : "true",
+        "effectSharpen" : "-",
+        "effectContrast" : "1"
     }]
 });
 ```
@@ -129,8 +133,8 @@ var imageURL = imagekit.url({
         "v" : "123"
     },
     transformation : [{
-        "HEIGHT" : "300",
-        "WIDTH" : "400"
+        "height" : "300",
+        "width" : "400"
     }],
     signed : true,
     expireSeconds : 300
@@ -146,48 +150,48 @@ The complete list of transformations supported and their usage in ImageKit can b
 
 | Supported Transformation Name | Translates to parameter |
 |-------------------------------|-------------------------|
-| HEIGHT | h |
-| WIDTH | w |
-| ASPECT_RATIO | ar |
-| QUALITY | q |
-| CROP | c |
-| CROP_MODE | cm |
-| X | x |
-| Y | y |
-| FOCUS | fo |
-| FORMAT | f |
-| RADIUS | r |
-| BACKGROUND | bg |
-| BORDER | bo |
-| ROTATION | rt |
-| BLUR | bl |
-| NAMED | n |
-| OVERLAY_IMAGE | oi |
-| OVERLAY_X | ox |
-| OVERLAY_Y | oy |
-| OVERLAY_FOCUS | ofo |
-| OVERLAY_HEIGHT | oh |
-| OVERLAY_WIDTH | ow |
-| OVERLAY_TEXT | ot |
-| OVERLAY_TEXT_FONT_SIZE | ots |
-| OVERLAY_TEXT_FONT_FAMILY | otf |
-| OVERLAY_TEXT_COLOR | otc |
-| OVERLAY_ALPHA | oa |
-| OVERLAY_TEXT_TYPOGRAPHY | ott |
-| OVERLAY_BACKGROUND | obg |
-| OVERLAY_IMAGE_TRIM | oit |
-| PROGRESSIVE | pr |
-| LOSSLESS | lo |
-| TRIM | t |
-| METADATA | md |
-| COLOR_PROFILE | cp |
-| DEFAULT_IMAGE | di |
-| DPR | dpr |
-| EFFECT_SHARPEN | e-sharpen |
-| EFFECT_USM | e-usm |
-| EFFECT_CONTRAST | e-contrast |
-| EFFECT_GRAY | e-grayscale |
-| ORIGINAL | orig |
+| height | h |
+| width | w |
+| aspectRatio | ar |
+| quality | q |
+| crop | c |
+| cropMode | cm |
+| x | x |
+| y | y |
+| focus | fo |
+| format | f |
+| radius | r |
+| background | bg |
+| border | bo |
+| rotation | rt |
+| blur | bl |
+| named | n |
+| overlayImage | oi |
+| overlayX | ox |
+| overlayY | oy |
+| overlayFocus | ofo |
+| overlayHeight | oh |
+| overlayWidth | ow |
+| overlayText | ot |
+| overlayTextFontSize | ots |
+| overlayTextFontFamily | otf |
+| overlayTextColor | otc |
+| overlayAlpha | oa |
+| overlayTextTypography | ott |
+| overlayBackground | obg |
+| overlayImageTrim | oit |
+| progressive | pr |
+| lossless | lo |
+| trim | t |
+| metadata | md |
+| colorProfile | cp |
+| defaultImage | di |
+| dpr | dpr |
+| effectSharpen | e-sharpen |
+| effectUSM | e-usm |
+| effectContrast | e-contrast |
+| effectGray | e-grayscale |
+| original | orig |
 
 
 
