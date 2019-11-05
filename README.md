@@ -317,6 +317,14 @@ Returns
 
 Both the `token` and `expire` parameters are optional. If not specified the SDK uses the [uuid](https://www.npmjs.com/package/uuid) package to generate a random token and also generates a valid expiry timestamp internally. The value of the `token` and `expire` used to generate the signature are always returned in the response, no matter if they are provided as an input to this method or not.
 
+### Distance calculation for pHashes
+
+Calculate the distance between pHash strings of two images. Accepts two pHash hexadecimal strings and returns a numeric value indicative of the level of difference between the two images.
+
+```
+const distance = imagekit.pHashDistance(firstHash, secondHash);
+```
+
 ## Support
 
 For any feedback or to report any issues or general implementation support please reach out to [support@imagekit.io](mailto:support@imagekit.io)
