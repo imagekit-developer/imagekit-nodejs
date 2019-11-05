@@ -10,5 +10,9 @@ module.exports = {
     "LIST_FILES_INPUT_MISSING" : { message : "Missing options for list files", help : "If you do not want to pass any parameter for listing, pass an empty object" },
     "MISSING_UPLOAD_DATA" : { message : "Missing data for upload", help : "" },
     "MISSING_UPLOAD_FILE_PARAMETER" : { message : "Missing file parameter for upload", help : "" },
-    "MISSING_UPLOAD_FILENAME_PARAMETER" : { message : "Missing fileName parameter for upload", help : "" }
-}
+    "MISSING_UPLOAD_FILENAME_PARAMETER" : { message : "Missing fileName parameter for upload", help : "" },
+    // pHash errors
+    "INVALID_PHASH_VALUE": { message: "Invalid pHash value", help: "Both pHash strings must be valid hexadecimal numbers" },
+    "MISSING_PHASH_VALUE": { message: "Missing pHash value", help: "Please pass two pHash values" },
+    "UNEQUAL_STRING_LENGTH": { message: "Unequal pHash string length", help: "For distance calucation, the two pHash strings must have equal length" },
+};
