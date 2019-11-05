@@ -9,10 +9,7 @@ module.exports = {
     'eslint:recommended',
     'airbnb-base',
   ],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-  },
+  globals: {},
   parserOptions: {
     ecmaVersion: 2018,
   },
