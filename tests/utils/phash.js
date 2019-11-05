@@ -26,7 +26,7 @@ const successHelper = (distance, ...params) => {
   expect(result).to.be.a('number');
   expect(result).to.equal(distance);
   expect(pHashDistanceSpy.calledOnceWithExactly(...params)).to.equal(true);
-}
+};
 
 const pHash = {
   invalidAlphabeticalString: 'INVALIDHEXSTRING',
@@ -43,7 +43,7 @@ const pHash = {
     '2d5ad3936d2e015b',
     '2d6ed293db36a4fb',
   ],
-}
+};
 
 module.exports.run = () => {
   describe('Utils > pHash > Distance calculator', () => {
@@ -69,7 +69,7 @@ module.exports.run = () => {
       });
 
       it('Should return error for invalid second pHash', () => {
-        failureHelper(errors.INVALID_PHASH_VALUE, pHash.valid, pHash.invalidCharacterString);        
+        failureHelper(errors.INVALID_PHASH_VALUE, pHash.valid, pHash.invalidCharacterString);
       });
 
       it('Should return error for unequal pHash lengths', () => {

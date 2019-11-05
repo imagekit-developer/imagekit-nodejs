@@ -4,6 +4,8 @@
   "description": "Offical NodeJS SDK for ImageKit.io integration",
   "main": "index.js",
   "scripts": {
+    "lint": "./node_modules/eslint/bin/eslint.js tests/ utils/phash.js",
+    "lint:fix": "./node_modules/eslint/bin/eslint.js --fix tests/ utils/phash.js",
     "test": "export NODE_ENV=test; mocha --exit -t 40000 tests/*.js;ex=$?;unset NODE_ENV; exit $ex;"
   },
   "author": "ImageKit Developer <developer@imagekit.io>",
@@ -20,6 +22,9 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
     "mocha": "^6.2.2",
     "sinon": "^7.5.0"
   }

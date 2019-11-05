@@ -6,12 +6,10 @@ const errors = require('./../constants/errorMessages');
 // regexp validator
 const hexRegExp = new RegExp(/^[0-9a-fA-F]+$/, 'i');
 
-const errorHandler = (error) => {
-  return new Error(`${error.message}: ${error.help}`)
-}
+const errorHandler = (error) => new Error(`${error.message}: ${error.help}`);
 
 const pHashDistance = (firstHash, secondHash) => {
-  if(!firstHash || !secondHash) {
+  if (!firstHash || !secondHash) {
     return errorHandler(errors.MISSING_PHASH_VALUE);
   }
   if (!hexRegExp.test(firstHash) || !hexRegExp.test(secondHash)) {
@@ -21,13 +19,13 @@ const pHashDistance = (firstHash, secondHash) => {
   const firstHashString = firstHash.toString();
   const secondHashString = secondHash.toString();
 
-  if(firstHashString.length !== secondHashString.length) {
+  if (firstHashString.length !== secondHashString.length) {
     return errorHandler(errors.UNEQUAL_STRING_LENGTH);
   }
 
   const distance = compare(firstHashString, secondHashString);
   return distance;
-}
+};
 
 module.exports = {
   pHashDistance,
