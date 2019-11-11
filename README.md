@@ -343,7 +343,7 @@ Calculate the distance between pHash strings of two images. Accepts two pHash he
 
 ```
 const calculateDistance = () => {
-	// asynchronously fetch metadata of two uploaded image files
+    // asynchronously fetch metadata of two uploaded image files
     // ...
     // Extract pHash strings from both: say 'firstHash' and 'secondHash'
     // ...
