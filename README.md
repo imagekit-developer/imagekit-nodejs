@@ -1,8 +1,23 @@
+
 # NodeJS SDK v2.x for ImageKit
+
+[![npm version](https://img.shields.io/npm/v/imagekit)](https://www.npmjs.com/package/imagekit) 
+[![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ApacheAirflow)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 New version of the NodeJS SDK for [ImageKit.io](https://imagekit.io) that implements the new APIs and interface for performing different file operations.
 
 ImageKit is a complete image optimization and transformation solution that comes with an [image CDN](https://imagekit.io/features/imagekit-infrastructure) and media storage. It can be integrated with your existing infrastructure - storages like AWS S3, web servers, your CDN and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
+
+##### Table of contents
+* [Installation](#installation)
+* [Initialization](#initialization)
+* [URL generation](#url-generation)
+* [File upload](#file-upload)
+* [File management](#file-management)
+* [Utility functions](#utility-functions)
+* [Support](#support)
+* [Links](#links)
 
 ## Installation
 
@@ -27,7 +42,7 @@ var imagekit = new ImageKit({
 ## Usage
 You can use this NodeJS SDK for 3 different kinds of functions - URL generation, file uploads and file management. The usage of the SDK has been explained below
 
-### URL Generation
+## URL Generation
 
 **1. Using image path and image hostname or endpoint**
 
@@ -195,7 +210,7 @@ The complete list of transformations supported and their usage in ImageKit can b
 
 
 
-### File Upload
+## File Upload
 
 The SDK provides a simple interface using the `.upload()` method to upload files to the ImageKit Media Library. It accepts all the parameters supported by the [ImageKit Upload API](https://docs.imagekit.io/imagekit-docs/server-side-file-upload).
 
@@ -216,7 +231,7 @@ If the upload fails, `error` will be the same as what is received from ImageKit'
 
 
 
-### File Management
+## File Management
 
 The SDK provides a simple interface for all the [media APIs mentioned here](https://docs.imagekit.io/imagekit-docs/media-api) to manage your files. You can use a callback function with all API interfaces. The first argument of the callback function is the error and the second is the result of the API call. Error will be `null` if the API succeeds.
 
@@ -296,7 +311,11 @@ imagekit.getPurgeCacheStatus("cache_request_id", function(err, result) {
 });
 ```
 
-### Authentication Parameter Generation
+## Utility functions
+
+We have included following commonly used utility functions in this package.
+
+### Authentication parameter generation
 
 In case you are looking to implement client-side file upload, you are going to need a token, expiry timestamp and a valid signature for that upload. The SDK provides a simple method that you can use in your code to generate these authentication parameters for you.
 
@@ -317,9 +336,43 @@ Returns
 
 Both the `token` and `expire` parameters are optional. If not specified the SDK uses the [uuid](https://www.npmjs.com/package/uuid) package to generate a random token and also generates a valid expiry timestamp internally. The value of the `token` and `expire` used to generate the signature are always returned in the response, no matter if they are provided as an input to this method or not.
 
+### Distance calculation between two pHash values
+
+Perceptual hashing allows you to constructing a hash value that uniquely identifies an input image based on the contents of an image. [ImageKit.io metadata API](https://docs.imagekit.io/imagekit-docs/metadata-api) returns the pHash value of an image in the response. You can use this value to find a duplicate (or similar) image by calculating distance between pHash value of two images.
+
+This SDK exposes `pHashDistance` function to calcualte distance between two pHash values. It accepts two pHash hexadecimal strings and returns a numeric value indicative of the level of difference between the two images.
+
+```
+const calculateDistance = () => {
+    // asynchronously fetch metadata of two uploaded image files
+    // ...
+    // Extract pHash strings from both: say 'firstHash' and 'secondHash'
+    // ...
+    // Calculate the distance between them:
+    const distance = imagekit.pHashDistance(firstHash, secondHash);
+	return distance;
+}
+```
+#### Distance calculation examples
+
+```
+imagekit.pHashDistance('f06830ca9f1e3e90', 'f06830ca9f1e3e90');
+// output: 0 (same image)
+
+imagekit.pHashDistance('2d5ad3936d2e015b', '2d6ed293db36a4fb');
+// output: 17 (similar images)
+
+imagekit.pHashDistance('a4a65595ac94518b', '7838873e791f8400');
+// output: 37 (dissimilar images)
+```
+
 ## Support
 
 For any feedback or to report any issues or general implementation support please reach out to [support@imagekit.io](mailto:support@imagekit.io)
+
+## Links
+* [Documentation](https://docs.imagekit.io)
+* [Main website](https://imagekit.io)
 
 ## License
 
