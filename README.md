@@ -41,7 +41,7 @@ var imagekit = new ImageKit({
 ## Usage
 You can use this NodeJS SDK for 3 different kinds of functions - URL generation, file uploads and file management. The usage of the SDK has been explained below
 
-### URL Generation
+## URL Generation
 
 **1. Using image path and image hostname or endpoint**
 
@@ -209,7 +209,7 @@ The complete list of transformations supported and their usage in ImageKit can b
 
 
 
-### File Upload
+## File Upload
 
 The SDK provides a simple interface using the `.upload()` method to upload files to the ImageKit Media Library. It accepts all the parameters supported by the [ImageKit Upload API](https://docs.imagekit.io/imagekit-docs/server-side-file-upload).
 
@@ -230,7 +230,7 @@ If the upload fails, `error` will be the same as what is received from ImageKit'
 
 
 
-### File Management
+## File Management
 
 The SDK provides a simple interface for all the [media APIs mentioned here](https://docs.imagekit.io/imagekit-docs/media-api) to manage your files. You can use a callback function with all API interfaces. The first argument of the callback function is the error and the second is the result of the API call. Error will be `null` if the API succeeds.
 
@@ -312,9 +312,9 @@ imagekit.getPurgeCacheStatus("cache_request_id", function(err, result) {
 
 ## Utility functions
 
-We have included following commonly used utility functions in the package.
+We have included following commonly used utility functions in this package.
 
-### Authentication Parameter Generation
+### Authentication parameter generation
 
 In case you are looking to implement client-side file upload, you are going to need a token, expiry timestamp and a valid signature for that upload. The SDK provides a simple method that you can use in your code to generate these authentication parameters for you.
 
@@ -335,11 +335,11 @@ Returns
 
 Both the `token` and `expire` parameters are optional. If not specified the SDK uses the [uuid](https://www.npmjs.com/package/uuid) package to generate a random token and also generates a valid expiry timestamp internally. The value of the `token` and `expire` used to generate the signature are always returned in the response, no matter if they are provided as an input to this method or not.
 
-### Distance calculation for two pHashes
+### Distance calculation between two pHashe values
 
-Perceptual hashing allows you to constructing a hash value that uniquely identifies an input image based on the contents of an image.
+Perceptual hashing allows you to constructing a hash value that uniquely identifies an input image based on the contents of an image. [ImageKit.io metadata API](https://docs.imagekit.io/imagekit-docs/metadata-api) returns the pHash value of an image in the response. You can use this value to find a duplicate (or similar) image by calculating distance between pHash value of two images.
 
-Calculate the distance between pHash strings of two images. Accepts two pHash hexadecimal strings and returns a numeric value indicative of the level of difference between the two images.
+This SDK exposes `pHashDistance` function to calcualte distance between two pHash values. It accepts two pHash hexadecimal strings and returns a numeric value indicative of the level of difference between the two images.
 
 ```
 const calculateDistance = () => {
@@ -352,7 +352,7 @@ const calculateDistance = () => {
 	return distance;
 }
 ```
-#### Distance comparison examples
+#### Distance calculation examples
 
 ```
 imagekit.pHashDistance('f06830ca9f1e3e90', 'f06830ca9f1e3e90');
