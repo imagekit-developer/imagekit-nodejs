@@ -2,6 +2,7 @@
 # NodeJS SDK v2.x for ImageKit
 
 [![npm version](https://img.shields.io/npm/v/imagekit)](https://www.npmjs.com/package/imagekit) 
+[![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ApacheAirflow)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 New version of the NodeJS SDK for [ImageKit.io](https://imagekit.io) that implements the new APIs and interface for performing different file operations.
