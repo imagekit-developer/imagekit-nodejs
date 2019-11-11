@@ -4,6 +4,16 @@ New version of the NodeJS SDK for [ImageKit.io](https://imagekit.io) that implem
 
 ImageKit is a complete image optimization and transformation solution that comes with an [image CDN](https://imagekit.io/features/imagekit-infrastructure) and media storage. It can be integrated with your existing infrastructure - storages like AWS S3, web servers, your CDN and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
 
+##### Table of contents
+* [Installation](#installation)
+* [Initialization](#initialization)
+* [URL generation](#url-generation)
+* [File upload](#file-upload)
+* [File management](#file-management)
+* [Utility functions](#utility-functions)
+* [Support](#support)
+* [Links](#links)
+
 ## Installation
 
 Use the following command to download this module. Use the optional `--save` parameter if you wish to save the dependency in your `package.json` file.
@@ -296,6 +306,10 @@ imagekit.getPurgeCacheStatus("cache_request_id", function(err, result) {
 });
 ```
 
+## Utility functions
+
+We have included following commonly used utility functions in the package.
+
 ### Authentication Parameter Generation
 
 In case you are looking to implement client-side file upload, you are going to need a token, expiry timestamp and a valid signature for that upload. The SDK provides a simple method that you can use in your code to generate these authentication parameters for you.
@@ -317,7 +331,9 @@ Returns
 
 Both the `token` and `expire` parameters are optional. If not specified the SDK uses the [uuid](https://www.npmjs.com/package/uuid) package to generate a random token and also generates a valid expiry timestamp internally. The value of the `token` and `expire` used to generate the signature are always returned in the response, no matter if they are provided as an input to this method or not.
 
-### Distance calculation for pHashes
+### Distance calculation for two pHashes
+
+Perceptual hashing allows you to constructing a hash value that uniquely identifies an input image based on the contents of an image.
 
 Calculate the distance between pHash strings of two images. Accepts two pHash hexadecimal strings and returns a numeric value indicative of the level of difference between the two images.
 
@@ -328,6 +344,10 @@ const distance = imagekit.pHashDistance(firstHash, secondHash);
 ## Support
 
 For any feedback or to report any issues or general implementation support please reach out to [support@imagekit.io](mailto:support@imagekit.io)
+
+## Links
+* [Documentation](https://docs.imagekit.io)
+* [Main website](https://imagekit.io)
 
 ## License
 
