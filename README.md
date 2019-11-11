@@ -342,7 +342,27 @@ Perceptual hashing allows you to constructing a hash value that uniquely identif
 Calculate the distance between pHash strings of two images. Accepts two pHash hexadecimal strings and returns a numeric value indicative of the level of difference between the two images.
 
 ```
-const distance = imagekit.pHashDistance(firstHash, secondHash);
+const calculateDistance = () => {
+	// asynchronously fetch metadata of two uploaded image files
+    // ...
+    // Extract pHash strings from both: say 'firstHash' and 'secondHash'
+    // ...
+	// Calculate the distance between them:
+    const distance = imagekit.pHashDistance(firstHash, secondHash);
+	return distance;
+}
+```
+#### Distance comparison examples
+
+```
+imagekit.pHashDistance('f06830ca9f1e3e90', 'f06830ca9f1e3e90');
+// output: 0 (same image)
+
+imagekit.pHashDistance('2d5ad3936d2e015b', '2d6ed293db36a4fb');
+// output: 17 (similar images)
+
+imagekit.pHashDistance('a4a65595ac94518b', '7838873e791f8400');
+// output: 37 (dissimilar images)
 ```
 
 ## Support
