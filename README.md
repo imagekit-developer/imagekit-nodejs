@@ -344,11 +344,11 @@ This SDK exposes `pHashDistance` function to calcualte distance between two pHas
 
 ```
 const calculateDistance = () => {
-	// asynchronously fetch metadata of two uploaded image files
+    // asynchronously fetch metadata of two uploaded image files
     // ...
     // Extract pHash strings from both: say 'firstHash' and 'secondHash'
     // ...
-	// Calculate the distance between them:
+    // Calculate the distance between them:
     const distance = imagekit.pHashDistance(firstHash, secondHash);
 	return distance;
 }
