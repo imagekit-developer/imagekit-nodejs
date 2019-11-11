@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js tests/ utils/phash.js",
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix tests/ utils/phash.js",
-    "test": "export NODE_ENV=test; mocha --exit -t 40000 tests/*.js;ex=$?;unset NODE_ENV; exit $ex;"
+    "test": "export NODE_ENV=test; ./node_modules/mocha/bin/mocha --exit -t 40000 tests/*.js;ex=$?;unset NODE_ENV; exit $ex;"
   },
   "author": "ImageKit Developer <developer@imagekit.io>",
   "homepage": "https://imagekit.io",
