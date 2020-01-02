@@ -33,8 +33,8 @@ var ImageKit = function(opts) {
     }
 
     const promisify = function(f) {
-        const self = this;
         return function(...args) {
+            const self = this;            
             if (args.length === f.length) {
                 if (typeof args[args.length-1] !== 'function') {
                     throw new Error('Callback must be a function.')

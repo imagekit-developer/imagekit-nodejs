@@ -40,7 +40,6 @@ module.exports.getMetadata = function(fileId, defaultOptions, callback) {
         respond(true, errorMessages.FILE_ID_MISSING, callback);
         return;
     }
-
     var requestOptions = {
         url : "https://api.imagekit.io/v1/files/" + fileId + "/metadata",
         method : "GET",
