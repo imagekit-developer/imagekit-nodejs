@@ -144,7 +144,8 @@ module.exports.listFiles = function(listOptions, defaultOptions, callback) {
     var requestOptions = {
         url : "https://api.imagekit.io/v1/files/",
         method : "GET",
-        json : listOptions
+        qs : listOptions,
+        json : true
     };
 
     request(requestOptions, defaultOptions, function(err, response, body) {
