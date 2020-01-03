@@ -38,10 +38,10 @@ jobs:
         node-version: 12
         registry-url: https://registry.npmjs.org/
     - name: yarn publish
-        run: |
-          npm i -g yarn
-          yarn config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          yarn publish        
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-          CI: true
+      run: |
+        npm i -g yarn
+        yarn config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+        yarn publish        
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+        CI: true
