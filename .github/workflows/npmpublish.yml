@@ -1,0 +1,47 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install, build, and test
+      run: |
+        npm i -g yarn
+        yarn install
+        yarn test
+      env:
+        CI: true
+  
+  publish: 
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12
+        registry-url: https://registry.npmjs.org/
+    - name: yarn publish
+      run: |
+        npm i -g yarn
+        yarn config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+        yarn publish        
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+        CI: true

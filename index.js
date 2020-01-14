@@ -32,6 +32,33 @@ var ImageKit = function(opts) {
         throw new Error(errorMessages.MANDATORY_INITIALIZATION_MISSING.message);
     }
 
+    const promisify = function(f) {
+        return function(...args) {
+            const self = this;            
+            if (args.length === f.length) {
+                if (typeof args[args.length-1] !== 'function') {
+                    throw new Error('Callback must be a function.')
+                }
+                f.call(self, ...args)
+            } else {
+                if (typeof Promise !== 'function') {
+                    throw new Error('Promises should be defined as a global function.')
+                }
+                return new Promise((resolve, reject) => {
+                    const callback = function(err, ...results) {
+                        if (err) {
+                            return reject(err);
+                        } else {
+                            resolve(results.length > 1 ? results : results[0])
+                        }
+                    }
+                    args.push(callback);
+                    f.call(self, ...args);
+                });
+            }
+        }
+    }
+
     if(!transformationUtils.validParameters(this.options)) {
         throw new Error(errorMessages.INVALID_TRANSFORMATION_POSITION.message);
     }
@@ -46,53 +73,53 @@ var ImageKit = function(opts) {
     /*
         Upload API
     */
-    this.upload = function(uploadOptions, callback) {
+    this.upload = promisify(function(uploadOptions, callback) {
         return upload(uploadOptions, this.options, callback);
-    };
+    });
 
     /*
         Image Management APIs
     */
 
     // List and Search Files API
-    this.listFiles = function(listOptions, callback) {
+    this.listFiles = promisify(function(listOptions, callback) {
         return manage.listFiles(listOptions, this.options, callback);
-    };
+    });
 
     // Get File Details API
-    this.getFileDetails = function(fileId, callback) {
+    this.getFileDetails = promisify(function(fileId, callback) {
         return manage.getFileDetails(fileId, this.options, callback);
-    };
+    });
 
     // Get File Metadata API
-    this.getFileMetadata = function(fileId, callback) {
+    this.getFileMetadata = promisify(function(fileId, callback) {
         return manage.getFileMetadata(fileId, this.options, callback);
-    };
+    });
 
     // Update File Details API
-    this.updateFileDetails = function(fileId, updateData, callback) {
+    this.updateFileDetails = promisify(function(fileId, updateData, callback) {
         return manage.updateFileDetails(fileId, updateData, this.options, callback);
-    };
+    });
 
     // Delete File API
-    this.deleteFile = function(fileId, callback) {
+    this.deleteFile = promisify(function(fileId, callback) {
         return manage.deleteFile(fileId, this.options, callback);
-    };
+    });
 
     // Purge Cache API
-    this.purgeCache = function(url, callback) {
+    this.purgeCache = promisify(function(url, callback) {
         return manage.purgeCache(url, this.options, callback);
-    };
+    });
 
     // Purge Cache Status API
-    this.getPurgeCacheStatus = function(requestId, callback) {
+    this.getPurgeCacheStatus = promisify(function(requestId, callback) {
         return manage.getPurgeCacheStatus(requestId, this.options, callback);
-    };
+    });
     
     // To generate Signature for upload request
     this.getAuthenticationParameters = function(token, timestamp) {
         return signature.getAuthenticationParameters(token, timestamp, this.options);   
-    }
+    };
 
     // To calculate distance between two pHash strings
     this.pHashDistance = function(firstPHash, secondPHash) {
