@@ -1,12 +1,12 @@
 
-# NodeJS SDK v2.x for ImageKit
+# ImageKit SDK for Node.js
 
 [![Node CI](https://github.com/imagekit-developer/imagekit-nodejs/workflows/Node%20CI/badge.svg)](https://github.com/imagekit-developer/imagekit-nodejs/)
 [![npm version](https://img.shields.io/npm/v/imagekit)](https://www.npmjs.com/package/imagekit) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ApacheAirflow)
 
-New version of the NodeJS SDK for [ImageKit.io](https://imagekit.io) that implements the new APIs and interface for performing different file operations.
+NodeJS SDK for [ImageKit.io](https://imagekit.io) that implements the new APIs and interface for performing different file operations.
 
 ImageKit is a complete image optimization and transformation solution that comes with an [image CDN](https://imagekit.io/features/imagekit-infrastructure) and media storage. It can be integrated with your existing infrastructure - storages like AWS S3, web servers, your CDN and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
 
