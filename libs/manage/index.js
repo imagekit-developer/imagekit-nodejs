@@ -6,5 +6,6 @@ module.exports.getFileDetails = file.getDetails;
 module.exports.updateFileDetails = file.updateDetails;
 module.exports.getFileMetadata = file.getMetadata;
 module.exports.deleteFile = file.deleteFile;
+module.exports.bulkDeleteFiles = file.bulkDeleteFiles;
 module.exports.purgeCache = cache.purgeCache;
 module.exports.getPurgeCacheStatus = cache.getPurgeCacheStatus;

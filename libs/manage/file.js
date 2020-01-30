@@ -157,4 +157,34 @@ module.exports.listFiles = function(listOptions, defaultOptions, callback) {
     });
 };
 
+/*
+    Bulk Delete By FileIds
+*/
+module.exports.bulkDeleteFiles = function(fileIdArray, defaultOptions, callback) {
+    
+    if(!Array.isArray(fileIdArray) 
+        || fileIdArray.length === 0 
+        || fileIdArray.filter(fileId => typeof(fileId) !== 'string').length > 0) {
+        respond(true, errorMessages.INVALID_FILEIDS_VALUE, callback);
+        return;
+    }
 
+    const data = {
+        fileIds: fileIdArray,
+    }
+
+    const requestOptions = {
+        url: "https://api.imagekit.io/v1/files/batch/deleteByFileIds",
+        method: "POST",
+        json: data
+    }
+
+    request(requestOptions, defaultOptions, function(err, response, body) {
+        if(err) {
+            respond(true, err, callback);
+            return;
+        }
+
+        respond(false, body, callback)
+    });
+};

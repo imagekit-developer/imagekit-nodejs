@@ -115,6 +115,10 @@ var ImageKit = function(opts) {
     this.getPurgeCacheStatus = promisify(function(requestId, callback) {
         return manage.getPurgeCacheStatus(requestId, this.options, callback);
     });
+
+    this.bulkDeleteFiles = promisify(function(fileIdArray, callback) {
+        return manage.bulkDeleteFiles(fileIdArray, this.options, callback);
+    });
     
     // To generate Signature for upload request
     this.getAuthenticationParameters = function(token, timestamp) {
