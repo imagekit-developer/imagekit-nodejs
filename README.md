@@ -219,11 +219,25 @@ The `upload()` method requires at least the `file` and the `fileName` parameter 
 
 Sample usage
 ```
-imagekit.upload({
-  file : <url|base_64|binary>, //required
-  fileName : "my_file_name.jpg",   //required
-}, function(error, result) {
+// Using Callback Function
 
+imagekit.upload({
+    file : <url|base_64|binary>, //required
+    fileName : "my_file_name.jpg",   //required
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises 
+
+imagekit.upload({
+    file : <url|base_64|binary>, //required
+    fileName : "my_file_name.jpg",   //required
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -246,7 +260,9 @@ Accepts an object specifying the parameters to be used to list and search files.
 imagekit.listFiles({
     skip : 10,
     limit : 10
-}, function(err, result) { 
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
 });
 
 
@@ -256,9 +272,9 @@ imagekit.listFiles({
     skip : 10,
     limit : 10
 }).then(response => {
-
-}).catch(err => {
-
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -269,18 +285,19 @@ Accepts the file ID and fetches the details as per the [API documentation here](
 ```
 // Using Callback Function
 
-imagekit.getFileDetails("file_id", function(err, result) {  
-
+imagekit.getFileDetails("file_id", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
 });
 
 
 // Using Promises 
 
 imagekit.getFileDetails("file_id")
-.then(response => {
-
-}).catch(err => {
-
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -291,18 +308,19 @@ Accepts the file ID and fetches the metadata as per the [API documentation here]
 ```
 // Using Callback Function
 
-imagekit.getFileMetadata("file_id", function(err, result) {  
-
+imagekit.getFileMetadata("file_id", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
 });
 
 
 // Using Promises 
 
 imagekit.getFileMetadata("file_id")
-.then(response => {
-
-}).catch(err => {
-
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -316,8 +334,9 @@ Update parameters associated with the file as per the [API documentation here](h
 imagekit.updateFileDetails("file_id", { 
     tags : ['image_tag'],
     customCoordinates : "10,10,100,100"
-}, function(err, result) { 
-
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
 });
 
 
@@ -326,11 +345,10 @@ imagekit.updateFileDetails("file_id", {
 imagekit.updateFileDetails("file_id", {
     tags : ['image_tag'],
     customCoordinates : "10,10,100,100"
-})
-.then(response => {
-
-}).catch(err => {
-
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -342,18 +360,19 @@ Delete a file as per the [API documentation here](https://docs.imagekit.io/api-r
 
 // Using Callback Function
 
-imagekit.deleteFile("file_id", function(err, result) {
-    
+imagekit.deleteFile("file_id", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
 });
 
 
 // Using Promises 
 
 imagekit.deleteFile("file_id"})
-.then(response => {
-
-}).catch(err => {
-
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -365,18 +384,19 @@ Delete multiple file as per the [API documentation here](https://docs.imagekit.i
 
 // Using Callback Function
 
-imagekit.bulkDeleteFiles(["fileIds"], function(err, result) {
-    
+imagekit.bulkDeleteFiles(["fileIds"], function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
 });
 
 
 // Using Promises 
 
 imagekit.bulkDeleteFiles(["fileIds"])
-.then(response => {
-
-}).catch(err => {
-
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -387,18 +407,19 @@ Programmatically issue a cache clear request as per the [API documentation here]
 ```
 // Using Callback Function
 
-imagekit.purgeCache("full_url", function(err, result) {
-    
+imagekit.purgeCache("full_url", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
 });
 
 
 // Using Promises 
 
 imagekit.purgeCache("full_url")
-.then(response => {
-
-}).catch(err => {
-
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -409,18 +430,19 @@ Get the purge cache request status using the request ID returned when a purge ca
 ```
 // Using Callback Function
 
-imagekit.getPurgeCacheStatus("cache_request_id", function(err, result) {
-    
+imagekit.getPurgeCacheStatus("cache_request_id", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
 });
 
 
 // Using Promises 
 
 imagekit.getPurgeCacheStatus("cache_request_id")
-.then(response => {
-
-}).catch(err => {
-
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
