@@ -2,28 +2,42 @@ const ImageKit = require("../index");
 const fs = require("fs");
 const path = require("path");
 
-const CONFIG_OPTIONS = {
-    publicKey : "your_public_api_key",
-    privateKey : "your_private_api_key",
-    urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/"
-}
+// const CONFIG_OPTIONS = {
+//     publicKey : "your_public_api_key",
+//     privateKey : "your_private_api_key",
+//     urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/"
+// }
 
-const FILE_PATH = path.resolve(__dirname, "./test_image.jpg"), FILE_NAME = "test_image";
+const CONFIG_OPTIONS = {
+    publicKey: '81shyFkcqoR/It6sCR1P845UtCY=',
+    privateKey: 'qqHhrm/7WtoRcMuIORD2+75uPOA=',
+    urlEndpoint: 'https://ik.imagekit.io/s11xanjcm/'
+};
+
+const FILE_PATH = path.resolve(__dirname, "./test_image.jpg"), FILE_NAME = "test_image", IMG_URL = "https://images.pexels.com/photos/247676/pexels-photo-247676.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260";
 
 const sampleApp = async () => {
     try {
         const imagekit = new ImageKit(CONFIG_OPTIONS);
 
-        // Uploading images
+        // Uploading images through binary
         let i =0;
-        while (i < 10){
-            const response = await uploadFile(imagekit, FILE_PATH, `${FILE_NAME}_${i+1}`);
-            console.log(`Upload response # ${i+1}:`, JSON.stringify(response, undefined, 2), "\n");
+        while (i < 8){
+            const response = await uploadFileBin(imagekit, FILE_PATH, `${FILE_NAME}_bin_${i+1}`);
+            console.log(`Binary upload response # ${i+1}:`, JSON.stringify(response, undefined, 2), "\n");
             i++;
         }
 
+        // Uploading images with base64
+        const uploadResponse_base64 = await uploadFileBase64(imagekit, FILE_PATH, `${FILE_NAME}_base64`);
+        console.log(`Base64 upload response:`, JSON.stringify(uploadResponse_base64, undefined, 2), "\n");
+        
+        // Uploading images with URL
+        const uploadResponse_url = await uploadFileURL(imagekit, IMG_URL, `${FILE_NAME}_url`);
+        console.log(`URL upload response:`, JSON.stringify(uploadResponse_url, undefined, 2), "\n");
+
         // Listing Files
-        const filesList = await listFiles(imagekit, 10, 0);
+        const filesList = await listFiles(imagekit, 12, 0);
         console.log("List of first 10 files: ", JSON.stringify(filesList, undefined, 2), "\n");
 
         // Generating URLs
@@ -83,9 +97,20 @@ const sampleApp = async () => {
 
 }
 
-const uploadFile = async (imagekitInstance, filePath, fileName) => {
+const uploadFileBin = async (imagekitInstance, filePath, fileName) => {
     const file = fs.createReadStream(filePath);
     const response = await imagekitInstance.upload({file, fileName});
+    return response;
+}
+
+const uploadFileBase64 = async (imagekitInstance, filePath, fileName) => {
+    const file_base64 = fs.readFileSync(filePath, 'base64');
+    const response = await imagekitInstance.upload({file: file_base64, fileName});
+    return response;
+}
+
+const uploadFileURL = async (imagekitInstance, url, fileName) => {
+    const response = await imagekitInstance.upload({file: url, fileName});
     return response;
 }
 
@@ -138,10 +163,3 @@ const bulkDeleteFiles = async (imagekitInstance, fileIds) => {
 
 
 sampleApp();
-
-
-
-
-
-// //Generating Authentication token
-// 
