@@ -219,11 +219,25 @@ The `upload()` method requires at least the `file` and the `fileName` parameter 
 
 Sample usage
 ```
-imagekit.upload({
-  file : <url|base_64|binary>, //required
-  fileName : "my_file_name.jpg",   //required
-}, function(error, result) {
+// Using Callback Function
 
+imagekit.upload({
+    file : <url|base_64|binary>, //required
+    fileName : "my_file_name.jpg",   //required
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises 
+
+imagekit.upload({
+    file : <url|base_64|binary>, //required
+    fileName : "my_file_name.jpg",   //required
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -241,11 +255,26 @@ The SDK provides a simple interface for all the [media APIs mentioned here](http
 Accepts an object specifying the parameters to be used to list and search files. All parameters specified in the [documentation here](https://docs.imagekit.io/api-reference/media-api/list-and-search-files) can be passed as is with the correct values to get the results.
 
 ```
+// Using Callback Function
+
 imagekit.listFiles({
     skip : 10,
     limit : 10
-}, function(err, result) { 
-    
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+
+// Using Promises 
+
+imagekit.listFiles({
+    skip : 10,
+    limit : 10
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -254,8 +283,21 @@ imagekit.listFiles({
 Accepts the file ID and fetches the details as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/get-file-details).
 
 ```
-imagekit.getFileDetails("file_id", function(err, result) {  
+// Using Callback Function
 
+imagekit.getFileDetails("file_id", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+
+// Using Promises 
+
+imagekit.getFileDetails("file_id")
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -264,8 +306,21 @@ imagekit.getFileDetails("file_id", function(err, result) {
 Accepts the file ID and fetches the metadata as per the [API documentation here](https://docs.imagekit.io/api-reference/metadata-api/get-image-metadata-for-uploaded-media-files).
 
 ```
-imagekit.getFileMetadata("file_id", function(err, result) {  
+// Using Callback Function
 
+imagekit.getFileMetadata("file_id", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+
+// Using Promises 
+
+imagekit.getFileMetadata("file_id")
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -274,11 +329,26 @@ imagekit.getFileMetadata("file_id", function(err, result) {
 Update parameters associated with the file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/update-file-details). The first argument to the `updateFileDetails` method is the file ID and the second argument is an object with the parameters to be updated.
 
 ```
+// Using Callback Function
+
 imagekit.updateFileDetails("file_id", { 
     tags : ['image_tag'],
     customCoordinates : "10,10,100,100"
-}, function(err, result) { 
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
 
+
+// Using Promises 
+
+imagekit.updateFileDetails("file_id", {
+    tags : ['image_tag'],
+    customCoordinates : "10,10,100,100"
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
@@ -287,28 +357,92 @@ imagekit.updateFileDetails("file_id", {
 Delete a file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-file). The method accepts the file ID of the file that has to be deleted.
 
 ```
-imagekit.deleteFile("file_id", function(err, result) {
-    
+
+// Using Callback Function
+
+imagekit.deleteFile("file_id", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+
+// Using Promises 
+
+imagekit.deleteFile("file_id"})
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
-**6. Purge Cache**
+**6. Bulk Delete Files**
+
+Delete multiple file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-files-bulk). The method accepts an array of file IDs of the files that have to be deleted.
+
+```
+
+// Using Callback Function
+
+imagekit.bulkDeleteFiles(["fileIds"], function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+
+// Using Promises 
+
+imagekit.bulkDeleteFiles(["fileIds"])
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**7. Purge Cache**
 
 Programmatically issue a cache clear request as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/purge-cache). Accepts the full URL of the file for which the cache has to be cleared.
 
 ```
-imagekit.purgeCache("full_url", function(err, result) { 
-    
+// Using Callback Function
+
+imagekit.purgeCache("full_url", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+
+// Using Promises 
+
+imagekit.purgeCache("full_url")
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
-**7. Purge Cache Status**
+**8. Purge Cache Status**
 
 Get the purge cache request status using the request ID returned when a purge cache request gets submitted as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/purge-cache-status)
 
 ```
-imagekit.getPurgeCacheStatus("cache_request_id", function(err, result) {
-    
+// Using Callback Function
+
+imagekit.getPurgeCacheStatus("cache_request_id", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+
+// Using Promises 
+
+imagekit.getPurgeCacheStatus("cache_request_id")
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
 });
 ```
 
