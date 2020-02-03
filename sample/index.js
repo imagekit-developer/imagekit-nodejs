@@ -2,17 +2,11 @@ const ImageKit = require("../index");
 const fs = require("fs");
 const path = require("path");
 
-// const CONFIG_OPTIONS = {
-//     publicKey : "your_public_api_key",
-//     privateKey : "your_private_api_key",
-//     urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/"
-// }
-
 const CONFIG_OPTIONS = {
-    publicKey: '81shyFkcqoR/It6sCR1P845UtCY=',
-    privateKey: 'qqHhrm/7WtoRcMuIORD2+75uPOA=',
-    urlEndpoint: 'https://ik.imagekit.io/s11xanjcm/'
-};
+    publicKey : "your_public_api_key",
+    privateKey : "your_private_api_key",
+    urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/"
+}
 
 const FILE_PATH = path.resolve(__dirname, "./test_image.jpg"), FILE_NAME = "test_image", IMG_URL = "https://images.pexels.com/photos/247676/pexels-photo-247676.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260";
 
