@@ -75,12 +75,20 @@ module.exports.buildURL = function(opts) {
     urlObject.pathname = urlFormatter.addLeadingSlash(urlObject.pathname);
     urlObject.search = queryParameters.toString();
 
-    // Signature String and Timestamp
-    // We can do this only for URLs that are created using urlEndpoint and path parameter
-    // because we need to know the endpoint to be able to remove it from the URL to create a signature
-    // for the remaining. With the src parameter, we would not know the "pattern" in the URL
+    /* 
+        Signature String and Timestamp
+        If the url is constructed using src parameter instead of path then we still replace the urlEndpoint we have
+        But the user is responsible for passing correct urlEndpoint value
+
+        Signature generation logic, let's assume:
+        urlEndpoint value = https://ik.imagekit.io/your_imagekit_id
+        expiryTimestamp 9999999999 
+        1. Let the final URL construct e.g. https://ik.imagekit.io/your_imagekit_id/tr:w-400:rotate-91/sample/testing-file.jpg?param1=123
+        2. Now remove urlEndpoint from it i.e tr:w-400:rotate-91/sample/testing-file.jpg?param1=123
+        3. Append expiryTimestamp to above string and calcualte signature of this string i.e "tr:w-400:rotate-91/sample/testing-file.jpg?param1=1239999999999"
+    */
     var expiryTimestamp;
-    if(opts.signed === true && !isSrcParameterUsedForURL) {
+    if(opts.signed === true) {
         if(opts.expireSeconds) {
             expiryTimestamp = getSignatureTimestamp(opts.expireSeconds);
         } else {

@@ -1,6 +1,6 @@
 {
   "name": "imagekit",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Offical NodeJS SDK for ImageKit.io integration",
   "main": "index.js",
   "scripts": {

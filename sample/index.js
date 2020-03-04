@@ -44,6 +44,16 @@ const sampleApp = async () => {
             });
         console.log("Url for first image transformed with height: 300, width: 400: ", imageURL, "\n");
 
+        var signedUrl = imagekit.url({
+            path : filesList[0].filePath,
+            signed : true,
+            transformation : [{
+                height: 300,
+                width: 400
+            }]
+        });
+        console.log("Signed Url for first image transformed with height: 300, width: 400: ", signedUrl, "\n");
+
         // Get File Details
         const fileDetails_1 = await getFileDetails(imagekit, filesList[0].fileId);
         console.log("File Details fetched: ", JSON.stringify(fileDetails_1, undefined, 2), "\n");
@@ -58,6 +68,7 @@ const sampleApp = async () => {
         console.log("File Update Response: ", JSON.stringify(fileUpdateResponse, undefined, 2), "\n");
 
         // pHash Distance
+        console.log(fileMetadata_1.pHash, fileMetadata_2.pHash)
         const pHashDistance = imagekit.pHashDistance(fileMetadata_1.pHash, fileMetadata_2.pHash);
         console.log(`pHash distance: ${pHashDistance}`, "\n");
 
