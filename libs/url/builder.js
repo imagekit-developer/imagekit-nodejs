@@ -10,6 +10,7 @@ var crypto = require('crypto');
     Utils
 */
 var transformationUtils = require('../../utils/transformation');
+var urlFormatter = require('../../utils/urlFormatter');
 
 /*
     Variables
@@ -39,6 +40,8 @@ module.exports.buildURL = function(opts) {
     for(var i in opts.queryParameters) {
         queryParameters.set(i, opts.queryParameters[i]);
     }
+
+    
     
     //Initial URL Construction Object
     var urlObject = {host : "", pathname : "", search : ""};
@@ -68,8 +71,8 @@ module.exports.buildURL = function(opts) {
 
     
     
-    urlObject.host = removeTrailingSlash(urlObject.host);
-    urlObject.pathname = addLeadingSlash(urlObject.pathname);
+    urlObject.host = urlFormatter.removeTrailingSlash(urlObject.host);
+    urlObject.pathname = urlFormatter.addLeadingSlash(urlObject.pathname);
     urlObject.search = queryParameters.toString();
 
     // Signature String and Timestamp
@@ -129,21 +132,6 @@ function constructTransformationString(transformation) {
     return parsedTransforms.join(transformationUtils.getChainTransformDelimiter());
 }
 
-function addLeadingSlash(str) {
-    if(typeof str == "string" && str[0] != "/") {
-        str = "/" + str;
-    }
-
-    return str;
-}
-
-function removeTrailingSlash(str) {
-    if(typeof str == "string" && str[str.length - 1] == "/") {
-        str = str.substring(0, str.length - 1);
-    }
-
-    return str;
-}
 
 function getSignatureTimestamp(seconds) {
     if(!seconds) return DEFAULT_TIMESTAMP;
@@ -157,6 +145,6 @@ function getSignatureTimestamp(seconds) {
 
 function getSignature(opts) {
     if(!opts.privateKey || !opts.url || !opts.urlEndpoint) return "";
-
-    return crypto.createHmac('sha1', opts.privateKey).update(opts.url.replace(opts.urlEndpoint, "") + opts.expiryTimestamp).digest('hex');
+    var stringToSign = opts.url.replace(urlFormatter.addTrailingSlash(opts.urlEndpoint), "") + opts.expiryTimestamp;
+    return crypto.createHmac('sha1', opts.privateKey).update(stringToSign).digest('hex');
 }
