@@ -23,6 +23,16 @@ module.exports = function(uploadOptions, defaultOptions, callback) {
         return;
     }
 
+    if(typeof uploadOptions.file != "string") {
+        uploadOptions.file = {
+            value : uploadOptions.file,
+            options: {
+                'filename': uploadOptions.fileName,
+                'contentType': null
+            }
+        };
+    }
+
     var requestOptions = {
         url : "https://api.imagekit.io/v1/files/upload",
         method : "POST",

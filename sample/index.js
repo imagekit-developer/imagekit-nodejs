@@ -17,7 +17,7 @@ const sampleApp = async () => {
         // Uploading images through binary
         let i =0;
         while (i < 8){
-            const response = await uploadFileBin(imagekit, FILE_PATH, `${FILE_NAME}_bin_${i+1}`);
+            const response = await uploadLocalFile(imagekit, FILE_PATH, `${FILE_NAME}_bin_${i+1}`);
             console.log(`Binary upload response # ${i+1}:`, JSON.stringify(response, undefined, 2), "\n");
             i++;
         }
@@ -25,6 +25,10 @@ const sampleApp = async () => {
         // Uploading images with base64
         const uploadResponse_base64 = await uploadFileBase64(imagekit, FILE_PATH, `${FILE_NAME}_base64`);
         console.log(`Base64 upload response:`, JSON.stringify(uploadResponse_base64, undefined, 2), "\n");
+
+        // Uploading images with buffer
+        const uploadResponse_buffer = await uploadFileBuffer(imagekit, FILE_PATH, `${FILE_NAME}_buffer`);
+        console.log(`Buffer upload response:`, JSON.stringify(uploadResponse_buffer, undefined, 2), "\n");
         
         // Uploading images with URL
         const uploadResponse_url = await uploadFileURL(imagekit, IMG_URL, `${FILE_NAME}_url`);
@@ -102,9 +106,15 @@ const sampleApp = async () => {
 
 }
 
-const uploadFileBin = async (imagekitInstance, filePath, fileName) => {
+const uploadLocalFile = async (imagekitInstance, filePath, fileName) => {
     const file = fs.createReadStream(filePath);
     const response = await imagekitInstance.upload({file, fileName});
+    return response;
+}
+
+const uploadFileBuffer = async (imagekitInstance, filePath, fileName) => {
+    const buffer = fs.readFileSync(filePath);
+    const response = await imagekitInstance.upload({file: buffer, fileName});
     return response;
 }
 
