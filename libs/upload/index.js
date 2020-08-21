@@ -33,6 +33,16 @@ module.exports = function(uploadOptions, defaultOptions, callback) {
         };
     }
 
+    if(uploadOptions.tags && Array.isArray(uploadOptions.tags)) {
+        uploadOptions.tags = uploadOptions.tags.join(",");
+    }
+
+    for(key in uploadOptions) {
+        if(key && typeof uploadOptions[key] === "boolean") {
+            uploadOptions[key] = uploadOptions[key].toString();
+        }
+    }
+
     var requestOptions = {
         url : "https://api.imagekit.io/v1/files/upload",
         method : "POST",
