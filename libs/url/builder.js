@@ -65,6 +65,8 @@ module.exports.buildURL = function(opts) {
             urlObject.pathname = path.join(
                                     [TRANSFORMATION_PARAMETER, transformationString].join(transformationUtils.getChainTransformDelimiter()),
                                     urlObject.pathname
+                                // Fix for Windows pathnames having backslashes instead of forward slashes. 
+                                // TODO: Replace path.join with a different library.
                                 ).replace("\\", "/")
         }
     }
