@@ -65,7 +65,7 @@ module.exports.buildURL = function(opts) {
             urlObject.pathname = path.join(
                                     [TRANSFORMATION_PARAMETER, transformationString].join(transformationUtils.getChainTransformDelimiter()),
                                     urlObject.pathname
-                                )
+                                ).replace("\\", "/")
         }
     }
 
