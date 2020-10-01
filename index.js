@@ -28,8 +28,14 @@ var ImageKit = function(opts) {
     };
 
     this.options = _.extend(this.options, opts);
-    if(!mandatoryParametersAvailable(this.options)) {
-        throw new Error(errorMessages.MANDATORY_INITIALIZATION_MISSING.message);
+    if(!this.options.publicKey) {
+        throw new Error(errorMessages.MANDATORY_PUBLIC_KEY_MISSING.message);
+    }
+    if(!this.options.privateKey) {
+        throw new Error(errorMessages.MANDATORY_PRIVATE_KEY_MISSING.message);
+    }
+    if(!this.options.urlEndpoint) {
+        throw new Error(errorMessages.MANDATORY_URL_ENDPOINT_KEY_MISSING.message);
     }
 
     const promisify = function(f) {

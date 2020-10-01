@@ -130,7 +130,12 @@ function constructTransformationString(transformation) {
             if(transformation[i][key] === "-") {
                 parsedTransformStep.push(transformKey);
             } else {
-                parsedTransformStep.push([transformKey, transformation[i][key]].join(transformationUtils.getTransformKeyValueDelimiter()));
+                var value = transformation[i][key];
+                if(transformKey === "oi") {
+                    value = removeLeadingSlash(value);
+                    value = value.replace(/\//g,"@@");
+                }
+                parsedTransformStep.push([transformKey, value].join(transformationUtils.getTransformKeyValueDelimiter()));
             }
             
         }
@@ -140,6 +145,12 @@ function constructTransformationString(transformation) {
     return parsedTransforms.join(transformationUtils.getChainTransformDelimiter());
 }
 
+function removeLeadingSlash(str) {
+    if (typeof str == "string" && str[0] == "/") {
+        str = str.slice(1);
+    }
+    return str;
+}
 
 function getSignatureTimestamp(seconds) {
     if(!seconds) return DEFAULT_TIMESTAMP;

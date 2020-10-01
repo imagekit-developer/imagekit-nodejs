@@ -1,5 +1,8 @@
 module.exports = {
     "MANDATORY_INITIALIZATION_MISSING" : { message : "Missing publicKey or privateKey or urlEndpoint during ImageKit initialization", help : "" },
+    "MANDATORY_PUBLIC_KEY_MISSING" : { message : "Missing publicKey during ImageKit initialization", help : "" },
+    "MANDATORY_PRIVATE_KEY_MISSING" : { message : "Missing privateKey during ImageKit initialization", help : "" },
+    "MANDATORY_URL_ENDPOINT_KEY_MISSING" : { message : "Missing urlEndpoint during ImageKit initialization", help : "" },
     "INVALID_TRANSFORMATION_POSITION" : { message : "Invalid transformationPosition parameter", help : "" },
     "CACHE_PURGE_URL_MISSING" : { message : "Missing URL parameter for this request", help : "" },
     "CACHE_PURGE_STATUS_ID_MISSING" : { message : "Missing Request ID parameter for this request", help : "" },

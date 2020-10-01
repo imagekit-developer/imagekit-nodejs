@@ -29,7 +29,7 @@ module.exports.getSupportedTransforms = function() {
 module.exports.getTransformKey = function(transform) {
     if(!transform) { return ""; }
 
-    return supportedTransforms[transform] || "";
+    return supportedTransforms[transform] || supportedTransforms[transform.toLowerCase()] || "";
 }
 
 module.exports.getChainTransformDelimiter = function() {
