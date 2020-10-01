@@ -33,6 +33,15 @@ describe("URL generation", function () {
         expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/test_path_alt.jpg`);
     });
 
+    it('Signed URL', function () {
+        const url = imagekit.url({
+            path: "/test_path_alt.jpg",
+            signed: true
+        });
+
+        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/test_path_alt.jpg?ik-s=e26ca157df99b30b2443d7cb6886fc396fb4c87b`);
+    });
+
     it('should generate the correct url with path param', function () {
         const url = imagekit.url({
             path: "/test_path.jpg",
