@@ -62,7 +62,7 @@ module.exports.buildURL = function(opts) {
         if(transformationUtils.addAsQueryParameter(opts) || isSrcParameterUsedForURL) {
             queryParameters.set(TRANSFORMATION_PARAMETER, transformationString);   
         } else {
-            urlObject.pathname = path.join(
+            urlObject.pathname = path.posix.join(
                                     [TRANSFORMATION_PARAMETER, transformationString].join(transformationUtils.getChainTransformDelimiter()),
                                     urlObject.pathname
                                 )
