@@ -22,5 +22,9 @@ jobs:
         npm i -g yarn
         yarn install
         yarn test
+    - name: Publish Code Coverage to codecove.io
+      run: |
+        yarn i -g nyc codecov 
+        yarn run report-coverage        
       env:
         CI: true
