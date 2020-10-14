@@ -52,7 +52,11 @@ module.exports = function(uploadOptions, defaultOptions, callback) {
 
     request(requestOptions, defaultOptions, function(err, response, body) {
         if(err) {
-            respond(true, err, callback);
+            if(err instanceof Error && err.message) {
+                respond(true, err.message, callback);
+            } else {
+                respond(true, err, callback);
+            }
             return;
         }
 

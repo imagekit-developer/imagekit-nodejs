@@ -6,7 +6,7 @@ module.exports = function(requestOptions, defaultOptions, callback) {
     request(requestOptions, function(err, response, body) {
         if(typeof callback != "function") return;
 
-        if(response.statusCode >= 400) {
+        if(response && response.statusCode != 200) {
             callback(err || body);
         } else {
             callback(err, response, body);
