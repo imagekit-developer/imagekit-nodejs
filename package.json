@@ -1,12 +1,12 @@
 {
   "name": "imagekit",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Offical NodeJS SDK for ImageKit.io integration",
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js tests/ utils/phash.js",
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix tests/ utils/phash.js",
-    "test": "export NODE_ENV=test; nyc ./node_modules/mocha/bin/mocha --coverage --exit -t 40000 tests/*.js;ex=$?;unset NODE_ENV; exit $ex;",
+    "test": "export NODE_ENV=test; nyc ./node_modules/mocha/bin/mocha --exit -t 40000 tests/*.js;ex=$?;unset NODE_ENV; exit $ex;",
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "author": "ImageKit Developer <developer@imagekit.io>",

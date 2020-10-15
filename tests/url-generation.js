@@ -87,7 +87,7 @@ describe("URL generation", function () {
 
     });
 
-    it('should generate the correct url with path param with transformationPostion as query', function () {
+    it('should generate the correct url with path param with transformationPosition as query', function () {
         const url = imagekit.url({
             path: "/test_path.jpg",
             transformationPosition: "query",
@@ -112,7 +112,7 @@ describe("URL generation", function () {
         expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/test_path_alt.jpg?tr=h-300%2Cw-400`);
     });
 
-    it('should generate the correct url with transformationPostion as query', function () {
+    it('should generate the correct url with transformationPosition as query', function () {
         const url = imagekit.url({
             src: "https://ik.imagekit.io/test_url_endpoint/test_path_alt.jpg",
             transformationPosition: "query",

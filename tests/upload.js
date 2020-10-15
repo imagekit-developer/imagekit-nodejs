@@ -189,6 +189,24 @@ describe("File upload", function () {
         },10); 
     });
 
+    it('Success using promise', function (done) {
+        const fileOptions = {
+            fileName: "test_file_name",
+            file: "test_file_content"
+        };
+
+        const scope = nock('https://api.imagekit.io')
+            .post('/v1/files/upload')
+            .basicAuth({ user: initializationParams.privateKey, pass: '' })
+            .reply(200, uploadSuccessResponseObj)
+
+        imagekit.upload(fileOptions)
+        .then((response, error) => {
+            expect(response).to.been.deep.equal(uploadSuccessResponseObj)
+            done();
+        });
+    });
+
     it('Network error', function (done) {
         const fileOptions = {
             fileName: "test_file_name",
@@ -236,5 +254,30 @@ describe("File upload", function () {
             sinon.assert.calledWith(callback, error, null);
             done();
         },10);
+    });
+
+    it('Server side error promise', function (done) {
+        const fileOptions = {
+            fileName: "test_file_name",
+            file: "test_file_content"
+        };
+
+        var error = {
+            help: "For support kindly contact us at support@imagekit.io .",
+            message: "Your account cannot be authenticated."
+        };
+
+        const scope = nock('https://api.imagekit.io')
+            .post('/v1/files/upload')
+            .basicAuth({ user: initializationParams.privateKey, pass: '' })
+            .reply(403, error)
+
+        imagekit.upload(fileOptions)
+            .then((response, error) => {
+            })
+            .catch(error => {
+                expect(error).to.been.deep.equal(error)
+                done();
+            })
     });
 });
