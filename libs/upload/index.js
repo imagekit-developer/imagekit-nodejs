@@ -9,7 +9,7 @@ var request = require("../../utils/request");
 
 module.exports = function(uploadOptions, defaultOptions, callback) {
     if(!_.isObject(uploadOptions)) {
-        respond(true, errorMessages.INVALID_UPLOAD_OPTIONS, callback);
+        respond(true, errorMessages.MISSING_UPLOAD_DATA, callback);
         return;
     }
 
@@ -50,16 +50,5 @@ module.exports = function(uploadOptions, defaultOptions, callback) {
         json : true
     };
 
-    request(requestOptions, defaultOptions, function(err, response, body) {
-        if(err) {
-            if(err instanceof Error && err.message) {
-                respond(true, err.message, callback);
-            } else {
-                respond(true, err, callback);
-            }
-            return;
-        }
-
-        respond(false, body, callback);
-    });
+    request(requestOptions, defaultOptions, callback);
 };

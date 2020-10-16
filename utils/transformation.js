@@ -18,14 +18,6 @@ module.exports.addAsQueryParameter = function(options) {
     return options.transformationPosition === QUERY_TRANSFORMATION_POSITION;
 }
 
-module.exports.validParameters = function(options) {
-    return VALID_TRANSFORMATION_POSITIONS.indexOf(options.transformationPosition) != -1;
-}
-
-module.exports.getSupportedTransforms = function() {
-    return supportedTransforms;
-}
-
 module.exports.getTransformKey = function(transform) {
     if(!transform) { return ""; }
 

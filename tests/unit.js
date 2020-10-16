@@ -43,6 +43,13 @@ describe("Unit test cases", function () {
         expect(signature).to.be.equal("41b3075c40bc84147eb71b8b49ae7fbf349d0f00")
     });
 
+    it('Signed URL signature empty', function () {
+        var url = "https://test-domain.com/test-endpoint/tr:w-100/test-signed-url.png";
+        var signature = urlBuilder.getSignature({
+        })
+        expect(signature).to.be.equal("")
+    });
+
     it('pHash distance different', function () {
         var pHashDistance = imagekit.pHashDistance("33699c96619cc69e","968e978414fe04ea");
         expect(pHashDistance).to.be.equal(30)

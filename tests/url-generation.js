@@ -48,6 +48,17 @@ describe("URL generation", function () {
         expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/test_path_alt.jpg?ik-s=e26ca157df99b30b2443d7cb6886fc396fb4c87b`);
     });
 
+    it('Signed URL with expireSeconds', function () {
+        const url = imagekit.url({
+            path: "/test_path_alt.jpg",
+            signed: true,
+            expireSeconds: 100
+        });
+
+        expect(url).includes(`https://ik.imagekit.io/test_url_endpoint/test_path_alt.jpg`);
+        expect(url).includes(`ik-s=`);
+    });
+
     it('should generate the correct url with path param', function () {
         const url = imagekit.url({
             path: "/test_path.jpg",
@@ -218,6 +229,17 @@ describe("URL generation", function () {
         })
 
         expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400,b-20_FF0000/test_path.jpg`);
+    });
+
+    it('e-sharpen - ', function () {
+        const url = imagekit.url({
+            path: "/test_path.jpg",
+            transformation: [{
+                "e-sharpen": "-",
+            }]
+        })
+
+        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:e-sharpen/test_path.jpg`);
     });
 
     it('All combined', function () {

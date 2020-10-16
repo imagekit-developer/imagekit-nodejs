@@ -4,6 +4,8 @@ const expect = chai.expect;
 const initializationParams = require("./data").initializationParams
 const ImageKit = require(".."); // This will automatically pick main module (cjs bundle) as per package.json
 const nock = require("nock");
+const fs = require("fs");
+const path = require("path");
 
 function checkFormData({requestBody, boundary, fieldName, fieldValue}) {
     return expect(requestBody).include(`${boundary}\r\nContent-Disposition: form-data; name="${fieldName}"\r\n\r\n${fieldValue}`)
@@ -27,12 +29,12 @@ const uploadSuccessResponseObj = {
 describe("File upload", function () {
     var imagekit = new ImageKit(initializationParams);
 
-    beforeEach(() => {
-        
-    });
+    it('Invalid upload params', function () {
+        var callback = sinon.spy();
 
-    afterEach(() => {
-        
+        imagekit.upload(null, callback);
+        expect(callback.calledOnce).to.be.true;
+        sinon.assert.calledWith(callback, { help: "", message: "Missing data for upload" }, null);
     });
 
     it('Missing fileName', function () {
@@ -87,6 +89,25 @@ describe("File upload", function () {
               })
 
         imagekit.upload(fileOptions, callback);
+    });
+
+    it('Buffer file', function (done) {
+        const fileOptions = {
+            fileName: "test_file_name",
+            file: fs.readFileSync(path.join(__dirname,"./data/test_image.jpg"))
+        };
+
+        const scope = nock('https://api.imagekit.io')
+        .post('/v1/files/upload')
+        .basicAuth({ user: initializationParams.privateKey, pass: '' })
+        .reply(200, function (uri, requestBody) {
+            expect(this.req.headers["content-type"]).include("multipart/form-data; boundary=---------------------");
+            var boundary = this.req.headers["content-type"].replace("multipart/form-data; boundary=","");
+            expect(requestBody.length).equal(399064);
+            done()
+          })
+
+        imagekit.upload(fileOptions);
     });
 
     it('Missing useUniqueFileName', function (done) {
@@ -213,20 +234,15 @@ describe("File upload", function () {
             file: "test_file_content"
         };
 
-        var callback = sinon.spy();
-
         const scope = nock('https://api.imagekit.io')
             .post('/v1/files/upload')
             .basicAuth({ user: initializationParams.privateKey, pass: '' })
             .replyWithError("Network error occured")
 
-        imagekit.upload(fileOptions, callback);
-
-        setTimeout( () => {
-            expect(callback.calledOnce).to.be.true;
-            sinon.assert.calledWith(callback, "Network error occured", null);
+        imagekit.upload(fileOptions, function(err, response) {
+            expect(err.message).equal("Network error occured");
             done();
-        },10);
+        });
     });
 
     it('Server side error', function (done) {

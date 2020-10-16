@@ -1,4 +1,5 @@
 var request = require('request');
+var respond = require("../utils/respond");
 var authorizationUtils = require("./authorization");
 
 module.exports = function(requestOptions, defaultOptions, callback) {
@@ -6,11 +7,17 @@ module.exports = function(requestOptions, defaultOptions, callback) {
     request(requestOptions, function(err, response, body) {
         if(typeof callback != "function") return;
 
-        if(response && response.statusCode != 200) {
-            callback(err || body);
-        } else {
-            callback(err, response, body);
+        if(err) {
+            respond(true, err, callback);
+            return;
         }
+
+        if(response && response.statusCode >= 400) {
+            respond(true, err || body, callback);
+            return;
+        }
+
+        respond(false, body, callback);
     });
 }
 

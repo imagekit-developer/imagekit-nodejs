@@ -47,9 +47,6 @@ var ImageKit = function(opts) {
                 }
                 f.call(self, ...args)
             } else {
-                if (typeof Promise !== 'function') {
-                    throw new Error('Promises should be defined as a global function.')
-                }
                 return new Promise((resolve, reject) => {
                     const callback = function(err, ...results) {
                         if (err) {
@@ -63,10 +60,6 @@ var ImageKit = function(opts) {
                 });
             }
         }
-    }
-
-    if(!transformationUtils.validParameters(this.options)) {
-        throw new Error(errorMessages.INVALID_TRANSFORMATION_POSITION.message);
     }
 
     /*
@@ -136,9 +129,5 @@ var ImageKit = function(opts) {
         return pHashUtils.pHashDistance(firstPHash, secondPHash);
     }
 };
-
-function mandatoryParametersAvailable(options) {
-    return options.publicKey && options.privateKey && options.urlEndpoint;
-}
 
 module.exports = ImageKit;
