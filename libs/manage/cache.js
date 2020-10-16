@@ -16,14 +16,7 @@ module.exports.purgeCache = function(url, defaultOptions, callback) {
         }
     };
 
-    request(requestOptions, defaultOptions, function(err, response, body) {
-        if(err) {
-            respond(true, err, callback);
-            return;
-        }
-
-        respond(false, body, callback);
-    });
+    request(requestOptions, defaultOptions, callback);
 };
 
 module.exports.getPurgeCacheStatus = function(requestId, defaultOptions, callback) {
@@ -38,12 +31,5 @@ module.exports.getPurgeCacheStatus = function(requestId, defaultOptions, callbac
         json : true
     };
 
-    request(requestOptions, defaultOptions, function(err, response, body) {
-        if(err) {
-            respond(true, err, callback);
-            return;
-        }
-
-        respond(false, body, callback);
-    });
+    request(requestOptions, defaultOptions, callback);
 };

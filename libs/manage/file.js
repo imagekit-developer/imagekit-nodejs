@@ -22,14 +22,7 @@ module.exports.deleteFile = function(fileId, defaultOptions, callback) {
         json : true
     };
 
-    request(requestOptions, defaultOptions, function(err, response, body) {
-        if(err) {
-            respond(true, err, callback);
-            return;
-        }
-
-        respond(false, body, callback);
-    });
+    request(requestOptions, defaultOptions, callback);
 };
 
 /*
@@ -46,14 +39,7 @@ module.exports.getMetadata = function(fileId, defaultOptions, callback) {
         json : true
     };
 
-    request(requestOptions, defaultOptions, function(err, response, body) {
-        if(err) {
-            respond(true, err, callback);
-            return;
-        }
-
-        respond(false, body, callback);
-    });
+    request(requestOptions, defaultOptions, callback);
 };
 
 /*
@@ -71,14 +57,7 @@ module.exports.getDetails = function(fileId, defaultOptions, callback) {
         json : true
     };
 
-    request(requestOptions, defaultOptions, function(err, response, body) {
-        if(err) {
-            respond(true, err, callback);
-            return;
-        }
-
-        respond(false, body, callback);
-    });
+    request(requestOptions, defaultOptions, callback);
 };
 
 /*
@@ -94,48 +73,25 @@ module.exports.updateDetails = function(fileId, updateData, defaultOptions, call
         respond(true, errorMessages.UPDATE_DATA_MISSING, callback);
         return;
     }
-    var data = {};
-    if(updateData.tags !== null 
-        && !(updateData.tags && Array.isArray(updateData.tags))
-        && (typeof updateData.tags !== "undefined")
-    ) {
-        respond(true, errorMessages.UPDATE_DATA_TAGS_INVALID, callback);
-        return;
-    } else {
-        data.tags = updateData.tags;
-    }
-
-    if(updateData.customCoordinates !== null 
-        && !(updateData.customCoordinates && typeof updateData.customCoordinates === "string")
-        && (typeof updateData.customCoordinates !== "undefined")
-    ) {
-        respond(true, errorMessages.UPDATE_DATA_COORDS_INVALID, callback);
-        return;
-    } else {
-        data.customCoordinates = updateData.customCoordinates;
-    }
-
+    var data = {
+        tags: updateData.tags,
+        customCoordinates: updateData.customCoordinates
+    };
+    
     var requestOptions = {
         url : "https://api.imagekit.io/v1/files/" + fileId + "/details",
         method : "PATCH",
         json : data
     };
 
-    request(requestOptions, defaultOptions, function(err, response, body) {
-        if(err) {
-            respond(true, err, callback);
-            return;
-        }
-
-        respond(false, body, callback);
-    });
+    request(requestOptions, defaultOptions, callback);
 };
 
 /*
     List files
 */
 module.exports.listFiles = function(listOptions, defaultOptions, callback) {
-    if(!_.isObject(listOptions)) {
+    if(listOptions && !_.isObject(listOptions)) {
         respond(true, errorMessages.UPDATE_DATA_MISSING, callback);
         return;
     }
@@ -143,18 +99,11 @@ module.exports.listFiles = function(listOptions, defaultOptions, callback) {
     var requestOptions = {
         url : "https://api.imagekit.io/v1/files/",
         method : "GET",
-        qs : listOptions,
+        qs : listOptions || {},
         json : true
     };
 
-    request(requestOptions, defaultOptions, function(err, response, body) {
-        if(err) {
-            respond(true, err, callback);
-            return;
-        }
-
-        respond(false, body, callback);
-    });
+    request(requestOptions, defaultOptions, callback);
 };
 
 /*
@@ -179,12 +128,5 @@ module.exports.bulkDeleteFiles = function(fileIdArray, defaultOptions, callback)
         json: data
     }
 
-    request(requestOptions, defaultOptions, function(err, response, body) {
-        if(err) {
-            respond(true, err, callback);
-            return;
-        }
-
-        respond(false, body, callback)
-    });
+    request(requestOptions, defaultOptions, callback);
 };

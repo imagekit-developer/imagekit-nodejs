@@ -1,22 +1,25 @@
 
-# ImageKit SDK for Node.js
+[<img width="250" alt="ImageKit.io" src="https://raw.githubusercontent.com/imagekit-developer/imagekit-javascript/master/assets/imagekit-light-logo.svg"/>](https://imagekit.io)
+
+# ImageKit.io Node.js SDK
 
 [![Node CI](https://github.com/imagekit-developer/imagekit-nodejs/workflows/Node%20CI/badge.svg)](https://github.com/imagekit-developer/imagekit-nodejs/)
 [![npm version](https://img.shields.io/npm/v/imagekit)](https://www.npmjs.com/package/imagekit) 
+[![codecov](https://codecov.io/gh/imagekit-developer/imagekit-nodejs/branch/master/graph/badge.svg)](https://codecov.io/gh/imagekit-developer/imagekit-nodejs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ImagekitIo)
 
-NodeJS SDK for [ImageKit.io](https://imagekit.io) that implements the new APIs and interface for performing different file operations.
-
-ImageKit is a complete image optimization and transformation solution that comes with an [image CDN](https://imagekit.io/features/imagekit-infrastructure) and media storage. It can be integrated with your existing infrastructure - storages like AWS S3, web servers, your CDN and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
+ImageKit Node.js SDK allows you to use [image resizing](https://docs.imagekit.io/features/image-transformations), [optimization](https://docs.imagekit.io/features/image-optimization), [file uploading](https://docs.imagekit.io/api-reference/upload-file-api) and other [ImageKit APIs](https://docs.imagekit.io/api-reference/api-introduction) from applications written in server-side JavaScript.
 
 ##### Table of contents
 * [Installation](#installation)
 * [Initialization](#initialization)
+* [Demo application](#demo-application)
 * [URL generation](#url-generation)
 * [File upload](#file-upload)
 * [File management](#file-management)
 * [Utility functions](#utility-functions)
+* [Rate limits](#rate-limits)
 * [Support](#support)
 * [Links](#links)
 
@@ -40,8 +43,12 @@ var imagekit = new ImageKit({
 });
 ```
 
+
+## Demo application
+The fastest way to get started is by running the demo application in [sample](/sample) folder as per [README.md](/sample/README.md).
+
 ## Usage
-You can use this NodeJS SDK for 3 different kinds of functions - URL generation, file uploads and file management. The usage of the SDK has been explained below
+You can use this NodeJS SDK for three different kinds of functions - URL generation, file uploads, and file management. The usage of the SDK has been explained below.
 
 ## URL Generation
 
@@ -68,7 +75,7 @@ https://ik.imagekit.io/your_imagekit_id/endpoint/tr:h-300,w-400/default-image.jp
 
 **2. Using full image URL**
 
-This method allows you to add transformation parameters to an existing, complete URL that is already mapped to ImageKit using the `src` parameter. This method should be used if you have the complete URL mapped to ImageKit stored in your database.
+This method allows you to add transformation parameters to an existing, complete URL that is already mapped to ImageKit using the `src` parameter. Use this method if you have the absolute image URL stored in your database.
 
 
 ```
@@ -93,13 +100,13 @@ The `.url()` method accepts the following parameters
 | Option           | Description                    |
 | :----------------| :----------------------------- |
 | urlEndpoint      | Optional. The base URL to be appended before the path of the image. If not specified, the URL Endpoint specified at the time of SDK initialization is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
-| path             | Conditional. This is the path at which the image exists. For example, `/path/to/image.jpg`. Either the `path` or `src` parameter need to be specified for URL generation. |
-| src              | Conditional. This is the complete URL of an image already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/image.jpg`. Either the `path` or `src` parameter need to be specified for URL generation. |
-| transformation   | Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name  and the value should be specified as a key-value pair in the object. Different steps of a [chained transformation](https://docs.imagekit.io/features/image-transformations/chained-transformations) can be specified as different objects of the array. The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it gets applied as it is in the URL. |
-| transformationPostion | Optional. Default value is `path` that places the transformation string as a path parameter in the URL. Can also be specified as `query` which adds the transformation string as the query parameter `tr` in the URL. If you use `src` parameter to create the URL, then the transformation string is always added as a query parameter. |
-| queryParameters  | Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and not necessarily related to ImageKit. Especially useful, if you want to add some versioning parameter to your URLs. |
-| signed           | Optional. Boolean. Default is `false`. If set to `true`, the SDK generates a signed image URL adding the image signature to the image URL. If you are creating URL using `src` parameter instead of `path` then do correct `urlEndpoint` for this to work. Otherwise returned URL will have wrong signature |
-| expireSeconds    | Optional. Integer. Meant to be used along with the `signed` parameter to specify the time in seconds from now when the URL should expire. If specified, the URL contains the expiry timestamp in the URL and the image signature is modified accordingly. |
+| path             | Conditional. This is the path at which the image exists. For example, `/path/to/image.jpg`. Either the `path` or `src` parameter needs to be specified for URL generation. |
+| src              | Conditional. This is the complete URL of an image already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/image.jpg`. Either the `path` or `src` parameter needs to be specified for URL generation. |
+| transformation   | Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. Different steps of a [chained transformation](https://docs.imagekit.io/features/image-transformations/chained-transformations) can be specified as different objects of the array. The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it gets applied as it is in the URL. |
+| transformationPosition | Optional. The default value is `path` that places the transformation string as a path parameter in the URL. It can also be specified as `query`, which adds the transformation string as the URL's query parameter `tr`. If you use the `src` parameter to create the URL, then the transformation string is always added as a query parameter. |
+| queryParameters  | Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and not necessarily related to ImageKit. Especially useful if you want to add some versioning parameter to your URLs. |
+| signed           | Optional. Boolean. Default is `false`. If set to `true`, the SDK generates a signed image URL adding the image signature to the image URL. If you create a URL using the `src` parameter instead of `path`, then do correct `urlEndpoint` for this to work. Otherwise returned URL will have the wrong signature |
+| expireSeconds    | Optional. Integer. Meant to be used along with the `signed` parameter to specify the time in seconds from now when the URL should expire. If specified, the URL contains the expiry timestamp in the URL, and the image signature is modified accordingly. |
 
 #### Examples of generating URLs
 
@@ -123,7 +130,7 @@ https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg?tr=h-300%2Cw-
 
 **2. Sharpening and contrast transforms and a progressive JPG image**
 
-There are some transforms like [Sharpening](https://docs.imagekit.io/features/image-transformations/image-enhancement-and-color-manipulation) that can be added to the URL with or without any other value. To use such transforms without specifying a value, specify the value as "-" in the transformation object, otherwise, specify the value that you want to be added to this transformation.
+There are some transforms like [Sharpening](https://docs.imagekit.io/features/image-transformations/image-enhancement-and-color-manipulation) that can be added to the URL with or without any other value. To use such transforms without specifying a value, specify the value as "-" in the transformation object. Otherwise, specify the value that you want to be added to this transformation.
 
 ```
 var imageURL = imagekit.url({
@@ -137,7 +144,7 @@ var imageURL = imagekit.url({
 });
 ```
 ```
-//Note that because `src` parameter was used, the transformation string gets added as a query parameter `tr`
+//Note that because the `src` parameter was used, the transformation string gets added as a query parameter `tr`
 https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg?tr=f-jpg%2Cpr-true%2Ce-sharpen%2Ce-contrast-1
 ```
 
@@ -162,7 +169,7 @@ https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400/default-image.jpg?v=123&i
 
 #### List of supported transformations
 
-The complete list of transformations supported and their usage in ImageKit can be found [here](https://docs.imagekit.io/features/image-transformations). The SDK gives a name to each transformation parameter, making the code simpler and readable. If a transformation is supported in ImageKit, but a name for it cannot be found in the table below, then use the transformation code from ImageKit docs as the name when using in the `url` function.
+See the complete list of transformations supported in ImageKit [here](https://docs.imagekit.io/features/image-transformations). The SDK gives a name to each transformation parameter e.g. `height` for `h` and `width` for `w` parameter. It makes your code more readable. If the property does not match any of the following supported options, it is added as it is.
 
 | Supported Transformation Name | Translates to parameter |
 |-------------------------------|-------------------------|
@@ -178,24 +185,38 @@ The complete list of transformations supported and their usage in ImageKit can b
 | format | f |
 | radius | r |
 | background | bg |
-| border | bo |
+| border | b |
 | rotation | rt |
 | blur | bl |
 | named | n |
-| overlayImage | oi |
 | overlayX | ox |
 | overlayY | oy |
 | overlayFocus | ofo |
 | overlayHeight | oh |
 | overlayWidth | ow |
+| overlayImage | oi |
+| overlayImageTrim | oit |
+| overlayImageAspectRatio | oiar |
+| overlayImageBackground | oibg |
+| overlayImageBorder | oib |
+| overlayImageDPR | oidpr |
+| overlayImageQuality | oiq |
+| overlayImageCropping | oic |
+| overlayImageTrim | oit |
 | overlayText | ot |
 | overlayTextFontSize | ots |
 | overlayTextFontFamily | otf |
 | overlayTextColor | otc |
+| overlayTextTransparency | oa |
 | overlayAlpha | oa |
 | overlayTextTypography | ott |
 | overlayBackground | obg |
-| overlayImageTrim | oit |
+| overlayTextEncoded | ote |
+| overlayTextWidth | otw |
+| overlayTextBackground | otbg |
+| overlayTextPadding | otp |
+| overlayTextInnerAlignment | otia |
+| overlayRadius | or |
 | progressive | pr |
 | lossless | lo |
 | trim | t |
@@ -215,7 +236,7 @@ The complete list of transformations supported and their usage in ImageKit can b
 
 The SDK provides a simple interface using the `.upload()` method to upload files to the ImageKit Media Library. It accepts all the parameters supported by the [ImageKit Upload API](https://docs.imagekit.io/api-reference/upload-file-api/server-side-file-upload).
 
-The `upload()` method requires at least the `file` and the `fileName` parameter to upload a file and returns a callback with the `error` and `result` as arguments. You can pass other parameters supported by the ImageKit upload API using the same parameter name as specified in the upload API documentation. For example, to specify tags for a file at the time of upload use the `tags` parameter as specified in the [documentation here](https://docs.imagekit.io/api-reference/upload-file-api/server-side-file-upload).
+The `upload()` method requires at least the `file` and the `fileName` parameter to upload a file and returns a callback with the `error` and `result` as arguments. You can pass other parameters supported by the ImageKit upload API using the same parameter name as specified in the upload API documentation. For example, to specify tags for a file at the time of upload, use the `tags` parameter as specified in the [documentation here](https://docs.imagekit.io/api-reference/upload-file-api/server-side-file-upload).
 
 Sample usage
 ```
@@ -241,18 +262,18 @@ imagekit.upload({
 });
 ```
 
-If the upload succeed, `error` will be `null` and the `result` will be the same as what is received from ImageKit's servers.
-If the upload fails, `error` will be the same as what is received from ImageKit's servers and the `result` will be null.
+If the upload succeeds, `error` will be `null,` and the `result` will be the same as what is received from ImageKit's servers.
+If the upload fails, `error` will be the same as what is received from ImageKit's servers, and the `result` will be null.
 
 
 
 ## File Management
 
-The SDK provides a simple interface for all the [media APIs mentioned here](https://docs.imagekit.io/api-reference/media-api) to manage your files. You can use a callback function with all API interfaces. The first argument of the callback function is the error and the second is the result of the API call. Error will be `null` if the API succeeds.
+The SDK provides a simple interface for all the [media APIs mentioned here](https://docs.imagekit.io/api-reference/media-api) to manage your files. You can use a callback function with all API interfaces. The first argument of the callback function is the error, and the second is the result of the API call. The error will be `null` if the API succeeds.
 
 **1. List & Search Files**
 
-Accepts an object specifying the parameters to be used to list and search files. All parameters specified in the [documentation here](https://docs.imagekit.io/api-reference/media-api/list-and-search-files) can be passed as is with the correct values to get the results.
+Accepts an object specifying the parameters to be used to list and search files. All parameters specified in the [documentation here](https://docs.imagekit.io/api-reference/media-api/list-and-search-files) can be passed as-is with the correct values to get the results.
 
 ```
 // Using Callback Function
@@ -326,7 +347,7 @@ imagekit.getFileMetadata("file_id")
 
 **4. Update File Details**
 
-Update parameters associated with the file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/update-file-details). The first argument to the `updateFileDetails` method is the file ID and the second argument is an object with the parameters to be updated.
+Update parameters associated with the file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/update-file-details). The first argument to the `updateFileDetails` method is the file ID, and a second argument is an object with the parameters to be updated.
 
 ```
 // Using Callback Function
@@ -378,7 +399,7 @@ imagekit.deleteFile("file_id"})
 
 **6. Bulk Delete Files**
 
-Delete multiple file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-files-bulk). The method accepts an array of file IDs of the files that have to be deleted.
+Delete multiple files as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-files-bulk). The method accepts an array of file IDs of the files that have to be deleted.
 
 ```
 
@@ -448,11 +469,11 @@ imagekit.getPurgeCacheStatus("cache_request_id")
 
 ## Utility functions
 
-We have included following commonly used utility functions in this package.
+We have included the following commonly used utility functions in this package.
 
 ### Authentication parameter generation
 
-In case you are looking to implement client-side file upload, you are going to need a token, expiry timestamp and a valid signature for that upload. The SDK provides a simple method that you can use in your code to generate these authentication parameters for you.
+In case you are looking to implement client-side file upload, you are going to need a token, expiry timestamp, and a valid signature for that upload. The SDK provides a simple method that you can use in your code to generate these authentication parameters for you.
 
 *Note: The Private API Key should never be exposed in any client-side code. You must always generate these authentication parameters on the server-side*
 
@@ -469,13 +490,13 @@ Returns
 }
 ```
 
-Both the `token` and `expire` parameters are optional. If not specified the SDK uses the [uuid](https://www.npmjs.com/package/uuid) package to generate a random token and also generates a valid expiry timestamp internally. The value of the `token` and `expire` used to generate the signature are always returned in the response, no matter if they are provided as an input to this method or not.
+Both the `token` and `expire` parameters are optional. If not specified, the SDK uses the [uuid](https://www.npmjs.com/package/uuid) package to generate a random token and generate a valid expiry timestamp internally. `token` and `expire` are always returned in the response, no matter if they are provided as an input to this method or not.
 
 ### Distance calculation between two pHash values
 
-Perceptual hashing allows you to constructing a hash value that uniquely identifies an input image based on the contents of an image. [ImageKit.io metadata API](https://docs.imagekit.io/api-reference/metadata-api) returns the pHash value of an image in the response. You can use this value to find a duplicate (or similar) image by calculating distance between pHash value of two images.
+Perceptual hashing allows you to construct a hash value that uniquely identifies an input image based on an image's contents. [ImageKit.io metadata API](https://docs.imagekit.io/api-reference/metadata-api) returns the pHash value of an image in the response. You can use this value to [find a duplicate (or similar) image](https://docs.imagekit.io/api-reference/metadata-api#using-phash-to-find-similar-or-duplicate-images) by calculating the distance between the two images' pHash value.
 
-This SDK exposes `pHashDistance` function to calcualte distance between two pHash values. It accepts two pHash hexadecimal strings and returns a numeric value indicative of the level of difference between the two images.
+This SDK exposes `pHashDistance` function to calculate the distance between two pHash values. It accepts two pHash hexadecimal strings and returns a numeric value indicative of the level of difference between the two images.
 
 ```
 const calculateDistance = () => {
@@ -485,7 +506,7 @@ const calculateDistance = () => {
     // ...
     // Calculate the distance between them:
     const distance = imagekit.pHashDistance(firstHash, secondHash);
-	return distance;
+    return distance;
 }
 ```
 #### Distance calculation examples
@@ -501,9 +522,20 @@ imagekit.pHashDistance('a4a65595ac94518b', '7838873e791f8400');
 // output: 37 (dissimilar images)
 ```
 
+## Rate limits
+Except for upload API, all [ImageKit APIs are rate limited](https://docs.imagekit.io/api-reference/api-introduction/rate-limits) to protect the infrastructure from excessive request rates and to keep ImageKit.io fast and stable for everyone.
+
+When you exceed the rate limits for an endpoint, you will receive a `429` status code. The Node.js library reads the [rate limiting response headers](https://docs.imagekit.io/api-reference/api-introduction/rate-limits#response-headers-to-understand-rate-limits) provided in API response and adds these in the error argument of callback or `.catch` when using promises. Please sleep/pause for the number of milliseconds specified by the value of `X-RateLimit-Reset` property before making additional requests to that endpoint.
+
+| Property | Description |
+|----------|-------------|
+| `X-RateLimit-Limit` | The maximum number of requests that can be made to this endpoint in interval specified by `X-RateLimit-Interval` response header. |
+| `X-RateLimit-Reset` | The amount of time in milliseconds, before you can make another request to this endpoint. Pause/sleep your workflow for this duration. |
+| `X-RateLimit-Interval` | The duration of interval in milliseconds for which this rate limit was exceeded. |
+
 ## Support
 
-For any feedback or to report any issues or general implementation support please reach out to [support@imagekit.io](mailto:support@imagekit.io)
+For any feedback or to report any issues or general implementation support, please reach out to [support@imagekit.io](mailto:support@imagekit.io)
 
 ## Links
 * [Documentation](https://docs.imagekit.io)

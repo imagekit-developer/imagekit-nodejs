@@ -97,7 +97,7 @@ module.exports.buildURL = function(opts) {
 
         var intermediateURL = url.format(urlObject);
 
-        var urlSignature = getSignature({
+        var urlSignature = module.exports.getSignature({
             privateKey : opts.privateKey,
             url : intermediateURL,
             urlEndpoint : opts.urlEndpoint,
@@ -131,8 +131,8 @@ function constructTransformationString(transformation) {
                 parsedTransformStep.push(transformKey);
             } else {
                 var value = transformation[i][key];
-                if(transformKey === "oi") {
-                    value = removeLeadingSlash(value);
+                if(transformKey === "oi" || transformKey === "di") {
+                    value = urlFormatter.removeTrailingSlash(urlFormatter.removeLeadingSlash(value));
                     value = value.replace(/\//g,"@@");
                 }
                 parsedTransformStep.push([transformKey, value].join(transformationUtils.getTransformKeyValueDelimiter()));
@@ -145,13 +145,6 @@ function constructTransformationString(transformation) {
     return parsedTransforms.join(transformationUtils.getChainTransformDelimiter());
 }
 
-function removeLeadingSlash(str) {
-    if (typeof str == "string" && str[0] == "/") {
-        str = str.slice(1);
-    }
-    return str;
-}
-
 function getSignatureTimestamp(seconds) {
     if(!seconds) return DEFAULT_TIMESTAMP;
 
@@ -162,7 +155,7 @@ function getSignatureTimestamp(seconds) {
     return currentTimestamp + sec;
 }
 
-function getSignature(opts) {
+module.exports.getSignature = function(opts) {
     if(!opts.privateKey || !opts.url || !opts.urlEndpoint) return "";
     var stringToSign = opts.url.replace(urlFormatter.addTrailingSlash(opts.urlEndpoint), "") + opts.expiryTimestamp;
     return crypto.createHmac('sha1', opts.privateKey).update(stringToSign).digest('hex');

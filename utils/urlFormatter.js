@@ -1,11 +1,3 @@
-module.exports.addLeadingQuestionMark = function(str) {
-    if(typeof str == "string" && str[0] != "?") {
-        str = "?" + str;
-    }
-
-    return str;
-}
-
 module.exports.addLeadingSlash = function(str) {
     if(typeof str == "string" && str[0] != "/") {
         str = "/" + str;

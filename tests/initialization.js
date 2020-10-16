@@ -36,6 +36,19 @@ describe("Initialization checks", function () {
         }
     });
 
+    it('callback', function () {
+        var imagekit = new ImageKit({
+            urlEndpoint: "https://ik.imagekit.io/demo",
+            publicKey: "test_public_key",
+            privateKey: "test_private_key"
+        });
+        try {
+            imagekit.getFileDetails("fileId","wrongCallback");
+        } catch(err) {
+            expect(err.message).to.be.equal("Callback must be a function.")
+        }
+    });
+
     it('should have options object', function () {
         expect(imagekit.options).to.be.an('object');
     });
