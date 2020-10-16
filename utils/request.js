@@ -12,6 +12,16 @@ module.exports = function(requestOptions, defaultOptions, callback) {
             return;
         }
 
+        if(response && response.statusCode === 429) {
+            respond(true, {
+                ...body,
+                "X-RateLimit-Limit": parseInt(response.caseless.get("X-RateLimit-Limit"), 10),
+                "X-RateLimit-Reset": parseInt(response.caseless.get("X-RateLimit-Reset"), 10),
+                "X-RateLimit-Interval": parseInt(response.caseless.get("X-RateLimit-Interval"))
+            }, callback)
+            return
+        }
+
         if(response && response.statusCode >= 400) {
             respond(true, err || body, callback);
             return;

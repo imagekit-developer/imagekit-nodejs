@@ -463,6 +463,39 @@ describe("Media library APIs", function () {
                 done();
             }, 50);
         });
+
+        it('Rate limit error', function (done) {
+            var fileIds = ["fileId1", "fileId2"];
+
+            var responseBody = {
+                message: "rate limit exceeded"
+            };
+
+            var rateLimitHeaders = {
+                "X-RateLimit-Limit": 10,
+                "X-RateLimit-Reset": 1000,
+                "X-RateLimit-Interval": 1000
+            }
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/batch/deleteByFileIds`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(() => {
+                    return [
+                        429,
+                        responseBody,
+                        rateLimitHeaders
+                    ]
+                })
+
+            imagekit.bulkDeleteFiles(fileIds, function (err, response) {
+                expect(err).deep.equal({
+                    ...responseBody,
+                    ...rateLimitHeaders
+                })
+                done();
+            });
+        });
     });
 });
 

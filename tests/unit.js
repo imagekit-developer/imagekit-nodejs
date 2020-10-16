@@ -21,6 +21,13 @@ describe("Unit test cases", function () {
         })
     });
 
+    it('Authentication params check no params', function () {
+        var authenticationParameters = imagekit.getAuthenticationParameters();
+        expect(authenticationParameters).to.have.property("token");
+        expect(authenticationParameters).to.have.property("expire");
+        expect(authenticationParameters).to.have.property("signature");
+    });
+
     it('Signed URL signature without slash default expiry', function () {
         var url = "https://test-domain.com/test-endpoint/tr:w-100/test-signed-url.png";
         var signature = urlBuilder.getSignature({
