@@ -33,7 +33,7 @@ npm install imagekit
 
 ## Initialization
 
-```
+```js
 var ImageKit = require("imagekit");
 
 var imagekit = new ImageKit({
@@ -56,7 +56,7 @@ You can use this NodeJS SDK for three different kinds of functions - URL generat
 
 This method allows you to create a URL using the `path` where the image exists and the URL endpoint (`urlEndpoint`) you want to use to access the image. You can refer to the documentation [here](https://docs.imagekit.io/integration/url-endpoints) to read more about URL endpoints in ImageKit and the section about [image origins](https://docs.imagekit.io/integration/configure-origin) to understand about paths with different kinds of origins.
 
-```
+```js
 var imageURL = imagekit.url({
     path : "/default-image.jpg",
     urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/endpoint/",
@@ -78,7 +78,7 @@ https://ik.imagekit.io/your_imagekit_id/endpoint/tr:h-300,w-400/default-image.jp
 This method allows you to add transformation parameters to an existing, complete URL that is already mapped to ImageKit using the `src` parameter. Use this method if you have the absolute image URL stored in your database.
 
 
-```
+```js
 var imageURL = imagekit.url({
     src : "https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg",
     transformation : [{
@@ -111,7 +111,7 @@ The `.url()` method accepts the following parameters
 #### Examples of generating URLs
 
 **1. Chained Transformations as a query parameter**
-```
+```js
 var imageURL = imagekit.url({
     path : "/default-image.jpg",
     urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/endpoint/",
@@ -132,7 +132,7 @@ https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg?tr=h-300%2Cw-
 
 There are some transforms like [Sharpening](https://docs.imagekit.io/features/image-transformations/image-enhancement-and-color-manipulation) that can be added to the URL with or without any other value. To use such transforms without specifying a value, specify the value as "-" in the transformation object. Otherwise, specify the value that you want to be added to this transformation.
 
-```
+```js
 var imageURL = imagekit.url({
     src : "https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg",
     transformation : [{
@@ -149,7 +149,7 @@ https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg?tr=f-jpg%2Cpr
 ```
 
 **3. Signed URL that expires in 300 seconds with the default URL endpoint and other query parameters**
-```
+```js
 var imageURL = imagekit.url({
     path : "/default-image.jpg",
     queryParameters : {
@@ -239,7 +239,7 @@ The SDK provides a simple interface using the `.upload()` method to upload files
 The `upload()` method requires at least the `file` and the `fileName` parameter to upload a file and returns a callback with the `error` and `result` as arguments. You can pass other parameters supported by the ImageKit upload API using the same parameter name as specified in the upload API documentation. For example, to specify tags for a file at the time of upload, use the `tags` parameter as specified in the [documentation here](https://docs.imagekit.io/api-reference/upload-file-api/server-side-file-upload).
 
 Sample usage
-```
+```js
 // Using Callback Function
 
 imagekit.upload({
@@ -275,7 +275,7 @@ The SDK provides a simple interface for all the [media APIs mentioned here](http
 
 Accepts an object specifying the parameters to be used to list and search files. All parameters specified in the [documentation here](https://docs.imagekit.io/api-reference/media-api/list-and-search-files) can be passed as-is with the correct values to get the results.
 
-```
+```js
 // Using Callback Function
 
 imagekit.listFiles({
@@ -303,7 +303,7 @@ imagekit.listFiles({
 
 Accepts the file ID and fetches the details as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/get-file-details).
 
-```
+```js
 // Using Callback Function
 
 imagekit.getFileDetails("file_id", function(error, result) {
@@ -326,7 +326,7 @@ imagekit.getFileDetails("file_id")
 
 Accepts the file ID and fetches the metadata as per the [API documentation here](https://docs.imagekit.io/api-reference/metadata-api/get-image-metadata-for-uploaded-media-files).
 
-```
+```js
 // Using Callback Function
 
 imagekit.getFileMetadata("file_id", function(error, result) {
@@ -349,7 +349,7 @@ imagekit.getFileMetadata("file_id")
 
 Update parameters associated with the file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/update-file-details). The first argument to the `updateFileDetails` method is the file ID, and a second argument is an object with the parameters to be updated.
 
-```
+```js
 // Using Callback Function
 
 imagekit.updateFileDetails("file_id", { 
@@ -377,8 +377,7 @@ imagekit.updateFileDetails("file_id", {
 
 Delete a file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-file). The method accepts the file ID of the file that has to be deleted.
 
-```
-
+```js
 // Using Callback Function
 
 imagekit.deleteFile("file_id", function(error, result) {
@@ -389,7 +388,7 @@ imagekit.deleteFile("file_id", function(error, result) {
 
 // Using Promises 
 
-imagekit.deleteFile("file_id"})
+imagekit.deleteFile("file_id")
 }).then(response => {
     console.log(response);
 }).catch(error => {
@@ -401,8 +400,7 @@ imagekit.deleteFile("file_id"})
 
 Delete multiple files as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-files-bulk). The method accepts an array of file IDs of the files that have to be deleted.
 
-```
-
+```js
 // Using Callback Function
 
 imagekit.bulkDeleteFiles(["fileIds"], function(error, result) {
@@ -425,7 +423,7 @@ imagekit.bulkDeleteFiles(["fileIds"])
 
 Programmatically issue a cache clear request as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/purge-cache). Accepts the full URL of the file for which the cache has to be cleared.
 
-```
+```js
 // Using Callback Function
 
 imagekit.purgeCache("full_url", function(error, result) {
@@ -448,7 +446,7 @@ imagekit.purgeCache("full_url")
 
 Get the purge cache request status using the request ID returned when a purge cache request gets submitted as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/purge-cache-status)
 
-```
+```js
 // Using Callback Function
 
 imagekit.getPurgeCacheStatus("cache_request_id", function(error, result) {
@@ -477,12 +475,12 @@ In case you are looking to implement client-side file upload, you are going to n
 
 *Note: The Private API Key should never be exposed in any client-side code. You must always generate these authentication parameters on the server-side*
 
-```
+```js
 var authenticationParameters = imagekit.getAuthenticationParameters(token, expire);
 ```
 
 Returns
-```
+```js
 {
     token : "unique_token",
     expire : "valid_expiry_timestamp",
@@ -498,7 +496,7 @@ Perceptual hashing allows you to construct a hash value that uniquely identifies
 
 This SDK exposes `pHashDistance` function to calculate the distance between two pHash values. It accepts two pHash hexadecimal strings and returns a numeric value indicative of the level of difference between the two images.
 
-```
+```js
 const calculateDistance = () => {
     // asynchronously fetch metadata of two uploaded image files
     // ...
@@ -511,7 +509,7 @@ const calculateDistance = () => {
 ```
 #### Distance calculation examples
 
-```
+```js
 imagekit.pHashDistance('f06830ca9f1e3e90', 'f06830ca9f1e3e90');
 // output: 0 (same image)
 
