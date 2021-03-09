@@ -19,5 +19,6 @@ module.exports = {
     "MISSING_PHASH_VALUE": { message: "Missing pHash value", help: "Please pass two pHash values" },
     "UNEQUAL_STRING_LENGTH": { message: "Unequal pHash string length", help: "For distance calucation, the two pHash strings must have equal length" },
     //bulk delete errors
-    "INVALID_FILEIDS_VALUE": {message: "Invalid value for fileIds", help: "fileIds should be an string array of fileId of the files to delete. The array should have atleast one fileId."}
+    "INVALID_FILEIDS_VALUE": {message: "Invalid value for fileIds", help: "fileIds should be an string array of fileId of the files to delete. The array should have atleast one fileId.",},
+    "BULK_ADD_TAGS_INVALID": {message: "Invalid value for tags", help: "tags should be a non empty array of string like ['tag1', 'tag2']."}
 };

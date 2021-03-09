@@ -100,6 +100,16 @@ var ImageKit = function(opts) {
         return manage.updateFileDetails(fileId, updateData, this.options, callback);
     });
 
+    // Add bulk tags
+    this.bulkAddTags = promisify(function(fileIdArray, tags, callback) {
+        return manage.bulkAddTags(fileIdArray, tags, this.options, callback);
+    });
+
+    // Remove bulk tags
+    this.bulkRemoveTags = promisify(function(fileIds, tags, callback) {
+        return manage.bulkRemoveTags(fileIds, tags, this.options, callback);
+    });
+
     // Delete File API
     this.deleteFile = promisify(function(fileId, callback) {
         return manage.deleteFile(fileId, this.options, callback);
@@ -118,10 +128,45 @@ var ImageKit = function(opts) {
     this.bulkDeleteFiles = promisify(function(fileIdArray, callback) {
         return manage.bulkDeleteFiles(fileIdArray, this.options, callback);
     });
-    
+
+    // Copy files API
+    this.copyFile = promisify(function(sourceFilePath, destinationPath, callback) {
+        return manage.copyFile(sourceFilePath, destinationPath, this.options, callback);
+    });
+
+    // Move files API
+    this.moveFile = promisify(function(sourceFilePath, destinationPath, callback) {
+        return manage.moveFile(sourceFilePath, destinationPath, this.options, callback);
+    });
+
+    // Create folder API
+    this.createFolder = promisify(function(folderName, parentFolderPath, callback) {
+        return manage.createFolder(folderName, parentFolderPath, this.options, callback);
+    });
+
+    // Delete folder API
+    this.deleteFolder = promisify(function(folderPath, callback) {
+        return manage.deleteFolder(folderPath, this.options, callback);
+    });
+
+    // Copy folder API
+    this.copyFolder = promisify(function(sourceFolderPath, destinationPath, callback) {
+        return manage.copyFile(sourceFolderPath, destinationPath, this.options, callback);
+    });
+
+    // Move folder API
+    this.moveFolder = promisify(function(sourceFolderPath, destinationPath, callback) {
+        return manage.moveFolder(sourceFolderPath, destinationPath, this.options, callback);
+    });
+
     // To generate Signature for upload request
     this.getAuthenticationParameters = function(token, timestamp) {
         return signature.getAuthenticationParameters(token, timestamp, this.options);   
+    };
+
+    // Get bulk job status API
+    this.getBulkJobStatus = function(jobId) {
+        return manage.getBulkJobStatus(jobId, this.options);
     };
 
     // To calculate distance between two pHash strings

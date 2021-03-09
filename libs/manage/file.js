@@ -130,3 +130,36 @@ module.exports.bulkDeleteFiles = function(fileIdArray, defaultOptions, callback)
 
     request(requestOptions, defaultOptions, callback);
 };
+
+/*
+    Add tags in bulk
+*/
+module.exports.bulkAddTags = function(fileIdArray, tags, defaultOptions, callback) {
+    
+    if(!Array.isArray(fileIdArray) 
+        || fileIdArray.length === 0 
+        || fileIdArray.filter(fileId => typeof(fileId) !== 'string').length > 0) {
+        respond(true, errorMessages.INVALID_FILEIDS_VALUE, callback);
+        return;
+    }
+
+    if(!Array.isArray(tags) 
+        || tags.length === 0 
+        || tags.filter(tag => typeof(tag) !== 'string').length > 0) {
+        respond(true, errorMessages.BULK_ADD_TAGS_INVALID, callback);
+        return;
+    }
+
+    const data = {
+        fileIds: fileIdArray,
+        tags: tags
+    }
+
+    const requestOptions = {
+        url: "https://api.imagekit.io/v1/files/addTags",
+        method: "POST",
+        json: data
+    }
+
+    request(requestOptions, defaultOptions, callback);
+};
