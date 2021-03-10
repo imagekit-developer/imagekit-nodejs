@@ -352,7 +352,7 @@ module.exports.deleteFolder = function(folderPath, defaultOptions, callback) {
 /*
     Bulk job status
 */
-module.exports.getBulkJobStatus = function(jobId, defaultOptions) {
+module.exports.getBulkJobStatus = function(jobId, defaultOptions, callback) {
 
     if(!jobId) {
         respond(true, errorMessages.JOB_ID_MISSING, callback);

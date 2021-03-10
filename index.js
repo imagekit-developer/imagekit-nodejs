@@ -165,9 +165,9 @@ var ImageKit = function(opts) {
     };
 
     // Get bulk job status API
-    this.getBulkJobStatus = function(jobId) {
-        return manage.getBulkJobStatus(jobId, this.options);
-    };
+    this.getBulkJobStatus = promisify(function(jobId, callback) {
+        return manage.getBulkJobStatus(jobId, this.options, callback);
+    });
 
     // To calculate distance between two pHash strings
     this.pHashDistance = function(firstPHash, secondPHash) {
