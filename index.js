@@ -151,7 +151,7 @@ var ImageKit = function(opts) {
 
     // Copy folder API
     this.copyFolder = promisify(function(sourceFolderPath, destinationPath, callback) {
-        return manage.copyFile(sourceFolderPath, destinationPath, this.options, callback);
+        return manage.copyFolder(sourceFolderPath, destinationPath, this.options, callback);
     });
 
     // Move folder API

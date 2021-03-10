@@ -163,3 +163,207 @@ module.exports.bulkAddTags = function(fileIdArray, tags, defaultOptions, callbac
 
     request(requestOptions, defaultOptions, callback);
 };
+
+/*
+    Remove tags in bulk
+*/
+module.exports.bulkRemoveTags = function(fileIdArray, tags, defaultOptions, callback) {
+    
+    if(!Array.isArray(fileIdArray) 
+        || fileIdArray.length === 0 
+        || fileIdArray.filter(fileId => typeof(fileId) !== 'string').length > 0) {
+        respond(true, errorMessages.INVALID_FILEIDS_VALUE, callback);
+        return;
+    }
+
+    if(!Array.isArray(tags) 
+        || tags.length === 0 
+        || tags.filter(tag => typeof(tag) !== 'string').length > 0) {
+        respond(true, errorMessages.BULK_ADD_TAGS_INVALID, callback);
+        return;
+    }
+
+    const data = {
+        fileIds: fileIdArray,
+        tags: tags
+    }
+
+    const requestOptions = {
+        url: "https://api.imagekit.io/v1/files/removeTags",
+        method: "POST",
+        json: data
+    }
+
+    request(requestOptions, defaultOptions, callback);
+};
+
+/*
+    Copy file
+*/
+module.exports.copyFile = function(sourceFilePath, destinationPath, defaultOptions, callback) {
+    
+    if(sourceFilePath.length === 0 || typeof(sourceFilePath) !== 'string'
+        || destinationPath.length === 0 || typeof(destinationPath) !== 'string') {
+        respond(true, errorMessages.INVALID_DIRECTORY_PATH, callback);
+        return;
+    }
+
+    const data = {
+        sourceFilePath: sourceFilePath,
+        destinationPath: destinationPath
+    }
+
+    const requestOptions = {
+        url: "https://api.imagekit.io/v1/files/copy",
+        method: "POST",
+        json: data
+    }
+
+    request(requestOptions, defaultOptions, callback);
+};
+
+/*
+    Move file
+*/
+module.exports.moveFile = function(sourceFilePath, destinationPath, defaultOptions, callback) {
+    
+    if(sourceFilePath.length === 0 || typeof(sourceFilePath) !== 'string'
+        || destinationPath.length === 0 || typeof(destinationPath) !== 'string') {
+        respond(true, errorMessages.INVALID_DIRECTORY_PATH, callback);
+        return;
+    }
+
+    const data = {
+        sourceFilePath: sourceFilePath,
+        destinationPath: destinationPath
+    }
+
+    const requestOptions = {
+        url: "https://api.imagekit.io/v1/files/move",
+        method: "POST",
+        json: data
+    }
+
+    request(requestOptions, defaultOptions, callback);
+};
+
+/*
+    Copy Folder
+*/
+module.exports.copyFolder = function(sourceFolderPath, destinationPath, defaultOptions, callback) {
+    
+    if(sourceFolderPath.length === 0 || typeof(sourceFolderPath) !== 'string'
+        || destinationPath.length === 0 || typeof(destinationPath) !== 'string') {
+        respond(true, errorMessages.INVALID_DIRECTORY_PATH, callback);
+        return;
+    }
+
+    const data = {
+        sourceFolderPath: sourceFolderPath,
+        destinationPath: destinationPath
+    }
+
+    const requestOptions = {
+        url: "https://api.imagekit.io/v1/bulkJobs/copyFolder",
+        method: "POST",
+        json: data
+    }
+
+    request(requestOptions, defaultOptions, callback);
+};
+
+/*
+    Move Folder
+*/
+module.exports.moveFolder = function(sourceFolderPath, destinationPath, defaultOptions, callback) {
+    
+    if(sourceFolderPath.length === 0 || typeof(sourceFolderPath) !== 'string'
+        || destinationPath.length === 0 || typeof(destinationPath) !== 'string') {
+        respond(true, errorMessages.INVALID_DIRECTORY_PATH, callback);
+        return;
+    }
+
+    const data = {
+        sourceFolderPath: sourceFolderPath,
+        destinationPath: destinationPath
+    }
+
+    const requestOptions = {
+        url: "https://api.imagekit.io/v1/bulkJobs/moveFolder",
+        method: "POST",
+        json: data
+    }
+
+    request(requestOptions, defaultOptions, callback);
+};
+
+/*
+    Create folder
+*/
+module.exports.createFolder = function(folderName, parentFolderPath, defaultOptions, callback) {
+    
+    if(folderName.length === 0 || typeof(folderName) !== 'string') {
+        respond(true, errorMessages.INVALID_FOLDER_NAME, callback);
+        return;
+    }
+
+    if(parentFolderPath.length === 0 || typeof(parentFolderPath) !== 'string') {
+        respond(true, errorMessages.INVALID_DIRECTORY_PATH, callback);
+        return;
+    }
+
+    const data = {
+        folderName: folderName,
+        parentFolderPath: parentFolderPath
+    }
+    
+    const requestOptions = {
+        url: "https://api.imagekit.io/v1/folder/",
+        method: "POST",
+        json: data
+    }
+
+    request(requestOptions, defaultOptions, callback);
+};
+
+/* 
+    Delete folder
+*/
+module.exports.deleteFolder = function(folderPath, defaultOptions, callback) {
+
+    if(folderPath.length === 0 || typeof(folderPath) !== 'string') {
+        respond(true, errorMessages.INVALID_DIRECTORY_PATH, callback);
+        return;
+    }
+
+    const data = {
+        folderPath: folderPath
+    }
+
+    const requestOptions = {
+        url: "https://api.imagekit.io/v1/folder",
+        method: "DELETE",
+        json: data
+    }
+
+    request(requestOptions, defaultOptions, callback);
+};
+
+/*
+    Bulk job status
+*/
+module.exports.getBulkJobStatus = function(jobId, defaultOptions) {
+
+    if(!jobId) {
+        respond(true, errorMessages.JOB_ID_MISSING, callback);
+        return;
+    }
+    
+    const requestOptions = {
+        url : "https://api.imagekit.io/v1/bulkJobs/" + jobId,
+        method : "GET",
+        json : true
+    };
+
+    request(requestOptions, defaultOptions, callback);
+};

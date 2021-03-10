@@ -14,6 +14,9 @@ module.exports = {
     "MISSING_UPLOAD_DATA" : { message : "Missing data for upload", help : "" },
     "MISSING_UPLOAD_FILE_PARAMETER" : { message : "Missing file parameter for upload", help : "" },
     "MISSING_UPLOAD_FILENAME_PARAMETER" : { message : "Missing fileName parameter for upload", help : "" },
+    "JOB_ID_MISSING" : { message : "Missing Job ID parameter for this request", help : "" },
+    "INVALID_DIRECTORY_PATH" : { messages : "Invalid file/folder path for this request", help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"},
+    "INVALID_FOLDER_NAME": { messages : "Invalid folder name for this request" , help : ""},
     // pHash errors
     "INVALID_PHASH_VALUE": { message: "Invalid pHash value", help: "Both pHash strings must be valid hexadecimal numbers" },
     "MISSING_PHASH_VALUE": { message: "Missing pHash value", help: "Please pass two pHash values" },
