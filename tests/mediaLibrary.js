@@ -42,6 +42,128 @@ describe("Media library APIs", function () {
             });
         });
 
+        it('Bulk add tags missing tags', function (done) {
+            fileIds = ["23902390239203923"]
+            imagekit.bulkAddTags(fileIds, null, function (err, response) {
+                expect(err).to.deep.equal({
+                    message: "Invalid value for tags",
+                    help: "tags should be a non empty array of string like ['tag1', 'tag2']."
+                })
+                done();
+            });
+        });
+
+        it('Bulk add tags missing file id', function (done) {
+            tags = ['tag1'];
+            imagekit.bulkAddTags(null, tags, function (err, response) {
+                expect(err).to.deep.equal({
+                    message: "Invalid value for fileIds",
+                    help: "fileIds should be an string array of fileId of the files to delete. The array should have atleast one fileId."
+                })
+                done();
+            });
+        });
+
+        it('Bulk remove tags missing file id', function (done) {
+            tags = ['tag1'];
+            imagekit.bulkRemoveTags(null, tags, function (err, response) {
+                expect(err).to.deep.equal({
+                    message: "Invalid value for fileIds",
+                    help: "fileIds should be an string array of fileId of the files to delete. The array should have atleast one fileId."
+                })
+                done();
+            });
+        });
+
+        it('Bulk remove tags missing tags', function (done) {
+            fileIds = ["23902390239203923"]
+            imagekit.bulkRemoveTags(fileIds, null, function (err, response) {
+                expect(err).to.deep.equal({
+                    message: "Invalid value for tags",
+                    help: "tags should be a non empty array of string like ['tag1', 'tag2']."
+                })
+                done();
+            });
+        });
+
+        it('Copy file invalid path', function (done) {
+            sourceFilePath = "/";
+            imagekit.copyFile(sourceFilePath, null, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages : "Invalid file/folder path for this request", 
+                    help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"
+                })
+                done();
+            });
+        });
+
+        it('Move file invalid path', function (done) {
+            sourceFilePath = "/";
+            imagekit.moveFile(sourceFilePath, null, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages : "Invalid file/folder path for this request", 
+                    help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"
+                })
+                done();
+            });
+        });
+
+        it('Copy folder invalid path', function (done) {
+            sourceFolderPath = "/";
+            imagekit.copyFolder(sourceFolderPath, null, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages : "Invalid file/folder path for this request", 
+                    help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"
+                })
+                done();
+            });
+        });
+
+        it('Move folder invalid path', function (done) {
+            sourceFolderPath = "/";
+            imagekit.moveFolder(sourceFolderPath, null, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages : "Invalid file/folder path for this request", 
+                    help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"
+                })
+                done();
+            });
+        });
+
+        it('Create folder invalid name', function (done) {
+            folderName = "";
+            parentFolderPath = "";
+            imagekit.createFolder(folderName, parentFolderPath, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages : "Invalid folder name for this request", 
+                    help : ""
+                })
+                done();
+            });
+        });
+
+        it('Create folder invalid path', function (done) {
+            folderName = "folder1";
+            parentFolderPath = "";
+            imagekit.createFolder(folderName, parentFolderPath, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages : "Invalid file/folder path for this request", 
+                    help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"
+                })
+                done();
+            });
+        });
+
+        it('Delete folder invalid path', function (done) {
+            imagekit.deleteFolder(null, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages : "Invalid file/folder path for this request", 
+                    help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"
+                })
+                done();
+            });
+        });        
+
         it('Get file metadata using file id', function (done) {
             var fileId = "23902390239203923";
 
@@ -212,6 +334,31 @@ describe("Media library APIs", function () {
                 done();
             });
         });
+
+        it('Get bulk job status', function (done) {
+            var jobId = "23902390239203923";
+
+            const scope = nock('https://api.imagekit.io')
+                .get(`/v1/bulkJobs/${jobId}`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/bulkJobs/${jobId}`)
+                    done();
+                    return [200]
+                })
+
+            imagekit.getBulkJobStatus(jobId);
+        });
+
+        it('Get bulk job status missing jobId', function (done) {
+            imagekit.getBulkJobStatus(null, function (err, response) {
+                expect(err).to.deep.equal({ 
+                    help : "" ,
+                    message : "Missing Job ID parameter for this request"
+                })
+                done();
+            });
+        });
     });
 
     describe("Success callbacks", function () {
@@ -338,6 +485,184 @@ describe("Media library APIs", function () {
                 done();
             }, 50);
         });
+
+        it('Bulk add tags', function(done) {
+            var fileIds = ["fileId1", "fileId2"];
+            var tags = ["tag1", "tag2"];
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/addTags`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(200, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.bulkAddTags(fileIds, tags, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, null, dummyAPISuccessResponse);
+                done();
+            }, 50);
+        });
+
+        it('Bulk remove tags', function(done) {
+            var fileIds = ["fileId1", "fileId2"];
+            var tags = ["tag1", "tag2"];
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/removeTags`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(200, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.bulkRemoveTags(fileIds, tags, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, null, dummyAPISuccessResponse);
+                done();
+            }, 50);
+        });
+
+        it('Copy file', function(done) {
+            var sourceFilePath = "/file_path.jpg";
+            var destinationPath = "/folder1/";
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/copy`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(204, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.copyFile(sourceFilePath, destinationPath, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, null, dummyAPISuccessResponse);
+                done();
+            }, 50);
+        });
+
+        it('Move file', function(done) {
+            var sourceFilePath = "/file_path.jpg";
+            var destinationPath = "/folder1/";
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/move`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(204, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.moveFile(sourceFilePath, destinationPath, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, null, dummyAPISuccessResponse);
+                done();
+            }, 50);
+        });
+
+        it('Copy folder', function(done) {
+            var sourceFolderPath = "/folder2";
+            var destinationPath = "/folder1/";
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/bulkJobs/copyFolder`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(200, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.copyFolder(sourceFolderPath, destinationPath, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, null, dummyAPISuccessResponse);
+                done();
+            }, 50);
+        });
+
+        it('Move folder', function(done) {
+            var sourceFolderPath = "/folder1";
+            var destinationPath = "/folder2/";
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/bulkJobs/moveFolder`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(200, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.moveFolder(sourceFolderPath, destinationPath, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, null, dummyAPISuccessResponse);
+                done();
+            }, 50);
+        });
+
+        it('Get bulk job status', function(done) {
+            var jobId = "23902390239203923";
+
+            const scope = nock('https://api.imagekit.io')
+                .get(`/v1/bulkJobs/${jobId}`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(200, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.getBulkJobStatus(jobId, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, null, dummyAPISuccessResponse);
+                done();
+            }, 50);
+        });
+
+        it('Create folder', function(done) {
+            var folderName = "folder1";
+            var parentFolderPath = "/";
+
+            const scope = nock('https://api.imagekit.io')
+                .post('/v1/folder/')
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(201, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.createFolder(folderName, parentFolderPath, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, null, dummyAPISuccessResponse);
+                done();
+            }, 50);
+        });
+
+        it('Delete folder', function(done) {
+            var folderPath = "/folder1/";
+
+            const scope = nock('https://api.imagekit.io')
+                .delete(`/v1/folder`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(204, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.deleteFolder(folderPath, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, null, dummyAPISuccessResponse);
+                done();
+            }, 50);
+        });
     });
 
     describe("Error callbacks", function () {
@@ -456,6 +781,184 @@ describe("Media library APIs", function () {
             var callback = sinon.spy();
 
             imagekit.bulkDeleteFiles(fileIds, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
+                done();
+            }, 50);
+        });
+
+        it('Bulk add tags', function(done) {
+            var fileIds = ["fileId1", "fileId2"];
+            var tags = ["tag1", "tag2"];
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/addTags`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(404, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.bulkAddTags(fileIds, tags, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
+                done();
+            }, 50);
+        });
+
+        it('Bulk remove tags', function(done) {
+            var fileIds = ["fileId1", "fileId2"];
+            var tags = ["tag1", "tag2"];
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/removeTags`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(404, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.bulkRemoveTags(fileIds, tags, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
+                done();
+            }, 50);
+        });
+
+        it('Copy file', function(done) {
+            var sourceFilePath = "/file_path.jpg";
+            var destinationPath = "/folder1/";
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/copy`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(404, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.copyFile(sourceFilePath, destinationPath, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
+                done();
+            }, 50);
+        });
+
+        it('Move file', function(done) {
+            var sourceFilePath = "/file_path.jpg";
+            var destinationPath = "/folder1/";
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/move`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(404, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.moveFile(sourceFilePath, destinationPath, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
+                done();
+            }, 50);
+        });
+
+        it('Copy folder', function(done) {
+            var sourceFolderPath = "/folder2";
+            var destinationPath = "/folder1/";
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/bulkJobs/copyFolder`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(404, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.copyFolder(sourceFolderPath, destinationPath, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
+                done();
+            }, 50);
+        });
+
+        it('Move folder', function(done) {
+            var sourceFolderPath = "/folder1";
+            var destinationPath = "/folder2/";
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/bulkJobs/moveFolder`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(404, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.moveFolder(sourceFolderPath, destinationPath, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
+                done();
+            }, 50);
+        });
+
+        it('Get bulk job status', function(done) {
+            var jobId = "23902390239203923";
+
+            const scope = nock('https://api.imagekit.io')
+                .get(`/v1/bulkJobs/${jobId}`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(500, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.getBulkJobStatus(jobId, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
+                done();
+            }, 50);
+        });
+
+        it('Create folder', function(done) {
+            var folderName = "folder1";
+            var parentFolderPath = "/";
+
+            const scope = nock('https://api.imagekit.io')
+                .post('/v1/folder/')
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(500, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.createFolder(folderName, parentFolderPath, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
+                done();
+            }, 50);
+        });
+
+        it('Delete folder', function(done) {
+            var folderPath = "/folder1/";
+
+            const scope = nock('https://api.imagekit.io')
+                .delete(`/v1/folder`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(404, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.deleteFolder(folderPath, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
