@@ -176,6 +176,18 @@ See the complete list of transformations supported in ImageKit [here](https://do
 | height | h |
 | width | w |
 | aspectRatio | ar |
+| padResizeCrop | cm-pad_resize |
+| forcedCrop | c-force |
+| maxSizeCrop | c-at_max |
+| minSizeCrop | c-at_least |
+| maintainRatioCrop | c-maintain_ratio |
+| extractCrop | cm-extract |
+| padExtractCrop | cm-pad_extract |
+| autoSmartCrop | fo-auto |
+| faceCrop | fo-face |
+| focusCustom | fo-custom |
+| xc | xc |
+| yc | yc |
 | quality | q |
 | crop | c |
 | cropMode | cm |
@@ -217,6 +229,21 @@ See the complete list of transformations supported in ImageKit [here](https://do
 | overlayTextPadding | otp |
 | overlayTextInnerAlignment | otia |
 | overlayRadius | or |
+| overlayMinSizeCrop | oic-at_least |
+| overlayMaxSizeCrop | oic-at_max |
+| overlayForcedCrop | oic-force |
+| overlayMaintainRatioCrop | oic-maintain_ratio |
+| overlayExtractCrop | oicm-extract |
+| overlayPadExtractCrop | oicm-pad_extract |
+| overlayPadResizeCrop | oicm-pad_resize |
+| overlayFocusCrop | oifo |
+| overlayAutoSmartCrop | oifo-auto |
+| overlayFocusCustom | oifo-custom |
+| overlayFaceCrop | oifo-face |
+| oixc | oixc |
+| oiyc | oiyc |
+| oix | oix |
+| oiy | oiy |
 | progressive | pr |
 | lossless | lo |
 | trim | t |
@@ -388,8 +415,7 @@ imagekit.deleteFile("file_id", function(error, result) {
 
 // Using Promises 
 
-imagekit.deleteFile("file_id")
-}).then(response => {
+imagekit.deleteFile("file_id").then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
@@ -411,8 +437,7 @@ imagekit.bulkDeleteFiles(["fileIds"], function(error, result) {
 
 // Using Promises 
 
-imagekit.bulkDeleteFiles(["fileIds"])
-}).then(response => {
+imagekit.bulkDeleteFiles(["fileIds"]).then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
@@ -434,8 +459,7 @@ imagekit.purgeCache("full_url", function(error, result) {
 
 // Using Promises 
 
-imagekit.purgeCache("full_url")
-}).then(response => {
+imagekit.purgeCache("full_url").then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
@@ -457,8 +481,196 @@ imagekit.getPurgeCacheStatus("cache_request_id", function(error, result) {
 
 // Using Promises 
 
-imagekit.getPurgeCacheStatus("cache_request_id")
-}).then(response => {
+imagekit.getPurgeCacheStatus("cache_request_id").then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**9. Bulk Add tags**
+
+Add tags to multiple files in a single request as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/add-tags-bulk). The method accepts an array of fileIDs of the files and an array of tags that have to be added to those files.
+
+```js
+// Using Callback Function
+
+imagekit.bulkAddTags(["fileIds"], ["tags"], function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.bulkAddTags(["fileIds"], ["tags"]).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**10. Bulk Remove tags**
+
+Remove tags from multiple files in a single request as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/remove-tags-bulk). The method accepts an array of fileIDs of the files and an array of tags that have to be removed from those files.
+
+```js
+// Using Callback Function
+
+imagekit.bulkRemoveTags(["fileIds"], ["tags"], function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.bulkRemoveTags(["fileIds"], ["tags"]).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**11. Copy File**
+
+This will copy a file from one folder to another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-file). This method accepts source file's path and destination folder path.
+
+```js
+// Using Callback Function
+
+imagekit.copyFile("sourceFilePath", "destinationPath", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.copyFile("sourceFilePath", "destinationPath").then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**12. Move File**
+
+This will move a file from one folder to another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/move-file). This method accepts source file's path and destination folder path.
+
+```js
+// Using Callback Function
+
+imagekit.moveFile("sourceFilePath", "destinationPath", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.moveFile("sourceFilePath", "destinationPath").then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**13. Copy Folder**
+
+This will copy one folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-folder). This method accepts source folder's path and destination folder path.
+
+```js
+// Using Callback Function
+
+imagekit.copyFolder("sourceFolderPath", "destinationPath", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.copyFolder("sourceFolderPath", "destinationPath").then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**14. Move Folder**
+
+This will move one folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/move-folder). This method accepts source folder's path and destination folder path.
+
+```js
+// Using Callback Function
+
+imagekit.moveFolder("sourceFolderPath", "destinationPath", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.moveFolder("sourceFolderPath", "destinationPath").then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**15. Get bulk job status**
+
+This allows us to get the status of a bulk operation e.g. copy or move folder as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-move-folder-status). This method accepts jobID that is returned by copy and move folder operations.
+
+```js
+// Using Callback Function
+
+imagekit.getBulkJobStatus("jobId", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.getBulkJobStatus("jobId").then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**16. Create Folder**
+
+This will create a new folder as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/create-folder). This method accepts folder name and parent folder path.
+
+```js
+// Using Callback Function
+
+imagekit.createFolder("folderName", "parentFolderPath", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.createFolder("folderName", "parentFolderPath").then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**17. Delete Folder**
+
+This will delete the specified folder and all nested files & folders as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-folder). This method accepts full path of folder that is to be deleted.
+
+```js
+// Using Callback Function
+
+imagekit.deleteFolder("folderPath", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.deleteFolder("folderPath").then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
