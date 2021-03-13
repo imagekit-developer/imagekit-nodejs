@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     "height": "h",
     "width": "w",
     "aspectRatio": "ar",
