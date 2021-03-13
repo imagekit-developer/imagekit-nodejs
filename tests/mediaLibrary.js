@@ -86,23 +86,45 @@ describe("Media library APIs", function () {
             });
         });
 
-        it('Copy file invalid path', function (done) {
-            sourceFilePath = "/";
+        it('Copy file invalid folder path', function (done) {
+            sourceFilePath = "/file.jpg";
             imagekit.copyFile(sourceFilePath, null, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid file/folder path for this request", 
-                    help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"
+                    messages : "Invalid folder path for this request", 
+                    help : "Path should be a string like '/path/to/folder'"                
                 })
                 done();
             });
         });
 
-        it('Move file invalid path', function (done) {
-            sourceFilePath = "/";
+        it('Copy file invalid file path', function (done) {
+            destinationPath = "/";
+            imagekit.copyFile(null, destinationPath, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages : "Invalid file path for this request", 
+                    help : "Path should be a string like /path/to/file.jpg'"               
+                })
+                done();
+            });
+        });
+
+        it('Move file invalid folder path', function (done) {
+            sourceFilePath = "/file.jpg";
             imagekit.moveFile(sourceFilePath, null, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid file/folder path for this request", 
-                    help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"
+                    messages : "Invalid folder path for this request", 
+                    help : "Path should be a string like '/path/to/folder'"
+                })
+                done();
+            });
+        });
+
+        it('Move file invalid file path', function (done) {
+            destinationPath = "/";
+            imagekit.moveFile(null, destinationPath, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages : "Invalid file path for this request", 
+                    help : "Path should be a string like /path/to/file.jpg'"
                 })
                 done();
             });
@@ -112,8 +134,8 @@ describe("Media library APIs", function () {
             sourceFolderPath = "/";
             imagekit.copyFolder(sourceFolderPath, null, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid file/folder path for this request", 
-                    help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"
+                    messages : "Invalid folder path for this request", 
+                    help : "Path should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -123,8 +145,8 @@ describe("Media library APIs", function () {
             sourceFolderPath = "/";
             imagekit.moveFolder(sourceFolderPath, null, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid file/folder path for this request", 
-                    help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"
+                    messages : "Invalid folder path for this request", 
+                    help : "Path should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -147,8 +169,8 @@ describe("Media library APIs", function () {
             parentFolderPath = "";
             imagekit.createFolder(folderName, parentFolderPath, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid file/folder path for this request", 
-                    help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"
+                    messages : "Invalid folder path for this request", 
+                    help : "Path should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -157,8 +179,8 @@ describe("Media library APIs", function () {
         it('Delete folder invalid path', function (done) {
             imagekit.deleteFolder(null, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid file/folder path for this request", 
-                    help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"
+                    messages : "Invalid folder path for this request", 
+                    help : "Path should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -630,7 +652,7 @@ describe("Media library APIs", function () {
             var parentFolderPath = "/";
 
             const scope = nock('https://api.imagekit.io')
-                .post('/v1/folder/')
+                .post('/v1/folder')
                 .basicAuth({ user: initializationParams.privateKey, pass: '' })
                 .reply(201, dummyAPISuccessResponse)
 
@@ -933,7 +955,7 @@ describe("Media library APIs", function () {
             var parentFolderPath = "/";
 
             const scope = nock('https://api.imagekit.io')
-                .post('/v1/folder/')
+                .post('/v1/folder')
                 .basicAuth({ user: initializationParams.privateKey, pass: '' })
                 .reply(500, dummyAPIErrorResponse)
 

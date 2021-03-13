@@ -15,13 +15,14 @@ module.exports = {
     "MISSING_UPLOAD_FILE_PARAMETER" : { message : "Missing file parameter for upload", help : "" },
     "MISSING_UPLOAD_FILENAME_PARAMETER" : { message : "Missing fileName parameter for upload", help : "" },
     "JOB_ID_MISSING" : { message : "Missing Job ID parameter for this request", help : "" },
-    "INVALID_DIRECTORY_PATH" : { messages : "Invalid file/folder path for this request", help : "Path should be a string like '/path/of/folder', '/path/of/file.jpg'"},
+    "INVALID_FOLDER_PATH" : { messages : "Invalid folder path for this request", help : "Path should be a string like '/path/to/folder'"},
+    "INVALID_FILE_PATH" : { messages : "Invalid file path for this request", help : "Path should be a string like /path/to/file.jpg'"},
     "INVALID_FOLDER_NAME": { messages : "Invalid folder name for this request" , help : ""},
     // pHash errors
     "INVALID_PHASH_VALUE": { message: "Invalid pHash value", help: "Both pHash strings must be valid hexadecimal numbers" },
     "MISSING_PHASH_VALUE": { message: "Missing pHash value", help: "Please pass two pHash values" },
     "UNEQUAL_STRING_LENGTH": { message: "Unequal pHash string length", help: "For distance calucation, the two pHash strings must have equal length" },
     //bulk delete errors
-    "INVALID_FILEIDS_VALUE": {message: "Invalid value for fileIds", help: "fileIds should be an string array of fileId of the files to delete. The array should have atleast one fileId.",},
+    "INVALID_FILEIDS_VALUE": {message: "Invalid value for fileIds", help: "fileIds should be an string array of fileId of the files to delete. The array should have atleast one fileId."},
     "BULK_ADD_TAGS_INVALID": {message: "Invalid value for tags", help: "tags should be a non empty array of string like ['tag1', 'tag2']."}
 };
