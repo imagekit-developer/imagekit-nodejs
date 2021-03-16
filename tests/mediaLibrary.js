@@ -130,7 +130,18 @@ describe("Media library APIs", function () {
             });
         });
 
-        it('Copy folder invalid path', function (done) {
+        it('Copy folder invalid sourceFolderPath', function (done) {
+            destinationPath = "/";
+            imagekit.copyFolder(null, destinationPath, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages : "Invalid sourceFolderPath value", 
+                    help : "It should be a string like '/path/to/folder'"
+                })
+                done();
+            });
+        });
+
+        it('Copy folder invalid destinationPath', function (done) {
             sourceFolderPath = "/";
             imagekit.copyFolder(sourceFolderPath, null, function (err, response) {
                 expect(err).to.deep.equal({
@@ -141,11 +152,22 @@ describe("Media library APIs", function () {
             });
         });
 
-        it('Move folder invalid path', function (done) {
+        it('Move folder invalid destinationPath', function (done) {
             sourceFolderPath = "/";
             imagekit.moveFolder(sourceFolderPath, null, function (err, response) {
                 expect(err).to.deep.equal({
                     messages : "Invalid destinationPath value", 
+                    help : "It should be a string like '/path/to/folder'"
+                })
+                done();
+            });
+        });
+
+        it('Move folder invalid sourceFolderPath', function (done) {
+            destinationPath = "/";
+            imagekit.moveFolder(null, destinationPath, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages : "Invalid sourceFolderPath value", 
                     help : "It should be a string like '/path/to/folder'"
                 })
                 done();
