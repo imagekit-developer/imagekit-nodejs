@@ -105,7 +105,7 @@ const sampleApp = async () => {
         console.log("File copy response: ", copyFileResponse, "\n");
 
         // Move file
-        const moveFileResponse = await moveFile(imagekit, `/folder1${fileDetails_1.filePath}`, "/folder2/");
+        const moveFileResponse = await moveFile(imagekit, `/folder1/${fileDetails_1.name}`, "/folder2/");
         console.log("File move response: ", moveFileResponse, "\n");
 
         // Copy folder
