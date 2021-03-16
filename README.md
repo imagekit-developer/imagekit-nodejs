@@ -329,7 +329,6 @@ Accepts the file ID and fetches the metadata as per the [API documentation here]
 
 ```js
 // Using Callback Function
-
 imagekit.getFileMetadata("file_id", function(error, result) {
     if(error) console.log(error);
     else console.log(result);
@@ -337,8 +336,26 @@ imagekit.getFileMetadata("file_id", function(error, result) {
 
 
 // Using Promises 
-
 imagekit.getFileMetadata("file_id")
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+You can also pass the remote URL of the image to get metadata.
+
+```js
+// Using Callback Function
+imagekit.getFileMetadata("https://ik.imagekit.io/your_imagekit_id/sample.jpg", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+
+// Using Promises 
+imagekit.getFileMetadata("https://ik.imagekit.io/your_imagekit_id/sample.jpg")
 }).then(response => {
     console.log(response);
 }).catch(error => {
@@ -506,7 +523,7 @@ imagekit.bulkRemoveTags(["fileIds"], ["tags"]).then(response => {
 
 **11. Copy File**
 
-This will copy a file from one folder to another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-file). This method accepts source file's path and destination folder path.
+This will copy a file from one location to another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-file). This method accepts the source file's path and destination folder path.
 
 ```js
 // Using Callback Function
@@ -527,7 +544,7 @@ imagekit.copyFile("sourceFilePath", "destinationPath").then(response => {
 
 **12. Move File**
 
-This will move a file from one folder to another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/move-file). This method accepts source file's path and destination folder path.
+This will move a file from one location to another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/move-file). This method accepts the source file's path and destination folder path.
 
 ```js
 // Using Callback Function
@@ -548,7 +565,7 @@ imagekit.moveFile("sourceFilePath", "destinationPath").then(response => {
 
 **13. Copy Folder**
 
-This will copy one folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-folder). This method accepts source folder's path and destination folder path.
+This will copy one folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-folder). This method accepts the source folder's path and destination folder path.
 
 ```js
 // Using Callback Function
@@ -569,7 +586,7 @@ imagekit.copyFolder("sourceFolderPath", "destinationPath").then(response => {
 
 **14. Move Folder**
 
-This will move one folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/move-folder). This method accepts source folder's path and destination folder path.
+This will move one folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/move-folder). This method accepts the source folder's path and destination folder path.
 
 ```js
 // Using Callback Function
@@ -590,7 +607,7 @@ imagekit.moveFolder("sourceFolderPath", "destinationPath").then(response => {
 
 **15. Get bulk job status**
 
-This allows us to get the status of a bulk operation e.g. copy or move folder as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-move-folder-status). This method accepts jobID that is returned by copy and move folder operations.
+This allows us to get a bulk operation status e.g. copy or move folder as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-move-folder-status). This method accepts `jobId` that is returned by copy and move folder operations.
 
 ```js
 // Using Callback Function
@@ -632,7 +649,7 @@ imagekit.createFolder("folderName", "parentFolderPath").then(response => {
 
 **17. Delete Folder**
 
-This will delete the specified folder and all nested files & folders as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-folder). This method accepts full path of folder that is to be deleted.
+This will delete the specified folder and all nested files & folders as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-folder). This method accepts the full path of the folder that is to be deleted.
 
 ```js
 // Using Callback Function

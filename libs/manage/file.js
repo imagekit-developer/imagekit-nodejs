@@ -28,16 +28,26 @@ module.exports.deleteFile = function(fileId, defaultOptions, callback) {
 /*
     Get Metadata of a file
 */
-module.exports.getMetadata = function(fileId, defaultOptions, callback) {
-    if(!fileId) {
-        respond(true, errorMessages.FILE_ID_MISSING, callback);
+module.exports.getMetadata = function(fileIdOrURL, defaultOptions, callback) {
+    if(!fileIdOrURL || fileIdOrURL.trim () == "") {
+        respond(true, errorMessages.FILE_ID_OR_URL_MISSING, callback);
         return;
     }
+
     var requestOptions = {
-        url : "https://api.imagekit.io/v1/files/" + fileId + "/metadata",
+        url : "https://api.imagekit.io/v1/files/" + fileIdOrURL + "/metadata",
         method : "GET",
         json : true
     };
+
+    // In case of URL change the endopint
+    if(fileIdOrURL.indexOf("http") === 0) {
+        requestOptions = {
+            url : `https://api.imagekit.io/v1/metadata?url=${fileIdOrURL}`,
+            method : "GET",
+            json : true
+        };
+    }
 
     request(requestOptions, defaultOptions, callback);
 };

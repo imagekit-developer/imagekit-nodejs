@@ -7,6 +7,7 @@ module.exports = {
     "CACHE_PURGE_URL_MISSING" : { message : "Missing URL parameter for this request", help : "" },
     "CACHE_PURGE_STATUS_ID_MISSING" : { message : "Missing Request ID parameter for this request", help : "" },
     "FILE_ID_MISSING" : { message : "Missing File ID parameter for this request", help : "" },
+    "FILE_ID_OR_URL_MISSING" : { message : "Pass either File ID or remote URL of the image as first parameter", help : "" },
     "UPDATE_DATA_MISSING" : { message : "Missing file update data for this request", help : "" },
     "UPDATE_DATA_TAGS_INVALID" : { message : "Invalid tags parameter for this request", help : "tags should be passed as null or an array like ['tag1', 'tag2']" },
     "UPDATE_DATA_COORDS_INVALID" : { message : "Invalid customCoordinates parameter for this request", help : "customCoordinates should be passed as null or a string like 'x,y,width,height'" },

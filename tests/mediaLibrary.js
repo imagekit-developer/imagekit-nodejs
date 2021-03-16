@@ -205,7 +205,7 @@ describe("Media library APIs", function () {
             imagekit.getFileMetadata(null, function (err, response) {
                 expect(err).to.deep.equal({
                     help: "",
-                    message: "Missing File ID parameter for this request"
+                    message: "Pass either File ID or remote URL of the image as first parameter"
                 })
                 done();
             });
@@ -414,6 +414,28 @@ describe("Media library APIs", function () {
             var callback = sinon.spy();
 
             imagekit.getFileMetadata(fileId, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, null, dummyAPISuccessResponse);
+                done();
+            }, 50);
+        });
+
+        it('Get file metadata using remote URL', function (done) {
+            var url = "https://ik.imagekit.io/demo/image.jpg";
+
+            const scope = nock('https://api.imagekit.io')
+                .get(`/v1/metadata`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .query({
+                    url: url
+                })
+                .reply(200, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.getFileMetadata(url, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
@@ -717,6 +739,28 @@ describe("Media library APIs", function () {
             var callback = sinon.spy();
 
             imagekit.getFileMetadata(fileId, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
+                done();
+            }, 50);
+        });
+
+        it('Get file metadata using remote URL', function (done) {
+            var url = "https://ik.imagekit.io/demo/image.jpg";
+
+            const scope = nock('https://api.imagekit.io')
+                .get(`/v1/metadata`)
+                .query({
+                    url
+                })
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(500, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.getFileMetadata(url, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
