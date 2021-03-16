@@ -213,12 +213,12 @@ module.exports.bulkRemoveTags = function(fileIdArray, tags, defaultOptions, call
 module.exports.copyFile = function(sourceFilePath, destinationPath, defaultOptions, callback) {
     
     if(typeof(sourceFilePath) !== 'string' || sourceFilePath.length === 0) {
-        respond(true, errorMessages.INVALID_FILE_PATH, callback);
+        respond(true, errorMessages.INVALID_SOURCE_FILE_PATH, callback);
         return;
     }
 
     if(typeof(destinationPath) !== 'string' || destinationPath.length === 0) {
-        respond(true, errorMessages.INVALID_FOLDER_PATH, callback);
+        respond(true, errorMessages.INVALID_DESTINATION_FOLDER_PATH, callback);
         return;
     }
 
@@ -242,12 +242,12 @@ module.exports.copyFile = function(sourceFilePath, destinationPath, defaultOptio
 module.exports.moveFile = function(sourceFilePath, destinationPath, defaultOptions, callback) {
     
     if(typeof(sourceFilePath) !== 'string' || sourceFilePath.length === 0) {
-        respond(true, errorMessages.INVALID_FILE_PATH, callback);
+        respond(true, errorMessages.INVALID_SOURCE_FILE_PATH, callback);
         return;
     }
 
     if(typeof(destinationPath) !== 'string' || destinationPath.length === 0) {
-        respond(true, errorMessages.INVALID_FOLDER_PATH, callback);
+        respond(true, errorMessages.INVALID_DESTINATION_FOLDER_PATH, callback);
         return;
     }
 
@@ -270,9 +270,13 @@ module.exports.moveFile = function(sourceFilePath, destinationPath, defaultOptio
 */
 module.exports.copyFolder = function(sourceFolderPath, destinationPath, defaultOptions, callback) {
     
-    if(typeof(destinationPath) !== 'string' || typeof(sourceFolderPath) !== 'string'
-        || destinationPath.length === 0 || sourceFolderPath.length === 0) {
-        respond(true, errorMessages.INVALID_FOLDER_PATH, callback);
+    if(typeof(sourceFolderPath) !== 'string' || sourceFolderPath.length === 0) {
+        respond(true, errorMessages.INVALID_SOURCE_FOLDER_PATH, callback);
+        return;
+    }
+
+    if(typeof(destinationPath) !== 'string' || destinationPath.length === 0) {
+        respond(true, errorMessages.INVALID_DESTINATION_FOLDER_PATH, callback);
         return;
     }
 
@@ -295,9 +299,13 @@ module.exports.copyFolder = function(sourceFolderPath, destinationPath, defaultO
 */
 module.exports.moveFolder = function(sourceFolderPath, destinationPath, defaultOptions, callback) {
     
-    if(typeof(destinationPath) !== 'string' || typeof(sourceFolderPath) !== 'string'
-        || destinationPath.length === 0 || sourceFolderPath.length === 0) {
-        respond(true, errorMessages.INVALID_FOLDER_PATH, callback);
+    if(typeof(sourceFolderPath) !== 'string' || sourceFolderPath.length === 0) {
+        respond(true, errorMessages.INVALID_SOURCE_FOLDER_PATH, callback);
+        return;
+    }
+
+    if(typeof(destinationPath) !== 'string' || destinationPath.length === 0) {
+        respond(true, errorMessages.INVALID_DESTINATION_FOLDER_PATH, callback);
         return;
     }
 
@@ -326,7 +334,7 @@ module.exports.createFolder = function(folderName, parentFolderPath, defaultOpti
     }
 
     if(typeof(parentFolderPath) !== 'string' || parentFolderPath.length === 0) {
-        respond(true, errorMessages.INVALID_FOLDER_PATH, callback);
+        respond(true, errorMessages.INVALID_PARENT_FOLDER_PATH, callback);
         return;
     }
 

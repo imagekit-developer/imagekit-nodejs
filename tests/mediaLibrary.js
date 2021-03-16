@@ -58,7 +58,7 @@ describe("Media library APIs", function () {
             imagekit.bulkAddTags(null, tags, function (err, response) {
                 expect(err).to.deep.equal({
                     message: "Invalid value for fileIds",
-                    help: "fileIds should be an string array of fileId of the files to delete. The array should have atleast one fileId."
+                    help: "fileIds should be an array of fileId of the files. The array should have atleast one fileId."
                 })
                 done();
             });
@@ -69,7 +69,7 @@ describe("Media library APIs", function () {
             imagekit.bulkRemoveTags(null, tags, function (err, response) {
                 expect(err).to.deep.equal({
                     message: "Invalid value for fileIds",
-                    help: "fileIds should be an string array of fileId of the files to delete. The array should have atleast one fileId."
+                    help: "fileIds should be an array of fileId of the files. The array should have atleast one fileId."
                 })
                 done();
             });
@@ -90,8 +90,8 @@ describe("Media library APIs", function () {
             sourceFilePath = "/file.jpg";
             imagekit.copyFile(sourceFilePath, null, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid folder path for this request", 
-                    help : "Path should be a string like '/path/to/folder'"                
+                    messages : "Invalid destinationPath value", 
+                    help : "It should be a string like '/path/to/folder'"                
                 })
                 done();
             });
@@ -101,8 +101,8 @@ describe("Media library APIs", function () {
             destinationPath = "/";
             imagekit.copyFile(null, destinationPath, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid file path for this request", 
-                    help : "Path should be a string like /path/to/file.jpg'"               
+                    messages : "Invalid sourceFilePath value", 
+                    help : "It should be a string like /path/to/file.jpg'"               
                 })
                 done();
             });
@@ -112,8 +112,8 @@ describe("Media library APIs", function () {
             sourceFilePath = "/file.jpg";
             imagekit.moveFile(sourceFilePath, null, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid folder path for this request", 
-                    help : "Path should be a string like '/path/to/folder'"
+                    messages : "Invalid destinationPath value", 
+                    help : "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -123,8 +123,8 @@ describe("Media library APIs", function () {
             destinationPath = "/";
             imagekit.moveFile(null, destinationPath, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid file path for this request", 
-                    help : "Path should be a string like /path/to/file.jpg'"
+                    messages : "Invalid sourceFilePath value", 
+                    help : "It should be a string like /path/to/file.jpg'"
                 })
                 done();
             });
@@ -134,8 +134,8 @@ describe("Media library APIs", function () {
             sourceFolderPath = "/";
             imagekit.copyFolder(sourceFolderPath, null, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid folder path for this request", 
-                    help : "Path should be a string like '/path/to/folder'"
+                    messages : "Invalid destinationPath value", 
+                    help : "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -145,8 +145,8 @@ describe("Media library APIs", function () {
             sourceFolderPath = "/";
             imagekit.moveFolder(sourceFolderPath, null, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid folder path for this request", 
-                    help : "Path should be a string like '/path/to/folder'"
+                    messages : "Invalid destinationPath value", 
+                    help : "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -157,7 +157,7 @@ describe("Media library APIs", function () {
             parentFolderPath = "";
             imagekit.createFolder(folderName, parentFolderPath, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid folder name for this request", 
+                    messages : "Invalid folderName value", 
                     help : ""
                 })
                 done();
@@ -169,8 +169,8 @@ describe("Media library APIs", function () {
             parentFolderPath = "";
             imagekit.createFolder(folderName, parentFolderPath, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid folder path for this request", 
-                    help : "Path should be a string like '/path/to/folder'"
+                    messages : "Invalid parentFolderPath value", 
+                    help : "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -179,8 +179,8 @@ describe("Media library APIs", function () {
         it('Delete folder invalid path', function (done) {
             imagekit.deleteFolder(null, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid folder path for this request", 
-                    help : "Path should be a string like '/path/to/folder'"
+                    messages : "Invalid folderPath value", 
+                    help : "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -351,7 +351,7 @@ describe("Media library APIs", function () {
             imagekit.bulkDeleteFiles(null, function (err, response) {
                 expect(err).to.deep.equal({
                     message: "Invalid value for fileIds",
-                    help: "fileIds should be an string array of fileId of the files to delete. The array should have atleast one fileId."
+                    help: "fileIds should be an array of fileId of the files. The array should have atleast one fileId."
                 })
                 done();
             });
@@ -376,7 +376,7 @@ describe("Media library APIs", function () {
             imagekit.getBulkJobStatus(null, function (err, response) {
                 expect(err).to.deep.equal({ 
                     help : "" ,
-                    message : "Missing Job ID parameter for this request"
+                    message : "Missing jobId parameter"
                 })
                 done();
             });
