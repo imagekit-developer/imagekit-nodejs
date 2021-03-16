@@ -84,13 +84,51 @@ const sampleApp = async () => {
         console.log("Purge Response: ", JSON.stringify(purgeStatus, undefined, 2), "\n");
 
 
+        // Bulk add tags
+        let fileIds = filesList.map(file => file.fileId);
+        fileIds.shift();
+        tags = ['red', 'blue'];
+        const bulkAddTagsResponse = await bulkAddTags(imagekit, fileIds, tags);
+        console.log("Bulk add tags response: ", bulkAddTagsResponse, "\n");
+
+        // Bulk remove tags
+        const bulkRemoveTagsResponse = await bulkRemoveTags(imagekit, fileIds, tags);
+        console.log("Bulk remove tags response: ", bulkRemoveTagsResponse, "\n");
+
+        // Create folder
+        const createFolderResponse_1 = await createFolder(imagekit, "folder1", "/");
+        const createFolderResponse_2 = await createFolder(imagekit, "folder2", "/");
+        console.log("Folder creation response: ", createFolderResponse_2, "\n");
+
+        // Copy file
+        const copyFileResponse = await copyFile(imagekit, fileDetails_1.filePath, "/folder1/");
+        console.log("File copy response: ", copyFileResponse, "\n");
+
+        // Move file
+        const moveFileResponse = await moveFile(imagekit, `/folder1/${fileDetails_1.name}`, "/folder2/");
+        console.log("File move response: ", moveFileResponse, "\n");
+
+        // Copy folder
+        const copyFolderResponse = await copyFolder(imagekit, "/folder2", "/folder1/");
+        console.log("Copy folder response: ", JSON.stringify(copyFolderResponse, undefined, 2), "\n");
+
+        // Move folder
+        const moveFolderResponse = await moveFolder(imagekit, "/folder1", "/folder2/");
+        console.log("Move folder response: ", JSON.stringify(moveFolderResponse, undefined, 2),"\n");
+        
+        // Get bulk job status
+        const getBulkJobStatusResponse = await getBulkJobStatus(imagekit, moveFolderResponse.jobId);
+        console.log("Bulk job status response: ", JSON.stringify(getBulkJobStatusResponse), "\n");
+
+        // Delete folder
+        const deleteFolderResponse = await deleteFolder(imagekit, "/folder2/");
+        console.log("Delete folder response: ", deleteFolderResponse, "\n");
+
         // Deleting Files
         const deleteResponse = await deleteFile(imagekit, fileDetails_1.fileId);
         console.log("Deletion response: ", deleteResponse, "\n");
         
         // Bulk Delete Files
-        let fileIds = filesList.map(file => file.fileId);
-        fileIds.shift();
         const bulkDeleteResponse = await bulkDeleteFiles(imagekit, fileIds);
         console.log("Bulk deletion response: ", bulkDeleteResponse, "\n");
 
@@ -176,5 +214,49 @@ const bulkDeleteFiles = async (imagekitInstance, fileIds) => {
     return "success";
 }
 
+const bulkAddTags = async (imagekitInstance, fileIds, tags) => {
+    const response = await imagekitInstance.bulkAddTags(fileIds, tags);
+    return "success";
+}
+
+const bulkRemoveTags = async (imagekitInstance, fileIds, tags) => {
+    const response = await imagekitInstance.bulkRemoveTags(fileIds, tags);
+    return "success";
+}
+
+const copyFile = async (imagekitInstance, sourceFilePath, destinationPath) => {
+    const response = await imagekitInstance.copyFile(sourceFilePath, destinationPath);
+    return "success";
+}
+
+const moveFile = async (imagekitInstance, sourceFilePath, destinationPath) => {
+    const response = await imagekitInstance.moveFile(sourceFilePath, destinationPath);
+    return "success";
+}
+
+const copyFolder = async (imagekitInstance, sourceFolderPath, destinationPath) => {
+    const response = await imagekitInstance.copyFolder(sourceFolderPath, destinationPath);
+    return response;
+}
+
+const moveFolder = async (imagekitInstance, sourceFolderPath, destinationPath) => {
+    const response = await imagekitInstance.moveFolder(sourceFolderPath, destinationPath);
+    return response;
+}
+
+const createFolder = async (imagekitInstance, folderName, parentFolderPath) => {
+    const response = await imagekitInstance.createFolder(folderName, parentFolderPath);
+    return "success";
+}
+
+const deleteFolder = async (imagekitInstance, folderPath) => {
+    const response = await imagekitInstance.deleteFolder(folderPath);
+    return "success";
+}
+
+const getBulkJobStatus = async (imagekitInstance, jobId) => {
+    const response = await imagekitInstance.getBulkJobStatus(jobId);
+    return response;
+}
 
 sampleApp();

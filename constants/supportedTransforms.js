@@ -23,6 +23,7 @@ module.exports = {
     "overlayImageDPR": "oidpr",
     "overlayImageQuality": "oiq",
     "overlayImageCropping": "oic",
+    "overlayImageFocus": "oifo",
     "overlayImageTrim": "oit",
     "overlayX": "ox",
     "overlayY": "oy",

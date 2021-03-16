@@ -7,6 +7,7 @@ module.exports = {
     "CACHE_PURGE_URL_MISSING" : { message : "Missing URL parameter for this request", help : "" },
     "CACHE_PURGE_STATUS_ID_MISSING" : { message : "Missing Request ID parameter for this request", help : "" },
     "FILE_ID_MISSING" : { message : "Missing File ID parameter for this request", help : "" },
+    "FILE_ID_OR_URL_MISSING" : { message : "Pass either File ID or remote URL of the image as first parameter", help : "" },
     "UPDATE_DATA_MISSING" : { message : "Missing file update data for this request", help : "" },
     "UPDATE_DATA_TAGS_INVALID" : { message : "Invalid tags parameter for this request", help : "tags should be passed as null or an array like ['tag1', 'tag2']" },
     "UPDATE_DATA_COORDS_INVALID" : { message : "Invalid customCoordinates parameter for this request", help : "customCoordinates should be passed as null or a string like 'x,y,width,height'" },
@@ -14,10 +15,18 @@ module.exports = {
     "MISSING_UPLOAD_DATA" : { message : "Missing data for upload", help : "" },
     "MISSING_UPLOAD_FILE_PARAMETER" : { message : "Missing file parameter for upload", help : "" },
     "MISSING_UPLOAD_FILENAME_PARAMETER" : { message : "Missing fileName parameter for upload", help : "" },
+    "JOB_ID_MISSING" : { message : "Missing jobId parameter", help : "" },
+    "INVALID_DESTINATION_FOLDER_PATH" : { messages : "Invalid destinationPath value", help : "It should be a string like '/path/to/folder'"},
+    "INVALID_SOURCE_FILE_PATH" : { messages : "Invalid sourceFilePath value", help : "It should be a string like /path/to/file.jpg'"},
+    "INVALID_SOURCE_FOLDER_PATH" : { messages : "Invalid sourceFolderPath value", help : "It should be a string like '/path/to/folder'"},
+    "INVALID_FOLDER_NAME": { messages : "Invalid folderName value" , help : ""},
+    "INVALID_PARENT_FOLDER_PATH": { messages : "Invalid parentFolderPath value" , help : "It should be a string like '/path/to/folder'"},
+    "INVALID_FOLDER_PATH": { messages : "Invalid folderPath value" , help : "It should be a string like '/path/to/folder'"},
     // pHash errors
     "INVALID_PHASH_VALUE": { message: "Invalid pHash value", help: "Both pHash strings must be valid hexadecimal numbers" },
     "MISSING_PHASH_VALUE": { message: "Missing pHash value", help: "Please pass two pHash values" },
     "UNEQUAL_STRING_LENGTH": { message: "Unequal pHash string length", help: "For distance calucation, the two pHash strings must have equal length" },
     //bulk delete errors
-    "INVALID_FILEIDS_VALUE": {message: "Invalid value for fileIds", help: "fileIds should be an string array of fileId of the files to delete. The array should have atleast one fileId."}
+    "INVALID_FILEIDS_VALUE": {message: "Invalid value for fileIds", help: "fileIds should be an array of fileId of the files. The array should have atleast one fileId."},
+    "BULK_ADD_TAGS_INVALID": {message: "Invalid value for tags", help: "tags should be a non empty array of string like ['tag1', 'tag2']."}
 };
