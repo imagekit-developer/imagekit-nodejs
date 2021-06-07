@@ -45,7 +45,7 @@ var imagekit = new ImageKit({
 
 
 ## Demo application
-The fastest way to get started is by running the demo application in [sample](/sample) folder as per [README.md](/sample/README.md).
+The fastest way to get started is by running the demo application in [sample](/sample) folder.
 
 ## Usage
 You can use this NodeJS SDK for three different kinds of functions - URL generation, file uploads, and file management. The usage of the SDK has been explained below.
