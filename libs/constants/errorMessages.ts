@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     "MANDATORY_INITIALIZATION_MISSING" : { message : "Missing publicKey or privateKey or urlEndpoint during ImageKit initialization", help : "" },
     "MANDATORY_PUBLIC_KEY_MISSING" : { message : "Missing publicKey during ImageKit initialization", help : "" },
     "MANDATORY_PRIVATE_KEY_MISSING" : { message : "Missing privateKey during ImageKit initialization", help : "" },
