@@ -1,3 +1,2 @@
-const errors = require('./../../constants/errorMessages');
-
+import errors from '../../libs/constants/errorMessages';
 module.exports = { ...errors };

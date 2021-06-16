@@ -1,8 +1,8 @@
-const chai = require("chai");
+import chai from "chai";
 const pkg = require("../package.json");
 const expect = chai.expect;
 const initializationParams = require("./data").initializationParams
-const ImageKit = require(".."); // This will automatically pick main module (cjs bundle) as per package.json
+import ImageKit from "../index";
 var imagekit = new ImageKit(initializationParams);
 
 describe("URL generation", function () {

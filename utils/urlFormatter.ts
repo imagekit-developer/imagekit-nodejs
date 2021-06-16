@@ -1,4 +1,4 @@
-const addLeadingSlash = function(str : string | null) {
+const addLeadingSlash = function(str : string) {
     if(typeof str == "string" && str[0] != "/") {
         str = "/" + str;
     }
@@ -6,7 +6,7 @@ const addLeadingSlash = function(str : string | null) {
     return str;
 }
 
-const removeLeadingSlash = function(str : string | null) {
+const removeLeadingSlash = function(str : string) {
     if(typeof str == "string" && str[0] == "/") {
         str = str.substring(1);
     }
@@ -14,7 +14,7 @@ const removeLeadingSlash = function(str : string | null) {
     return str;
 };
 
-const removeTrailingSlash = function(str : string | null) {
+const removeTrailingSlash = function(str : string) {
     if(typeof str == "string" && str[str.length - 1] == "/") {
         str = str.substring(0, str.length - 1);
     }
@@ -22,7 +22,7 @@ const removeTrailingSlash = function(str : string | null) {
     return str;
 }
 
-const addTrailingSlash = function(str : string | null) {
+const addTrailingSlash = function(str : string) {
     if(typeof str == "string" && str[str.length - 1] != "/") {
         str = str + "/";
     }

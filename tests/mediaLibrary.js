@@ -1,9 +1,9 @@
-const chai = require("chai");
-const sinon = require("sinon");
+import chai from "chai";
+import sinon from "sinon";
 const expect = chai.expect;
 const initializationParams = require("./data").initializationParams
-const ImageKit = require("..");
-const nock = require("nock");
+import ImageKit from "../index";
+import nock from "nock";
 var imagekit = new ImageKit(initializationParams);
 
 const dummyAPISuccessResponse = {
@@ -43,7 +43,7 @@ describe("Media library APIs", function () {
         });
 
         it('Bulk add tags missing tags', function (done) {
-            fileIds = ["23902390239203923"]
+            var fileIds = ["23902390239203923"]
             imagekit.bulkAddTags(fileIds, null, function (err, response) {
                 expect(err).to.deep.equal({
                     message: "Invalid value for tags",
@@ -54,7 +54,7 @@ describe("Media library APIs", function () {
         });
 
         it('Bulk add tags missing file id', function (done) {
-            tags = ['tag1'];
+            var tags = ['tag1'];
             imagekit.bulkAddTags(null, tags, function (err, response) {
                 expect(err).to.deep.equal({
                     message: "Invalid value for fileIds",
@@ -65,7 +65,7 @@ describe("Media library APIs", function () {
         });
 
         it('Bulk remove tags missing file id', function (done) {
-            tags = ['tag1'];
+            var tags = ['tag1'];
             imagekit.bulkRemoveTags(null, tags, function (err, response) {
                 expect(err).to.deep.equal({
                     message: "Invalid value for fileIds",
@@ -76,7 +76,7 @@ describe("Media library APIs", function () {
         });
 
         it('Bulk remove tags missing tags', function (done) {
-            fileIds = ["23902390239203923"]
+            var fileIds = ["23902390239203923"]
             imagekit.bulkRemoveTags(fileIds, null, function (err, response) {
                 expect(err).to.deep.equal({
                     message: "Invalid value for tags",
@@ -87,7 +87,7 @@ describe("Media library APIs", function () {
         });
 
         it('Copy file invalid folder path', function (done) {
-            sourceFilePath = "/file.jpg";
+            var sourceFilePath = "/file.jpg";
             imagekit.copyFile(sourceFilePath, null, function (err, response) {
                 expect(err).to.deep.equal({
                     messages : "Invalid destinationPath value", 
@@ -98,7 +98,7 @@ describe("Media library APIs", function () {
         });
 
         it('Copy file invalid file path', function (done) {
-            destinationPath = "/";
+            var destinationPath = "/";
             imagekit.copyFile(null, destinationPath, function (err, response) {
                 expect(err).to.deep.equal({
                     messages : "Invalid sourceFilePath value", 
@@ -109,7 +109,7 @@ describe("Media library APIs", function () {
         });
 
         it('Move file invalid folder path', function (done) {
-            sourceFilePath = "/file.jpg";
+            var sourceFilePath = "/file.jpg";
             imagekit.moveFile(sourceFilePath, null, function (err, response) {
                 expect(err).to.deep.equal({
                     messages : "Invalid destinationPath value", 
@@ -120,7 +120,7 @@ describe("Media library APIs", function () {
         });
 
         it('Move file invalid file path', function (done) {
-            destinationPath = "/";
+            var destinationPath = "/";
             imagekit.moveFile(null, destinationPath, function (err, response) {
                 expect(err).to.deep.equal({
                     messages : "Invalid sourceFilePath value", 
@@ -131,7 +131,7 @@ describe("Media library APIs", function () {
         });
 
         it('Copy folder invalid sourceFolderPath', function (done) {
-            destinationPath = "/";
+            var destinationPath = "/";
             imagekit.copyFolder(null, destinationPath, function (err, response) {
                 expect(err).to.deep.equal({
                     messages : "Invalid sourceFolderPath value", 
@@ -142,7 +142,7 @@ describe("Media library APIs", function () {
         });
 
         it('Copy folder invalid destinationPath', function (done) {
-            sourceFolderPath = "/";
+            var sourceFolderPath = "/";
             imagekit.copyFolder(sourceFolderPath, null, function (err, response) {
                 expect(err).to.deep.equal({
                     messages : "Invalid destinationPath value", 
@@ -153,7 +153,7 @@ describe("Media library APIs", function () {
         });
 
         it('Move folder invalid destinationPath', function (done) {
-            sourceFolderPath = "/";
+            var sourceFolderPath = "/";
             imagekit.moveFolder(sourceFolderPath, null, function (err, response) {
                 expect(err).to.deep.equal({
                     messages : "Invalid destinationPath value", 
@@ -164,7 +164,7 @@ describe("Media library APIs", function () {
         });
 
         it('Move folder invalid sourceFolderPath', function (done) {
-            destinationPath = "/";
+            var destinationPath = "/";
             imagekit.moveFolder(null, destinationPath, function (err, response) {
                 expect(err).to.deep.equal({
                     messages : "Invalid sourceFolderPath value", 
@@ -175,8 +175,8 @@ describe("Media library APIs", function () {
         });
 
         it('Create folder invalid name', function (done) {
-            folderName = "";
-            parentFolderPath = "";
+            var folderName = "";
+            var parentFolderPath = "";
             imagekit.createFolder(folderName, parentFolderPath, function (err, response) {
                 expect(err).to.deep.equal({
                     messages : "Invalid folderName value", 
@@ -187,8 +187,8 @@ describe("Media library APIs", function () {
         });
 
         it('Create folder invalid path', function (done) {
-            folderName = "folder1";
-            parentFolderPath = "";
+            var folderName = "folder1";
+            var parentFolderPath = "";
             imagekit.createFolder(folderName, parentFolderPath, function (err, response) {
                 expect(err).to.deep.equal({
                     messages : "Invalid parentFolderPath value", 

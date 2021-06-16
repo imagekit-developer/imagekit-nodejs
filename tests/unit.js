@@ -1,9 +1,8 @@
-const chai = require("chai");
+import chai from "chai";
 const expect = chai.expect;
-const ImageKit = require(".."); // This will automatically pick main module (cjs bundle) as per package.json
+import ImageKit from "../index";
 
-const urlBuilder = require("../libs/url/builder");
-
+import urlBuilder from "../libs/url/builder";
 
 describe("Unit test cases", function () {
     var imagekit = new ImageKit({

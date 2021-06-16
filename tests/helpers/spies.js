@@ -1,7 +1,7 @@
 // packages
-const sinon = require('sinon');
+import sinon from 'sinon';
 // internal modules
-const pHashUtils = require('./../../utils/phash');
+import pHashUtils from "../../utils/phash";
 
 // spies
 const pHashDistanceSpy = sinon.spy(pHashUtils, 'pHashDistance');

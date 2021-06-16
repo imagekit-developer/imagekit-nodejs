@@ -121,7 +121,10 @@
 	 * @see {@link https://docs.imagekit.io/features/image-transformations/overlay#overlay-image-cropping}
 	 */
 	overlayImageCropping: "oic",
-  
+ 	/**
+	 * @see {@link https://docs.imagekit.io/features/image-transformations/overlay#oifo}
+	*/
+	overlayImageFocus : "oifo",
 	/**
 	 * @see {@link https://docs.imagekit.io/features/image-transformations/overlay#trimming-of-the-overlay-image}
 	 */

@@ -1,18 +1,18 @@
 /*
     VARIABLES
 */
-const DEFAULT_TRANSFORMATION_POSITION : string = "path";
-const QUERY_TRANSFORMATION_POSITION : string = "query";
-const VALID_TRANSFORMATION_POSITIONS : Array<string> = [DEFAULT_TRANSFORMATION_POSITION, QUERY_TRANSFORMATION_POSITION];
-
 import supportedTransforms from "../libs/constants/supportedTransforms";
-import { UrlOptions, Transformation } from "../libs/interfaces";
+import { UrlOptions, TransformationPosition } from "../libs/interfaces";
+
+const DEFAULT_TRANSFORMATION_POSITION : TransformationPosition = "path";
+const QUERY_TRANSFORMATION_POSITION : TransformationPosition = "query";
+const VALID_TRANSFORMATION_POSITIONS : Array<string> = [DEFAULT_TRANSFORMATION_POSITION, QUERY_TRANSFORMATION_POSITION];
 
 const CHAIN_TRANSFORM_DELIMITER : string = ":";
 const TRANSFORM_DELIMITER : string = ",";
 const TRANSFORM_KEY_VALUE_DELIMITER : string = "-";
 
-const getDefault = function() : string {
+const getDefault = function() : TransformationPosition {
     return DEFAULT_TRANSFORMATION_POSITION;
 }
 

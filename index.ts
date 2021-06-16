@@ -14,9 +14,9 @@ import signature from "./libs/signature";
 /*
     Utils
 */
-var pHashUtils = require('./utils/phash');
-var transformationUtils = require('./utils/transformation');
-var errorMessages = require("./constants/errorMessages");
+import pHashUtils from "./utils/phash";
+import transformationUtils from "./utils/transformation";
+import errorMessages from "./libs/constants/errorMessages";
 
 import { IKCallback } from "./libs/interfaces/IKCallback";
 import { 
@@ -276,9 +276,9 @@ var ImageKit = function(
 		this: IImageKit,
 		firstPHash: string,
 		secondPHash: string
-	) : number {
+	) : number | Error {
         return pHashUtils.pHashDistance(firstPHash, secondPHash);
     }
 };
 
-module.exports = ImageKit;
+export default ImageKit;

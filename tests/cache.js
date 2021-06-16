@@ -1,9 +1,10 @@
-const chai = require("chai");
-const sinon = require("sinon");
+import chai from "chai";
+import sinon from "sinon";
 const expect = chai.expect;
 const initializationParams = require("./data").initializationParams
-const ImageKit = require("..");
-const nock = require("nock");
+
+import ImageKit from "../index";
+import nock from "nock";
 var imagekit = new ImageKit(initializationParams);
 
 const dummyAPISuccessResponse = {

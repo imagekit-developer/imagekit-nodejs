@@ -131,7 +131,7 @@ function constructTransformationString(transformation : Array<Transformation> | 
             if(transformation[i][key] === "-") {
                 parsedTransformStep.push(transformKey);
             } else {
-                var value = transformation[i][key] || null;
+                var value = String(transformation[i][key]);
                 if(transformKey === "oi" || transformKey === "di") {
                     value = urlFormatter.removeTrailingSlash(urlFormatter.removeLeadingSlash(value));
 					if(value) value = value.replace(/\//g,"@@");

@@ -1,11 +1,11 @@
-const chai = require("chai");
-const sinon = require("sinon");
+import chai from "chai";
+import sinon from "sinon";
 const expect = chai.expect;
 const initializationParams = require("./data").initializationParams
-const ImageKit = require(".."); // This will automatically pick main module (cjs bundle) as per package.json
-const nock = require("nock");
-const fs = require("fs");
-const path = require("path");
+import ImageKit from "../index";
+import nock from "nock";
+import fs from "fs";
+import path from "path";
 
 function checkFormData({requestBody, boundary, fieldName, fieldValue}) {
     return expect(requestBody).include(`${boundary}\r\nContent-Disposition: form-data; name="${fieldName}"\r\n\r\n${fieldValue}`)

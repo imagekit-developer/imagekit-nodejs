@@ -219,7 +219,7 @@ export interface IImageKit {
 	 * @param firstPHash
 	 * @param secondPHash
 	*/
-	pHashDistance: (firstPHash: string, secondPHash: string) => number;
+	pHashDistance: (firstPHash: string, secondPHash: string) => number | Error;
 }
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; //actual options used to construct url
