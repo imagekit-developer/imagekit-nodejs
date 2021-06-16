@@ -19,7 +19,7 @@ export interface UrlOptionsBase {
 	 * These can be any query parameters and not necessarily related to ImageKit.
 	 * Especially useful, if you want to add some versioning parameter to your URLs.
 	 */
-	queryParameters?: { [key: string]: string | number };
+	queryParameters?: { [key: string]: string };
 	/**
 	 * The base URL to be appended before the path of the image.
 	 * If not specified, the URL Endpoint specified at the time of SDK initialization is used.

@@ -12,7 +12,7 @@ export interface UploadOptions {
 	 *      Downloading file from URL might take longer, so it is recommended that you pass the binary or base64 content of the file.
 	 *      Pass the full URL, for example - https://www.example.com/rest-of-the-image-path.jpg.
 	 */
-	file: string | Buffer | File;
+	file: string | Buffer;
 	/**
 	 * The name with which the file has to be uploaded.
 	 * The file name can contain:

@@ -1,15 +1,15 @@
 /*
     Helper Modules
 */
-var _ = require('lodash');
+import _ from "lodash";
 
 /*
     Implementations
 */
-var url = require('./libs/url');
-var upload = require('./libs/upload');
-var manage = require('./libs/manage');
-var signature = require('./libs/signature');
+import url from "./libs/url";
+import upload from "./libs/upload";
+import manage from "./libs/manage";
+import signature from "./libs/signature";
 
 /*
     Utils
@@ -22,7 +22,6 @@ import { IKCallback } from "./libs/interfaces/IKCallback";
 import { 
 	IImageKit, 
 	ImageKitOptions, 
-	TransformationPosition, 
 	UploadOptions, 
 	UploadResponse, 
 	UrlOptions,
@@ -35,12 +34,7 @@ import {
 
 var ImageKit = function(
 	this: IImageKit,
-	opts: {
-		publicKey: string;
-		privateKey: string;
-		urlEndpoint: string;
-		transformationPosition?: TransformationPosition;
-	},
+	opts: ImageKitOptions,
   ) {
     opts = opts || {};
     this.options = {

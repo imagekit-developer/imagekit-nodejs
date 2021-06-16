@@ -1,6 +1,6 @@
 import { IKCallback } from "./IKCallback";
 import { ImageKitOptions } from "./ImageKitOptions";
-import { TransformationPosition } from "./Transformation";
+import { Transformation, TransformationPosition } from "./Transformation";
 import { UploadOptions } from "./UploadOptions";
 import { UploadResponse } from "./UploadResponse";
 import { FileType } from "./FileType";
@@ -222,13 +222,16 @@ export interface IImageKit {
 	pHashDistance: (firstPHash: string, secondPHash: string) => number;
 }
 
+type FinalUrlOptions = ImageKitOptions & UrlOptions; //actual options used to construct url
+
 export { 
 	ImageKitOptions, 
-	TransformationPosition, 
+	Transformation, TransformationPosition, 
 	UploadOptions, 
 	UploadResponse, 
 	FileType, 
 	UrlOptions,
+	FinalUrlOptions,
 	ListFileOptions, ListFileResponse,
 	FileDetailsOptions, FileDetailsResponse,
 	FileMetadataResponse,

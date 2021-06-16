@@ -1,16 +1,43 @@
-var _ = require('lodash');
+import _ from "lodash";
+
+/*
+	Constants
+*/
+import errorMessages from "../constants/errorMessages";
 
 /*
     Utils
 */
-var errorMessages = require("../../constants/errorMessages");
-var respond = require("../../utils/respond");
-var request = require("../../utils/request");
+import respond from "../../utils/respond";
+import request from "../../utils/request";
+
+/*
+	Interfaces
+*/
+import { IKCallback } from "../interfaces/IKCallback";
+import { 
+	ImageKitOptions, 
+	Transformation, TransformationPosition, 
+	UploadOptions, 
+	UploadResponse, 
+	FileType, 
+	UrlOptions,
+	FinalUrlOptions,
+	ListFileOptions, ListFileResponse,
+	FileDetailsOptions, FileDetailsResponse,
+	FileMetadataResponse,
+	PurgeCacheResponse, PurgeCacheStatusResponse,
+	BulkDeleteFilesResponse, BulkDeleteFilesError,
+} from "../interfaces/";
 
 /*
     Delete a file
 */
-module.exports.deleteFile = function(fileId, defaultOptions, callback) {
+const deleteFile = function(
+	fileId : string, 
+	defaultOptions : ImageKitOptions, 
+	callback? : IKCallback<void>
+) {
     if(!fileId) {
         respond(true, errorMessages.FILE_ID_MISSING, callback);
         return;
@@ -28,7 +55,11 @@ module.exports.deleteFile = function(fileId, defaultOptions, callback) {
 /*
     Get Metadata of a file
 */
-module.exports.getMetadata = function(fileIdOrURL, defaultOptions, callback) {
+const getMetadata = function(
+	fileIdOrURL : string, 
+	defaultOptions : ImageKitOptions, 
+	callback? : IKCallback<FileMetadataResponse>
+) {
     if(!fileIdOrURL || fileIdOrURL.trim () == "") {
         respond(true, errorMessages.FILE_ID_OR_URL_MISSING, callback);
         return;
@@ -55,7 +86,11 @@ module.exports.getMetadata = function(fileIdOrURL, defaultOptions, callback) {
 /*
     Get Details of a file
 */
-module.exports.getDetails = function(fileId, defaultOptions, callback) {
+const getDetails = function(
+	fileId : string, 
+	defaultOptions : ImageKitOptions, 
+	callback? : IKCallback<FileDetailsResponse>
+) {
     if(!fileId) {
         respond(true, errorMessages.FILE_ID_MISSING, callback);
         return;
@@ -73,7 +108,12 @@ module.exports.getDetails = function(fileId, defaultOptions, callback) {
 /*
     Update file details
 */
-module.exports.updateDetails = function(fileId, updateData, defaultOptions, callback) {
+const updateDetails = function(
+	fileId : string, 
+	updateData : FileDetailsOptions, 
+	defaultOptions : ImageKitOptions, 
+	callback? : IKCallback<FileDetailsResponse>
+) {
     if(!fileId) {
         respond(true, errorMessages.FILE_ID_MISSING, callback);
         return;
@@ -100,7 +140,11 @@ module.exports.updateDetails = function(fileId, updateData, defaultOptions, call
 /*
     List files
 */
-module.exports.listFiles = function(listOptions, defaultOptions, callback) {
+const listFiles = function(
+	listOptions : ListFileOptions, 
+	defaultOptions : ImageKitOptions, 
+	callback? : IKCallback<ListFileResponse>
+) {
     if(listOptions && !_.isObject(listOptions)) {
         respond(true, errorMessages.UPDATE_DATA_MISSING, callback);
         return;
@@ -119,7 +163,11 @@ module.exports.listFiles = function(listOptions, defaultOptions, callback) {
 /*
     Bulk Delete By FileIds
 */
-module.exports.bulkDeleteFiles = function(fileIdArray, defaultOptions, callback) {
+const bulkDeleteFiles = function(
+	fileIdArray : string[], 
+	defaultOptions : ImageKitOptions, 
+	callback? : IKCallback<BulkDeleteFilesResponse, BulkDeleteFilesError>
+) {
     
     if(!Array.isArray(fileIdArray) 
         || fileIdArray.length === 0 
@@ -144,7 +192,12 @@ module.exports.bulkDeleteFiles = function(fileIdArray, defaultOptions, callback)
 /*
     Add tags in bulk
 */
-module.exports.bulkAddTags = function(fileIdArray, tags, defaultOptions, callback) {
+const bulkAddTags = function(
+	fileIdArray : string[], 
+	tags : string[], 
+	defaultOptions : ImageKitOptions, 
+	callback? : IKCallback<void>
+) {
     
     if(!Array.isArray(fileIdArray) 
         || fileIdArray.length === 0 
@@ -177,7 +230,12 @@ module.exports.bulkAddTags = function(fileIdArray, tags, defaultOptions, callbac
 /*
     Remove tags in bulk
 */
-module.exports.bulkRemoveTags = function(fileIdArray, tags, defaultOptions, callback) {
+const bulkRemoveTags = function(
+	fileIdArray : string[], 
+	tags : string[], 
+	defaultOptions : ImageKitOptions, 
+	callback? : IKCallback<void>
+) {
     
     if(!Array.isArray(fileIdArray) 
         || fileIdArray.length === 0 
@@ -210,7 +268,12 @@ module.exports.bulkRemoveTags = function(fileIdArray, tags, defaultOptions, call
 /*
     Copy file
 */
-module.exports.copyFile = function(sourceFilePath, destinationPath, defaultOptions, callback) {
+const copyFile = function(
+	sourceFilePath : string, 
+	destinationPath : string, 
+	defaultOptions : ImageKitOptions,
+	callback? : IKCallback<void>
+) {
     
     if(typeof(sourceFilePath) !== 'string' || sourceFilePath.length === 0) {
         respond(true, errorMessages.INVALID_SOURCE_FILE_PATH, callback);
@@ -239,7 +302,12 @@ module.exports.copyFile = function(sourceFilePath, destinationPath, defaultOptio
 /*
     Move file
 */
-module.exports.moveFile = function(sourceFilePath, destinationPath, defaultOptions, callback) {
+const moveFile = function(
+	sourceFilePath : string, 
+	destinationPath : string, 
+	defaultOptions : ImageKitOptions,
+	callback? : IKCallback<void>
+) {
     
     if(typeof(sourceFilePath) !== 'string' || sourceFilePath.length === 0) {
         respond(true, errorMessages.INVALID_SOURCE_FILE_PATH, callback);
@@ -268,7 +336,12 @@ module.exports.moveFile = function(sourceFilePath, destinationPath, defaultOptio
 /*
     Copy Folder
 */
-module.exports.copyFolder = function(sourceFolderPath, destinationPath, defaultOptions, callback) {
+const copyFolder = function(
+	sourceFolderPath : string, 
+	destinationPath : string, 
+	defaultOptions : ImageKitOptions,
+	callback? : IKCallback<void>
+) {
     
     if(typeof(sourceFolderPath) !== 'string' || sourceFolderPath.length === 0) {
         respond(true, errorMessages.INVALID_SOURCE_FOLDER_PATH, callback);
@@ -297,7 +370,12 @@ module.exports.copyFolder = function(sourceFolderPath, destinationPath, defaultO
 /*
     Move Folder
 */
-module.exports.moveFolder = function(sourceFolderPath, destinationPath, defaultOptions, callback) {
+const moveFolder = function(
+	sourceFolderPath : string, 
+	destinationPath : string, 
+	defaultOptions : ImageKitOptions,
+	callback? : IKCallback<void>
+) {
     
     if(typeof(sourceFolderPath) !== 'string' || sourceFolderPath.length === 0) {
         respond(true, errorMessages.INVALID_SOURCE_FOLDER_PATH, callback);
@@ -326,7 +404,12 @@ module.exports.moveFolder = function(sourceFolderPath, destinationPath, defaultO
 /*
     Create folder
 */
-module.exports.createFolder = function(folderName, parentFolderPath, defaultOptions, callback) {
+const createFolder = function(
+	folderName : string, 
+	parentFolderPath : string, 
+	defaultOptions : ImageKitOptions, 
+	callback? : IKCallback<void>
+) {
     
     if(typeof(folderName) !== 'string' || folderName.length === 0) {
         respond(true, errorMessages.INVALID_FOLDER_NAME, callback);
@@ -355,7 +438,11 @@ module.exports.createFolder = function(folderName, parentFolderPath, defaultOpti
 /* 
     Delete folder
 */
-module.exports.deleteFolder = function(folderPath, defaultOptions, callback) {
+const deleteFolder = function(
+	folderPath : string, 
+	defaultOptions : ImageKitOptions, 
+	callback? : IKCallback<void>
+) {
 
     if(typeof(folderPath) !== 'string' || folderPath.length === 0) {
         respond(true, errorMessages.INVALID_FOLDER_PATH, callback);
@@ -378,7 +465,11 @@ module.exports.deleteFolder = function(folderPath, defaultOptions, callback) {
 /*
     Bulk job status
 */
-module.exports.getBulkJobStatus = function(jobId, defaultOptions, callback) {
+const getBulkJobStatus = function(
+	jobId : string, 
+	defaultOptions : ImageKitOptions, 
+	callback? : IKCallback<void>
+) {
 
     if(!jobId) {
         respond(true, errorMessages.JOB_ID_MISSING, callback);
@@ -393,3 +484,5 @@ module.exports.getBulkJobStatus = function(jobId, defaultOptions, callback) {
 
     request(requestOptions, defaultOptions, callback);
 };
+
+export default { deleteFile, getMetadata, getDetails, updateDetails, listFiles, bulkDeleteFiles, bulkAddTags, bulkRemoveTags, copyFile, moveFile, copyFolder, moveFolder, createFolder, deleteFolder, getBulkJobStatus };

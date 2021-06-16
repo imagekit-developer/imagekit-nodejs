@@ -1,9 +1,15 @@
-var request = require('request');
-var respond = require("../utils/respond");
-var authorizationUtils = require("./authorization");
+import request from "request";
+import respond from "../utils/respond";
+import { addAuthorization, RequestOptions } from "../utils/authorization";
+import { ImageKitOptions } from "../libs/interfaces/";
+import { IKCallback } from "../libs/interfaces/IKCallback"
 
-module.exports = function(requestOptions, defaultOptions, callback) {
-    authorizationUtils.addAuthorization(requestOptions, defaultOptions.privateKey);
+export default function(
+	requestOptions : RequestOptions, 
+	defaultOptions : ImageKitOptions, 
+	callback?: IKCallback<any, any>
+) {
+    addAuthorization(requestOptions, defaultOptions.privateKey);
     request(requestOptions, function(err, response, body) {
         if(typeof callback != "function") return;
 

@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js tests/ utils/phash.js",
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix tests/ utils/phash.js",
-    "test": "export NODE_ENV=test; nyc ./node_modules/mocha/bin/mocha --exit -t 40000 tests/*.js;ex=$?;unset NODE_ENV; exit $ex;",
+    "test": "export NODE_ENV=test; tsc; nyc ./node_modules/mocha/bin/mocha --exit -t 40000 tests/*.js;ex=$?;unset NODE_ENV; exit $ex;",
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "author": "ImageKit Developer <developer@imagekit.io>",
@@ -22,7 +22,10 @@
     "node": ">=10.0.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.170",
     "@types/node": "^15.12.2",
+    "@types/request": "^2.48.5",
+    "@types/uuid": "^8.3.0",
     "chai": "^4.2.0",
     "codecov": "^3.8.0",
     "eslint": "^7.7.0",

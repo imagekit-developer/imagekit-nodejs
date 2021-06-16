@@ -1,58 +1,59 @@
 /*
     Helper Modules
 */
-var { URLSearchParams } = require('url');
-var url = require('url');
-var path = require('path');
-var crypto = require('crypto');
+import url, { UrlWithStringQuery, URLSearchParams } from 'url';
+import path from 'path';
+import crypto from 'crypto';
 
 /*
     Utils
 */
-var transformationUtils = require('../../utils/transformation');
-var urlFormatter = require('../../utils/urlFormatter');
+import transformationUtils from "../../utils/transformation";
+import urlFormatter from "../../utils/urlFormatter";
+
+/*
+	Interfaces
+*/
+import { FinalUrlOptions, Transformation } from "../interfaces";
 
 /*
     Variables
 */
-const TRANSFORMATION_PARAMETER = "tr";
-const SIGNATURE_PARAMETER = "ik-s";
-const TIMESTAMP_PARAMETER = "ik-t";
-const DEFAULT_TIMESTAMP = "9999999999";
-const PROTOCOL_QUERY = /http[s]?\:\/\//;
+const TRANSFORMATION_PARAMETER : string = "tr";
+const SIGNATURE_PARAMETER : string = "ik-s";
+const TIMESTAMP_PARAMETER : string = "ik-t";
+const DEFAULT_TIMESTAMP : string = "9999999999";
 
-module.exports.buildURL = function(opts) {
-    if(!opts.path && !opts.src) {
-        return "";
-    }
-
+const buildURL = function(opts: FinalUrlOptions) : string {
     //Create correct query parameters
-    var parsedURL, isSrcParameterUsedForURL, parsedHost;
+    var parsedURL : UrlWithStringQuery;
+	var parsedHost : UrlWithStringQuery;
+	var isSrcParameterUsedForURL : boolean = false;
+
+	var urlObject : { [key: string]: string | null; } = {host : "", pathname : "", search : ""};
+
     if(opts.path) {
-        parsedURL = url.parse(opts.path);
+		parsedURL = url.parse(opts.path);
         parsedHost = url.parse(opts.urlEndpoint);
-    } else {
+
+		urlObject.protocol = parsedHost.protocol;
+        urlObject.host = opts.urlEndpoint.replace(urlObject.protocol + "//", "");
+    } else if(opts.src) {
         parsedURL = url.parse(opts.src);
         isSrcParameterUsedForURL = true;
-    }
+
+		urlObject.host = [parsedURL.auth, parsedURL.auth ? "@" : "" ,parsedURL.host].join("");
+        urlObject.protocol = parsedURL.protocol;
+    } else {
+		return "";
+	}
+
+	urlObject.pathname = parsedURL.pathname ? parsedURL.pathname : "";
 
     var queryParameters = new URLSearchParams(parsedURL.query || "");
     for(var i in opts.queryParameters) {
         queryParameters.set(i, opts.queryParameters[i]);
     }
-
-    
-    
-    //Initial URL Construction Object
-    var urlObject = {host : "", pathname : "", search : ""};
-    if(opts.path) {
-        urlObject.protocol = parsedHost.protocol;
-        urlObject.host = opts.urlEndpoint.replace(urlObject.protocol + "//", "");
-    } else if(opts.src) {
-        urlObject.host = [parsedURL.auth, parsedURL.auth ? "@" : "" ,parsedURL.host].join("");
-        urlObject.protocol = parsedURL.protocol;
-    }
-    urlObject.pathname = parsedURL.pathname;
 
     //Create Transformation String
     var transformationString = constructTransformationString(opts.transformation);
@@ -97,7 +98,7 @@ module.exports.buildURL = function(opts) {
 
         var intermediateURL = url.format(urlObject);
 
-        var urlSignature = module.exports.getSignature({
+        var urlSignature = getSignature({
             privateKey : opts.privateKey,
             url : intermediateURL,
             urlEndpoint : opts.urlEndpoint,
@@ -115,7 +116,7 @@ module.exports.buildURL = function(opts) {
     return url.format(urlObject);
 };
 
-function constructTransformationString(transformation) {
+function constructTransformationString(transformation : Array<Transformation> | undefined) {
     if(!Array.isArray(transformation)) { return ""; }
 
     var parsedTransforms = [];
@@ -130,10 +131,10 @@ function constructTransformationString(transformation) {
             if(transformation[i][key] === "-") {
                 parsedTransformStep.push(transformKey);
             } else {
-                var value = transformation[i][key];
+                var value = transformation[i][key] || null;
                 if(transformKey === "oi" || transformKey === "di") {
                     value = urlFormatter.removeTrailingSlash(urlFormatter.removeLeadingSlash(value));
-                    value = value.replace(/\//g,"@@");
+					if(value) value = value.replace(/\//g,"@@");
                 }
                 parsedTransformStep.push([transformKey, value].join(transformationUtils.getTransformKeyValueDelimiter()));
             }
@@ -145,18 +146,23 @@ function constructTransformationString(transformation) {
     return parsedTransforms.join(transformationUtils.getChainTransformDelimiter());
 }
 
-function getSignatureTimestamp(seconds) {
+function getSignatureTimestamp(seconds : number) : string {
     if(!seconds) return DEFAULT_TIMESTAMP;
 
-    var sec = parseInt(seconds, 10);
+    var sec = parseInt(String(seconds), 10);
     if(!sec) return DEFAULT_TIMESTAMP;
 
-    var currentTimestamp = parseInt(new Date().getTime() / 1000, 10);
-    return currentTimestamp + sec;
+    var currentTimestamp = parseInt(String(new Date().getTime() / 1000), 10);
+    return String(currentTimestamp + sec);
 }
 
-module.exports.getSignature = function(opts) {
+function getSignature (opts : any) {
     if(!opts.privateKey || !opts.url || !opts.urlEndpoint) return "";
     var stringToSign = opts.url.replace(urlFormatter.addTrailingSlash(opts.urlEndpoint), "") + opts.expiryTimestamp;
     return crypto.createHmac('sha1', opts.privateKey).update(stringToSign).digest('hex');
+}
+
+export default {
+	buildURL,
+	getSignature
 }

@@ -1,13 +1,17 @@
 /*
     Helper Modules
 */
-var uuidv4 = require('uuid/v4');
-var crypto = require('crypto');
-
+import { v4 as uuid } from 'uuid';
+import crypto from 'crypto';
+import { ImageKitOptions } from '../interfaces';
 var DEFAULT_TIME_DIFF = 60 * 30;
 
-module.exports.getAuthenticationParameters = function(token, expire, defaultOptions) {
-    var defaultExpire = parseInt((new Date().getTime()) / 1000, 10) + DEFAULT_TIME_DIFF;
+const getAuthenticationParameters = function(
+	token? : string, 
+	expire? : number, 
+	defaultOptions? : ImageKitOptions
+) {
+    var defaultExpire = parseInt( String((new Date().getTime()) / 1000), 10) + DEFAULT_TIME_DIFF;
     var authParameters = {
         "token" : token || "",
         "expire" : expire || 0,
@@ -16,7 +20,7 @@ module.exports.getAuthenticationParameters = function(token, expire, defaultOpti
 
     if(!defaultOptions || !defaultOptions.privateKey) return authParameters;
 
-    token = token || uuidv4();
+    token = token || uuid();
     expire = expire || defaultExpire;
     var signature = crypto.createHmac('sha1', defaultOptions.privateKey).update(token+expire).digest("hex");
 
@@ -26,3 +30,5 @@ module.exports.getAuthenticationParameters = function(token, expire, defaultOpti
 
     return authParameters;
 };
+
+export default { getAuthenticationParameters }

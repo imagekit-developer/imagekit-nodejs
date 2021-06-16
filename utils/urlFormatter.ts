@@ -1,4 +1,4 @@
-module.exports.addLeadingSlash = function(str) {
+const addLeadingSlash = function(str : string | null) {
     if(typeof str == "string" && str[0] != "/") {
         str = "/" + str;
     }
@@ -6,7 +6,7 @@ module.exports.addLeadingSlash = function(str) {
     return str;
 }
 
-module.exports.removeLeadingSlash = function(str) {
+const removeLeadingSlash = function(str : string | null) {
     if(typeof str == "string" && str[0] == "/") {
         str = str.substring(1);
     }
@@ -14,7 +14,7 @@ module.exports.removeLeadingSlash = function(str) {
     return str;
 };
 
-module.exports.removeTrailingSlash = function(str) {
+const removeTrailingSlash = function(str : string | null) {
     if(typeof str == "string" && str[str.length - 1] == "/") {
         str = str.substring(0, str.length - 1);
     }
@@ -22,10 +22,12 @@ module.exports.removeTrailingSlash = function(str) {
     return str;
 }
 
-module.exports.addTrailingSlash = function(str) {
+const addTrailingSlash = function(str : string | null) {
     if(typeof str == "string" && str[str.length - 1] != "/") {
         str = str + "/";
     }
 
     return str;
 }
+
+export default {addLeadingSlash, removeLeadingSlash, removeTrailingSlash, addTrailingSlash}
