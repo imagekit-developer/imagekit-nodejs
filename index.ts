@@ -281,4 +281,4 @@ var ImageKit = function(
     }
 };
 
-export default ImageKit;
+export = ImageKit;
