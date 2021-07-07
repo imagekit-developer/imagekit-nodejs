@@ -34,6 +34,7 @@
     "@types/node": "^15.12.2",
     "@types/request": "^2.48.5",
     "@types/uuid": "^8.3.0",
+    "babel-plugin-replace-ts-export-assignment": "^0.0.2",
     "chai": "^4.2.0",
     "codecov": "^3.8.0",
     "eslint": "^7.7.0",
