@@ -87,7 +87,7 @@ const sampleApp = async () => {
         // Bulk add tags
         let fileIds = filesList.map(file => file.fileId);
         fileIds.shift();
-        tags = ['red', 'blue'];
+        var tags = ['red', 'blue'];
         const bulkAddTagsResponse = await bulkAddTags(imagekit, fileIds, tags);
         console.log("Bulk add tags response: ", bulkAddTagsResponse, "\n");
 

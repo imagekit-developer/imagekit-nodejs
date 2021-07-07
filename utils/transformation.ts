@@ -6,7 +6,6 @@ import { UrlOptions, TransformationPosition } from "../libs/interfaces";
 
 const DEFAULT_TRANSFORMATION_POSITION : TransformationPosition = "path";
 const QUERY_TRANSFORMATION_POSITION : TransformationPosition = "query";
-const VALID_TRANSFORMATION_POSITIONS : Array<string> = [DEFAULT_TRANSFORMATION_POSITION, QUERY_TRANSFORMATION_POSITION];
 
 const CHAIN_TRANSFORM_DELIMITER : string = ":";
 const TRANSFORM_DELIMITER : string = ",";

@@ -29,7 +29,7 @@ export default function(
         }
 
         if(response && response.statusCode >= 400) {
-            respond(true, err || body, callback);
+            respond(true, body, callback);
             return;
         }
 

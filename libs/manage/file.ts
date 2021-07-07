@@ -17,16 +17,9 @@ import request from "../../utils/request";
 import { IKCallback } from "../interfaces/IKCallback";
 import { 
 	ImageKitOptions, 
-	Transformation, TransformationPosition, 
-	UploadOptions, 
-	UploadResponse, 
-	FileType, 
-	UrlOptions,
-	FinalUrlOptions,
 	ListFileOptions, ListFileResponse,
 	FileDetailsOptions, FileDetailsResponse,
 	FileMetadataResponse,
-	PurgeCacheResponse, PurgeCacheStatusResponse,
 	BulkDeleteFilesResponse, BulkDeleteFilesError,
 } from "../interfaces/";
 
