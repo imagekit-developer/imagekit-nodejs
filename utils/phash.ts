@@ -4,11 +4,11 @@ import compare from "hamming-distance";
 import errors from "../libs/constants/errorMessages";
 
 // regexp validator
-const hexRegExp = new RegExp(/^[0-9a-fA-F]+$/, 'i');
+const hexRegExp = new RegExp(/^[0-9a-fA-F]+$/, "i");
 
-const errorHandler = (error : { message : string, help : string}) : Error => new Error(`${error.message}: ${error.help}`);
+const errorHandler = (error: { message: string; help: string }): Error => new Error(`${error.message}: ${error.help}`);
 
-const pHashDistance = (firstHash : string, secondHash : string) : number | Error => {
+const pHashDistance = (firstHash: string, secondHash: string): number | Error => {
   if (!firstHash || !secondHash) {
     return errorHandler(errors.MISSING_PHASH_VALUE);
   }

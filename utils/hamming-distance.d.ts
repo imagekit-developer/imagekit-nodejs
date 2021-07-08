@@ -1,1 +1,1 @@
-declare module "hamming-distance"
+declare module "hamming-distance";

@@ -70,5 +70,5 @@
 	  "resolveJsonModule": true
 	},
 	"include": ["index.ts", "libs/**/*", "utils/*", "test/*"],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules", "dist"]
   }
