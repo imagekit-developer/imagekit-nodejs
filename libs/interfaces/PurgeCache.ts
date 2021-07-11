@@ -5,10 +5,10 @@
  */
 
 export interface PurgeCacheResponse {
-	/**
-	 * requestId can be used to fetch the status of submitted purge request.
-	 */
-	requestId: string;
+  /**
+   * requestId can be used to fetch the status of submitted purge request.
+   */
+  requestId: string;
 }
 
 /**
@@ -18,10 +18,10 @@ export interface PurgeCacheResponse {
  */
 
 export interface PurgeCacheStatusResponse {
-	/**
-	 * Pending - The request has been successfully submitted, and purging is in progress.
-	 * Complete - The purge request has been successfully completed. And now you should get a fresh object.
-	 * Check the Age header in response to confirm this.
-	 */
-	status: 'Pending' | 'Completed';
+  /**
+   * Pending - The request has been successfully submitted, and purging is in progress.
+   * Complete - The purge request has been successfully completed. And now you should get a fresh object.
+   * Check the Age header in response to confirm this.
+   */
+  status: "Pending" | "Completed";
 }

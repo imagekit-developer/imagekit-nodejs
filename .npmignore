@@ -1,0 +1,6 @@
+.github
+tests
+sample
+.npmignore
+.babelrc
+babel-register.js
