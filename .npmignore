@@ -3,4 +3,10 @@ tests
 sample
 .npmignore
 .babelrc
+coverage
 babel-register.js
+.nyc_output
+.vscode
+.DS_Store
+.mocharc.json
+.nycrc
