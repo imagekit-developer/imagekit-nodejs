@@ -45,6 +45,29 @@ export interface ListFileOptions {
    * Default value - 0
    */
   skip?: number;
+  /**
+   * You can sort based on the following fields: 
+   *  - name - ASC_NAME or DESC_NAME
+   *  - createdAt - ASC_CREATED or DESC_CREATED
+   *  - updatedAt - ASC_UPDATED or DESC_UPDATED
+   *  - height - ASC_HEIGHT or DESC_HEIGHT
+   *  - width - ASC_WIDTH or DESC_WIDTH
+   *  - size - ASC_SIZE or DESC_SIZE
+   */
+  sort?: string;
+  /**
+   * Limit search to either file or folder.  Pass all to include both files and folders in search results.
+   * Default value - `file`
+   */
+  type?: string;
+  /**
+   * Query string in a Lucene-like query language. Learn more about the query expression later in this section.
+   * Note: When the searchQuery parameter is present, the following query parameters will have no effect on the result:
+   * 1. tags
+   * 2. type
+   * 3. name
+   */
+  searchQuery?: string;
 }
 
 /**
