@@ -1,4 +1,4 @@
-const ImageKit = require("../dist/");
+const ImageKit = require("imagekit");
 const fs = require("fs");
 const path = require("path");
 

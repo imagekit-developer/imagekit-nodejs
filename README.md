@@ -6,6 +6,7 @@
 [![Node CI](https://github.com/imagekit-developer/imagekit-nodejs/workflows/Node%20CI/badge.svg)](https://github.com/imagekit-developer/imagekit-nodejs/)
 [![npm version](https://img.shields.io/npm/v/imagekit)](https://www.npmjs.com/package/imagekit) 
 [![codecov](https://codecov.io/gh/imagekit-developer/imagekit-nodejs/branch/master/graph/badge.svg)](https://codecov.io/gh/imagekit-developer/imagekit-nodejs)
+[![Try imagekit on RunKit](https://badge.runkitcdn.com/imagekit.svg)](https://npm.runkit.com/imagekit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ImagekitIo)
 
@@ -28,7 +29,9 @@ ImageKit Node.js SDK allows you to use [image resizing](https://docs.imagekit.io
 Use the following command to download this module. Use the optional `--save` parameter if you wish to save the dependency in your `package.json` file.
 
 ```
-npm install imagekit
+npm install imagekit --save
+# or
+yarn add imagekit
 ```
 
 ## Initialization
@@ -43,9 +46,8 @@ var imagekit = new ImageKit({
 });
 ```
 
-
 ## Demo application
-The fastest way to get started is by running the demo application in [sample](/sample) folder.
+The fastest way to get started is by running the demo application in [sample](/sample) folder. Refer to the README file in [sample](/sample) folder.
 
 ## Usage
 You can use this NodeJS SDK for three different kinds of functions - URL generation, file uploads, and file management. The usage of the SDK has been explained below.
