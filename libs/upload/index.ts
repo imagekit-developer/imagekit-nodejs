@@ -57,7 +57,7 @@ export default function (
   }
 
   var requestOptions = {
-    url: "https://api.imagekit.io/v1/files/upload",
+    url: defaultOptions.uploadEndpoint || "https://upload.imagekit.io/api/v1/files/upload",
     method: "POST",
     formData: formData,
     json: true,

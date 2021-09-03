@@ -62,6 +62,7 @@ const promisify = function <T = void>(thisContext: ImageKit, fn: Function) {
 
 class ImageKit {
   options: ImageKitOptions = {
+    uploadEndpoint: "https://upload.imagekit.io/api/v1/files/upload",
     publicKey: "",
     privateKey: "",
     urlEndpoint: "",

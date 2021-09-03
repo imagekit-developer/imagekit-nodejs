@@ -73,7 +73,7 @@ describe("File upload", function () {
 
         var callback = sinon.spy();
 
-        const scope = nock('https://api.imagekit.io')
+        const scope = nock('https://upload.imagekit.io/api')
             .post('/v1/files/upload')
             .basicAuth({ user: initializationParams.privateKey, pass: '' })
             .reply(200, function (uri, requestBody) {
@@ -97,7 +97,7 @@ describe("File upload", function () {
             file: fs.readFileSync(path.join(__dirname,"./data/test_image.jpg"))
         };
 
-        const scope = nock('https://api.imagekit.io')
+        const scope = nock('https://upload.imagekit.io/api')
         .post('/v1/files/upload')
         .basicAuth({ user: initializationParams.privateKey, pass: '' })
         .reply(200, function (uri, requestBody) {
@@ -119,7 +119,7 @@ describe("File upload", function () {
 
         var callback = sinon.spy();
 
-        const scope = nock('https://api.imagekit.io')
+        const scope = nock('https://upload.imagekit.io/api')
             .post('/v1/files/upload')
             .basicAuth({ user: initializationParams.privateKey, pass: '' })
             .reply(200, function (uri, requestBody) {
@@ -144,7 +144,7 @@ describe("File upload", function () {
 
         var callback = sinon.spy();
 
-        const scope = nock('https://api.imagekit.io')
+        const scope = nock('https://upload.imagekit.io/api')
             .post('/v1/files/upload')
             .basicAuth({ user: initializationParams.privateKey, pass: '' })
             .reply(200, function (uri, requestBody) {
@@ -169,7 +169,7 @@ describe("File upload", function () {
 
         var callback = sinon.spy();
 
-        const scope = nock('https://api.imagekit.io')
+        const scope = nock('https://upload.imagekit.io/api')
             .post('/v1/files/upload')
             .basicAuth({ user: initializationParams.privateKey, pass: '' })
             .reply(200, function (uri, requestBody) {
@@ -196,7 +196,7 @@ describe("File upload", function () {
 
         var callback = sinon.spy();
 
-        const scope = nock('https://api.imagekit.io')
+        const scope = nock('https://upload.imagekit.io/api')
             .post('/v1/files/upload')
             .basicAuth({ user: initializationParams.privateKey, pass: '' })
             .reply(200, uploadSuccessResponseObj)
@@ -216,7 +216,7 @@ describe("File upload", function () {
             file: "test_file_content"
         };
 
-        const scope = nock('https://api.imagekit.io')
+        const scope = nock('https://upload.imagekit.io/api')
             .post('/v1/files/upload')
             .basicAuth({ user: initializationParams.privateKey, pass: '' })
             .reply(200, uploadSuccessResponseObj)
@@ -234,7 +234,7 @@ describe("File upload", function () {
             file: "test_file_content"
         };
 
-        const scope = nock('https://api.imagekit.io')
+        const scope = nock('https://upload.imagekit.io/api')
             .post('/v1/files/upload')
             .basicAuth({ user: initializationParams.privateKey, pass: '' })
             .replyWithError("Network error occured")
@@ -258,7 +258,7 @@ describe("File upload", function () {
             message: "Your account cannot be authenticated."
         };
 
-        const scope = nock('https://api.imagekit.io')
+        const scope = nock('https://upload.imagekit.io/api')
             .post('/v1/files/upload')
             .basicAuth({ user: initializationParams.privateKey, pass: '' })
             .reply(403, error)
@@ -283,7 +283,7 @@ describe("File upload", function () {
             message: "Your account cannot be authenticated."
         };
 
-        const scope = nock('https://api.imagekit.io')
+        const scope = nock('https://upload.imagekit.io/api')
             .post('/v1/files/upload')
             .basicAuth({ user: initializationParams.privateKey, pass: '' })
             .reply(403, error)
