@@ -26,6 +26,35 @@ const uploadSuccessResponseObj = {
     "fileType": "image"
 };
 
+describe("File upload custom endpoint", function () {
+    var imagekit = new ImageKit({
+        ...initializationParams,
+        uploadEndpoint: "https://custom-env.imagekit.io/api/v1/files/upload"
+    });
+
+    it('Upload endpoint test case', function (done) {
+        const fileOptions = {
+            fileName: "test_file_name",
+            file: "test_file_content"
+        };
+
+        var callback = sinon.spy();
+
+        const scope = nock('https://custom-env.imagekit.io/api')
+            .post('/v1/files/upload')
+            .basicAuth({ user: initializationParams.privateKey, pass: '' })
+            .reply(200, uploadSuccessResponseObj)
+
+        imagekit.upload(fileOptions, callback);
+
+        setTimeout( () => {
+            expect(callback.calledOnce).to.be.true;
+            sinon.assert.calledWith(callback, null, uploadSuccessResponseObj);
+            done();
+        },10); 
+    });
+});
+
 describe("File upload", function () {
     var imagekit = new ImageKit(initializationParams);
 
