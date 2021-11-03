@@ -23,7 +23,9 @@ const uploadSuccessResponseObj = {
     "tags": ["t-shirt", "round-neck", "sale2019"],
     "isPrivateFile": false,
     "customCoordinates": null,
-    "fileType": "image"
+    "fileType": "image",
+    "AITags":[{"name":"Face","confidence":99.95,"source":"aws-auto-tagging"}],
+    "extensionStatus":{"aws-auto-tagging":"success"}
 };
 
 describe("File upload custom endpoint", function () {
@@ -97,10 +99,19 @@ describe("File upload", function () {
             tags: ["tag1","tag2"], // array handling
             isPrivateFile: true, // Boolean handling
             useUniqueFileName: "false", // As string
-            responseFields : ["tags,metadata"]
+            responseFields : ["tags,metadata"],
+            extensions: [
+                {
+                    name: "aws-auto-tagging",
+                    minConfidence: 80,
+                    maxTags: 10
+                }
+            ],
+            webhookUrl: "https://your-domain/?appId=some-id"
         };
 
         var callback = sinon.spy();
+        var jsonStringifiedExtensions = JSON.stringify(fileOptions.extensions);
 
         const scope = nock('https://upload.imagekit.io/api')
             .post('/v1/files/upload')
@@ -114,6 +125,8 @@ describe("File upload", function () {
                 checkFormData({requestBody,boundary,fieldName:"isPrivateFile",fieldValue:"true"});
                 checkFormData({requestBody,boundary,fieldName:"useUniqueFileName",fieldValue:"false"});
                 checkFormData({requestBody,boundary,fieldName:"responseFields",fieldValue:"tags,metadata"});
+                checkFormData({requestBody,boundary,fieldName:"extensions",fieldValue:jsonStringifiedExtensions});
+                checkFormData({requestBody,boundary,fieldName:"webhookUrl",fieldValue:"https://your-domain/?appId=some-id"});
                 done()
               })
 

@@ -118,6 +118,8 @@ const updateDetails = function (
   var data = {
     tags: updateData.tags,
     customCoordinates: updateData.customCoordinates,
+    extensions: updateData.extensions,
+    webhookUrl: updateData.webhookUrl
   };
 
   var requestOptions = {

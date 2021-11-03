@@ -58,4 +58,12 @@ export interface UploadResponse {
    * The metadata of the upload file. Use responseFields property in request to get the metadata returned in response of upload API.
    */
   metadata?: string;
+  /*
+   * AITags field is populated only because the google-auto-tagging extension was executed synchronously and it received a successresponse.
+   */
+  AITags?: object[];
+  /*
+   * Field object which will contain the status of each extension at the time of completion of the update/upload request.
+   */ 
+  extensionStatus?: { [key: string]: string }
 }

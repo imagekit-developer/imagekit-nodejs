@@ -80,6 +80,14 @@ const sampleApp = async () => {
       filesList[0].fileId,
       ["buildings", "day"],
       "10,10,100,100",
+      //Uncomment to send extensions parameter
+      // [
+      //   {
+      //       name: "google-auto-tagging",
+      //       maxTags: 5,
+      //       minConfidence: 95
+      //   }
+      // ]
     );
     console.log("File Update Response: ", JSON.stringify(fileUpdateResponse, undefined, 2), "\n");
 
@@ -168,7 +176,15 @@ const uploadFileBuffer = async (imagekitInstance, filePath, fileName) => {
 
 const uploadFileBase64 = async (imagekitInstance, filePath, fileName) => {
   const file_base64 = fs.readFileSync(filePath, "base64");
-  const response = await imagekitInstance.upload({ file: file_base64, fileName });
+  //Uncomment to send extensions parameter
+  // var extensions =  [
+  //   {
+  //       name: "google-auto-tagging",
+  //       maxTags: 5,
+  //       minConfidence: 95
+  //   }
+  // ];
+  const response = await imagekitInstance.upload({ file: file_base64, fileName/*, extensions*/});
   return response;
 };
 
@@ -195,12 +211,15 @@ const getFileMetadata = async (imagekitInstance, fileId) => {
   return response;
 };
 
-const updateFileDetails = async (imagekitInstance, fileId, tags = [], customCoordinates = "") => {
+const updateFileDetails = async (imagekitInstance, fileId, tags = [], customCoordinates = "", extensions = [], webhookUrl = "") => {
   let options = {};
   if (Array.isArray(tags) && tags.length > 0) Object.assign(options, { tags });
   if (typeof customCoordinates === "string" && customCoordinates.length > 0)
     Object.assign(options, { customCoordinates });
-
+  if (Array.isArray(extensions) && extensions.length > 0)
+    Object.assign(options,{ extensions });
+  if (typeof webhookUrl === "string" && webhookUrl.length > 0)
+    Object.assign(options,{ webhookUrl })
   const response = await imagekitInstance.updateFileDetails(fileId, options);
   return response;
 };
