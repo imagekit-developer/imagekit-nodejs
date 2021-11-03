@@ -16,6 +16,14 @@ export interface FileDetailsOptions {
    * Example - 50,50,500,500
    */
   customCoordinates?: string;
+  /* 
+  * Object with array of extensions to be processed on the image.
+  */
+  extensions?: object[];
+  /*
+    * Final status of pending extensions will be sent to this URL. 
+    */
+  webhookUrl?: string
 }
 
 /**
@@ -68,4 +76,12 @@ export interface FileDetailsResponse {
    * The type of file, it could be either image or non-image.
    */
   fileType: FileType;
+  /*
+   * AITags field is populated only because the google-auto-tagging extension was executed synchronously and it received a successresponse.
+   */
+  AITags?: object[];
+  /*
+   * Field object which will contain the status of each extension at the time of completion of the update/upload request.
+   */ 
+  extensionStatus?: { [key: string]: string }
 }

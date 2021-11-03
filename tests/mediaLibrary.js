@@ -263,7 +263,15 @@ describe("Media library APIs", function () {
 
             var updateData = {
                 tags: ["tag1", "tag2"],
-                customCoordinates: "10,10,100,100"
+                customCoordinates: "10,10,100,100",
+                extensions: [
+                    {
+                        name: "google-auto-tagging",
+                        maxTags: 5,
+                        minConfidence: 95
+                    }
+                ],
+                webhookUrl: "https://some-domain/some-api-id"
             }
 
             const scope = nock('https://api.imagekit.io')

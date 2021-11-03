@@ -248,6 +248,13 @@ Sample usage
 imagekit.upload({
     file : <url|base_64|binary>, //required
     fileName : "my_file_name.jpg",   //required
+    extensions: [
+        {
+            name: "google-auto-tagging",
+            maxTags: 5,
+            minConfidence: 95
+        }
+    ]
 }, function(error, result) {
     if(error) console.log(error);
     else console.log(result);
@@ -258,6 +265,13 @@ imagekit.upload({
 imagekit.upload({
     file : <url|base_64|binary>, //required
     fileName : "my_file_name.jpg",   //required
+    extensions: [
+        {
+            name: "google-auto-tagging",
+            maxTags: 5,
+            minConfidence: 95
+        }
+    ]
 }).then(response => {
     console.log(response);
 }).catch(error => {
@@ -374,7 +388,14 @@ Update parameters associated with the file as per the [API documentation here](h
 
 imagekit.updateFileDetails("file_id", { 
     tags : ['image_tag'],
-    customCoordinates : "10,10,100,100"
+    customCoordinates : "10,10,100,100",
+    extensions: [
+        {
+            name: "google-auto-tagging",
+            maxTags: 5,
+            minConfidence: 95
+        }
+    ]
 }, function(error, result) {
     if(error) console.log(error);
     else console.log(result);
@@ -385,7 +406,14 @@ imagekit.updateFileDetails("file_id", {
 
 imagekit.updateFileDetails("file_id", {
     tags : ['image_tag'],
-    customCoordinates : "10,10,100,100"
+    customCoordinates : "10,10,100,100",
+    extensions: [
+        {
+            name: "google-auto-tagging",
+            maxTags: 5,
+            minConfidence: 95
+        }
+    ]
 }).then(response => {
     console.log(response);
 }).catch(error => {

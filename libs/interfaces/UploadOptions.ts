@@ -69,4 +69,12 @@ export interface UploadOptions {
    * For example, set the value of this field to tags,customCoordinates,isPrivateFile,metadata to get value of tags, customCoordinates, isPrivateFile , and metadata in the response.
    */
   responseFields?: string;
+  /* 
+   * Object with array of extensions to be processed on the image.
+   */
+  extensions?: object[];
+  /*
+   * Final status of pending extensions will be sent to this URL. 
+   */
+  webhookUrl?: string
 }

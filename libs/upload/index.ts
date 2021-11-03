@@ -12,6 +12,8 @@ type FormDataOptions = Modify<
     file: string | Buffer | object;
     useUniqueFileName: string;
     isPrivateFile: string;
+    extensions?: string;
+    webhookUrl?: string;
   }
 >;
 
@@ -50,7 +52,11 @@ export default function (
         };
       } else if (key == "tags" && Array.isArray(uploadOptions.tags)) {
         formData.tags = uploadOptions.tags.join(",");
-      } else {
+      }
+        else if(key == "extensions" && Array.isArray(uploadOptions.extensions)){
+          formData.extensions = JSON.stringify(uploadOptions.extensions);
+      }
+       else {
         formData[key] = String(uploadOptions[key]);
       }
     }
