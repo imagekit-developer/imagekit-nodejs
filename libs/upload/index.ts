@@ -14,6 +14,11 @@ type FormDataOptions = Modify<
     isPrivateFile: string;
     extensions?: string;
     webhookUrl?: string;
+    overwriteFile?: string;
+    overwriteAITags?: string;
+    overwriteTags?: string;
+    overwriteCustomMetadata?: string;
+    customMetadata?: string;
   }
 >;
 
@@ -55,6 +60,9 @@ export default function (
       }
         else if(key == "extensions" && Array.isArray(uploadOptions.extensions)){
           formData.extensions = JSON.stringify(uploadOptions.extensions);
+      } else if (key === "customMetadata" && typeof uploadOptions.customMetadata === "object" &&
+                        !Array.isArray(uploadOptions.customMetadata) && uploadOptions.customMetadata !== null) {
+          formData.customMetadata = JSON.stringify(uploadOptions.customMetadata)
       }
        else {
         formData[key] = String(uploadOptions[key]);
