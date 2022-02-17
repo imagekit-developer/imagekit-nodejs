@@ -14,6 +14,10 @@ type FormDataOptions = Modify<
     isPrivateFile: string;
     extensions?: string;
     webhookUrl?: string;
+    overwriteFile?: string;
+    overwriteAITags?: string;
+    overwriteTags?: string;
+    overwriteCustomMetadata?: string;
     customMetadata?: string;
   }
 >;
