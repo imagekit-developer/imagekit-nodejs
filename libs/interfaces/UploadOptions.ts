@@ -76,5 +76,12 @@ export interface UploadOptions {
   /*
    * Final status of pending extensions will be sent to this URL. 
    */
-  webhookUrl?: string
+  webhookUrl?: string;
+  overwriteFile?: boolean;
+  overwriteAITags?: boolean;
+  overwriteTags?: boolean;
+  overwriteCustomMetadata?: boolean;
+  customMetadata?: {
+    [key: string]: string | number | boolean | Array<string | number | boolean>;
+  }
 }

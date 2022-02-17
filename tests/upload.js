@@ -107,11 +107,20 @@ describe("File upload", function () {
                     maxTags: 10
                 }
             ],
-            webhookUrl: "https://your-domain/?appId=some-id"
+            webhookUrl: "https://your-domain/?appId=some-id",
+            overwriteFile: true,
+            overwriteAITags: false,
+            overwriteTags: true,
+            overwriteCustomMetadata: false,
+            customMetadata: {
+                brand: "Nike",
+                color: "red"
+            },
         };
 
         var callback = sinon.spy();
         var jsonStringifiedExtensions = JSON.stringify(fileOptions.extensions);
+        const customMetadata = JSON.stringify(fileOptions.customMetadata);
 
         const scope = nock('https://upload.imagekit.io/api')
             .post('/v1/files/upload')
@@ -127,6 +136,11 @@ describe("File upload", function () {
                 checkFormData({requestBody,boundary,fieldName:"responseFields",fieldValue:"tags,metadata"});
                 checkFormData({requestBody,boundary,fieldName:"extensions",fieldValue:jsonStringifiedExtensions});
                 checkFormData({requestBody,boundary,fieldName:"webhookUrl",fieldValue:"https://your-domain/?appId=some-id"});
+                checkFormData({requestBody,boundary,fieldName:"overwriteFile",fieldValue:"true"});
+                checkFormData({requestBody,boundary,fieldName:"overwriteAITags",fieldValue:"false"});
+                checkFormData({requestBody,boundary,fieldName:"overwriteTags",fieldValue:"true"});
+                checkFormData({requestBody,boundary,fieldName:"overwriteCustomMetadata",fieldValue:"false"});
+                checkFormData({requestBody,boundary,fieldName:"customMetadata",fieldValue:customMetadata});
                 done()
               })
 
