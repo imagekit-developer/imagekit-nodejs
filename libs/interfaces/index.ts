@@ -17,6 +17,12 @@ import { MoveFolderOptions, MoveFolderResponse, MoveFolderError } from "./MoveFo
 import { DeleteFileVersionOptions, RestoreFileVersionOptions } from "./FileVersion"
 import { CreateCustomMetadataFieldOptions, CustomMetadataField, UpdateCustomMetadataFieldOptions, GetCustomMetadataFieldsOptions } from "./CustomMetatadaField"
 import { RenameFileOptions, RenameFileResponse } from "./Rename"
+import {
+  WebhookEvent,
+  WebhookEventVideoAccepted,
+  WebhookEventVideoCompleted,
+  WebhookEventVideoFailed,
+} from "./WebhookEvent";
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; // actual options used to construct url
 
@@ -56,5 +62,9 @@ export type {
   UpdateCustomMetadataFieldOptions,
   RenameFileOptions,
   RenameFileResponse,
+  WebhookEvent,
+  WebhookEventVideoAccepted,
+  WebhookEventVideoCompleted,
+  WebhookEventVideoFailed,
 };
 export type { IKCallback } from "./IKCallback";
