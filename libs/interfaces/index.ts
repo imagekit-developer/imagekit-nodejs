@@ -8,9 +8,18 @@ import { ListFileOptions, ListFileResponse } from "./ListFile";
 import { FileDetailsOptions, FileDetailsResponse } from "./FileDetails";
 import { FileMetadataResponse } from "./FileMetadata";
 import { PurgeCacheResponse, PurgeCacheStatusResponse } from "./PurgeCache";
-import { BulkDeleteFilesResponse, BulkDeleteFilesError } from "./BulkDeleteFiles";
+import {
+  BulkDeleteFilesResponse,
+  BulkDeleteFilesError,
+} from "./BulkDeleteFiles";
 import { CopyFolderResponse, CopyFolderError } from "./CopyFolder";
 import { MoveFolderResponse, MoveFolderError } from "./MoveFolder";
+import {
+  WebhookEvent,
+  WebhookEventVideoAccepted,
+  WebhookEventVideoCompleted,
+  WebhookEventVideoFailed,
+} from "./WebhookEvent";
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; // actual options used to construct url
 
@@ -36,5 +45,9 @@ export {
   CopyFolderError,
   MoveFolderResponse,
   MoveFolderError,
+  WebhookEvent,
+  WebhookEventVideoAccepted,
+  WebhookEventVideoCompleted,
+  WebhookEventVideoFailed,
 };
 export { IKCallback } from "./IKCallback";

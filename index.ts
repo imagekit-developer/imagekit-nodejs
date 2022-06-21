@@ -25,6 +25,7 @@ import {
 import { IKCallback } from "./libs/interfaces/IKCallback";
 import manage from "./libs/manage";
 import signature from "./libs/signature";
+import WebhookSignature, { WebhookSignatureError, makePayloadTimestampSha1Hash, serializeSignature, deserializeSignature } from "./utils/webhook-signature";
 import upload from "./libs/upload";
 /*
     Implementations
@@ -60,7 +61,15 @@ const promisify = function <T = void>(thisContext: ImageKit, fn: Function) {
   };
 };
 
-class ImageKit {
+class ImageKitStaticUtils {
+  static WebhookSignature = WebhookSignature;
+  static WebhookSignatureError = WebhookSignatureError;
+  static makePayloadTimestampSha1Hash = makePayloadTimestampSha1Hash;
+  static serializeWebhookSignature = serializeSignature;
+  static deserializeWebhookSignature = deserializeSignature;
+}
+
+class ImageKit extends ImageKitStaticUtils {
   options: ImageKitOptions = {
     uploadEndpoint: "https://upload.imagekit.io/api/v1/files/upload",
     publicKey: "",
@@ -70,6 +79,7 @@ class ImageKit {
   };
 
   constructor(opts: ImageKitOptions = {} as ImageKitOptions) {
+    super();
     this.options = _.extend(this.options, opts);
     if (!this.options.publicKey) {
       throw new Error(errorMessages.MANDATORY_PUBLIC_KEY_MISSING.message);
