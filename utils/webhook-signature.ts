@@ -14,8 +14,13 @@ export class WebhookSignatureError extends Error {
  * Generate SHA1 hash for given payload, timestamp and secret.
  * @param payload - Webhook payload (Raw request body)
  * @param timestamp - Webhook request timestamp (Generate while sending request)
- * @param secret - Webhook secret
+ * @param secret - Webhook secret as bytes (Decoded from base64 string)
  * @returns SHA1 hash encoded as base64 string
+ * @example
+ * const payload = Buffer.from("<payloadAsString>");
+ * const timestamp = new Date();
+ * const secret = Buffer.from("<secretAsString>", "base64");
+ * const webhook = new Webhook(payload, timestamp, secret);
  */
 export function makePayloadTimestampSha1Hash(
   payload: Uint8Array,
@@ -67,8 +72,7 @@ export function deserializeSignature(signature: string): {
 }
 
 /**
- * Example
- * ```
+ * @example
  * const secret = '<secret>';
  * const webhookSignature = WebhookSignature.create(secret);
  *
@@ -78,7 +82,6 @@ export function deserializeSignature(signature: string): {
  *
  * // Verify the signature for a payload
  * const isValid = webhookSignature.verify(payload, signature);
- * ```
  */
 export class WebhookSignature {
   private secret: Uint8Array;
@@ -95,12 +98,12 @@ export class WebhookSignature {
     this.eventIdSet = checkDuplicateEventIds ? new Set() : null;
   }
   /**
-   * @param secret - Webhook secret
+   * @param secret - Webhook secret (Base64 string)
    * @param options.expiryDurationMs - Duration in miliseconds after which signature is expired (default: 1min) 
    * @param options.checkDuplicateEventIds - Check if event id is unique (default: true)
    */
   public static create(
-    secret: Uint8Array | string,
+    secret: string,
     options: {
       expiryDurationMs?: number;
       checkDuplicateEventIds?: boolean;
@@ -109,15 +112,15 @@ export class WebhookSignature {
     const expiryDurationMs = options.expiryDurationMs ?? 1000 * 60;
     const checkDuplicateEventIds = options.checkDuplicateEventIds ?? false;
     return new WebhookSignature(
-      Buffer.from(secret),
+      Buffer.from(secret, "base64"),
       expiryDurationMs,
       checkDuplicateEventIds
     );
   }
   /**
    * @param payload - Webhook payload (Raw request body)
-   * @param timestamp - Webhook request timestamp (Generate while sending request)
-   * @returns Webhook signature
+   * @param options.timestamp - Explicit timestamp for the signature
+   * @returns Webhook signature encoded as base64 string
    */
   public sign(
     payload: Uint8Array | string,
@@ -132,9 +135,9 @@ export class WebhookSignature {
     return serializeSignature({ timestamp, payloadTimestampSha1Hash });
   }
   /**
-   * @param payload - Webhook payload (Raw request body)
+   * @param payload - Webhook payload (raw request body)
    * @param signature - Webhook signature
-   * @returns webhook event (parsed webhook request body)
+   * @returns Webhook event (parsed webhook request body)
    * @throws WebhookSignatureError if signature is invalid or expired
    */
   public verify(payload: Uint8Array | string, signature: string): WebhookEvent {
@@ -159,7 +162,7 @@ export class WebhookSignature {
     const parsedEvent = JSON.parse(payload.toString()) as WebhookEvent;
     // Check if the event id is unique
     if (this.eventIdSet !== null) {
-      const eventIdSet = this.eventIdSet; // refrence copied for type safety
+      const eventIdSet = this.eventIdSet; // Refrence copied for type safety
       if (eventIdSet.has(parsedEvent.id)) {
         throw new WebhookSignatureError("Duplicate event id");
       }
@@ -168,7 +171,7 @@ export class WebhookSignature {
       if (expiresIn > 0) {
         setTimeout(() => {
           eventIdSet.delete(parsedEvent.id);
-        }, this.expiryDurationMs); // remove event id when signature expires
+        }, this.expiryDurationMs); // Remove event id when signature expires
       }
     }
     return parsedEvent;
