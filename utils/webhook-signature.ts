@@ -1,7 +1,7 @@
-import { createHash } from "crypto";
+import { createHmac } from "crypto";
 import { WebhookEvent } from "../libs/interfaces";
 
-const HASH_ALGORITHM = "sha1";
+const HASH_ALGORITHM = "sha256";
 
 export class WebhookSignatureError extends Error {
   constructor(message: string) {
@@ -11,52 +11,39 @@ export class WebhookSignatureError extends Error {
 }
 
 /**
- * Generate SHA1 hash for given payload, timestamp and secret.
- * @param payload - Webhook payload (Raw request body)
- * @param timestamp - Webhook request timestamp (Generate while sending request)
- * @param secret - Webhook secret as bytes (Decoded from base64 string)
- * @returns SHA1 hash encoded as base64 string
- * @example
- * const payload = Buffer.from("<payloadAsString>");
- * const timestamp = new Date();
- * const secret = Buffer.from("<secretAsString>", "base64");
- * const webhook = new Webhook(payload, timestamp, secret);
+ *
+ * @param timstamp - Webhook request timestamp
+ * @param payload - Webhook payload as UTF8 encoded string
+ * @param secret - Webhook secret as UTF8 encoded string
+ * @returns Hmac with webhook secret as key and `${timestamp}.${payload}` as hash payload.
  */
-export function makePayloadTimestampSha1Hash(
-  payload: Uint8Array,
-  timestamp: Date,
-  secret: Uint8Array
-): string {
-  const timestampBigint = BigInt(timestamp.getTime());
-  const timestampAsBytes = Buffer.alloc(8);
-  timestampAsBytes.writeBigUInt64LE(timestampBigint);
-  // Create hashPayload in sequence of: payload, timestamp, secret
-  const hashPayload = Buffer.concat([payload, timestampAsBytes, secret]);
-  return createHash(HASH_ALGORITHM).update(hashPayload).digest("base64");
+export function computeHmac(timstamp: Date, payload: string, secret: string) {
+  const hashPayload = Buffer.from(`${timstamp.getTime()}.${payload}`);
+  return createHmac(HASH_ALGORITHM, secret).update(hashPayload).digest("base64");
 }
 
 enum WebhookSignatureItem {
   Timestamp = "t",
-  PayloadTimestampSha1Hash = "p_t_sha1",
+  Hmac = "hmac",
 }
 
-export function serializeSignature({
+function serializeSignature({
   timestamp,
-  payloadTimestampSha1Hash,
+  hmac,
 }: {
   timestamp: Date;
-  payloadTimestampSha1Hash: string;
+  hmac: string;
 }): string {
   const items: [string, string][] = [
-    [WebhookSignatureItem.Timestamp, timestamp.getTime().toString()], // timestamp in miliseconds since epoch
-    [WebhookSignatureItem.PayloadTimestampSha1Hash, payloadTimestampSha1Hash], // sha1(payload + timestamp + secret)
+    [WebhookSignatureItem.Timestamp, timestamp.getTime().toString()],
+    [WebhookSignatureItem.Hmac, hmac],
   ];
   return items.map(([key, value]) => `${key}:${value}`).join(",");
 }
 
-export function deserializeSignature(signature: string): {
+function deserializeSignature(signature: string): {
   timestamp: Date;
-  payloadTimestampSha1Hash: string;
+  hmac: string;
 } {
   const items = signature.split(",");
   const itemMap: Map<string, string> = new Map(
@@ -65,117 +52,51 @@ export function deserializeSignature(signature: string): {
 
   return {
     timestamp: new Date(Number(itemMap.get(WebhookSignatureItem.Timestamp)!)),
-    payloadTimestampSha1Hash: itemMap.get(
-      WebhookSignatureItem.PayloadTimestampSha1Hash
-    )!,
+    hmac: itemMap.get(WebhookSignatureItem.Hmac)!,
   };
 }
 
 /**
- * @example
- * const secret = '<secret>';
- * const webhookSignature = WebhookSignature.create(secret);
- *
- * // Create a signature for a payload
- * const payload = Buffer.from('{"hello": "world"}');
- * const signature = webhookSignature.sign(payload);
- *
- * // Verify the signature for a payload
- * const isValid = webhookSignature.verify(payload, signature);
+ * 
+ * @param payload - Webhook request body (Raw body)
+ * @param secret - Webhook secret as UTF8 encoded string
+ * @param options - `.timestamp` to explicitly set the timestamp
+ * @returns 
  */
-export class WebhookSignature {
-  private secret: Uint8Array;
-  private expiryDurationMs: number;
-  private eventIdSet: Set<string> | null;
-
-  protected constructor(
-    secret: Uint8Array,
-    expiryDurationMs: number,
-    checkDuplicateEventIds: boolean
-  ) {
-    this.secret = secret;
-    this.expiryDurationMs = expiryDurationMs;
-    this.eventIdSet = checkDuplicateEventIds ? new Set() : null;
-  }
-  /**
-   * @param secret - Webhook secret (Base64 string)
-   * @param options.expiryDurationMs - Duration in miliseconds after which signature is expired (default: 1min) 
-   * @param options.checkDuplicateEventIds - Check if event id is unique (default: true)
-   */
-  public static create(
-    secret: string,
-    options: {
-      expiryDurationMs?: number;
-      checkDuplicateEventIds?: boolean;
-    } = {}
-  ) {
-    const expiryDurationMs = options.expiryDurationMs ?? 1000 * 60;
-    const checkDuplicateEventIds = options.checkDuplicateEventIds ?? false;
-    return new WebhookSignature(
-      Buffer.from(secret, "base64"),
-      expiryDurationMs,
-      checkDuplicateEventIds
-    );
-  }
-  /**
-   * @param payload - Webhook payload (Raw request body)
-   * @param options.timestamp - Explicit timestamp for the signature
-   * @returns Webhook signature encoded as base64 string
-   */
-  public sign(
-    payload: Uint8Array | string,
-    options: { timestamp?: Date } = {}
-  ): string {
-    const timestamp = options.timestamp ?? new Date();
-    const payloadTimestampSha1Hash = makePayloadTimestampSha1Hash(
-      Buffer.from(payload),
-      timestamp,
-      this.secret
-    );
-    return serializeSignature({ timestamp, payloadTimestampSha1Hash });
-  }
-  /**
-   * @param payload - Webhook payload (raw request body)
-   * @param signature - Webhook signature
-   * @returns Webhook event (parsed webhook request body)
-   * @throws WebhookSignatureError if signature is invalid or expired
-   */
-  public verify(payload: Uint8Array | string, signature: string): WebhookEvent {
-    const { timestamp, payloadTimestampSha1Hash } =
-      deserializeSignature(signature);
-    // Check if signature is expired
-    const expiresAt = new Date(timestamp.getTime() + this.expiryDurationMs);
-    const isExpired = Date.now() > expiresAt.getTime();
-    if (isExpired) {
-      throw new WebhookSignatureError("Signature expired");
-    }
-    // Check if signature is valid
-    const calculatedPayloadTimestampSha1Hash = makePayloadTimestampSha1Hash(
-      Buffer.from(payload),
-      timestamp,
-      this.secret
-    );
-    if (payloadTimestampSha1Hash !== calculatedPayloadTimestampSha1Hash) {
-      throw new WebhookSignatureError("Signature is invalid");
-    }
-    // Parse event
-    const parsedEvent = JSON.parse(payload.toString()) as WebhookEvent;
-    // Check if the event id is unique
-    if (this.eventIdSet !== null) {
-      const eventIdSet = this.eventIdSet; // Refrence copied for type safety
-      if (eventIdSet.has(parsedEvent.id)) {
-        throw new WebhookSignatureError("Duplicate event id");
-      }
-      eventIdSet.add(parsedEvent.id);
-      const expiresIn = expiresAt.getTime() - Date.now();
-      if (expiresIn > 0) {
-        setTimeout(() => {
-          eventIdSet.delete(parsedEvent.id);
-        }, this.expiryDurationMs); // Remove event id when signature expires
-      }
-    }
-    return parsedEvent;
-  }
+export function sign(
+  payload: string | Uint8Array,
+  secret: string,
+  options: {
+    timestamp?: Date;
+  } = {}
+) {
+  const timestamp = options.timestamp ?? new Date();
+  const payloadAsString = Buffer.from(payload).toString(); // Ensure payload as utf8 string
+  return serializeSignature({
+    timestamp,
+    hmac: computeHmac(timestamp, payloadAsString, secret),
+  });
 }
 
-export default WebhookSignature;
+/**
+ * @param payload - Webhook request (Raw body)
+ * @param signature - Webhook signature as UTF8 encoded strings (Stored in `x-ik-signature` header of the request)
+ * @param secret - Webhook secret as UTF8 encoded string [Copy from ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks)
+ * @returns Verified timestamp and parsed webhook event
+ */
+export function verify(
+  payload: string | Uint8Array,
+  signature: string,
+  secret: string
+) {
+  const { timestamp, hmac } = deserializeSignature(signature);
+  const payloadAsString = Buffer.from(payload).toString(); // Ensure payload as utf8 string
+  const computedHmac = computeHmac(timestamp, payloadAsString, secret);
+  if (hmac !== computedHmac) {
+    throw new WebhookSignatureError("Invalid signature");
+  }
+  return {
+    timestamp,
+    event: JSON.parse(payloadAsString) as WebhookEvent,
+  };
+}
