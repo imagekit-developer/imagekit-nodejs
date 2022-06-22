@@ -25,7 +25,7 @@ import {
 import { IKCallback } from "./libs/interfaces/IKCallback";
 import manage from "./libs/manage";
 import signature from "./libs/signature";
-import WebhookSignature, { WebhookSignatureError, makePayloadTimestampSha1Hash, serializeSignature, deserializeSignature } from "./utils/webhook-signature";
+import { sign, verify } from "./utils/webhook-signature";
 import upload from "./libs/upload";
 /*
     Implementations
@@ -62,11 +62,7 @@ const promisify = function <T = void>(thisContext: ImageKit, fn: Function) {
 };
 
 class ImageKitStaticUtils {
-  static WebhookSignature = WebhookSignature;
-  static WebhookSignatureError = WebhookSignatureError;
-  static makePayloadTimestampSha1Hash = makePayloadTimestampSha1Hash;
-  static serializeWebhookSignature = serializeSignature;
-  static deserializeWebhookSignature = deserializeSignature;
+  static WebhookSignature = { sign, verify };
 }
 
 class ImageKit extends ImageKitStaticUtils {
