@@ -55,8 +55,9 @@ export default function (
         form.append('file', uploadOptions.file, String(uploadOptions.fileName));
       } else if (key == "tags" && Array.isArray(uploadOptions.tags)) {
         form.append('tags', uploadOptions.tags.join(","));
-      }
-      else if (key == "extensions" && Array.isArray(uploadOptions.extensions)) {
+      } else if (key == "responseFields" && Array.isArray(uploadOptions.responseFields)) {
+        form.append('responseFields', uploadOptions.responseFields.join(","));
+      } else if (key == "extensions" && Array.isArray(uploadOptions.extensions)) {
         form.append('extensions', JSON.stringify(uploadOptions.extensions));
       } else if (key === "customMetadata" && typeof uploadOptions.customMetadata === "object" &&
         !Array.isArray(uploadOptions.customMetadata) && uploadOptions.customMetadata !== null) {
