@@ -145,7 +145,7 @@ const listFiles = function (
   }
 
   var requestOptions = {
-    url: "https://api.imagekit.io/v1/files/",
+    url: `https://api.imagekit.io/v1/files/`,
     method: "GET",
     qs: listOptions || {},
     json: true,
