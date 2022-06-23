@@ -45,7 +45,6 @@ const getPurgeCacheStatus = function (
   var requestOptions = {
     url: "https://api.imagekit.io/v1/files/purge/" + requestId,
     method: "GET",
-    json: true,
   };
 
   request(requestOptions, defaultOptions, callback);

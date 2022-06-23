@@ -37,8 +37,7 @@ const deleteFile = function (fileId: string, defaultOptions: ImageKitOptions, ca
 
   var requestOptions = {
     url: "https://api.imagekit.io/v1/files/" + fileId,
-    method: "DELETE",
-    json: true,
+    method: "DELETE"
   };
 
   request(requestOptions, defaultOptions, callback);
@@ -59,16 +58,14 @@ const getMetadata = function (
 
   var requestOptions = {
     url: "https://api.imagekit.io/v1/files/" + fileIdOrURL + "/metadata",
-    method: "GET",
-    json: true,
+    method: "GET"
   };
 
   // In case of URL change the endopint
   if (fileIdOrURL.indexOf("http") === 0) {
     requestOptions = {
       url: `https://api.imagekit.io/v1/metadata?url=${fileIdOrURL}`,
-      method: "GET",
-      json: true,
+      method: "GET"
     };
   }
 
@@ -90,8 +87,7 @@ const getDetails = function (
 
   var requestOptions = {
     url: "https://api.imagekit.io/v1/files/" + fileId + "/details",
-    method: "GET",
-    json: true,
+    method: "GET"
   };
 
   request(requestOptions, defaultOptions, callback);
@@ -147,8 +143,7 @@ const listFiles = function (
   var requestOptions = {
     url: `https://api.imagekit.io/v1/files/`,
     method: "GET",
-    qs: listOptions || {},
-    json: true,
+    qs: listOptions || {}
   };
 
   request(requestOptions, defaultOptions, callback);
@@ -456,8 +451,7 @@ const getBulkJobStatus = function (jobId: string, defaultOptions: ImageKitOption
 
   const requestOptions = {
     url: "https://api.imagekit.io/v1/bulkJobs/" + jobId,
-    method: "GET",
-    json: true,
+    method: "GET"
   };
 
   request(requestOptions, defaultOptions, callback);

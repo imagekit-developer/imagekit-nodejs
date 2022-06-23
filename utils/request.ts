@@ -50,14 +50,15 @@ export default function (
         respond(true, error.response.data, callback);
       }
       
-    } else if (error.request) {
+    } else if (error) {
+      respond(true, error, callback);
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-      respond(true, error.request, callback);
     } else {
-      // Something happened in setting up the request that triggered an Error
-      respond(true, error.message, callback);
+      respond(true, {
+        message: "Unknown error occured"
+      }, callback);
     }
   })
 
