@@ -99,7 +99,7 @@ describe("File upload", function () {
             tags: ["tag1","tag2"], // array handling
             isPrivateFile: true, // Boolean handling
             useUniqueFileName: "false", // As string
-            responseFields : ["tags,metadata"],
+            responseFields: ["tags", "metadata"],
             extensions: [
                 {
                     name: "aws-auto-tagging",
