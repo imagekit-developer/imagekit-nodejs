@@ -26,6 +26,9 @@ import {
   CreateFolderOptions,
   CopyFolderOptions,
   MoveFolderOptions,
+  FileVersionDetailsOptions,
+  DeleteFileVersionOptions,
+  RestoreFileVersionOptions,
 } from "./libs/interfaces";
 import { IKCallback } from "./libs/interfaces/IKCallback";
 import manage from "./libs/manage";
@@ -148,6 +151,32 @@ class ImageKit {
   }
 
   /**
+   * Get all versions of an assset API
+   *
+   * @see {@link https://docs.imagekit.io/api-reference/media-api/get-file-versions}
+   *
+   * @param fileId
+   */
+  getFileVersions(fileId: string): Promise<FileDetailsResponse>;
+  getFileVersions(fileId: string, callback: IKCallback<FileDetailsResponse>): void;
+  getFileVersions(fileId: string, callback?: IKCallback<FileDetailsResponse>): void | Promise<FileDetailsResponse> {
+    return promisify<FileDetailsResponse>(this, manage.getFileVersions)(fileId, this.options, callback);
+  }
+
+  /**
+  * Get file version details API
+  *
+  * @see {@link https://docs.imagekit.io/api-reference/media-api/get-file-version-details}
+  *
+  * @param fileVersionDetailsOptions
+  */
+  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions): Promise<FileDetailsResponse>;
+  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions, callback: IKCallback<FileDetailsResponse>): void;
+  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions, callback?: IKCallback<FileDetailsResponse>): void | Promise<FileDetailsResponse> {
+    return promisify<FileDetailsResponse>(this, manage.getFileVersionDetails)(fileVersionDetailsOptions, this.options, callback);
+  }
+
+  /**
    * Get image exif, pHash and other metadata for uploaded files in ImageKit.io media library using this API.
    *
    * @see {@link https://docs.imagekit.io/api-reference/metadata-api/get-image-metadata-for-uploaded-media-files}
@@ -207,6 +236,20 @@ class ImageKit {
   }
 
   /**
+   * Remove AITags from multiple files in a single request.
+   *
+   * @see {@link https://docs.imagekit.io/api-reference/media-api/remove-aitags-bulk}
+   *
+   * @param fileIds
+   * @param tags
+   */
+  bulkRemoveAITags(fileIds: string[], tags: string[]): void;
+  bulkRemoveAITags(fileIds: string[], tags: string[], callback: IKCallback<void>): void;
+  bulkRemoveAITags(fileIds: string[], tags: string[], callback?: IKCallback<void>): void | Promise<void> {
+    return promisify(this, manage.bulkRemoveAITags)(fileIds, tags, this.options, callback);
+  }
+
+  /**
    * You can programmatically delete uploaded files in media library using delete file API.
    *
    * @see {@link https://docs.imagekit.io/api-reference/media-api/delete-file}
@@ -217,6 +260,32 @@ class ImageKit {
   deleteFile(fileId: string, callback: IKCallback<void>): void;
   deleteFile(fileId: string, callback?: IKCallback<void>): void | Promise<void> {
     return promisify(this, manage.deleteFile)(fileId, this.options, callback);
+  }
+
+  /**
+   * Delete any non-current version of a file.
+   *
+   * @see {@link https://docs.imagekit.io/api-reference/media-api/delete-file-version}
+   *
+   * @param deleteFileVersionOptions
+   */
+  deleteFileVersion(deleteFileVersionOptions: DeleteFileVersionOptions): Promise<void>;
+  deleteFileVersion(deleteFileVersionOptions: DeleteFileVersionOptions, callback: IKCallback<void>): void;
+  deleteFileVersion(deleteFileVersionOptions: DeleteFileVersionOptions, callback?: IKCallback<void>): void | Promise<void> {
+    return promisify(this, manage.deleteFileVersion)(deleteFileVersionOptions, this.options, callback);
+  }
+
+  /**
+  * Restore file version to a different version of a file.
+  *
+  * @see {@link https://docs.imagekit.io/api-reference/media-api/restore-file-version}
+  *
+  * @param restoreFileVersionOptions
+  */
+  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions): Promise<FileDetailsResponse>;
+  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions, callback: IKCallback<FileDetailsResponse>): void;
+  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions, callback?: IKCallback<FileDetailsResponse>): void | Promise<FileDetailsResponse> {
+    return promisify<FileDetailsResponse>(this, manage.restoreFileVersion)(restoreFileVersionOptions, this.options, callback);
   }
 
   /**

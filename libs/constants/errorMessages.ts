@@ -7,6 +7,7 @@ export default {
     "CACHE_PURGE_URL_MISSING": { message: "Missing URL parameter for this request", help: "" },
     "CACHE_PURGE_STATUS_ID_MISSING": { message: "Missing Request ID parameter for this request", help: "" },
     "FILE_ID_MISSING": { message: "Missing File ID parameter for this request", help: "" },
+    "FILE_VERSION_ID_MISSING": { message: "Missing File version ID parameter for this request", help: "" },
     "FILE_ID_OR_URL_MISSING": { message: "Pass either File ID or remote URL of the image as first parameter", help: "" },
     "UPDATE_DATA_MISSING": { message: "Missing file update data for this request", help: "" },
     "UPDATE_DATA_TAGS_INVALID": { message: "Invalid tags parameter for this request", help: "tags should be passed as null or an array like ['tag1', 'tag2']" },
@@ -29,5 +30,6 @@ export default {
     "UNEQUAL_STRING_LENGTH": { message: "Unequal pHash string length", help: "For distance calucation, the two pHash strings must have equal length" },
     //bulk delete errors
     "INVALID_FILEIDS_VALUE": { message: "Invalid value for fileIds", help: "fileIds should be an array of fileId of the files. The array should have atleast one fileId." },
-    "BULK_ADD_TAGS_INVALID": { message: "Invalid value for tags", help: "tags should be a non empty array of string like ['tag1', 'tag2']." }
+    "BULK_ADD_TAGS_INVALID": { message: "Invalid value for tags", help: "tags should be a non empty array of string like ['tag1', 'tag2']." },
+    "BULK_AI_TAGS_INVALID": { message: "Invalid value for AITags", help: "AITags should be a non empty array of string like ['tag1', 'tag2']." }
 };

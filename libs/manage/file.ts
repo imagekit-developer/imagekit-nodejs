@@ -20,6 +20,7 @@ import {
   ListFileOptions,
   ListFileResponse,
   FileDetailsOptions,
+  FileVersionDetailsOptions,
   FileDetailsResponse,
   FileMetadataResponse,
   BulkDeleteFilesResponse,
@@ -30,6 +31,8 @@ import {
   CreateFolderOptions,
   CopyFolderOptions,
   MoveFolderOptions,
+  DeleteFileVersionOptions,
+  RestoreFileVersionOptions,
 } from "../interfaces/";
 import ImageKit from "../..";
 
@@ -45,6 +48,57 @@ const deleteFile = function (fileId: string, defaultOptions: ImageKitOptions, ca
   var requestOptions = {
     url: "https://api.imagekit.io/v1/files/" + fileId,
     method: "DELETE"
+  };
+
+  request(requestOptions, defaultOptions, callback);
+};
+
+
+/*
+    Delete a file version
+*/
+const deleteFileVersion = function (deleteFileVersionOptions: DeleteFileVersionOptions, defaultOptions: ImageKitOptions, callback?: IKCallback<void>) {
+  const { fileId, versionId } = deleteFileVersionOptions;
+  if (!fileId) {
+    respond(true, errorMessages.FILE_ID_MISSING, callback);
+    return;
+  }
+
+  if (!versionId) {
+    respond(true, errorMessages.FILE_VERSION_ID_MISSING, callback);
+    return;
+  }
+
+  var requestOptions = {
+    url: `https://api.imagekit.io/v1/files/${fileId}/versions/${versionId}`,
+    method: "DELETE"
+  };
+
+  request(requestOptions, defaultOptions, callback);
+};
+
+
+/*
+    Restore a file version as the current version
+*/
+const restoreFileVersion = function (
+  restoreFileVersionOptions: RestoreFileVersionOptions,
+  defaultOptions: ImageKitOptions,
+  callback?: IKCallback<FileDetailsResponse>) {
+  const { fileId, versionId } = restoreFileVersionOptions;
+  if (!fileId) {
+    respond(true, errorMessages.FILE_ID_MISSING, callback);
+    return;
+  }
+
+  if (!versionId) {
+    respond(true, errorMessages.FILE_VERSION_ID_MISSING, callback);
+    return;
+  }
+
+  var requestOptions = {
+    url: `https://api.imagekit.io/v1/files/${fileId}/versions/${versionId}/restore`,
+    method: "PUT"
   };
 
   request(requestOptions, defaultOptions, callback);
@@ -94,6 +148,34 @@ const getDetails = function (
 
   var requestOptions = {
     url: "https://api.imagekit.io/v1/files/" + fileId + "/details",
+    method: "GET"
+  };
+
+  request(requestOptions, defaultOptions, callback);
+};
+
+
+/*
+    Get Details of a file version
+*/
+const getFileVersionDetails = function (
+  fileDetailsOptions: FileVersionDetailsOptions,
+  defaultOptions: ImageKitOptions,
+  callback?: IKCallback<FileDetailsResponse>,
+) {
+  const { fileId, versionId } = fileDetailsOptions;
+  if (!fileId) {
+    respond(true, errorMessages.FILE_ID_MISSING, callback);
+    return;
+  }
+
+  if (!versionId) {
+    respond(true, errorMessages.FILE_VERSION_ID_MISSING, callback);
+    return;
+  }
+
+  var requestOptions = {
+    url: `https://api.imagekit.io/v1/files/${fileId}/versions/${versionId}`,
     method: "GET"
   };
 
@@ -151,6 +233,28 @@ const listFiles = function (
     url: `https://api.imagekit.io/v1/files/`,
     method: "GET",
     qs: listOptions || {}
+  };
+
+  request(requestOptions, defaultOptions, callback);
+};
+
+
+/*
+    Get all versions of an asset
+*/
+const getFilesVersions = function (
+  fileId: string,
+  defaultOptions: ImageKitOptions,
+  callback?: IKCallback<FileDetailsResponse[]>,
+) {
+  if (!fileId) {
+    respond(true, errorMessages.FILE_ID_MISSING, callback);
+    return;
+  }
+
+  var requestOptions = {
+    url: `https://api.imagekit.io/v1/files/${fileId}/versions`,
+    method: "GET"
   };
 
   request(requestOptions, defaultOptions, callback);
@@ -253,6 +357,44 @@ const bulkRemoveTags = function (
 
   const requestOptions = {
     url: "https://api.imagekit.io/v1/files/removeTags",
+    method: "POST",
+    json: data,
+  };
+
+  request(requestOptions, defaultOptions, callback);
+};
+
+
+/*
+    Remove AI tags in bulk
+*/
+const bulkRemoveAITags = function (
+  fileIdArray: string[],
+  tags: string[],
+  defaultOptions: ImageKitOptions,
+  callback?: IKCallback<void>,
+) {
+  if (
+    !Array.isArray(fileIdArray) ||
+    fileIdArray.length === 0 ||
+    fileIdArray.filter((fileId) => typeof fileId !== "string").length > 0
+  ) {
+    respond(true, errorMessages.INVALID_FILEIDS_VALUE, callback);
+    return;
+  }
+
+  if (!Array.isArray(tags) || tags.length === 0 || tags.filter((tag) => typeof tag !== "string").length > 0) {
+    respond(true, errorMessages.BULK_ADD_TAGS_INVALID, callback);
+    return;
+  }
+
+  const data = {
+    fileIds: fileIdArray,
+    AITags: tags,
+  };
+
+  const requestOptions = {
+    url: "https://api.imagekit.io/v1/files/removeAITags",
     method: "POST",
     json: data,
   };
@@ -477,11 +619,16 @@ export default {
   deleteFile,
   getMetadata,
   getDetails,
+  getFileVersionDetails,
   updateDetails,
   listFiles,
+  getFilesVersions,
   bulkDeleteFiles,
+  deleteFileVersion,
+  restoreFileVersion,
   bulkAddTags,
   bulkRemoveTags,
+  bulkRemoveAITags,
   copyFile,
   moveFile,
   copyFolder,

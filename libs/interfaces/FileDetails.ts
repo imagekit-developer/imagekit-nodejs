@@ -61,7 +61,7 @@ export interface FileDetailsResponse {
   /**
    * Array of tags associated with the image. If no tags are set, it will be null.
    */
-  tags: string[] | null;
+  tags?: string[] | null;
   /**
    * Is the file marked as private. It can be either true or false.
    */
@@ -126,5 +126,21 @@ export interface FileDetailsResponse {
   /*
    * MIME Type of the file. For example - image/jpeg
    */
-  mime: string;
+  mime?: string;
+  /**
+   * An object containing the file or file version's id (versionId) and name.
+   */
+  versionInfo?: object;
+}
+
+
+export interface FileVersionDetailsOptions {
+  /**
+   * The unique fileId of the uploaded file. fileId is returned in list files API and upload API.
+   */
+  fileId: string;
+  /**
+   * The unique versionId of the uploaded file's version. This is returned in list files API and upload API as id within the versionInfo parameter.
+   */
+  versionId: string;
 }

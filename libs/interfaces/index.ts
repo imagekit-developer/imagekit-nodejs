@@ -8,12 +8,13 @@ import { ListFileOptions, ListFileResponse } from "./ListFile";
 import { CopyFileOptions } from "./CopyFile";
 import { MoveFileOptions } from "./MoveFile";
 import { CreateFolderOptions } from "./CreateFolder";
-import { FileDetailsOptions, FileDetailsResponse } from "./FileDetails";
+import { FileDetailsOptions, FileVersionDetailsOptions, FileDetailsResponse } from "./FileDetails";
 import { FileMetadataResponse } from "./FileMetadata";
 import { PurgeCacheResponse, PurgeCacheStatusResponse } from "./PurgeCache";
 import { BulkDeleteFilesResponse, BulkDeleteFilesError } from "./BulkDeleteFiles";
 import { CopyFolderOptions, CopyFolderResponse, CopyFolderError } from "./CopyFolder";
 import { MoveFolderOptions, MoveFolderResponse, MoveFolderError } from "./MoveFolder";
+import { DeleteFileVersionOptions, RestoreFileVersionOptions } from "./FileVersion"
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; // actual options used to construct url
 
@@ -29,6 +30,7 @@ export {
   ListFileOptions,
   ListFileResponse,
   FileDetailsOptions,
+  FileVersionDetailsOptions,
   FileDetailsResponse,
   FileMetadataResponse,
   PurgeCacheResponse,
@@ -44,5 +46,7 @@ export {
   CreateFolderOptions,
   CopyFolderOptions,
   MoveFolderOptions,
+  DeleteFileVersionOptions,
+  RestoreFileVersionOptions,
 };
 export { IKCallback } from "./IKCallback";
