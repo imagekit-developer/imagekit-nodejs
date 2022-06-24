@@ -173,6 +173,8 @@ https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400/default-image.jpg?v=123&i
 
 See the complete list of transformations supported in ImageKit [here](https://docs.imagekit.io/features/image-transformations). The SDK gives a name to each transformation parameter e.g. `height` for `h` and `width` for `w` parameter. It makes your code more readable. If the property does not match any of the following supported options, it is added as it is.
 
+If you want to generate transformations in your application and add them to the URL as it is, use the `raw` parameter.
+
 | Supported Transformation Name | Translates to parameter |
 |-------------------------------|-------------------------|
 | height | h |
@@ -232,6 +234,7 @@ See the complete list of transformations supported in ImageKit [here](https://do
 | effectContrast | e-contrast |
 | effectGray | e-grayscale |
 | original | orig |
+| raw | `replaced by the parameter value` |
 
 
 
