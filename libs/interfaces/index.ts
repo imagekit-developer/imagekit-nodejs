@@ -5,12 +5,15 @@ import { UploadResponse } from "./UploadResponse";
 import { FileType } from "./FileType";
 import { UrlOptions } from "./UrlOptions";
 import { ListFileOptions, ListFileResponse } from "./ListFile";
+import { CopyFileOptions } from "./CopyFile";
+import { MoveFileOptions } from "./MoveFile";
+import { CreateFolderOptions } from "./CreateFolder";
 import { FileDetailsOptions, FileDetailsResponse } from "./FileDetails";
 import { FileMetadataResponse } from "./FileMetadata";
 import { PurgeCacheResponse, PurgeCacheStatusResponse } from "./PurgeCache";
 import { BulkDeleteFilesResponse, BulkDeleteFilesError } from "./BulkDeleteFiles";
-import { CopyFolderResponse, CopyFolderError } from "./CopyFolder";
-import { MoveFolderResponse, MoveFolderError } from "./MoveFolder";
+import { CopyFolderOptions, CopyFolderResponse, CopyFolderError } from "./CopyFolder";
+import { MoveFolderOptions, MoveFolderResponse, MoveFolderError } from "./MoveFolder";
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; // actual options used to construct url
 
@@ -36,5 +39,10 @@ export {
   CopyFolderError,
   MoveFolderResponse,
   MoveFolderError,
+  CopyFileOptions,
+  MoveFileOptions,
+  CreateFolderOptions,
+  CopyFolderOptions,
+  MoveFolderOptions,
 };
 export { IKCallback } from "./IKCallback";

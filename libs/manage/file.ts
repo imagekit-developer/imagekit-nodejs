@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 /*
-	Constants
+  Constants
 */
 import errorMessages from "../constants/errorMessages";
 
@@ -12,7 +12,7 @@ import respond from "../../utils/respond";
 import request from "../../utils/request";
 
 /*
-	Interfaces
+  Interfaces
 */
 import { IKCallback } from "../interfaces/IKCallback";
 import {
@@ -24,7 +24,14 @@ import {
   FileMetadataResponse,
   BulkDeleteFilesResponse,
   BulkDeleteFilesError,
+  CopyFileOptions,
+  CopyFolderResponse,
+  MoveFileOptions,
+  CreateFolderOptions,
+  CopyFolderOptions,
+  MoveFolderOptions,
 } from "../interfaces/";
+import ImageKit from "../..";
 
 /*
     Delete a file
@@ -133,7 +140,7 @@ const updateDetails = function (
 const listFiles = function (
   listOptions: ListFileOptions,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<ListFileResponse[]>,
+  callback?: IKCallback<FileDetailsResponse[]>,
 ) {
   if (listOptions && !_.isObject(listOptions)) {
     respond(true, errorMessages.UPDATE_DATA_MISSING, callback);
@@ -257,11 +264,12 @@ const bulkRemoveTags = function (
     Copy file
 */
 const copyFile = function (
-  sourceFilePath: string,
-  destinationPath: string,
+  copyFileOptions: CopyFileOptions,
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<void>,
 ) {
+  const { sourceFilePath, destinationPath, includeVersions = false } = copyFileOptions;
+
   if (typeof sourceFilePath !== "string" || sourceFilePath.length === 0) {
     respond(true, errorMessages.INVALID_SOURCE_FILE_PATH, callback);
     return;
@@ -272,9 +280,15 @@ const copyFile = function (
     return;
   }
 
+  if (typeof includeVersions !== "boolean") {
+    respond(true, errorMessages.INVALID_INCLUDE_VERSION, callback);
+    return;
+  }
+
   const data = {
-    sourceFilePath: sourceFilePath,
-    destinationPath: destinationPath,
+    sourceFilePath,
+    destinationPath,
+    includeVersions
   };
 
   const requestOptions = {
@@ -290,11 +304,11 @@ const copyFile = function (
     Move file
 */
 const moveFile = function (
-  sourceFilePath: string,
-  destinationPath: string,
+  moveFileOptions: MoveFileOptions,
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<void>,
 ) {
+  const { sourceFilePath, destinationPath } = moveFileOptions;
   if (typeof sourceFilePath !== "string" || sourceFilePath.length === 0) {
     respond(true, errorMessages.INVALID_SOURCE_FILE_PATH, callback);
     return;
@@ -306,8 +320,8 @@ const moveFile = function (
   }
 
   const data = {
-    sourceFilePath: sourceFilePath,
-    destinationPath: destinationPath,
+    sourceFilePath,
+    destinationPath
   };
 
   const requestOptions = {
@@ -323,11 +337,11 @@ const moveFile = function (
     Copy Folder
 */
 const copyFolder = function (
-  sourceFolderPath: string,
-  destinationPath: string,
+  copyFolderOptions: CopyFolderOptions,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<void>,
+  callback?: IKCallback<CopyFolderResponse>,
 ) {
+  const { sourceFolderPath, destinationPath, includeVersions = false } = copyFolderOptions;
   if (typeof sourceFolderPath !== "string" || sourceFolderPath.length === 0) {
     respond(true, errorMessages.INVALID_SOURCE_FOLDER_PATH, callback);
     return;
@@ -339,8 +353,9 @@ const copyFolder = function (
   }
 
   const data = {
-    sourceFolderPath: sourceFolderPath,
-    destinationPath: destinationPath,
+    sourceFolderPath,
+    destinationPath,
+    includeVersions
   };
 
   const requestOptions = {
@@ -356,11 +371,12 @@ const copyFolder = function (
     Move Folder
 */
 const moveFolder = function (
-  sourceFolderPath: string,
-  destinationPath: string,
+  moveFolderOptions: MoveFolderOptions,
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<void>,
 ) {
+  const { sourceFolderPath, destinationPath } = moveFolderOptions;
+
   if (typeof sourceFolderPath !== "string" || sourceFolderPath.length === 0) {
     respond(true, errorMessages.INVALID_SOURCE_FOLDER_PATH, callback);
     return;
@@ -372,8 +388,8 @@ const moveFolder = function (
   }
 
   const data = {
-    sourceFolderPath: sourceFolderPath,
-    destinationPath: destinationPath,
+    sourceFolderPath,
+    destinationPath,
   };
 
   const requestOptions = {
@@ -389,11 +405,11 @@ const moveFolder = function (
     Create folder
 */
 const createFolder = function (
-  folderName: string,
-  parentFolderPath: string,
+  createFolderOptions: CreateFolderOptions,
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<void>,
 ) {
+  const { folderName, parentFolderPath } = createFolderOptions;
   if (typeof folderName !== "string" || folderName.length === 0) {
     respond(true, errorMessages.INVALID_FOLDER_NAME, callback);
     return;

@@ -88,10 +88,10 @@ describe("Media library APIs", function () {
 
         it('Copy file invalid folder path', function (done) {
             var sourceFilePath = "/file.jpg";
-            imagekit.copyFile(sourceFilePath, null, function (err, response) {
+            imagekit.copyFile({ sourceFilePath, destinationPath: null }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid destinationPath value", 
-                    help : "It should be a string like '/path/to/folder'"                
+                    messages: "Invalid destinationPath value",
+                    help: "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -99,10 +99,10 @@ describe("Media library APIs", function () {
 
         it('Copy file invalid file path', function (done) {
             var destinationPath = "/";
-            imagekit.copyFile(null, destinationPath, function (err, response) {
+            imagekit.copyFile({ sourceFilePath: null, destinationPath }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid sourceFilePath value", 
-                    help : "It should be a string like /path/to/file.jpg'"               
+                    messages: "Invalid sourceFilePath value",
+                    help: "It should be a string like /path/to/file.jpg'"
                 })
                 done();
             });
@@ -110,10 +110,10 @@ describe("Media library APIs", function () {
 
         it('Move file invalid folder path', function (done) {
             var sourceFilePath = "/file.jpg";
-            imagekit.moveFile(sourceFilePath, null, function (err, response) {
+            imagekit.moveFile({ sourceFilePath, destinationPath: null }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid destinationPath value", 
-                    help : "It should be a string like '/path/to/folder'"
+                    messages: "Invalid destinationPath value",
+                    help: "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -121,10 +121,10 @@ describe("Media library APIs", function () {
 
         it('Move file invalid file path', function (done) {
             var destinationPath = "/";
-            imagekit.moveFile(null, destinationPath, function (err, response) {
+            imagekit.moveFile({ sourceFilePath: null, destinationPath }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid sourceFilePath value", 
-                    help : "It should be a string like /path/to/file.jpg'"
+                    messages: "Invalid sourceFilePath value",
+                    help: "It should be a string like /path/to/file.jpg'"
                 })
                 done();
             });
@@ -132,10 +132,10 @@ describe("Media library APIs", function () {
 
         it('Copy folder invalid sourceFolderPath', function (done) {
             var destinationPath = "/";
-            imagekit.copyFolder(null, destinationPath, function (err, response) {
+            imagekit.copyFolder({ sourceFolderPath: null, destinationPath }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid sourceFolderPath value", 
-                    help : "It should be a string like '/path/to/folder'"
+                    messages: "Invalid sourceFolderPath value",
+                    help: "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -143,10 +143,10 @@ describe("Media library APIs", function () {
 
         it('Copy folder invalid destinationPath', function (done) {
             var sourceFolderPath = "/";
-            imagekit.copyFolder(sourceFolderPath, null, function (err, response) {
+            imagekit.copyFolder({ sourceFolderPath, destinationPath: null }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid destinationPath value", 
-                    help : "It should be a string like '/path/to/folder'"
+                    messages: "Invalid destinationPath value",
+                    help: "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -154,10 +154,10 @@ describe("Media library APIs", function () {
 
         it('Move folder invalid destinationPath', function (done) {
             var sourceFolderPath = "/";
-            imagekit.moveFolder(sourceFolderPath, null, function (err, response) {
+            imagekit.moveFolder({ sourceFolderPath, destinationPath: null }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid destinationPath value", 
-                    help : "It should be a string like '/path/to/folder'"
+                    messages: "Invalid destinationPath value",
+                    help: "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -165,10 +165,10 @@ describe("Media library APIs", function () {
 
         it('Move folder invalid sourceFolderPath', function (done) {
             var destinationPath = "/";
-            imagekit.moveFolder(null, destinationPath, function (err, response) {
+            imagekit.moveFolder({ sourceFolderPath: null, destinationPath }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid sourceFolderPath value", 
-                    help : "It should be a string like '/path/to/folder'"
+                    messages: "Invalid sourceFolderPath value",
+                    help: "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -177,10 +177,10 @@ describe("Media library APIs", function () {
         it('Create folder invalid name', function (done) {
             var folderName = "";
             var parentFolderPath = "";
-            imagekit.createFolder(folderName, parentFolderPath, function (err, response) {
+            imagekit.createFolder({ folderName, parentFolderPath }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid folderName value", 
-                    help : ""
+                    messages: "Invalid folderName value",
+                    help: ""
                 })
                 done();
             });
@@ -189,10 +189,10 @@ describe("Media library APIs", function () {
         it('Create folder invalid path', function (done) {
             var folderName = "folder1";
             var parentFolderPath = "";
-            imagekit.createFolder(folderName, parentFolderPath, function (err, response) {
+            imagekit.createFolder({ folderName, parentFolderPath }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid parentFolderPath value", 
-                    help : "It should be a string like '/path/to/folder'"
+                    messages: "Invalid parentFolderPath value",
+                    help: "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
@@ -201,12 +201,12 @@ describe("Media library APIs", function () {
         it('Delete folder invalid path', function (done) {
             imagekit.deleteFolder(null, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages : "Invalid folderPath value", 
-                    help : "It should be a string like '/path/to/folder'"
+                    messages: "Invalid folderPath value",
+                    help: "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
-        });        
+        });
 
         it('Get file metadata using file id', function (done) {
             var fileId = "23902390239203923";
@@ -404,9 +404,9 @@ describe("Media library APIs", function () {
 
         it('Get bulk job status missing jobId', function (done) {
             imagekit.getBulkJobStatus(null, function (err, response) {
-                expect(err).to.deep.equal({ 
-                    help : "" ,
-                    message : "Missing jobId parameter"
+                expect(err).to.deep.equal({
+                    help: "",
+                    message: "Missing jobId parameter"
                 })
                 done();
             });
@@ -560,7 +560,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Bulk add tags', function(done) {
+        it('Bulk add tags', function (done) {
             var fileIds = ["fileId1", "fileId2"];
             var tags = ["tag1", "tag2"];
 
@@ -580,7 +580,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Bulk remove tags', function(done) {
+        it('Bulk remove tags', function (done) {
             var fileIds = ["fileId1", "fileId2"];
             var tags = ["tag1", "tag2"];
 
@@ -600,7 +600,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Copy file', function(done) {
+        it('Copy file', function (done) {
             var sourceFilePath = "/file_path.jpg";
             var destinationPath = "/folder1/";
 
@@ -611,7 +611,7 @@ describe("Media library APIs", function () {
 
             var callback = sinon.spy();
 
-            imagekit.copyFile(sourceFilePath, destinationPath, callback);
+            imagekit.copyFile({ sourceFilePath, destinationPath }, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
@@ -620,7 +620,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Move file', function(done) {
+        it('Move file', function (done) {
             var sourceFilePath = "/file_path.jpg";
             var destinationPath = "/folder1/";
 
@@ -631,7 +631,7 @@ describe("Media library APIs", function () {
 
             var callback = sinon.spy();
 
-            imagekit.moveFile(sourceFilePath, destinationPath, callback);
+            imagekit.moveFile({ sourceFilePath, destinationPath }, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
@@ -640,7 +640,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Copy folder', function(done) {
+        it('Copy folder', function (done) {
             var sourceFolderPath = "/folder2";
             var destinationPath = "/folder1/";
 
@@ -651,7 +651,7 @@ describe("Media library APIs", function () {
 
             var callback = sinon.spy();
 
-            imagekit.copyFolder(sourceFolderPath, destinationPath, callback);
+            imagekit.copyFolder({ sourceFolderPath, destinationPath }, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
@@ -660,7 +660,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Move folder', function(done) {
+        it('Move folder', function (done) {
             var sourceFolderPath = "/folder1";
             var destinationPath = "/folder2/";
 
@@ -671,7 +671,7 @@ describe("Media library APIs", function () {
 
             var callback = sinon.spy();
 
-            imagekit.moveFolder(sourceFolderPath, destinationPath, callback);
+            imagekit.moveFolder({ sourceFolderPath, destinationPath }, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
@@ -680,7 +680,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Get bulk job status', function(done) {
+        it('Get bulk job status', function (done) {
             var jobId = "23902390239203923";
 
             const scope = nock('https://api.imagekit.io')
@@ -699,7 +699,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Create folder', function(done) {
+        it('Create folder', function (done) {
             var folderName = "folder1";
             var parentFolderPath = "/";
 
@@ -710,7 +710,7 @@ describe("Media library APIs", function () {
 
             var callback = sinon.spy();
 
-            imagekit.createFolder(folderName, parentFolderPath, callback);
+            imagekit.createFolder({ folderName, parentFolderPath }, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
@@ -719,7 +719,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Delete folder', function(done) {
+        it('Delete folder', function (done) {
             var folderPath = "/folder1/";
 
             const scope = nock('https://api.imagekit.io')
@@ -885,7 +885,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Bulk add tags', function(done) {
+        it('Bulk add tags', function (done) {
             var fileIds = ["fileId1", "fileId2"];
             var tags = ["tag1", "tag2"];
 
@@ -905,7 +905,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Bulk remove tags', function(done) {
+        it('Bulk remove tags', function (done) {
             var fileIds = ["fileId1", "fileId2"];
             var tags = ["tag1", "tag2"];
 
@@ -925,7 +925,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Copy file', function(done) {
+        it('Copy file', function (done) {
             var sourceFilePath = "/file_path.jpg";
             var destinationPath = "/folder1/";
 
@@ -936,7 +936,7 @@ describe("Media library APIs", function () {
 
             var callback = sinon.spy();
 
-            imagekit.copyFile(sourceFilePath, destinationPath, callback);
+            imagekit.copyFile({ sourceFilePath, destinationPath }, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
@@ -945,7 +945,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Move file', function(done) {
+        it('Move file', function (done) {
             var sourceFilePath = "/file_path.jpg";
             var destinationPath = "/folder1/";
 
@@ -956,7 +956,7 @@ describe("Media library APIs", function () {
 
             var callback = sinon.spy();
 
-            imagekit.moveFile(sourceFilePath, destinationPath, callback);
+            imagekit.moveFile({ sourceFilePath, destinationPath }, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
@@ -965,7 +965,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Copy folder', function(done) {
+        it('Copy folder', function (done) {
             var sourceFolderPath = "/folder2";
             var destinationPath = "/folder1/";
 
@@ -976,7 +976,7 @@ describe("Media library APIs", function () {
 
             var callback = sinon.spy();
 
-            imagekit.copyFolder(sourceFolderPath, destinationPath, callback);
+            imagekit.copyFolder({ sourceFolderPath, destinationPath }, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
@@ -985,7 +985,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Move folder', function(done) {
+        it('Move folder', function (done) {
             var sourceFolderPath = "/folder1";
             var destinationPath = "/folder2/";
 
@@ -996,7 +996,7 @@ describe("Media library APIs", function () {
 
             var callback = sinon.spy();
 
-            imagekit.moveFolder(sourceFolderPath, destinationPath, callback);
+            imagekit.moveFolder({ sourceFolderPath, destinationPath }, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
@@ -1005,7 +1005,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Get bulk job status', function(done) {
+        it('Get bulk job status', function (done) {
             var jobId = "23902390239203923";
 
             const scope = nock('https://api.imagekit.io')
@@ -1024,7 +1024,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Create folder', function(done) {
+        it('Create folder', function (done) {
             var folderName = "folder1";
             var parentFolderPath = "/";
 
@@ -1035,7 +1035,7 @@ describe("Media library APIs", function () {
 
             var callback = sinon.spy();
 
-            imagekit.createFolder(folderName, parentFolderPath, callback);
+            imagekit.createFolder({ folderName, parentFolderPath }, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
@@ -1044,7 +1044,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Delete folder', function(done) {
+        it('Delete folder', function (done) {
             var folderPath = "/folder1/";
 
             const scope = nock('https://api.imagekit.io')

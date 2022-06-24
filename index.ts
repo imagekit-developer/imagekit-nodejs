@@ -21,6 +21,11 @@ import {
   UploadOptions,
   UploadResponse,
   UrlOptions,
+  CopyFileOptions,
+  MoveFileOptions,
+  CreateFolderOptions,
+  CopyFolderOptions,
+  MoveFolderOptions,
 } from "./libs/interfaces";
 import { IKCallback } from "./libs/interfaces/IKCallback";
 import manage from "./libs/manage";
@@ -120,13 +125,13 @@ class ImageKit {
    *
    * @param listFilesOptions
    */
-  listFiles(listOptions: ListFileOptions): Promise<ListFileResponse[]>;
-  listFiles(listOptions: ListFileOptions, callback: IKCallback<ListFileResponse[]>): void;
+  listFiles(listOptions: ListFileOptions): Promise<FileDetailsResponse[]>;
+  listFiles(listOptions: ListFileOptions, callback: IKCallback<FileDetailsResponse[]>): void;
   listFiles(
     listOptions: ListFileOptions,
-    callback?: IKCallback<ListFileResponse[]>,
-  ): void | Promise<ListFileResponse[]> {
-    return promisify<ListFileResponse[]>(this, manage.listFiles)(listOptions, this.options, callback);
+    callback?: IKCallback<FileDetailsResponse[]>,
+  ): void | Promise<FileDetailsResponse[]> {
+    return promisify<FileDetailsResponse[]>(this, manage.listFiles)(listOptions, this.options, callback);
   }
 
   /**
@@ -266,13 +271,12 @@ class ImageKit {
    *
    * @see {@link https://docs.imagekit.io/api-reference/media-api/copy-file}
    *
-   * @param sourceFilePath
-   * @param destinationPath
+   * @param copyFileOptions
    */
-  copyFile(sourceFilePath: string, destinationPath: string): Promise<void>;
-  copyFile(sourceFilePath: string, destinationPath: string, callback: IKCallback<void>): void;
-  copyFile(sourceFilePath: string, destinationPath: string, callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.copyFile)(sourceFilePath, destinationPath, this.options, callback);
+  copyFile(copyFileOptions: CopyFileOptions): Promise<void>;
+  copyFile(copyFileOptions: CopyFileOptions, callback: IKCallback<void>): void;
+  copyFile(copyFileOptions: CopyFileOptions, callback?: IKCallback<void>): void | Promise<void> {
+    return promisify(this, manage.copyFile)(copyFileOptions, this.options, callback);
   }
 
   /**
@@ -280,13 +284,12 @@ class ImageKit {
    *
    * @see {@link https://docs.imagekit.io/api-reference/media-api/move-file}
    *
-   * @param sourceFilePath
-   * @param destinationPath
+   * @param moveFileOptions
    */
-  moveFile(sourceFilePath: string, destinationPath: string): Promise<void>;
-  moveFile(sourceFilePath: string, destinationPath: string, callback: IKCallback<void>): void;
-  moveFile(sourceFilePath: string, destinationPath: string, callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.moveFile)(sourceFilePath, destinationPath, this.options, callback);
+  moveFile(moveFileOptions: MoveFileOptions): Promise<void>;
+  moveFile(moveFileOptions: MoveFileOptions, callback: IKCallback<void>): void;
+  moveFile(moveFileOptions: MoveFileOptions, callback?: IKCallback<void>): void | Promise<void> {
+    return promisify(this, manage.moveFile)(moveFileOptions, this.options, callback);
   }
 
   /**
@@ -294,13 +297,13 @@ class ImageKit {
    *
    * @see {@link https://docs.imagekit.io/api-reference/media-api/create-folder}
    *
-   * @param folderName
+   * @param createFolderOptions
    * @param parentFolderPath
    */
-  createFolder(folderName: string, parentFolderPath: string): Promise<void>;
-  createFolder(folderName: string, parentFolderPath: string, callback: IKCallback<void>): void;
-  createFolder(folderName: string, parentFolderPath: string, callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.createFolder)(folderName, parentFolderPath, this.options, callback);
+  createFolder(createFolderOptions: CreateFolderOptions): Promise<void>;
+  createFolder(createFolderOptions: CreateFolderOptions, callback: IKCallback<void>): void;
+  createFolder(createFolderOptions: CreateFolderOptions, callback?: IKCallback<void>): void | Promise<void> {
+    return promisify(this, manage.createFolder)(createFolderOptions, this.options, callback);
   }
 
   /**
@@ -321,23 +324,19 @@ class ImageKit {
    *
    * @see {@link https://docs.imagekit.io/api-reference/media-api/copy-folder}
    *
-   * @param sourceFolderPath
-   * @param destinationPath
+   * @param copyFolderOptions
    */
-  copyFolder(sourceFolderPath: string, destinationPath: string): Promise<CopyFolderResponse>;
+  copyFolder(copyFolderOptions: CopyFolderOptions): Promise<CopyFolderResponse>;
   copyFolder(
-    sourceFolderPath: string,
-    destinationPath: string,
+    copyFolderOptions: CopyFolderOptions,
     callback: IKCallback<CopyFolderResponse, CopyFolderError>,
   ): void;
   copyFolder(
-    sourceFolderPath: string,
-    destinationPath: string,
+    copyFolderOptions: CopyFolderOptions,
     callback?: IKCallback<CopyFolderResponse, CopyFolderError>,
   ): void | Promise<CopyFolderResponse> {
     return promisify<CopyFolderResponse>(this, manage.copyFolder)(
-      sourceFolderPath,
-      destinationPath,
+      copyFolderOptions,
       this.options,
       callback,
     );
@@ -351,20 +350,17 @@ class ImageKit {
    * @param sourceFolderPath
    * @param destinationPath
    */
-  moveFolder(sourceFolderPath: string, destinationPath: string): Promise<MoveFolderResponse>;
+  moveFolder(moveFolderOptions: MoveFolderOptions): Promise<MoveFolderResponse>;
   moveFolder(
-    sourceFolderPath: string,
-    destinationPath: string,
+    moveFolderOptions: MoveFolderOptions,
     callback: IKCallback<MoveFolderResponse, MoveFolderError>,
   ): void;
   moveFolder(
-    sourceFolderPath: string,
-    destinationPath: string,
+    moveFolderOptions: MoveFolderOptions,
     callback?: IKCallback<MoveFolderResponse, MoveFolderError>,
   ): void | Promise<MoveFolderResponse> {
     return promisify<MoveFolderResponse>(this, manage.moveFolder)(
-      sourceFolderPath,
-      destinationPath,
+      moveFolderOptions,
       this.options,
       callback,
     );

@@ -21,3 +21,20 @@ export interface MoveFolderError extends Error {
   message: string;
   reason: string;
 }
+
+
+/**
+ * Move folder API options
+ *
+ * @see {@link https://docs.imagekit.io/api-reference/media-api/move-folder}
+ */
+export interface MoveFolderOptions {
+  /**
+   * The full path to the source folder you want to move. For example - /path/of/source/folder.
+   */
+  sourceFolderPath: string;
+  /**
+   * Full path to the destination folder where you want to move the source folder into. For example - /path/of/destination/folder.
+   */
+  destinationPath: string;
+}
