@@ -166,7 +166,7 @@ class ImageKit {
    * @see {@link https://docs.imagekit.io/api-reference/media-api/update-file-details}
    *
    * @param fileId The unique fileId of the uploaded file. fileId is returned in list files API and upload API.
-   * @param optionsFileDetails
+   * @param updateData
    */
   updateFileDetails(fileId: string, updateData: FileDetailsOptions): Promise<FileDetailsResponse>;
   updateFileDetails(fileId: string, updateData: FileDetailsOptions, callback: IKCallback<FileDetailsResponse>): void;
@@ -298,7 +298,6 @@ class ImageKit {
    * @see {@link https://docs.imagekit.io/api-reference/media-api/create-folder}
    *
    * @param createFolderOptions
-   * @param parentFolderPath
    */
   createFolder(createFolderOptions: CreateFolderOptions): Promise<void>;
   createFolder(createFolderOptions: CreateFolderOptions, callback: IKCallback<void>): void;
@@ -347,8 +346,7 @@ class ImageKit {
    *
    * @see {@link https://docs.imagekit.io/api-reference/media-api/move-folder}
    *
-   * @param sourceFolderPath
-   * @param destinationPath
+   * @param moveFolderOptions
    */
   moveFolder(moveFolderOptions: MoveFolderOptions): Promise<MoveFolderResponse>;
   moveFolder(
