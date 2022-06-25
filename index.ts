@@ -492,12 +492,13 @@ class ImageKit {
   *
   * @see {@link https://docs.imagekit.io/api-reference/custom-metadata-fields-api/update-custom-metadata-field}
   *
+  * @param fieldId
   * @param updateCustomMetadataFieldOptions
   */
-  updateCustomMetadataField(updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions): Promise<CustomMetadataField>;
-  updateCustomMetadataField(updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions, callback: IKCallback<CustomMetadataField>): Promise<CustomMetadataField>;
-  updateCustomMetadataField(updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions, callback?: IKCallback<CustomMetadataField>): void | Promise<CustomMetadataField> {
-    return promisify<CustomMetadataField>(this, customMetadataField.update)(updateCustomMetadataFieldOptions, this.options, callback);
+  updateCustomMetadataField(fieldId: string, updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions): Promise<CustomMetadataField>;
+  updateCustomMetadataField(fieldId: string, updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions, callback: IKCallback<CustomMetadataField>): Promise<CustomMetadataField>;
+  updateCustomMetadataField(fieldId: string, updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions, callback?: IKCallback<CustomMetadataField>): void | Promise<CustomMetadataField> {
+    return promisify<CustomMetadataField>(this, customMetadataField.update)(fieldId, updateCustomMetadataFieldOptions, this.options, callback);
   }
 
   /**

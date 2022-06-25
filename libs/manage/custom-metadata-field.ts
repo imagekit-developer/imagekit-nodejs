@@ -37,7 +37,7 @@ const create = function (createCustomMetadataFieldOptions: CreateCustomMetadataF
         return;
     }
 
-    if (!!schema.type) {
+    if (!schema.type) {
         respond(true, errorMessages.CMF_SCHEMA_INVALID, callback);
         return;
     }
@@ -67,7 +67,12 @@ const list = function (
     request(requestOptions, defaultOptions, callback);
 };
 
-const update = function (updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions, defaultOptions: ImageKitOptions, callback?: IKCallback<CustomMetadataField>) {
+const update = function (fieldId: string, updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions, defaultOptions: ImageKitOptions, callback?: IKCallback<CustomMetadataField>) {
+    if (!fieldId || typeof fieldId !== "string" || !fieldId.length) {
+        respond(true, errorMessages.CMF_FIELD_ID_MISSING, callback);
+        return;
+    }
+
     const { label, schema } = updateCustomMetadataFieldOptions;
     if (!label && !schema) {
         respond(true, errorMessages.CMF_LABEL_SCHEMA_MISSING, callback);
@@ -79,8 +84,8 @@ const update = function (updateCustomMetadataFieldOptions: UpdateCustomMetadataF
     if (schema) requestBody.schema = schema;
 
     var requestOptions = {
-        url: "https://api.imagekit.io/v1/customMetadataFields",
-        method: "POST",
+        url: `https://api.imagekit.io/v1/customMetadataFields/${fieldId}`,
+        method: "PATCH",
         json: requestBody
     };
 
@@ -92,6 +97,10 @@ const deleteField = function (
     defaultOptions: ImageKitOptions,
     callback?: IKCallback<void>,
 ) {
+    if (!fieldId || typeof fieldId !== "string" || !fieldId.length) {
+        respond(true, errorMessages.CMF_FIELD_ID_MISSING, callback);
+        return;
+    }
     var requestOptions = {
         url: `https://api.imagekit.io/v1/customMetadataFields/${fieldId}`,
         method: "DELETE",

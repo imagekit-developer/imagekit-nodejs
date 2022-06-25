@@ -37,4 +37,5 @@ export default {
     "CMF_SCHEMA_MISSING": { message: "Missing schema parameter for this request", help: "" },
     "CMF_SCHEMA_INVALID": { message: "Invalid value for schema", help: "schema should have a mandatory type field." },
     "CMF_LABEL_SCHEMA_MISSING": { message: "Both label and schema is missing", help: "" },
+    "CMF_FIELD_ID_MISSING": { message: "Missing fieldId parameter for this request", help: "" },
 };
