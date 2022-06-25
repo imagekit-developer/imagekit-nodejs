@@ -31,5 +31,10 @@ export default {
     //bulk delete errors
     "INVALID_FILEIDS_VALUE": { message: "Invalid value for fileIds", help: "fileIds should be an array of fileId of the files. The array should have atleast one fileId." },
     "BULK_ADD_TAGS_INVALID": { message: "Invalid value for tags", help: "tags should be a non empty array of string like ['tag1', 'tag2']." },
-    "BULK_AI_TAGS_INVALID": { message: "Invalid value for AITags", help: "AITags should be a non empty array of string like ['tag1', 'tag2']." }
+    "BULK_AI_TAGS_INVALID": { message: "Invalid value for AITags", help: "AITags should be a non empty array of string like ['tag1', 'tag2']." },
+    "CMF_NAME_MISSING": { message: "Missing name parameter for this request", help: "" },
+    "CMF_LABEL_MISSING": { message: "Missing label parameter for this request", help: "" },
+    "CMF_SCHEMA_MISSING": { message: "Missing schema parameter for this request", help: "" },
+    "CMF_SCHEMA_INVALID": { message: "Invalid value for schema", help: "schema should have a mandatory type field." },
+    "CMF_LABEL_SCHEMA_MISSING": { message: "Both label and schema is missing", help: "" },
 };

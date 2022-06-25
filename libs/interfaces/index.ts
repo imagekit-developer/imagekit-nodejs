@@ -15,6 +15,7 @@ import { BulkDeleteFilesResponse, BulkDeleteFilesError } from "./BulkDeleteFiles
 import { CopyFolderOptions, CopyFolderResponse, CopyFolderError } from "./CopyFolder";
 import { MoveFolderOptions, MoveFolderResponse, MoveFolderError } from "./MoveFolder";
 import { DeleteFileVersionOptions, RestoreFileVersionOptions } from "./FileVersion"
+import { CreateCustomMetadataFieldOptions, CustomMetadataField, UpdateCustomMetadataFieldOptions } from "./CustomMetatadaField"
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; // actual options used to construct url
 
@@ -48,5 +49,8 @@ export {
   MoveFolderOptions,
   DeleteFileVersionOptions,
   RestoreFileVersionOptions,
+  CreateCustomMetadataFieldOptions,
+  CustomMetadataField,
+  UpdateCustomMetadataFieldOptions,
 };
 export { IKCallback } from "./IKCallback";

@@ -1,5 +1,6 @@
 import cache from "./cache";
 import file from "./file";
+import customMetadataField from "./custom-metadata-field";
 
 export default {
   listFiles: file.listFiles,
@@ -24,4 +25,8 @@ export default {
   getBulkJobStatus: file.getBulkJobStatus,
   purgeCache: cache.purgeCache,
   getPurgeCacheStatus: cache.getPurgeCacheStatus,
+  createCustomMetadataField: customMetadataField.create,
+  getCustomMetadataFields: customMetadataField.list,
+  updateCustomMetadataField: customMetadataField.update,
+  deleteCustomMetadataField: customMetadataField.deleteField,
 };

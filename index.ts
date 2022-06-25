@@ -29,11 +29,15 @@ import {
   FileVersionDetailsOptions,
   DeleteFileVersionOptions,
   RestoreFileVersionOptions,
+  CreateCustomMetadataFieldOptions,
+  CustomMetadataField,
+  UpdateCustomMetadataFieldOptions,
 } from "./libs/interfaces";
 import { IKCallback } from "./libs/interfaces/IKCallback";
 import manage from "./libs/manage";
 import signature from "./libs/signature";
 import upload from "./libs/upload";
+import customMetadataField from "./libs/manage/custom-metadata-field";
 /*
     Implementations
 */
@@ -456,6 +460,57 @@ class ImageKit {
   getBulkJobStatus(jobId: string, callback: IKCallback<void>): Promise<void>;
   getBulkJobStatus(jobId: string, callback?: IKCallback<void>): void | Promise<void> {
     return promisify(this, manage.getBulkJobStatus)(jobId, this.options, callback);
+  }
+
+  /**
+   * Create custom metadata field
+   *
+   * @see {@link https://docs.imagekit.io/api-reference/custom-metadata-fields-api/create-custom-metadata-field}
+   *
+   * @param createCustomMetadataFieldOptions
+   */
+  createCustomMetadataField(createCustomMetadataFieldOptions: CreateCustomMetadataFieldOptions): Promise<CustomMetadataField>;
+  createCustomMetadataField(createCustomMetadataFieldOptions: CreateCustomMetadataFieldOptions, callback: IKCallback<CustomMetadataField>): Promise<CustomMetadataField>;
+  createCustomMetadataField(createCustomMetadataFieldOptions: CreateCustomMetadataFieldOptions, callback?: IKCallback<CustomMetadataField>): void | Promise<CustomMetadataField> {
+    return promisify<CustomMetadataField>(this, customMetadataField.create)(createCustomMetadataFieldOptions, this.options, callback);
+  }
+
+  /**
+   *Get a list of all the custom metadata fields.
+   *
+   * @see {@link https://docs.imagekit.io/api-reference/custom-metadata-fields-api/get-custom-metadata-field}
+   *
+   */
+  getCustomMetadataFields(): Promise<CustomMetadataField[]>;
+  getCustomMetadataFields(callback: IKCallback<CustomMetadataField[]>): Promise<CustomMetadataField[]>;
+  getCustomMetadataFields(callback?: IKCallback<CustomMetadataField[]>): void | Promise<CustomMetadataField[]> {
+    return promisify<CustomMetadataField[]>(this, customMetadataField.list)(this.options, callback);
+  }
+
+  /**
+  * Update custom metadata field
+  *
+  * @see {@link https://docs.imagekit.io/api-reference/custom-metadata-fields-api/update-custom-metadata-field}
+  *
+  * @param updateCustomMetadataFieldOptions
+  */
+  updateCustomMetadataField(updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions): Promise<CustomMetadataField>;
+  updateCustomMetadataField(updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions, callback: IKCallback<CustomMetadataField>): Promise<CustomMetadataField>;
+  updateCustomMetadataField(updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions, callback?: IKCallback<CustomMetadataField>): void | Promise<CustomMetadataField> {
+    return promisify<CustomMetadataField>(this, customMetadataField.update)(updateCustomMetadataFieldOptions, this.options, callback);
+  }
+
+  /**
+   * Delete a custom metadata field
+   *
+   * @see {@link https://docs.imagekit.io/api-reference/custom-metadata-fields-api/delete-custom-metadata-field}
+   *
+   * @param fieldId
+   */
+  deleteCustomMetadataField(fieldId: string): Promise<void>;
+  deleteCustomMetadataField(fieldId: string, callback: IKCallback<void>): void;
+  deleteCustomMetadataField(fieldId: string, callback?: IKCallback<void>): void | Promise<void> {
+    return promisify(this, customMetadataField.deleteField)(fieldId, this.options, callback);
   }
 
   /**
