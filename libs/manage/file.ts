@@ -33,6 +33,8 @@ import {
   MoveFolderOptions,
   DeleteFileVersionOptions,
   RestoreFileVersionOptions,
+  RenameFileOptions,
+  RenameFileResponse,
 } from "../interfaces/";
 import ImageKit from "../..";
 
@@ -58,7 +60,7 @@ const deleteFile = function (fileId: string, defaultOptions: ImageKitOptions, ca
     Delete a file version
 */
 const deleteFileVersion = function (deleteFileVersionOptions: DeleteFileVersionOptions, defaultOptions: ImageKitOptions, callback?: IKCallback<void>) {
-  const { fileId, versionId } = deleteFileVersionOptions;
+  const { fileId, versionId } = deleteFileVersionOptions || {};
   if (!fileId) {
     respond(true, errorMessages.FILE_ID_MISSING, callback);
     return;
@@ -85,7 +87,7 @@ const restoreFileVersion = function (
   restoreFileVersionOptions: RestoreFileVersionOptions,
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<FileDetailsResponse>) {
-  const { fileId, versionId } = restoreFileVersionOptions;
+  const { fileId, versionId } = restoreFileVersionOptions || {};
   if (!fileId) {
     respond(true, errorMessages.FILE_ID_MISSING, callback);
     return;
@@ -163,7 +165,7 @@ const getFileVersionDetails = function (
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<FileDetailsResponse>,
 ) {
-  const { fileId, versionId } = fileDetailsOptions;
+  const { fileId, versionId } = fileDetailsOptions || {};
   if (!fileId) {
     respond(true, errorMessages.FILE_ID_MISSING, callback);
     return;
@@ -480,6 +482,45 @@ const moveFile = function (
 };
 
 /*
+    Rename file
+*/
+const renameFile = function (
+  renameFileOptions: RenameFileOptions,
+  defaultOptions: ImageKitOptions,
+  callback?: IKCallback<RenameFileResponse>,
+) {
+  const { filePath, newFileName, purgeCache = false } = renameFileOptions;
+  if (typeof filePath !== "string" || filePath.length === 0) {
+    respond(true, errorMessages.INVALID_FILE_PATH, callback);
+    return;
+  }
+
+  if (typeof newFileName !== "string" || newFileName.length === 0) {
+    respond(true, errorMessages.INVALID_NEW_FILE_NAME, callback);
+    return;
+  }
+
+  if (typeof purgeCache !== "boolean") {
+    respond(true, errorMessages.INVALID_PURGE_CACHE, callback);
+    return;
+  }
+
+  const data = {
+    filePath,
+    newFileName,
+    purgeCache
+  };
+
+  const requestOptions = {
+    url: "https://api.imagekit.io/v1/files/rename",
+    method: "POST",
+    json: data,
+  };
+
+  request(requestOptions, defaultOptions, callback);
+};
+
+/*
     Copy Folder
 */
 const copyFolder = function (
@@ -640,6 +681,7 @@ export default {
   bulkRemoveAITags,
   copyFile,
   moveFile,
+  renameFile,
   copyFolder,
   moveFolder,
   createFolder,

@@ -18,6 +18,7 @@ export default {
   bulkRemoveAITags: file.bulkRemoveAITags,
   copyFile: file.copyFile,
   moveFile: file.moveFile,
+  renameFile: file.renameFile,
   copyFolder: file.copyFolder,
   moveFolder: file.moveFolder,
   createFolder: file.createFolder,

@@ -36,7 +36,48 @@ describe("Media library APIs", function () {
             imagekit.deleteFile(null, function (err, response) {
                 expect(err).to.deep.equal({
                     help: "",
-                    message: "Missing File ID parameter for this request"
+                    message: "Missing fileId parameter for this request"
+                })
+                done();
+            });
+        });
+
+        it('Delete file versions', function (done) {
+            var fileId = "23902390239203923";
+            var versionId = "versionId"
+
+            const scope = nock('https://api.imagekit.io')
+                .delete(`/v1/files/${fileId}/versions/${versionId}`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/files/${fileId}/versions/${versionId}`)
+                    done();
+                    return [200]
+                })
+
+            imagekit.deleteFileVersion({
+                fileId,
+                versionId
+            });
+        });
+
+        it('Delete file versions missing fileId', function (done) {
+            imagekit.deleteFileVersion(null, function (err, response) {
+                expect(err).to.deep.equal({
+                    help: "",
+                    message: "Missing fileId parameter for this request"
+                })
+                done();
+            });
+        });
+
+        it('Delete file versions missing versionId', function (done) {
+            imagekit.deleteFileVersion({
+                fileId: "fileId"
+            }, function (err, response) {
+                expect(err).to.deep.equal({
+                    help: "",
+                    message: "Missing versionId parameter for this request"
                 })
                 done();
             });
@@ -53,7 +94,7 @@ describe("Media library APIs", function () {
             });
         });
 
-        it('Bulk add tags missing file id', function (done) {
+        it('Bulk add tags missing fileId', function (done) {
             var tags = ['tag1'];
             imagekit.bulkAddTags(null, tags, function (err, response) {
                 expect(err).to.deep.equal({
@@ -64,7 +105,26 @@ describe("Media library APIs", function () {
             });
         });
 
-        it('Bulk remove tags missing file id', function (done) {
+        it('Bulk remove tags', function (done) {
+            var fileId = "23902390239203923";
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/removeTags`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/files/removeTags`)
+                    expect(requestBody).to.be.deep.equal({
+                        fileIds: [fileId, fileId],
+                        tags: ["tag1", "tag2"]
+                    })
+                    done();
+                    return [200]
+                })
+
+            imagekit.bulkRemoveTags([fileId, fileId], ["tag1", "tag2"]);
+        });
+
+        it('Bulk remove tags missing fileId', function (done) {
             var tags = ['tag1'];
             imagekit.bulkRemoveTags(null, tags, function (err, response) {
                 expect(err).to.deep.equal({
@@ -86,11 +146,99 @@ describe("Media library APIs", function () {
             });
         });
 
+        it('Bulk remove AITags', function (done) {
+            var fileId = "23902390239203923";
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/removeAITags`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/files/removeAITags`)
+                    expect(requestBody).to.be.deep.equal({
+                        fileIds: [fileId, fileId],
+                        AITags: ["tag1", "tag2"]
+                    })
+                    done();
+                    return [200]
+                })
+
+            imagekit.bulkRemoveAITags([fileId, fileId], ["tag1", "tag2"]);
+        });
+
+        it('Bulk remove AITags missing fileId', function (done) {
+            var tags = ['tag1'];
+            imagekit.bulkRemoveAITags(null, tags, function (err, response) {
+                expect(err).to.deep.equal({
+                    message: "Invalid value for fileIds",
+                    help: "fileIds should be an array of fileId of the files. The array should have atleast one fileId."
+                })
+                done();
+            });
+        });
+
+        it('Bulk remove AITags missing tags', function (done) {
+            var fileIds = ["23902390239203923"]
+            imagekit.bulkRemoveAITags(fileIds, null, function (err, response) {
+                expect(err).to.deep.equal({
+                    message: "Invalid value for tags",
+                    help: "tags should be a non empty array of string like ['tag1', 'tag2']."
+                })
+                done();
+            });
+        });
+
+        it('Copy file - default options', function (done) {
+            var fileId = "23902390239203923";
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/copy`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/files/copy`)
+                    expect(requestBody).to.be.deep.equal({
+                        sourceFilePath: "/xyz",
+                        destinationPath: "/abc",
+                        includeFileVersions: false
+                    })
+                    done();
+                    return [200]
+                })
+
+            imagekit.copyFile({
+                sourceFilePath: "/xyz",
+                destinationPath: "/abc"
+            });
+        });
+
+        it('Copy file', function (done) {
+            var fileId = "23902390239203923";
+
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/copy`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/files/copy`)
+                    expect(requestBody).to.be.deep.equal({
+                        sourceFilePath: "/xyz.jpg",
+                        destinationPath: "/abc",
+                        includeFileVersions: true
+                    })
+                    done();
+                    return [200]
+                })
+
+            imagekit.copyFile({
+                sourceFilePath: "/xyz.jpg",
+                destinationPath: "/abc",
+                includeFileVersions: true
+            });
+        });
+
         it('Copy file invalid folder path', function (done) {
             var sourceFilePath = "/file.jpg";
             imagekit.copyFile({ sourceFilePath, destinationPath: null }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid destinationPath value",
+                    message: "Invalid destinationPath value",
                     help: "It should be a string like '/path/to/folder'"
                 })
                 done();
@@ -101,7 +249,7 @@ describe("Media library APIs", function () {
             var destinationPath = "/";
             imagekit.copyFile({ sourceFilePath: null, destinationPath }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid sourceFilePath value",
+                    message: "Invalid sourceFilePath value",
                     help: "It should be a string like /path/to/file.jpg'"
                 })
                 done();
@@ -109,22 +257,39 @@ describe("Media library APIs", function () {
         });
 
         it('Copy file invalid includeFileVersions value', function (done) {
-            var sourceFilePath = "/sdf";
+            var sourceFilePath = "/sdf.jpg";
             var destinationPath = "/";
             imagekit.copyFile({ sourceFilePath, destinationPath, includeFileVersions: "sdf" }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid includeFileVersions value",
+                    message: "Invalid includeFileVersions value",
                     help: "It should be a boolean"
                 })
                 done();
             });
         });
 
+        it('Move file', function (done) {
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/move`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/files/move`)
+                    expect(requestBody).to.be.deep.equal({
+                        sourceFilePath: "/abc.jpg",
+                        destinationPath: "/xyz"
+                    })
+                    done();
+                    return [200]
+                });
+
+            imagekit.moveFile({ sourceFilePath: "/abc.jpg", destinationPath: "/xyz" });
+        });
+
         it('Move file invalid folder path', function (done) {
             var sourceFilePath = "/file.jpg";
             imagekit.moveFile({ sourceFilePath, destinationPath: null }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid destinationPath value",
+                    message: "Invalid destinationPath value",
                     help: "It should be a string like '/path/to/folder'"
                 })
                 done();
@@ -135,8 +300,91 @@ describe("Media library APIs", function () {
             var destinationPath = "/";
             imagekit.moveFile({ sourceFilePath: null, destinationPath }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid sourceFilePath value",
+                    message: "Invalid sourceFilePath value",
                     help: "It should be a string like /path/to/file.jpg'"
+                })
+                done();
+            });
+        });
+
+        it('Rename file - default purgeCache value', function (done) {
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/rename`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/files/rename`)
+                    expect(requestBody).to.be.deep.equal({
+                        filePath: "/abc.jpg",
+                        newFileName: "test.jpg",
+                        purgeCache: false
+                    })
+                    done();
+                    return [200]
+                });
+
+            imagekit.renameFile({
+                filePath: "/abc.jpg",
+                newFileName: "test.jpg"
+            })
+        });
+
+        it('Rename file', function (done) {
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/rename`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/files/rename`)
+                    expect(requestBody).to.be.deep.equal({
+                        filePath: "/abc.jpg",
+                        newFileName: "test.jpg",
+                        purgeCache: true
+                    })
+                    done();
+                    return [200]
+                });
+
+            imagekit.renameFile({
+                filePath: "/abc.jpg",
+                newFileName: "test.jpg",
+                purgeCache: true
+            })
+        });
+
+        it('Rename file - invalid filePath', function (done) {
+            imagekit.renameFile({
+                filePath: null,
+                newFileName: "test.jpg"
+            }, function (err, response) {
+                expect(err).to.deep.equal({
+                    message: "Invalid value for filePath",
+                    help: "Pass the full path of the file. For example - /path/to/file.jpg"
+                })
+                done();
+            });
+        });
+
+        it('Rename file - invalid newFileName', function (done) {
+            imagekit.renameFile({
+                filePath: "/xyz.jpg",
+                newFileName: null,
+            }, function (err, response) {
+                expect(err).to.deep.equal({
+                    message: "Invalid value for newFileName. It should be a string.",
+                    help: ""
+                })
+                done();
+            });
+        });
+
+        it('Rename file - invalid purgeCache', function (done) {
+            imagekit.renameFile({
+                filePath: "/xyz.jpg",
+                newFileName: "test.pdf",
+                purgeCache: "sdf"
+            }, function (err, response) {
+                expect(err).to.deep.equal({
+                    message: "Invalid value for purgeCache. It should be boolean.",
+                    help: ""
                 })
                 done();
             });
@@ -146,7 +394,7 @@ describe("Media library APIs", function () {
             var destinationPath = "/";
             imagekit.copyFolder({ sourceFolderPath: null, destinationPath }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid sourceFolderPath value",
+                    message: "Invalid sourceFolderPath value",
                     help: "It should be a string like '/path/to/folder'"
                 })
                 done();
@@ -157,7 +405,7 @@ describe("Media library APIs", function () {
             var sourceFolderPath = "/";
             imagekit.copyFolder({ sourceFolderPath, destinationPath: null }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid destinationPath value",
+                    message: "Invalid destinationPath value",
                     help: "It should be a string like '/path/to/folder'"
                 })
                 done();
@@ -168,7 +416,7 @@ describe("Media library APIs", function () {
             var sourceFolderPath = "/";
             imagekit.copyFolder({ sourceFolderPath, destinationPath: "/sdf", includeFileVersions: "sdf" }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid includeFileVersions value",
+                    message: "Invalid includeFileVersions value",
                     help: "It should be a boolean"
                 })
                 done();
@@ -179,7 +427,7 @@ describe("Media library APIs", function () {
             var sourceFolderPath = "/";
             imagekit.moveFolder({ sourceFolderPath, destinationPath: null }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid destinationPath value",
+                    message: "Invalid destinationPath value",
                     help: "It should be a string like '/path/to/folder'"
                 })
                 done();
@@ -190,7 +438,7 @@ describe("Media library APIs", function () {
             var destinationPath = "/";
             imagekit.moveFolder({ sourceFolderPath: null, destinationPath }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid sourceFolderPath value",
+                    message: "Invalid sourceFolderPath value",
                     help: "It should be a string like '/path/to/folder'"
                 })
                 done();
@@ -202,7 +450,7 @@ describe("Media library APIs", function () {
             var parentFolderPath = "";
             imagekit.createFolder({ folderName, parentFolderPath }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid folderName value",
+                    message: "Invalid folderName value",
                     help: ""
                 })
                 done();
@@ -214,7 +462,7 @@ describe("Media library APIs", function () {
             var parentFolderPath = "";
             imagekit.createFolder({ folderName, parentFolderPath }, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid parentFolderPath value",
+                    message: "Invalid parentFolderPath value",
                     help: "It should be a string like '/path/to/folder'"
                 })
                 done();
@@ -224,14 +472,14 @@ describe("Media library APIs", function () {
         it('Delete folder invalid path', function (done) {
             imagekit.deleteFolder(null, function (err, response) {
                 expect(err).to.deep.equal({
-                    messages: "Invalid folderPath value",
+                    message: "Invalid folderPath value",
                     help: "It should be a string like '/path/to/folder'"
                 })
                 done();
             });
         });
 
-        it('Get file metadata using file id', function (done) {
+        it('Get file metadata using fileId', function (done) {
             var fileId = "23902390239203923";
 
             const scope = nock('https://api.imagekit.io')
@@ -246,11 +494,11 @@ describe("Media library APIs", function () {
             imagekit.getFileMetadata(fileId);
         });
 
-        it('Get file metadata using file id missing fileId', function (done) {
+        it('Get file metadata using fileId missing fileId', function (done) {
             imagekit.getFileMetadata(null, function (err, response) {
                 expect(err).to.deep.equal({
                     help: "",
-                    message: "Pass either File ID or remote URL of the image as first parameter"
+                    message: "Pass either fileId or remote URL of the image as first parameter"
                 })
                 done();
             });
@@ -275,7 +523,83 @@ describe("Media library APIs", function () {
             imagekit.getFileDetails(null, function (err, response) {
                 expect(err).to.deep.equal({
                     help: "",
-                    message: "Missing File ID parameter for this request"
+                    message: "Missing fileId parameter for this request"
+                })
+                done();
+            });
+        });
+
+        it('Get all file versions', function (done) {
+            var fileId = "23902390239203923";
+
+            const scope = nock('https://api.imagekit.io')
+                .get(`/v1/files/${fileId}/versions`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(200, function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/files/${fileId}/versions`)
+                    done()
+                    return [200]
+                })
+
+            imagekit.getFileVersions(fileId);
+        });
+
+        it('Get all file versions - missing fileId', function (done) {
+            imagekit.getFileVersions(null, function (err, response) {
+                expect(err).to.deep.equal({
+                    help: "",
+                    message: "Missing fileId parameter for this request"
+                })
+                done();
+            });
+        });
+
+        it('Get file versions details', function (done) {
+            var fileId = "fileId";
+            var versionId = "versionId";
+
+            const scope = nock('https://api.imagekit.io')
+                .get(`/v1/files/${fileId}/versions/${versionId}`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(200, function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/files/${fileId}/versions/${versionId}`)
+                    done()
+                    return [200]
+                })
+
+            imagekit.getFileVersionDetails({
+                fileId,
+                versionId
+            });
+        });
+
+        it('Get file versions details - missing fileId', function (done) {
+            var fileId = "fileId";
+            var versionId = "versionId";
+
+            imagekit.getFileVersionDetails({
+                fileId: null,
+                versionId
+            }, function (err, response) {
+                expect(err).to.deep.equal({
+                    help: "",
+                    message: "Missing fileId parameter for this request"
+                })
+                done();
+            });
+        });
+
+        it('Get file versions details - missing versionId', function (done) {
+            var fileId = "fileId";
+            var versionId = "versionId";
+
+            imagekit.getFileVersionDetails({
+                fileId,
+                versionId: null
+            }, function (err, response) {
+                expect(err).to.deep.equal({
+                    help: "",
+                    message: "Missing versionId parameter for this request"
                 })
                 done();
             });
@@ -330,7 +654,7 @@ describe("Media library APIs", function () {
             imagekit.updateFileDetails(null, updateData, function (err, response) {
                 expect(err).to.deep.equal({
                     help: "",
-                    message: "Missing File ID parameter for this request"
+                    message: "Missing fileId parameter for this request"
                 })
                 done();
             });
@@ -461,7 +785,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Get file metadata using file id', function (done) {
+        it('Get file metadata using fileId', function (done) {
             var fileId = "23902390239203923";
 
             const scope = nock('https://api.imagekit.io')
@@ -786,7 +1110,7 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
-        it('Get file metadata using file id', function (done) {
+        it('Get file metadata using fileId', function (done) {
             var fileId = "23902390239203923";
 
             const scope = nock('https://api.imagekit.io')

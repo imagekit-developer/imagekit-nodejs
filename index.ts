@@ -32,6 +32,8 @@ import {
   CreateCustomMetadataFieldOptions,
   CustomMetadataField,
   UpdateCustomMetadataFieldOptions,
+  RenameFileOptions,
+  RenameFileResponse,
 } from "./libs/interfaces";
 import { IKCallback } from "./libs/interfaces/IKCallback";
 import manage from "./libs/manage";
@@ -363,6 +365,19 @@ class ImageKit {
   moveFile(moveFileOptions: MoveFileOptions, callback: IKCallback<void>): void;
   moveFile(moveFileOptions: MoveFileOptions, callback?: IKCallback<void>): void | Promise<void> {
     return promisify(this, manage.moveFile)(moveFileOptions, this.options, callback);
+  }
+
+  /**
+   * You can programmatically rename an already existing file in the media library using rename file API. This operation would rename all file versions of the file. Note: The old URLs will stop working. The file/file version URLs cached on CDN will continue to work unless a purge is requested.
+   *
+   * @see {@link https://docs.imagekit.io/api-reference/media-api/rename-file}
+   *
+   * @param renameFileOptions
+   */
+  renameFile(renameFileOptions: RenameFileOptions): Promise<RenameFileResponse>;
+  renameFile(renameFileOptions: RenameFileOptions, callback: IKCallback<RenameFileResponse>): void;
+  renameFile(renameFileOptions: RenameFileOptions, callback?: IKCallback<RenameFileResponse>): void | Promise<RenameFileResponse> {
+    return promisify<RenameFileResponse>(this, manage.renameFile)(renameFileOptions, this.options, callback);
   }
 
   /**

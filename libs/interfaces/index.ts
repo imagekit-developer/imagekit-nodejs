@@ -16,6 +16,7 @@ import { CopyFolderOptions, CopyFolderResponse, CopyFolderError } from "./CopyFo
 import { MoveFolderOptions, MoveFolderResponse, MoveFolderError } from "./MoveFolder";
 import { DeleteFileVersionOptions, RestoreFileVersionOptions } from "./FileVersion"
 import { CreateCustomMetadataFieldOptions, CustomMetadataField, UpdateCustomMetadataFieldOptions } from "./CustomMetatadaField"
+import { RenameFileOptions, RenameFileResponse } from "./Rename"
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; // actual options used to construct url
 
@@ -52,5 +53,7 @@ export {
   CreateCustomMetadataFieldOptions,
   CustomMetadataField,
   UpdateCustomMetadataFieldOptions,
+  RenameFileOptions,
+  RenameFileResponse,
 };
 export { IKCallback } from "./IKCallback";
