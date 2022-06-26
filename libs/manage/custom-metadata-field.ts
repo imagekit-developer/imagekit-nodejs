@@ -17,7 +17,8 @@ import {
     ImageKitOptions,
     CreateCustomMetadataFieldOptions,
     CustomMetadataField,
-    UpdateCustomMetadataFieldOptions
+    UpdateCustomMetadataFieldOptions,
+    GetCustomMetadataFieldsOptions,
 } from "../interfaces/";
 
 const create = function (createCustomMetadataFieldOptions: CreateCustomMetadataFieldOptions, defaultOptions: ImageKitOptions, callback?: IKCallback<CustomMetadataField>) {
@@ -56,12 +57,15 @@ const create = function (createCustomMetadataFieldOptions: CreateCustomMetadataF
 };
 
 const list = function (
+    getCustomMetadataFieldsOptions: GetCustomMetadataFieldsOptions,
     defaultOptions: ImageKitOptions,
     callback?: IKCallback<CustomMetadataField[]>,
 ) {
+    const { includeDeleted = false } = getCustomMetadataFieldsOptions || {};
     var requestOptions = {
         url: "https://api.imagekit.io/v1/customMetadataFields",
         method: "GET",
+        qs: { includeDeleted }
     };
 
     request(requestOptions, defaultOptions, callback);

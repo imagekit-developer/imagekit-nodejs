@@ -115,6 +115,9 @@ describe("Custom metadata field API", function () {
         it('Get field', function (done) {
             const scope = nock('https://api.imagekit.io')
                 .get("/v1/customMetadataFields")
+                .query({
+                    includeDeleted: false
+                })
                 .basicAuth({ user: initializationParams.privateKey, pass: '' })
                 .reply(function (uri, requestBody) {
                     expect(requestBody).to.be.empty;
@@ -123,6 +126,24 @@ describe("Custom metadata field API", function () {
                 })
 
             imagekit.getCustomMetadataFields();
+        });
+
+        it('Get field - includeDeleted true', function (done) {
+            const scope = nock('https://api.imagekit.io')
+                .get("/v1/customMetadataFields")
+                .query({
+                    includeDeleted: true
+                })
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(requestBody).to.be.empty;
+                    done();
+                    return [200];
+                })
+
+            imagekit.getCustomMetadataFields({
+                includeDeleted: true
+            });
         });
 
         it('Update field', function (done) {
@@ -235,11 +256,14 @@ describe("Custom metadata field API", function () {
         it('Get fields', function (done) {
             const scope = nock('https://api.imagekit.io')
                 .get("/v1/customMetadataFields")
+                .query({
+                    includeDeleted: false
+                })
                 .basicAuth({ user: initializationParams.privateKey, pass: '' })
                 .reply(200, [dummyAPISuccessResponse, dummyAPISuccessResponse])
 
             var callback = sinon.spy();
-            imagekit.getCustomMetadataFields(callback);
+            imagekit.getCustomMetadataFields({}, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
@@ -312,11 +336,14 @@ describe("Custom metadata field API", function () {
         it('Get fields', function (done) {
             const scope = nock('https://api.imagekit.io')
                 .get("/v1/customMetadataFields")
+                .query({
+                    includeDeleted: false
+                })
                 .basicAuth({ user: initializationParams.privateKey, pass: '' })
                 .reply(500, dummyAPIErrorResponse)
 
             var callback = sinon.spy();
-            imagekit.getCustomMetadataFields(callback);
+            imagekit.getCustomMetadataFields({}, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;

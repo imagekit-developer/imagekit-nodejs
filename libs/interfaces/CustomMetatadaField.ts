@@ -70,3 +70,10 @@ export interface UpdateCustomMetadataFieldOptions {
      */
     schema?: CustomMetadataFieldSchemaMinusType
 }
+
+export interface GetCustomMetadataFieldsOptions {
+    /**
+     * Set it to true if you want to receive deleted fields as well in the API response.
+     */
+    includeDeleted?: boolean;
+}

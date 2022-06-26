@@ -30,6 +30,7 @@ import {
   DeleteFileVersionOptions,
   RestoreFileVersionOptions,
   CreateCustomMetadataFieldOptions,
+  GetCustomMetadataFieldsOptions,
   CustomMetadataField,
   UpdateCustomMetadataFieldOptions,
   RenameFileOptions,
@@ -187,12 +188,12 @@ class ImageKit {
    *
    * @see {@link https://docs.imagekit.io/api-reference/metadata-api/get-image-metadata-for-uploaded-media-files}
    *
-   * @param fileId The unique fileId of the uploaded file. fileId is returned in list files API and upload API.
+   * @param fileIdOrURL The unique fileId of the uploaded file or absolute URL.
    */
-  getFileMetadata(fileId: string): Promise<FileMetadataResponse>;
-  getFileMetadata(fileId: string, callback: IKCallback<FileMetadataResponse>): void;
-  getFileMetadata(fileId: string, callback?: IKCallback<FileMetadataResponse>): void | Promise<FileMetadataResponse> {
-    return promisify<FileMetadataResponse>(this, manage.getFileMetadata)(fileId, this.options, callback);
+  getFileMetadata(fileIdOrURL: string): Promise<FileMetadataResponse>;
+  getFileMetadata(fileIdOrURL: string, callback: IKCallback<FileMetadataResponse>): void;
+  getFileMetadata(fileIdOrURL: string, callback?: IKCallback<FileMetadataResponse>): void | Promise<FileMetadataResponse> {
+    return promisify<FileMetadataResponse>(this, manage.getFileMetadata)(fileIdOrURL, this.options, callback);
   }
 
   /**
@@ -496,10 +497,10 @@ class ImageKit {
    * @see {@link https://docs.imagekit.io/api-reference/custom-metadata-fields-api/get-custom-metadata-field}
    *
    */
-  getCustomMetadataFields(): Promise<CustomMetadataField[]>;
-  getCustomMetadataFields(callback: IKCallback<CustomMetadataField[]>): Promise<CustomMetadataField[]>;
-  getCustomMetadataFields(callback?: IKCallback<CustomMetadataField[]>): void | Promise<CustomMetadataField[]> {
-    return promisify<CustomMetadataField[]>(this, customMetadataField.list)(this.options, callback);
+  getCustomMetadataFields(getCustomMetadataFieldsOptions: GetCustomMetadataFieldsOptions): Promise<CustomMetadataField[]>;
+  getCustomMetadataFields(getCustomMetadataFieldsOptions: GetCustomMetadataFieldsOptions, callback: IKCallback<CustomMetadataField[]>): Promise<CustomMetadataField[]>;
+  getCustomMetadataFields(getCustomMetadataFieldsOptions: GetCustomMetadataFieldsOptions, callback?: IKCallback<CustomMetadataField[]>): void | Promise<CustomMetadataField[]> {
+    return promisify<CustomMetadataField[]>(this, customMetadataField.list)(getCustomMetadataFieldsOptions, this.options, callback);
   }
 
   /**
