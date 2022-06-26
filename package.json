@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "compile": "tsc",
+    "compile": "rm -rf dist* && tsc",
     "test": "export NODE_ENV=test; nyc ./node_modules/mocha/bin/mocha --exit -t 40000 tests/*.js;ex=$?;unset NODE_ENV; exit $ex;",
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "prepack": "npm run compile"

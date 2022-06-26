@@ -11,4 +11,4 @@ interface RequestOptions {
   };
 }
 
-export { RequestOptions };
+export type { RequestOptions };

@@ -20,7 +20,7 @@ import { RenameFileOptions, RenameFileResponse } from "./Rename"
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; // actual options used to construct url
 
-export {
+export type {
   ImageKitOptions,
   Transformation,
   TransformationPosition,
@@ -57,4 +57,4 @@ export {
   RenameFileOptions,
   RenameFileResponse,
 };
-export { IKCallback } from "./IKCallback";
+export type { IKCallback } from "./IKCallback";
