@@ -11,5 +11,5 @@ export interface CopyFileOptions {
      * Option to copy all versions of a file. By default, only the current version of the file is copied. When set to true, all versions of the file will be copied.
      * Default value is false
      */
-    includeVersions?: boolean;
+    includeFileVersions?: boolean;
 }

@@ -18,7 +18,7 @@ export default {
     "MISSING_UPLOAD_FILENAME_PARAMETER": { message: "Missing fileName parameter for upload", help: "" },
     "JOB_ID_MISSING": { message: "Missing jobId parameter", help: "" },
     "INVALID_DESTINATION_FOLDER_PATH": { messages: "Invalid destinationPath value", help: "It should be a string like '/path/to/folder'" },
-    "INVALID_INCLUDE_VERSION": { messages: "Invalid includeVersions value", help: "It should be a boolean" },
+    "INVALID_INCLUDE_VERSION": { messages: "Invalid includeFileVersions value", help: "It should be a boolean" },
     "INVALID_SOURCE_FILE_PATH": { messages: "Invalid sourceFilePath value", help: "It should be a string like /path/to/file.jpg'" },
     "INVALID_SOURCE_FOLDER_PATH": { messages: "Invalid sourceFolderPath value", help: "It should be a string like '/path/to/folder'" },
     "INVALID_FOLDER_NAME": { messages: "Invalid folderName value", help: "" },

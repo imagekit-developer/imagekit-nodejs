@@ -410,7 +410,7 @@ const copyFile = function (
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<void>,
 ) {
-  const { sourceFilePath, destinationPath, includeVersions = false } = copyFileOptions;
+  const { sourceFilePath, destinationPath, includeFileVersions = false } = copyFileOptions;
 
   if (typeof sourceFilePath !== "string" || sourceFilePath.length === 0) {
     respond(true, errorMessages.INVALID_SOURCE_FILE_PATH, callback);
@@ -422,7 +422,7 @@ const copyFile = function (
     return;
   }
 
-  if (typeof includeVersions !== "boolean") {
+  if (typeof includeFileVersions !== "boolean") {
     respond(true, errorMessages.INVALID_INCLUDE_VERSION, callback);
     return;
   }
@@ -430,7 +430,7 @@ const copyFile = function (
   const data = {
     sourceFilePath,
     destinationPath,
-    includeVersions
+    includeFileVersions
   };
 
   const requestOptions = {
@@ -483,7 +483,7 @@ const copyFolder = function (
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<CopyFolderResponse>,
 ) {
-  const { sourceFolderPath, destinationPath, includeVersions = false } = copyFolderOptions;
+  const { sourceFolderPath, destinationPath, includeFileVersions = false } = copyFolderOptions;
   if (typeof sourceFolderPath !== "string" || sourceFolderPath.length === 0) {
     respond(true, errorMessages.INVALID_SOURCE_FOLDER_PATH, callback);
     return;
@@ -494,10 +494,15 @@ const copyFolder = function (
     return;
   }
 
+  if (typeof includeFileVersions !== "boolean") {
+    respond(true, errorMessages.INVALID_INCLUDE_VERSION, callback);
+    return;
+  }
+
   const data = {
     sourceFolderPath,
     destinationPath,
-    includeVersions
+    includeFileVersions
   };
 
   const requestOptions = {

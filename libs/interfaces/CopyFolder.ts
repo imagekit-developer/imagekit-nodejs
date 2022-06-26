@@ -40,5 +40,5 @@ export interface CopyFolderOptions {
    * Option to copy all versions of files that are nested inside the selected folder. By default, only the current version of each file will be copied. When set to true, all versions of each file will be copied.
    * Default value - false
   */
-  includeVersions?: boolean;
+  includeFileVersions?: boolean;
 }

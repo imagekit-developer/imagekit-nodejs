@@ -108,6 +108,18 @@ describe("Media library APIs", function () {
             });
         });
 
+        it('Copy file invalid includeFileVersions value', function (done) {
+            var sourceFilePath = "/sdf";
+            var destinationPath = "/";
+            imagekit.copyFile({ sourceFilePath, destinationPath, includeFileVersions: "sdf" }, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages: "Invalid includeFileVersions value",
+                    help: "It should be a boolean"
+                })
+                done();
+            });
+        });
+
         it('Move file invalid folder path', function (done) {
             var sourceFilePath = "/file.jpg";
             imagekit.moveFile({ sourceFilePath, destinationPath: null }, function (err, response) {
@@ -147,6 +159,17 @@ describe("Media library APIs", function () {
                 expect(err).to.deep.equal({
                     messages: "Invalid destinationPath value",
                     help: "It should be a string like '/path/to/folder'"
+                })
+                done();
+            });
+        });
+
+        it('Copy folder invalid includeFileVersions', function (done) {
+            var sourceFolderPath = "/";
+            imagekit.copyFolder({ sourceFolderPath, destinationPath: "/sdf", includeFileVersions: "sdf" }, function (err, response) {
+                expect(err).to.deep.equal({
+                    messages: "Invalid includeFileVersions value",
+                    help: "It should be a boolean"
                 })
                 done();
             });
