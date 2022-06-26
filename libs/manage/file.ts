@@ -21,7 +21,7 @@ import {
   ListFileResponse,
   FileDetailsOptions,
   FileVersionDetailsOptions,
-  FileDetailsResponse,
+  FileObject,
   FileMetadataResponse,
   BulkDeleteFilesResponse,
   BulkDeleteFilesError,
@@ -86,7 +86,7 @@ const deleteFileVersion = function (deleteFileVersionOptions: DeleteFileVersionO
 const restoreFileVersion = function (
   restoreFileVersionOptions: RestoreFileVersionOptions,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<FileDetailsResponse>) {
+  callback?: IKCallback<FileObject>) {
   const { fileId, versionId } = restoreFileVersionOptions || {};
   if (!fileId) {
     respond(true, errorMessages.FILE_ID_MISSING, callback);
@@ -141,7 +141,7 @@ const getMetadata = function (
 const getDetails = function (
   fileId: string,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<FileDetailsResponse>,
+  callback?: IKCallback<FileObject>,
 ) {
   if (!fileId) {
     respond(true, errorMessages.FILE_ID_MISSING, callback);
@@ -163,7 +163,7 @@ const getDetails = function (
 const getFileVersionDetails = function (
   fileDetailsOptions: FileVersionDetailsOptions,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<FileDetailsResponse>,
+  callback?: IKCallback<FileObject>,
 ) {
   const { fileId, versionId } = fileDetailsOptions || {};
   if (!fileId) {
@@ -191,7 +191,7 @@ const updateDetails = function (
   fileId: string,
   updateData: FileDetailsOptions,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<FileDetailsResponse>,
+  callback?: IKCallback<FileObject>,
 ) {
   if (!fileId) {
     respond(true, errorMessages.FILE_ID_MISSING, callback);
@@ -224,7 +224,7 @@ const updateDetails = function (
 const listFiles = function (
   listOptions: ListFileOptions,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<FileDetailsResponse[]>,
+  callback?: IKCallback<FileObject[]>,
 ) {
   if (listOptions && !_.isObject(listOptions)) {
     respond(true, errorMessages.INVALID_LIST_OPTIONS, callback);
@@ -251,7 +251,7 @@ const listFiles = function (
 const getFilesVersions = function (
   fileId: string,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<FileDetailsResponse[]>,
+  callback?: IKCallback<FileObject[]>,
 ) {
   if (!fileId) {
     respond(true, errorMessages.FILE_ID_MISSING, callback);

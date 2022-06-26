@@ -9,7 +9,7 @@ import {
   CopyFolderError,
   CopyFolderResponse,
   FileDetailsOptions,
-  FileDetailsResponse,
+  FileObject,
   FileMetadataResponse,
   ImageKitOptions,
   ListFileOptions,
@@ -134,13 +134,13 @@ class ImageKit {
    *
    * @param listFilesOptions
    */
-  listFiles(listOptions: ListFileOptions): Promise<FileDetailsResponse[]>;
-  listFiles(listOptions: ListFileOptions, callback: IKCallback<FileDetailsResponse[]>): void;
+  listFiles(listOptions: ListFileOptions): Promise<FileObject[]>;
+  listFiles(listOptions: ListFileOptions, callback: IKCallback<FileObject[]>): void;
   listFiles(
     listOptions: ListFileOptions,
-    callback?: IKCallback<FileDetailsResponse[]>,
-  ): void | Promise<FileDetailsResponse[]> {
-    return promisify<FileDetailsResponse[]>(this, manage.listFiles)(listOptions, this.options, callback);
+    callback?: IKCallback<FileObject[]>,
+  ): void | Promise<FileObject[]> {
+    return promisify<FileObject[]>(this, manage.listFiles)(listOptions, this.options, callback);
   }
 
   /**
@@ -150,10 +150,10 @@ class ImageKit {
    *
    * @param fileId
    */
-  getFileDetails(fileId: string): Promise<FileDetailsResponse>;
-  getFileDetails(fileId: string, callback: IKCallback<FileDetailsResponse>): void;
-  getFileDetails(fileId: string, callback?: IKCallback<FileDetailsResponse>): void | Promise<FileDetailsResponse> {
-    return promisify<FileDetailsResponse>(this, manage.getFileDetails)(fileId, this.options, callback);
+  getFileDetails(fileId: string): Promise<FileObject>;
+  getFileDetails(fileId: string, callback: IKCallback<FileObject>): void;
+  getFileDetails(fileId: string, callback?: IKCallback<FileObject>): void | Promise<FileObject> {
+    return promisify<FileObject>(this, manage.getFileDetails)(fileId, this.options, callback);
   }
 
   /**
@@ -163,10 +163,10 @@ class ImageKit {
    *
    * @param fileId
    */
-  getFileVersions(fileId: string): Promise<FileDetailsResponse>;
-  getFileVersions(fileId: string, callback: IKCallback<FileDetailsResponse>): void;
-  getFileVersions(fileId: string, callback?: IKCallback<FileDetailsResponse>): void | Promise<FileDetailsResponse> {
-    return promisify<FileDetailsResponse>(this, manage.getFileVersions)(fileId, this.options, callback);
+  getFileVersions(fileId: string): Promise<FileObject>;
+  getFileVersions(fileId: string, callback: IKCallback<FileObject>): void;
+  getFileVersions(fileId: string, callback?: IKCallback<FileObject>): void | Promise<FileObject> {
+    return promisify<FileObject>(this, manage.getFileVersions)(fileId, this.options, callback);
   }
 
   /**
@@ -176,10 +176,10 @@ class ImageKit {
   *
   * @param fileVersionDetailsOptions
   */
-  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions): Promise<FileDetailsResponse>;
-  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions, callback: IKCallback<FileDetailsResponse>): void;
-  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions, callback?: IKCallback<FileDetailsResponse>): void | Promise<FileDetailsResponse> {
-    return promisify<FileDetailsResponse>(this, manage.getFileVersionDetails)(fileVersionDetailsOptions, this.options, callback);
+  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions): Promise<FileObject>;
+  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions, callback: IKCallback<FileObject>): void;
+  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions, callback?: IKCallback<FileObject>): void | Promise<FileObject> {
+    return promisify<FileObject>(this, manage.getFileVersionDetails)(fileVersionDetailsOptions, this.options, callback);
   }
 
   /**
@@ -203,14 +203,14 @@ class ImageKit {
    * @param fileId The unique fileId of the uploaded file. fileId is returned in list files API and upload API.
    * @param updateData
    */
-  updateFileDetails(fileId: string, updateData: FileDetailsOptions): Promise<FileDetailsResponse>;
-  updateFileDetails(fileId: string, updateData: FileDetailsOptions, callback: IKCallback<FileDetailsResponse>): void;
+  updateFileDetails(fileId: string, updateData: FileDetailsOptions): Promise<FileObject>;
+  updateFileDetails(fileId: string, updateData: FileDetailsOptions, callback: IKCallback<FileObject>): void;
   updateFileDetails(
     fileId: string,
     updateData: FileDetailsOptions,
-    callback?: IKCallback<FileDetailsResponse>,
-  ): void | Promise<FileDetailsResponse> {
-    return promisify<FileDetailsResponse>(this, manage.updateFileDetails)(fileId, updateData, this.options, callback);
+    callback?: IKCallback<FileObject>,
+  ): void | Promise<FileObject> {
+    return promisify<FileObject>(this, manage.updateFileDetails)(fileId, updateData, this.options, callback);
   }
 
   /**
@@ -288,10 +288,10 @@ class ImageKit {
   *
   * @param restoreFileVersionOptions
   */
-  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions): Promise<FileDetailsResponse>;
-  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions, callback: IKCallback<FileDetailsResponse>): void;
-  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions, callback?: IKCallback<FileDetailsResponse>): void | Promise<FileDetailsResponse> {
-    return promisify<FileDetailsResponse>(this, manage.restoreFileVersion)(restoreFileVersionOptions, this.options, callback);
+  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions): Promise<FileObject>;
+  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions, callback: IKCallback<FileObject>): void;
+  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions, callback?: IKCallback<FileObject>): void | Promise<FileObject> {
+    return promisify<FileObject>(this, manage.restoreFileVersion)(restoreFileVersionOptions, this.options, callback);
   }
 
   /**

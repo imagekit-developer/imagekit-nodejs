@@ -40,7 +40,7 @@ export interface FileDetailsOptions {
  *
  * @see {@link https://docs.imagekit.io/api-reference/media-api#file-object-structure}
  */
-export interface FileDetailsResponse {
+export interface FileObject {
   /**
    * The unique fileId of the uploaded file.
    */
