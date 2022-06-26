@@ -225,8 +225,12 @@ const listFiles = function (
   callback?: IKCallback<FileDetailsResponse[]>,
 ) {
   if (listOptions && !_.isObject(listOptions)) {
-    respond(true, errorMessages.UPDATE_DATA_MISSING, callback);
+    respond(true, errorMessages.INVALID_LIST_OPTIONS, callback);
     return;
+  }
+
+  if (listOptions && listOptions.tags && _.isArray(listOptions.tags) && listOptions.tags.length) {
+    listOptions.tags = listOptions.tags.join(",");
   }
 
   var requestOptions = {

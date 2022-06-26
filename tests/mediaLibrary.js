@@ -339,13 +339,18 @@ describe("Media library APIs", function () {
         it('List files', function (done) {
             var listOptions = {
                 skip: 0,
-                limit: 100
+                limit: 100,
+                tags: ["t-shirt", "summer"]
             }
 
             const scope = nock('https://api.imagekit.io')
                 .get(`/v1/files/`)
                 .basicAuth({ user: initializationParams.privateKey, pass: '' })
-                .query(listOptions)
+                .query({
+                    skip: listOptions.skip,
+                    limit: listOptions.limit,
+                    tags: listOptions.tags.join(",")
+                })
                 .reply(function (uri, requestBody) {
                     expect(requestBody).equal("")
                     done()
@@ -377,7 +382,7 @@ describe("Media library APIs", function () {
         it('List files empty invalid options', function (done) {
             imagekit.listFiles("invalid", function (err, response) {
                 expect(err).to.deep.equal({
-                    message: "Missing file update data for this request",
+                    message: "Pass a valid JSON list options e.g. {skip: 10, limit: 100}.",
                     help: ""
                 })
                 done();

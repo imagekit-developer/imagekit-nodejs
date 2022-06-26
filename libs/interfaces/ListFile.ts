@@ -22,7 +22,7 @@ export interface ListFileOptions {
   /**
    * Comma-separated list of tags. Files matching any of the tags are included in result response. If no tag is matched, the file is not included in result set.
    */
-  tags?: string;
+  tags?: string | string[];
   /**
    * Whether to include folders in search results or not. By default only files are searched.
    * Accepts true and false. If this is set to true then tags and fileType parameters are ignored.
