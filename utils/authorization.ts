@@ -11,11 +11,4 @@ interface RequestOptions {
   };
 }
 
-const addAuthorization = function (obj: RequestOptions, privateKey: string) {
-  obj.auth = {
-    user: privateKey || "",
-    pass: "",
-  };
-};
-
-export { addAuthorization, RequestOptions };
+export { RequestOptions };

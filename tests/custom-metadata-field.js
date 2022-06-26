@@ -303,7 +303,7 @@ describe("Custom metadata field API", function () {
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
-                sinon.assert.calledWith(callback, null, null);
+                sinon.assert.calledWith(callback, null, {});
                 done();
             }, 50);
         });

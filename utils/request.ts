@@ -1,6 +1,5 @@
-// import request from "request";
 import respond from "../utils/respond";
-import { addAuthorization, RequestOptions } from "../utils/authorization";
+import { RequestOptions } from "../utils/authorization";
 import { ImageKitOptions } from "../libs/interfaces/";
 import { IKCallback } from "../libs/interfaces/IKCallback";
 const axios = require('axios');
@@ -21,7 +20,7 @@ export default function (
   }
 
   if (typeof requestOptions.json === "object") options.data = requestOptions.json;
-  else if(typeof requestOptions.formData === "object") options.data = requestOptions.formData;
+  else if (typeof requestOptions.formData === "object") options.data = requestOptions.formData;
 
   if (typeof requestOptions.qs === "object") options.params = requestOptions.qs;
   if (typeof requestOptions.headers === "object") options.headers = requestOptions.headers;
@@ -29,8 +28,19 @@ export default function (
   axios(options).then((response: any) => {
     if (typeof callback != "function") return;
     const { data, status, headers } = response;
+    const responseMetadata = {
+      statusCode: status,
+      headers
+    }
     if (status >= 200 && status <= 299) {
-      respond(false, data, callback);
+      // define status code and headers as non-enumerable properties on data
+      var result = data ? data : {};
+      Object.defineProperty(result, "$ResponseMetadata", {
+        value: responseMetadata,
+        enumerable: false,
+        writable: false
+      });
+      respond(false, result, callback);
     } else {
       respond(true, data, callback);
     }
@@ -39,17 +49,27 @@ export default function (
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      if(error.response?.status === 429) {
-        respond(true, {
-          ...error.response.data,
+      const responseMetadata = {
+        statusCode: error.response.status,
+        headers: error.response.headers
+      }
+      // define status code and headers as non-enumerable properties on data
+      var result = error.response.data ? error.response.data : {};
+      if (error.response.status === 429) {
+        result = {
+          ...result,
           "X-RateLimit-Limit": parseInt(error.response.headers["x-ratelimit-limit"], 10),
           "X-RateLimit-Reset": parseInt(error.response.headers["x-ratelimit-reset"], 10),
           "X-RateLimit-Interval": parseInt(error.response.headers["x-ratelimit-interval"], 10),
-        }, callback);
-      } else {
-        respond(true, error.response.data, callback);
+        }
       }
-      
+      Object.defineProperty(result, "$ResponseMetadata", {
+        value: responseMetadata,
+        enumerable: false,
+        writable: false
+      });
+      respond(true, result, callback);
+
     } else if (error) {
       respond(true, error, callback);
       // The request was made but no response was received
@@ -61,82 +81,4 @@ export default function (
       }, callback);
     }
   })
-
-  // var req = https.request({
-  //   ...urlToHttpOptions(new URL(requestOptions.url)),
-  //   method: requestOptions.method,
-  //   headers: {
-  //     Authorization: 'Basic ' + Buffer.from(defaultOptions.privateKey + ':').toString('base64')
-  //   }
-  // }, (response: IncomingMessage) => {
-  //   const { statusCode = 0, headers: resHeaders } = response;
-  //   response.setEncoding('utf8');
-  //   var rawBody = '';
-  //   var JSONBody;
-  //   response.on("data", (chunk) => {
-  //     rawBody += chunk;
-  //   });
-  //   response.on("end", () => {
-  //     try {
-  //       var result = {
-  //         responseMetadata: {
-  //           statusCode,
-  //           rawBody,
-  //           headers: resHeaders
-  //         }
-  //       };
-  //       JSONBody = JSON.parse(rawBody);
-  //       if (statusCode >= 200 && statusCode <= 299) {
-  //         respond(false, JSONBody, callback);
-  //         return;
-  //       } else {
-  //         respond(true, JSONBody, callback);
-  //       }
-  //     } catch (e) {
-  //       respond(true, {
-  //         reason: "JSON_PARSE_ERROR"
-  //       }, callback);
-  //       return;
-  //     }
-  //   })
-  // });
-
-  // var requestPayload = null;
-  // if (requestOptions.formData) requestPayload = requestOptions.formData;
-  // else if (requestOptions.json) requestPayload = requestOptions.json;
-
-  // if (requestPayload) req.write(requestPayload);
-  // req.end();
-
-  // return;
-  // addAuthorization(requestOptions, defaultOptions.privateKey);
-  // request(requestOptions, function (err, response, body) {
-  //   if (typeof callback != "function") return;
-
-  //   if (err) {
-  //     respond(true, err, callback);
-  //     return;
-  //   }
-
-  //   if (response && response.statusCode === 429) {
-  //     respond(
-  //       true,
-  //       {
-  //         ...body,
-  //         "X-RateLimit-Limit": parseInt(response.caseless.get("X-RateLimit-Limit"), 10),
-  //         "X-RateLimit-Reset": parseInt(response.caseless.get("X-RateLimit-Reset"), 10),
-  //         "X-RateLimit-Interval": parseInt(response.caseless.get("X-RateLimit-Interval")),
-  //       },
-  //       callback,
-  //     );
-  //     return;
-  //   }
-
-  //   if (response && response.statusCode >= 400) {
-  //     respond(true, body, callback);
-  //     return;
-  //   }
-
-  //   respond(false, body, callback);
-  // });
 }
