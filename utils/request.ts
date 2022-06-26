@@ -32,18 +32,14 @@ export default function (
       statusCode: status,
       headers
     }
-    if (status >= 200 && status <= 299) {
-      // define status code and headers as non-enumerable properties on data
-      var result = data ? data : {};
-      Object.defineProperty(result, "$ResponseMetadata", {
-        value: responseMetadata,
-        enumerable: false,
-        writable: false
-      });
-      respond(false, result, callback);
-    } else {
-      respond(true, data, callback);
-    }
+    var result = data ? data : {};
+    // define status code and headers as non-enumerable properties on data
+    Object.defineProperty(result, "$ResponseMetadata", {
+      value: responseMetadata,
+      enumerable: false,
+      writable: false
+    });
+    respond(false, result, callback);
   }, (error: any) => {
     if (typeof callback != "function") return;
     if (error.response) {
