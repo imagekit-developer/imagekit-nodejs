@@ -69,32 +69,6 @@ export default function (
     }
   }
 
-  // let key: keyof typeof uploadOptions;
-  // for (key in uploadOptions) {
-  //   if (key) {
-  //     if (key == "file" && typeof uploadOptions.file != "string") {
-  //       formData.file = {
-  //         value: uploadOptions.file,
-  //         options: {
-  //           filename: uploadOptions.fileName,
-  //           contentType: null,
-  //         },
-  //       };
-  //     } else if (key == "tags" && Array.isArray(uploadOptions.tags)) {
-  //       formData.tags = uploadOptions.tags.join(",");
-  //     }
-  //       else if(key == "extensions" && Array.isArray(uploadOptions.extensions)){
-  //         formData.extensions = JSON.stringify(uploadOptions.extensions);
-  //     } else if (key === "customMetadata" && typeof uploadOptions.customMetadata === "object" &&
-  //                       !Array.isArray(uploadOptions.customMetadata) && uploadOptions.customMetadata !== null) {
-  //         formData.customMetadata = JSON.stringify(uploadOptions.customMetadata)
-  //     }
-  //      else {
-  //       formData[key] = String(uploadOptions[key]);
-  //     }
-  //   }
-  // }
-
   var requestOptions = {
     url: defaultOptions.uploadEndpoint || "https://upload.imagekit.io/api/v1/files/upload",
     method: "POST",
