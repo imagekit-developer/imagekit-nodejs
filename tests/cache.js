@@ -107,6 +107,21 @@ describe("Cache purge API", function () {
                 done();
             }, 50);
         });
+
+        it('Purge cache promise', async function () {
+            var requestId = "sdfdsfksjfldsjfjsdf";
+
+            const scope = nock('https://api.imagekit.io')
+                .get(`/v1/files/purge/${requestId}`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(200, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            var response = await imagekit.getPurgeCacheStatus(requestId);
+            expect(response).to.be.deep.equal(dummyAPISuccessResponse);
+            return Promise.resolve();
+        });
     });
 
     describe("Error callbacks", function () {
@@ -145,6 +160,26 @@ describe("Cache purge API", function () {
                 sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
                 done();
             }, 50);
+        });
+
+        it('Purge cache promise', async function () {
+            var requestId = "sdfdsfksjfldsjfjsdf";
+
+            const scope = nock('https://api.imagekit.io')
+                .get(`/v1/files/purge/${requestId}`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(500, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            try {
+                await imagekit.getPurgeCacheStatus(requestId);
+            } catch(ex) {
+                expect(ex).to.be.deep.equal(dummyAPIErrorResponse);
+                return Promise.resolve();
+            }
+
+            return Promise.reject();
         });
     });
 });
