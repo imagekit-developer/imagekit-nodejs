@@ -390,6 +390,94 @@ describe("Media library APIs", function () {
             });
         });
 
+        it('Restore file version', function (done) {
+            var fileId = "fileId";
+            var versionId = "versionId";
+            const scope = nock('https://api.imagekit.io')
+                .put(`/v1/files/${fileId}/versions/${versionId}/restore`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/files/${fileId}/versions/${versionId}/restore`)
+                    expect(requestBody).to.be.empty;
+                    done();
+                    return [200]
+                });
+
+            imagekit.restoreFileVersion({
+                fileId,
+                versionId,
+            })
+        });
+
+        it('Restore file version - missing fileId', function (done) {
+            imagekit.restoreFileVersion({
+                fileId: null,
+                versionId: "versionId",
+            }, function (err, response) {
+                expect(err).to.deep.equal({
+                    message: "Missing fileId parameter for this request",
+                    help: ""
+                })
+                done();
+            });
+        });
+
+        it('Restore file version - missing versionId', function (done) {
+            imagekit.restoreFileVersion({
+                fileId: "fileId",
+                versionId: null
+            }, function (err, response) {
+                expect(err).to.deep.equal({
+                    message: "Missing versionId parameter for this request",
+                    help: ""
+                })
+                done();
+            });
+        });
+
+        it('Copy folder - default options', function (done) {
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/bulkJobs/copyFolder`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/bulkJobs/copyFolder`)
+                    expect(requestBody).to.be.deep.equal({
+                        sourceFolderPath: "/source-folder",
+                        destinationPath: "/destination",
+                        includeFileVersions: false
+                    })
+                    done();
+                    return [200]
+                });
+
+            imagekit.copyFolder({
+                sourceFolderPath: "/source-folder",
+                destinationPath: "/destination"
+            })
+        });
+
+        it('Copy folder', function (done) {
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/bulkJobs/copyFolder`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/bulkJobs/copyFolder`)
+                    expect(requestBody).to.be.deep.equal({
+                        sourceFolderPath: "/source-folder",
+                        destinationPath: "/destination",
+                        includeFileVersions: true
+                    })
+                    done();
+                    return [200]
+                });
+
+            imagekit.copyFolder({
+                sourceFolderPath: "/source-folder",
+                destinationPath: "/destination",
+                includeFileVersions: true
+            })
+        });
+
         it('Copy folder invalid sourceFolderPath', function (done) {
             var destinationPath = "/";
             imagekit.copyFolder({ sourceFolderPath: null, destinationPath }, function (err, response) {
@@ -423,6 +511,26 @@ describe("Media library APIs", function () {
             });
         });
 
+        it('Move folder', function (done) {
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/bulkJobs/moveFolder`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/bulkJobs/moveFolder`)
+                    expect(requestBody).to.be.deep.equal({
+                        sourceFolderPath: "/source-folder",
+                        destinationPath: "/destination"
+                    })
+                    done();
+                    return [200]
+                });
+
+            imagekit.moveFolder({
+                sourceFolderPath: "/source-folder",
+                destinationPath: "/destination"
+            })
+        });
+
         it('Move folder invalid destinationPath', function (done) {
             var sourceFolderPath = "/";
             imagekit.moveFolder({ sourceFolderPath, destinationPath: null }, function (err, response) {
@@ -443,6 +551,26 @@ describe("Media library APIs", function () {
                 })
                 done();
             });
+        });
+
+        it('Create folder', function (done) {
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/folder`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/folder`)
+                    expect(requestBody).to.be.deep.equal({
+                        folderName: "abc",
+                        parentFolderPath: "/path/to/folder"
+                    })
+                    done();
+                    return [200]
+                });
+
+            imagekit.createFolder({
+                folderName: "abc",
+                parentFolderPath: "/path/to/folder"
+            })
         });
 
         it('Create folder invalid name', function (done) {
@@ -467,6 +595,22 @@ describe("Media library APIs", function () {
                 })
                 done();
             });
+        });
+
+        it('Delete folder', function (done) {
+            const scope = nock('https://api.imagekit.io')
+                .delete(`/v1/folder`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/folder`)
+                    expect(requestBody).to.be.deep.equal({
+                        folderPath: "/path/to/folder",
+                    })
+                    done();
+                    return [200]
+                });
+
+            imagekit.deleteFolder("/path/to/folder")
         });
 
         it('Delete folder invalid path', function (done) {
@@ -992,6 +1136,48 @@ describe("Media library APIs", function () {
             }, 50);
         });
 
+        it('Rename file', function (done) {
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/rename`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(204, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.renameFile({
+                filePath: "/xyz.jpg",
+                newFileName: "test.jpg"
+            }, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, null, dummyAPISuccessResponse);
+                done();
+            }, 50);
+        });
+
+        it('Restore file version', function (done) {
+            var fileId = "fileId";
+            var versionId = "versionId";
+            const scope = nock('https://api.imagekit.io')
+                .put(`/v1/files/${fileId}/versions/${versionId}/restore`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(204, dummyAPISuccessResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.restoreFileVersion({
+                fileId,
+                versionId
+            }, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, null, dummyAPISuccessResponse);
+                done();
+            }, 50);
+        });
+
         it('Copy folder', function (done) {
             var sourceFolderPath = "/folder2";
             var destinationPath = "/folder1/";
@@ -1309,6 +1495,48 @@ describe("Media library APIs", function () {
             var callback = sinon.spy();
 
             imagekit.moveFile({ sourceFilePath, destinationPath }, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
+                done();
+            }, 50);
+        });
+
+        it('Rename file', function (done) {
+            const scope = nock('https://api.imagekit.io')
+                .post(`/v1/files/rename`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(500, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.renameFile({
+                filePath: "/xyz.jpg",
+                newFileName: "test.jpg"
+            }, callback);
+
+            setTimeout(function () {
+                expect(callback.calledOnce).to.be.true;
+                sinon.assert.calledWith(callback, dummyAPIErrorResponse, null);
+                done();
+            }, 50);
+        });
+
+        it('Restore file version', function (done) {
+            var fileId = "fileId";
+            var versionId = "versionId";
+            const scope = nock('https://api.imagekit.io')
+                .put(`/v1/files/${fileId}/versions/${versionId}/restore`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(500, dummyAPIErrorResponse)
+
+            var callback = sinon.spy();
+
+            imagekit.restoreFileVersion({
+                fileId,
+                versionId
+            }, callback);
 
             setTimeout(function () {
                 expect(callback.calledOnce).to.be.true;
