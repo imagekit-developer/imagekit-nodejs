@@ -1,4 +1,5 @@
 import { createHmac } from "crypto";
+import { isString } from "lodash";
 import { WebhookEvent } from "../libs/interfaces";
 
 const HASH_ALGORITHM = "sha256";
@@ -48,11 +49,17 @@ export class WebhookSignature {
     const itemMap: Map<string, string> = new Map(
       items.map((item) => item.split(":")).map(([key, value]) => [key, value])
     );
+    const timestampString = itemMap.get(
+      WebhookSignature.SignatureItems.Timestamp
+    );
+    const hmacString = itemMap.get(WebhookSignature.SignatureItems.Hmac);
+    if (!isString(timestampString))
+      throw new WebhookSignatureError("Invalid signature - timestamp missing");
+    if (!isString(hmacString))
+      throw new WebhookSignatureError("Invalid signature - hmac missing");
     return {
-      timestamp: new Date(
-        parseInt(itemMap.get(WebhookSignature.SignatureItems.Timestamp)!)
-      ),
-      hmac: itemMap.get(WebhookSignature.SignatureItems.Hmac)!,
+      timestamp: new Date(parseInt(timestampString)),
+      hmac: hmacString,
     };
   }
 
@@ -76,7 +83,7 @@ export class WebhookSignature {
       secret
     );
     if (hmac !== computedHmac) {
-      throw new WebhookSignatureError("Invalid signature");
+      throw new WebhookSignatureError("Incorrect signature");
     }
     return {
       timestamp,
