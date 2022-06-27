@@ -41,7 +41,7 @@
     "babel-plugin-replace-ts-export-assignment": "^0.0.2",
     "chai": "^4.2.0",
     "codecov": "^3.8.0",
-    "concurrently": "^7.2.2",
+    "concurrently": "6.5.1",
     "mocha": "^8.1.1",
     "nock": "^13.2.7",
     "nyc": "^15.1.0",
