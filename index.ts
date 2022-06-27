@@ -25,7 +25,7 @@ import {
 import { IKCallback } from "./libs/interfaces/IKCallback";
 import manage from "./libs/manage";
 import signature from "./libs/signature";
-import { sign, verify } from "./utils/webhook-signature";
+import { verify as verifyWebhookSignature } from "./utils/webhook-signature";
 import upload from "./libs/upload";
 /*
     Implementations
@@ -60,9 +60,8 @@ const promisify = function <T = void>(thisContext: ImageKit, fn: Function) {
     }
   };
 };
-
 class ImageKitStaticUtils {
-  static WebhookSignature = { sign, verify };
+  static Webhook = { verify: verifyWebhookSignature };
 }
 
 class ImageKit extends ImageKitStaticUtils {
