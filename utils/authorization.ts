@@ -1,8 +1,10 @@
+import FormData from "form-data";
+
 interface RequestOptions {
   url: string;
-  headers?: Object;
+  headers?: Record<string, string | number | boolean>;
   method: string;
-  formData?: Object;
+  formData?: FormData;
   qs?: Object;
   json?: any;
   auth?: {

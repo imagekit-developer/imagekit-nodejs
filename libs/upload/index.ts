@@ -4,7 +4,7 @@ import respond from "../../utils/respond";
 import request from "../../utils/request";
 import { IKCallback } from "../interfaces/IKCallback";
 import { ImageKitOptions, UploadOptions, UploadResponse } from "../interfaces";
-const FormData = require('form-data');
+import FormData from "form-data";
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 type FormDataOptions = Modify<

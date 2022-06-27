@@ -2,22 +2,22 @@ import respond from "../utils/respond";
 import { RequestOptions } from "../utils/authorization";
 import { ImageKitOptions } from "../libs/interfaces/";
 import { IKCallback } from "../libs/interfaces/IKCallback";
-const axios = require('axios');
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
-export default function (
+export default function request<T, E extends Error> (
   requestOptions: RequestOptions,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<any, any>,
+  callback?: IKCallback<T, E>,
 ) {
 
-  var options: any = {
+  var options: AxiosRequestConfig = {
     method: requestOptions.method,
     url: requestOptions.url,
     auth: {
       username: defaultOptions.privateKey || "",
-      password: ""
-    }
-  }
+      password: "",
+    },
+  };
 
   if (typeof requestOptions.json === "object") options.data = requestOptions.json;
   else if (typeof requestOptions.formData === "object") options.data = requestOptions.formData;
@@ -25,14 +25,14 @@ export default function (
   if (typeof requestOptions.qs === "object") options.params = requestOptions.qs;
   if (typeof requestOptions.headers === "object") options.headers = requestOptions.headers;
 
-  axios(options).then((response: any) => {
+  axios(options).then((response: AxiosResponse<T>) => {
     if (typeof callback != "function") return;
     const { data, status, headers } = response;
     const responseMetadata = {
       statusCode: status,
       headers
     }
-    var result = data ? data : {};
+    var result = data ? data : {} as T;
     // define status code and headers as non-enumerable properties on data
     Object.defineProperty(result, "$ResponseMetadata", {
       value: responseMetadata,
@@ -40,7 +40,7 @@ export default function (
       writable: false
     });
     respond(false, result, callback);
-  }, (error: any) => {
+  }, (error: AxiosError) => {
     if (typeof callback != "function") return;
     if (error.response) {
       // The request was made and the server responded with a status code
@@ -50,7 +50,7 @@ export default function (
         headers: error.response.headers
       }
       // define status code and headers as non-enumerable properties on data
-      var result = error.response.data ? error.response.data : {};
+      var result = error.response.data ? error.response.data : {} as any;
       if (error.response.status === 429) {
         result = {
           ...result,
@@ -72,9 +72,7 @@ export default function (
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
     } else {
-      respond(true, {
-        message: "Unknown error occured"
-      }, callback);
+      respond(true, new Error("Unknown error occured"), callback);
     }
   })
 }

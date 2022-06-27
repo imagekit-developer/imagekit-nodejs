@@ -4,4 +4,4 @@ node_modules
 coverage.lcov
 coverage
 .DS_Store 
-dist
+dist*

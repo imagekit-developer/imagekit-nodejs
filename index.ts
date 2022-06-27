@@ -50,6 +50,7 @@ import url from "./libs/url";
 */
 import pHashUtils from "./utils/phash";
 import transformationUtils from "./utils/transformation";
+import IKResponse from "./libs/interfaces/IKResponse";
 
 const promisify = function <T = void>(thisContext: ImageKit, fn: Function) {
   return function (...args: any[]): Promise<T> | void {
@@ -121,10 +122,13 @@ class ImageKit {
    *
    * @param uploadOptions
    */
-  upload(uploadOptions: UploadOptions): Promise<UploadResponse>;
-  upload(uploadOptions: UploadOptions, callback: IKCallback<UploadResponse>): void;
-  upload(uploadOptions: UploadOptions, callback?: IKCallback<UploadResponse>): void | Promise<UploadResponse> {
-    return promisify<UploadResponse>(this, upload)(uploadOptions, this.options, callback);
+  upload(uploadOptions: UploadOptions): Promise<IKResponse<UploadResponse>>;
+  upload(uploadOptions: UploadOptions, callback: IKCallback<IKResponse<UploadResponse>>): void;
+  upload(
+    uploadOptions: UploadOptions,
+    callback?: IKCallback<IKResponse<UploadResponse>>,
+  ): void | Promise<IKResponse<UploadResponse>> {
+    return promisify<IKResponse<UploadResponse>>(this, upload)(uploadOptions, this.options, callback);
   }
 
   /**
@@ -135,13 +139,13 @@ class ImageKit {
    *
    * @param listFilesOptions
    */
-  listFiles(listOptions: ListFileOptions): Promise<FileObject[]>;
-  listFiles(listOptions: ListFileOptions, callback: IKCallback<FileObject[]>): void;
+  listFiles(listOptions: ListFileOptions): Promise<IKResponse<FileObject[]>>;
+  listFiles(listOptions: ListFileOptions, callback: IKCallback<IKResponse<FileObject[]>>): void;
   listFiles(
     listOptions: ListFileOptions,
-    callback?: IKCallback<FileObject[]>,
-  ): void | Promise<FileObject[]> {
-    return promisify<FileObject[]>(this, manage.listFiles)(listOptions, this.options, callback);
+    callback?: IKCallback<IKResponse<FileObject[]>>,
+  ): void | Promise<IKResponse<FileObject[]>> {
+    return promisify<IKResponse<FileObject[]>>(this, manage.listFiles)(listOptions, this.options, callback);
   }
 
   /**
@@ -151,10 +155,13 @@ class ImageKit {
    *
    * @param fileId
    */
-  getFileDetails(fileId: string): Promise<FileObject>;
-  getFileDetails(fileId: string, callback: IKCallback<FileObject>): void;
-  getFileDetails(fileId: string, callback?: IKCallback<FileObject>): void | Promise<FileObject> {
-    return promisify<FileObject>(this, manage.getFileDetails)(fileId, this.options, callback);
+  getFileDetails(fileId: string): Promise<IKResponse<FileObject>>;
+  getFileDetails(fileId: string, callback: IKCallback<IKResponse<FileObject>>): void;
+  getFileDetails(
+    fileId: string,
+    callback?: IKCallback<IKResponse<FileObject>>,
+  ): void | Promise<IKResponse<FileObject>> {
+    return promisify<IKResponse<FileObject>>(this, manage.getFileDetails)(fileId, this.options, callback);
   }
 
   /**
@@ -164,23 +171,36 @@ class ImageKit {
    *
    * @param fileId
    */
-  getFileVersions(fileId: string): Promise<FileObject>;
-  getFileVersions(fileId: string, callback: IKCallback<FileObject>): void;
-  getFileVersions(fileId: string, callback?: IKCallback<FileObject>): void | Promise<FileObject> {
-    return promisify<FileObject>(this, manage.getFileVersions)(fileId, this.options, callback);
+  getFileVersions(fileId: string): Promise<IKResponse<FileObject>>;
+  getFileVersions(fileId: string, callback: IKCallback<IKResponse<FileObject>>): void;
+  getFileVersions(
+    fileId: string,
+    callback?: IKCallback<IKResponse<FileObject>>,
+  ): void | Promise<IKResponse<FileObject>> {
+    return promisify<IKResponse<FileObject>>(this, manage.getFileVersions)(fileId, this.options, callback);
   }
 
   /**
-  * Get file version details API
-  *
-  * @see {@link https://docs.imagekit.io/api-reference/media-api/get-file-version-details}
-  *
-  * @param fileVersionDetailsOptions
-  */
-  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions): Promise<FileObject>;
-  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions, callback: IKCallback<FileObject>): void;
-  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions, callback?: IKCallback<FileObject>): void | Promise<FileObject> {
-    return promisify<FileObject>(this, manage.getFileVersionDetails)(fileVersionDetailsOptions, this.options, callback);
+   * Get file version details API
+   *
+   * @see {@link https://docs.imagekit.io/api-reference/media-api/get-file-version-details}
+   *
+   * @param fileVersionDetailsOptions
+   */
+  getFileVersionDetails(fileVersionDetailsOptions: FileVersionDetailsOptions): Promise<IKResponse<FileObject>>;
+  getFileVersionDetails(
+    fileVersionDetailsOptions: FileVersionDetailsOptions,
+    callback: IKCallback<IKResponse<FileObject>>,
+  ): void;
+  getFileVersionDetails(
+    fileVersionDetailsOptions: FileVersionDetailsOptions,
+    callback?: IKCallback<IKResponse<FileObject>>,
+  ): void | Promise<IKResponse<FileObject>> {
+    return promisify<IKResponse<FileObject>>(this, manage.getFileVersionDetails)(
+      fileVersionDetailsOptions,
+      this.options,
+      callback,
+    );
   }
 
   /**
@@ -190,10 +210,17 @@ class ImageKit {
    *
    * @param fileIdOrURL The unique fileId of the uploaded file or absolute URL.
    */
-  getFileMetadata(fileIdOrURL: string): Promise<FileMetadataResponse>;
-  getFileMetadata(fileIdOrURL: string, callback: IKCallback<FileMetadataResponse>): void;
-  getFileMetadata(fileIdOrURL: string, callback?: IKCallback<FileMetadataResponse>): void | Promise<FileMetadataResponse> {
-    return promisify<FileMetadataResponse>(this, manage.getFileMetadata)(fileIdOrURL, this.options, callback);
+  getFileMetadata(fileIdOrURL: string): Promise<IKResponse<FileMetadataResponse>>;
+  getFileMetadata(fileIdOrURL: string, callback: IKCallback<IKResponse<FileMetadataResponse>>): void;
+  getFileMetadata(
+    fileIdOrURL: string,
+    callback?: IKCallback<IKResponse<FileMetadataResponse>>,
+  ): void | Promise<IKResponse<FileMetadataResponse>> {
+    return promisify<IKResponse<FileMetadataResponse>>(this, manage.getFileMetadata)(
+      fileIdOrURL,
+      this.options,
+      callback,
+    );
   }
 
   /**
@@ -204,14 +231,19 @@ class ImageKit {
    * @param fileId The unique fileId of the uploaded file. fileId is returned in list files API and upload API.
    * @param updateData
    */
-  updateFileDetails(fileId: string, updateData: FileDetailsOptions): Promise<FileObject>;
-  updateFileDetails(fileId: string, updateData: FileDetailsOptions, callback: IKCallback<FileObject>): void;
+  updateFileDetails(fileId: string, updateData: FileDetailsOptions): Promise<IKResponse<FileObject>>;
+  updateFileDetails(fileId: string, updateData: FileDetailsOptions, callback: IKCallback<IKResponse<FileObject>>): void;
   updateFileDetails(
     fileId: string,
     updateData: FileDetailsOptions,
-    callback?: IKCallback<FileObject>,
-  ): void | Promise<FileObject> {
-    return promisify<FileObject>(this, manage.updateFileDetails)(fileId, updateData, this.options, callback);
+    callback?: IKCallback<IKResponse<FileObject>>,
+  ): void | Promise<IKResponse<FileObject>> {
+    return promisify<IKResponse<FileObject>>(this, manage.updateFileDetails)(
+      fileId,
+      updateData,
+      this.options,
+      callback,
+    );
   }
 
   /**
@@ -222,10 +254,14 @@ class ImageKit {
    * @param fileIds
    * @param tags
    */
-  bulkAddTags(fileIds: string[], tags: string[]): Promise<void>;
-  bulkAddTags(fileIds: string[], tags: string[], callback: IKCallback<void>): void;
-  bulkAddTags(fileIds: string[], tags: string[], callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.bulkAddTags)(fileIds, tags, this.options, callback);
+  bulkAddTags(fileIds: string[], tags: string[]): Promise<IKResponse<void>>;
+  bulkAddTags(fileIds: string[], tags: string[], callback: IKCallback<IKResponse<void>>): void;
+  bulkAddTags(
+    fileIds: string[],
+    tags: string[],
+    callback?: IKCallback<IKResponse<void>>,
+  ): void | Promise<IKResponse<void>> {
+    return promisify<IKResponse<void>>(this, manage.bulkAddTags)(fileIds, tags, this.options, callback);
   }
 
   /**
@@ -236,10 +272,14 @@ class ImageKit {
    * @param fileIds
    * @param tags
    */
-  bulkRemoveTags(fileIds: string[], tags: string[]): void;
-  bulkRemoveTags(fileIds: string[], tags: string[], callback: IKCallback<void>): void;
-  bulkRemoveTags(fileIds: string[], tags: string[], callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.bulkRemoveTags)(fileIds, tags, this.options, callback);
+  bulkRemoveTags(fileIds: string[], tags: string[]): Promise<IKResponse<void>>;
+  bulkRemoveTags(fileIds: string[], tags: string[], callback: IKCallback<IKResponse<void>>): void;
+  bulkRemoveTags(
+    fileIds: string[],
+    tags: string[],
+    callback?: IKCallback<IKResponse<void>>,
+  ): void | Promise<IKResponse<void>> {
+    return promisify<IKResponse<void>>(this, manage.bulkRemoveTags)(fileIds, tags, this.options, callback);
   }
 
   /**
@@ -250,10 +290,14 @@ class ImageKit {
    * @param fileIds
    * @param tags
    */
-  bulkRemoveAITags(fileIds: string[], tags: string[]): void;
-  bulkRemoveAITags(fileIds: string[], tags: string[], callback: IKCallback<void>): void;
-  bulkRemoveAITags(fileIds: string[], tags: string[], callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.bulkRemoveAITags)(fileIds, tags, this.options, callback);
+  bulkRemoveAITags(fileIds: string[], tags: string[]): Promise<IKResponse<void>>;
+  bulkRemoveAITags(fileIds: string[], tags: string[], callback: IKCallback<IKResponse<void>>): void;
+  bulkRemoveAITags(
+    fileIds: string[],
+    tags: string[],
+    callback?: IKCallback<IKResponse<void>>,
+  ): void | Promise<IKResponse<void>> {
+    return promisify<IKResponse<void>>(this, manage.bulkRemoveAITags)(fileIds, tags, this.options, callback);
   }
 
   /**
@@ -263,10 +307,10 @@ class ImageKit {
    *
    * @param fileId The unique fileId of the uploaded file. fileId is returned in list files API and upload API
    */
-  deleteFile(fileId: string): Promise<void>;
-  deleteFile(fileId: string, callback: IKCallback<void>): void;
-  deleteFile(fileId: string, callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.deleteFile)(fileId, this.options, callback);
+  deleteFile(fileId: string): Promise<IKResponse<void>>;
+  deleteFile(fileId: string, callback: IKCallback<IKResponse<void>>): void;
+  deleteFile(fileId: string, callback?: IKCallback<IKResponse<void>>): void | Promise<IKResponse<void>> {
+    return promisify<IKResponse<void>>(this, manage.deleteFile)(fileId, this.options, callback);
   }
 
   /**
@@ -276,23 +320,40 @@ class ImageKit {
    *
    * @param deleteFileVersionOptions
    */
-  deleteFileVersion(deleteFileVersionOptions: DeleteFileVersionOptions): Promise<void>;
-  deleteFileVersion(deleteFileVersionOptions: DeleteFileVersionOptions, callback: IKCallback<void>): void;
-  deleteFileVersion(deleteFileVersionOptions: DeleteFileVersionOptions, callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.deleteFileVersion)(deleteFileVersionOptions, this.options, callback);
+  deleteFileVersion(deleteFileVersionOptions: DeleteFileVersionOptions): Promise<IKResponse<void>>;
+  deleteFileVersion(deleteFileVersionOptions: DeleteFileVersionOptions, callback: IKCallback<IKResponse<void>>): void;
+  deleteFileVersion(
+    deleteFileVersionOptions: DeleteFileVersionOptions,
+    callback?: IKCallback<IKResponse<void>>,
+  ): void | Promise<IKResponse<void>> {
+    return promisify<IKResponse<void>>(this, manage.deleteFileVersion)(
+      deleteFileVersionOptions,
+      this.options,
+      callback,
+    );
   }
 
   /**
-  * Restore file version to a different version of a file.
-  *
-  * @see {@link https://docs.imagekit.io/api-reference/media-api/restore-file-version}
-  *
-  * @param restoreFileVersionOptions
-  */
-  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions): Promise<FileObject>;
-  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions, callback: IKCallback<FileObject>): void;
-  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions, callback?: IKCallback<FileObject>): void | Promise<FileObject> {
-    return promisify<FileObject>(this, manage.restoreFileVersion)(restoreFileVersionOptions, this.options, callback);
+   * Restore file version to a different version of a file.
+   *
+   * @see {@link https://docs.imagekit.io/api-reference/media-api/restore-file-version}
+   *
+   * @param restoreFileVersionOptions
+   */
+  restoreFileVersion(restoreFileVersionOptions: RestoreFileVersionOptions): Promise<IKResponse<FileObject>>;
+  restoreFileVersion(
+    restoreFileVersionOptions: RestoreFileVersionOptions,
+    callback: IKCallback<IKResponse<FileObject>>,
+  ): void;
+  restoreFileVersion(
+    restoreFileVersionOptions: RestoreFileVersionOptions,
+    callback?: IKCallback<IKResponse<FileObject>>,
+  ): void | Promise<IKResponse<FileObject>> {
+    return promisify<IKResponse<FileObject>>(this, manage.restoreFileVersion)(
+      restoreFileVersionOptions,
+      this.options,
+      callback,
+    );
   }
 
   /**
@@ -302,10 +363,13 @@ class ImageKit {
    *
    * @param url The exact URL of the file to be purged. For example - https://ik.imageki.io/your_imagekit_id/rest-of-the-file-path.jpg
    */
-  purgeCache(url: string): Promise<PurgeCacheResponse>;
-  purgeCache(url: string, callback: IKCallback<PurgeCacheResponse>): void;
-  purgeCache(url: string, callback?: IKCallback<PurgeCacheResponse>): void | Promise<PurgeCacheResponse> {
-    return promisify<PurgeCacheResponse>(this, manage.purgeCache)(url, this.options, callback);
+  purgeCache(url: string): Promise<IKResponse<PurgeCacheResponse>>;
+  purgeCache(url: string, callback: IKCallback<IKResponse<PurgeCacheResponse>>): void;
+  purgeCache(
+    url: string,
+    callback?: IKCallback<IKResponse<PurgeCacheResponse>>,
+  ): void | Promise<IKResponse<PurgeCacheResponse>> {
+    return promisify<IKResponse<PurgeCacheResponse>>(this, manage.purgeCache)(url, this.options, callback);
   }
 
   /**
@@ -315,13 +379,17 @@ class ImageKit {
    *
    * @param requestId The requestId returned in response of purge cache API.
    */
-  getPurgeCacheStatus(requestId: string, callback: IKCallback<PurgeCacheStatusResponse>): void;
-  getPurgeCacheStatus(requestId: string): Promise<PurgeCacheStatusResponse>;
+  getPurgeCacheStatus(requestId: string, callback: IKCallback<IKResponse<PurgeCacheStatusResponse>>): void;
+  getPurgeCacheStatus(requestId: string): Promise<IKResponse<PurgeCacheStatusResponse>>;
   getPurgeCacheStatus(
     requestId: string,
-    callback?: IKCallback<PurgeCacheStatusResponse>,
-  ): void | Promise<PurgeCacheStatusResponse> {
-    return promisify<PurgeCacheStatusResponse>(this, manage.getPurgeCacheStatus)(requestId, this.options, callback);
+    callback?: IKCallback<IKResponse<PurgeCacheStatusResponse>>,
+  ): void | Promise<IKResponse<PurgeCacheStatusResponse>> {
+    return promisify<IKResponse<PurgeCacheStatusResponse>>(this, manage.getPurgeCacheStatus)(
+      requestId,
+      this.options,
+      callback,
+    );
   }
 
   /**
@@ -333,13 +401,17 @@ class ImageKit {
    */
   bulkDeleteFiles(
     fileIdArray: string[],
-    callback?: IKCallback<BulkDeleteFilesResponse, BulkDeleteFilesError>,
-  ): void | Promise<BulkDeleteFilesResponse>;
+    callback?: IKCallback<IKResponse<BulkDeleteFilesResponse>, IKResponse<BulkDeleteFilesError>>,
+  ): void | Promise<IKResponse<BulkDeleteFilesResponse>>;
   bulkDeleteFiles(
     fileIdArray: string[],
-    callback?: IKCallback<BulkDeleteFilesResponse, BulkDeleteFilesError>,
-  ): void | Promise<BulkDeleteFilesResponse> {
-    return promisify<BulkDeleteFilesResponse>(this, manage.bulkDeleteFiles)(fileIdArray, this.options, callback);
+    callback?: IKCallback<IKResponse<BulkDeleteFilesResponse>, IKResponse<BulkDeleteFilesError>>,
+  ): void | Promise<IKResponse<BulkDeleteFilesResponse>> {
+    return promisify<IKResponse<BulkDeleteFilesResponse>>(this, manage.bulkDeleteFiles)(
+      fileIdArray,
+      this.options,
+      callback,
+    );
   }
 
   /**
@@ -349,10 +421,13 @@ class ImageKit {
    *
    * @param copyFileOptions
    */
-  copyFile(copyFileOptions: CopyFileOptions): Promise<void>;
-  copyFile(copyFileOptions: CopyFileOptions, callback: IKCallback<void>): void;
-  copyFile(copyFileOptions: CopyFileOptions, callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.copyFile)(copyFileOptions, this.options, callback);
+  copyFile(copyFileOptions: CopyFileOptions): Promise<IKResponse<void>>;
+  copyFile(copyFileOptions: CopyFileOptions, callback: IKCallback<IKResponse<void>>): void;
+  copyFile(
+    copyFileOptions: CopyFileOptions,
+    callback?: IKCallback<IKResponse<void>>,
+  ): void | Promise<IKResponse<void>> {
+    return promisify<IKResponse<void>>(this, manage.copyFile)(copyFileOptions, this.options, callback);
   }
 
   /**
@@ -362,10 +437,13 @@ class ImageKit {
    *
    * @param moveFileOptions
    */
-  moveFile(moveFileOptions: MoveFileOptions): Promise<void>;
-  moveFile(moveFileOptions: MoveFileOptions, callback: IKCallback<void>): void;
-  moveFile(moveFileOptions: MoveFileOptions, callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.moveFile)(moveFileOptions, this.options, callback);
+  moveFile(moveFileOptions: MoveFileOptions): Promise<IKResponse<void>>;
+  moveFile(moveFileOptions: MoveFileOptions, callback: IKCallback<IKResponse<void>>): void;
+  moveFile(
+    moveFileOptions: MoveFileOptions,
+    callback?: IKCallback<IKResponse<void>>,
+  ): void | Promise<IKResponse<void>> {
+    return promisify<IKResponse<void>>(this, manage.moveFile)(moveFileOptions, this.options, callback);
   }
 
   /**
@@ -375,10 +453,17 @@ class ImageKit {
    *
    * @param renameFileOptions
    */
-  renameFile(renameFileOptions: RenameFileOptions): Promise<RenameFileResponse>;
-  renameFile(renameFileOptions: RenameFileOptions, callback: IKCallback<RenameFileResponse>): void;
-  renameFile(renameFileOptions: RenameFileOptions, callback?: IKCallback<RenameFileResponse>): void | Promise<RenameFileResponse> {
-    return promisify<RenameFileResponse>(this, manage.renameFile)(renameFileOptions, this.options, callback);
+  renameFile(renameFileOptions: RenameFileOptions): Promise<IKResponse<RenameFileResponse>>;
+  renameFile(renameFileOptions: RenameFileOptions, callback: IKCallback<IKResponse<RenameFileResponse>>): void;
+  renameFile(
+    renameFileOptions: RenameFileOptions,
+    callback?: IKCallback<IKResponse<RenameFileResponse>>,
+  ): void | Promise<IKResponse<RenameFileResponse>> {
+    return promisify<IKResponse<RenameFileResponse>>(this, manage.renameFile)(
+      renameFileOptions,
+      this.options,
+      callback,
+    );
   }
 
   /**
@@ -388,10 +473,13 @@ class ImageKit {
    *
    * @param createFolderOptions
    */
-  createFolder(createFolderOptions: CreateFolderOptions): Promise<void>;
-  createFolder(createFolderOptions: CreateFolderOptions, callback: IKCallback<void>): void;
-  createFolder(createFolderOptions: CreateFolderOptions, callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.createFolder)(createFolderOptions, this.options, callback);
+  createFolder(createFolderOptions: CreateFolderOptions): Promise<IKResponse<void>>;
+  createFolder(createFolderOptions: CreateFolderOptions, callback: IKCallback<IKResponse<void>>): void;
+  createFolder(
+    createFolderOptions: CreateFolderOptions,
+    callback?: IKCallback<IKResponse<void>>,
+  ): void | Promise<IKResponse<void>> {
+    return promisify<IKResponse<void>>(this, manage.createFolder)(createFolderOptions, this.options, callback);
   }
 
   /**
@@ -401,10 +489,10 @@ class ImageKit {
    *
    * @param foldePath
    */
-  deleteFolder(folderPath: string): Promise<void>;
-  deleteFolder(folderPath: string, callback: IKCallback<void>): void;
-  deleteFolder(folderPath: string, callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.deleteFolder)(folderPath, this.options, callback);
+  deleteFolder(folderPath: string): Promise<IKResponse<void>>;
+  deleteFolder(folderPath: string, callback: IKCallback<IKResponse<void>>): void;
+  deleteFolder(folderPath: string, callback?: IKCallback<IKResponse<void>>): void | Promise<IKResponse<void>> {
+    return promisify<IKResponse<void>>(this, manage.deleteFolder)(folderPath, this.options, callback);
   }
 
   /**
@@ -414,16 +502,16 @@ class ImageKit {
    *
    * @param copyFolderOptions
    */
-  copyFolder(copyFolderOptions: CopyFolderOptions): Promise<CopyFolderResponse>;
+  copyFolder(copyFolderOptions: CopyFolderOptions): Promise<IKResponse<CopyFolderResponse>>;
   copyFolder(
     copyFolderOptions: CopyFolderOptions,
-    callback: IKCallback<CopyFolderResponse, CopyFolderError>,
+    callback: IKCallback<IKResponse<CopyFolderResponse>, IKResponse<CopyFolderError>>,
   ): void;
   copyFolder(
     copyFolderOptions: CopyFolderOptions,
-    callback?: IKCallback<CopyFolderResponse, CopyFolderError>,
-  ): void | Promise<CopyFolderResponse> {
-    return promisify<CopyFolderResponse>(this, manage.copyFolder)(
+    callback?: IKCallback<IKResponse<CopyFolderResponse>, IKResponse<CopyFolderError>>,
+  ): void | Promise<IKResponse<CopyFolderResponse>> {
+    return promisify<IKResponse<CopyFolderResponse>>(this, manage.copyFolder)(
       copyFolderOptions,
       this.options,
       callback,
@@ -437,16 +525,16 @@ class ImageKit {
    *
    * @param moveFolderOptions
    */
-  moveFolder(moveFolderOptions: MoveFolderOptions): Promise<MoveFolderResponse>;
+  moveFolder(moveFolderOptions: MoveFolderOptions): Promise<IKResponse<MoveFolderResponse>>;
   moveFolder(
     moveFolderOptions: MoveFolderOptions,
-    callback: IKCallback<MoveFolderResponse, MoveFolderError>,
+    callback: IKCallback<IKResponse<MoveFolderResponse>, IKResponse<MoveFolderError>>,
   ): void;
   moveFolder(
     moveFolderOptions: MoveFolderOptions,
-    callback?: IKCallback<MoveFolderResponse, MoveFolderError>,
-  ): void | Promise<MoveFolderResponse> {
-    return promisify<MoveFolderResponse>(this, manage.moveFolder)(
+    callback?: IKCallback<IKResponse<MoveFolderResponse>, MoveFolderError>,
+  ): void | Promise<IKResponse<MoveFolderResponse>> {
+    return promisify<IKResponse<MoveFolderResponse>>(this, manage.moveFolder)(
       moveFolderOptions,
       this.options,
       callback,
@@ -472,10 +560,10 @@ class ImageKit {
    *
    * @param jobId
    */
-  getBulkJobStatus(jobId: string): Promise<void>;
-  getBulkJobStatus(jobId: string, callback: IKCallback<void>): Promise<void>;
-  getBulkJobStatus(jobId: string, callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, manage.getBulkJobStatus)(jobId, this.options, callback);
+  getBulkJobStatus(jobId: string): Promise<IKResponse<void>>;
+  getBulkJobStatus(jobId: string, callback: IKCallback<IKResponse<void>>): Promise<IKResponse<void>>;
+  getBulkJobStatus(jobId: string, callback?: IKCallback<IKResponse<void>>): void | Promise<IKResponse<void>> {
+    return promisify<IKResponse<void>>(this, manage.getBulkJobStatus)(jobId, this.options, callback);
   }
 
   /**
@@ -485,10 +573,22 @@ class ImageKit {
    *
    * @param createCustomMetadataFieldOptions
    */
-  createCustomMetadataField(createCustomMetadataFieldOptions: CreateCustomMetadataFieldOptions): Promise<CustomMetadataField>;
-  createCustomMetadataField(createCustomMetadataFieldOptions: CreateCustomMetadataFieldOptions, callback: IKCallback<CustomMetadataField>): Promise<CustomMetadataField>;
-  createCustomMetadataField(createCustomMetadataFieldOptions: CreateCustomMetadataFieldOptions, callback?: IKCallback<CustomMetadataField>): void | Promise<CustomMetadataField> {
-    return promisify<CustomMetadataField>(this, customMetadataField.create)(createCustomMetadataFieldOptions, this.options, callback);
+  createCustomMetadataField(
+    createCustomMetadataFieldOptions: CreateCustomMetadataFieldOptions,
+  ): Promise<IKResponse<CustomMetadataField>>;
+  createCustomMetadataField(
+    createCustomMetadataFieldOptions: CreateCustomMetadataFieldOptions,
+    callback: IKCallback<IKResponse<CustomMetadataField>>,
+  ): Promise<IKResponse<CustomMetadataField>>;
+  createCustomMetadataField(
+    createCustomMetadataFieldOptions: CreateCustomMetadataFieldOptions,
+    callback?: IKCallback<IKResponse<CustomMetadataField>>,
+  ): void | Promise<IKResponse<CustomMetadataField>> {
+    return promisify<IKResponse<CustomMetadataField>>(this, customMetadataField.create)(
+      createCustomMetadataFieldOptions,
+      this.options,
+      callback,
+    );
   }
 
   /**
@@ -497,24 +597,52 @@ class ImageKit {
    * @see {@link https://docs.imagekit.io/api-reference/custom-metadata-fields-api/get-custom-metadata-field}
    *
    */
-  getCustomMetadataFields(getCustomMetadataFieldsOptions: GetCustomMetadataFieldsOptions): Promise<CustomMetadataField[]>;
-  getCustomMetadataFields(getCustomMetadataFieldsOptions: GetCustomMetadataFieldsOptions, callback: IKCallback<CustomMetadataField[]>): Promise<CustomMetadataField[]>;
-  getCustomMetadataFields(getCustomMetadataFieldsOptions: GetCustomMetadataFieldsOptions, callback?: IKCallback<CustomMetadataField[]>): void | Promise<CustomMetadataField[]> {
-    return promisify<CustomMetadataField[]>(this, customMetadataField.list)(getCustomMetadataFieldsOptions, this.options, callback);
+  getCustomMetadataFields(
+    getCustomMetadataFieldsOptions: GetCustomMetadataFieldsOptions,
+  ): Promise<IKResponse<CustomMetadataField[]>>;
+  getCustomMetadataFields(
+    getCustomMetadataFieldsOptions: GetCustomMetadataFieldsOptions,
+    callback: IKCallback<IKResponse<CustomMetadataField[]>>,
+  ): Promise<IKResponse<CustomMetadataField[]>>;
+  getCustomMetadataFields(
+    getCustomMetadataFieldsOptions: GetCustomMetadataFieldsOptions,
+    callback?: IKCallback<IKResponse<CustomMetadataField[]>>,
+  ): void | Promise<IKResponse<CustomMetadataField[]>> {
+    return promisify<IKResponse<CustomMetadataField[]>>(this, customMetadataField.list)(
+      getCustomMetadataFieldsOptions,
+      this.options,
+      callback,
+    );
   }
 
   /**
-  * Update custom metadata field
-  *
-  * @see {@link https://docs.imagekit.io/api-reference/custom-metadata-fields-api/update-custom-metadata-field}
-  *
-  * @param fieldId
-  * @param updateCustomMetadataFieldOptions
-  */
-  updateCustomMetadataField(fieldId: string, updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions): Promise<CustomMetadataField>;
-  updateCustomMetadataField(fieldId: string, updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions, callback: IKCallback<CustomMetadataField>): Promise<CustomMetadataField>;
-  updateCustomMetadataField(fieldId: string, updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions, callback?: IKCallback<CustomMetadataField>): void | Promise<CustomMetadataField> {
-    return promisify<CustomMetadataField>(this, customMetadataField.update)(fieldId, updateCustomMetadataFieldOptions, this.options, callback);
+   * Update custom metadata field
+   *
+   * @see {@link https://docs.imagekit.io/api-reference/custom-metadata-fields-api/update-custom-metadata-field}
+   *
+   * @param fieldId
+   * @param updateCustomMetadataFieldOptions
+   */
+  updateCustomMetadataField(
+    fieldId: string,
+    updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions,
+  ): Promise<IKResponse<CustomMetadataField>>;
+  updateCustomMetadataField(
+    fieldId: string,
+    updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions,
+    callback: IKCallback<IKResponse<CustomMetadataField>>,
+  ): Promise<IKResponse<CustomMetadataField>>;
+  updateCustomMetadataField(
+    fieldId: string,
+    updateCustomMetadataFieldOptions: UpdateCustomMetadataFieldOptions,
+    callback?: IKCallback<IKResponse<CustomMetadataField>>,
+  ): void | Promise<IKResponse<CustomMetadataField>> {
+    return promisify<IKResponse<CustomMetadataField>>(this, customMetadataField.update)(
+      fieldId,
+      updateCustomMetadataFieldOptions,
+      this.options,
+      callback,
+    );
   }
 
   /**
@@ -524,10 +652,10 @@ class ImageKit {
    *
    * @param fieldId
    */
-  deleteCustomMetadataField(fieldId: string): Promise<void>;
-  deleteCustomMetadataField(fieldId: string, callback: IKCallback<void>): void;
-  deleteCustomMetadataField(fieldId: string, callback?: IKCallback<void>): void | Promise<void> {
-    return promisify(this, customMetadataField.deleteField)(fieldId, this.options, callback);
+  deleteCustomMetadataField(fieldId: string): Promise<IKResponse<void>>;
+  deleteCustomMetadataField(fieldId: string, callback: IKCallback<IKResponse<void>>): void;
+  deleteCustomMetadataField(fieldId: string, callback?: IKCallback<IKResponse<void>>): void | Promise<IKResponse<void>> {
+    return promisify<IKResponse<void>>(this, customMetadataField.deleteField)(fieldId, this.options, callback);
   }
 
   /**
@@ -545,4 +673,4 @@ class ImageKit {
   }
 }
 
-export = ImageKit;
+export default ImageKit;
