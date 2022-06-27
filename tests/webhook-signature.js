@@ -1,35 +1,11 @@
-import ImageKit from "../index";
+import { Webhook } from "../index";
 import { expect } from "chai";
 import SampleWebhookRequest from "./data/sample-webhook-requests";
 
-describe.only("WebhookSignature", function () {
-  const { sign, verify } = ImageKit.WebhookSignature;
+describe("WebhookSignature", function () {
+  const { verify } = Webhook;
 
-  context("Test WebhookSignature.sign()", () => {
-    it("WEBHOOK_REQUEST_1", () => {
-      const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1;
-      const signature = sign(webhookRequest.rawBody, webhookRequest.secret, {
-        timestamp: webhookRequest.timestamp,
-      });
-      expect(signature).to.equal(webhookRequest.signature);
-    });
-    it("WEBHOOK_REQUEST_2", () => {
-      const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_2;
-      const signature = sign(webhookRequest.rawBody, webhookRequest.secret, {
-        timestamp: webhookRequest.timestamp,
-      });
-      expect(signature).to.equal(webhookRequest.signature);
-    });
-    it("WEBHOOK_REQUEST_3", () => {
-      const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_3;
-      const signature = sign(webhookRequest.rawBody, webhookRequest.secret, {
-        timestamp: webhookRequest.timestamp,
-      });
-      expect(signature).to.equal(webhookRequest.signature);
-    });
-  });
-
-  context("Test WebhookSignature.verify() - Positive cases", () => {
+  context("Test Webhook.verify() - Positive cases", () => {
     it("WEBHOOK_REQUEST_1", () => {
       const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1;
       const { timestamp, event } = verify(
@@ -65,14 +41,11 @@ describe.only("WebhookSignature", function () {
   context("Test WebhookSignature.verify() - Negative cases", () => {
     it("Invalid signature - incorrect request body", () => {
       const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1;
-
-      // modify webhook request body
-      const body = { hello: "world" };
-      const rawBody = JSON.stringify(body);
-
+      const incorrectBody = { hello: "world" };
+      const incorrectRawBody = JSON.stringify(incorrectBody);
       try {
         verify(
-          rawBody, // Incorrect body
+          incorrectRawBody,
           webhookRequest.signature,
           webhookRequest.secret
         );
@@ -83,12 +56,16 @@ describe.only("WebhookSignature", function () {
     });
     it("Invalid signature - incorrect timestamp", () => {
       const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1;
-      const signature = webhookRequest.signature.replace(
+      const incorrectSignature = webhookRequest.signature.replace(
         `t:${webhookRequest.timestamp.getTime()}`,
         `t:${webhookRequest.timestamp.getTime() + 1}`
       ); // Correct timestamp replaced with incorrect timestamp
       try {
-        verify(webhookRequest.rawBody, signature, webhookRequest.secret);
+        verify(
+          webhookRequest.rawBody,
+          incorrectSignature,
+          webhookRequest.secret
+        );
         expect.fail("Expected exception");
       } catch (e) {
         expect(e.message).to.equal("Invalid signature");
@@ -97,7 +74,11 @@ describe.only("WebhookSignature", function () {
     it("Invalid signature - different secret", () => {
       const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1;
       try {
-        verify(webhookRequest.rawBody, webhookRequest.signature, "A different secret");
+        verify(
+          webhookRequest.rawBody,
+          webhookRequest.signature,
+          "A different secret"
+        );
         expect.fail("Expected exception");
       } catch (e) {
         expect(e.message).to.equal("Invalid signature");
