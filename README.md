@@ -173,6 +173,8 @@ https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400/default-image.jpg?v=123&i
 
 See the complete list of transformations supported in ImageKit [here](https://docs.imagekit.io/features/image-transformations). The SDK gives a name to each transformation parameter e.g. `height` for `h` and `width` for `w` parameter. It makes your code more readable. If the property does not match any of the following supported options, it is added as it is.
 
+If you want to generate transformations in your application and add them to the URL as it is, use the `raw` parameter.
+
 | Supported Transformation Name | Translates to parameter |
 |-------------------------------|-------------------------|
 | height | h |
@@ -232,6 +234,7 @@ See the complete list of transformations supported in ImageKit [here](https://do
 | effectContrast | e-contrast |
 | effectGray | e-grayscale |
 | original | orig |
+| raw | `replaced by the parameter value` |
 
 
 
@@ -288,7 +291,7 @@ If the upload fails, `error` will be the same as what is received from ImageKit'
 
 The SDK provides a simple interface for all the [media APIs mentioned here](https://docs.imagekit.io/api-reference/media-api) to manage your files. You can use a callback function with all API interfaces. The first argument of the callback function is the error, and the second is the result of the API call. The error will be `null` if the API succeeds.
 
-**1. List & Search Files**
+**List & Search Files**
 
 Accepts an object specifying the parameters to be used to list and search files. All parameters specified in the [documentation here](https://docs.imagekit.io/api-reference/media-api/list-and-search-files) can be passed as-is with the correct values to get the results.
 
@@ -316,7 +319,7 @@ imagekit.listFiles({
 });
 ```
 
-**2. Get File Details**
+**Get File Details**
 
 Accepts the file ID and fetches the details as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/get-file-details).
 
@@ -339,20 +342,22 @@ imagekit.getFileDetails("file_id")
 });
 ```
 
-**3. Get File Metadata**
+**Get File Versions**
 
-Accepts the file ID and fetches the metadata as per the [API documentation here](https://docs.imagekit.io/api-reference/metadata-api/get-image-metadata-for-uploaded-media-files).
+Accepts the file ID and fetches all the versions of that file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/get-file-versions).
 
 ```js
 // Using Callback Function
-imagekit.getFileMetadata("file_id", function(error, result) {
+
+imagekit.getFileVersions("file_id", function(error, result) {
     if(error) console.log(error);
     else console.log(result);
 });
 
 
 // Using Promises 
-imagekit.getFileMetadata("file_id")
+
+imagekit.getFileVersions("file_id")
 }).then(response => {
     console.log(response);
 }).catch(error => {
@@ -360,18 +365,28 @@ imagekit.getFileMetadata("file_id")
 });
 ```
 
-You can also pass the remote URL of the image to get metadata.
+**Get File version details**
+
+Accepts the file ID and version ID, returns the details of that specific version as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/get-file-version-details).
 
 ```js
 // Using Callback Function
-imagekit.getFileMetadata("https://ik.imagekit.io/your_imagekit_id/sample.jpg", function(error, result) {
+
+imagekit.getFileVersionDetails({
+    fileId: "file_id",
+    versionId: "version_id"
+}, function(error, result) {
     if(error) console.log(error);
     else console.log(result);
 });
 
 
 // Using Promises 
-imagekit.getFileMetadata("https://ik.imagekit.io/your_imagekit_id/sample.jpg")
+
+imagekit.getFileVersionDetails({
+    fileId: "file_id",
+    versionId: "version_id"
+})
 }).then(response => {
     console.log(response);
 }).catch(error => {
@@ -379,7 +394,7 @@ imagekit.getFileMetadata("https://ik.imagekit.io/your_imagekit_id/sample.jpg")
 });
 ```
 
-**4. Update File Details**
+**Update File Details**
 
 Update parameters associated with the file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/update-file-details). The first argument to the `updateFileDetails` method is the file ID, and a second argument is an object with the parameters to be updated.
 
@@ -421,7 +436,70 @@ imagekit.updateFileDetails("file_id", {
 });
 ```
 
-**5. Delete File**
+**Bulk Add tags**
+
+Add tags to multiple files in a single request as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/add-tags-bulk). The method accepts an array of fileIDs of the files and an array of tags that have to be added to those files.
+
+```js
+// Using Callback Function
+
+imagekit.bulkAddTags(["fileIds"], ["tags"], function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.bulkAddTags(["fileIds"], ["tags"]).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Bulk Remove tags**
+
+Remove tags from multiple files in a single request as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/remove-tags-bulk). The method accepts an array of fileIDs of the files and an array of tags that have to be removed from those files.
+
+```js
+// Using Callback Function
+
+imagekit.bulkRemoveTags(["fileIds"], ["tags"], function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.bulkRemoveTags(["fileIds"], ["tags"]).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Bulk Remove AI Tags**
+
+Remove AI tags from multiple files in a single request as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/remove-aitags-bulk). The method accepts an array of fileIDs of the files and an array of tags that have to be removed from those files.
+
+```js
+// Using Callback Function
+
+imagekit.bulkRemoveAITags(["fileIds"], ["ai-tag1", "ai-tag2"], function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.bulkRemoveAITags(["fileIds"], ["ai-tag1", "ai-tag2"]).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Delete File**
 
 Delete a file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-file). The method accepts the file ID of the file that has to be deleted.
 
@@ -443,14 +521,17 @@ imagekit.deleteFile("file_id").then(response => {
 });
 ```
 
-**6. Bulk Delete Files**
+**Delete File Version**
 
-Delete multiple files as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-files-bulk). The method accepts an array of file IDs of the files that have to be deleted.
+Delete any non-current version of a file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-file-version).
 
 ```js
 // Using Callback Function
 
-imagekit.bulkDeleteFiles(["fileIds"], function(error, result) {
+imagekit.deleteFileVersion({
+    fileId: "file_id",
+    versionId: "version_id",
+}, function(error, result) {
     if(error) console.log(error);
     else console.log(result);
 });
@@ -458,14 +539,276 @@ imagekit.bulkDeleteFiles(["fileIds"], function(error, result) {
 
 // Using Promises 
 
-imagekit.bulkDeleteFiles(["fileIds"]).then(response => {
+imagekit.deleteFile({
+    fileId: "file_id",
+    versionId: "version_id",
+}).then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
 });
 ```
 
-**7. Purge Cache**
+**Bulk Delete Files**
+
+Delete multiple files as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-files-bulk). The method accepts an array of file IDs of the files that have to be deleted.
+
+```js
+// Using Callback Function
+
+imagekit.bulkDeleteFiles(["fileId1", "fileId2"], function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+
+// Using Promises 
+
+imagekit.bulkDeleteFiles(["fileId1", "fileId2"]).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Copy File**
+
+This will copy a file from one location to another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-file).
+
+```js
+// Using Callback Function
+
+imagekit.copyFile({
+    sourceFilePath: "/path/to/file.jpg",
+    destinationPath: "/folder/to/copy/into/"
+    includeFileVersions: false // optional
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.copyFile({
+    sourceFilePath: "/path/to/file.jpg",
+    destinationPath: "/folder/to/copy/into/",
+     includeFileVersions: false // optional
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Move File**
+
+This will move a file from one location to another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/move-file).
+
+```js
+// Using Callback Function
+
+imagekit.moveFile({
+    sourceFilePath: "/path/to/file.jpg",
+    destinationPath: "/folder/to/copy/into/",
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.moveFile({
+    sourceFilePath: "/path/to/file.jpg",
+    destinationPath: "/folder/to/copy/into/",
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Rename File**
+
+Rename the file as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/rename-file).
+
+```js
+// Using Callback Function
+
+imagekit.renameFile({
+    filePath: "/path/to/old-file-name.jpg",
+    newFileName: "new-file-name.jpg",
+    purgeCache: false // optional
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.renameFile({
+    filePath: "/path/to/old-file-name.jpg",
+    newFileName: "new-file-name.jpg",
+    purgeCache: false // optional
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Restore File Version**
+
+Restore the file version as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/restore-file-version).
+
+```js
+// Using Callback Function
+
+imagekit.restoreFileVersion({
+    fileId: "file_id",
+    versionId: "version_id"
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.restoreFileVersion({
+    fileId: "file_id",
+    versionId: "version_id"
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Create Folder**
+
+This will create a new folder as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/create-folder).
+
+```js
+// Using Callback Function
+
+imagekit.createFolder({
+    folderName: "new_folder",
+    parentFolderPath: "source/folder/path"
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.createFolder({
+    folderName: "new_folder",
+    parentFolderPath: "source/folder/path"
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Delete Folder**
+
+This will delete the specified folder and all nested files & folders as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-folder).
+
+```js
+// Using Callback Function
+
+imagekit.deleteFolder("folderPath", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.deleteFolder("folderPath").then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Copy Folder**
+
+This will copy one folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-folder).
+
+```js
+// Using Callback Function
+
+imagekit.copyFolder({
+    sourceFolderPath: "/folder/to/copy",
+    destinationPath: "/folder/to/copy/into/",
+    includeFileVersions: false // optional
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.copyFolder({
+    sourceFolderPath: "/folder/to/copy",
+    destinationPath: "/folder/to/copy/into/",
+    includeFileVersions: false // optional
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Move Folder**
+
+This will move one folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/move-folder).
+
+```js
+// Using Callback Function
+
+imagekit.moveFolder({
+    sourceFolderPath: "/folder/to/move",
+    destinationPath: "/folder/to/move/into/"
+}, function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.moveFolder({
+    sourceFolderPath: "/folder/to/move",
+    destinationPath: "/folder/to/move/into/"
+}).then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Get bulk job status**
+
+This allows us to get a bulk operation status e.g. copy or move folder as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-move-folder-status). This method accepts `jobId` that is returned by copy and move folder operations.
+
+```js
+// Using Callback Function
+
+imagekit.getBulkJobStatus("jobId", function(error, result) {
+    if(error) console.log(error);
+    else console.log(result);
+});
+
+// Using Promises
+
+imagekit.getBulkJobStatus("jobId").then(response => {
+    console.log(response);
+}).catch(error => {
+    console.log(error);
+});
+```
+
+**Purge Cache**
 
 Programmatically issue a cache clear request as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/purge-cache). Accepts the full URL of the file for which the cache has to be cleared.
 
@@ -487,7 +830,7 @@ imagekit.purgeCache("full_url").then(response => {
 });
 ```
 
-**8. Purge Cache Status**
+**Purge Cache Status**
 
 Get the purge cache request status using the request ID returned when a purge cache request gets submitted as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/purge-cache-status)
 
@@ -509,189 +852,180 @@ imagekit.getPurgeCacheStatus("cache_request_id").then(response => {
 });
 ```
 
-**9. Bulk Add tags**
+**Get File Metadata**
 
-Add tags to multiple files in a single request as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/add-tags-bulk). The method accepts an array of fileIDs of the files and an array of tags that have to be added to those files.
+Accepts the file ID and fetches the metadata as per the [API documentation here](https://docs.imagekit.io/api-reference/metadata-api/get-image-metadata-for-uploaded-media-files).
 
 ```js
 // Using Callback Function
-
-imagekit.bulkAddTags(["fileIds"], ["tags"], function(error, result) {
+imagekit.getFileMetadata("file_id", function(error, result) {
     if(error) console.log(error);
     else console.log(result);
 });
 
-// Using Promises
 
-imagekit.bulkAddTags(["fileIds"], ["tags"]).then(response => {
+// Using Promises 
+imagekit.getFileMetadata("file_id")
+}).then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
 });
 ```
 
-**10. Bulk Remove tags**
-
-Remove tags from multiple files in a single request as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/remove-tags-bulk). The method accepts an array of fileIDs of the files and an array of tags that have to be removed from those files.
+You can also pass the remote URL of the image to get metadata.
 
 ```js
 // Using Callback Function
-
-imagekit.bulkRemoveTags(["fileIds"], ["tags"], function(error, result) {
+imagekit.getFileMetadata("https://ik.imagekit.io/your_imagekit_id/sample.jpg", function(error, result) {
     if(error) console.log(error);
     else console.log(result);
 });
 
-// Using Promises
 
-imagekit.bulkRemoveTags(["fileIds"], ["tags"]).then(response => {
+// Using Promises 
+imagekit.getFileMetadata("https://ik.imagekit.io/your_imagekit_id/sample.jpg")
+}).then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
 });
 ```
 
-**11. Copy File**
+**Create custom metadata field**
 
-This will copy a file from one location to another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-file). This method accepts the source file's path and destination folder path.
+Create a new custom metadata field as per the [API documentation here](https://docs.imagekit.io/api-reference/custom-metadata-fields-api/create-custom-metadata-field)
 
 ```js
 // Using Callback Function
 
-imagekit.copyFile("sourceFilePath", "destinationPath", function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
+imagekit.createCustomMetadataField(
+    {
+        name: "price",
+        label: "price",
+        schema: {
+            type: "Number",
+            minValue: 1000,
+            maxValue: 3000
+        }
+    }, 
+    function(error, result) {
+        if(error) console.log(error);
+        else console.log(result);
+    }
+);
 
-// Using Promises
 
-imagekit.copyFile("sourceFilePath", "destinationPath").then(response => {
+// Using Promises 
+
+imagekit.createCustomMetadataField(
+    {
+        name: "price",
+        label: "price",
+        schema: {
+            type: "Number",
+            minValue: 1000,
+            maxValue: 3000
+        }
+    }
+).then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
 });
 ```
 
-**12. Move File**
+**Get all custom metadata fields**
 
-This will move a file from one location to another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/move-file). This method accepts the source file's path and destination folder path.
+Get the list of all custom metadata fields as per the [API documentation here](https://docs.imagekit.io/api-reference/custom-metadata-fields-api/get-custom-metadata-field)
 
 ```js
 // Using Callback Function
 
-imagekit.moveFile("sourceFilePath", "destinationPath", function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
+imagekit.getCustomMetadataFields(
+    {
+       includeDeleted: false // optional
+    }, 
+    function(error, result) {
+        if(error) console.log(error);
+        else console.log(result);
+    }
+);
 
-// Using Promises
 
-imagekit.moveFile("sourceFilePath", "destinationPath").then(response => {
+// Using Promises 
+
+imagekit.getCustomMetadataFields(
+    {
+       includeDeleted: false // optional
+    }
+).then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
 });
 ```
 
-**13. Copy Folder**
+**Update a custom metadata field**
 
-This will copy one folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-folder). This method accepts the source folder's path and destination folder path.
+Update a custom metadata field as per the [API documentation here](https://docs.imagekit.io/api-reference/custom-metadata-fields-api/update-custom-metadata-field)
 
 ```js
 // Using Callback Function
 
-imagekit.copyFolder("sourceFolderPath", "destinationPath", function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
+imagekit.updateCustomMetadataField(
+    "field_id",
+    {
+        schema: {
+            minValue: 500,
+            maxValue: 2500
+        }
+    }, 
+    function(error, result) {
+        if(error) console.log(error);
+        else console.log(result);
+    }
+);
 
-// Using Promises
 
-imagekit.copyFolder("sourceFolderPath", "destinationPath").then(response => {
+// Using Promises 
+
+imagekit.updateCustomMetadataField(
+    "field_id",
+    {
+        schema: {
+            minValue: 500,
+            maxValue: 2500
+        }
+    }, 
+).then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
 });
 ```
 
-**14. Move Folder**
+**Delete a custom metadata field**
 
-This will move one folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/move-folder). This method accepts the source folder's path and destination folder path.
-
-```js
-// Using Callback Function
-
-imagekit.moveFolder("sourceFolderPath", "destinationPath", function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
-
-// Using Promises
-
-imagekit.moveFolder("sourceFolderPath", "destinationPath").then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
-```
-
-**15. Get bulk job status**
-
-This allows us to get a bulk operation status e.g. copy or move folder as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-move-folder-status). This method accepts `jobId` that is returned by copy and move folder operations.
+delete a custom metadata field as per the [API documentation here](https://docs.imagekit.io/api-reference/custom-metadata-fields-api/delete-custom-metadata-field)
 
 ```js
 // Using Callback Function
 
-imagekit.getBulkJobStatus("jobId", function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
+imagekit.deleteCustomMetadataField(
+    "field_id",
+    function(error, result) {
+        if(error) console.log(error);
+        else console.log(result);
+    }
+);
 
-// Using Promises
 
-imagekit.getBulkJobStatus("jobId").then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
-```
+// Using Promises 
 
-**16. Create Folder**
-
-This will create a new folder as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/create-folder). This method accepts folder name and parent folder path.
-
-```js
-// Using Callback Function
-
-imagekit.createFolder("folderName", "parentFolderPath", function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
-
-// Using Promises
-
-imagekit.createFolder("folderName", "parentFolderPath").then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
-```
-
-**17. Delete Folder**
-
-This will delete the specified folder and all nested files & folders as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-folder). This method accepts the full path of the folder that is to be deleted.
-
-```js
-// Using Callback Function
-
-imagekit.deleteFolder("folderPath", function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
-
-// Using Promises
-
-imagekit.deleteFolder("folderPath").then(response => {
+imagekit.deleteCustomMetadataField(
+    "field_id"
+).then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);

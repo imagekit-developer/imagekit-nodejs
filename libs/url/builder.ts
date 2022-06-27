@@ -12,7 +12,7 @@ import transformationUtils from "../../utils/transformation";
 import urlFormatter from "../../utils/urlFormatter";
 
 /*
-	Interfaces
+  Interfaces
 */
 import { FinalUrlOptions, Transformation } from "../interfaces";
 
@@ -129,6 +129,8 @@ function constructTransformationString(transformation: Array<Transformation> | u
 
       if (transformation[i][key] === "-") {
         parsedTransformStep.push(transformKey);
+      } else if (key === "raw") {
+        parsedTransformStep.push(transformation[i][key]);
       } else {
         var value = String(transformation[i][key]);
         if (transformKey === "oi" || transformKey === "di") {

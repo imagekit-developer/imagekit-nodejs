@@ -24,16 +24,23 @@ export interface FileDetailsOptions {
     * Final status of pending extensions will be sent to this URL. 
     */
   webhookUrl?: string
+  /*
+   * Array of AI tags to remove from the asset.
+   */
+  removeAITags?: string[];
+  /*
+   * A key-value data to be associated with the asset. To unset a key, send null value for that key. Before setting any custom metadata on an asset you have to create the field using custom metadata fields API.
+   */
+  customMetadata?: object;
 }
 
 /**
  *
- * File details such as tags, customCoordinates, and isPrivate properties using get file detail API.
+ * File object.
  *
- * @see {@link https://docs.imagekit.io/api-reference/media-api/get-file-details}
- * @see {@link https://docs.imagekit.io/api-reference/media-api/update-file-details#understanding-response}
+ * @see {@link https://docs.imagekit.io/api-reference/media-api#file-object-structure}
  */
-export interface FileDetailsResponse {
+export interface FileObject {
   /**
    * The unique fileId of the uploaded file.
    */
@@ -54,7 +61,7 @@ export interface FileDetailsResponse {
   /**
    * Array of tags associated with the image. If no tags are set, it will be null.
    */
-  tags: string[] | null;
+  tags?: string[] | null;
   /**
    * Is the file marked as private. It can be either true or false.
    */
@@ -82,6 +89,58 @@ export interface FileDetailsResponse {
   AITags?: object[];
   /*
    * Field object which will contain the status of each extension at the time of completion of the update/upload request.
-   */ 
+   */
   extensionStatus?: { [key: string]: string }
+  /*
+   * Consolidated embedded metadata associated with the file. It includes exif, iptc, and xmp data.
+   */
+  embeddedMetadata?: object | null;
+  /*
+   * A key-value data associated with the asset. Before setting any custom metadata on an asset, you have to create the field using custom metadata fields API.
+   */
+  customMetadata?: object;
+  /*
+   * Size of the file in bytes
+   */
+  size: number;
+  /*
+   * The date and time when the file was first uploaded. The format is YYYY-MM-DDTHH:mm:ss.sssZ
+   */
+  createdAt: string;
+  /*
+   * The date and time when the file was last updated. The format is YYYY-MM-DDTHH:mm:ss.sssZ
+   */
+  updatedAt: string;
+  /*
+   * Height of the image in pixels (Only for images)
+   */
+  height: number;
+  /*
+   * Width of the image in pixels (Only for Images)
+   */
+  width: number;
+  /*
+   * A boolean indicating if the image has an alpha layer or not.
+   */
+  hasAlpha: boolean;
+  /*
+   * MIME Type of the file. For example - image/jpeg
+   */
+  mime?: string;
+  /**
+   * An object containing the file or file version's id (versionId) and name.
+   */
+  versionInfo?: object;
+}
+
+
+export interface FileVersionDetailsOptions {
+  /**
+   * The unique fileId of the uploaded file. fileId is returned in list files API and upload API.
+   */
+  fileId: string;
+  /**
+   * The unique versionId of the uploaded file's version. This is returned in list files API and upload API as id within the versionInfo parameter.
+   */
+  versionId: string;
 }

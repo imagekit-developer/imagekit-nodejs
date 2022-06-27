@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 /*
-	Constants
+  Constants
 */
 import errorMessages from "../constants/errorMessages";
 
@@ -12,7 +12,7 @@ import respond from "../../utils/respond";
 import request from "../../utils/request";
 
 /*
-	Interfaces
+  Interfaces
 */
 import { IKCallback } from "../interfaces/IKCallback";
 import {
@@ -20,11 +20,23 @@ import {
   ListFileOptions,
   ListFileResponse,
   FileDetailsOptions,
-  FileDetailsResponse,
+  FileVersionDetailsOptions,
+  FileObject,
   FileMetadataResponse,
   BulkDeleteFilesResponse,
   BulkDeleteFilesError,
+  CopyFileOptions,
+  CopyFolderResponse,
+  MoveFileOptions,
+  CreateFolderOptions,
+  CopyFolderOptions,
+  MoveFolderOptions,
+  DeleteFileVersionOptions,
+  RestoreFileVersionOptions,
+  RenameFileOptions,
+  RenameFileResponse,
 } from "../interfaces/";
+import ImageKit from "../..";
 
 /*
     Delete a file
@@ -37,8 +49,58 @@ const deleteFile = function (fileId: string, defaultOptions: ImageKitOptions, ca
 
   var requestOptions = {
     url: "https://api.imagekit.io/v1/files/" + fileId,
-    method: "DELETE",
-    json: true,
+    method: "DELETE"
+  };
+
+  request(requestOptions, defaultOptions, callback);
+};
+
+
+/*
+    Delete a file version
+*/
+const deleteFileVersion = function (deleteFileVersionOptions: DeleteFileVersionOptions, defaultOptions: ImageKitOptions, callback?: IKCallback<void>) {
+  const { fileId, versionId } = deleteFileVersionOptions || {};
+  if (!fileId) {
+    respond(true, errorMessages.FILE_ID_MISSING, callback);
+    return;
+  }
+
+  if (!versionId) {
+    respond(true, errorMessages.FILE_VERSION_ID_MISSING, callback);
+    return;
+  }
+
+  var requestOptions = {
+    url: `https://api.imagekit.io/v1/files/${fileId}/versions/${versionId}`,
+    method: "DELETE"
+  };
+
+  request(requestOptions, defaultOptions, callback);
+};
+
+
+/*
+    Restore a file version as the current version
+*/
+const restoreFileVersion = function (
+  restoreFileVersionOptions: RestoreFileVersionOptions,
+  defaultOptions: ImageKitOptions,
+  callback?: IKCallback<FileObject>) {
+  const { fileId, versionId } = restoreFileVersionOptions || {};
+  if (!fileId) {
+    respond(true, errorMessages.FILE_ID_MISSING, callback);
+    return;
+  }
+
+  if (!versionId) {
+    respond(true, errorMessages.FILE_VERSION_ID_MISSING, callback);
+    return;
+  }
+
+  var requestOptions = {
+    url: `https://api.imagekit.io/v1/files/${fileId}/versions/${versionId}/restore`,
+    method: "PUT"
   };
 
   request(requestOptions, defaultOptions, callback);
@@ -59,16 +121,14 @@ const getMetadata = function (
 
   var requestOptions = {
     url: "https://api.imagekit.io/v1/files/" + fileIdOrURL + "/metadata",
-    method: "GET",
-    json: true,
+    method: "GET"
   };
 
   // In case of URL change the endopint
   if (fileIdOrURL.indexOf("http") === 0) {
     requestOptions = {
       url: `https://api.imagekit.io/v1/metadata?url=${fileIdOrURL}`,
-      method: "GET",
-      json: true,
+      method: "GET"
     };
   }
 
@@ -81,7 +141,7 @@ const getMetadata = function (
 const getDetails = function (
   fileId: string,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<FileDetailsResponse>,
+  callback?: IKCallback<FileObject>,
 ) {
   if (!fileId) {
     respond(true, errorMessages.FILE_ID_MISSING, callback);
@@ -90,8 +150,35 @@ const getDetails = function (
 
   var requestOptions = {
     url: "https://api.imagekit.io/v1/files/" + fileId + "/details",
-    method: "GET",
-    json: true,
+    method: "GET"
+  };
+
+  request(requestOptions, defaultOptions, callback);
+};
+
+
+/*
+    Get Details of a file version
+*/
+const getFileVersionDetails = function (
+  fileDetailsOptions: FileVersionDetailsOptions,
+  defaultOptions: ImageKitOptions,
+  callback?: IKCallback<FileObject>,
+) {
+  const { fileId, versionId } = fileDetailsOptions || {};
+  if (!fileId) {
+    respond(true, errorMessages.FILE_ID_MISSING, callback);
+    return;
+  }
+
+  if (!versionId) {
+    respond(true, errorMessages.FILE_VERSION_ID_MISSING, callback);
+    return;
+  }
+
+  var requestOptions = {
+    url: `https://api.imagekit.io/v1/files/${fileId}/versions/${versionId}`,
+    method: "GET"
   };
 
   request(requestOptions, defaultOptions, callback);
@@ -104,7 +191,7 @@ const updateDetails = function (
   fileId: string,
   updateData: FileDetailsOptions,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<FileDetailsResponse>,
+  callback?: IKCallback<FileObject>,
 ) {
   if (!fileId) {
     respond(true, errorMessages.FILE_ID_MISSING, callback);
@@ -137,18 +224,43 @@ const updateDetails = function (
 const listFiles = function (
   listOptions: ListFileOptions,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<ListFileResponse[]>,
+  callback?: IKCallback<FileObject[]>,
 ) {
   if (listOptions && !_.isObject(listOptions)) {
-    respond(true, errorMessages.UPDATE_DATA_MISSING, callback);
+    respond(true, errorMessages.INVALID_LIST_OPTIONS, callback);
+    return;
+  }
+
+  if (listOptions && listOptions.tags && _.isArray(listOptions.tags) && listOptions.tags.length) {
+    listOptions.tags = listOptions.tags.join(",");
+  }
+
+  var requestOptions = {
+    url: `https://api.imagekit.io/v1/files/`,
+    method: "GET",
+    qs: listOptions || {}
+  };
+
+  request(requestOptions, defaultOptions, callback);
+};
+
+
+/*
+    Get all versions of an asset
+*/
+const getFilesVersions = function (
+  fileId: string,
+  defaultOptions: ImageKitOptions,
+  callback?: IKCallback<FileObject[]>,
+) {
+  if (!fileId) {
+    respond(true, errorMessages.FILE_ID_MISSING, callback);
     return;
   }
 
   var requestOptions = {
-    url: "https://api.imagekit.io/v1/files/",
-    method: "GET",
-    qs: listOptions || {},
-    json: true,
+    url: `https://api.imagekit.io/v1/files/${fileId}/versions`,
+    method: "GET"
   };
 
   request(requestOptions, defaultOptions, callback);
@@ -258,15 +370,54 @@ const bulkRemoveTags = function (
   request(requestOptions, defaultOptions, callback);
 };
 
+
+/*
+    Remove AI tags in bulk
+*/
+const bulkRemoveAITags = function (
+  fileIdArray: string[],
+  tags: string[],
+  defaultOptions: ImageKitOptions,
+  callback?: IKCallback<void>,
+) {
+  if (
+    !Array.isArray(fileIdArray) ||
+    fileIdArray.length === 0 ||
+    fileIdArray.filter((fileId) => typeof fileId !== "string").length > 0
+  ) {
+    respond(true, errorMessages.INVALID_FILEIDS_VALUE, callback);
+    return;
+  }
+
+  if (!Array.isArray(tags) || tags.length === 0 || tags.filter((tag) => typeof tag !== "string").length > 0) {
+    respond(true, errorMessages.BULK_ADD_TAGS_INVALID, callback);
+    return;
+  }
+
+  const data = {
+    fileIds: fileIdArray,
+    AITags: tags,
+  };
+
+  const requestOptions = {
+    url: "https://api.imagekit.io/v1/files/removeAITags",
+    method: "POST",
+    json: data,
+  };
+
+  request(requestOptions, defaultOptions, callback);
+};
+
 /*
     Copy file
 */
 const copyFile = function (
-  sourceFilePath: string,
-  destinationPath: string,
+  copyFileOptions: CopyFileOptions,
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<void>,
 ) {
+  const { sourceFilePath, destinationPath, includeFileVersions = false } = copyFileOptions;
+
   if (typeof sourceFilePath !== "string" || sourceFilePath.length === 0) {
     respond(true, errorMessages.INVALID_SOURCE_FILE_PATH, callback);
     return;
@@ -277,9 +428,15 @@ const copyFile = function (
     return;
   }
 
+  if (typeof includeFileVersions !== "boolean") {
+    respond(true, errorMessages.INVALID_INCLUDE_VERSION, callback);
+    return;
+  }
+
   const data = {
-    sourceFilePath: sourceFilePath,
-    destinationPath: destinationPath,
+    sourceFilePath,
+    destinationPath,
+    includeFileVersions
   };
 
   const requestOptions = {
@@ -295,11 +452,11 @@ const copyFile = function (
     Move file
 */
 const moveFile = function (
-  sourceFilePath: string,
-  destinationPath: string,
+  moveFileOptions: MoveFileOptions,
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<void>,
 ) {
+  const { sourceFilePath, destinationPath } = moveFileOptions;
   if (typeof sourceFilePath !== "string" || sourceFilePath.length === 0) {
     respond(true, errorMessages.INVALID_SOURCE_FILE_PATH, callback);
     return;
@@ -311,8 +468,8 @@ const moveFile = function (
   }
 
   const data = {
-    sourceFilePath: sourceFilePath,
-    destinationPath: destinationPath,
+    sourceFilePath,
+    destinationPath
   };
 
   const requestOptions = {
@@ -325,14 +482,53 @@ const moveFile = function (
 };
 
 /*
+    Rename file
+*/
+const renameFile = function (
+  renameFileOptions: RenameFileOptions,
+  defaultOptions: ImageKitOptions,
+  callback?: IKCallback<RenameFileResponse>,
+) {
+  const { filePath, newFileName, purgeCache = false } = renameFileOptions;
+  if (typeof filePath !== "string" || filePath.length === 0) {
+    respond(true, errorMessages.INVALID_FILE_PATH, callback);
+    return;
+  }
+
+  if (typeof newFileName !== "string" || newFileName.length === 0) {
+    respond(true, errorMessages.INVALID_NEW_FILE_NAME, callback);
+    return;
+  }
+
+  if (typeof purgeCache !== "boolean") {
+    respond(true, errorMessages.INVALID_PURGE_CACHE, callback);
+    return;
+  }
+
+  const data = {
+    filePath,
+    newFileName,
+    purgeCache
+  };
+
+  const requestOptions = {
+    url: "https://api.imagekit.io/v1/files/rename",
+    method: "POST",
+    json: data,
+  };
+
+  request(requestOptions, defaultOptions, callback);
+};
+
+/*
     Copy Folder
 */
 const copyFolder = function (
-  sourceFolderPath: string,
-  destinationPath: string,
+  copyFolderOptions: CopyFolderOptions,
   defaultOptions: ImageKitOptions,
-  callback?: IKCallback<void>,
+  callback?: IKCallback<CopyFolderResponse>,
 ) {
+  const { sourceFolderPath, destinationPath, includeFileVersions = false } = copyFolderOptions;
   if (typeof sourceFolderPath !== "string" || sourceFolderPath.length === 0) {
     respond(true, errorMessages.INVALID_SOURCE_FOLDER_PATH, callback);
     return;
@@ -343,9 +539,15 @@ const copyFolder = function (
     return;
   }
 
+  if (typeof includeFileVersions !== "boolean") {
+    respond(true, errorMessages.INVALID_INCLUDE_VERSION, callback);
+    return;
+  }
+
   const data = {
-    sourceFolderPath: sourceFolderPath,
-    destinationPath: destinationPath,
+    sourceFolderPath,
+    destinationPath,
+    includeFileVersions
   };
 
   const requestOptions = {
@@ -361,11 +563,12 @@ const copyFolder = function (
     Move Folder
 */
 const moveFolder = function (
-  sourceFolderPath: string,
-  destinationPath: string,
+  moveFolderOptions: MoveFolderOptions,
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<void>,
 ) {
+  const { sourceFolderPath, destinationPath } = moveFolderOptions;
+
   if (typeof sourceFolderPath !== "string" || sourceFolderPath.length === 0) {
     respond(true, errorMessages.INVALID_SOURCE_FOLDER_PATH, callback);
     return;
@@ -377,8 +580,8 @@ const moveFolder = function (
   }
 
   const data = {
-    sourceFolderPath: sourceFolderPath,
-    destinationPath: destinationPath,
+    sourceFolderPath,
+    destinationPath,
   };
 
   const requestOptions = {
@@ -394,11 +597,11 @@ const moveFolder = function (
     Create folder
 */
 const createFolder = function (
-  folderName: string,
-  parentFolderPath: string,
+  createFolderOptions: CreateFolderOptions,
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<void>,
 ) {
+  const { folderName, parentFolderPath } = createFolderOptions;
   if (typeof folderName !== "string" || folderName.length === 0) {
     respond(true, errorMessages.INVALID_FOLDER_NAME, callback);
     return;
@@ -456,8 +659,7 @@ const getBulkJobStatus = function (jobId: string, defaultOptions: ImageKitOption
 
   const requestOptions = {
     url: "https://api.imagekit.io/v1/bulkJobs/" + jobId,
-    method: "GET",
-    json: true,
+    method: "GET"
   };
 
   request(requestOptions, defaultOptions, callback);
@@ -467,13 +669,19 @@ export default {
   deleteFile,
   getMetadata,
   getDetails,
+  getFileVersionDetails,
   updateDetails,
   listFiles,
+  getFilesVersions,
   bulkDeleteFiles,
+  deleteFileVersion,
+  restoreFileVersion,
   bulkAddTags,
   bulkRemoveTags,
+  bulkRemoveAITags,
   copyFile,
   moveFile,
+  renameFile,
   copyFolder,
   moveFolder,
   createFolder,

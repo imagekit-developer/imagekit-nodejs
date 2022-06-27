@@ -5,16 +5,22 @@ import { UploadResponse } from "./UploadResponse";
 import { FileType } from "./FileType";
 import { UrlOptions } from "./UrlOptions";
 import { ListFileOptions, ListFileResponse } from "./ListFile";
-import { FileDetailsOptions, FileDetailsResponse } from "./FileDetails";
+import { CopyFileOptions } from "./CopyFile";
+import { MoveFileOptions } from "./MoveFile";
+import { CreateFolderOptions } from "./CreateFolder";
+import { FileDetailsOptions, FileVersionDetailsOptions, FileObject } from "./FileDetails";
 import { FileMetadataResponse } from "./FileMetadata";
 import { PurgeCacheResponse, PurgeCacheStatusResponse } from "./PurgeCache";
 import { BulkDeleteFilesResponse, BulkDeleteFilesError } from "./BulkDeleteFiles";
-import { CopyFolderResponse, CopyFolderError } from "./CopyFolder";
-import { MoveFolderResponse, MoveFolderError } from "./MoveFolder";
+import { CopyFolderOptions, CopyFolderResponse, CopyFolderError } from "./CopyFolder";
+import { MoveFolderOptions, MoveFolderResponse, MoveFolderError } from "./MoveFolder";
+import { DeleteFileVersionOptions, RestoreFileVersionOptions } from "./FileVersion"
+import { CreateCustomMetadataFieldOptions, CustomMetadataField, UpdateCustomMetadataFieldOptions, GetCustomMetadataFieldsOptions } from "./CustomMetatadaField"
+import { RenameFileOptions, RenameFileResponse } from "./Rename"
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; // actual options used to construct url
 
-export {
+export type {
   ImageKitOptions,
   Transformation,
   TransformationPosition,
@@ -26,7 +32,8 @@ export {
   ListFileOptions,
   ListFileResponse,
   FileDetailsOptions,
-  FileDetailsResponse,
+  FileVersionDetailsOptions,
+  FileObject,
   FileMetadataResponse,
   PurgeCacheResponse,
   PurgeCacheStatusResponse,
@@ -36,5 +43,18 @@ export {
   CopyFolderError,
   MoveFolderResponse,
   MoveFolderError,
+  CopyFileOptions,
+  MoveFileOptions,
+  CreateFolderOptions,
+  CopyFolderOptions,
+  MoveFolderOptions,
+  DeleteFileVersionOptions,
+  RestoreFileVersionOptions,
+  CreateCustomMetadataFieldOptions,
+  GetCustomMetadataFieldsOptions,
+  CustomMetadataField,
+  UpdateCustomMetadataFieldOptions,
+  RenameFileOptions,
+  RenameFileResponse,
 };
-export { IKCallback } from "./IKCallback";
+export type { IKCallback } from "./IKCallback";

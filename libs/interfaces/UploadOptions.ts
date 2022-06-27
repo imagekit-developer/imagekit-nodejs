@@ -38,7 +38,7 @@ export interface UploadOptions {
    * - % is not allowed.
    * - If this field is not specified and the file is overwritten then the tags will be removed.
    */
-  tags?: string;
+  tags?: string | string[];
   /**
    * The folder path (e.g. /images/folder/) in which the image has to be uploaded. If the folder(s) didn't exist before, a new folder(s) is created.
    * The folder name can contain:
@@ -68,7 +68,7 @@ export interface UploadOptions {
    *
    * For example, set the value of this field to tags,customCoordinates,isPrivateFile,metadata to get value of tags, customCoordinates, isPrivateFile , and metadata in the response.
    */
-  responseFields?: string;
+  responseFields?: string | string[];
   /* 
    * Object with array of extensions to be processed on the image.
    */
