@@ -39,7 +39,35 @@ describe("WebhookSignature", function () {
   });
 
   context("Test WebhookSignature.verify() - Negative cases", () => {
-    it("Invalid signature - incorrect request body", () => {
+    it("Invalid signature - timestamp missing", () => {
+      const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1;
+      const invalidSignature = "hmac:yWDsGoiqR8Q+okUWcCY67V4nvizIXvVeimnoi8ivrwI=";
+      try {
+        verify(
+          webhookRequest.rawBody,
+          invalidSignature,
+          webhookRequest.secret
+        );
+        expect.fail("Expected exception");
+      } catch (e) {
+        expect(e.message).to.equal("Invalid signature - timestamp missing");
+      }
+    });
+    it("Invalid signature - hmac missing", () => {
+      const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1;
+      const invalidSignature = "t:1656326161409";
+      try {
+        verify(
+          webhookRequest.rawBody,
+          invalidSignature,
+          webhookRequest.secret
+        );
+        expect.fail("Expected exception");
+      } catch (e) {
+        expect(e.message).to.equal("Invalid signature - hmac missing");
+      }
+    });
+    it("Incorrect signature - incorrect request body", () => {
       const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1;
       const incorrectBody = { hello: "world" };
       const incorrectRawBody = JSON.stringify(incorrectBody);
@@ -51,10 +79,10 @@ describe("WebhookSignature", function () {
         );
         expect.fail("Expected exception");
       } catch (e) {
-        expect(e.message).to.equal("Invalid signature");
+        expect(e.message).to.equal("Incorrect signature");
       }
     });
-    it("Invalid signature - incorrect timestamp", () => {
+    it("Incorrect signature - incorrect timestamp", () => {
       const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1;
       const incorrectSignature = webhookRequest.signature.replace(
         `t:${webhookRequest.timestamp.getTime()}`,
@@ -68,10 +96,10 @@ describe("WebhookSignature", function () {
         );
         expect.fail("Expected exception");
       } catch (e) {
-        expect(e.message).to.equal("Invalid signature");
+        expect(e.message).to.equal("Incorrect signature");
       }
     });
-    it("Invalid signature - different secret", () => {
+    it("Incorrect signature - different secret", () => {
       const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1;
       try {
         verify(
@@ -81,7 +109,7 @@ describe("WebhookSignature", function () {
         );
         expect.fail("Expected exception");
       } catch (e) {
-        expect(e.message).to.equal("Invalid signature");
+        expect(e.message).to.equal("Incorrect signature");
       }
     });
   });
