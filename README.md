@@ -17,7 +17,6 @@ This SDK supports both CommonJS and ESM.
 ##### Table of contents
 * [Installation](#installation)
 * [Initialization](#initialization)
-* [Demo application](#demo-application)
 * [URL generation](#url-generation)
 * [File upload](#file-upload)
 * [File management](#file-management)
@@ -51,9 +50,6 @@ var imagekit = new ImageKit({
     urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/"
 });
 ```
-
-## Demo application
-The fastest way to get started is by running the demo application in the [sample](/sample) folder. Refer to the README file in [sample](/sample) folder.
 
 ## Usage
 You can use this Node.js SDK for three different methods - URL generation, file upload, and media management operations. The usage of the SDK has been explained below.
@@ -1096,6 +1092,26 @@ imagekit.pHashDistance('2d5ad3936d2e015b', '2d6ed293db36a4fb');
 
 imagekit.pHashDistance('a4a65595ac94518b', '7838873e791f8400');
 // output: 37 (dissimilar images)
+```
+## Access request-id, other response headers and HTTP status code
+You can access `$ResponseMetadata` on success or error object to access the HTTP status code and response headers.
+
+```javascript
+// Success
+var response = await imagekit.getPurgeCacheStatus(requestId);
+console.log(response.$ResponseMetadata.statusCode); // 200
+
+// {'content-type': 'application/json', 'x-request-id': 'ee560df4-d44f-455e-a48e-29dfda49aec5'}
+console.log(response.$ResponseMetadata.headers);
+
+// Error
+try {
+    await imagekit.getPurgeCacheStatus(requestId);
+} catch (ex) {
+    console.log(response.$ResponseMetadata.statusCode); // 200
+
+    // {'content-type': 'application/json', 'x-request-id': 'ee560df4-d44f-455e-a48e-29dfda49aec5'}
+    console.log(response.$ResponseMetadata.headers);
 ```
 
 ## Rate limits
