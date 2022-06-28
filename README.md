@@ -1112,6 +1112,7 @@ try {
 
     // {'content-type': 'application/json', 'x-request-id': 'ee560df4-d44f-455e-a48e-29dfda49aec5'}
     console.log(response.$ResponseMetadata.headers);
+}
 ```
 
 ## Rate limits
