@@ -76,8 +76,13 @@ const promisify = function <T = void>(thisContext: ImageKit, fn: Function) {
     }
   };
 };
+
+export const Webhook = {
+  verify: verifyWebhookSignature,
+}
+
 class ImageKitStaticUtils {
-  static Webhook = { verify: verifyWebhookSignature };
+  static Webhook = Webhook;
 }
 
 class ImageKit extends ImageKitStaticUtils {
