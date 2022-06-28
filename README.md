@@ -1,4 +1,3 @@
-
 [<img width="250" alt="ImageKit.io" src="https://raw.githubusercontent.com/imagekit-developer/imagekit-javascript/master/assets/imagekit-light-logo.svg"/>](https://imagekit.io)
 
 # ImageKit.io Node.js SDK
@@ -10,7 +9,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ImagekitIo)
 
-ImageKit Node.js SDK allows you to use [image resizing](https://docs.imagekit.io/features/image-transformations), [optimization](https://docs.imagekit.io/features/image-optimization), [file uploading](https://docs.imagekit.io/api-reference/upload-file-api) and other [ImageKit APIs](https://docs.imagekit.io/api-reference/api-introduction) from applications written in server-side JavaScript.
+Node.js SDK for [ImageKit](https://imagekit.io/) implements the new APIs and interface for different file operations.
+
+ImageKit is complete media storage, optimization, and transformation solution that comes with an [image and video CDN](https://imagekit.io/features/imagekit-infrastructure). It can be integrated with your existing infrastructure - storage like AWS S3, web servers, your CDN, and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
 
 This SDK supports both CommonJS and ESM.
 ##### Table of contents
@@ -52,18 +53,23 @@ var imagekit = new ImageKit({
 ```
 
 ## Demo application
-The fastest way to get started is by running the demo application in [sample](/sample) folder. Refer to the README file in [sample](/sample) folder.
+The fastest way to get started is by running the demo application in the [sample](/sample) folder. Refer to the README file in [sample](/sample) folder.
 
 ## Usage
-You can use this NodeJS SDK for three different kinds of functions - URL generation, file uploads, and file management. The usage of the SDK has been explained below.
+You can use this Node.js SDK for three different methods - URL generation, file upload, and media management operations. The usage of the SDK has been explained below.
+
+* `URL Generation`
+* `File Upload`
+* `File Management`
 
 ## URL Generation
 
 **1. Using image path and image hostname or endpoint**
 
-This method allows you to create a URL using the `path` where the image exists and the URL endpoint (`urlEndpoint`) you want to use to access the image. You can refer to the documentation [here](https://docs.imagekit.io/integration/url-endpoints) to read more about URL endpoints in ImageKit and the section about [image origins](https://docs.imagekit.io/integration/configure-origin) to understand about paths with different kinds of origins.
+This method allows you to create an URL to access a file using the relative file path and the ImageKit URL endpoint (`urlEndpoint`). The file can be an image, video or any other static file supported by ImageKit.
 
 ```js
+// For URL Generation, works for both images and videos
 var imageURL = imagekit.url({
     path : "/default-image.jpg",
     urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/endpoint/",
@@ -82,7 +88,7 @@ https://ik.imagekit.io/your_imagekit_id/endpoint/tr:h-300,w-400/default-image.jp
 
 **2. Using full image URL**
 
-This method allows you to add transformation parameters to an existing, complete URL that is already mapped to ImageKit using the `src` parameter. Use this method if you have the absolute image URL stored in your database.
+This method allows you to add transformation parameters to an absolute URL. For example, if you have configured a custom CNAME and have absolute asset URLs in your database or CMS, you will often need this.
 
 
 ```js
@@ -247,7 +253,7 @@ If you want to generate transformations in your application and add them to the 
 
 The SDK provides a simple interface using the `.upload()` method to upload files to the ImageKit Media Library. It accepts all the parameters supported by the [ImageKit Upload API](https://docs.imagekit.io/api-reference/upload-file-api/server-side-file-upload).
 
-The `upload()` method requires at least the `file` and the `fileName` parameter to upload a file and returns a callback with the `error` and `result` as arguments. You can pass other parameters supported by the ImageKit upload API using the same parameter name as specified in the upload API documentation. For example, to specify tags for a file at the time of upload, use the `tags` parameter as specified in the [documentation here](https://docs.imagekit.io/api-reference/upload-file-api/server-side-file-upload).
+The `upload()` method requires at least the `file` and the `fileName` parameter to upload a file and returns a callback with the `error` and `result` as arguments. You can pass other parameters supported by the ImageKit upload API using the same parameter name as specified in the upload API documentation. For example, to set tags for a file at the upload time, use the `tags` parameter as defined in the [documentation here](https://docs.imagekit.io/api-reference/upload-file-api/server-side-file-upload).
 
 Sample usage
 ```js
@@ -288,7 +294,7 @@ imagekit.upload({
 ```
 
 If the upload succeeds, `error` will be `null,` and the `result` will be the same as what is received from ImageKit's servers.
-If the upload fails, `error` will be the same as what is received from ImageKit's servers, and the `result` will be null.
+If the upload fails, the `error` will be the same as what is received from ImageKit's servers, and the `result` will be null.
 
 
 
@@ -298,7 +304,7 @@ The SDK provides a simple interface for all the [media APIs mentioned here](http
 
 **List & Search Files**
 
-Accepts an object specifying the parameters to be used to list and search files. All parameters specified in the [documentation here](https://docs.imagekit.io/api-reference/media-api/list-and-search-files) can be passed as-is with the correct values to get the results.
+Accepts an object specifying the parameters used to list and search files. All parameters specified in the [documentation here](https://docs.imagekit.io/api-reference/media-api/list-and-search-files) can be passed as-is with the correct values to get the results.
 
 ```js
 // Using Callback Function
@@ -372,7 +378,7 @@ imagekit.getFileVersions("file_id")
 
 **Get File version details**
 
-Accepts the file ID and version ID, returns the details of that specific version as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/get-file-version-details).
+Accepts the file ID & version ID and returns the details of that specific version as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/get-file-version-details).
 
 ```js
 // Using Callback Function
@@ -401,7 +407,7 @@ imagekit.getFileVersionDetails({
 
 **Update File Details**
 
-Update parameters associated with the file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/update-file-details). The first argument to the `updateFileDetails` method is the file ID, and a second argument is an object with the parameters to be updated.
+Update parameters associated with the file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/update-file-details). The first argument to the `updateFileDetails` method is the file ID, and the second argument is an object with the parameters to be updated.
 
 ```js
 // Using Callback Function
@@ -448,14 +454,14 @@ Add tags to multiple files in a single request as per [API documentation here](h
 ```js
 // Using Callback Function
 
-imagekit.bulkAddTags(["fileIds"], ["tags"], function(error, result) {
+imagekit.bulkAddTags(["file_id_1", "file_id_2"], ["tag1", "tag2"], function(error, result) {
     if(error) console.log(error);
     else console.log(result);
 });
 
 // Using Promises
 
-imagekit.bulkAddTags(["fileIds"], ["tags"]).then(response => {
+imagekit.bulkAddTags(["file_id_1", "file_id_2"], ["tag1", "tag2"]).then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
@@ -469,14 +475,14 @@ Remove tags from multiple files in a single request as per [API documentation he
 ```js
 // Using Callback Function
 
-imagekit.bulkRemoveTags(["fileIds"], ["tags"], function(error, result) {
+imagekit.bulkRemoveTags(["file_id_1", "file_id_2"], ["tags"], function(error, result) {
     if(error) console.log(error);
     else console.log(result);
 });
 
 // Using Promises
 
-imagekit.bulkRemoveTags(["fileIds"], ["tags"]).then(response => {
+imagekit.bulkRemoveTags(["file_id_1", "file_id_2"], ["tags"]).then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
@@ -490,14 +496,14 @@ Remove AI tags from multiple files in a single request as per [API documentation
 ```js
 // Using Callback Function
 
-imagekit.bulkRemoveAITags(["fileIds"], ["ai-tag1", "ai-tag2"], function(error, result) {
+imagekit.bulkRemoveAITags(["file_id_1", "file_id_2"], ["ai-tag1", "ai-tag2"], function(error, result) {
     if(error) console.log(error);
     else console.log(result);
 });
 
 // Using Promises
 
-imagekit.bulkRemoveAITags(["fileIds"], ["ai-tag1", "ai-tag2"]).then(response => {
+imagekit.bulkRemoveAITags(["file_id_1", "file_id_2"], ["ai-tag1", "ai-tag2"]).then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
@@ -561,7 +567,7 @@ Delete multiple files as per the [API documentation here](https://docs.imagekit.
 ```js
 // Using Callback Function
 
-imagekit.bulkDeleteFiles(["fileId1", "fileId2"], function(error, result) {
+imagekit.bulkDeleteFiles(["file_id_1", "file_id_2"], function(error, result) {
     if(error) console.log(error);
     else console.log(result);
 });
@@ -569,7 +575,7 @@ imagekit.bulkDeleteFiles(["fileId1", "fileId2"], function(error, result) {
 
 // Using Promises 
 
-imagekit.bulkDeleteFiles(["fileId1", "fileId2"]).then(response => {
+imagekit.bulkDeleteFiles(["file_id_1", "file_id_2"]).then(response => {
     console.log(response);
 }).catch(error => {
     console.log(error);
@@ -717,7 +723,7 @@ imagekit.createFolder({
 
 **Delete Folder**
 
-This will delete the specified folder and all nested files & folders as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-folder).
+This will delete the specified Folder and all nested files & folders as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/delete-folder).
 
 ```js
 // Using Callback Function
@@ -738,7 +744,7 @@ imagekit.deleteFolder("folderPath").then(response => {
 
 **Copy Folder**
 
-This will copy one folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-folder).
+This will copy one Folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-folder).
 
 ```js
 // Using Callback Function
@@ -767,7 +773,7 @@ imagekit.copyFolder({
 
 **Move Folder**
 
-This will move one folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/move-folder).
+This will move one Folder into another as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/move-folder).
 
 ```js
 // Using Callback Function
@@ -794,7 +800,7 @@ imagekit.moveFolder({
 
 **Get bulk job status**
 
-This allows us to get a bulk operation status e.g. copy or move folder as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-move-folder-status). This method accepts `jobId` that is returned by copy and move folder operations.
+This allows us to get a bulk operation status e.g. copy or move Folder as per [API documentation here](https://docs.imagekit.io/api-reference/media-api/copy-move-folder-status). This method accepts `jobId` that is returned by copy and move folder operations.
 
 ```js
 // Using Callback Function
@@ -815,7 +821,7 @@ imagekit.getBulkJobStatus("jobId").then(response => {
 
 **Purge Cache**
 
-Programmatically issue a cache clear request as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/purge-cache). Accepts the full URL of the file for which the cache has to be cleared.
+Programmatically issue a clear cache request as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/purge-cache). Accepts the full URL of the file for which the cache has to be cleared.
 
 ```js
 // Using Callback Function
@@ -897,7 +903,7 @@ imagekit.getFileMetadata("https://ik.imagekit.io/your_imagekit_id/sample.jpg")
 });
 ```
 
-**Create custom metadata field**
+**Create a custom metadata field**
 
 Create a new custom metadata field as per the [API documentation here](https://docs.imagekit.io/api-reference/custom-metadata-fields-api/create-custom-metadata-field)
 
@@ -1043,7 +1049,7 @@ We have included the following commonly used utility functions in this package.
 
 ### Authentication parameter generation
 
-In case you are looking to implement client-side file upload, you are going to need a token, expiry timestamp, and a valid signature for that upload. The SDK provides a simple method that you can use in your code to generate these authentication parameters for you.
+If you want to implement client-side file upload, you will need a token, expiry timestamp, and a valid signature for that upload. The SDK provides a simple method you can use in your backend code to generate these authentication parameters.
 
 *Note: The Private API Key should never be exposed in any client-side code. You must always generate these authentication parameters on the server-side*
 
@@ -1064,9 +1070,9 @@ Both the `token` and `expire` parameters are optional. If not specified, the SDK
 
 ### Distance calculation between two pHash values
 
-Perceptual hashing allows you to construct a hash value that uniquely identifies an input image based on an image's contents. [ImageKit.io metadata API](https://docs.imagekit.io/api-reference/metadata-api) returns the pHash value of an image in the response. You can use this value to [find a duplicate (or similar) image](https://docs.imagekit.io/api-reference/metadata-api#using-phash-to-find-similar-or-duplicate-images) by calculating the distance between the two images' pHash value.
+Perceptual hashing allows you to construct a hash value that uniquely identifies an input image based on an image's contents. For example, [ImageKit.io metadata API](https://docs.imagekit.io/api-reference/metadata-api) returns the pHash value of an image in the response. You can use this value to [find a duplicate (or similar) image](https://docs.imagekit.io/api-reference/metadata-api#using-phash-to-find-similar-or-duplicate-images) by calculating the distance between the two images' pHash value.
 
-This SDK exposes `pHashDistance` function to calculate the distance between two pHash values. It accepts two pHash hexadecimal strings and returns a numeric value indicative of the level of difference between the two images.
+This SDK exposes the `pHashDistance` function to calculate the distance between two pHash values. It accepts two pHash hexadecimal strings and returns a numeric value indicative of the level of difference between the two images.
 
 ```js
 const calculateDistance = () => {
@@ -1093,14 +1099,14 @@ imagekit.pHashDistance('a4a65595ac94518b', '7838873e791f8400');
 ```
 
 ## Rate limits
-Except for upload API, all [ImageKit APIs are rate limited](https://docs.imagekit.io/api-reference/api-introduction/rate-limits) to protect the infrastructure from excessive request rates and to keep ImageKit.io fast and stable for everyone.
+Except for upload API, all [ImageKit APIs are rate limited](https://docs.imagekit.io/api-reference/api-introduction/rate-limits) to protect the infrastructure from excessive requests rates and to keep ImageKit.io fast and stable for everyone.
 
-When you exceed the rate limits for an endpoint, you will receive a `429` status code. The Node.js library reads the [rate limiting response headers](https://docs.imagekit.io/api-reference/api-introduction/rate-limits#response-headers-to-understand-rate-limits) provided in API response and adds these in the error argument of callback or `.catch` when using promises. Please sleep/pause for the number of milliseconds specified by the value of `X-RateLimit-Reset` property before making additional requests to that endpoint.
+When you exceed the rate limits for an endpoint, you will receive a `429` status code. The Node.js library reads the [rate limiting response headers](https://docs.imagekit.io/api-reference/api-introduction/rate-limits#response-headers-to-understand-rate-limits) provided in the API response and adds these in the error argument of the callback or `.catch` when using promises. Please sleep/pause for the number of milliseconds specified by the value of the `X-RateLimit-Reset` property before making additional requests to that endpoint.
 
 | Property | Description |
 |----------|-------------|
-| `X-RateLimit-Limit` | The maximum number of requests that can be made to this endpoint in interval specified by `X-RateLimit-Interval` response header. |
-| `X-RateLimit-Reset` | The amount of time in milliseconds, before you can make another request to this endpoint. Pause/sleep your workflow for this duration. |
+| `X-RateLimit-Limit` | The maximum number of requests that can be made to this endpoint in the interval specified by the `X-RateLimit-Interval` response header. |
+| `X-RateLimit-Reset` | The amount of time in milliseconds before you can make another request to this endpoint. Pause/sleep your workflow for this duration. |
 | `X-RateLimit-Interval` | The duration of interval in milliseconds for which this rate limit was exceeded. |
 
 ## Support
