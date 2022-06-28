@@ -22,7 +22,7 @@ import {
   WebhookEventVideoAccepted,
   WebhookEventVideoCompleted,
   WebhookEventVideoFailed,
-} from "./WebhookEvent";
+} from "./webhookEvent";
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; // actual options used to construct url
 
