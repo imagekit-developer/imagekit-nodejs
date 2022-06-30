@@ -59,7 +59,7 @@ describe("WebhookSignature", function () {
     it("Invalid signature - timestamp missing", () => {
       const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1;
       const invalidSignature =
-        "hmac=b6bc2aa82491c32f1cbef0eb52b7ffffff467ea65a03b5d4ccdcfb9e0941c946";
+        "v1=b6bc2aa82491c32f1cbef0eb52b7ffffff467ea65a03b5d4ccdcfb9e0941c946";
       try {
         verify(webhookRequest.rawBody, invalidSignature, webhookRequest.secret);
         expect.fail("Expected exception");
@@ -78,7 +78,7 @@ describe("WebhookSignature", function () {
         expect(e.message).to.equal("Invalid signature - timestamp invalid");
       }
     });
-    it("Invalid signature - hmac missing", () => {
+    it("Invalid signature - hmac v1 missing", () => {
       const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1;
       const invalidSignature = "t=1656326161409";
       try {
