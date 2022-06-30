@@ -36,6 +36,23 @@ describe("WebhookSignature", function () {
       expect(timestamp.getTime()).to.equal(webhookRequest.timestamp.getTime());
       expect(event).to.deep.equal(webhookRequest.body);
     });
+    it("verify WEBHOOK_REQUEST_1 - body as Buffer", () => {
+      const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_1
+      const { timestamp, event } = verify(
+        Buffer.from(webhookRequest.rawBody),
+        webhookRequest.signature,
+        webhookRequest.secret
+      )
+      expect(timestamp.getTime()).to.equal(webhookRequest.timestamp.getTime())
+      expect(event).to.deep.equal(webhookRequest.body)
+    })
+    it("verify WEBHOOK_REQUEST_2 - body as Uint8Array", () => {
+      const webhookRequest = SampleWebhookRequest.WEBHOOK_REQUEST_2
+      const rawBody = Uint8Array.from(Buffer.from(webhookRequest.rawBody))
+      const { timestamp, event } = verify(rawBody, webhookRequest.signature, webhookRequest.secret)
+      expect(timestamp.getTime()).to.equal(webhookRequest.timestamp.getTime())
+      expect(event).to.deep.equal(webhookRequest.body)
+    })
   });
 
   context("Test WebhookSignature.verify() - Negative cases", () => {
