@@ -1108,7 +1108,7 @@ console.log(response.$ResponseMetadata.headers);
 try {
     await imagekit.getPurgeCacheStatus(requestId);
 } catch (ex) {
-    console.log(response.$ResponseMetadata.statusCode); // 200
+    console.log(response.$ResponseMetadata.statusCode); // 404
 
     // {'content-type': 'application/json', 'x-request-id': 'ee560df4-d44f-455e-a48e-29dfda49aec5'}
     console.log(response.$ResponseMetadata.headers);
