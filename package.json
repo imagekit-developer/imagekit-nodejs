@@ -17,6 +17,27 @@
   "author": "ImageKit Developer <developer@imagekit.io>",
   "homepage": "https://imagekit.io",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imagekit-developer/imagekit-nodejs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/imagekit-developer/imagekit-nodejs/issues"
+  },
+  "keywords": [
+    "imagekit",
+    "nodejs",
+    "javascript",
+    "sdk",
+    "js",
+    "sdk",
+    "image",
+    "optimization",
+    "image",
+    "transformation",
+    "image",
+    "resize"
+  ],
   "dependencies": {
     "axios": "^0.27.2",
     "form-data": "^4.0.0",
