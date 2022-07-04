@@ -2,8 +2,6 @@ import { createHmac } from "crypto";
 import { isNaN } from "lodash";
 import type { WebhookEvent } from "../libs/interfaces";
 
-const HASH_ALGORITHM = "sha256";
-
 class WebhookSignatureError extends Error {
   constructor(message: string) {
     super(message);
@@ -18,6 +16,8 @@ enum SignatureItems {
   Timestamp = "t",
   V1 = "v1",
 }
+
+const HASH_ALGORITHM = "sha256";
 
 /**
  * @param timstamp - Webhook request timestamp
