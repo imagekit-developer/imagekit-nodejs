@@ -1,6 +1,6 @@
 import { createHmac } from "crypto";
-import { isNaN, isString } from "lodash";
-import { WebhookEvent } from "../libs/interfaces";
+import { isNaN } from "lodash";
+import type { WebhookEvent } from "../libs/interfaces";
 
 const HASH_ALGORITHM = "sha256";
 
@@ -14,9 +14,9 @@ class WebhookSignatureError extends Error {
 /**
  * @description Enum for Webhook signature item names
  */
- enum SignatureItems {
+enum SignatureItems {
   Timestamp = "t",
-  HmacV1 = "v1",
+  V1 = "v1",
 }
 
 /**
@@ -35,52 +35,55 @@ const computeHmac = (timstamp: Date, payload: string, secret: string) => {
  */
 const deserializeSignature = (signature: string) => {
   const items = signature.split(",");
-  const itemMap = items.map((item) => item.split("="));
+  const itemMap = items.map((item) => item.split("=")); // eg. [["t", 1656921250765], ["v1", 'afafafafafaf']]
   const timestampString = itemMap.find(
     ([key]) => key === SignatureItems.Timestamp
-  )?.[1];
+  )?.[1]; // eg. 1656921250765
 
   // parse timestamp
   if (timestampString === undefined) {
-    throw new WebhookSignatureError("Invalid signature - timestamp missing");
+    throw new WebhookSignatureError("Timestamp missing");
   }
-  const timestampMillis = parseInt(timestampString, 10);
-  if (isNaN(timestampMillis) || timestampMillis < 0) {
-    throw new WebhookSignatureError("Invalid signature - timestamp invalid");
-  }
-  const timestamp = new Date(timestampMillis);
-
-  // parse hmac
-  const hmacV1 = itemMap.find(([key]) => key === SignatureItems.HmacV1)?.[1];
-  if (hmacV1 === undefined) {
-    throw new WebhookSignatureError("Invalid signature - hmac missing");
+  const timestamp = parseInt(timestampString, 10);
+  if (isNaN(timestamp) || timestamp < 0) {
+    throw new WebhookSignatureError("Timestamp invalid");
   }
 
-  return { timestamp, hmacV1 };
+  // parse v1 signature
+  const v1 = itemMap.find(([key]) => key === SignatureItems.V1)?.[1]; // eg. 'afafafafafaf'
+  if (v1 === undefined) {
+    throw new WebhookSignatureError("Signature missing");
+  }
+
+  return { timestamp, v1 };
 };
 
 /**
  * @param payload - Webhook request (Raw body)
  * @param signature - Webhook signature as UTF8 encoded strings (Stored in `x-ik-signature` header of the request)
  * @param secret - Webhook secret as UTF8 encoded string [Copy from ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks)
- * @returns Verified timestamp and parsed webhook event
+ * @returns \{ `timstamp`: Verified UNIX epoch timestamp if signature, `event`: Parsed webhook event payload \}
  */
 export const verify = (
   payload: string | Uint8Array,
   signature: string,
   secret: string
 ) => {
-  const { timestamp, hmacV1 } = deserializeSignature(signature);
+  const { timestamp, v1 } = deserializeSignature(signature);
   const payloadAsString: string =
     typeof payload === "string"
       ? payload
       : Buffer.from(payload).toString("utf8");
-  const computedHmac = computeHmac(timestamp, payloadAsString, secret);
-  if (hmacV1 !== computedHmac) {
+  const computedHmac = computeHmac(
+    new Date(timestamp),
+    payloadAsString,
+    secret
+  );
+  if (v1 !== computedHmac) {
     throw new WebhookSignatureError("Incorrect signature");
   }
   return {
     timestamp,
-    event: JSON.parse(payloadAsString),
+    event: JSON.parse(payloadAsString) as WebhookEvent,
   };
 };
