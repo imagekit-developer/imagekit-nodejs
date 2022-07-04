@@ -4,5 +4,8 @@
     "target": "ES2018",
     "module": "commonjs",
     "outDir": "dist/cjs",
-  }
+    "declaration": true,
+  },
+	"include": ["index.ts", "libs/**/*", "utils/*", "test/*", "types/*"],
+	"exclude": ["node_modules", "dist"],
 }
