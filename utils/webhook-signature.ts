@@ -25,7 +25,11 @@ const HASH_ALGORITHM = "sha256";
  * @param secret - Webhook secret as UTF8 encoded string
  * @returns Hmac with webhook secret as key and `${timestamp}.${payload}` as hash payload.
  */
-const computeHmac = (timstamp: Date, payload: string, secret: string) => {
+const computeHmac = (
+  timstamp: Date,
+  payload: string,
+  secret: string
+): string => {
   const hashPayload = `${timstamp.getTime()}.${payload}`;
   return createHmac(HASH_ALGORITHM, secret).update(hashPayload).digest("hex");
 };
@@ -33,7 +37,12 @@ const computeHmac = (timstamp: Date, payload: string, secret: string) => {
 /**
  * @description Extract items from webhook signature string
  */
-const deserializeSignature = (signature: string) => {
+const deserializeSignature = (
+  signature: string
+): {
+  timestamp: number;
+  v1: string;
+} => {
   const items = signature.split(",");
   const itemMap = items.map((item) => item.split("=")); // eg. [["t", 1656921250765], ["v1", 'afafafafafaf']]
   const timestampString = itemMap.find(
@@ -68,7 +77,10 @@ export const verify = (
   payload: string | Uint8Array,
   signature: string,
   secret: string
-) => {
+): {
+  timestamp: number;
+  event: WebhookEvent;
+} => {
   const { timestamp, v1 } = deserializeSignature(signature);
   const payloadAsString: string =
     typeof payload === "string"
