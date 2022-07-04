@@ -6,6 +6,6 @@
     "outDir": "dist/cjs",
     "declaration": true,
   },
-	"include": ["index.ts", "libs/**/*", "utils/*", "test/*", "types/*"],
+	"include": ["index.ts", "index.cts", "libs/**/*", "utils/*", "test/*", "types/*"],
 	"exclude": ["node_modules", "dist"],
 }
