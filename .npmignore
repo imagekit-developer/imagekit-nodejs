@@ -10,8 +10,8 @@ babel-register.js
 .DS_Store
 .mocharc.json
 .nycrc
-libs
-utils
+libs/*
+utils/*
 tsconfig*
 fixup.sh
 index.ts
