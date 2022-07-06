@@ -39,6 +39,7 @@ import {
 import { IKCallback } from "./libs/interfaces/IKCallback";
 import manage from "./libs/manage";
 import signature from "./libs/signature";
+import { verify as verifyWebhookSignature } from "./utils/webhook-signature";
 import upload from "./libs/upload";
 import customMetadataField from "./libs/manage/custom-metadata-field";
 /*
@@ -76,7 +77,15 @@ const promisify = function <T = void>(thisContext: ImageKit, fn: Function) {
   };
 };
 
-class ImageKit {
+export const Webhook = {
+  verify: verifyWebhookSignature,
+}
+
+class ImageKitStaticUtils {
+  static Webhook = Webhook;
+}
+
+class ImageKit extends ImageKitStaticUtils {
   options: ImageKitOptions = {
     uploadEndpoint: "https://upload.imagekit.io/api/v1/files/upload",
     publicKey: "",
@@ -86,6 +95,7 @@ class ImageKit {
   };
 
   constructor(opts: ImageKitOptions = {} as ImageKitOptions) {
+    super();
     this.options = _.extend(this.options, opts);
     if (!this.options.publicKey) {
       throw new Error(errorMessages.MANDATORY_PUBLIC_KEY_MISSING.message);
