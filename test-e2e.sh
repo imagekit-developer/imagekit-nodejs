@@ -1,6 +1,6 @@
 npm pack
 cd tests/e2e/node-js
-yarn install
+yarn init --yes
 echo "Installing local bundle from TAR in NodeJS project"
 yarn add ../../../imagekit*.tgz
 node index.js;test_result=$?
@@ -11,7 +11,8 @@ fi
 echo "Final bundle working in NodeJS project"
 
 cd ../typescript
-yarn install
+yarn init --yes
+yarn add typescript --dev
 echo "Installing local bundle from TAR in Typescript project"
 yarn add ../../../imagekit*.tgz
 npx tsc && node index.js;test_result=$?
