@@ -669,4 +669,4 @@ class ImageKit {
   }
 }
 
-export default ImageKit;
+export = ImageKit;
