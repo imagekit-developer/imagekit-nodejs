@@ -21,7 +21,7 @@ import {
   WebhookEvent,
   WebhookEventVideoAccepted,
   WebhookEventVideoReady,
-  WebhookEventVideoFailed,
+  WebhookEventVideoError,
 } from "./webhookEvent";
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; // actual options used to construct url
@@ -65,6 +65,6 @@ export type {
   WebhookEvent,
   WebhookEventVideoAccepted,
   WebhookEventVideoReady,
-  WebhookEventVideoFailed,
+  WebhookEventVideoError,
 };
 export type { IKCallback } from "./IKCallback";

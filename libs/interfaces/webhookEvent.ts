@@ -60,8 +60,8 @@ export interface WebhookEventVideoReady extends WebhookEventVideoBase {
   };
 }
 
-export interface WebhookEventVideoFailed extends WebhookEventVideoBase {
-  type: "video.transformation.failed";
+export interface WebhookEventVideoError extends WebhookEventVideoBase {
+  type: "video.transformation.error";
   data: {
     asset: Asset;
     transformation: {
@@ -77,4 +77,4 @@ export interface WebhookEventVideoFailed extends WebhookEventVideoBase {
 export type WebhookEvent =
   | WebhookEventVideoAccepted
   | WebhookEventVideoReady
-  | WebhookEventVideoFailed;
+  | WebhookEventVideoError;
