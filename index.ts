@@ -40,7 +40,7 @@ import { IKCallback } from "./libs/interfaces/IKCallback";
 import manage from "./libs/manage";
 import signature from "./libs/signature";
 import upload from "./libs/upload";
-import { verify as verifyWebhookSignature } from "./utils/webhook-signature";
+import { verify as verifyWebhookEvent } from "./utils/webhook-signature";
 import customMetadataField from "./libs/manage/custom-metadata-field";
 /*
     Implementations
@@ -76,16 +76,7 @@ const promisify = function <T = void>(thisContext: ImageKit, fn: Function) {
     }
   };
 };
-
-const Webhook = {
-  verify: verifyWebhookSignature,
-}
-
-class ImageKitStaticUtils {
-  static Webhook = Webhook;
-}
-
-class ImageKit extends ImageKitStaticUtils {
+class ImageKit {
   options: ImageKitOptions = {
     uploadEndpoint: "https://upload.imagekit.io/api/v1/files/upload",
     publicKey: "",
@@ -95,7 +86,6 @@ class ImageKit extends ImageKitStaticUtils {
   };
 
   constructor(opts: ImageKitOptions = {} as ImageKitOptions) {
-    super()
     this.options = _.extend(this.options, opts);
     if (!this.options.publicKey) {
       throw new Error(errorMessages.MANDATORY_PUBLIC_KEY_MISSING.message);
@@ -677,6 +667,14 @@ class ImageKit extends ImageKitStaticUtils {
   pHashDistance(firstPHash: string, secondPHash: string): number | Error {
     return pHashUtils.pHashDistance(firstPHash, secondPHash);
   }
+
+  /**
+   * @param payload - Raw webhook request body (Encoded as UTF8 string or Buffer)
+   * @param signature - Webhook signature as UTF8 encoded strings (Stored in `x-ik-signature` header of the request)
+   * @param secret - Webhook secret as UTF8 encoded string [Copy from ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks)
+   * @returns \{ `timstamp`: Verified UNIX epoch timestamp if signature, `event`: Parsed webhook event payload \}
+   */
+  verifyWebhookEvent = verifyWebhookEvent;
 }
 
 export = ImageKit;

@@ -1,4 +1,4 @@
-import { Webhook } from "../index";
+import ImageKit from "../index";
 import { expect } from "chai";
 
 // Sample webhook data
@@ -17,7 +17,7 @@ const WEBHOOK_REQUEST_SAMPLE = Object.seal({
 });
 
 describe("WebhookSignature", function () {
-  const { verify } = Webhook;
+  const verify = (new ImageKit(require("./data").initializationParams)).verifyWebhookEvent;
 
   context("Test Webhook.verify() - Positive cases", () => {
     it("Verify with body as string", () => {

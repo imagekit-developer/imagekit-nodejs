@@ -68,7 +68,7 @@ const deserializeSignature = (
 };
 
 /**
- * @param payload - Webhook request (Raw body)
+ * @param payload - Raw webhook request body (Encoded as UTF8 string or Buffer)
  * @param signature - Webhook signature as UTF8 encoded strings (Stored in `x-ik-signature` header of the request)
  * @param secret - Webhook secret as UTF8 encoded string [Copy from ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks)
  * @returns \{ `timstamp`: Verified UNIX epoch timestamp if signature, `event`: Parsed webhook event payload \}
