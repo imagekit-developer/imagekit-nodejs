@@ -15,3 +15,5 @@ utils/*
 tsconfig*
 fixup.sh
 index.ts
+*.tgz
+test-e2e.sh
