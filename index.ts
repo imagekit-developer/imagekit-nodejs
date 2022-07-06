@@ -99,8 +99,7 @@ class ImageKit {
   }
 
   /**
-   * You can add multiple origins in the same ImageKit.io account.
-   * URL endpoints allow you to configure which origins are accessible through your account and set their preference order as well.
+   * This method allows you to create an URL to access a file using the relative or absolute path and the ImageKit URL endpoint (urlEndpoint). The file can be an image, video or any other static file supported by ImageKit.
    *
    * @see {@link https://github.com/imagekit-developer/imagekit-nodejs#url-generation}
    * @see {@link https://docs.imagekit.io/integration/url-endpoints}
@@ -113,10 +112,7 @@ class ImageKit {
   }
 
   /**
-   * You can upload files to ImageKit.io media library from your server-side using private API key authentication.
-   *
-   * File size limit
-   * The maximum upload file size is limited to 25MB.
+   * You can upload file to ImageKit.io media library from your server-side using private API key authentication.
    *
    * @see {@link https://docs.imagekit.io/api-reference/upload-file-api/server-side-file-upload}
    *
@@ -133,7 +129,7 @@ class ImageKit {
 
   /**
    * This API can list all the uploaded files in your ImageKit.io media library.
-   * For searching and filtering, you can use query parameters as described below.
+   * For searching and filtering, you can use query parameters as described in docs.
    *
    * @see {@link https://docs.imagekit.io/api-reference/media-api/list-and-search-files}
    *
@@ -165,7 +161,7 @@ class ImageKit {
   }
 
   /**
-   * Get all versions of an assset API
+   * Get all versions of an assset.
    *
    * @see {@link https://docs.imagekit.io/api-reference/media-api/get-file-versions}
    *
@@ -181,7 +177,7 @@ class ImageKit {
   }
 
   /**
-   * Get file version details API
+   * Get file details of a specific version.
    *
    * @see {@link https://docs.imagekit.io/api-reference/media-api/get-file-version-details}
    *

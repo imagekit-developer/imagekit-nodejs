@@ -1,5 +1,5 @@
-import supportedTransforms from "../constants/supportedTransforms";
-
 export type TransformationPosition = "path" | "query";
 
-export type Transformation = Partial<typeof supportedTransforms>;
+export interface Transformation {
+    [key: string]: string | number | boolean
+}
