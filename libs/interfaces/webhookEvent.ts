@@ -36,8 +36,8 @@ export interface WebhookEventVideoAccepted extends WebhookEventVideoBase {
   };
 }
 
-export interface WebhookEventVideoCompleted extends WebhookEventVideoBase {
-  type: "video.transformation.completed";
+export interface WebhookEventVideoReady extends WebhookEventVideoBase {
+  type: "video.transformation.ready";
   timings: {
     donwload_duration: number;
     encoding_duration: number;
@@ -76,5 +76,5 @@ export interface WebhookEventVideoFailed extends WebhookEventVideoBase {
 
 export type WebhookEvent =
   | WebhookEventVideoAccepted
-  | WebhookEventVideoCompleted
+  | WebhookEventVideoReady
   | WebhookEventVideoFailed;

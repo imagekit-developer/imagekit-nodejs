@@ -20,7 +20,7 @@ import { RenameFileOptions, RenameFileResponse } from "./Rename"
 import {
   WebhookEvent,
   WebhookEventVideoAccepted,
-  WebhookEventVideoCompleted,
+  WebhookEventVideoReady,
   WebhookEventVideoFailed,
 } from "./webhookEvent";
 
@@ -64,7 +64,7 @@ export type {
   RenameFileResponse,
   WebhookEvent,
   WebhookEventVideoAccepted,
-  WebhookEventVideoCompleted,
+  WebhookEventVideoReady,
   WebhookEventVideoFailed,
 };
 export type { IKCallback } from "./IKCallback";
