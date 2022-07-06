@@ -1,3 +1,5 @@
+#!/bin/bash
+
 npm pack
 cd tests/e2e
 export YARN_CACHE_FOLDER=.cache
