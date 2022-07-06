@@ -19,9 +19,9 @@ import { CreateCustomMetadataFieldOptions, CustomMetadataField, UpdateCustomMeta
 import { RenameFileOptions, RenameFileResponse } from "./Rename"
 import {
   WebhookEvent,
-  WebhookEventVideoAccepted,
-  WebhookEventVideoReady,
-  WebhookEventVideoError,
+  WebhookEventVideoTransformationAccepted,
+  WebhookEventVideoTransformationReady,
+  WebhookEventVideoTransformationError,
 } from "./webhookEvent";
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; // actual options used to construct url
@@ -63,8 +63,8 @@ export type {
   RenameFileOptions,
   RenameFileResponse,
   WebhookEvent,
-  WebhookEventVideoAccepted,
-  WebhookEventVideoReady,
-  WebhookEventVideoError,
+  WebhookEventVideoTransformationAccepted,
+  WebhookEventVideoTransformationReady,
+  WebhookEventVideoTransformationError,
 };
 export type { IKCallback } from "./IKCallback";

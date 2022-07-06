@@ -17,7 +17,7 @@ interface WebhookEventBase {
 }
 
 /** WebhookEvent for "video.transformation.*" type */
-interface WebhookEventVideoBase extends WebhookEventBase {
+interface WebhookEventVideoTransformationBase extends WebhookEventBase {
   request: {
     x_request_id: string;
     url: string;
@@ -25,7 +25,7 @@ interface WebhookEventVideoBase extends WebhookEventBase {
   };
 }
 
-export interface WebhookEventVideoAccepted extends WebhookEventVideoBase {
+export interface WebhookEventVideoTransformationAccepted extends WebhookEventVideoTransformationBase {
   type: "video.transformation.accepted";
   data: {
     asset: Asset;
@@ -36,7 +36,7 @@ export interface WebhookEventVideoAccepted extends WebhookEventVideoBase {
   };
 }
 
-export interface WebhookEventVideoReady extends WebhookEventVideoBase {
+export interface WebhookEventVideoTransformationReady extends WebhookEventVideoTransformationBase {
   type: "video.transformation.ready";
   timings: {
     donwload_duration: number;
@@ -60,7 +60,7 @@ export interface WebhookEventVideoReady extends WebhookEventVideoBase {
   };
 }
 
-export interface WebhookEventVideoError extends WebhookEventVideoBase {
+export interface WebhookEventVideoTransformationError extends WebhookEventVideoTransformationBase {
   type: "video.transformation.error";
   data: {
     asset: Asset;
@@ -75,6 +75,6 @@ export interface WebhookEventVideoError extends WebhookEventVideoBase {
 }
 
 export type WebhookEvent =
-  | WebhookEventVideoAccepted
-  | WebhookEventVideoReady
-  | WebhookEventVideoError;
+  | WebhookEventVideoTransformationAccepted
+  | WebhookEventVideoTransformationReady
+  | WebhookEventVideoTransformationError;
