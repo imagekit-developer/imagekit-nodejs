@@ -287,4 +287,4 @@ const supportedTransforms = {
 };
 
 export default supportedTransforms as { [key: string]: string };
-export type SupportedTransformsType = keyof typeof supportedTransforms;
+export type SupportedTransformsParam = keyof typeof supportedTransforms;
