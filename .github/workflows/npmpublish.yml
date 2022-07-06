@@ -25,6 +25,7 @@ jobs:
         npm i -g yarn
         yarn install
         yarn test
+        yarn test-e2e
       env:
         CI: true
   

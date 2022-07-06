@@ -22,6 +22,7 @@ jobs:
         npm i -g yarn
         yarn install
         yarn test
+        yarn test-e2e
         yarn report-coverage
       env:
         CI: true
