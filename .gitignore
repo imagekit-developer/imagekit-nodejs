@@ -9,6 +9,7 @@ tests/e2e/node-js/package.json
 tests/e2e/node-js/yarn.lock
 tests/e2e/typescript/package.json
 tests/e2e/typescript/yarn.lock
+tests/e2e/typescript/index.js
 .cache
 yarn-error.log
 *.tgz
