@@ -1,7 +1,7 @@
 /**
  * @see {@link https://docs.imagekit.io/features/image-transformations}
  */
-const supportedTransforms: { [key: string]: string } = {
+const supportedTransforms = {
   /**
    * @see {@link https://docs.imagekit.io/features/image-transformations/resize-crop-and-other-transformations#width-w}
    */
@@ -286,4 +286,5 @@ const supportedTransforms: { [key: string]: string } = {
   original: "orig",
 };
 
-export default supportedTransforms;
+export default supportedTransforms as { [key: string]: string };
+export type SupportedTransformsParam = keyof typeof supportedTransforms;

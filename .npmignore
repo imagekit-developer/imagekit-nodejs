@@ -10,3 +10,10 @@ babel-register.js
 .DS_Store
 .mocharc.json
 .nycrc
+libs/*
+utils/*
+tsconfig*
+fixup.sh
+index.ts
+*.tgz
+test-e2e.sh

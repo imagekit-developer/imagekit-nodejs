@@ -113,7 +113,9 @@ const buildURL = function (opts: FinalUrlOptions): string {
   return url.format(urlObject);
 };
 
-function constructTransformationString(transformation: Array<Transformation> | undefined) {
+function constructTransformationString(inputTransformation: Array<Transformation> | undefined) {
+
+  const transformation = inputTransformation as Array<{ [key: string]: string | boolean | number }> | undefined;
   if (!Array.isArray(transformation)) {
     return "";
   }
