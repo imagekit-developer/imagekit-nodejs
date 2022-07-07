@@ -1125,13 +1125,26 @@ When you exceed the rate limits for an endpoint, you will receive a `429` status
 | `X-RateLimit-Reset` | The amount of time in milliseconds before you can make another request to this endpoint. Pause/sleep your workflow for this duration. |
 | `X-RateLimit-Interval` | The duration of interval in milliseconds for which this rate limit was exceeded. |
 
-## Verify webhooks
+## Verify webhook events
 
 ImageKit sends `x-ik-signature` in the webhook request header, which is used to verify the authenticity of the webhook.
 
 Verifing webhook signature is easy with imagekit SDK. All you need is `x-ik-signature`, rawRequestBody and secretKey. You can copy webhook secret from imagekit dashboard.
 
-Here is an example of how to verify the webhook signature in an express.js server.
+```js
+const {
+    timestamp,  // Unix timestamp in milliseconds
+    event,      // Parsed webhook event object
+} = imagekit.verifyWebhookEvent(
+    `{"type":"video.transformation.accepted","id":"58e6d24d-6098-4319-be8d-40c3cb0a402d"...`, // Raw request body encoded as Uint8Array or UTF8 string
+    't=1655788406333,v1=d30758f47fcb31e1fa0109d3b3e2a6c623e699aaf1461cba6bd462ef58ea4b31' // Webhook secret key
+    'whsec_...' // Webhook secret key
+) // Throws an error if signature is invalid
+
+// { timestamp: 1655788406333, event: {"type":"video.transformation.accepted","id":"58e6d24d-6098-4319-be8d-40c3cb0a402d"...} }
+```
+
+Here is an example of implementing with express.js server.
 
 ```js
 const express = require('express');
@@ -1139,7 +1152,7 @@ const Imagekit = require('imagekit');
 
 // Webhook configs
 const WEBHOOK_ENDPOINT = '/webhook';
-const WEBHOOK_SECRET = 'whsec_0DrqBcZEGejn4fU0P6+EQNTPAEgUnIQW'; // Copy from Imagekit dashboard
+const WEBHOOK_SECRET = 'whsec_...'; // Copy from Imagekit dashboard
 const WEBHOOK_EXPIRY_DURATION = 60 * 1000; // 60 seconds
 
 // Server configs
