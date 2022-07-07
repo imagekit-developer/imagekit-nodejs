@@ -1125,6 +1125,84 @@ When you exceed the rate limits for an endpoint, you will receive a `429` status
 | `X-RateLimit-Reset` | The amount of time in milliseconds before you can make another request to this endpoint. Pause/sleep your workflow for this duration. |
 | `X-RateLimit-Interval` | The duration of interval in milliseconds for which this rate limit was exceeded. |
 
+## Verify webhooks
+
+ImageKit sends `x-ik-signature` in the webhook request header, which is used to verify the authenticity of the webhook.
+
+Verifing webhook signature is easy with imagekit SDK. All you need is `x-ik-signature`, rawRequestBody and secretKey. You can copy webhook secret from imagekit dashboard.
+
+Here is an example of how to verify the webhook signature in an express.js server.
+
+```js
+const express = require('express');
+const Imagekit = require('imagekit');
+
+// Webhook configs
+const WEBHOOK_ENDPOINT = '/webhook';
+const WEBHOOK_SECRET = 'whsec_0DrqBcZEGejn4fU0P6+EQNTPAEgUnIQW'; // Copy from Imagekit dashboard
+const WEBHOOK_EXPIRY_DURATION = 60 * 1000; // 60 seconds
+
+// Server configs
+const PORT = 8081;
+
+const imagekit = new Imagekit({
+  publicKey: 'pub_...',
+  urlEndpoint: 'https://ik.imagekit.io/example',
+  privateKey: 'pvt_...',
+})
+
+const app = express();
+
+app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+  // Get `x-ik-signature` from webhook request header & rawRequestBody
+  const signature = req.headers["x-ik-signature"]; // eg. 't=1655788406333,v1=d30758f47fcb31e1fa0109d3b3e2a6c623e699aaf1461cba6bd462ef58ea4b31'
+  const rawBody = req.rawBody;// Unmodified request body encoded as Uint8Array or UTF8 string
+
+  // Verify signature & parse event
+  let webhookResult;
+  try {
+    webhookResult = imagekit.verifyWebhookEvent(rawBody, signature, WEBHOOK_SECRET);
+    // `verifyWebhookEvent` method will throw an error if signature is invalid
+  } catch (e) {
+    // Failed to verify webhook
+    return res.status(401).send(`Webhook error: ${e.message}`);
+  }
+  const { timestamp, event } = webhookResult;
+
+  // Check if webhook has expired
+  if (timestamp + WEBHOOK_EXPIRY_DURATION < Date.now()) {
+    return res.status(401).send('Webhook signature expired');
+  }
+
+  // Handle webhook
+  switch (event.type) {
+    case 'video.transformation.accepted':
+      // It is triggered when a new video transformation request is accepted for processing. You can use this for debugging purposes.
+      break;
+    case 'video.transformation.ready':
+      // It is triggered when a video encoding is finished and the transformed resource is ready to be served. You should listen to this webhook and update any flag in your database or CMS against that particular asset so your application can start showing it to users.
+      break;
+    case 'video.transformation.error':
+      // It is triggered if an error occurs during encoding. Listen to this webhook to log the reason. You should check your origin and URL-endpoint settings if the reason is related to download failure. If the reason seems like an error on the ImageKit side, then raise a support ticket at support@imagekit.io.
+      break;
+    // ... handle other event types
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  // Acknowledge webhook is received and processed successfully
+  res.status(200).end();
+});
+
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+  console.log(
+    `Webhook endpoint: 'http://localhost:${PORT}${WEBHOOK_ENDPOINT}'`,
+    'Do replace 'localhost' with public endpoint'
+  );
+});
+```
+
 ## Support
 
 For any feedback or to report any issues or general implementation support, please reach out to [support@imagekit.io](mailto:support@imagekit.io)
