@@ -1,13 +1,7 @@
 import { createHmac } from "crypto";
 import { isNaN } from "lodash";
+import errorMessages from "../libs/constants/errorMessages";
 import type { WebhookEvent } from "../libs/interfaces";
-
-class WebhookSignatureError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "WebhookSignatureError";
-  }
-}
 
 /**
  * @description Enum for Webhook signature item names
@@ -51,17 +45,23 @@ const deserializeSignature = (
 
   // parse timestamp
   if (timestampString === undefined) {
-    throw new WebhookSignatureError("Timestamp missing");
+    throw new Error(
+      errorMessages.VERIFY_WEBHOOK_EVENT_TIMESTAMP_MISSING.message
+    );
   }
   const timestamp = parseInt(timestampString, 10);
   if (isNaN(timestamp) || timestamp < 0) {
-    throw new WebhookSignatureError("Timestamp invalid");
+    throw new Error(
+      errorMessages.VERIFY_WEBHOOK_EVENT_TIMESTAMP_INVALID.message
+    );
   }
 
   // parse v1 signature
   const v1 = itemMap.find(([key]) => key === SignatureItems.V1)?.[1]; // eg. 'afafafafafaf'
   if (v1 === undefined) {
-    throw new WebhookSignatureError("Signature missing");
+    throw new Error(
+      errorMessages.VERIFY_WEBHOOK_EVENT_SIGNATURE_MISSING.message
+    );
   }
 
   return { timestamp, v1 };
@@ -92,7 +92,9 @@ export const verify = (
     secret
   );
   if (v1 !== computedHmac) {
-    throw new WebhookSignatureError("Incorrect signature");
+    throw new Error(
+      errorMessages.VERIFY_WEBHOOK_EVENT_SIGNATURE_INCORRECT.message
+    );
   }
   return {
     timestamp,
