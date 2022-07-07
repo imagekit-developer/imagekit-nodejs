@@ -1132,16 +1132,24 @@ ImageKit sends `x-ik-signature` in the webhook request header, which can be used
 Verifing webhook signature is easy with imagekit SDK. All you need is `x-ik-signature`, rawRequestBody and secretKey. You can copy webhook secret from imagekit dashboard.
 
 ```js
-const {
-    timestamp,  // Unix timestamp in milliseconds
-    event,      // Parsed webhook event object
-} = imagekit.verifyWebhookEvent(
-    '{"type":"video.transformation.accepted","id":"58e6d24d-6098-4319-be8d-40c3cb0a402d"...', // Raw request body encoded as Uint8Array or UTF8 string
-    't=1655788406333,v1=d30758f47fcb31e1fa0109d3b3e2a6c623e699aaf1461cba6bd462ef58ea4b31', // Webhook secret key
-    'whsec_...' // Webhook secret key
-) // Throws an error if signature is invalid
-
-// { timestamp: 1655788406333, event: {"type":"video.transformation.accepted","id":"58e6d24d-6098-4319-be8d-40c3cb0a402d"...} }
+try {
+    const {
+        timestamp,  // Unix timestamp in milliseconds
+        event,      // Parsed webhook event object
+    } = imagekit.verifyWebhookEvent(
+        '{"type":"video.transformation.accepted","id":"58e6d24d-6098-4319-be8d-40c3cb0a402d"...', // Raw request body encoded as Uint8Array or UTF8 string
+        't=1655788406333,v1=d30758f47fcb31e1fa0109d3b3e2a6c623e699aaf1461cba6bd462ef58ea4b31', // Request header `x-ik-signature`
+        'whsec_...' // Webhook secret
+    )
+    // { timestamp: 1655788406333, event: {"type":"video.transformation.accepted","id":"58e6d24d-6098-4319-be8d-40c3cb0a402d"...} }
+} catch (err) {
+    // `verifyWebhookEvent` will throw an error if the signature is invalid
+    // And the webhook event must be ignored and not processed
+    console.log(err);
+    // Under normal circumstances you may catch following errors:
+    // - `Error: Incorrect signature` - you may check the webhook secret & the request body being used.
+    // - `Error: Signature missing` or `Error: Timestamp missing` or `Error: Invalid timestamp` - you may check `x-ik-signature` header used.
+}
 ```
 
 Here is an example for implementing with express.js server.
