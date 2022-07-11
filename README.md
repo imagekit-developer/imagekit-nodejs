@@ -1158,16 +1158,14 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
     } catch (e) {
         // `verifyWebhookEvent` method will throw an error if signature is invalid
         console.log(e);
-        // Return a response to acknowledge receipt of the event so that ImageKit doesn't retry sending this webhook.
-        res.send()
+        res.status(400).send(`Webhook Error`);
     }
 
     const { timestamp, event } = webhookResult;
 
     // Check if webhook has expired
     if (timestamp + WEBHOOK_EXPIRY_DURATION < Date.now()) {
-        // Return a response to acknowledge receipt of the event so that ImageKit doesn't retry sending this webhook.
-        res.send()
+        res.status(400).send(`Webhook Error`);
     }
 
     // Handle webhook
