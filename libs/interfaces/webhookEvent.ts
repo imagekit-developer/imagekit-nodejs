@@ -77,4 +77,5 @@ export interface WebhookEventVideoTransformationError extends WebhookEventVideoT
 export type WebhookEvent =
   | WebhookEventVideoTransformationAccepted
   | WebhookEventVideoTransformationReady
-  | WebhookEventVideoTransformationError;
+  | WebhookEventVideoTransformationError
+  | Object;

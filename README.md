@@ -1129,99 +1129,70 @@ When you exceed the rate limits for an endpoint, you will receive a `429` status
 
 ImageKit sends `x-ik-signature` in the webhook request header, which can be used to verify the authenticity of the webhook request.
 
-Verifing webhook signature is easy with imagekit SDK. All you need is `x-ik-signature`, rawRequestBody and secretKey. You can copy webhook secret from imagekit dashboard.
+Verifying webhook signature is easy with imagekit SDK. All you need is the value of the `x-ik-signature` header, request body, and [webhook secret](https://imagekit.io/dashboard/developer/webhooks) from the ImageKit dashboard.
 
-```js
-try {
-    const {
-        timestamp,  // Unix timestamp in milliseconds
-        event,      // Parsed webhook event object
-    } = imagekit.verifyWebhookEvent(
-        '{"type":"video.transformation.accepted","id":"58e6d24d-6098-4319-be8d-40c3cb0a402d"...', // Raw request body encoded as Uint8Array or UTF8 string
-        't=1655788406333,v1=d30758f47fcb31e1fa0109d3b3e2a6c623e699aaf1461cba6bd462ef58ea4b31', // Request header `x-ik-signature`
-        'whsec_...' // Webhook secret
-    )
-    // { timestamp: 1655788406333, event: {"type":"video.transformation.accepted","id":"58e6d24d-6098-4319-be8d-40c3cb0a402d"...} }
-} catch (err) {
-    // `verifyWebhookEvent` will throw an error if the signature is invalid
-    // And the webhook event must be ignored and not processed
-    console.log(err);
-    // Under normal circumstances you may catch following errors:
-    // - `Error: Incorrect signature` - you may check the webhook secret & the request body being used.
-    // - `Error: Signature missing` or `Error: Timestamp missing` or `Error: Invalid timestamp` - you may check `x-ik-signature` header used.
-}
-```
-
-Here is an example for implementing with express.js server.
+Here is an example using the express.js server.
 
 ```js
 const express = require('express');
 const Imagekit = require('imagekit');
 
 // Webhook configs
-const WEBHOOK_ENDPOINT = '/webhook';
 const WEBHOOK_SECRET = 'whsec_...'; // Copy from Imagekit dashboard
-const WEBHOOK_EXPIRY_DURATION = 60 * 1000; // 60 seconds
-
-// Server configs
-const PORT = 8081;
+const WEBHOOK_EXPIRY_DURATION = 300 * 1000; // 300 seconds for example
 
 const imagekit = new Imagekit({
-  publicKey: 'pub_...',
-  urlEndpoint: 'https://ik.imagekit.io/example',
-  privateKey: 'pvt_...',
+  publicKey: 'public_...',
+  urlEndpoint: 'https://ik.imagekit.io/imagekit_id',
+  privateKey: 'private_...',
 })
 
 const app = express();
 
 app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
-  // Get `x-ik-signature` from webhook request header & rawRequestBody
-  const signature = req.headers["x-ik-signature"]; // eg. 't=1655788406333,v1=d30758f47fcb31e1fa0109d3b3e2a6c623e699aaf1461cba6bd462ef58ea4b31'
-  const rawBody = req.rawBody;// Unmodified request body encoded as Uint8Array or UTF8 string
+    const signature = req.headers["x-ik-signature"];
+    const requestBody = req.body;
+    let webhookResult;
+    try {
+        webhookResult = imagekit.verifyWebhookEvent(requestBody, signature, WEBHOOK_SECRET);
+    } catch (e) {
+        // `verifyWebhookEvent` method will throw an error if signature is invalid
+        console.log(e);
+        // Return a response to acknowledge receipt of the event so that ImageKit doesn't retry sending this webhook.
+        res.send()
+    }
 
-  // Verify signature & parse event
-  let webhookResult;
-  try {
-    webhookResult = imagekit.verifyWebhookEvent(rawBody, signature, WEBHOOK_SECRET);
-    // `verifyWebhookEvent` method will throw an error if signature is invalid
-  } catch (e) {
-    // Failed to verify webhook
-    return res.status(401).send(`Webhook error: ${e.message}`);
-  }
-  const { timestamp, event } = webhookResult;
+    const { timestamp, event } = webhookResult;
 
-  // Check if webhook has expired
-  if (timestamp + WEBHOOK_EXPIRY_DURATION < Date.now()) {
-    return res.status(401).send('Webhook signature expired');
-  }
+    // Check if webhook has expired
+    if (timestamp + WEBHOOK_EXPIRY_DURATION < Date.now()) {
+        // Return a response to acknowledge receipt of the event so that ImageKit doesn't retry sending this webhook.
+        res.send()
+    }
 
-  // Handle webhook
-  switch (event.type) {
-    case 'video.transformation.accepted':
-      // It is triggered when a new video transformation request is accepted for processing. You can use this for debugging purposes.
-      break;
-    case 'video.transformation.ready':
-      // It is triggered when a video encoding is finished and the transformed resource is ready to be served. You should listen to this webhook and update any flag in your database or CMS against that particular asset so your application can start showing it to users.
-      break;
-    case 'video.transformation.error':
-      // It is triggered if an error occurs during encoding. Listen to this webhook to log the reason. You should check your origin and URL-endpoint settings if the reason is related to download failure. If the reason seems like an error on the ImageKit side, then raise a support ticket at support@imagekit.io.
-      break;
-    // ... handle other event types
-    default:
-      console.log(`Unhandled event type ${event.type}`);
-  }
+    // Handle webhook
+    switch (event.type) {
+        case 'video.transformation.accepted':
+            // It is triggered when a new video transformation request is accepted for processing. You can use this for debugging purposes.
+            break;
+        case 'video.transformation.ready':
+            // It is triggered when a video encoding is finished, and the transformed resource is ready to be served. You should listen to this webhook and update any flag in your database or CMS against that particular asset so your application can start showing it to users.
+            break;
+        case 'video.transformation.error':
+            // It is triggered if an error occurs during encoding. Listen to this webhook to log the reason. You should check your origin and URL-endpoint settings if the reason is related to download failure. If the reason seems like an error on the ImageKit side, then raise a support ticket at support@imagekit.io.
+            break;
+        default:
+            // ... handle other event types
+            console.log(`Unhandled event type ${event.type}`);
+    }
 
-  // Acknowledge webhook is received and processed successfully
-  res.status(200).end();
-});
+    // Return a response to acknowledge receipt of the event
+    res.send();
+})
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-  console.log(
-    `Webhook endpoint: 'http://localhost:${PORT}${WEBHOOK_ENDPOINT}'`,
-    'Do replace 'localhost' with public endpoint'
-  );
-});
+app.listen(3000, () => {
+    console.log(`Example app listening on port 3000`)
+})
 ```
 
 ## Support
