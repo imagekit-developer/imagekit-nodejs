@@ -42,4 +42,9 @@ export default {
     "INVALID_FILE_PATH": { message: "Invalid value for filePath", help: "Pass the full path of the file. For example - /path/to/file.jpg" },
     "INVALID_NEW_FILE_NAME": { message: "Invalid value for newFileName. It should be a string.", help: "" },
     "INVALID_PURGE_CACHE": { message: "Invalid value for purgeCache. It should be boolean.", help: "" },
+    // Webhook signature
+    "VERIFY_WEBHOOK_EVENT_SIGNATURE_INCORRECT": { message: "Incorrect signature", help: "Please pass x-ik-signature header as utf8 string" },
+    "VERIFY_WEBHOOK_EVENT_SIGNATURE_MISSING": { message: "Signature missing", help: "Please pass x-ik-signature header as utf8 string" },
+    "VERIFY_WEBHOOK_EVENT_TIMESTAMP_MISSING": { message: "Timestamp missing", help: "Please pass x-ik-signature header as utf8 string" },
+    "VERIFY_WEBHOOK_EVENT_TIMESTAMP_INVALID": { message: "Timestamp invalid", help: "Please pass x-ik-signature header as utf8 string" },
 };
