@@ -206,7 +206,8 @@ const updateDetails = function (
     tags: updateData.tags,
     customCoordinates: updateData.customCoordinates,
     extensions: updateData.extensions,
-    webhookUrl: updateData.webhookUrl
+    webhookUrl: updateData.webhookUrl,
+    customMetadata: updateData.customMetadata
   };
 
   var requestOptions = {
