@@ -762,6 +762,9 @@ describe("Media library APIs", function () {
                         minConfidence: 95
                     }
                 ],
+                customMetadata: {
+                    SKU: 10
+                },
                 webhookUrl: "https://some-domain/some-api-id"
             }
 
