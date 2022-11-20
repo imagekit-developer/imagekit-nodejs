@@ -17,6 +17,7 @@ export default function request<T, E extends Error> (
       username: defaultOptions.privateKey || "",
       password: "",
     },
+    maxBodyLength: Infinity,
   };
 
   if (typeof requestOptions.json === "object") options.data = requestOptions.json;
