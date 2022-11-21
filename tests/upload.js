@@ -184,8 +184,6 @@ describe("File upload", function () {
 
         imagekit.upload(fileOptions);
     });
-    
-    
 
     it('Missing useUniqueFileName', function (done) {
         const fileOptions = {
