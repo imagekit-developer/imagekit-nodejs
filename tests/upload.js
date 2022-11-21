@@ -147,7 +147,7 @@ describe("File upload", function () {
         imagekit.upload(fileOptions, callback);
     });
 
-    it('Buffer file', function (done) {
+    it('Buffer file smaller than 10MB', function (done) {
         const fileOptions = {
             fileName: "test_file_name",
             file: fs.readFileSync(path.join(__dirname,"./data/test_image.jpg"))
@@ -165,6 +165,27 @@ describe("File upload", function () {
 
         imagekit.upload(fileOptions);
     });
+   
+    it('Buffer file larger than 10MB', function (done) {
+        const fileOptions = {
+            fileName: "test_file_name",
+            file: fs.readFileSync(path.join(__dirname,"./data/test_video_larger_than_10mb.mp4"))
+        };
+
+        const scope = nock('https://upload.imagekit.io/api')
+        .post('/v1/files/upload')
+        .basicAuth({ user: initializationParams.privateKey, pass: '' })
+        .reply(200, function (uri, requestBody) {
+            expect(this.req.headers["content-type"]).include("multipart/form-data; boundary=---------------------");
+            var boundary = this.req.headers["content-type"].replace("multipart/form-data; boundary=","");
+            expect(requestBody.length).equal(33046084);
+            done()
+          })
+
+        imagekit.upload(fileOptions);
+    });
+    
+    
 
     it('Missing useUniqueFileName', function (done) {
         const fileOptions = {
