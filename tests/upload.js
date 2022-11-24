@@ -169,7 +169,7 @@ describe("File upload", function () {
     it('Buffer file larger than 10MB', function (done) {
         const fileOptions = {
             fileName: "test_file_name",
-            file: Buffer.alloc(15000000).toString('base64')
+            file: Buffer.alloc(15000000), // static buffer of 15 MB size
         };
 
         const scope = nock('https://upload.imagekit.io/api')
