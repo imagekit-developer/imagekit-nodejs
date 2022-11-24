@@ -179,10 +179,12 @@ describe("File upload", function () {
             expect(this.req.headers["content-type"]).include("multipart/form-data; boundary=---------------------");
             var boundary = this.req.headers["content-type"].replace("multipart/form-data; boundary=","");
             expect(requestBody.length).equal(15000347);
-            done()
           })
 
-        imagekit.upload(fileOptions);
+        imagekit.upload(fileOptions, function (err, result) {
+            expect(err).to.equal(null)
+            done();
+        });
     });
 
     it('Missing useUniqueFileName', function (done) {
@@ -279,7 +281,6 @@ describe("File upload", function () {
         imagekit.upload(fileOptions, callback);
 
         setTimeout( () => {
-            console.log(callback.called, callback.calledOnce)
             expect(callback.calledOnce).to.be.true;
             sinon.assert.calledWith(callback, null, uploadSuccessResponseObj);
             done();
