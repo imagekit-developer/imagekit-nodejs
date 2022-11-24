@@ -181,9 +181,9 @@ describe("File upload", function () {
             expect(requestBody.length).equal(15000347);
           })
 
-        imagekit.upload(fileOptions, (response) => {
-            console.log('File upload complete', response)
-            done()
+        imagekit.upload(fileOptions, function (err, result) {
+            expect(err).to.equal(null)
+            done();
         });
     });
 
