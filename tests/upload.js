@@ -169,7 +169,7 @@ describe("File upload", function () {
     it('Buffer file larger than 10MB', function (done) {
         const fileOptions = {
             fileName: "test_file_name",
-            file: fs.readFileSync(path.join(__dirname,"./data/test_video_larger_than_10mb.mp4"))
+            file: Buffer.alloc(15000000).toString('base64')
         };
 
         const scope = nock('https://upload.imagekit.io/api')
@@ -178,7 +178,7 @@ describe("File upload", function () {
         .reply(200, function (uri, requestBody) {
             expect(this.req.headers["content-type"]).include("multipart/form-data; boundary=---------------------");
             var boundary = this.req.headers["content-type"].replace("multipart/form-data; boundary=","");
-            expect(requestBody.length).equal(33046084);
+            expect(requestBody.length).equal(20000280);
             done()
           })
 
