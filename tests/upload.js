@@ -178,7 +178,7 @@ describe("File upload", function () {
         .reply(200, function (uri, requestBody) {
             expect(this.req.headers["content-type"]).include("multipart/form-data; boundary=---------------------");
             var boundary = this.req.headers["content-type"].replace("multipart/form-data; boundary=","");
-            expect(requestBody.length).equal(20000280);
+            expect(requestBody.length).equal(15000347);
             done()
           })
 
