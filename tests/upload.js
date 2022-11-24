@@ -147,7 +147,7 @@ describe("File upload", function () {
         imagekit.upload(fileOptions, callback);
     });
 
-    it('Buffer file', function (done) {
+    it('Buffer file smaller than 10MB', function (done) {
         const fileOptions = {
             fileName: "test_file_name",
             file: fs.readFileSync(path.join(__dirname,"./data/test_image.jpg"))
@@ -160,6 +160,25 @@ describe("File upload", function () {
             expect(this.req.headers["content-type"]).include("multipart/form-data; boundary=---------------------");
             var boundary = this.req.headers["content-type"].replace("multipart/form-data; boundary=","");
             expect(requestBody.length).equal(399064);
+            done()
+          })
+
+        imagekit.upload(fileOptions);
+    });
+   
+    it('Buffer file larger than 10MB', function (done) {
+        const fileOptions = {
+            fileName: "test_file_name",
+            file: Buffer.alloc(15000000), // static buffer of 15 MB size
+        };
+
+        const scope = nock('https://upload.imagekit.io/api')
+        .post('/v1/files/upload')
+        .basicAuth({ user: initializationParams.privateKey, pass: '' })
+        .reply(200, function (uri, requestBody) {
+            expect(this.req.headers["content-type"]).include("multipart/form-data; boundary=---------------------");
+            var boundary = this.req.headers["content-type"].replace("multipart/form-data; boundary=","");
+            expect(requestBody.length).equal(20000280);
             done()
           })
 
