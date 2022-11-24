@@ -281,7 +281,6 @@ describe("File upload", function () {
         imagekit.upload(fileOptions, callback);
 
         setTimeout( () => {
-            console.log(callback.called, callback.calledOnce)
             expect(callback.calledOnce).to.be.true;
             sinon.assert.calledWith(callback, null, uploadSuccessResponseObj);
             done();
