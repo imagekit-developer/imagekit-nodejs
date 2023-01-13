@@ -33,7 +33,11 @@ export default function request<T, E extends Error> (
       statusCode: status,
       headers
     }
-    var result = data ? data : {} as T;
+    var result = data
+      ? typeof data === "object"
+        ? data
+        : { result: JSON.stringify(data) }
+      : ({} as T);
     // define status code and headers as non-enumerable properties on data
     Object.defineProperty(result, "$ResponseMetadata", {
       value: responseMetadata,
@@ -51,7 +55,14 @@ export default function request<T, E extends Error> (
         headers: error.response.headers
       }
       // define status code and headers as non-enumerable properties on data
-      var result = error.response.data ? error.response.data : {} as any;
+      var result = error.response.data
+        ? typeof error.response.data === "object"
+          ? error.response.data
+          : {
+              message: JSON.stringify(error.response.data),
+              help: "For support kindly contact us at support@imagekit.io .",
+            }
+        : ({} as any);
       if (error.response.status === 429) {
         result = {
           ...result,
