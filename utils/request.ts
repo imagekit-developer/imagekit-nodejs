@@ -33,11 +33,7 @@ export default function request<T, E extends Error> (
       statusCode: status,
       headers
     }
-    var result = data
-      ? typeof data === "object"
-        ? data
-        : { result: JSON.stringify(data) }
-      : ({} as T);
+    var result = data ? data : ({} as T);
     // define status code and headers as non-enumerable properties on data
     Object.defineProperty(result, "$ResponseMetadata", {
       value: responseMetadata,
