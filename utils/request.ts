@@ -4,7 +4,7 @@ import { ImageKitOptions } from "../libs/interfaces/";
 import { IKCallback } from "../libs/interfaces/IKCallback";
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
-export default function request<T, E extends Error> (
+export default function request<T, E extends Error>(
   requestOptions: RequestOptions,
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<T, E>,
@@ -50,8 +50,16 @@ export default function request<T, E extends Error> (
         statusCode: error.response.status,
         headers: error.response.headers
       }
-      // define status code and headers as non-enumerable properties on data
-      var result = error.response.data ? error.response.data : {} as any;
+
+      var result = {} as Object;
+      if (error.response.data && typeof error.response.data === "object") {
+        result = error.response.data
+      } else if (error.response.data && typeof error.response.data === "string") {
+        result = {
+          help: error.response.data
+        }
+      }
+
       if (error.response.status === 429) {
         result = {
           ...result,
@@ -60,6 +68,7 @@ export default function request<T, E extends Error> (
           "X-RateLimit-Interval": parseInt(error.response.headers["x-ratelimit-interval"], 10),
         }
       }
+      // define status code and headers as non-enumerable properties on data
       Object.defineProperty(result, "$ResponseMetadata", {
         value: responseMetadata,
         enumerable: false,

@@ -20,6 +20,8 @@ const dummyAPIErrorResponse = {
     message: "message"
 }
 
+const dummyAPIErrorResponseString = "Internal server error"
+
 const responseHeaders = {
     'x-request-id': "request-id"
 }
@@ -59,6 +61,30 @@ describe("Promise", function () {
             expect(ex.$ResponseMetadata.headers).to.be.deep.equal({
                 ...responseHeaders,
                 'content-type': 'application/json'
+            });
+            return Promise.resolve();
+        }
+
+        return Promise.reject();
+    });
+
+    it('Server unhandled error', async function () {
+        var requestId = "sdfdsfksjfldsjfjsdf";
+
+        const scope = nock('https://api.imagekit.io')
+            .get(`/v1/files/purge/${requestId}`)
+            .basicAuth({ user: initializationParams.privateKey, pass: '' })
+            .reply(500, dummyAPIErrorResponseString, responseHeaders)
+
+        try {
+            await imagekit.getPurgeCacheStatus(requestId);
+        } catch (ex) {
+            expect(ex).to.be.deep.equal({
+                help: dummyAPIErrorResponseString
+            });
+            expect(ex.$ResponseMetadata.statusCode).to.be.equal(500);
+            expect(ex.$ResponseMetadata.headers).to.be.deep.equal({
+                ...responseHeaders
             });
             return Promise.resolve();
         }
