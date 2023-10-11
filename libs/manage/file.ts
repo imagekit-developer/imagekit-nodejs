@@ -514,7 +514,7 @@ const renameFile = function (
 
   const requestOptions = {
     url: "https://api.imagekit.io/v1/files/rename",
-    method: "POST",
+    method: "PUT",
     json: data,
   };
 
