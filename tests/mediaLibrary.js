@@ -309,7 +309,7 @@ describe("Media library APIs", function () {
 
         it('Rename file - default purgeCache value', function (done) {
             const scope = nock('https://api.imagekit.io')
-                .post(`/v1/files/rename`)
+                .put(`/v1/files/rename`)
                 .basicAuth({ user: initializationParams.privateKey, pass: '' })
                 .reply(function (uri, requestBody) {
                     expect(this.req.path).equal(`/v1/files/rename`)
@@ -330,7 +330,7 @@ describe("Media library APIs", function () {
 
         it('Rename file', function (done) {
             const scope = nock('https://api.imagekit.io')
-                .post(`/v1/files/rename`)
+                .put(`/v1/files/rename`)
                 .basicAuth({ user: initializationParams.privateKey, pass: '' })
                 .reply(function (uri, requestBody) {
                     expect(this.req.path).equal(`/v1/files/rename`)
@@ -1141,7 +1141,7 @@ describe("Media library APIs", function () {
 
         it('Rename file', function (done) {
             const scope = nock('https://api.imagekit.io')
-                .post(`/v1/files/rename`)
+                .put(`/v1/files/rename`)
                 .basicAuth({ user: initializationParams.privateKey, pass: '' })
                 .reply(204, dummyAPISuccessResponse)
 
@@ -1508,7 +1508,7 @@ describe("Media library APIs", function () {
 
         it('Rename file', function (done) {
             const scope = nock('https://api.imagekit.io')
-                .post(`/v1/files/rename`)
+                .put(`/v1/files/rename`)
                 .basicAuth({ user: initializationParams.privateKey, pass: '' })
                 .reply(500, dummyAPIErrorResponse)
 
