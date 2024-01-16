@@ -278,6 +278,8 @@ If you want to generate transformations in your application and add them to the 
 | effectUSM | e-usm |
 | effectContrast | e-contrast |
 | effectGray | e-grayscale |
+| effectShadow | e-shadow |
+| effectGradient | e-gradient |
 | original | orig |
 | raw | `replaced by the parameter value` |
 

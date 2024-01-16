@@ -62,8 +62,10 @@ export default function (
       } else if (key === "customMetadata" && typeof uploadOptions.customMetadata === "object" &&
         !Array.isArray(uploadOptions.customMetadata) && uploadOptions.customMetadata !== null) {
         form.append('customMetadata', JSON.stringify(uploadOptions.customMetadata));
-      }
-      else {
+      } else if (key === "transformation" && typeof uploadOptions.transformation === "object" &&
+        uploadOptions.transformation !== null) {
+        form.append(key, JSON.stringify(uploadOptions.transformation));
+      } else {
         form.append(key, String(uploadOptions[key]));
       }
     }

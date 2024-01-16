@@ -1,5 +1,15 @@
 import { ReadStream } from "fs";
 
+interface postTransformation{
+  type: 'abs' | 'thumbnail' | 'transformation' | 'gif-to-video'
+  protocol?: 'hls' | 'dash'
+  value?: string
+}
+interface transformation{
+  pre?: string
+  post?: postTransformation[]
+}
+
 /**
  * Options used when uploading a file
  *
@@ -83,5 +93,6 @@ export interface UploadOptions {
   overwriteCustomMetadata?: boolean;
   customMetadata?: {
     [key: string]: string | number | boolean | Array<string | number | boolean>;
-  }
+  },
+  transformation?: transformation
 }
