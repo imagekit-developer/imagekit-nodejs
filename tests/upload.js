@@ -373,4 +373,29 @@ describe("File upload", function () {
                 done();
             })
     });
+
+    it('With pre and post transformation', function (done) {
+        const fileOptions = {
+            fileName: "test_file_name",
+            file: "test_file_content",
+            transformation: { pre: 'w-100', post: [{type: 'transformation', value: ''}]}
+        };
+
+        var callback = sinon.spy();
+        const transformation = JSON.stringify(fileOptions.transformation);
+
+        const scope = nock('https://upload.imagekit.io/api')
+            .post('/v1/files/upload')
+            .basicAuth({ user: initializationParams.privateKey, pass: '' })
+            .reply(200, function (uri, requestBody) {
+                expect(this.req.headers["content-type"]).include("multipart/form-data; boundary=---------------------");
+                var boundary = this.req.headers["content-type"].replace("multipart/form-data; boundary=","");
+                checkFormData({requestBody,boundary,fieldName:"fileName",fieldValue:fileOptions.fileName});
+                checkFormData({requestBody,boundary,fieldName:"file",fieldValue:fileOptions.file});
+                checkFormData({requestBody,boundary,fieldName:"transformation",fieldValue:transformation});
+                done()
+              })
+
+        imagekit.upload(fileOptions, callback);
+    });
 });
