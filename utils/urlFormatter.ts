@@ -7,7 +7,7 @@ const addLeadingSlash = function (str: string) {
 };
 
 const removeLeadingSlash = function (str: string) {
-  if (str[0] == "/") {
+  if (typeof str == "string" && str[0] == "/") {
     str = str.substring(1);
   }
 
