@@ -271,13 +271,13 @@ describe("URL generation", function () {
                 effectContrast: true,
                 effectGray: true,
                 original: true,
-                effectShadow: 'e-shadow-bl-15_st-40_x-10_y-N5',
+                effectShadow: 'bl-15_st-40_x-10_y-N5',
                 effectGradient: 'from-red_to-white',
                 raw: "h-200,w-300,l-image,i-logo.png,l-end",
             }]
         })
 
-        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400,ar-4-3,q-40,c-force,cm-extract,fo-left,f-jpeg,r-50,bg-A94D34,b-5-A94D34,rt-90,bl-10,n-some_name,pr-true,lo-true,t-5,md-true,cp-true,di-folder@@file.jpg,dpr-3,e-sharpen-10,e-usm-2-2-0.8-0.024,e-contrast-true,e-grayscale-true,orig-true,e-shadow-e-shadow-bl-15_st-40_x-10_y-N5,e-gradient-from-red_to-white,h-200,w-300,l-image,i-logo.png,l-end/test_path.jpg`);
+        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400,ar-4-3,q-40,c-force,cm-extract,fo-left,f-jpeg,r-50,bg-A94D34,b-5-A94D34,rt-90,bl-10,n-some_name,pr-true,lo-true,t-5,md-true,cp-true,di-folder@@file.jpg,dpr-3,e-sharpen-10,e-usm-2-2-0.8-0.024,e-contrast-true,e-grayscale-true,orig-true,e-shadow-bl-15_st-40_x-10_y-N5,e-gradient-from-red_to-white,h-200,w-300,l-image,i-logo.png,l-end/test_path.jpg`);
     });
 });
 
