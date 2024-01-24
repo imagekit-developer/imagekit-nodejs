@@ -83,7 +83,7 @@ describe("Promise", function () {
                 help: dummyAPIErrorResponseString
             });
             expect(ex.$ResponseMetadata.statusCode).to.be.equal(500);
-            expect(Object.fromEntries(ex.$ResponseMetadata.headers)).to.be.deep.equal({
+            expect(ex.$ResponseMetadata.headers).to.be.deep.equal({
                 ...responseHeaders
             });
             return Promise.resolve();
