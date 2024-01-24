@@ -38,7 +38,7 @@ describe("Promise", function () {
         var response = await imagekit.getPurgeCacheStatus(requestId);
         expect(response).to.be.deep.equal(dummyAPISuccessResponse);
         expect(response.$ResponseMetadata.statusCode).to.be.equal(200);
-        expect(Object.fromEntries(response.$ResponseMetadata.headers)).to.be.deep.equal({
+        expect(response.$ResponseMetadata.headers).to.be.deep.equal({
             ...responseHeaders,
             'content-type': 'application/json'
         });
@@ -58,7 +58,7 @@ describe("Promise", function () {
         } catch (ex) {
             expect(ex).to.be.deep.equal(dummyAPIErrorResponse);
             expect(ex.$ResponseMetadata.statusCode).to.be.equal(500);
-            expect(Object.fromEntries(ex.$ResponseMetadata.headers)).to.be.deep.equal({
+            expect(ex.$ResponseMetadata.headers).to.be.deep.equal({
                 ...responseHeaders,
                 'content-type': 'application/json'
             });
