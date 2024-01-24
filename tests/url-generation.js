@@ -234,7 +234,7 @@ describe("URL generation", function () {
         const url = imagekit.url({
             path: "/test_path1.jpg",
             transformation: [{
-                defaultImage: "/test_path.jpg",
+                defaultImage: "test_path.jpg",
             }]
         })
 
