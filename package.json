@@ -36,7 +36,7 @@
     "resize"
   ],
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.6.5",
     "form-data": "^4.0.0",
     "hamming-distance": "^1.0.0",
     "lodash": "^4.17.15",

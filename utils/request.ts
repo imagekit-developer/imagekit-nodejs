@@ -31,7 +31,7 @@ export default function request<T, E extends Error>(
     const { data, status, headers } = response;
     const responseMetadata = {
       statusCode: status,
-      headers
+      headers: Object.assign({}, headers)
     }
     var result = data ? data : {} as T;
     // define status code and headers as non-enumerable properties on data
@@ -48,7 +48,7 @@ export default function request<T, E extends Error>(
       // that falls out of the range of 2xx
       const responseMetadata = {
         statusCode: error.response.status,
-        headers: error.response.headers
+        headers:  Object.assign({}, error.response.headers)
       }
 
       var result = {} as Object;
