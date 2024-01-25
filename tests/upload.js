@@ -374,28 +374,171 @@ describe("File upload", function () {
             })
     });
 
-    it('With pre and post transformation', function (done) {
-        const fileOptions = {
-            fileName: "test_file_name",
-            file: "test_file_content",
-            transformation: { pre: 'w-100', post: [{type: 'transformation', value: ''}]}
-        };
+    it("With pre and post transformation", function (done) {
+      const fileOptions = {
+        fileName: "test_file_name",
+        file: "test_file_content",
+        transformation: { pre: "w-100", post: [{ type: "transformation", value: "h-100" }] },
+      };
 
-        var callback = sinon.spy();
-        const transformation = JSON.stringify(fileOptions.transformation);
+      var callback = sinon.spy();
+      const transformation = JSON.stringify(fileOptions.transformation);
 
-        const scope = nock('https://upload.imagekit.io/api')
-            .post('/v1/files/upload')
-            .basicAuth({ user: initializationParams.privateKey, pass: '' })
-            .reply(200, function (uri, requestBody) {
-                expect(this.req.headers["content-type"]).include("multipart/form-data; boundary=---------------------");
-                var boundary = this.req.headers["content-type"].replace("multipart/form-data; boundary=","");
-                checkFormData({requestBody,boundary,fieldName:"fileName",fieldValue:fileOptions.fileName});
-                checkFormData({requestBody,boundary,fieldName:"file",fieldValue:fileOptions.file});
-                checkFormData({requestBody,boundary,fieldName:"transformation",fieldValue:transformation});
-                done()
-              })
+      const scope = nock("https://upload.imagekit.io/api")
+        .post("/v1/files/upload")
+        .basicAuth({ user: initializationParams.privateKey, pass: "" })
+        .reply(200, function (uri, requestBody) {
+          expect(this.req.headers["content-type"]).include("multipart/form-data; boundary=---------------------");
+          var boundary = this.req.headers["content-type"].replace("multipart/form-data; boundary=", "");
+          checkFormData({ requestBody, boundary, fieldName: "fileName", fieldValue: fileOptions.fileName });
+          checkFormData({ requestBody, boundary, fieldName: "file", fieldValue: fileOptions.file });
+          checkFormData({ requestBody, boundary, fieldName: "transformation", fieldValue: transformation });
+          done();
+        });
 
-        imagekit.upload(fileOptions, callback);
+      imagekit.upload(fileOptions, callback);
+    });
+    it("With pre transformation", function (done) {
+      const fileOptions = {
+        fileName: "test_file_name",
+        file: "test_file_content",
+        transformation: { pre: "w-100" },
+      };
+
+      var callback = sinon.spy();
+      const transformation = JSON.stringify(fileOptions.transformation);
+
+      const scope = nock("https://upload.imagekit.io/api")
+        .post("/v1/files/upload")
+        .basicAuth({ user: initializationParams.privateKey, pass: "" })
+        .reply(200, function (uri, requestBody) {
+          expect(this.req.headers["content-type"]).include("multipart/form-data; boundary=---------------------");
+          var boundary = this.req.headers["content-type"].replace("multipart/form-data; boundary=", "");
+          checkFormData({ requestBody, boundary, fieldName: "fileName", fieldValue: fileOptions.fileName });
+          checkFormData({ requestBody, boundary, fieldName: "file", fieldValue: fileOptions.file });
+          checkFormData({ requestBody, boundary, fieldName: "transformation", fieldValue: transformation });
+          done();
+        });
+
+      imagekit.upload(fileOptions, callback);
+    });
+    it("With post transformation", function (done) {
+      const fileOptions = {
+        fileName: "test_file_name",
+        file: "test_file_content",
+        transformation: { post: [{ type: "transformation", value: "h-100" }] },
+      };
+
+      var callback = sinon.spy();
+      const transformation = JSON.stringify(fileOptions.transformation);
+
+      const scope = nock("https://upload.imagekit.io/api")
+        .post("/v1/files/upload")
+        .basicAuth({ user: initializationParams.privateKey, pass: "" })
+        .reply(200, function (uri, requestBody) {
+          expect(this.req.headers["content-type"]).include("multipart/form-data; boundary=---------------------");
+          var boundary = this.req.headers["content-type"].replace("multipart/form-data; boundary=", "");
+          checkFormData({ requestBody, boundary, fieldName: "fileName", fieldValue: fileOptions.fileName });
+          checkFormData({ requestBody, boundary, fieldName: "file", fieldValue: fileOptions.file });
+          checkFormData({ requestBody, boundary, fieldName: "transformation", fieldValue: transformation });
+          done();
+        });
+
+      imagekit.upload(fileOptions, callback);
+    });
+    it("Should return error for an invalid transformation", async function () {
+      const fileOptions = {
+        fileName: "test_file_name",
+        file: "test_file",
+        responseFields: "tags, customCoordinates, isPrivateFile, metadata",
+        useUniqueFileName: false,
+        transformation: {},
+      };
+      var callback = sinon.spy();
+
+      imagekit.upload(fileOptions, callback);
+
+      var errRes = {
+        help: "",
+        message: "Invalid transformation parameter.",
+      };
+      expect(callback.calledOnce).to.be.true;
+      sinon.assert.calledWith(callback, errRes, null);
+    });
+    it("Should return error for an invalid pre transformation", async function () {
+      const fileOptions = {
+        fileName: "test_file_name",
+        file: "test_file",
+        responseFields: "tags, customCoordinates, isPrivateFile, metadata",
+        useUniqueFileName: false,
+        transformation: { pre: "" },
+      };
+      var callback = sinon.spy();
+
+      imagekit.upload(fileOptions, callback);
+
+      var errRes = {
+        help: "",
+        message: "Invalid pre transformation parameter.",
+      };
+      expect(callback.calledOnce).to.be.true;
+      sinon.assert.calledWith(callback, errRes, null);
+    });
+    it("Should return error for an invalid post transformation of type abs", async function () {
+      const fileOptions = {
+        fileName: "test_file_name",
+        file: "test_file",
+        responseFields: "tags, customCoordinates, isPrivateFile, metadata",
+        useUniqueFileName: false,
+        transformation: { post: [{ type: "abs", value: "" }] },
+      };
+      var callback = sinon.spy();
+
+      imagekit.upload(fileOptions, callback);
+
+      var errRes = {
+        help: "",
+        message: "Invalid post transformation parameter.",
+      };
+      expect(callback.calledOnce).to.be.true;
+      sinon.assert.calledWith(callback, errRes, null);
+    });
+    it("Should return error for an invalid post transformation of type transformation", async function () {
+      const fileOptions = {
+        fileName: "test_file_name",
+        file: "test_file",
+        responseFields: "tags, customCoordinates, isPrivateFile, metadata",
+        useUniqueFileName: false,
+        transformation: { post: [{ type: "transformation", value: "" }] },
+      };
+      var callback = sinon.spy();
+
+      imagekit.upload(fileOptions, callback);
+
+      var errRes = {
+        help: "",
+        message: "Invalid post transformation parameter.",
+      };
+      expect(callback.calledOnce).to.be.true;
+      sinon.assert.calledWith(callback, errRes, null);
+    });
+    it("Should return error for an invalid post transformation if it's not an array", async function () {
+      const fileOptions = {
+        fileName: "test_file_name",
+        file: "test_file",
+        responseFields: "tags, customCoordinates, isPrivateFile, metadata",
+        useUniqueFileName: false,
+        transformation: { post: {} },
+      };
+      var callback = sinon.spy();
+
+      imagekit.upload(fileOptions, callback);
+
+      var errRes = {
+        help: "",
+        message: "Invalid post transformation parameter.",
+      };
+      expect(callback.calledOnce).to.be.true;
+      sinon.assert.calledWith(callback, errRes, null);
     });
 });

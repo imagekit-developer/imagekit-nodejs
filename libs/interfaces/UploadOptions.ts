@@ -1,10 +1,22 @@
 import { ReadStream } from "fs";
 
-interface postTransformation{
-  type: 'abs' | 'thumbnail' | 'transformation' | 'gif-to-video'
-  protocol?: 'hls' | 'dash'
-  value?: string
+interface TransformationObject {
+  type: "transformation";
+  value: string;
 }
+interface GifToVideoOrThumbnailObject {
+  type: "gif-to-video" | "thumbnail";
+  value?: string;
+}
+
+interface AbsObject {
+  type: "abs";
+  value: string;
+  protocol: "hls" | "dash";
+}
+
+type postTransformation = TransformationObject | GifToVideoOrThumbnailObject | AbsObject;
+
 interface transformation{
   pre?: string
   post?: postTransformation[]
