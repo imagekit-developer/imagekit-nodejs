@@ -20,7 +20,7 @@ ImageKit is complete media storage, optimization, and transformation solution th
 * In version 5.0.0, we've removed the old overlay syntax parameters such as `oi`, `ot`, `obg`, and [more](https://docs.imagekit.io/features/image-transformations/overlay). These parameters are deprecated and will start returning errors when used in URLs. Please migrate to the new Layers syntax that supports overlay nesting, provides better positional control, and allows more transformations at the layer level. You can start with [examples](https://docs.imagekit.io/features/image-transformations/overlay-using-layers#examples) to learn quickly.
 * You can migrate to the new Layers syntax using the `raw` transformation parameter.
 
-##### Table of contents1
+##### Table of contents
 * [Installation](#installation)
 * [Initialization](#initialization)
 * [URL generation](#url-generation)
