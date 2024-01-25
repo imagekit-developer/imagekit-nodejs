@@ -36,7 +36,7 @@ ImageKit is complete media storage, optimization, and transformation solution th
 * You can migrate to the new layers syntax using the `raw` transformation parameter.
 
 **2. Remove Node.js 10.x support**
-* This change removes support for Node.js version 10.x.
+* In version 5.0.0, we've removed support for Node.js version 10.x.
 
 ## Installation
 
