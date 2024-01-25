@@ -14,11 +14,7 @@ Node.js SDK for [ImageKit](https://imagekit.io/) implements the new APIs and int
 ImageKit is complete media storage, optimization, and transformation solution that comes with an [image and video CDN](https://imagekit.io/features/imagekit-infrastructure). It can be integrated with your existing infrastructure - storage like AWS S3, web servers, your CDN, and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
 
 ## Changelog
-### SDK Version 5.0.0
-#### Breaking changes
-**1. Overlay Syntax update**
-* In version 5.0.0, we've removed the old overlay syntax parameters such as `oi`, `ot`, `obg`, and [more](https://docs.imagekit.io/features/image-transformations/overlay). These parameters are deprecated and will start returning errors when used in URLs. Please migrate to the new Layers syntax that supports overlay nesting, provides better positional control, and allows more transformations at the layer level. You can start with [examples](https://docs.imagekit.io/features/image-transformations/overlay-using-layers#examples) to learn quickly.
-* You can migrate to the new Layers syntax using the `raw` transformation parameter.
+
 
 ##### Table of contents
 * [Installation](#installation)
