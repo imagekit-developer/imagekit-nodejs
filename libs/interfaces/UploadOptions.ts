@@ -15,11 +15,11 @@ interface AbsObject {
   protocol: "hls" | "dash";
 }
 
-type postTransformation = TransformationObject | GifToVideoOrThumbnailObject | AbsObject;
+type PostTransformation = TransformationObject | GifToVideoOrThumbnailObject | AbsObject;
 
-interface transformation{
+interface Transformation{
   pre?: string
-  post?: postTransformation[]
+  post?: PostTransformation[]
 }
 
 /**
@@ -106,5 +106,5 @@ export interface UploadOptions {
   customMetadata?: {
     [key: string]: string | number | boolean | Array<string | number | boolean>;
   },
-  transformation?: transformation
+  transformation?: Transformation
 }
