@@ -398,6 +398,7 @@ describe("File upload", function () {
 
       imagekit.upload(fileOptions, callback);
     });
+  
     it("With pre transformation", function (done) {
       const fileOptions = {
         fileName: "test_file_name",
@@ -422,6 +423,7 @@ describe("File upload", function () {
 
       imagekit.upload(fileOptions, callback);
     });
+
     it("With post transformation", function (done) {
       const fileOptions = {
         fileName: "test_file_name",
@@ -446,6 +448,7 @@ describe("File upload", function () {
 
       imagekit.upload(fileOptions, callback);
     });
+
     it("Should return error for an invalid transformation", async function () {
       const fileOptions = {
         fileName: "test_file_name",
@@ -465,6 +468,7 @@ describe("File upload", function () {
       expect(callback.calledOnce).to.be.true;
       sinon.assert.calledWith(callback, errRes, null);
     });
+
     it("Should return error for an invalid pre transformation", async function () {
       const fileOptions = {
         fileName: "test_file_name",
@@ -484,6 +488,7 @@ describe("File upload", function () {
       expect(callback.calledOnce).to.be.true;
       sinon.assert.calledWith(callback, errRes, null);
     });
+
     it("Should return error for an invalid post transformation of type abs", async function () {
       const fileOptions = {
         fileName: "test_file_name",
@@ -503,6 +508,7 @@ describe("File upload", function () {
       expect(callback.calledOnce).to.be.true;
       sinon.assert.calledWith(callback, errRes, null);
     });
+
     it("Should return error for an invalid post transformation of type transformation", async function () {
       const fileOptions = {
         fileName: "test_file_name",
@@ -522,6 +528,7 @@ describe("File upload", function () {
       expect(callback.calledOnce).to.be.true;
       sinon.assert.calledWith(callback, errRes, null);
     });
+
     it("Should return error for an invalid post transformation if it's not an array", async function () {
       const fileOptions = {
         fileName: "test_file_name",
