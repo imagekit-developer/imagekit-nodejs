@@ -47,7 +47,7 @@ export default {
     "VERIFY_WEBHOOK_EVENT_SIGNATURE_MISSING": { message: "Signature missing", help: "Please pass x-ik-signature header as utf8 string" },
     "VERIFY_WEBHOOK_EVENT_TIMESTAMP_MISSING": { message: "Timestamp missing", help: "Please pass x-ik-signature header as utf8 string" },
     "VERIFY_WEBHOOK_EVENT_TIMESTAMP_INVALID": { message: "Timestamp invalid", help: "Please pass x-ik-signature header as utf8 string" },
-    "INVALID_TRANSFORMATION": { message: "Invalid transformation parameter.", help: ""},
+    "INVALID_TRANSFORMATION": { message: "Invalid transformation parameter. Please include at least pre, post, or both.", help: ""},
     "INVALID_PRE_TRANSFORMATION": { message: "Invalid pre transformation parameter.", help: ""},
     "INVALID_POST_TRANSFORMATION": { message: "Invalid post transformation parameter.", help: ""},
 };

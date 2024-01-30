@@ -1,4 +1,4 @@
-import { AITagItem, CmValues, EmbeddedMetadataValues } from "./FileDetails";
+import { AITagItem, CMValues, EmbeddedMetadataValues } from "./FileDetails";
 import { FileMetadataResponse } from "./FileMetadata";
 import { FileType } from "./FileType";
 
@@ -75,5 +75,5 @@ export interface UploadResponse {
   /*
    * A key-value data associated with the asset. Before setting any custom metadata on an asset, you have to create the field using custom metadata fields API.
    */
-  customMetadata?: CmValues;
+  customMetadata?: CMValues;
 }

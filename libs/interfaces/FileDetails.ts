@@ -16,7 +16,7 @@ export interface AITagItem {
   source: 'google-auto-tagging' | 'aws-auto-tagging'
 }
 
-export interface CmValues {
+export interface CMValues {
   [key: string]: | string
   | number
   | boolean
@@ -71,7 +71,7 @@ export interface FileDetailsOptions {
   /*
    * A key-value data to be associated with the asset. To unset a key, send null value for that key. Before setting any custom metadata on an asset you have to create the field using custom metadata fields API.
    */
-  customMetadata?: CmValues;
+  customMetadata?: CMValues;
 }
 
 /**
@@ -138,7 +138,7 @@ export interface FileObject {
   /*
    * A key-value data associated with the asset. Before setting any custom metadata on an asset, you have to create the field using custom metadata fields API.
    */
-  customMetadata?: CmValues;
+  customMetadata?: CMValues;
   /*
    * Size of the file in bytes
    */

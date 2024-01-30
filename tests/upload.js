@@ -463,7 +463,7 @@ describe("File upload", function () {
 
       var errRes = {
         help: "",
-        message: "Invalid transformation parameter.",
+        message: "Invalid transformation parameter. Please include at least pre, post, or both.",
       };
       expect(callback.calledOnce).to.be.true;
       sinon.assert.calledWith(callback, errRes, null);
