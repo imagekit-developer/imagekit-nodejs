@@ -1,3 +1,5 @@
+import { AITagItem, CmValues, EmbeddedMetadataValues } from "./FileDetails";
+import { FileMetadataResponse } from "./FileMetadata";
 import { FileType } from "./FileType";
 
 /**
@@ -57,11 +59,11 @@ export interface UploadResponse {
   /**
    * The metadata of the upload file. Use responseFields property in request to get the metadata returned in response of upload API.
    */
-  metadata?: object;
+  metadata?: FileMetadataResponse;
   /*
   * AITags field is populated only because the google-auto-tagging extension was executed synchronously and it received a successresponse.
   */
-  AITags?: object[];
+  AITags?: AITagItem[];
   /*
    * Field object which will contain the status of each extension at the time of completion of the update/upload request.
    */
@@ -69,9 +71,9 @@ export interface UploadResponse {
   /*
    * Consolidated embedded metadata associated with the file. It includes exif, iptc, and xmp data.
    */
-  embeddedMetadata?: object | null;
+  embeddedMetadata?: EmbeddedMetadataValues | null;
   /*
    * A key-value data associated with the asset. Before setting any custom metadata on an asset, you have to create the field using custom metadata fields API.
    */
-  customMetadata?: object;
+  customMetadata?: CmValues;
 }

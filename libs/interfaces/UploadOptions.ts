@@ -1,4 +1,5 @@
 import { ReadStream } from "fs";
+import { Extension } from "./FileDetails";
 
 interface TransformationObject {
   type: "transformation";
@@ -94,7 +95,7 @@ export interface UploadOptions {
   /* 
    * Object with array of extensions to be processed on the image.
    */
-  extensions?: object[];
+  extensions?: Extension;
   /*
    * Final status of pending extensions will be sent to this URL. 
    */
