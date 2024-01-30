@@ -179,43 +179,30 @@ describe("URL generation", function () {
         expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400:rndm_trnsf-abcd/test_path.jpg`);
     });
 
-    it('overlayImage', function () {
+    it('Overlay image', function () {
         const url = imagekit.url({
             path: "/test_path.jpg",
             transformation: [{
                 "height": "300",
                 "width": "400",
-                overlayImage: "overlay.jpg"
+                "raw": "l-image,i-overlay.jpg,w-100,b-10_CDDC39,l-end"
             }]
         })
 
-        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400,oi-overlay.jpg/test_path.jpg`);
+        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400,l-image,i-overlay.jpg,w-100,b-10_CDDC39,l-end/test_path.jpg`);
     });
 
-    it('overlayImage with slash in path', function () {
+    it('Overlay image with slash in path', function () {
         const url = imagekit.url({
             path: "/test_path.jpg",
             transformation: [{
                 "height": "300",
                 "width": "400",
-                overlayImage: "/path/to/overlay.jpg"
+                "raw": "l-image,i-/path/to/overlay.jpg,w-100,b-10_CDDC39,l-end"
             }]
         })
 
-        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400,oi-path@@to@@overlay.jpg/test_path.jpg`);
-    });
-
-    it('overlayX', function () {
-        const url = imagekit.url({
-            path: "/test_path.jpg",
-            transformation: [{
-                "height": "300",
-                "width": "400",
-                overlayX: 10
-            }]
-        })
-
-        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400,ox-10/test_path.jpg`);
+        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400,l-image,i-/path/to/overlay.jpg,w-100,b-10_CDDC39,l-end/test_path.jpg`);
     });
 
     it('Border', function () {
@@ -242,6 +229,31 @@ describe("URL generation", function () {
         expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:e-sharpen/test_path.jpg`);
     });
 
+
+    it('transformation with defaultImage', function () {
+        const url = imagekit.url({
+            path: "/test_path1.jpg",
+            transformation: [{
+                defaultImage: "test_path.jpg",
+            }]
+        })
+
+        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:di-test_path.jpg/test_path1.jpg`);
+    });
+
+    it('skip transformation if it is undefined or null', function () {
+        const url = imagekit.url({
+            path: "/test_path1.jpg",
+            transformation: [{
+                defaultImage: "/test_path.jpg",
+                quality: undefined,
+                effectContrast: null
+            }]
+        })
+
+        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:di-test_path.jpg/test_path1.jpg`);
+    }); 
+    
     it('All combined', function () {
         const url = imagekit.url({
             path: "/test_path.jpg",
@@ -260,50 +272,25 @@ describe("URL generation", function () {
                 rotation: 90,
                 blur: 10,
                 named: "some_name",
-                overlayX: 35,
-                overlayY: 35,
-                overlayFocus: "bottom",
-                overlayHeight: 20,
-                overlayWidth: 20,
-                overlayImage: "/folder/file.jpg", // leading slash case
-                overlayImageTrim: false,
-                overlayImageAspectRatio: "4:3",
-                overlayImageBackground: "0F0F0F",
-                overlayImageBorder: "10_0F0F0F",
-                overlayImageDPR: 2,
-                overlayImageQuality: 50,
-                overlayImageCropping: "force",
-                overlayText: "two words",
-                overlayTextFontSize: 20,
-                overlayTextFontFamily: "Open Sans",
-                overlayTextColor: "00FFFF",
-                overlayTextTransparency: 5,
-                overlayTextTypography: "b",
-                overlayBackground: "00AAFF55",
-                overlayTextEncoded: "b3ZlcmxheSBtYWRlIGVhc3k%3D",
-                overlayTextWidth: 50,
-                overlayTextBackground: "00AAFF55",
-                overlayTextPadding: 40,
-                overlayTextInnerAlignment: "left",
-                overlayRadius: 10,
                 progressive: true,
                 lossless: true,
                 trim: 5,
                 metadata: true,
                 colorProfile: true,
-                defaultImage: "folder/file.jpg/", //trailing slash case
+                defaultImage: "/folder/file.jpg/", //trailing and leading slash case
                 dpr: 3,
                 effectSharpen: 10,
                 effectUSM: "2-2-0.8-0.024",
                 effectContrast: true,
                 effectGray: true,
                 original: true,
+                effectShadow: 'bl-15_st-40_x-10_y-N5',
+                effectGradient: 'from-red_to-white',
                 raw: "h-200,w-300,l-image,i-logo.png,l-end",
-                overlayImageFocus: "face"
             }]
         })
 
-        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400,ar-4-3,q-40,c-force,cm-extract,fo-left,f-jpeg,r-50,bg-A94D34,b-5-A94D34,rt-90,bl-10,n-some_name,ox-35,oy-35,ofo-bottom,oh-20,ow-20,oi-folder@@file.jpg,oit-false,oiar-4:3,oibg-0F0F0F,oib-10_0F0F0F,oidpr-2,oiq-50,oic-force,ot-two words,ots-20,otf-Open Sans,otc-00FFFF,oa-5,ott-b,obg-00AAFF55,ote-b3ZlcmxheSBtYWRlIGVhc3k%3D,otw-50,otbg-00AAFF55,otp-40,otia-left,or-10,pr-true,lo-true,t-5,md-true,cp-true,di-folder@@file.jpg,dpr-3,e-sharpen-10,e-usm-2-2-0.8-0.024,e-contrast-true,e-grayscale-true,orig-true,h-200,w-300,l-image,i-logo.png,l-end,oifo-face/test_path.jpg`);
+        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400,ar-4-3,q-40,c-force,cm-extract,fo-left,f-jpeg,r-50,bg-A94D34,b-5-A94D34,rt-90,bl-10,n-some_name,pr-true,lo-true,t-5,md-true,cp-true,di-folder@@file.jpg,dpr-3,e-sharpen-10,e-usm-2-2-0.8-0.024,e-contrast-true,e-grayscale-true,orig-true,e-shadow-bl-15_st-40_x-10_y-N5,e-gradient-from-red_to-white,h-200,w-300,l-image,i-logo.png,l-end/test_path.jpg`);
     });
 });
 

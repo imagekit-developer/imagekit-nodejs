@@ -1,3 +1,5 @@
+import { UploadResponse } from "./UploadResponse";
+
 type Asset = {
   url: string;
 };
@@ -74,8 +76,78 @@ export interface WebhookEventVideoTransformationError extends WebhookEventVideoT
   };
 }
 
+type TransformationType = "transformation" | "abs" | "gif-to-video" | "thumbnail";
+
+interface PreTransformationBase {
+  id: string;
+  created_at: string;
+  request: {
+    x_request_id: string;
+    transformation: string;
+  };
+}
+
+interface PostTransformationBase {
+  id: string;
+  created_at: string;
+  request: {
+    x_request_id: string;
+    transformation: {
+      type: TransformationType;
+      value?: string;
+      protocol?: 'hls' | 'dash';
+    };
+  };
+}
+
+export interface WebhookEventUploadPreTransformationSuccess extends PreTransformationBase {
+  type: "upload.pre-transform.success";
+  data: UploadResponse;
+}
+
+export interface WebhookEventUploadPreTransformationError extends PostTransformationBase {
+  type: "upload.pre-transform.error";
+  data: {
+    name: string;
+    path: string;
+    transformation: {
+      error: {
+        reason: string;
+      };
+    };
+  };
+}
+
+export interface WebhookEventUploadPostTransformationSuccess extends PostTransformationBase {
+  type: "upload.post-transform.success";
+  data: {
+    fileId: string;
+    url: string;
+    name: string;
+  };
+}
+
+export interface WebhookEventUploadPostTransformationError extends PostTransformationBase {
+  type: "upload.post-transform.error";
+  data: {
+    fileId: string;
+    url: string;
+    name: string;
+    path: string;
+    transformation: {
+      error: {
+        reason: string;
+      };
+    };
+  };
+}
+
 export type WebhookEvent =
   | WebhookEventVideoTransformationAccepted
   | WebhookEventVideoTransformationReady
   | WebhookEventVideoTransformationError
+  | WebhookEventUploadPreTransformationSuccess
+  | WebhookEventUploadPreTransformationError
+  | WebhookEventUploadPostTransformationSuccess
+  | WebhookEventUploadPostTransformationError
   | Object;

@@ -1,6 +1,46 @@
 import { FileType } from "./FileType";
 import { Item } from "./Item";
 
+export interface EmbeddedMetadataValues {
+  [key: string]:
+    | string
+    | number
+    | boolean
+    | Date
+    | Array<string | number | boolean | Date>
+}
+
+export interface AITagItem {
+  name: string
+  confidence: number
+  source: 'google-auto-tagging' | 'aws-auto-tagging'
+}
+
+export interface CMValues {
+  [key: string]: | string
+  | number
+  | boolean
+  | Array<string | number | boolean>
+}
+
+interface BgRemoval {
+  name: string
+  options: {
+    bg_color?: string
+    bg_image_url?: string
+    add_shadow: boolean
+    semitransparency: boolean
+  }
+}
+
+interface AutoTag {
+  name: string
+  maxTags: number
+  minConfidence: number
+}
+
+export type Extension = (BgRemoval | AutoTag)[];
+
 /**
  * Options when updating file details such as tags and customCoordinates attribute using update file detail API.
  *
@@ -19,7 +59,7 @@ export interface FileDetailsOptions {
   /* 
   * Object with array of extensions to be processed on the image.
   */
-  extensions?: object[];
+  extensions?: Extension;
   /*
     * Final status of pending extensions will be sent to this URL. 
     */
@@ -31,7 +71,7 @@ export interface FileDetailsOptions {
   /*
    * A key-value data to be associated with the asset. To unset a key, send null value for that key. Before setting any custom metadata on an asset you have to create the field using custom metadata fields API.
    */
-  customMetadata?: object;
+  customMetadata?: CMValues;
 }
 
 /**
@@ -86,7 +126,7 @@ export interface FileObject {
   /*
    * AITags field is populated only because the google-auto-tagging extension was executed synchronously and it received a successresponse.
    */
-  AITags?: object[];
+  AITags?: AITagItem[];
   /*
    * Field object which will contain the status of each extension at the time of completion of the update/upload request.
    */
@@ -94,11 +134,11 @@ export interface FileObject {
   /*
    * Consolidated embedded metadata associated with the file. It includes exif, iptc, and xmp data.
    */
-  embeddedMetadata?: object | null;
+  embeddedMetadata?: EmbeddedMetadataValues | null;
   /*
    * A key-value data associated with the asset. Before setting any custom metadata on an asset, you have to create the field using custom metadata fields API.
    */
-  customMetadata?: object;
+  customMetadata?: CMValues;
   /*
    * Size of the file in bytes
    */
@@ -130,7 +170,7 @@ export interface FileObject {
   /**
    * An object containing the file or file version's id (versionId) and name.
    */
-  versionInfo?: object;
+  versionInfo?: { name: string; id: string };
 }
 
 

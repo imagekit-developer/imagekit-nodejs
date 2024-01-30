@@ -14,6 +14,7 @@ Node.js SDK for [ImageKit](https://imagekit.io/) implements the new APIs and int
 ImageKit is complete media storage, optimization, and transformation solution that comes with an [image and video CDN](https://imagekit.io/features/imagekit-infrastructure). It can be integrated with your existing infrastructure - storage like AWS S3, web servers, your CDN, and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
 
 ##### Table of contents
+* [Changelog](#changelog)
 * [Installation](#installation)
 * [Initialization](#initialization)
 * [URL generation](#url-generation)
@@ -23,6 +24,19 @@ ImageKit is complete media storage, optimization, and transformation solution th
 * [Rate limits](#rate-limits)
 * [Support](#support)
 * [Links](#links)
+
+## Changelog
+
+### SDK Version 5.0.0
+
+#### Breaking changes
+
+**1. Overlay syntax update**
+* In version 5.0.0, we've removed the old overlay syntax parameters for transformations, such as `oi`, `ot`, `obg`, and [more](https://docs.imagekit.io/features/image-transformations/overlay). These parameters are deprecated and will start returning errors when used in URLs. Please migrate to the new layers syntax that supports overlay nesting, provides better positional control, and allows more transformations at the layer level. You can start with [examples](https://docs.imagekit.io/features/image-transformations/overlay-using-layers#examples) to learn quickly.
+* You can migrate to the new layers syntax using the `raw` transformation parameter.
+
+**2. Remove Node.js 10.x support**
+* In version 5.0.0, we've removed support for Node.js version 10.x.
 
 ## Installation
 
@@ -242,6 +256,29 @@ var imageURL = imagekit.url({
 https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400,l-image,i-ik_canvas,bg-FF0000,w-300,h-100,l-end/img/sample-video.mp4
 ```
 
+**5. Arithmetic expressions in transformations**
+
+ImageKit allows use of [arithmetic expressions](https://docs.imagekit.io/features/arithmetic-expressions-in-transformations) in certain dimension and position-related parameters, making media transformations more flexible and dynamic.
+
+For example:
+
+```js
+var imageURL = imagekit.url({
+    src: "https://ik.imagekit.io/your_imagekit_id/default-image.jpg",
+    transformation: [{
+        "width": "iw_div_4",
+        "height": "ih_div_2",
+        "border": "cw_mul_0.05_yellow"
+    }]
+});
+```
+
+**Sample Result URL**
+```
+https://ik.imagekit.io/your_imagekit_id/tr:w-iw_div_4,h-ih_div_2,b-cw_mul_0.05_yellow/default-image.jpg
+```
+
+
 #### List of supported transformations
 
 See the complete list of transformations supported in ImageKit [here](https://docs.imagekit.io/features/image-transformations). The SDK gives a name to each transformation parameter e.g. `height` for `h` and `width` for `w` parameter. It makes your code more readable. If the property does not match any of the following supported options, it is added as it is.
@@ -278,6 +315,8 @@ If you want to generate transformations in your application and add them to the 
 | effectUSM | e-usm |
 | effectContrast | e-contrast |
 | effectGray | e-grayscale |
+| effectShadow | e-shadow |
+| effectGradient | e-gradient |
 | original | orig |
 | raw | `replaced by the parameter value` |
 

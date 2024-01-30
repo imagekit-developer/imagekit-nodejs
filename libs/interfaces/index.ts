@@ -22,6 +22,10 @@ import {
   WebhookEventVideoTransformationAccepted,
   WebhookEventVideoTransformationReady,
   WebhookEventVideoTransformationError,
+  WebhookEventUploadPreTransformationSuccess,
+  WebhookEventUploadPreTransformationError,
+  WebhookEventUploadPostTransformationSuccess,
+  WebhookEventUploadPostTransformationError
 } from "./webhookEvent";
 
 type FinalUrlOptions = ImageKitOptions & UrlOptions; // actual options used to construct url
@@ -66,5 +70,9 @@ export type {
   WebhookEventVideoTransformationAccepted,
   WebhookEventVideoTransformationReady,
   WebhookEventVideoTransformationError,
+  WebhookEventUploadPostTransformationSuccess,
+  WebhookEventUploadPostTransformationError,
+  WebhookEventUploadPreTransformationSuccess,
+  WebhookEventUploadPreTransformationError
 };
 export type { IKCallback } from "./IKCallback";

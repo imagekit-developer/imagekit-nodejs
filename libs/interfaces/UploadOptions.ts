@@ -1,4 +1,27 @@
 import { ReadStream } from "fs";
+import { Extension } from "./FileDetails";
+
+interface TransformationObject {
+  type: "transformation";
+  value: string;
+}
+interface GifToVideoOrThumbnailObject {
+  type: "gif-to-video" | "thumbnail";
+  value?: string;
+}
+
+interface AbsObject {
+  type: "abs";
+  value: string;
+  protocol: "hls" | "dash";
+}
+
+type PostTransformation = TransformationObject | GifToVideoOrThumbnailObject | AbsObject;
+
+interface Transformation{
+  pre?: string
+  post?: PostTransformation[]
+}
 
 /**
  * Options used when uploading a file
@@ -72,7 +95,7 @@ export interface UploadOptions {
   /* 
    * Object with array of extensions to be processed on the image.
    */
-  extensions?: object[];
+  extensions?: Extension;
   /*
    * Final status of pending extensions will be sent to this URL. 
    */
@@ -83,5 +106,6 @@ export interface UploadOptions {
   overwriteCustomMetadata?: boolean;
   customMetadata?: {
     [key: string]: string | number | boolean | Array<string | number | boolean>;
-  }
+  },
+  transformation?: Transformation
 }

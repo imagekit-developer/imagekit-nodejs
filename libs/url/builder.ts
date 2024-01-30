@@ -124,6 +124,8 @@ function constructTransformationString(inputTransformation: Array<Transformation
   for (var i = 0, l = transformation.length; i < l; i++) {
     var parsedTransformStep = [];
     for (var key in transformation[i]) {
+      if(transformation[i][key] === undefined || transformation[i][key] === null )
+      continue;
       let transformKey = transformationUtils.getTransformKey(key);
       if (!transformKey) {
         transformKey = key;
@@ -135,7 +137,7 @@ function constructTransformationString(inputTransformation: Array<Transformation
         parsedTransformStep.push(transformation[i][key]);
       } else {
         var value = String(transformation[i][key]);
-        if (transformKey === "oi" || transformKey === "di") {
+        if (transformKey === "di") {
           value = urlFormatter.removeTrailingSlash(urlFormatter.removeLeadingSlash(value));
           if (value) value = value.replace(/\//g, "@@");
         }

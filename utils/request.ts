@@ -2,7 +2,7 @@ import respond from "../utils/respond";
 import { RequestOptions } from "../utils/authorization";
 import { ImageKitOptions } from "../libs/interfaces/";
 import { IKCallback } from "../libs/interfaces/IKCallback";
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosHeaders, AxiosRequestConfig, AxiosResponse } from "axios";
 
 export default function request<T, E extends Error>(
   requestOptions: RequestOptions,
@@ -31,7 +31,7 @@ export default function request<T, E extends Error>(
     const { data, status, headers } = response;
     const responseMetadata = {
       statusCode: status,
-      headers
+      headers: (headers as AxiosHeaders).toJSON()
     }
     var result = data ? data : {} as T;
     // define status code and headers as non-enumerable properties on data
@@ -48,7 +48,7 @@ export default function request<T, E extends Error>(
       // that falls out of the range of 2xx
       const responseMetadata = {
         statusCode: error.response.status,
-        headers: error.response.headers
+        headers: (error.response.headers as AxiosHeaders).toJSON()
       }
 
       var result = {} as Object;
