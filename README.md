@@ -341,7 +341,16 @@ imagekit.upload({
             maxTags: 5,
             minConfidence: 95
         }
-    ]
+    ],
+    transformation: {
+        pre: 'l-text,i-Imagekit,fs-50,l-end',
+        post: [
+            {
+                type: 'transformation',
+                value: 'w-100'
+            }
+        ]
+    }
 }, function(error, result) {
     if(error) console.log(error);
     else console.log(result);
@@ -358,7 +367,16 @@ imagekit.upload({
             maxTags: 5,
             minConfidence: 95
         }
-    ]
+    ],
+    transformation: {
+        pre: 'l-text,i-Imagekit,fs-50,l-end',
+        post: [
+            {
+                type: 'transformation',
+                value: 'w-100'
+            }
+        ]
+    }
 }).then(response => {
     console.log(response);
 }).catch(error => {
