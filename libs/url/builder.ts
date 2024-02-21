@@ -24,6 +24,15 @@ const SIGNATURE_PARAMETER: string = "ik-s";
 const TIMESTAMP_PARAMETER: string = "ik-t";
 const DEFAULT_TIMESTAMP: string = "9999999999";
 
+//used to check if special char is present in string (you'll need to encode it to utf-8 if it does)
+const hasMoreThanAscii = (str = '') => {
+	return str.split('').some((char) => char.charCodeAt(0) > 127);
+}
+
+const encodeStringIfRequired = (str = '') => {
+	return hasMoreThanAscii(str) ? encodeURI(str) : str;
+}
+
 const buildURL = function (opts: FinalUrlOptions): string {
   //Create correct query parameters
   var parsedURL: UrlWithStringQuery;
@@ -98,7 +107,7 @@ const buildURL = function (opts: FinalUrlOptions): string {
 
     var urlSignature = getSignature({
       privateKey: opts.privateKey,
-      url: intermediateURL,
+      url: encodeStringIfRequired(intermediateURL),
       urlEndpoint: opts.urlEndpoint,
       expiryTimestamp: expiryTimestamp,
     });
