@@ -59,6 +59,17 @@ describe("URL generation", function () {
         expect(url).includes(`ik-s=`);
     });
 
+    it('Signed URL with expireSeconds and é in url', function () {
+        const url = imagekit.url({
+            path: "/test_é_path_alt.jpg",
+            signed: true,
+            expireSeconds: 100
+        });
+
+        expect(url).includes(`https://ik.imagekit.io/test_url_endpoint/test_é_path_alt.jpg`);
+        expect(url).includes(`ik-s=`);
+    });
+
     it('should generate the correct url with path param', function () {
         const url = imagekit.url({
             path: "/test_path.jpg",
