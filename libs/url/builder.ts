@@ -25,11 +25,11 @@ const TIMESTAMP_PARAMETER: string = "ik-t";
 const DEFAULT_TIMESTAMP: string = "9999999999";
 
 //used to check if special char is present in string (you'll need to encode it to utf-8 if it does)
-const hasMoreThanAscii = (str = '') => {
+const hasMoreThanAscii = (str: string) => {
 	return str.split('').some((char) => char.charCodeAt(0) > 127);
 }
 
-const encodeStringIfRequired = (str = '') => {
+const encodeStringIfRequired = (str: string) => {
 	return hasMoreThanAscii(str) ? encodeURI(str) : str;
 }
 
