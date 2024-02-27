@@ -68,6 +68,7 @@ describe("URL generation", function () {
 
         expect(url).includes(`https://ik.imagekit.io/test_url_endpoint/test_é_path_alt.jpg`);
         expect(url).includes(`ik-s=`);
+        expect(url).includes(`ik-t=`);
     });
 
     it('should generate the correct url with path param', function () {
