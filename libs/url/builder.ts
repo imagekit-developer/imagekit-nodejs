@@ -30,17 +30,11 @@ const hasMoreThanAscii = (str: string) => {
 }
 
 const customEncodeURIComponent = (str: string) => {
-  const parts = str.includes("?") ? str.split("?")[0] : str;
-  const segments = parts.split("/");
-  const encodedSegments = segments.map((segment) => {
-    if(segment.includes('https:') || segment.includes('http:') || segment.includes('tr:'))
-    return segment;
-    return encodeURIComponent(segment);
-  });
-  return str.includes("?") ? `${encodedSegments.join("/")}?${str.split("?")[1]}` : encodedSegments.join("/");
+  const url = new URL(str);
+  return url.toString();
 };
 
-const encodeStringIfRequired = (str: string) => {
+export const encodeStringIfRequired = (str: string) => {
 	return hasMoreThanAscii(str) ? customEncodeURIComponent(str) : str;
 }
 
@@ -180,7 +174,7 @@ function getSignatureTimestamp(seconds: number): string {
   return String(currentTimestamp + sec);
 }
 
-function getSignature(opts: any) {
+export function getSignature(opts: any) {
   if (!opts.privateKey || !opts.url || !opts.urlEndpoint) return "";
   var stringToSign = opts.url.replace(urlFormatter.addTrailingSlash(opts.urlEndpoint), "") + opts.expiryTimestamp;
   return crypto.createHmac("sha1", opts.privateKey).update(stringToSign).digest("hex");
