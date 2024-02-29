@@ -29,8 +29,22 @@ const hasMoreThanAscii = (str: string) => {
 	return str.split('').some((char) => char.charCodeAt(0) > 127);
 }
 
+const customEncodeURIComponent = (str: string) => {
+  const parts = str.includes("?") ? str.split("?")[0] : str;
+  const segments = parts.split("/");
+  const encodedSegments = segments.map((segment) => {
+    if (segment === "/") return "/";
+    if(segment.includes('https:') || segment.includes('http:') || segment.includes('tr:'))
+    return segment;
+    return encodeURIComponent(segment);
+  });
+  return str.includes("?") ? `${encodedSegments.join("/")}?${str.split("?")[1]}` : encodedSegments.join("/");
+  // return str.includes("?") ? `${encodeURI(parts)}?${str.split("?")[1]}` : encodeURI(parts);
+};
+
 const encodeStringIfRequired = (str: string) => {
-	return hasMoreThanAscii(str) ? encodeURI(str) : str;
+  console.log({str})
+	return hasMoreThanAscii(str) ? customEncodeURIComponent(str) : str;
 }
 
 const buildURL = function (opts: FinalUrlOptions): string {
@@ -170,6 +184,7 @@ function getSignatureTimestamp(seconds: number): string {
 }
 
 function getSignature(opts: any) {
+  console.log({opts})
   if (!opts.privateKey || !opts.url || !opts.urlEndpoint) return "";
   var stringToSign = opts.url.replace(urlFormatter.addTrailingSlash(opts.urlEndpoint), "") + opts.expiryTimestamp;
   return crypto.createHmac("sha1", opts.privateKey).update(stringToSign).digest("hex");
