@@ -110,7 +110,6 @@ describe("URL generation", function () {
         transformation: [{ raw: "l-text,i-Imagekité,fs-50,l-end" }],
         transformationPosition: "path",
       });
-      console.log({ url, signature });
       expect(url).equal(
         `https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Imagekité,fs-50,l-end/aéb/test_é_path_alt.jpg?ik-s=d7f5aec0b7a766556dfc280bdf2e3466877d025f`
       );
