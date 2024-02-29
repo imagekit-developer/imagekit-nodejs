@@ -75,14 +75,26 @@ describe("URL generation", function () {
         expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg?ik-s=fca91582138ac65694425d52f0710b7ae2c3d7cf`);
     });
 
-    it('Signed URL with é in filename, path and query', function () {
+    it('Signed URL with é in filename, path and transformation as path', function () {
         const url = imagekit.url({
             path: "/aéb/test_é_path_alt.jpg",
             signed: true,
-            transformation: [ { raw: "l-text,i-Imagekité,fs-50,l-end"}]
+            transformation: [ { raw: "l-text,i-Imagekité,fs-50,l-end"}],
+            transformationPosition: "path"
         });
         console.log({url})
         expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Imagekité,fs-50,l-end/aéb/test_é_path_alt.jpg?ik-s=38539311889a0721b46ebe30b5f297773d01d960`);
+    });
+
+    it('Signed URL with é in filename, path and transformation as query', function () {
+        const url = imagekit.url({
+            path: "/aéb/test_é_path_alt.jpg",
+            signed: true,
+            transformation: [ { raw: "l-text,i-Imagekité,fs-50,l-end"}],
+            transformationPosition: "query"
+        });
+        console.log({url})
+        expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg?tr=l-text%2Ci-Imagekit%C3%A9%2Cfs-50%2Cl-end&ik-s=0b0107144b34e3b33264c0cec1d29ec98d46cbbb`);
     });
 
 
