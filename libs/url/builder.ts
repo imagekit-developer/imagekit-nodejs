@@ -39,11 +39,9 @@ const customEncodeURIComponent = (str: string) => {
     return encodeURIComponent(segment);
   });
   return str.includes("?") ? `${encodedSegments.join("/")}?${str.split("?")[1]}` : encodedSegments.join("/");
-  // return str.includes("?") ? `${encodeURI(parts)}?${str.split("?")[1]}` : encodeURI(parts);
 };
 
 const encodeStringIfRequired = (str: string) => {
-  console.log({str})
 	return hasMoreThanAscii(str) ? customEncodeURIComponent(str) : str;
 }
 
@@ -184,7 +182,6 @@ function getSignatureTimestamp(seconds: number): string {
 }
 
 function getSignature(opts: any) {
-  console.log({opts})
   if (!opts.privateKey || !opts.url || !opts.urlEndpoint) return "";
   var stringToSign = opts.url.replace(urlFormatter.addTrailingSlash(opts.urlEndpoint), "") + opts.expiryTimestamp;
   return crypto.createHmac("sha1", opts.privateKey).update(stringToSign).digest("hex");
