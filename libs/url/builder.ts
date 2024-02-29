@@ -33,7 +33,6 @@ const customEncodeURIComponent = (str: string) => {
   const parts = str.includes("?") ? str.split("?")[0] : str;
   const segments = parts.split("/");
   const encodedSegments = segments.map((segment) => {
-    if (segment === "/") return "/";
     if(segment.includes('https:') || segment.includes('http:') || segment.includes('tr:'))
     return segment;
     return encodeURIComponent(segment);
