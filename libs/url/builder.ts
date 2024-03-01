@@ -29,13 +29,8 @@ const hasMoreThanAscii = (str: string) => {
 	return str.split('').some((char) => char.charCodeAt(0) > 127);
 }
 
-const customEncodeURIComponent = (str: string) => {
-  const url = new URL(str);
-  return url.toString();
-};
-
 export const encodeStringIfRequired = (str: string) => {
-	return hasMoreThanAscii(str) ? customEncodeURIComponent(str) : str;
+	return hasMoreThanAscii(str) ? new URL(str).toString() : str;
 }
 
 const buildURL = function (opts: FinalUrlOptions): string {
