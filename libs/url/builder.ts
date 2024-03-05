@@ -29,8 +29,12 @@ const hasMoreThanAscii = (str: string) => {
 	return str.split('').some((char) => char.charCodeAt(0) > 127);
 }
 
+const customEncodeURI = (str: string) => {
+  return str.includes("?") ? `${encodeURI(str.split("?")[0])}?${str.split("?")[1]}` : encodeURI(str);
+};
+
 export const encodeStringIfRequired = (str: string) => {
-	return hasMoreThanAscii(str) ? new URL(str).toString() : str;
+	return hasMoreThanAscii(str) ? customEncodeURI(str) : str;
 }
 
 const buildURL = function (opts: FinalUrlOptions): string {
@@ -107,7 +111,7 @@ const buildURL = function (opts: FinalUrlOptions): string {
 
     var urlSignature = getSignature({
       privateKey: opts.privateKey,
-      url: encodeStringIfRequired(intermediateURL),
+      url: intermediateURL,
       urlEndpoint: opts.urlEndpoint,
       expiryTimestamp: expiryTimestamp,
     });
@@ -172,6 +176,7 @@ function getSignatureTimestamp(seconds: number): string {
 export function getSignature(opts: any) {
   if (!opts.privateKey || !opts.url || !opts.urlEndpoint) return "";
   var stringToSign = opts.url.replace(urlFormatter.addTrailingSlash(opts.urlEndpoint), "") + opts.expiryTimestamp;
+  stringToSign = encodeStringIfRequired(stringToSign);
   return crypto.createHmac("sha1", opts.privateKey).update(stringToSign).digest("hex");
 }
 

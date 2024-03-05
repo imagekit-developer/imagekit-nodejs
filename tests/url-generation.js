@@ -61,11 +61,12 @@ describe("URL generation", function () {
     });
 
     it("Signed URL with é in filename", function () {
-      const encodedUrl = encodeStringIfRequired("https://ik.imagekit.io/test_url_endpoint/test_é_path_alt.jpg");
+      const testURL = "https://ik.imagekit.io/test_url_endpoint/test_é_path_alt.jpg";
+      const encodedUrl = encodeStringIfRequired(testURL);
       expect(encodedUrl).equal("https://ik.imagekit.io/test_url_endpoint/test_%C3%A9_path_alt.jpg");
       const signature = getSignature({
         privateKey: "test_private_key",
-        url: encodedUrl,
+        url: testURL,
         urlEndpoint: "https://ik.imagekit.io/test_url_endpoint",
         expiryTimestamp: "9999999999",
       });
@@ -73,16 +74,16 @@ describe("URL generation", function () {
         path: "/test_é_path_alt.jpg",
         signed: true,
       });
-      expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/test_é_path_alt.jpg?ik-s=09a329f06a5106a8b9c43de8fb6a64948fff7c59`);
-      expect(url).includes(`ik-s=${signature}`);
+      expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/test_é_path_alt.jpg?ik-s=${signature}`);
     });
 
     it("Signed URL with é in filename and path", function () {
-      const encodedUrl = encodeStringIfRequired("https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg");
+      const testURL = "https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg";
+      const encodedUrl = encodeStringIfRequired(testURL);
       expect(encodedUrl).equal("https://ik.imagekit.io/test_url_endpoint/a%C3%A9b/test_%C3%A9_path_alt.jpg");
       const signature = getSignature({
         privateKey: "test_private_key",
-        url: encodedUrl,
+        url: testURL,
         urlEndpoint: "https://ik.imagekit.io/test_url_endpoint",
         expiryTimestamp: "9999999999",
       });
@@ -90,16 +91,16 @@ describe("URL generation", function () {
         path: "/aéb/test_é_path_alt.jpg",
         signed: true,
       });
-      expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg?ik-s=fca91582138ac65694425d52f0710b7ae2c3d7cf`);
-      expect(url).includes(`ik-s=${signature}`);
+      expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg?ik-s=${signature}`);
     });
 
     it("Signed URL with é in filename, path and transformation as path", function () {
-      const encodedUrl = encodeStringIfRequired("https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Imagekité,fs-50,l-end/aéb/test_é_path_alt.jpg");
+      const testURL = "https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Imagekité,fs-50,l-end/aéb/test_é_path_alt.jpg";
+      const encodedUrl = encodeStringIfRequired(testURL);
       expect(encodedUrl).equal("https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Imagekit%C3%A9,fs-50,l-end/a%C3%A9b/test_%C3%A9_path_alt.jpg");
       const signature = getSignature({
         privateKey: "test_private_key",
-        url: encodedUrl,
+        url: testURL,
         urlEndpoint: "https://ik.imagekit.io/test_url_endpoint",
         expiryTimestamp: "9999999999",
       });
@@ -111,17 +112,17 @@ describe("URL generation", function () {
         transformationPosition: "path",
       });
       expect(url).equal(
-        `https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Imagekité,fs-50,l-end/aéb/test_é_path_alt.jpg?ik-s=d7f5aec0b7a766556dfc280bdf2e3466877d025f`
+        `https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Imagekité,fs-50,l-end/aéb/test_é_path_alt.jpg?ik-s=${signature}`
       );
-      expect(url).includes(`ik-s=${signature}`);
     });
 
     it("Signed URL with é in filename, path and transformation as query", function () {
-      const encodedUrl = encodeStringIfRequired("https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg?tr=l-text%2Ci-Imagekité%2Cfs-50%2Cl-end");
+      const testURL = "https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg?tr=l-text%2Ci-Imagekit%C3%A9%2Cfs-50%2Cl-end";
+      const encodedUrl = encodeStringIfRequired(testURL);
       expect(encodedUrl).equal("https://ik.imagekit.io/test_url_endpoint/a%C3%A9b/test_%C3%A9_path_alt.jpg?tr=l-text%2Ci-Imagekit%C3%A9%2Cfs-50%2Cl-end");
       const signature = getSignature({
         privateKey: "test_private_key",
-        url: encodedUrl,
+        url: testURL,
         urlEndpoint: "https://ik.imagekit.io/test_url_endpoint",
         expiryTimestamp: "9999999999",
       });
@@ -132,9 +133,8 @@ describe("URL generation", function () {
         transformationPosition: "query",
       });
       expect(url).equal(
-        `https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg?tr=l-text%2Ci-Imagekit%C3%A9%2Cfs-50%2Cl-end&ik-s=0b0107144b34e3b33264c0cec1d29ec98d46cbbb`
+        `https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg?tr=l-text%2Ci-Imagekit%C3%A9%2Cfs-50%2Cl-end&ik-s=${signature}`
       );
-      expect(url).includes(`ik-s=${signature}`);
     });
 
 
