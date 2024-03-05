@@ -24,6 +24,19 @@ const SIGNATURE_PARAMETER: string = "ik-s";
 const TIMESTAMP_PARAMETER: string = "ik-t";
 const DEFAULT_TIMESTAMP: string = "9999999999";
 
+//used to check if special char is present in string (you'll need to encode it to utf-8 if it does)
+const hasMoreThanAscii = (str: string) => {
+	return str.split('').some((char) => char.charCodeAt(0) > 127);
+}
+
+const customEncodeURI = (str: string) => {
+  return str.includes("?") ? `${encodeURI(str.split("?")[0])}?${str.split("?")[1]}` : encodeURI(str);
+};
+
+export const encodeStringIfRequired = (str: string) => {
+	return hasMoreThanAscii(str) ? customEncodeURI(str) : str;
+}
+
 const buildURL = function (opts: FinalUrlOptions): string {
   //Create correct query parameters
   var parsedURL: UrlWithStringQuery;
@@ -160,9 +173,10 @@ function getSignatureTimestamp(seconds: number): string {
   return String(currentTimestamp + sec);
 }
 
-function getSignature(opts: any) {
+export function getSignature(opts: any) {
   if (!opts.privateKey || !opts.url || !opts.urlEndpoint) return "";
   var stringToSign = opts.url.replace(urlFormatter.addTrailingSlash(opts.urlEndpoint), "") + opts.expiryTimestamp;
+  stringToSign = encodeStringIfRequired(stringToSign);
   return crypto.createHmac("sha1", opts.privateKey).update(stringToSign).digest("hex");
 }
 
