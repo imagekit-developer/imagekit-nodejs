@@ -3,6 +3,7 @@ const pkg = require("../package.json");
 const expect = chai.expect;
 const initializationParams = require("./data").initializationParams
 import ImageKit from "../index";
+import { encodeStringIfRequired, getSignature } from "../libs/url/builder";
 var imagekit = new ImageKit(initializationParams);
 
 describe("URL generation", function () {
@@ -58,6 +59,84 @@ describe("URL generation", function () {
         expect(url).includes(`https://ik.imagekit.io/test_url_endpoint/test_path_alt.jpg`);
         expect(url).includes(`ik-s=`);
     });
+
+    it("Signed URL with é in filename", function () {
+      const testURL = "https://ik.imagekit.io/test_url_endpoint/test_é_path_alt.jpg";
+      const encodedUrl = encodeStringIfRequired(testURL);
+      expect(encodedUrl).equal("https://ik.imagekit.io/test_url_endpoint/test_%C3%A9_path_alt.jpg");
+      const signature = getSignature({
+        privateKey: "test_private_key",
+        url: testURL,
+        urlEndpoint: "https://ik.imagekit.io/test_url_endpoint",
+        expiryTimestamp: "9999999999",
+      });
+      const url = imagekit.url({
+        path: "/test_é_path_alt.jpg",
+        signed: true,
+      });
+      expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/test_é_path_alt.jpg?ik-s=${signature}`);
+    });
+
+    it("Signed URL with é in filename and path", function () {
+      const testURL = "https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg";
+      const encodedUrl = encodeStringIfRequired(testURL);
+      expect(encodedUrl).equal("https://ik.imagekit.io/test_url_endpoint/a%C3%A9b/test_%C3%A9_path_alt.jpg");
+      const signature = getSignature({
+        privateKey: "test_private_key",
+        url: testURL,
+        urlEndpoint: "https://ik.imagekit.io/test_url_endpoint",
+        expiryTimestamp: "9999999999",
+      });
+      const url = imagekit.url({
+        path: "/aéb/test_é_path_alt.jpg",
+        signed: true,
+      });
+      expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg?ik-s=${signature}`);
+    });
+
+    it("Signed URL with é in filename, path and transformation as path", function () {
+      const testURL = "https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Imagekité,fs-50,l-end/aéb/test_é_path_alt.jpg";
+      const encodedUrl = encodeStringIfRequired(testURL);
+      expect(encodedUrl).equal("https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Imagekit%C3%A9,fs-50,l-end/a%C3%A9b/test_%C3%A9_path_alt.jpg");
+      const signature = getSignature({
+        privateKey: "test_private_key",
+        url: testURL,
+        urlEndpoint: "https://ik.imagekit.io/test_url_endpoint",
+        expiryTimestamp: "9999999999",
+      });
+
+      const url = imagekit.url({
+        path: "/aéb/test_é_path_alt.jpg",
+        signed: true,
+        transformation: [{ raw: "l-text,i-Imagekité,fs-50,l-end" }],
+        transformationPosition: "path",
+      });
+      expect(url).equal(
+        `https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Imagekité,fs-50,l-end/aéb/test_é_path_alt.jpg?ik-s=${signature}`
+      );
+    });
+
+    it("Signed URL with é in filename, path and transformation as query", function () {
+      const testURL = "https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg?tr=l-text%2Ci-Imagekit%C3%A9%2Cfs-50%2Cl-end";
+      const encodedUrl = encodeStringIfRequired(testURL);
+      expect(encodedUrl).equal("https://ik.imagekit.io/test_url_endpoint/a%C3%A9b/test_%C3%A9_path_alt.jpg?tr=l-text%2Ci-Imagekit%C3%A9%2Cfs-50%2Cl-end");
+      const signature = getSignature({
+        privateKey: "test_private_key",
+        url: testURL,
+        urlEndpoint: "https://ik.imagekit.io/test_url_endpoint",
+        expiryTimestamp: "9999999999",
+      });
+      const url = imagekit.url({
+        path: "/aéb/test_é_path_alt.jpg",
+        signed: true,
+        transformation: [{ raw: "l-text,i-Imagekité,fs-50,l-end" }],
+        transformationPosition: "query",
+      });
+      expect(url).equal(
+        `https://ik.imagekit.io/test_url_endpoint/aéb/test_é_path_alt.jpg?tr=l-text%2Ci-Imagekit%C3%A9%2Cfs-50%2Cl-end&ik-s=${signature}`
+      );
+    });
+
 
     it('should generate the correct url with path param', function () {
         const url = imagekit.url({
