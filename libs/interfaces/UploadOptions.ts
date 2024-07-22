@@ -108,4 +108,8 @@ export interface UploadOptions {
     [key: string]: string | number | boolean | Array<string | number | boolean>;
   },
   transformation?: Transformation
+  /**
+   * Optional `checks` parameters can be used to run server-side checks before files are uploaded to the Media Library.
+   */
+  checks?: string
 }
