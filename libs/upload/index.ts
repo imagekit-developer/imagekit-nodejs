@@ -92,6 +92,8 @@ export default function (
       } else if (key === "transformation" && typeof uploadOptions.transformation === "object" &&
         uploadOptions.transformation !== null) {
         form.append(key, JSON.stringify(uploadOptions.transformation));
+      } else if (key === "checks" && uploadOptions.checks) {
+        form.append(key, uploadOptions.checks);
       } else {
         form.append(key, String(uploadOptions[key]));
       }

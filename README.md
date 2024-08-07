@@ -350,7 +350,8 @@ imagekit.upload({
                 value: 'w-100'
             }
         ]
-    }
+    },
+    checks={`"file.size" < "1mb"`} // To run server side checks before uploading files. Notice the quotes around file.size and 1mb.
 }, function(error, result) {
     if(error) console.log(error);
     else console.log(result);
@@ -376,7 +377,8 @@ imagekit.upload({
                 value: 'w-100'
             }
         ]
-    }
+    },
+    checks={`"file.size" < "1mb"`}
 }).then(response => {
     console.log(response);
 }).catch(error => {
