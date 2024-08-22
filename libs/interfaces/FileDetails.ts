@@ -72,6 +72,13 @@ export interface FileDetailsOptions {
    * A key-value data to be associated with the asset. To unset a key, send null value for that key. Before setting any custom metadata on an asset you have to create the field using custom metadata fields API.
    */
   customMetadata?: CMValues;
+  /**
+   * Configure the publication status of a file and its versions.
+   */
+  publish?: {
+    isPublished: boolean;
+    includeFileVersions?: boolean;
+  };
 }
 
 /**
