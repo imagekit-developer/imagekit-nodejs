@@ -503,6 +503,8 @@ imagekit.getFileVersionDetails({
 
 Update parameters associated with the file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/update-file-details). The first argument to the `updateFileDetails` method is the file ID, and the second argument is an object with the parameters to be updated.
 
+Note: If the second parameter, an object with properties to be updated, includes `publish`, all other properties will be ignored.
+
 ```js
 // Using Callback Function
 
