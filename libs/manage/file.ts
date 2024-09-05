@@ -203,18 +203,19 @@ const updateDetails = function (
     return;
   }
 
-  var data;
+  var data = {};
+  data = {
+    tags: updateData.tags,
+    customCoordinates: updateData.customCoordinates,
+    extensions: updateData.extensions,
+    webhookUrl: updateData.webhookUrl,
+    customMetadata: updateData.customMetadata,
+  };
+
   if (updateData.publish)
     data = {
+      ...data,
       publish: updateData.publish,
-    };
-  else
-    data = {
-      tags: updateData.tags,
-      customCoordinates: updateData.customCoordinates,
-      extensions: updateData.extensions,
-      webhookUrl: updateData.webhookUrl,
-      customMetadata: updateData.customMetadata,
     };
 
   var requestOptions = {
