@@ -351,7 +351,8 @@ imagekit.upload({
             }
         ]
     },
-    checks={`"file.size" < "1mb"`} // To run server side checks before uploading files. Notice the quotes around file.size and 1mb.
+    checks: {`"file.size" < "1mb"`}, // To run server side checks before uploading files. Notice the quotes around file.size and 1mb.
+    isPublished: true
 }, function(error, result) {
     if(error) console.log(error);
     else console.log(result);
@@ -502,6 +503,8 @@ imagekit.getFileVersionDetails({
 
 Update parameters associated with the file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/update-file-details). The first argument to the `updateFileDetails` method is the file ID, and the second argument is an object with the parameters to be updated.
 
+Note: If `publish` is included in the update options, no other parameters are allowed. If any are present, an error will be returned: `Your request cannot contain any other parameters when publish is present`.
+
 ```js
 // Using Callback Function
 
@@ -524,15 +527,10 @@ imagekit.updateFileDetails("file_id", {
 // Using Promises 
 
 imagekit.updateFileDetails("file_id", {
-    tags : ['image_tag'],
-    customCoordinates : "10,10,100,100",
-    extensions: [
-        {
-            name: "google-auto-tagging",
-            maxTags: 5,
-            minConfidence: 95
-        }
-    ]
+    publish: {
+        isPublished: true,
+        includeFileVersions: true
+    }
 }).then(response => {
     console.log(response);
 }).catch(error => {

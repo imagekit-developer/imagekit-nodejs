@@ -202,13 +202,21 @@ const updateDetails = function (
     respond(true, errorMessages.UPDATE_DATA_MISSING, callback);
     return;
   }
-  var data = {
+
+  var data = {};
+  data = {
     tags: updateData.tags,
     customCoordinates: updateData.customCoordinates,
     extensions: updateData.extensions,
     webhookUrl: updateData.webhookUrl,
-    customMetadata: updateData.customMetadata
+    customMetadata: updateData.customMetadata,
   };
+
+  if (updateData.publish)
+    data = {
+      ...data,
+      publish: updateData.publish,
+    };
 
   var requestOptions = {
     url: "https://api.imagekit.io/v1/files/" + fileId + "/details",

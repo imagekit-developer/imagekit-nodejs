@@ -112,4 +112,10 @@ export interface UploadOptions {
    * Optional `checks` parameters can be used to run server-side checks before files are uploaded to the Media Library.
    */
   checks?: string
+  /**
+   * Optional. Determines whether the file should be uploaded as published.
+   * If set to false, the file will be marked as unpublished, restricting access to the file through the media library only.
+   * Files in draft or unpublished states can only be publicly accessed after they are published.
+   */
+  isPublished?: boolean
 }
