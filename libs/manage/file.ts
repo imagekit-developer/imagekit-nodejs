@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { isObject } from 'lodash';
 
 /*
   Constants
@@ -35,7 +35,7 @@ import {
   RestoreFileVersionOptions,
   RenameFileOptions,
   RenameFileResponse,
-} from "../interfaces/";
+} from "../interfaces";
 import ImageKit from "../..";
 
 /*
@@ -198,7 +198,7 @@ const updateDetails = function (
     return;
   }
 
-  if (!_.isObject(updateData)) {
+  if (!isObject(updateData)) {
     respond(true, errorMessages.UPDATE_DATA_MISSING, callback);
     return;
   }
@@ -235,12 +235,12 @@ const listFiles = function (
   defaultOptions: ImageKitOptions,
   callback?: IKCallback<FileObject[]>,
 ) {
-  if (listOptions && !_.isObject(listOptions)) {
+  if (listOptions && !isObject(listOptions)) {
     respond(true, errorMessages.INVALID_LIST_OPTIONS, callback);
     return;
   }
 
-  if (listOptions && listOptions.tags && _.isArray(listOptions.tags) && listOptions.tags.length) {
+  if (listOptions && listOptions.tags && Array.isArray(listOptions.tags) && listOptions.tags.length) {
     listOptions.tags = listOptions.tags.join(",");
   }
 
@@ -635,7 +635,7 @@ const createFolder = function (
   request(requestOptions, defaultOptions, callback);
 };
 
-/* 
+/*
     Delete folder
 */
 const deleteFolder = function (folderPath: string, defaultOptions: ImageKitOptions, callback?: IKCallback<void>) {
