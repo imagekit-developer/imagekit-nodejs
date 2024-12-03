@@ -1,5 +1,5 @@
+import { FileObject, FolderObject } from "./FileDetails";
 import { FileType } from "./FileType";
-import { Item } from "./Item";
 
 /**
  * List and search files options
@@ -76,50 +76,4 @@ export interface ListFileOptions {
  *
  * @see {@link https://docs.imagekit.io/api-reference/media-api/list-and-search-files#response-structure-and-status-code-application-json}
  */
-export interface ListFileResponse {
-  /**
-   * The unique fileId of the uploaded file.
-   */
-  fileId: string;
-  /**
-   * Type of item. It can be either file or folder.
-   */
-  type: Item;
-  /**
-   * Name of the file or folder.
-   */
-  name: string;
-  /**
-   * The date and time when the file was first uploaded. The format is `YYYY-MM-DDTHH:mm:ss.sssZ`.
-   */
-  createdAt: string;
-  /**
-   * The relative path of the file. In the case of an image, you can use this
-   * path to construct different transformations.
-   */
-  filePath: string;
-  /**
-   * Array of tags associated with the image. If no tags are set, it will be null.
-   */
-  tags: string[] | null;
-  /**
-   * Is the file marked as private. It can be either true or false.
-   */
-  isPrivateFile: boolean;
-  /**
-   * Value of custom coordinates associated with the image in format x,y,width,height. If customCoordinates are not defined then it is null.
-   */
-  customCoordinates: string | null;
-  /**
-   * A publicly accessible URL of the file.
-   */
-  url: string;
-  /**
-   * In case of an image, a small thumbnail URL.
-   */
-  thumbnail: string;
-  /**
-   * The type of file, it could be either image or non-image.
-   */
-  fileType: FileType;
-}
+export type ListFileResponse = Array<FileObject | FolderObject>;

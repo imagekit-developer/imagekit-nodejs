@@ -8,7 +8,7 @@ import { ListFileOptions, ListFileResponse } from "./ListFile";
 import { CopyFileOptions } from "./CopyFile";
 import { MoveFileOptions } from "./MoveFile";
 import { CreateFolderOptions } from "./CreateFolder";
-import { FileDetailsOptions, FileVersionDetailsOptions, FileObject } from "./FileDetails";
+import { FileDetailsOptions, FileVersionDetailsOptions, FileObject, FolderObject } from "./FileDetails";
 import { FileMetadataResponse } from "./FileMetadata";
 import { PurgeCacheResponse, PurgeCacheStatusResponse } from "./PurgeCache";
 import { BulkDeleteFilesResponse, BulkDeleteFilesError } from "./BulkDeleteFiles";
@@ -44,6 +44,7 @@ export type {
   FileDetailsOptions,
   FileVersionDetailsOptions,
   FileObject,
+  FolderObject,
   FileMetadataResponse,
   PurgeCacheResponse,
   PurgeCacheStatusResponse,

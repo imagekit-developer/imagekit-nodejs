@@ -27,6 +27,32 @@ ImageKit is complete media storage, optimization, and transformation solution th
 
 ## Changelog
 
+### SDK Version 5.3.0
+
+### Breaking changes
+
+**1. `listFiles` API response type**
+* The `listFiles` method now returns a unified response type, ListFileResponse, which is an array of both `FileObject` and `FolderObject`. Previously, the response contained only `FileObject`. The `type` property in the response object indicates whether the object is a file or a folder. Even though this change has been made to just the type of the return object, it can be considered a breaking change so it may require require any code relying on the `listFiles` response to be updated.
+
+```
+const result = await imagekit.listFiles({ skip: 0, limit: 10 });
+
+# Before (Pre-version 5.3.0)
+result.forEach((item) => {
+    console.log(item);
+});
+
+# After (Version 5.3.0 and above)
+result.forEach((item) => {
+    if (item.type === "folder") {
+        console.log(item) // item is of type FolderObject
+    } else {
+        console.log(item) // item is of type FileObject
+    }
+});
+```
+
+
 ### SDK Version 5.0.0
 
 #### Breaking changes
