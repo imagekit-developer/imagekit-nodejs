@@ -19,7 +19,7 @@ import {
     CustomMetadataField,
     UpdateCustomMetadataFieldOptions,
     GetCustomMetadataFieldsOptions,
-} from "../interfaces/";
+} from "../interfaces";
 
 const create = function (createCustomMetadataFieldOptions: CreateCustomMetadataFieldOptions, defaultOptions: ImageKitOptions, callback?: IKCallback<CustomMetadataField>) {
     const { name, label, schema } = createCustomMetadataFieldOptions;

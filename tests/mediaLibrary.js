@@ -780,6 +780,28 @@ describe("Media library APIs", function () {
             imagekit.updateFileDetails(fileId, updateData);
         });
 
+
+        it('Update publish status', function (done) {
+            var fileId = "23902390239203923";
+
+            var updateData = {
+              publish: {
+                isPublished: false,
+              },
+            };
+
+            const scope = nock('https://api.imagekit.io')
+                .patch(`/v1/files/${fileId}/details`)
+                .basicAuth({ user: initializationParams.privateKey, pass: '' })
+                .reply(200, function (uri, requestBody) {
+                    expect(this.req.path).equal(`/v1/files/${fileId}/details`);
+                    expect(requestBody).to.deep.equal(updateData);
+                    done()
+                })
+
+            imagekit.updateFileDetails(fileId, updateData);
+        });
+
         it('Update file details invalid updateData', function (done) {
             var fileId = "23902390239203923";
 

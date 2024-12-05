@@ -76,4 +76,8 @@ export interface UploadResponse {
    * A key-value data associated with the asset. Before setting any custom metadata on an asset, you have to create the field using custom metadata fields API.
    */
   customMetadata?: CMValues;
+  /**
+   * Is the file published or in draft state. It can be either true or false.
+   */
+  isPublished?: boolean
 }

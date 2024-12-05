@@ -13,7 +13,7 @@ import request from "../../utils/request";
     Interfaces
 */
 import { IKCallback } from "../interfaces/IKCallback";
-import { ImageKitOptions, PurgeCacheResponse, PurgeCacheStatusResponse } from "../interfaces/";
+import { ImageKitOptions, PurgeCacheResponse, PurgeCacheStatusResponse } from "../interfaces";
 
 const purgeCache = function (url: string, defaultOptions: ImageKitOptions, callback?: IKCallback<PurgeCacheResponse>) {
   if (!url && !url.length) {

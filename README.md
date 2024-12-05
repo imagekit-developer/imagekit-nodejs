@@ -3,7 +3,7 @@
 # ImageKit.io Node.js SDK
 
 [![Node CI](https://github.com/imagekit-developer/imagekit-nodejs/workflows/Node%20CI/badge.svg)](https://github.com/imagekit-developer/imagekit-nodejs/)
-[![npm version](https://img.shields.io/npm/v/imagekit)](https://www.npmjs.com/package/imagekit) 
+[![npm version](https://img.shields.io/npm/v/imagekit)](https://www.npmjs.com/package/imagekit)
 [![codecov](https://codecov.io/gh/imagekit-developer/imagekit-nodejs/branch/master/graph/badge.svg)](https://codecov.io/gh/imagekit-developer/imagekit-nodejs)
 [![Try imagekit on RunKit](https://badge.runkitcdn.com/imagekit.svg)](https://npm.runkit.com/imagekit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -44,6 +44,10 @@ Use the following command to download this module. Use the optional `--save` par
 
 ```
 npm install imagekit --save
+# or
+pnpm install imagekit --save
+# or
+bun install imagekit // if you are using [Bun](https://bun.sh/) compiler
 # or
 yarn add imagekit
 ```
@@ -351,13 +355,14 @@ imagekit.upload({
             }
         ]
     },
-    checks={`"file.size" < "1mb"`} // To run server side checks before uploading files. Notice the quotes around file.size and 1mb.
+    checks: {`"file.size" < "1mb"`}, // To run server side checks before uploading files. Notice the quotes around file.size and 1mb.
+    isPublished: true
 }, function(error, result) {
     if(error) console.log(error);
     else console.log(result);
 });
 
-// Using Promises 
+// Using Promises
 
 imagekit.upload({
     file : <url|base_64|binary>, //required
@@ -411,7 +416,7 @@ imagekit.listFiles({
 });
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.listFiles({
     skip : 10,
@@ -436,7 +441,7 @@ imagekit.getFileDetails("file_id", function(error, result) {
 });
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.getFileDetails("file_id")
 }).then(response => {
@@ -459,7 +464,7 @@ imagekit.getFileVersions("file_id", function(error, result) {
 });
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.getFileVersions("file_id")
 }).then(response => {
@@ -485,7 +490,7 @@ imagekit.getFileVersionDetails({
 });
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.getFileVersionDetails({
     fileId: "file_id",
@@ -502,10 +507,12 @@ imagekit.getFileVersionDetails({
 
 Update parameters associated with the file as per the [API documentation here](https://docs.imagekit.io/api-reference/media-api/update-file-details). The first argument to the `updateFileDetails` method is the file ID, and the second argument is an object with the parameters to be updated.
 
+Note: If `publish` is included in the update options, no other parameters are allowed. If any are present, an error will be returned: `Your request cannot contain any other parameters when publish is present`.
+
 ```js
 // Using Callback Function
 
-imagekit.updateFileDetails("file_id", { 
+imagekit.updateFileDetails("file_id", {
     tags : ['image_tag'],
     customCoordinates : "10,10,100,100",
     extensions: [
@@ -521,18 +528,13 @@ imagekit.updateFileDetails("file_id", {
 });
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.updateFileDetails("file_id", {
-    tags : ['image_tag'],
-    customCoordinates : "10,10,100,100",
-    extensions: [
-        {
-            name: "google-auto-tagging",
-            maxTags: 5,
-            minConfidence: 95
-        }
-    ]
+    publish: {
+        isPublished: true,
+        includeFileVersions: true
+    }
 }).then(response => {
     console.log(response);
 }).catch(error => {
@@ -616,7 +618,7 @@ imagekit.deleteFile("file_id", function(error, result) {
 });
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.deleteFile("file_id").then(response => {
     console.log(response);
@@ -641,7 +643,7 @@ imagekit.deleteFileVersion({
 });
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.deleteFile({
     fileId: "file_id",
@@ -666,7 +668,7 @@ imagekit.bulkDeleteFiles(["file_id_1", "file_id_2"], function(error, result) {
 });
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.bulkDeleteFiles(["file_id_1", "file_id_2"]).then(response => {
     console.log(response);
@@ -925,7 +927,7 @@ imagekit.purgeCache("full_url", function(error, result) {
 });
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.purgeCache("full_url").then(response => {
     console.log(response);
@@ -947,7 +949,7 @@ imagekit.getPurgeCacheStatus("cache_request_id", function(error, result) {
 });
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.getPurgeCacheStatus("cache_request_id").then(response => {
     console.log(response);
@@ -968,7 +970,7 @@ imagekit.getFileMetadata("file_id", function(error, result) {
 });
 
 
-// Using Promises 
+// Using Promises
 imagekit.getFileMetadata("file_id")
 }).then(response => {
     console.log(response);
@@ -987,7 +989,7 @@ imagekit.getFileMetadata("https://ik.imagekit.io/your_imagekit_id/sample.jpg", f
 });
 
 
-// Using Promises 
+// Using Promises
 imagekit.getFileMetadata("https://ik.imagekit.io/your_imagekit_id/sample.jpg")
 }).then(response => {
     console.log(response);
@@ -1012,7 +1014,7 @@ imagekit.createCustomMetadataField(
             minValue: 1000,
             maxValue: 3000
         }
-    }, 
+    },
     function(error, result) {
         if(error) console.log(error);
         else console.log(result);
@@ -1020,7 +1022,7 @@ imagekit.createCustomMetadataField(
 );
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.createCustomMetadataField(
     {
@@ -1049,7 +1051,7 @@ Get the list of all custom metadata fields as per the [API documentation here](h
 imagekit.getCustomMetadataFields(
     {
        includeDeleted: false // optional
-    }, 
+    },
     function(error, result) {
         if(error) console.log(error);
         else console.log(result);
@@ -1057,7 +1059,7 @@ imagekit.getCustomMetadataFields(
 );
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.getCustomMetadataFields(
     {
@@ -1084,7 +1086,7 @@ imagekit.updateCustomMetadataField(
             minValue: 500,
             maxValue: 2500
         }
-    }, 
+    },
     function(error, result) {
         if(error) console.log(error);
         else console.log(result);
@@ -1092,7 +1094,7 @@ imagekit.updateCustomMetadataField(
 );
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.updateCustomMetadataField(
     "field_id",
@@ -1101,7 +1103,7 @@ imagekit.updateCustomMetadataField(
             minValue: 500,
             maxValue: 2500
         }
-    }, 
+    },
 ).then(response => {
     console.log(response);
 }).catch(error => {
@@ -1125,7 +1127,7 @@ imagekit.deleteCustomMetadataField(
 );
 
 
-// Using Promises 
+// Using Promises
 
 imagekit.deleteCustomMetadataField(
     "field_id"
