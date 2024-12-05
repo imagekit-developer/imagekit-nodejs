@@ -23,6 +23,6 @@ jobs:
         yarn install
         yarn test
         yarn test-e2e
-        yarn report-coverage
+        # yarn report-coverage
       env:
         CI: true

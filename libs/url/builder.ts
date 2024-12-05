@@ -1,7 +1,7 @@
 /*
     Helper Modules
 */
-import url, { UrlWithStringQuery, URLSearchParams } from "url";
+import { URLSearchParams, URL } from "url";
 import path from "path";
 import crypto from "crypto";
 
@@ -38,32 +38,21 @@ export const encodeStringIfRequired = (str: string) => {
 }
 
 const buildURL = function (opts: FinalUrlOptions): string {
-  //Create correct query parameters
-  var parsedURL: UrlWithStringQuery;
-  var parsedHost: UrlWithStringQuery;
   var isSrcParameterUsedForURL: boolean = false;
 
-  var urlObject: { [key: string]: string | null } = { host: "", pathname: "", search: "" };
+  var urlObject: URL;
 
   if (opts.path) {
-    parsedURL = url.parse(opts.path);
-    parsedHost = url.parse(opts.urlEndpoint);
-
-    urlObject.protocol = parsedHost.protocol;
-    urlObject.host = opts.urlEndpoint.replace(urlObject.protocol + "//", "");
+    urlObject = new URL(opts.urlEndpoint)
   } else if (opts.src) {
-    parsedURL = url.parse(opts.src);
     isSrcParameterUsedForURL = true;
-
-    urlObject.host = [parsedURL.auth, parsedURL.auth ? "@" : "", parsedURL.host].join("");
-    urlObject.protocol = parsedURL.protocol;
+    urlObject = new URL(opts.src)
   } else {
     return "";
   }
 
-  urlObject.pathname = parsedURL.pathname ? parsedURL.pathname : "";
 
-  var queryParameters = new URLSearchParams(parsedURL.query || "");
+  var queryParameters = new URLSearchParams(urlObject.search || "");
   for (var i in opts.queryParameters) {
     queryParameters.set(i, opts.queryParameters[i]);
   }
@@ -75,12 +64,17 @@ const buildURL = function (opts: FinalUrlOptions): string {
     //string should be added only as a query parameter
     if (transformationUtils.addAsQueryParameter(opts) || isSrcParameterUsedForURL) {
       queryParameters.set(TRANSFORMATION_PARAMETER, transformationString);
+      urlObject.pathname= `${urlObject.pathname}${opts.path||''}`;
     } else {
       urlObject.pathname = path.posix.join(
-        [TRANSFORMATION_PARAMETER, transformationString].join(transformationUtils.getChainTransformDelimiter()),
         urlObject.pathname,
+        [TRANSFORMATION_PARAMETER, transformationString].join(transformationUtils.getChainTransformDelimiter()),
+        opts.path || '',
       );
     }
+  }
+  else{
+    urlObject.pathname= `${urlObject.pathname}${opts.path||''}`;
   }
 
   urlObject.host = urlFormatter.removeTrailingSlash(urlObject.host);
@@ -107,7 +101,7 @@ const buildURL = function (opts: FinalUrlOptions): string {
       expiryTimestamp = DEFAULT_TIMESTAMP;
     }
 
-    var intermediateURL = url.format(urlObject);
+    var intermediateURL = urlObject.href;
 
     var urlSignature = getSignature({
       privateKey: opts.privateKey,
@@ -122,8 +116,7 @@ const buildURL = function (opts: FinalUrlOptions): string {
     queryParameters.set(SIGNATURE_PARAMETER, urlSignature);
     urlObject.search = queryParameters.toString();
   }
-
-  return url.format(urlObject);
+  return urlObject.href;
 };
 
 function constructTransformationString(inputTransformation: Array<Transformation> | undefined) {
