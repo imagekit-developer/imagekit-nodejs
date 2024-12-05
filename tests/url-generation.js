@@ -91,7 +91,6 @@ describe("URL generation", function () {
         path: "/aéb/test_é_path_alt.jpg",
         signed: true,
       });
-      console.log({signature})
       expect(url).equal(`https://ik.imagekit.io/test_url_endpoint/a%C3%A9b/test_%C3%A9_path_alt.jpg?ik-s=${signature}`);
     });
 
