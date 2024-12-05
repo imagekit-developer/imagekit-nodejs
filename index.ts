@@ -10,6 +10,7 @@ import {
   CopyFolderResponse,
   FileDetailsOptions,
   FileObject,
+  FolderObject,
   FileMetadataResponse,
   ImageKitOptions,
   ListFileOptions,
@@ -135,13 +136,13 @@ class ImageKit {
    *
    * @param listFilesOptions
    */
-  listFiles(listOptions: ListFileOptions): Promise<IKResponse<FileObject[]>>;
-  listFiles(listOptions: ListFileOptions, callback: IKCallback<IKResponse<FileObject[]>>): void;
+  listFiles(listOptions: ListFileOptions): Promise<IKResponse<ListFileResponse>>;
+  listFiles(listOptions: ListFileOptions, callback: IKCallback<IKResponse<ListFileResponse>>): void;
   listFiles(
     listOptions: ListFileOptions,
-    callback?: IKCallback<IKResponse<FileObject[]>>,
-  ): void | Promise<IKResponse<FileObject[]>> {
-    return promisify<IKResponse<FileObject[]>>(this, manage.listFiles)(listOptions, this.options, callback);
+    callback?: IKCallback<IKResponse<ListFileResponse>>,
+  ): void | Promise<IKResponse<ListFileResponse>> {
+    return promisify<IKResponse<ListFileResponse>>(this, manage.listFiles)(listOptions, this.options, callback);
   }
 
   /**

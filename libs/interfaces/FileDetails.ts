@@ -1,5 +1,4 @@
 import { FileType } from "./FileType";
-import { Item } from "./Item";
 
 export interface EmbeddedMetadataValues {
   [key: string]:
@@ -56,13 +55,13 @@ export interface FileDetailsOptions {
    * Example - 50,50,500,500
    */
   customCoordinates?: string;
-  /* 
-  * Object with array of extensions to be processed on the image.
-  */
+  /*
+   * Object with array of extensions to be processed on the image.
+   */
   extensions?: Extension;
   /*
-    * Final status of pending extensions will be sent to this URL. 
-    */
+   * Final status of pending extensions will be sent to this URL.
+   */
   webhookUrl?: string
   /*
    * Array of AI tags to remove from the asset.
@@ -93,9 +92,9 @@ export interface FileObject {
    */
   fileId: string;
   /**
-   * Type of item. It can be either file or folder.
+   * Type of item. It can be either file, file-version or folder.
    */
-  type: Item;
+  type: "file" | "file-version";
   /**
    * Name of the file or folder.
    */
@@ -180,6 +179,38 @@ export interface FileObject {
   versionInfo?: { name: string; id: string };
 }
 
+/**
+ *
+ * Folder object.
+ *
+ * @see {@link https://docs.imagekit.io/api-reference/media-api#file-object-structure}
+ */
+export interface FolderObject {
+  /**
+   * The unique fileId of the folder.
+   */
+  folderId: string;
+  /**
+   * Type of item. It can be either file, file-version or folder.
+   */
+  type: "folder";
+  /**
+   * Name of the file or folder.
+   */
+  name: string;
+  /**
+   * The relative path of the folder.
+   */
+  folderPath: string;
+  /*
+   * The date and time when the folder was first created. The format is YYYY-MM-DDTHH:mm:ss.sssZ
+   */
+  createdAt: string;
+  /*
+   * The date and time when the folder was last updated. The format is YYYY-MM-DDTHH:mm:ss.sssZ
+   */
+  updatedAt: string;
+}
 
 export interface FileVersionDetailsOptions {
   /**
