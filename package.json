@@ -8,7 +8,7 @@
     "compile": "rm -rf dist/ & tsc -p tsconfig.json",
     "test": "export NODE_ENV=test; nyc ./node_modules/mocha/bin/mocha --exit -t 40000 tests/*.js;ex=$?;unset NODE_ENV; exit $ex;",
     "test-e2e": "sh test-e2e.sh; exit $?;",
-    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov && --disable=gcov",
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov --disable=gcov",
     "prepack": "npm run compile"
   },
   "author": "ImageKit Developer <developer@imagekit.io>",
