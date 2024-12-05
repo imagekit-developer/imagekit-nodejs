@@ -1,6 +1,6 @@
 ## Changelog
 
-### SDK Version 5.3.0
+### SDK Version 6.0.0
 
 ### Breaking changes
 
