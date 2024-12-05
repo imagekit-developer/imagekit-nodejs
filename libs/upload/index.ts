@@ -1,5 +1,5 @@
 import _ from "lodash";
-import errorMessages from "../../libs/constants/errorMessages";
+import errorMessages from "../constants/errorMessages";
 import respond from "../../utils/respond";
 import request from "../../utils/request";
 import { IKCallback } from "../interfaces/IKCallback";

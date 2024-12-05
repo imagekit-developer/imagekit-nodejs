@@ -1,8 +1,11 @@
-import respond from "../utils/respond";
-import { RequestOptions } from "../utils/authorization";
-import { ImageKitOptions } from "../libs/interfaces/";
+import respond from "./respond";
+import { RequestOptions } from "./authorization";
+import { ImageKitOptions } from "../libs/interfaces";
 import { IKCallback } from "../libs/interfaces/IKCallback";
 import axios, { AxiosError, AxiosHeaders, AxiosRequestConfig, AxiosResponse } from "axios";
+
+// constant
+const UnknownError: string =  "Unknown error occured";
 
 export default function request<T, E extends Error>(
   requestOptions: RequestOptions,
@@ -27,13 +30,13 @@ export default function request<T, E extends Error>(
   if (typeof requestOptions.headers === "object") options.headers = requestOptions.headers;
 
   axios(options).then((response: AxiosResponse<T>) => {
-    if (typeof callback != "function") return;
+    if (typeof callback !== "function") return;
     const { data, status, headers } = response;
     const responseMetadata = {
       statusCode: status,
       headers: (headers as AxiosHeaders).toJSON()
     }
-    var result = data ? data : {} as T;
+    let result = data ? data : {} as T;
     // define status code and headers as non-enumerable properties on data
     Object.defineProperty(result, "$ResponseMetadata", {
       value: responseMetadata,
@@ -42,7 +45,7 @@ export default function request<T, E extends Error>(
     });
     respond(false, result, callback);
   }, (error: AxiosError) => {
-    if (typeof callback != "function") return;
+    if (typeof callback !== "function") return;
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
@@ -51,7 +54,7 @@ export default function request<T, E extends Error>(
         headers: (error.response.headers as AxiosHeaders).toJSON()
       }
 
-      var result = {} as Object;
+      let result = {} as Object;
       if (error.response.data && typeof error.response.data === "object") {
         result = error.response.data
       } else if (error.response.data && typeof error.response.data === "string") {
@@ -82,7 +85,7 @@ export default function request<T, E extends Error>(
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
     } else {
-      respond(true, new Error("Unknown error occured"), callback);
+      respond(true, new Error(UnknownError), callback);
     }
   })
 }
