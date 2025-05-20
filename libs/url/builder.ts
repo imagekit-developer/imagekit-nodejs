@@ -64,7 +64,7 @@ const buildURL = function (opts: FinalUrlOptions): string {
     //string should be added only as a query parameter
     if (transformationUtils.addAsQueryParameter(opts) || isSrcParameterUsedForURL) {
       queryParameters.set(TRANSFORMATION_PARAMETER, transformationString);
-      urlObject.pathname= `${urlObject.pathname}${opts.path||''}`;
+      urlObject.pathname = path.posix.join(urlObject.pathname, opts.path || "");
     } else {
       urlObject.pathname = path.posix.join(
         urlObject.pathname,
@@ -74,7 +74,7 @@ const buildURL = function (opts: FinalUrlOptions): string {
     }
   }
   else{
-    urlObject.pathname= `${urlObject.pathname}${opts.path||''}`;
+    urlObject.pathname = path.posix.join(urlObject.pathname, opts.path || "");
   }
 
   urlObject.host = urlFormatter.removeTrailingSlash(urlObject.host);

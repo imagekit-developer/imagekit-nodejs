@@ -177,6 +177,19 @@ describe("URL generation", function () {
 
     });
 
+    it('should not duplicate slashes when urlEndpoint has trailing slash', function () {
+        const kit = new ImageKit({
+            ...initializationParams,
+            urlEndpoint: initializationParams.urlEndpoint + '/',
+        });
+
+        const url = kit.url({
+            path: '/test_path.jpg'
+        });
+
+        expect(url).equal('https://ik.imagekit.io/test_url_endpoint/test_path.jpg');
+    });
+
     it('should generate the correct url with path param with transformationPosition as query', function () {
         const url = imagekit.url({
             path: "/test_path.jpg",
