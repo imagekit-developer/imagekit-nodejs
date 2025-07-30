@@ -2238,18 +2238,7 @@ export interface FileRenameParams {
 
 export interface FileUploadV1Params {
   /**
-   * This field accepts three kinds of values:
-   *
-   * - `binary` - You can send the content of the file as binary. This is used when a
-   *   file is being uploaded from the browser.
-   * - `base64` - Base64 encoded string of file content.
-   * - `url` - URL of the file from where to download the content before uploading.
-   *
-   * Note: When passing a URL in the file parameter, please ensure that our servers
-   * can access the URL. In case ImageKit is unable to download the file from the
-   * specified URL, a `400` error response is returned. This will also result in a
-   * `400` error if the file download request is aborted if response headers are not
-   * received in 8 seconds.
+   * Pass binary data. Accepts stream too.
    */
   file: Uploadable;
 
@@ -2453,18 +2442,7 @@ export interface FileUploadV1Params {
 
 export interface FileUploadV2Params {
   /**
-   * This field accepts three kinds of values:
-   *
-   * - `binary` - You can send the content of the file as binary. This is used when a
-   *   file is being uploaded from the browser.
-   * - `base64` - Base64 encoded string of file content.
-   * - `url` - URL of the file from where to download the content before uploading.
-   *
-   * Note: When passing a URL in the file parameter, please ensure that our servers
-   * can access the URL. In case ImageKit is unable to download the file from the
-   * specified URL, a `400` error response is returned. This will also result in a
-   * `400` error if the file download request is aborted if response headers are not
-   * received in 8 seconds.
+   * Pass binary data. Accepts stream too.
    */
   file: Uploadable;
 
