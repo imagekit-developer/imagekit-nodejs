@@ -1,0 +1,194 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+import Imagekit from 'imagekit';
+
+const client = new Imagekit({
+  username: 'My Username',
+  password: 'My Password',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
+
+describe('resource files', () => {
+  // skipped: tests are disabled for the time being
+  test.skip('list', async () => {
+    const responsePromise = client.files.list();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.files.list(
+        {
+          fileType: 'fileType',
+          limit: 'limit',
+          path: 'path',
+          searchQuery: 'searchQuery',
+          skip: 'skip',
+          sort: 'sort',
+          type: 'file',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Imagekit.NotFoundError);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('delete', async () => {
+    const responsePromise = client.files.delete('fileId');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('addTags: only required params', async () => {
+    const responsePromise = client.files.addTags({
+      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
+      tags: ['t-shirt', 'round-neck', 'sale2019'],
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('addTags: required and optional params', async () => {
+    const response = await client.files.addTags({
+      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
+      tags: ['t-shirt', 'round-neck', 'sale2019'],
+    });
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('copy: only required params', async () => {
+    const responsePromise = client.files.copy({
+      destinationPath: '/folder/to/copy/into/',
+      sourceFilePath: '/path/to/file.jpg',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('copy: required and optional params', async () => {
+    const response = await client.files.copy({
+      destinationPath: '/folder/to/copy/into/',
+      sourceFilePath: '/path/to/file.jpg',
+      includeFileVersions: false,
+    });
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('move: only required params', async () => {
+    const responsePromise = client.files.move({
+      destinationPath: '/folder/to/move/into/',
+      sourceFilePath: '/path/to/file.jpg',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('move: required and optional params', async () => {
+    const response = await client.files.move({
+      destinationPath: '/folder/to/move/into/',
+      sourceFilePath: '/path/to/file.jpg',
+    });
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('removeAITags: only required params', async () => {
+    const responsePromise = client.files.removeAITags({
+      AITags: ['t-shirt', 'round-neck', 'sale2019'],
+      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('removeAITags: required and optional params', async () => {
+    const response = await client.files.removeAITags({
+      AITags: ['t-shirt', 'round-neck', 'sale2019'],
+      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
+    });
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('removeTags: only required params', async () => {
+    const responsePromise = client.files.removeTags({
+      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
+      tags: ['t-shirt', 'round-neck', 'sale2019'],
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('removeTags: required and optional params', async () => {
+    const response = await client.files.removeTags({
+      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
+      tags: ['t-shirt', 'round-neck', 'sale2019'],
+    });
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('rename: only required params', async () => {
+    const responsePromise = client.files.rename({
+      filePath: '/path/to/file.jpg',
+      newFileName: 'newFileName.jpg',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('rename: required and optional params', async () => {
+    const response = await client.files.rename({
+      filePath: '/path/to/file.jpg',
+      newFileName: 'newFileName.jpg',
+      purgeCache: true,
+    });
+  });
+});
