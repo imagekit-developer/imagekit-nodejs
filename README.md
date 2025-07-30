@@ -27,7 +27,7 @@ import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
   privateAPIKey: process.env['IMAGEKIT_PRIVATE_API_KEY'], // This is the default and can be omitted
-  myPassword: process.env['ORG_MY_PASSWORD_TOKEN'], // This is the default and can be omitted
+  password: process.env['ORG_MY_PASSWORD_TOKEN'], // This is the default and can be omitted
 });
 
 const response = await client.files.uploadV1({
@@ -48,7 +48,7 @@ import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
   privateAPIKey: process.env['IMAGEKIT_PRIVATE_API_KEY'], // This is the default and can be omitted
-  myPassword: process.env['ORG_MY_PASSWORD_TOKEN'], // This is the default and can be omitted
+  password: process.env['ORG_MY_PASSWORD_TOKEN'], // This is the default and can be omitted
 });
 
 const params: ImageKit.FileUploadV1Params = {
