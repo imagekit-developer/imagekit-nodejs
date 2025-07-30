@@ -1,4 +1,4 @@
-import { createPathTagFunction, encodeURIPath } from 'imagekit/internal/utils/path';
+import { createPathTagFunction, encodeURIPath } from '@imagekit/nodejs/internal/utils/path';
 import { inspect } from 'node:util';
 import { runInNewContext } from 'node:vm';
 

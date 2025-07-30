@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Imagekit from 'imagekit';
+import ImageKit from '@imagekit/nodejs';
 
-const client = new Imagekit({
+const client = new ImageKit({
   username: 'My Username',
   password: 'My Password',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
@@ -37,7 +37,7 @@ describe('resource files', () => {
         },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(Imagekit.NotFoundError);
+    ).rejects.toThrow(ImageKit.NotFoundError);
   });
 
   // skipped: tests are disabled for the time being

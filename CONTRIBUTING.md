@@ -55,12 +55,12 @@ $ cd imagekit-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link imagekit
+$ yarn link @imagekit/nodejs
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global imagekit
+$ pnpm link -—global @imagekit/nodejs
 ```
 
 ## Running tests

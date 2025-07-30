@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "imagekit/*": ["dist/src/*"],
-      "imagekit": ["dist/src/index.ts"]
+      "@imagekit/nodejs/*": ["dist/src/*"],
+      "@imagekit/nodejs": ["dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

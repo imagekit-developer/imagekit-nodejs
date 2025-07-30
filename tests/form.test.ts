@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'imagekit/internal/uploads';
-import { toFile } from 'imagekit/core/uploads';
+import { multipartFormRequestOptions, createForm } from '@imagekit/nodejs/internal/uploads';
+import { toFile } from '@imagekit/nodejs/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

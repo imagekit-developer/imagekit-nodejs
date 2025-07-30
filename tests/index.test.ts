@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'imagekit/core/api-promise';
+import { APIPromise } from '@imagekit/nodejs/core/api-promise';
 
 import util from 'node:util';
-import Imagekit from 'imagekit';
-import { APIUserAbortError } from 'imagekit';
+import ImageKit from '@imagekit/nodejs';
+import { APIUserAbortError } from '@imagekit/nodejs';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {
@@ -20,7 +20,7 @@ describe('instantiate client', () => {
   });
 
   describe('defaultHeaders', () => {
-    const client = new Imagekit({
+    const client = new ImageKit({
       baseURL: 'http://localhost:5000/',
       defaultHeaders: { 'X-My-Default-Header': '2' },
       username: 'My Username',
@@ -55,14 +55,14 @@ describe('instantiate client', () => {
 
     beforeEach(() => {
       process.env = { ...env };
-      process.env['IMAGEKIT_LOG'] = undefined;
+      process.env['IMAGE_KIT_LOG'] = undefined;
     });
 
     afterEach(() => {
       process.env = env;
     });
 
-    const forceAPIResponseForClient = async (client: Imagekit) => {
+    const forceAPIResponseForClient = async (client: ImageKit) => {
       await new APIPromise(
         client,
         Promise.resolve({
@@ -88,7 +88,7 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      const client = new Imagekit({
+      const client = new ImageKit({
         logger: logger,
         logLevel: 'debug',
         username: 'My Username',
@@ -100,7 +100,7 @@ describe('instantiate client', () => {
     });
 
     test('default logLevel is warn', async () => {
-      const client = new Imagekit({ username: 'My Username', password: 'My Password' });
+      const client = new ImageKit({ username: 'My Username', password: 'My Password' });
       expect(client.logLevel).toBe('warn');
     });
 
@@ -113,7 +113,7 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      const client = new Imagekit({
+      const client = new ImageKit({
         logger: logger,
         logLevel: 'info',
         username: 'My Username',
@@ -133,8 +133,8 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['IMAGEKIT_LOG'] = 'debug';
-      const client = new Imagekit({ logger: logger, username: 'My Username', password: 'My Password' });
+      process.env['IMAGE_KIT_LOG'] = 'debug';
+      const client = new ImageKit({ logger: logger, username: 'My Username', password: 'My Password' });
       expect(client.logLevel).toBe('debug');
 
       await forceAPIResponseForClient(client);
@@ -150,11 +150,11 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['IMAGEKIT_LOG'] = 'not a log level';
-      const client = new Imagekit({ logger: logger, username: 'My Username', password: 'My Password' });
+      process.env['IMAGE_KIT_LOG'] = 'not a log level';
+      const client = new ImageKit({ logger: logger, username: 'My Username', password: 'My Password' });
       expect(client.logLevel).toBe('warn');
       expect(warnMock).toHaveBeenCalledWith(
-        'process.env[\'IMAGEKIT_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
+        'process.env[\'IMAGE_KIT_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
       );
     });
 
@@ -167,8 +167,8 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['IMAGEKIT_LOG'] = 'debug';
-      const client = new Imagekit({
+      process.env['IMAGE_KIT_LOG'] = 'debug';
+      const client = new ImageKit({
         logger: logger,
         logLevel: 'off',
         username: 'My Username',
@@ -188,8 +188,8 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['IMAGEKIT_LOG'] = 'not a log level';
-      const client = new Imagekit({
+      process.env['IMAGE_KIT_LOG'] = 'not a log level';
+      const client = new ImageKit({
         logger: logger,
         logLevel: 'debug',
         username: 'My Username',
@@ -202,7 +202,7 @@ describe('instantiate client', () => {
 
   describe('defaultQuery', () => {
     test('with null query params given', () => {
-      const client = new Imagekit({
+      const client = new ImageKit({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo' },
         username: 'My Username',
@@ -212,7 +212,7 @@ describe('instantiate client', () => {
     });
 
     test('multiple default query params', () => {
-      const client = new Imagekit({
+      const client = new ImageKit({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo', hello: 'world' },
         username: 'My Username',
@@ -222,7 +222,7 @@ describe('instantiate client', () => {
     });
 
     test('overriding with `undefined`', () => {
-      const client = new Imagekit({
+      const client = new ImageKit({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { hello: 'world' },
         username: 'My Username',
@@ -233,7 +233,7 @@ describe('instantiate client', () => {
   });
 
   test('custom fetch', async () => {
-    const client = new Imagekit({
+    const client = new ImageKit({
       baseURL: 'http://localhost:5000/',
       username: 'My Username',
       password: 'My Password',
@@ -252,7 +252,7 @@ describe('instantiate client', () => {
 
   test('explicit global fetch', async () => {
     // make sure the global fetch type is assignable to our Fetch type
-    const client = new Imagekit({
+    const client = new ImageKit({
       baseURL: 'http://localhost:5000/',
       username: 'My Username',
       password: 'My Password',
@@ -261,7 +261,7 @@ describe('instantiate client', () => {
   });
 
   test('custom signal', async () => {
-    const client = new Imagekit({
+    const client = new ImageKit({
       baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
       username: 'My Username',
       password: 'My Password',
@@ -294,7 +294,7 @@ describe('instantiate client', () => {
       return new Response(JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Imagekit({
+    const client = new ImageKit({
       baseURL: 'http://localhost:5000/',
       username: 'My Username',
       password: 'My Password',
@@ -307,7 +307,7 @@ describe('instantiate client', () => {
 
   describe('baseUrl', () => {
     test('trailing slash', () => {
-      const client = new Imagekit({
+      const client = new ImageKit({
         baseURL: 'http://localhost:5000/custom/path/',
         username: 'My Username',
         password: 'My Password',
@@ -316,7 +316,7 @@ describe('instantiate client', () => {
     });
 
     test('no trailing slash', () => {
-      const client = new Imagekit({
+      const client = new ImageKit({
         baseURL: 'http://localhost:5000/custom/path',
         username: 'My Username',
         password: 'My Password',
@@ -325,11 +325,11 @@ describe('instantiate client', () => {
     });
 
     afterEach(() => {
-      process.env['IMAGEKIT_BASE_URL'] = undefined;
+      process.env['IMAGE_KIT_BASE_URL'] = undefined;
     });
 
     test('explicit option', () => {
-      const client = new Imagekit({
+      const client = new ImageKit({
         baseURL: 'https://example.com',
         username: 'My Username',
         password: 'My Password',
@@ -338,32 +338,32 @@ describe('instantiate client', () => {
     });
 
     test('env variable', () => {
-      process.env['IMAGEKIT_BASE_URL'] = 'https://example.com/from_env';
-      const client = new Imagekit({ username: 'My Username', password: 'My Password' });
+      process.env['IMAGE_KIT_BASE_URL'] = 'https://example.com/from_env';
+      const client = new ImageKit({ username: 'My Username', password: 'My Password' });
       expect(client.baseURL).toEqual('https://example.com/from_env');
     });
 
     test('empty env variable', () => {
-      process.env['IMAGEKIT_BASE_URL'] = ''; // empty
-      const client = new Imagekit({ username: 'My Username', password: 'My Password' });
+      process.env['IMAGE_KIT_BASE_URL'] = ''; // empty
+      const client = new ImageKit({ username: 'My Username', password: 'My Password' });
       expect(client.baseURL).toEqual('https://api.imagekit.io');
     });
 
     test('blank env variable', () => {
-      process.env['IMAGEKIT_BASE_URL'] = '  '; // blank
-      const client = new Imagekit({ username: 'My Username', password: 'My Password' });
+      process.env['IMAGE_KIT_BASE_URL'] = '  '; // blank
+      const client = new ImageKit({ username: 'My Username', password: 'My Password' });
       expect(client.baseURL).toEqual('https://api.imagekit.io');
     });
 
     test('in request options', () => {
-      const client = new Imagekit({ username: 'My Username', password: 'My Password' });
+      const client = new ImageKit({ username: 'My Username', password: 'My Password' });
       expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
         'http://localhost:5000/option/foo',
       );
     });
 
     test('in request options overridden by client options', () => {
-      const client = new Imagekit({
+      const client = new ImageKit({
         username: 'My Username',
         password: 'My Password',
         baseURL: 'http://localhost:5000/client',
@@ -374,8 +374,8 @@ describe('instantiate client', () => {
     });
 
     test('in request options overridden by env variable', () => {
-      process.env['IMAGEKIT_BASE_URL'] = 'http://localhost:5000/env';
-      const client = new Imagekit({ username: 'My Username', password: 'My Password' });
+      process.env['IMAGE_KIT_BASE_URL'] = 'http://localhost:5000/env';
+      const client = new ImageKit({ username: 'My Username', password: 'My Password' });
       expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
         'http://localhost:5000/env/foo',
       );
@@ -383,17 +383,17 @@ describe('instantiate client', () => {
   });
 
   test('maxRetries option is correctly set', () => {
-    const client = new Imagekit({ maxRetries: 4, username: 'My Username', password: 'My Password' });
+    const client = new ImageKit({ maxRetries: 4, username: 'My Username', password: 'My Password' });
     expect(client.maxRetries).toEqual(4);
 
     // default
-    const client2 = new Imagekit({ username: 'My Username', password: 'My Password' });
+    const client2 = new ImageKit({ username: 'My Username', password: 'My Password' });
     expect(client2.maxRetries).toEqual(2);
   });
 
   describe('withOptions', () => {
     test('creates a new client with overridden options', async () => {
-      const client = new Imagekit({
+      const client = new ImageKit({
         baseURL: 'http://localhost:5000/',
         maxRetries: 3,
         username: 'My Username',
@@ -419,7 +419,7 @@ describe('instantiate client', () => {
     });
 
     test('inherits options from the parent client', async () => {
-      const client = new Imagekit({
+      const client = new ImageKit({
         baseURL: 'http://localhost:5000/',
         defaultHeaders: { 'X-Test-Header': 'test-value' },
         defaultQuery: { 'test-param': 'test-value' },
@@ -439,7 +439,7 @@ describe('instantiate client', () => {
     });
 
     test('respects runtime property changes when creating new client', () => {
-      const client = new Imagekit({
+      const client = new ImageKit({
         baseURL: 'http://localhost:5000/',
         timeout: 1000,
         username: 'My Username',
@@ -474,7 +474,7 @@ describe('instantiate client', () => {
     // set options via env var
     process.env['IMAGEKIT_USERNAME'] = 'My Username';
     process.env['IMAGEKIT_PASSWORD'] = 'My Password';
-    const client = new Imagekit();
+    const client = new ImageKit();
     expect(client.username).toBe('My Username');
     expect(client.password).toBe('My Password');
   });
@@ -483,14 +483,14 @@ describe('instantiate client', () => {
     // set options via env var
     process.env['IMAGEKIT_USERNAME'] = 'another My Username';
     process.env['IMAGEKIT_PASSWORD'] = 'another My Password';
-    const client = new Imagekit({ username: 'My Username', password: 'My Password' });
+    const client = new ImageKit({ username: 'My Username', password: 'My Password' });
     expect(client.username).toBe('My Username');
     expect(client.password).toBe('My Password');
   });
 });
 
 describe('request building', () => {
-  const client = new Imagekit({ username: 'My Username', password: 'My Password' });
+  const client = new ImageKit({ username: 'My Username', password: 'My Password' });
 
   describe('custom headers', () => {
     test('handles undefined', async () => {
@@ -509,7 +509,7 @@ describe('request building', () => {
 });
 
 describe('default encoder', () => {
-  const client = new Imagekit({ username: 'My Username', password: 'My Password' });
+  const client = new ImageKit({ username: 'My Username', password: 'My Password' });
 
   class Serializable {
     toJSON() {
@@ -594,7 +594,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Imagekit({
+    const client = new ImageKit({
       username: 'My Username',
       password: 'My Password',
       timeout: 10,
@@ -629,7 +629,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Imagekit({
+    const client = new ImageKit({
       username: 'My Username',
       password: 'My Password',
       fetch: testFetch,
@@ -658,7 +658,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Imagekit({
+    const client = new ImageKit({
       username: 'My Username',
       password: 'My Password',
       fetch: testFetch,
@@ -692,7 +692,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Imagekit({
+    const client = new ImageKit({
       username: 'My Username',
       password: 'My Password',
       fetch: testFetch,
@@ -726,7 +726,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Imagekit({
+    const client = new ImageKit({
       username: 'My Username',
       password: 'My Password',
       fetch: testFetch,
@@ -761,7 +761,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Imagekit({ username: 'My Username', password: 'My Password', fetch: testFetch });
+    const client = new ImageKit({ username: 'My Username', password: 'My Password', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -791,7 +791,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Imagekit({ username: 'My Username', password: 'My Password', fetch: testFetch });
+    const client = new ImageKit({ username: 'My Username', password: 'My Password', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);

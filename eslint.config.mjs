@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^imagekit(/.*)?',
+              regex: '^@imagekit/nodejs(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

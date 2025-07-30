@@ -115,7 +115,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['IMAGEKIT_BASE_URL'].
+   * Defaults to process.env['IMAGE_KIT_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -169,7 +169,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['IMAGEKIT_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['IMAGE_KIT_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -182,9 +182,9 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Imagekit API.
+ * API Client for interfacing with the Image Kit API.
  */
-export class Imagekit {
+export class ImageKit {
   username: string;
   password: string;
 
@@ -201,11 +201,11 @@ export class Imagekit {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Imagekit API.
+   * API Client for interfacing with the Image Kit API.
    *
    * @param {string | undefined} [opts.username=process.env['IMAGEKIT_USERNAME'] ?? undefined]
    * @param {string | undefined} [opts.password=process.env['IMAGEKIT_PASSWORD'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['IMAGEKIT_BASE_URL'] ?? https://api.imagekit.io] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['IMAGE_KIT_BASE_URL'] ?? https://api.imagekit.io] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -214,19 +214,19 @@ export class Imagekit {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('IMAGEKIT_BASE_URL'),
+    baseURL = readEnv('IMAGE_KIT_BASE_URL'),
     username = readEnv('IMAGEKIT_USERNAME'),
     password = readEnv('IMAGEKIT_PASSWORD'),
     ...opts
   }: ClientOptions = {}) {
     if (username === undefined) {
-      throw new Errors.ImagekitError(
-        "The IMAGEKIT_USERNAME environment variable is missing or empty; either provide it, or instantiate the Imagekit client with an username option, like new Imagekit({ username: 'My Username' }).",
+      throw new Errors.ImageKitError(
+        "The IMAGEKIT_USERNAME environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an username option, like new ImageKit({ username: 'My Username' }).",
       );
     }
     if (password === undefined) {
-      throw new Errors.ImagekitError(
-        "The IMAGEKIT_PASSWORD environment variable is missing or empty; either provide it, or instantiate the Imagekit client with an password option, like new Imagekit({ password: 'My Password' }).",
+      throw new Errors.ImageKitError(
+        "The IMAGEKIT_PASSWORD environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an password option, like new ImageKit({ password: 'My Password' }).",
       );
     }
 
@@ -238,14 +238,14 @@ export class Imagekit {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? Imagekit.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? ImageKit.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('IMAGEKIT_LOG'), "process.env['IMAGEKIT_LOG']", this) ??
+      parseLogLevel(readEnv('IMAGE_KIT_LOG'), "process.env['IMAGE_KIT_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
@@ -320,7 +320,7 @@ export class Imagekit {
         if (value === null) {
           return `${encodeURIComponent(key)}=`;
         }
-        throw new Errors.ImagekitError(
+        throw new Errors.ImageKitError(
           `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
         );
       })
@@ -792,10 +792,10 @@ export class Imagekit {
     }
   }
 
-  static Imagekit = this;
+  static ImageKit = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static ImagekitError = Errors.ImagekitError;
+  static ImageKitError = Errors.ImageKitError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -817,12 +817,12 @@ export class Imagekit {
   bulkJobs: API.BulkJobs = new API.BulkJobs(this);
   accounts: API.Accounts = new API.Accounts(this);
 }
-Imagekit.CustomMetadataFields = CustomMetadataFields;
-Imagekit.Files = Files;
-Imagekit.Folder = Folder;
-Imagekit.BulkJobs = BulkJobs;
-Imagekit.Accounts = Accounts;
-export declare namespace Imagekit {
+ImageKit.CustomMetadataFields = CustomMetadataFields;
+ImageKit.Files = Files;
+ImageKit.Folder = Folder;
+ImageKit.BulkJobs = BulkJobs;
+ImageKit.Accounts = Accounts;
+export declare namespace ImageKit {
   export type RequestOptions = Opts.RequestOptions;
 
   export {

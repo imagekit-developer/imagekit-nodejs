@@ -16,9 +16,9 @@ before making any information public.
 ## Reporting Non-SDK Related Security Issues
 
 If you encounter security issues that are not directly related to SDKs but pertain to the services
-or products provided by Imagekit, please follow the respective company's security reporting guidelines.
+or products provided by Image Kit, please follow the respective company's security reporting guidelines.
 
-### Imagekit Terms and Policies
+### Image Kit Terms and Policies
 
 Please contact developer@imagekit.io for any questions or concerns regarding the security of our services.
 

@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import type { Imagekit } from '../client';
+import type { ImageKit } from '../client';
 
 export abstract class APIResource {
-  protected _client: Imagekit;
+  protected _client: ImageKit;
 
-  constructor(client: Imagekit) {
+  constructor(client: ImageKit) {
     this._client = client;
   }
 }

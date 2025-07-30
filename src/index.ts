@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Imagekit as default } from './client';
+export { ImageKit as default } from './client';
 
 export { type Uploadable, toFile } from './core/uploads';
 export { APIPromise } from './core/api-promise';
-export { Imagekit, type ClientOptions } from './client';
+export { ImageKit, type ClientOptions } from './client';
 export {
-  ImagekitError,
+  ImageKitError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,

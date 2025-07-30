@@ -1,6 +1,6 @@
 import fs from 'fs';
-import type { ResponseLike } from 'imagekit/internal/to-file';
-import { toFile } from 'imagekit/core/uploads';
+import type { ResponseLike } from '@imagekit/nodejs/internal/to-file';
+import { toFile } from '@imagekit/nodejs/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,7 +97,7 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('imagekit/core/uploads');
+    const uploads = await import('@imagekit/nodejs/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(

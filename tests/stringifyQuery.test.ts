@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Imagekit } from 'imagekit';
+import { ImageKit } from '@imagekit/nodejs';
 
-const { stringifyQuery } = Imagekit.prototype as any;
+const { stringifyQuery } = ImageKit.prototype as any;
 
 describe(stringifyQuery, () => {
   for (const [input, expected] of [
