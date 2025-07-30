@@ -26,7 +26,6 @@ import {
   Versions,
 } from './versions';
 import { APIPromise } from '../../core/api-promise';
-import { type Uploadable } from '../../core/uploads';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { multipartFormRequestOptions } from '../../internal/uploads';
@@ -221,7 +220,7 @@ export class Files extends APIResource {
    * @example
    * ```ts
    * const response = await client.files.uploadV1({
-   *   file: fs.createReadStream('path/to/file'),
+   *   file: 'https://www.example.com/rest-of-the-image-path.jpg',
    *   fileName: 'fileName',
    * });
    * ```
@@ -268,7 +267,7 @@ export class Files extends APIResource {
    * @example
    * ```ts
    * const response = await client.files.uploadV2({
-   *   file: fs.createReadStream('path/to/file'),
+   *   file: 'https://www.example.com/rest-of-the-image-path.jpg',
    *   fileName: 'fileName',
    * });
    * ```
@@ -2238,9 +2237,13 @@ export interface FileRenameParams {
 
 export interface FileUploadV1Params {
   /**
-   * Pass binary data. Accepts stream too.
+   * Pass the HTTP URL or base64 string. When passing a URL in the file parameter,
+   * please ensure that our servers can access the URL. In case ImageKit is unable to
+   * download the file from the specified URL, a `400` error response is returned.
+   * This will also result in a `400` error if the file download request is aborted
+   * if response headers are not received in 8 seconds.
    */
-  file: Uploadable;
+  file: string;
 
   /**
    * The name with which the file has to be uploaded. The file name can contain:
@@ -2442,9 +2445,13 @@ export interface FileUploadV1Params {
 
 export interface FileUploadV2Params {
   /**
-   * Pass binary data. Accepts stream too.
+   * Pass the HTTP URL or base64 string. When passing a URL in the file parameter,
+   * please ensure that our servers can access the URL. In case ImageKit is unable to
+   * download the file from the specified URL, a `400` error response is returned.
+   * This will also result in a `400` error if the file download request is aborted
+   * if response headers are not received in 8 seconds.
    */
-  file: Uploadable;
+  file: string;
 
   /**
    * The name with which the file has to be uploaded.
