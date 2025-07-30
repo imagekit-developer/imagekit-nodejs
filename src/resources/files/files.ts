@@ -191,6 +191,9 @@ export class Files extends APIResource {
 export type FileListResponse = Array<FileListResponse.FileListResponseItem>;
 
 export namespace FileListResponse {
+  /**
+   * Object containing details of a file or file version.
+   */
   export interface FileListResponseItem {
     /**
      * An array of tags assigned to the file by auto tagging.

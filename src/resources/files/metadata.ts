@@ -40,6 +40,9 @@ export class Metadata extends APIResource {
   }
 }
 
+/**
+ * JSON object containing metadata.
+ */
 export interface MetadataRetrieveResponse {
   /**
    * The audio codec used in the video (only for video).
@@ -111,20 +114,38 @@ export interface MetadataRetrieveResponse {
 
 export namespace MetadataRetrieveResponse {
   export interface Exif {
+    /**
+     * Object containing Exif details.
+     */
     exif?: Exif.Exif;
 
+    /**
+     * Object containing GPS information.
+     */
     gps?: Exif.Gps;
 
+    /**
+     * Object containing EXIF image information.
+     */
     image?: Exif.Image;
 
+    /**
+     * JSON object.
+     */
     interoperability?: Exif.Interoperability;
 
     makernote?: { [key: string]: unknown };
 
+    /**
+     * Object containing Thumbnail information.
+     */
     thumbnail?: Exif.Thumbnail;
   }
 
   export namespace Exif {
+    /**
+     * Object containing Exif details.
+     */
     export interface Exif {
       ApertureValue?: number;
 
@@ -179,10 +200,16 @@ export namespace MetadataRetrieveResponse {
       WhiteBalance?: number;
     }
 
+    /**
+     * Object containing GPS information.
+     */
     export interface Gps {
       GPSVersionID?: Array<number>;
     }
 
+    /**
+     * Object containing EXIF image information.
+     */
     export interface Image {
       ExifOffset?: number;
 
@@ -207,12 +234,18 @@ export namespace MetadataRetrieveResponse {
       YResolution?: number;
     }
 
+    /**
+     * JSON object.
+     */
     export interface Interoperability {
       InteropIndex?: string;
 
       InteropVersion?: string;
     }
 
+    /**
+     * Object containing Thumbnail information.
+     */
     export interface Thumbnail {
       Compression?: number;
 
@@ -229,6 +262,9 @@ export namespace MetadataRetrieveResponse {
   }
 }
 
+/**
+ * JSON object containing metadata.
+ */
 export interface MetadataFromURLResponse {
   /**
    * The audio codec used in the video (only for video).
@@ -300,20 +336,38 @@ export interface MetadataFromURLResponse {
 
 export namespace MetadataFromURLResponse {
   export interface Exif {
+    /**
+     * Object containing Exif details.
+     */
     exif?: Exif.Exif;
 
+    /**
+     * Object containing GPS information.
+     */
     gps?: Exif.Gps;
 
+    /**
+     * Object containing EXIF image information.
+     */
     image?: Exif.Image;
 
+    /**
+     * JSON object.
+     */
     interoperability?: Exif.Interoperability;
 
     makernote?: { [key: string]: unknown };
 
+    /**
+     * Object containing Thumbnail information.
+     */
     thumbnail?: Exif.Thumbnail;
   }
 
   export namespace Exif {
+    /**
+     * Object containing Exif details.
+     */
     export interface Exif {
       ApertureValue?: number;
 
@@ -368,10 +422,16 @@ export namespace MetadataFromURLResponse {
       WhiteBalance?: number;
     }
 
+    /**
+     * Object containing GPS information.
+     */
     export interface Gps {
       GPSVersionID?: Array<number>;
     }
 
+    /**
+     * Object containing EXIF image information.
+     */
     export interface Image {
       ExifOffset?: number;
 
@@ -396,12 +456,18 @@ export namespace MetadataFromURLResponse {
       YResolution?: number;
     }
 
+    /**
+     * JSON object.
+     */
     export interface Interoperability {
       InteropIndex?: string;
 
       InteropVersion?: string;
     }
 
+    /**
+     * Object containing Thumbnail information.
+     */
     export interface Thumbnail {
       Compression?: number;
 

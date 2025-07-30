@@ -60,6 +60,9 @@ export class Details extends APIResource {
   }
 }
 
+/**
+ * Object containing details of a file or file version.
+ */
 export interface DetailRetrieveResponse {
   /**
    * An array of tags assigned to the file by auto tagging.
@@ -391,7 +394,7 @@ export declare namespace DetailUpdateParams {
      * Array of extensions to be applied to the asset. Each extension can be configured
      * with specific parameters based on the extension type.
      */
-    extensions?: Array<UpdateFileDetails.RemoveBackground | UpdateFileDetails.AutoTagging>;
+    extensions?: Array<UpdateFileDetails.RemovedotBgExtension | UpdateFileDetails.AutoTaggingExtension>;
 
     /**
      * An array of AITags associated with the file that you want to remove, e.g.
@@ -421,16 +424,16 @@ export declare namespace DetailUpdateParams {
   }
 
   export namespace UpdateFileDetails {
-    export interface RemoveBackground {
+    export interface RemovedotBgExtension {
       /**
        * Specifies the background removal extension.
        */
       name: 'remove-bg';
 
-      options?: RemoveBackground.Options;
+      options?: RemovedotBgExtension.Options;
     }
 
-    export namespace RemoveBackground {
+    export namespace RemovedotBgExtension {
       export interface Options {
         /**
          * Whether to add an artificial shadow to the result. Default is false. Note:
@@ -459,7 +462,7 @@ export declare namespace DetailUpdateParams {
       }
     }
 
-    export interface AutoTagging {
+    export interface AutoTaggingExtension {
       /**
        * Maximum number of tags to attach to the asset.
        */

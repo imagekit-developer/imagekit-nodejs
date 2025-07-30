@@ -90,6 +90,9 @@ export class CustomMetadataFields extends APIResource {
   }
 }
 
+/**
+ * Object containing details of a custom metadata field.
+ */
 export interface CustomMetadataFieldCreateResponse {
   /**
    * Unique identifier for the custom metadata field. Use this to update the field.
@@ -129,7 +132,7 @@ export namespace CustomMetadataFieldCreateResponse {
      * The default value for this custom metadata field. Date type of default value
      * depends on the field type.
      */
-    defaultValue?: string | number | boolean | Array<unknown>;
+    defaultValue?: string | number | boolean | Array<string | number | boolean>;
 
     /**
      * Specifies if the this custom metadata field is required or not.
@@ -163,10 +166,13 @@ export namespace CustomMetadataFieldCreateResponse {
     /**
      * An array of allowed values when field type is `SingleSelect` or `MultiSelect`.
      */
-    selectOptions?: Array<unknown>;
+    selectOptions?: Array<string | number | boolean>;
   }
 }
 
+/**
+ * Object containing details of a custom metadata field.
+ */
 export interface CustomMetadataFieldUpdateResponse {
   /**
    * Unique identifier for the custom metadata field. Use this to update the field.
@@ -206,7 +212,7 @@ export namespace CustomMetadataFieldUpdateResponse {
      * The default value for this custom metadata field. Date type of default value
      * depends on the field type.
      */
-    defaultValue?: string | number | boolean | Array<unknown>;
+    defaultValue?: string | number | boolean | Array<string | number | boolean>;
 
     /**
      * Specifies if the this custom metadata field is required or not.
@@ -240,7 +246,7 @@ export namespace CustomMetadataFieldUpdateResponse {
     /**
      * An array of allowed values when field type is `SingleSelect` or `MultiSelect`.
      */
-    selectOptions?: Array<unknown>;
+    selectOptions?: Array<string | number | boolean>;
   }
 }
 
@@ -248,6 +254,9 @@ export type CustomMetadataFieldListResponse =
   Array<CustomMetadataFieldListResponse.CustomMetadataFieldListResponseItem>;
 
 export namespace CustomMetadataFieldListResponse {
+  /**
+   * Object containing details of a custom metadata field.
+   */
   export interface CustomMetadataFieldListResponseItem {
     /**
      * Unique identifier for the custom metadata field. Use this to update the field.
@@ -287,7 +296,7 @@ export namespace CustomMetadataFieldListResponse {
        * The default value for this custom metadata field. Date type of default value
        * depends on the field type.
        */
-      defaultValue?: string | number | boolean | Array<unknown>;
+      defaultValue?: string | number | boolean | Array<string | number | boolean>;
 
       /**
        * Specifies if the this custom metadata field is required or not.
@@ -321,7 +330,7 @@ export namespace CustomMetadataFieldListResponse {
       /**
        * An array of allowed values when field type is `SingleSelect` or `MultiSelect`.
        */
-      selectOptions?: Array<unknown>;
+      selectOptions?: Array<string | number | boolean>;
     }
   }
 }
@@ -358,7 +367,7 @@ export namespace CustomMetadataFieldCreateParams {
      * if `isValueRequired` property is set to `true`. The value should match the
      * `type` of custom metadata field.
      */
-    defaultValue?: string | number | boolean | Array<unknown>;
+    defaultValue?: string | number | boolean | Array<string | number | boolean>;
 
     /**
      * Sets this custom metadata field as required. Setting custom metadata fields on
@@ -397,7 +406,7 @@ export namespace CustomMetadataFieldCreateParams {
      * An array of allowed values. This property is only required if `type` property is
      * set to `SingleSelect` or `MultiSelect`.
      */
-    selectOptions?: Array<unknown>;
+    selectOptions?: Array<string | number | boolean>;
   }
 }
 
@@ -432,7 +441,7 @@ export namespace CustomMetadataFieldUpdateParams {
      * if `isValueRequired` property is set to `true`. The value should match the
      * `type` of custom metadata field.
      */
-    defaultValue?: string | number | boolean | Array<unknown>;
+    defaultValue?: string | number | boolean | Array<string | number | boolean>;
 
     /**
      * Sets this custom metadata field as required. Setting custom metadata fields on
@@ -471,7 +480,7 @@ export namespace CustomMetadataFieldUpdateParams {
      * An array of allowed values. This property is only required if `type` property is
      * set to `SingleSelect` or `MultiSelect`.
      */
-    selectOptions?: Array<unknown>;
+    selectOptions?: Array<string | number | boolean>;
   }
 }
 

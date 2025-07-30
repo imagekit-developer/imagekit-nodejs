@@ -78,6 +78,9 @@ export class Versions extends APIResource {
   }
 }
 
+/**
+ * Object containing details of a file or file version.
+ */
 export interface VersionRetrieveResponse {
   /**
    * An array of tags assigned to the file by auto tagging.
@@ -230,6 +233,9 @@ export namespace VersionRetrieveResponse {
 export type VersionListResponse = Array<VersionListResponse.VersionListResponseItem>;
 
 export namespace VersionListResponse {
+  /**
+   * Object containing details of a file or file version.
+   */
   export interface VersionListResponseItem {
     /**
      * An array of tags assigned to the file by auto tagging.
@@ -382,6 +388,9 @@ export namespace VersionListResponse {
 
 export type VersionDeleteResponse = unknown;
 
+/**
+ * Object containing details of a file or file version.
+ */
 export interface VersionRestoreResponse {
   /**
    * An array of tags assigned to the file by auto tagging.

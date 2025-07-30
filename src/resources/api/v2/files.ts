@@ -54,6 +54,9 @@ export class Files extends APIResource {
   }
 }
 
+/**
+ * Object containing details of a successful upload.
+ */
 export interface FileUploadResponse {
   /**
    * An array of tags assigned to the uploaded file by auto tagging.
@@ -678,20 +681,38 @@ export namespace FileUploadResponse {
 
   export namespace Metadata {
     export interface Exif {
+      /**
+       * Object containing Exif details.
+       */
       exif?: Exif.Exif;
 
+      /**
+       * Object containing GPS information.
+       */
       gps?: Exif.Gps;
 
+      /**
+       * Object containing EXIF image information.
+       */
       image?: Exif.Image;
 
+      /**
+       * JSON object.
+       */
       interoperability?: Exif.Interoperability;
 
       makernote?: { [key: string]: unknown };
 
+      /**
+       * Object containing Thumbnail information.
+       */
       thumbnail?: Exif.Thumbnail;
     }
 
     export namespace Exif {
+      /**
+       * Object containing Exif details.
+       */
       export interface Exif {
         ApertureValue?: number;
 
@@ -746,10 +767,16 @@ export namespace FileUploadResponse {
         WhiteBalance?: number;
       }
 
+      /**
+       * Object containing GPS information.
+       */
       export interface Gps {
         GPSVersionID?: Array<number>;
       }
 
+      /**
+       * Object containing EXIF image information.
+       */
       export interface Image {
         ExifOffset?: number;
 
@@ -774,12 +801,18 @@ export namespace FileUploadResponse {
         YResolution?: number;
       }
 
+      /**
+       * JSON object.
+       */
       export interface Interoperability {
         InteropIndex?: string;
 
         InteropVersion?: string;
       }
 
+      /**
+       * Object containing Thumbnail information.
+       */
       export interface Thumbnail {
         Compression?: number;
 
@@ -895,7 +928,7 @@ export interface FileUploadParams {
    * If `true`, the file is marked as private and is accessible only using named
    * transformation or signed URL.
    */
-  isPrivateFile?;
+  isPrivateFile?: 'true' | 'false';
 
   /**
    * Whether to upload file as published or not.
@@ -907,19 +940,19 @@ export interface FileUploadParams {
    * The option to upload in draft state is only available in custom enterprise
    * pricing plans.
    */
-  isPublished?;
+  isPublished?: 'true' | 'false';
 
   /**
    * If set to `true` and a file already exists at the exact location, its AITags
    * will be removed. Set `overwriteAITags` to `false` to preserve AITags.
    */
-  overwriteAITags?;
+  overwriteAITags?: 'true' | 'false';
 
   /**
    * If the request does not have `customMetadata`, and a file already exists at the
    * exact location, existing customMetadata will be removed.
    */
-  overwriteCustomMetadata?;
+  overwriteCustomMetadata?: 'true' | 'false';
 
   /**
    * If `false` and `useUniqueFileName` is also `false`, and a file already exists at
@@ -931,7 +964,7 @@ export interface FileUploadParams {
    * If the request does not have `tags`, and a file already exists at the exact
    * location, existing tags will be removed.
    */
-  overwriteTags?;
+  overwriteTags?: 'true' | 'false';
 
   /**
    * Comma-separated values of the fields that you want the API to return in the
@@ -986,7 +1019,7 @@ export interface FileUploadParams {
    * If `false`, then the image is uploaded with the provided filename parameter, and
    * any existing file with the same name is replaced.
    */
-  useUniqueFileName?;
+  useUniqueFileName?: 'true' | 'false';
 
   /**
    * The final status of extensions after they have completed execution will be
