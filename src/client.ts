@@ -79,38 +79,11 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * ImageKit API uses API keys to authenticate requests. You can view and manage your API keys in [the dashboard](https://imagekit.io/dashboard/developer/api-keys).
-   *
-   * Private keys have the prefix `private_` and the public keys have the prefix `public_`. Alternatively, you can use [restricted API keys](/docs/api-keys#restricted-api-keys) for granular permissions.
-   *
-   * Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.
-   *
-   * Authentication to the API is performed via HTTP Basic Auth. Provide your API key as the basic auth username value. You do not need to provide a password.
-   *
-   * Send your HTTP requests with the `Authorization` header that contains the word Basic word followed by a space and a base64-encoded string username:password.
-   *
-   * For example, if your private key is `private_rGAPQJbhBx`, encode `private_rGAPQJbhBx:` using base64. The encoded value will be `cHJpdmF0ZV9yR0FQUUpiaEJ4Og==`. Then send `Authorization: Basic cHJpdmF0ZV9yR0FQUUpiaEJ4Og==`.
-   *
-   * All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
+   * Your ImageKit private key starts with `private_`.
    */
-  username?: string | undefined;
+  privateAPIKey?: string | undefined;
 
-  /**
-   * ImageKit API uses API keys to authenticate requests. You can view and manage your API keys in [the dashboard](https://imagekit.io/dashboard/developer/api-keys).
-   *
-   * Private keys have the prefix `private_` and the public keys have the prefix `public_`. Alternatively, you can use [restricted API keys](/docs/api-keys#restricted-api-keys) for granular permissions.
-   *
-   * Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.
-   *
-   * Authentication to the API is performed via HTTP Basic Auth. Provide your API key as the basic auth username value. You do not need to provide a password.
-   *
-   * Send your HTTP requests with the `Authorization` header that contains the word Basic word followed by a space and a base64-encoded string username:password.
-   *
-   * For example, if your private key is `private_rGAPQJbhBx`, encode `private_rGAPQJbhBx:` using base64. The encoded value will be `cHJpdmF0ZV9yR0FQUUpiaEJ4Og==`. Then send `Authorization: Basic cHJpdmF0ZV9yR0FQUUpiaEJ4Og==`.
-   *
-   * All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
-   */
-  password?: string | undefined;
+  password?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -185,8 +158,8 @@ export interface ClientOptions {
  * API Client for interfacing with the Image Kit API.
  */
 export class ImageKit {
-  username: string;
-  password: string;
+  privateAPIKey: string;
+  password: string | null;
 
   baseURL: string;
   maxRetries: number;
@@ -203,8 +176,8 @@ export class ImageKit {
   /**
    * API Client for interfacing with the Image Kit API.
    *
-   * @param {string | undefined} [opts.username=process.env['IMAGEKIT_USERNAME'] ?? undefined]
-   * @param {string | undefined} [opts.password=process.env['IMAGEKIT_PASSWORD'] ?? undefined]
+   * @param {string | undefined} [opts.privateAPIKey=process.env['IMAGEKIT_PRIVATE_API_KEY'] ?? undefined]
+   * @param {string | null | undefined} [opts.password]
    * @param {string} [opts.baseURL=process.env['IMAGE_KIT_BASE_URL'] ?? https://api.imagekit.io] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -215,23 +188,18 @@ export class ImageKit {
    */
   constructor({
     baseURL = readEnv('IMAGE_KIT_BASE_URL'),
-    username = readEnv('IMAGEKIT_USERNAME'),
-    password = readEnv('IMAGEKIT_PASSWORD'),
+    privateAPIKey = readEnv('IMAGEKIT_PRIVATE_API_KEY'),
+    password = null,
     ...opts
   }: ClientOptions = {}) {
-    if (username === undefined) {
+    if (privateAPIKey === undefined) {
       throw new Errors.ImageKitError(
-        "The IMAGEKIT_USERNAME environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an username option, like new ImageKit({ username: 'My Username' }).",
-      );
-    }
-    if (password === undefined) {
-      throw new Errors.ImageKitError(
-        "The IMAGEKIT_PASSWORD environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an password option, like new ImageKit({ password: 'My Password' }).",
+        "The IMAGEKIT_PRIVATE_API_KEY environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an privateAPIKey option, like new ImageKit({ privateAPIKey: 'My Private API Key' }).",
       );
     }
 
     const options: ClientOptions = {
-      username,
+      privateAPIKey,
       password,
       ...opts,
       baseURL: baseURL || `https://api.imagekit.io`,
@@ -254,7 +222,7 @@ export class ImageKit {
 
     this._options = options;
 
-    this.username = username;
+    this.privateAPIKey = privateAPIKey;
     this.password = password;
   }
 
@@ -271,7 +239,7 @@ export class ImageKit {
       logLevel: this.logLevel,
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
-      username: this.username,
+      privateAPIKey: this.privateAPIKey,
       password: this.password,
       ...options,
     });
@@ -290,11 +258,20 @@ export class ImageKit {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    return;
+    if (this.privateAPIKey && this.password && values.get('authorization')) {
+      return;
+    }
+    if (nulls.has('authorization')) {
+      return;
+    }
+
+    throw new Error(
+      'Could not resolve authentication method. Expected the privateAPIKey or password to be set. Or for the "Authorization" headers to be explicitly omitted',
+    );
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    if (!this.username) {
+    if (!this.privateAPIKey) {
       return undefined;
     }
 
@@ -302,7 +279,7 @@ export class ImageKit {
       return undefined;
     }
 
-    const credentials = `${this.username}:${this.password}`;
+    const credentials = `${this.privateAPIKey}:${this.password}`;
     const Authorization = `Basic ${toBase64(credentials)}`;
     return buildHeaders([{ Authorization }]);
   }

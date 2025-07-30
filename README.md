@@ -26,8 +26,8 @@ The full API of this library can be found in [api.md](api.md).
 import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
-  username: process.env['IMAGEKIT_USERNAME'], // This is the default and can be omitted
-  password: process.env['IMAGEKIT_PASSWORD'], // This is the default and can be omitted
+  privateAPIKey: process.env['IMAGEKIT_PRIVATE_API_KEY'], // This is the default and can be omitted
+  password: 'My Password',
 });
 
 const response = await client.files.uploadV1({
@@ -47,8 +47,8 @@ This library includes TypeScript definitions for all request params and response
 import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
-  username: process.env['IMAGEKIT_USERNAME'], // This is the default and can be omitted
-  password: process.env['IMAGEKIT_PASSWORD'], // This is the default and can be omitted
+  privateAPIKey: process.env['IMAGEKIT_PRIVATE_API_KEY'], // This is the default and can be omitted
+  password: 'My Password',
 });
 
 const params: ImageKit.FileUploadV1Params = {
