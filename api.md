@@ -1,3 +1,13 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">ExifDetails</a></code>
+- <code><a href="./src/resources/shared.ts">ExifImage</a></code>
+- <code><a href="./src/resources/shared.ts">Gps</a></code>
+- <code><a href="./src/resources/shared.ts">Interoperability</a></code>
+- <code><a href="./src/resources/shared.ts">Thumbnail</a></code>
+
 # API
 
 ## V1

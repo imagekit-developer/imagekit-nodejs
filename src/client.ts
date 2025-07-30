@@ -877,4 +877,10 @@ export declare namespace Imagekit {
     type AccountGetUsageResponse as AccountGetUsageResponse,
     type AccountGetUsageParams as AccountGetUsageParams,
   };
+
+  export type ExifDetails = API.ExifDetails;
+  export type ExifImage = API.ExifImage;
+  export type Gps = API.Gps;
+  export type Interoperability = API.Interoperability;
+  export type Thumbnail = API.Thumbnail;
 }
