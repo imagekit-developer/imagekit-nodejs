@@ -42,7 +42,6 @@ import {
   FolderDeleteParams,
   FolderDeleteResponse,
 } from './resources/folder';
-import { API as ApiapiAPI } from './resources/api/api';
 import {
   FileAddTagsParams,
   FileAddTagsResponse,
@@ -58,6 +57,10 @@ import {
   FileRemoveTagsResponse,
   FileRenameParams,
   FileRenameResponse,
+  FileUploadV1Params,
+  FileUploadV1Response,
+  FileUploadV2Params,
+  FileUploadV2Response,
   Files,
 } from './resources/files/files';
 import { type Fetch } from './internal/builtin-types';
@@ -808,14 +811,12 @@ export class Imagekit {
 
   static toFile = Uploads.toFile;
 
-  api: API.API = new API.API(this);
   customMetadataFields: API.CustomMetadataFields = new API.CustomMetadataFields(this);
   files: API.Files = new API.Files(this);
   folder: API.Folder = new API.Folder(this);
   bulkJobs: API.BulkJobs = new API.BulkJobs(this);
   accounts: API.Accounts = new API.Accounts(this);
 }
-Imagekit.API = ApiapiAPI;
 Imagekit.CustomMetadataFields = CustomMetadataFields;
 Imagekit.Files = Files;
 Imagekit.Folder = Folder;
@@ -823,8 +824,6 @@ Imagekit.BulkJobs = BulkJobs;
 Imagekit.Accounts = Accounts;
 export declare namespace Imagekit {
   export type RequestOptions = Opts.RequestOptions;
-
-  export { ApiapiAPI as API };
 
   export {
     CustomMetadataFields as CustomMetadataFields,
@@ -846,6 +845,8 @@ export declare namespace Imagekit {
     type FileRemoveAITagsResponse as FileRemoveAITagsResponse,
     type FileRemoveTagsResponse as FileRemoveTagsResponse,
     type FileRenameResponse as FileRenameResponse,
+    type FileUploadV1Response as FileUploadV1Response,
+    type FileUploadV2Response as FileUploadV2Response,
     type FileListParams as FileListParams,
     type FileAddTagsParams as FileAddTagsParams,
     type FileCopyParams as FileCopyParams,
@@ -853,6 +854,8 @@ export declare namespace Imagekit {
     type FileRemoveAITagsParams as FileRemoveAITagsParams,
     type FileRemoveTagsParams as FileRemoveTagsParams,
     type FileRenameParams as FileRenameParams,
+    type FileUploadV1Params as FileUploadV1Params,
+    type FileUploadV2Params as FileUploadV2Params,
   };
 
   export {
@@ -877,10 +880,4 @@ export declare namespace Imagekit {
     type AccountGetUsageResponse as AccountGetUsageResponse,
     type AccountGetUsageParams as AccountGetUsageParams,
   };
-
-  export type ExifDetails = API.ExifDetails;
-  export type ExifImage = API.ExifImage;
-  export type Gps = API.Gps;
-  export type Interoperability = API.Interoperability;
-  export type Thumbnail = API.Thumbnail;
 }

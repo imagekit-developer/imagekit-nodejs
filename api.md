@@ -1,39 +1,3 @@
-# Shared
-
-Types:
-
-- <code><a href="./src/resources/shared.ts">ExifDetails</a></code>
-- <code><a href="./src/resources/shared.ts">ExifImage</a></code>
-- <code><a href="./src/resources/shared.ts">Gps</a></code>
-- <code><a href="./src/resources/shared.ts">Interoperability</a></code>
-- <code><a href="./src/resources/shared.ts">Thumbnail</a></code>
-
-# API
-
-## V1
-
-### Files
-
-Types:
-
-- <code><a href="./src/resources/api/v1/files.ts">FileUploadResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/files/upload">client.api.v1.files.<a href="./src/resources/api/v1/files.ts">upload</a>({ ...params }) -> FileUploadResponse</code>
-
-## V2
-
-### Files
-
-Types:
-
-- <code><a href="./src/resources/api/v2/files.ts">FileUploadResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v2/files/upload">client.api.v2.files.<a href="./src/resources/api/v2/files.ts">upload</a>({ ...params }) -> FileUploadResponse</code>
-
 # CustomMetadataFields
 
 Types:
@@ -61,6 +25,8 @@ Types:
 - <code><a href="./src/resources/files/files.ts">FileRemoveAITagsResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileRemoveTagsResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileRenameResponse</a></code>
+- <code><a href="./src/resources/files/files.ts">FileUploadV1Response</a></code>
+- <code><a href="./src/resources/files/files.ts">FileUploadV2Response</a></code>
 
 Methods:
 
@@ -72,6 +38,8 @@ Methods:
 - <code title="post /v1/files/removeAITags">client.files.<a href="./src/resources/files/files.ts">removeAITags</a>({ ...params }) -> FileRemoveAITagsResponse</code>
 - <code title="post /v1/files/removeTags">client.files.<a href="./src/resources/files/files.ts">removeTags</a>({ ...params }) -> FileRemoveTagsResponse</code>
 - <code title="put /v1/files/rename">client.files.<a href="./src/resources/files/files.ts">rename</a>({ ...params }) -> FileRenameResponse</code>
+- <code title="post /api/v1/files/upload">client.files.<a href="./src/resources/files/files.ts">uploadV1</a>({ ...params }) -> FileUploadV1Response</code>
+- <code title="post /api/v2/files/upload">client.files.<a href="./src/resources/files/files.ts">uploadV2</a>({ ...params }) -> FileUploadV2Response</code>
 
 ## Details
 

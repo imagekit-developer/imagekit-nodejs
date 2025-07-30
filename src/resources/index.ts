@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export * from './shared';
-export { API } from './api/api';
 export { Accounts, type AccountGetUsageResponse, type AccountGetUsageParams } from './accounts';
 export {
   BulkJobs,
@@ -30,6 +28,8 @@ export {
   type FileRemoveAITagsResponse,
   type FileRemoveTagsResponse,
   type FileRenameResponse,
+  type FileUploadV1Response,
+  type FileUploadV2Response,
   type FileListParams,
   type FileAddTagsParams,
   type FileCopyParams,
@@ -37,6 +37,8 @@ export {
   type FileRemoveAITagsParams,
   type FileRemoveTagsParams,
   type FileRenameParams,
+  type FileUploadV1Params,
+  type FileUploadV2Params,
 } from './files/files';
 export {
   Folder,

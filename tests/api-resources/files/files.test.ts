@@ -191,4 +191,91 @@ describe('resource files', () => {
       purgeCache: true,
     });
   });
+
+  // skipped: tests are disabled for the time being
+  test.skip('uploadV1: only required params', async () => {
+    const responsePromise = client.files.uploadV1({
+      file: 'https://www.example.com/rest-of-the-image-path.jpg',
+      fileName: 'fileName',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('uploadV1: required and optional params', async () => {
+    const response = await client.files.uploadV1({
+      file: 'https://www.example.com/rest-of-the-image-path.jpg',
+      fileName: 'fileName',
+      token: 'token',
+      checks: '"request.folder" : "marketing/"\n',
+      customCoordinates: 'customCoordinates',
+      customMetadata: '"\n  {\n    "brand": "Nike",\n    "color":"red"\n  }\n"\n',
+      expire: 'expire',
+      extensions:
+        '"\n[\n  {"name":"remove-bg","options":{"add_shadow":true,"bg_colour":"green"}},\n  {"name":"google-auto-tagging","maxTags":5,"minConfidence":95}\n]\n"\n',
+      folder: 'folder',
+      isPrivateFile: 'true',
+      isPublished: 'true',
+      overwriteAITags: 'true',
+      overwriteCustomMetadata: 'true',
+      overwriteFile: 'overwriteFile',
+      overwriteTags: 'true',
+      publicKey: 'publicKey',
+      responseFields: 'responseFields',
+      signature: 'signature',
+      tags: 't-shirt,round-neck,men',
+      transformation:
+        '\'{"pre":"width:300,height:300,quality:80","post":[{"type":"thumbnail","value":"width:100,height:100"}]}\'\n',
+      useUniqueFileName: 'true',
+      webhookUrl: 'webhookUrl',
+    });
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('uploadV2: only required params', async () => {
+    const responsePromise = client.files.uploadV2({
+      file: 'https://www.example.com/rest-of-the-image-path.jpg',
+      fileName: 'fileName',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('uploadV2: required and optional params', async () => {
+    const response = await client.files.uploadV2({
+      file: 'https://www.example.com/rest-of-the-image-path.jpg',
+      fileName: 'fileName',
+      token: 'token',
+      checks: '"request.folder" : "marketing/"\n',
+      customCoordinates: 'customCoordinates',
+      customMetadata: '"\n  {\n    "brand": "Nike",\n    "color":"red"\n  }\n"\n',
+      extensions:
+        '"\n[\n  {"name":"remove-bg","options":{"add_shadow":true,"bg_colour":"green"}},\n  {"name":"google-auto-tagging","maxTags":5,"minConfidence":95}\n]\n"\n',
+      folder: 'folder',
+      isPrivateFile: 'true',
+      isPublished: 'true',
+      overwriteAITags: 'true',
+      overwriteCustomMetadata: 'true',
+      overwriteFile: 'overwriteFile',
+      overwriteTags: 'true',
+      responseFields: 'responseFields',
+      tags: 't-shirt,round-neck,men',
+      transformation:
+        '\'{"pre":"width:300,height:300,quality:80","post":[{"type":"thumbnail","value":"width:100,height:100"}]}\'\n',
+      useUniqueFileName: 'true',
+      webhookUrl: 'webhookUrl',
+    });
+  });
 });

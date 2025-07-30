@@ -30,7 +30,7 @@ const client = new Imagekit({
   password: process.env['IMAGEKIT_PASSWORD'], // This is the default and can be omitted
 });
 
-const response = await client.api.v1.files.upload({
+const response = await client.files.uploadV1({
   file: 'https://www.example.com/rest-of-the-image-path.jpg',
   fileName: 'fileName',
 });
@@ -51,11 +51,11 @@ const client = new Imagekit({
   password: process.env['IMAGEKIT_PASSWORD'], // This is the default and can be omitted
 });
 
-const params: Imagekit.API.V1.FileUploadParams = {
+const params: Imagekit.FileUploadV1Params = {
   file: 'https://www.example.com/rest-of-the-image-path.jpg',
   fileName: 'fileName',
 };
-const response: Imagekit.API.V1.FileUploadResponse = await client.api.v1.files.upload(params);
+const response: Imagekit.FileUploadV1Response = await client.files.uploadV1(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -68,8 +68,8 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.api.v1.files
-  .upload({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' })
+const response = await client.files
+  .uploadV1({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' })
   .catch(async (err) => {
     if (err instanceof Imagekit.APIError) {
       console.log(err.status); // 400
@@ -110,7 +110,7 @@ const client = new Imagekit({
 });
 
 // Or, configure per-request:
-await client.api.v1.files.upload({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' }, {
+await client.files.uploadV1({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' }, {
   maxRetries: 5,
 });
 ```
@@ -127,7 +127,7 @@ const client = new Imagekit({
 });
 
 // Override per-request:
-await client.api.v1.files.upload({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' }, {
+await client.files.uploadV1({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -150,14 +150,14 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Imagekit();
 
-const response = await client.api.v1.files
-  .upload({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' })
+const response = await client.files
+  .uploadV1({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.api.v1.files
-  .upload({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' })
+const { data: response, response: raw } = await client.files
+  .uploadV1({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.videoCodec);
@@ -240,7 +240,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.api.v1.files.upload({
+client.files.uploadV1({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

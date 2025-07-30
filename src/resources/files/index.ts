@@ -16,6 +16,8 @@ export {
   type FileRemoveAITagsResponse,
   type FileRemoveTagsResponse,
   type FileRenameResponse,
+  type FileUploadV1Response,
+  type FileUploadV2Response,
   type FileListParams,
   type FileAddTagsParams,
   type FileCopyParams,
@@ -23,6 +25,8 @@ export {
   type FileRemoveAITagsParams,
   type FileRemoveTagsParams,
   type FileRenameParams,
+  type FileUploadV1Params,
+  type FileUploadV2Params,
 } from './files';
 export {
   Metadata,
