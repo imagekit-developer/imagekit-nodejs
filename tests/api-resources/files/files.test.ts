@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import ImageKit from '@imagekit/nodejs';
+import ImageKit, { toFile } from '@imagekit/nodejs';
 
 const client = new ImageKit({
   privateAPIKey: 'My Private API Key',
@@ -195,7 +195,7 @@ describe('resource files', () => {
   // skipped: tests are disabled for the time being
   test.skip('uploadV1: only required params', async () => {
     const responsePromise = client.files.uploadV1({
-      file: 'https://www.example.com/rest-of-the-image-path.jpg',
+      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       fileName: 'fileName',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -210,7 +210,7 @@ describe('resource files', () => {
   // skipped: tests are disabled for the time being
   test.skip('uploadV1: required and optional params', async () => {
     const response = await client.files.uploadV1({
-      file: 'https://www.example.com/rest-of-the-image-path.jpg',
+      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       fileName: 'fileName',
       token: 'token',
       checks: '"request.folder" : "marketing/"\n',
@@ -240,7 +240,7 @@ describe('resource files', () => {
   // skipped: tests are disabled for the time being
   test.skip('uploadV2: only required params', async () => {
     const responsePromise = client.files.uploadV2({
-      file: 'https://www.example.com/rest-of-the-image-path.jpg',
+      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       fileName: 'fileName',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -255,7 +255,7 @@ describe('resource files', () => {
   // skipped: tests are disabled for the time being
   test.skip('uploadV2: required and optional params', async () => {
     const response = await client.files.uploadV2({
-      file: 'https://www.example.com/rest-of-the-image-path.jpg',
+      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       fileName: 'fileName',
       token: 'token',
       checks: '"request.folder" : "marketing/"\n',

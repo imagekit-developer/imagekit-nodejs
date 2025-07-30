@@ -26,6 +26,7 @@ import {
   Versions,
 } from './versions';
 import { APIPromise } from '../../core/api-promise';
+import { type Uploadable } from '../../core/uploads';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { multipartFormRequestOptions } from '../../internal/uploads';
@@ -220,7 +221,7 @@ export class Files extends APIResource {
    * @example
    * ```ts
    * const response = await client.files.uploadV1({
-   *   file: 'https://www.example.com/rest-of-the-image-path.jpg',
+   *   file: fs.createReadStream('path/to/file'),
    *   fileName: 'fileName',
    * });
    * ```
@@ -267,7 +268,7 @@ export class Files extends APIResource {
    * @example
    * ```ts
    * const response = await client.files.uploadV2({
-   *   file: 'https://www.example.com/rest-of-the-image-path.jpg',
+   *   file: fs.createReadStream('path/to/file'),
    *   fileName: 'fileName',
    * });
    * ```
@@ -2250,7 +2251,7 @@ export interface FileUploadV1Params {
    * `400` error if the file download request is aborted if response headers are not
    * received in 8 seconds.
    */
-  file: string;
+  file: Uploadable;
 
   /**
    * The name with which the file has to be uploaded. The file name can contain:
@@ -2465,7 +2466,7 @@ export interface FileUploadV2Params {
    * `400` error if the file download request is aborted if response headers are not
    * received in 8 seconds.
    */
-  file: string;
+  file: Uploadable;
 
   /**
    * The name with which the file has to be uploaded.
