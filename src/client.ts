@@ -83,6 +83,11 @@ export interface ClientOptions {
   privateAPIKey?: string | undefined;
 
   /**
+   * Defaults to process.env['ORG_MY_PASSWORD_TOKEN'].
+   */
+  myPassword?: string | undefined;
+
+  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env['IMAGE_KIT_BASE_URL'].
@@ -156,6 +161,7 @@ export interface ClientOptions {
  */
 export class ImageKit {
   privateAPIKey: string;
+  myPassword: string;
 
   baseURL: string;
   maxRetries: number;
@@ -173,6 +179,7 @@ export class ImageKit {
    * API Client for interfacing with the Image Kit API.
    *
    * @param {string | undefined} [opts.privateAPIKey=process.env['IMAGEKIT_PRIVATE_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.myPassword=process.env['ORG_MY_PASSWORD_TOKEN'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['IMAGE_KIT_BASE_URL'] ?? https://api.imagekit.io] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -184,6 +191,7 @@ export class ImageKit {
   constructor({
     baseURL = readEnv('IMAGE_KIT_BASE_URL'),
     privateAPIKey = readEnv('IMAGEKIT_PRIVATE_API_KEY'),
+    myPassword = readEnv('ORG_MY_PASSWORD_TOKEN'),
     ...opts
   }: ClientOptions = {}) {
     if (privateAPIKey === undefined) {
@@ -191,9 +199,15 @@ export class ImageKit {
         "The IMAGEKIT_PRIVATE_API_KEY environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an privateAPIKey option, like new ImageKit({ privateAPIKey: 'My Private API Key' }).",
       );
     }
+    if (myPassword === undefined) {
+      throw new Errors.ImageKitError(
+        "The ORG_MY_PASSWORD_TOKEN environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an myPassword option, like new ImageKit({ myPassword: 'My My Password' }).",
+      );
+    }
 
     const options: ClientOptions = {
       privateAPIKey,
+      myPassword,
       ...opts,
       baseURL: baseURL || `https://api.imagekit.io`,
     };
@@ -216,6 +230,7 @@ export class ImageKit {
     this._options = options;
 
     this.privateAPIKey = privateAPIKey;
+    this.myPassword = myPassword;
   }
 
   /**
@@ -232,6 +247,7 @@ export class ImageKit {
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
       privateAPIKey: this.privateAPIKey,
+      myPassword: this.myPassword,
       ...options,
     });
     return client;

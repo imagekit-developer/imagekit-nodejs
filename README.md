@@ -130,6 +130,7 @@ You can use the `maxRetries` option to configure or disable this:
 // Configure the default for all requests:
 const client = new ImageKit({
   privateAPIKey: 'My Private API Key',
+  myPassword: 'My My Password',
   maxRetries: 0, // default is 2
 });
 
@@ -148,6 +149,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 // Configure the default for all requests:
 const client = new ImageKit({
   privateAPIKey: 'My Private API Key',
+  myPassword: 'My My Password',
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
