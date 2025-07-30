@@ -1,0 +1,1 @@
+# imagekit-typescript
