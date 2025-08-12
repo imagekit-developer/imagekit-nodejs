@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource batch', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.files.batch.delete({
       fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
@@ -23,7 +23,7 @@ describe('resource batch', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.files.batch.delete({
       fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],

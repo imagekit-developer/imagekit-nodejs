@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource metadata', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.files.metadata.retrieve('fileId');
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource metadata', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('fromURL: only required params', async () => {
     const responsePromise = client.files.metadata.fromURL({ url: 'url' });
     const rawResponse = await responsePromise.asResponse();
@@ -33,7 +33,7 @@ describe('resource metadata', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('fromURL: required and optional params', async () => {
     const response = await client.files.metadata.fromURL({ url: 'url' });
   });

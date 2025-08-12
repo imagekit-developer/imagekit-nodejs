@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource purge', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('execute: only required params', async () => {
     const responsePromise = client.files.purge.execute({
       url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg',
@@ -23,14 +23,14 @@ describe('resource purge', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('execute: required and optional params', async () => {
     const response = await client.files.purge.execute({
       url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg',
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('status', async () => {
     const responsePromise = client.files.purge.status('requestId');
     const rawResponse = await responsePromise.asResponse();

@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource bulkJobs', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('copyFolder: only required params', async () => {
     const responsePromise = client.bulkJobs.copyFolder({
       destinationPath: '/path/of/destination/folder',
@@ -24,7 +24,7 @@ describe('resource bulkJobs', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('copyFolder: required and optional params', async () => {
     const response = await client.bulkJobs.copyFolder({
       destinationPath: '/path/of/destination/folder',
@@ -33,7 +33,7 @@ describe('resource bulkJobs', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('moveFolder: only required params', async () => {
     const responsePromise = client.bulkJobs.moveFolder({
       destinationPath: '/path/of/destination/folder',
@@ -48,7 +48,7 @@ describe('resource bulkJobs', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('moveFolder: required and optional params', async () => {
     const response = await client.bulkJobs.moveFolder({
       destinationPath: '/path/of/destination/folder',
@@ -56,7 +56,7 @@ describe('resource bulkJobs', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveStatus', async () => {
     const responsePromise = client.bulkJobs.retrieveStatus('jobId');
     const rawResponse = await responsePromise.asResponse();

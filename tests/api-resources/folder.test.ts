@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource folder', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.folder.create({
       folderName: 'summer',
@@ -24,7 +24,7 @@ describe('resource folder', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.folder.create({
       folderName: 'summer',
@@ -32,7 +32,7 @@ describe('resource folder', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.folder.delete({ folderPath: '/folder/to/delete/' });
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource folder', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.folder.delete({ folderPath: '/folder/to/delete/' });
   });

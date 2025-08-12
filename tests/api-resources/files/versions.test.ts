@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource versions', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.files.versions.retrieve('versionId', { fileId: 'fileId' });
     const rawResponse = await responsePromise.asResponse();
@@ -21,12 +21,12 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.files.versions.retrieve('versionId', { fileId: 'fileId' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.files.versions.list('fileId');
     const rawResponse = await responsePromise.asResponse();
@@ -38,7 +38,7 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.files.versions.delete('versionId', { fileId: 'fileId' });
     const rawResponse = await responsePromise.asResponse();
@@ -50,12 +50,12 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.files.versions.delete('versionId', { fileId: 'fileId' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('restore: only required params', async () => {
     const responsePromise = client.files.versions.restore('versionId', { fileId: 'fileId' });
     const rawResponse = await responsePromise.asResponse();
@@ -67,7 +67,7 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('restore: required and optional params', async () => {
     const response = await client.files.versions.restore('versionId', { fileId: 'fileId' });
   });

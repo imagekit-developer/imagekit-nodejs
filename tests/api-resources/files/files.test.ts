@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource files', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.files.list();
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -40,7 +40,7 @@ describe('resource files', () => {
     ).rejects.toThrow(ImageKit.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.files.delete('fileId');
     const rawResponse = await responsePromise.asResponse();
@@ -52,7 +52,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('addTags: only required params', async () => {
     const responsePromise = client.files.addTags({
       fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
@@ -67,7 +67,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('addTags: required and optional params', async () => {
     const response = await client.files.addTags({
       fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
@@ -75,7 +75,7 @@ describe('resource files', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('copy: only required params', async () => {
     const responsePromise = client.files.copy({
       destinationPath: '/folder/to/copy/into/',
@@ -90,7 +90,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('copy: required and optional params', async () => {
     const response = await client.files.copy({
       destinationPath: '/folder/to/copy/into/',
@@ -99,7 +99,7 @@ describe('resource files', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('move: only required params', async () => {
     const responsePromise = client.files.move({
       destinationPath: '/folder/to/move/into/',
@@ -114,7 +114,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('move: required and optional params', async () => {
     const response = await client.files.move({
       destinationPath: '/folder/to/move/into/',
@@ -122,7 +122,7 @@ describe('resource files', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('removeAITags: only required params', async () => {
     const responsePromise = client.files.removeAITags({
       AITags: ['t-shirt', 'round-neck', 'sale2019'],
@@ -137,7 +137,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('removeAITags: required and optional params', async () => {
     const response = await client.files.removeAITags({
       AITags: ['t-shirt', 'round-neck', 'sale2019'],
@@ -145,7 +145,7 @@ describe('resource files', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('removeTags: only required params', async () => {
     const responsePromise = client.files.removeTags({
       fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
@@ -160,7 +160,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('removeTags: required and optional params', async () => {
     const response = await client.files.removeTags({
       fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
@@ -168,7 +168,7 @@ describe('resource files', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('rename: only required params', async () => {
     const responsePromise = client.files.rename({
       filePath: '/path/to/file.jpg',
@@ -183,7 +183,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('rename: required and optional params', async () => {
     const response = await client.files.rename({
       filePath: '/path/to/file.jpg',
@@ -192,7 +192,7 @@ describe('resource files', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('uploadV1: only required params', async () => {
     const responsePromise = client.files.uploadV1({
       file: 'https://www.example.com/rest-of-the-image-path.jpg',
@@ -207,7 +207,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('uploadV1: required and optional params', async () => {
     const response = await client.files.uploadV1({
       file: 'https://www.example.com/rest-of-the-image-path.jpg',
@@ -237,7 +237,7 @@ describe('resource files', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('uploadV2: only required params', async () => {
     const responsePromise = client.files.uploadV2({
       file: 'https://www.example.com/rest-of-the-image-path.jpg',
@@ -252,7 +252,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('uploadV2: required and optional params', async () => {
     const response = await client.files.uploadV2({
       file: 'https://www.example.com/rest-of-the-image-path.jpg',
