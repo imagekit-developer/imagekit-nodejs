@@ -43,6 +43,8 @@ import {
   FolderDeleteResponse,
 } from './resources/folder';
 import {
+  ExifDetails,
+  ExifImage,
   FileAddTagsParams,
   FileAddTagsResponse,
   FileCopyParams,
@@ -62,6 +64,9 @@ import {
   FileUploadV2Params,
   FileUploadV2Response,
   Files,
+  Gps,
+  Interoperability,
+  Thumbnail,
 } from './resources/files/files';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -818,6 +823,11 @@ export declare namespace ImageKit {
 
   export {
     Files as Files,
+    type ExifDetails as ExifDetails,
+    type ExifImage as ExifImage,
+    type Gps as Gps,
+    type Interoperability as Interoperability,
+    type Thumbnail as Thumbnail,
     type FileListResponse as FileListResponse,
     type FileAddTagsResponse as FileAddTagsResponse,
     type FileCopyResponse as FileCopyResponse,

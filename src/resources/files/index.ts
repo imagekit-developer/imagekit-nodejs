@@ -9,6 +9,11 @@ export {
 } from './details';
 export {
   Files,
+  type ExifDetails,
+  type ExifImage,
+  type Gps,
+  type Interoperability,
+  type Thumbnail,
   type FileListResponse,
   type FileAddTagsResponse,
   type FileCopyResponse,

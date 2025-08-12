@@ -18,6 +18,11 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/files/files.ts">ExifDetails</a></code>
+- <code><a href="./src/resources/files/files.ts">ExifImage</a></code>
+- <code><a href="./src/resources/files/files.ts">Gps</a></code>
+- <code><a href="./src/resources/files/files.ts">Interoperability</a></code>
+- <code><a href="./src/resources/files/files.ts">Thumbnail</a></code>
 - <code><a href="./src/resources/files/files.ts">FileListResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileAddTagsResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileCopyResponse</a></code>
