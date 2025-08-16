@@ -802,11 +802,13 @@ export class ImageKit {
   bulkJobs: API.BulkJobs = new API.BulkJobs(this);
   accounts: API.Accounts = new API.Accounts(this);
 }
+
 ImageKit.CustomMetadataFields = CustomMetadataFields;
 ImageKit.Files = Files;
 ImageKit.Folder = Folder;
 ImageKit.BulkJobs = BulkJobs;
 ImageKit.Accounts = Accounts;
+
 export declare namespace ImageKit {
   export type RequestOptions = Opts.RequestOptions;
 
