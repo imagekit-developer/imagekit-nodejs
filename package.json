@@ -1,73 +1,65 @@
 {
-  "name": "imagekit",
-  "version": "6.0.0",
-  "description": "Offical NodeJS SDK for ImageKit.io integration",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "compile": "rm -rf dist/ & tsc -p tsconfig.json",
-    "test": "export NODE_ENV=test; nyc ./node_modules/mocha/bin/mocha --exit -t 40000 tests/*.js;ex=$?;unset NODE_ENV; exit $ex;",
-    "test-e2e": "sh test-e2e.sh; exit $?;",
-    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "prepack": "npm run compile"
-  },
-  "author": "ImageKit Developer <developer@imagekit.io>",
-  "homepage": "https://imagekit.io",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/imagekit-developer/imagekit-nodejs.git"
-  },
-  "bugs": {
-    "url": "https://github.com/imagekit-developer/imagekit-nodejs/issues"
-  },
-  "keywords": [
-    "imagekit",
-    "nodejs",
-    "javascript",
-    "sdk",
-    "js",
-    "sdk",
-    "image",
-    "optimization",
-    "image",
-    "transformation",
-    "image",
-    "resize"
-  ],
-  "dependencies": {
-    "axios": "^1.6.5",
-    "form-data": "^4.0.0",
-    "hamming-distance": "^1.0.0",
-    "lodash": "^4.17.15",
-    "tslib": "^2.4.0",
-    "uuid": "^8.3.2"
-  },
-  "engines": {
-    "node": ">=12.0.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.14.5",
-    "@babel/core": "^7.14.6",
-    "@babel/node": "^7.14.5",
-    "@babel/preset-env": "^7.14.5",
-    "@babel/preset-typescript": "^7.14.5",
-    "@babel/register": "^7.14.5",
-    "@types/chai": "^4.3.1",
-    "@types/lodash": "^4.14.170",
-    "@types/mocha": "^9.1.1",
-    "@types/node": "^15.12.2",
-    "@types/request": "^2.48.5",
-    "@types/sinon": "^10.0.12",
-    "@types/uuid": "^8.3.4",
-    "babel-plugin-replace-ts-export-assignment": "^0.0.2",
-    "chai": "^4.2.0",
-    "codecov": "^3.8.0",
-    "concurrently": "6.5.1",
-    "mocha": "^8.1.1",
-    "nock": "^13.2.7",
-    "nyc": "^15.1.0",
-    "sinon": "^9.2.0",
-    "typescript": "^4.3.2"
-  }
+    "name": "imagekit",
+    "version": "6.0.1",
+    "private": false,
+    "repository": "github:imagekit-developer/imagekit-nodejs",
+    "type": "commonjs",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.mjs",
+    "types": "./dist/cjs/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/cjs/index.d.ts",
+            "import": {
+                "types": "./dist/esm/index.d.mts",
+                "default": "./dist/esm/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.ts",
+                "default": "./dist/cjs/index.js"
+            },
+            "default": "./dist/cjs/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "dist",
+        "reference.md",
+        "README.md",
+        "LICENSE"
+    ],
+    "scripts": {
+        "format": "prettier . --write --ignore-unknown",
+        "build": "yarn build:cjs && yarn build:esm",
+        "build:cjs": "tsc --project ./tsconfig.cjs.json",
+        "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
+        "test": "jest --config jest.config.mjs",
+        "test:unit": "jest --selectProjects unit",
+        "test:browser": "jest --selectProjects browser",
+        "test:wire": "jest --selectProjects wire"
+    },
+    "devDependencies": {
+        "webpack": "^5.97.1",
+        "ts-loader": "^9.5.1",
+        "jest": "^29.7.0",
+        "@jest/globals": "^29.7.0",
+        "@types/jest": "^29.5.14",
+        "ts-jest": "^29.3.4",
+        "jest-environment-jsdom": "^29.7.0",
+        "msw": "^2.8.4",
+        "@types/node": "^18.19.70",
+        "prettier": "^3.4.2",
+        "typescript": "~5.7.2"
+    },
+    "browser": {
+        "fs": false,
+        "os": false,
+        "path": false,
+        "stream": false
+    },
+    "packageManager": "yarn@1.22.22",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "sideEffects": false
 }
