@@ -1,42 +1,14 @@
-[<img width="250" alt="ImageKit.io" src="https://raw.githubusercontent.com/imagekit-developer/imagekit-javascript/master/assets/imagekit-light-logo.svg"/>](https://imagekit.io)
+# ImagekitDeveloper TypeScript Library
 
-# ImageKit.io Node.js SDK
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fimagekit-developer%2Fimagekit-nodejs)
+[![npm shield](https://img.shields.io/npm/v/imagekit)](https://www.npmjs.com/package/imagekit)
 
-[![Node CI](https://github.com/imagekit-developer/imagekit-nodejs/workflows/Node%20CI/badge.svg)](https://github.com/imagekit-developer/imagekit-nodejs/)
-[![npm version](https://img.shields.io/npm/v/imagekit)](https://www.npmjs.com/package/imagekit)
-[![codecov](https://codecov.io/gh/imagekit-developer/imagekit-nodejs/branch/master/graph/badge.svg)](https://codecov.io/gh/imagekit-developer/imagekit-nodejs)
-[![Try imagekit on RunKit](https://badge.runkitcdn.com/imagekit.svg)](https://npm.runkit.com/imagekit)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ImagekitIo)
-
-Node.js SDK for [ImageKit](https://imagekit.io/) implements the new APIs and interface for different file operations.
-
-ImageKit is complete media storage, optimization, and transformation solution that comes with an [image and video CDN](https://imagekit.io/features/imagekit-infrastructure). It can be integrated with your existing infrastructure - storage like AWS S3, web servers, your CDN, and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
-
-##### Table of contents
-* [Changelog](#changelog)
-* [Installation](#installation)
-* [Initialization](#initialization)
-* [URL generation](#url-generation)
-* [File upload](#file-upload)
-* [File management](#file-management)
-* [Utility functions](#utility-functions)
-* [Rate limits](#rate-limits)
-* [Support](#support)
-* [Links](#links)
+The ImagekitDeveloper TypeScript library provides convenient access to the ImagekitDeveloper API from TypeScript.
 
 ## Installation
 
-Use the following command to download this module. Use the optional `--save` parameter if you wish to save the dependency in your `package.json` file.
-
-```
-npm install imagekit --save
-# or
-pnpm install imagekit --save
-# or
-bun install imagekit // if you are using [Bun](https://bun.sh/) compiler
-# or
-yarn add imagekit
+```sh
+npm i -s imagekit
 ```
 
 ## Initialization
@@ -49,18 +21,27 @@ import ImageKit from "imagekit";
 var ImageKit = require("imagekit");
 
 var imagekit = new ImageKit({
-    publicKey : "your_public_api_key",
-    privateKey : "your_private_api_key",
-    urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/"
+    publicKey: "your_public_api_key",
+    privateKey: "your_private_api_key",
+    urlEndpoint: "https://ik.imagekit.io/your_imagekit_id/",
 });
 ```
 
 ## Usage
-You can use this Node.js SDK for three different methods - URL generation, file upload, and media management operations. The usage of the SDK has been explained below.
 
-* `URL Generation`
-* `File Upload`
-* `File Management`
+Instantiate and use the client with the following:
+
+```typescript
+import { createReadStream } from "fs";
+import { ImageKitClient } from "imagekit";
+import * as fs from "fs";
+
+const client = new ImageKitClient({ username: "YOUR_USERNAME", password: "YOUR_PASSWORD" });
+await client.files.upload({
+    file: fs.createReadStream("/path/to/your/file"),
+    fileName: "fileName",
+});
+```
 
 ## URL Generation
 
@@ -71,12 +52,14 @@ This method allows you to create an URL to access a file using the relative file
 ```js
 // For URL Generation, works for both images and videos
 var imageURL = imagekit.url({
-    path : "/default-image.jpg",
-    urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/endpoint/",
-    transformation : [{
-        "height" : "300",
-        "width" : "400"
-    }]
+    path: "/default-image.jpg",
+    urlEndpoint: "https://ik.imagekit.io/your_imagekit_id/endpoint/",
+    transformation: [
+        {
+            height: "300",
+            width: "400",
+        },
+    ],
 });
 ```
 
@@ -90,14 +73,15 @@ https://ik.imagekit.io/your_imagekit_id/endpoint/tr:h-300,w-400/default-image.jp
 
 This method allows you to add transformation parameters to an absolute URL. For example, if you have configured a custom CNAME and have absolute asset URLs in your database or CMS, you will often need this.
 
-
 ```js
 var imageURL = imagekit.url({
-    src : "https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg",
-    transformation : [{
-        "height" : "300",
-        "width" : "400"
-    }]
+    src: "https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg",
+    transformation: [
+        {
+            height: "300",
+            width: "400",
+        },
+    ],
 });
 ```
 
@@ -107,36 +91,40 @@ This results in a URL like
 https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg?tr=h-300%2Cw-400
 ```
 
-
 The `.url()` method accepts the following parameters
 
-| Option           | Description                    |
-| :----------------| :----------------------------- |
-| urlEndpoint      | Optional. The base URL to be appended before the path of the image. If not specified, the URL Endpoint specified at the time of SDK initialization is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
-| path             | Conditional. This is the path at which the image exists. For example, `/path/to/image.jpg`. Either the `path` or `src` parameter needs to be specified for URL generation. |
-| src              | Conditional. This is the complete URL of an image already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/image.jpg`. Either the `path` or `src` parameter needs to be specified for URL generation. |
-| transformation   | Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. Different steps of a [chained transformation](https://docs.imagekit.io/features/image-transformations/chained-transformations) can be specified as different objects of the array. The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it gets applied as it is in the URL. |
-| transformationPosition | Optional. The default value is `path` that places the transformation string as a path parameter in the URL. It can also be specified as `query`, which adds the transformation string as the URL's query parameter `tr`. If you use the `src` parameter to create the URL, then the transformation string is always added as a query parameter. |
-| queryParameters  | Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and not necessarily related to ImageKit. Especially useful if you want to add some versioning parameter to your URLs. |
-| signed           | Optional. Boolean. Default is `false`. If set to `true`, the SDK generates a signed image URL adding the image signature to the image URL. If you create a URL using the `src` parameter instead of `path`, then do correct `urlEndpoint` for this to work. Otherwise returned URL will have the wrong signature |
-| expireSeconds    | Optional. Integer. Meant to be used along with the `signed` parameter to specify the time in seconds from now when the URL should expire. If specified, the URL contains the expiry timestamp in the URL, and the image signature is modified accordingly. |
+| Option                 | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| :--------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| urlEndpoint            | Optional. The base URL to be appended before the path of the image. If not specified, the URL Endpoint specified at the time of SDK initialization is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/                                                                                                                                                                                                                                                                                                                                                               |
+| path                   | Conditional. This is the path at which the image exists. For example, `/path/to/image.jpg`. Either the `path` or `src` parameter needs to be specified for URL generation.                                                                                                                                                                                                                                                                                                                                                                                                               |
+| src                    | Conditional. This is the complete URL of an image already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/image.jpg`. Either the `path` or `src` parameter needs to be specified for URL generation.                                                                                                                                                                                                                                                                                                                                          |
+| transformation         | Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. Different steps of a [chained transformation](https://docs.imagekit.io/features/image-transformations/chained-transformations) can be specified as different objects of the array. The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it gets applied as it is in the URL. |
+| transformationPosition | Optional. The default value is `path` that places the transformation string as a path parameter in the URL. It can also be specified as `query`, which adds the transformation string as the URL's query parameter `tr`. If you use the `src` parameter to create the URL, then the transformation string is always added as a query parameter.                                                                                                                                                                                                                                          |
+| queryParameters        | Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and not necessarily related to ImageKit. Especially useful if you want to add some versioning parameter to your URLs.                                                                                                                                                                                                                                                                                                                                            |
+| signed                 | Optional. Boolean. Default is `false`. If set to `true`, the SDK generates a signed image URL adding the image signature to the image URL. If you create a URL using the `src` parameter instead of `path`, then do correct `urlEndpoint` for this to work. Otherwise returned URL will have the wrong signature                                                                                                                                                                                                                                                                         |
+| expireSeconds          | Optional. Integer. Meant to be used along with the `signed` parameter to specify the time in seconds from now when the URL should expire. If specified, the URL contains the expiry timestamp in the URL, and the image signature is modified accordingly.                                                                                                                                                                                                                                                                                                                               |
 
 #### Examples of generating URLs
 
 **1. Chained Transformations as a query parameter**
+
 ```js
 var imageURL = imagekit.url({
-    path : "/default-image.jpg",
-    urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/endpoint/",
-    transformation : [{
-        "height" : "300",
-        "width" : "400"
-    }, {
-        "rotation" : 90
-    }],
-    transformationPosition : "query"
+    path: "/default-image.jpg",
+    urlEndpoint: "https://ik.imagekit.io/your_imagekit_id/endpoint/",
+    transformation: [
+        {
+            height: "300",
+            width: "400",
+        },
+        {
+            rotation: 90,
+        },
+    ],
+    transformationPosition: "query",
 });
 ```
+
 ```
 https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg?tr=h-300%2Cw-400%3Art-90
 ```
@@ -147,35 +135,42 @@ There are some transforms like [Sharpening](https://docs.imagekit.io/features/im
 
 ```js
 var imageURL = imagekit.url({
-    src : "https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg",
-    transformation : [{
-        "format" : "jpg",
-        "progressive" : "true",
-        "effectSharpen" : "-",
-        "effectContrast" : "1"
-    }]
+    src: "https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg",
+    transformation: [
+        {
+            format: "jpg",
+            progressive: "true",
+            effectSharpen: "-",
+            effectContrast: "1",
+        },
+    ],
 });
 ```
+
 ```
 //Note that because the `src` parameter was used, the transformation string gets added as a query parameter `tr`
 https://ik.imagekit.io/your_imagekit_id/endpoint/default-image.jpg?tr=f-jpg%2Cpr-true%2Ce-sharpen%2Ce-contrast-1
 ```
 
 **3. Signed URL that expires in 300 seconds with the default URL endpoint and other query parameters**
+
 ```js
 var imageURL = imagekit.url({
-    path : "/default-image.jpg",
-    queryParameters : {
-        "v" : "123"
+    path: "/default-image.jpg",
+    queryParameters: {
+        v: "123",
     },
-    transformation : [{
-        "height" : "300",
-        "width" : "400"
-    }],
-    signed : true,
-    expireSeconds : 300
+    transformation: [
+        {
+            height: "300",
+            width: "400",
+        },
+    ],
+    signed: true,
+    expireSeconds: 300,
 });
 ```
+
 ```
 https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400/default-image.jpg?v=123&ik-t=1567358667&ik-s=f2c7cdacbe7707b71a83d49cf1c6110e3d701054
 ```
@@ -200,7 +195,9 @@ var imageURL = imagekit.url({
     }]
 });
 ```
+
 **Sample Result URL**
+
 ```
 https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400,l-text,i-Imagekit,fs-50,l-end/default-image.jpg
 ```
@@ -221,7 +218,9 @@ var imageURL = imagekit.url({
     }]
 });
 ```
+
 **Sample Result URL**
+
 ```
 https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400,l-image,i-default-image.jpg,w-100,b-10_CDDC39,l-end/default-image.jpg
 ```
@@ -242,7 +241,9 @@ var imageURL = imagekit.url({
     }]
 });
 ```
+
 **Sample Result URL**
+
 ```
 https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400,l-image,i-ik_canvas,bg-FF0000,w-300,h-100,l-end/img/sample-video.mp4
 ```
@@ -256,19 +257,21 @@ For example:
 ```js
 var imageURL = imagekit.url({
     src: "https://ik.imagekit.io/your_imagekit_id/default-image.jpg",
-    transformation: [{
-        "width": "iw_div_4",
-        "height": "ih_div_2",
-        "border": "cw_mul_0.05_yellow"
-    }]
+    transformation: [
+        {
+            width: "iw_div_4",
+            height: "ih_div_2",
+            border: "cw_mul_0.05_yellow",
+        },
+    ],
 });
 ```
 
 **Sample Result URL**
+
 ```
 https://ik.imagekit.io/your_imagekit_id/tr:w-iw_div_4,h-ih_div_2,b-cw_mul_0.05_yellow/default-image.jpg
 ```
-
 
 #### List of supported transformations
 
@@ -276,42 +279,39 @@ See the complete list of transformations supported in ImageKit [here](https://do
 
 If you want to generate transformations in your application and add them to the URL as it is, use the `raw` parameter.
 
-
-| Supported Transformation Name | Translates to parameter |
-|-------------------------------|-------------------------|
-| height | h |
-| width | w |
-| aspectRatio | ar |
-| quality | q |
-| crop | c |
-| cropMode | cm |
-| x | x |
-| y | y |
-| focus | fo |
-| format | f |
-| radius | r |
-| background | bg |
-| border | b |
-| rotation | rt |
-| blur | bl |
-| named | n |
-| progressive | pr |
-| lossless | lo |
-| trim | t |
-| metadata | md |
-| colorProfile | cp |
-| defaultImage | di |
-| dpr | dpr |
-| effectSharpen | e-sharpen |
-| effectUSM | e-usm |
-| effectContrast | e-contrast |
-| effectGray | e-grayscale |
-| effectShadow | e-shadow |
-| effectGradient | e-gradient |
-| original | orig |
-| raw | `replaced by the parameter value` |
-
-
+| Supported Transformation Name | Translates to parameter           |
+| ----------------------------- | --------------------------------- |
+| height                        | h                                 |
+| width                         | w                                 |
+| aspectRatio                   | ar                                |
+| quality                       | q                                 |
+| crop                          | c                                 |
+| cropMode                      | cm                                |
+| x                             | x                                 |
+| y                             | y                                 |
+| focus                         | fo                                |
+| format                        | f                                 |
+| radius                        | r                                 |
+| background                    | bg                                |
+| border                        | b                                 |
+| rotation                      | rt                                |
+| blur                          | bl                                |
+| named                         | n                                 |
+| progressive                   | pr                                |
+| lossless                      | lo                                |
+| trim                          | t                                 |
+| metadata                      | md                                |
+| colorProfile                  | cp                                |
+| defaultImage                  | di                                |
+| dpr                           | dpr                               |
+| effectSharpen                 | e-sharpen                         |
+| effectUSM                     | e-usm                             |
+| effectContrast                | e-contrast                        |
+| effectGray                    | e-grayscale                       |
+| effectShadow                  | e-shadow                          |
+| effectGradient                | e-gradient                        |
+| original                      | orig                              |
+| raw                           | `replaced by the parameter value` |
 
 ## File Upload
 
@@ -320,6 +320,7 @@ The SDK provides a simple interface using the `.upload()` method to upload files
 The `upload()` method requires at least the `file` and the `fileName` parameter to upload a file and returns a callback with the `error` and `result` as arguments. You can pass other parameters supported by the ImageKit upload API using the same parameter name as specified in the upload API documentation. For example, to set tags for a file at the upload time, use the `tags` parameter as defined in the [documentation here](https://docs.imagekit.io/api-reference/upload-file-api/server-side-file-upload).
 
 Sample usage
+
 ```js
 // Using Callback Function
 
@@ -381,8 +382,6 @@ imagekit.upload({
 If the upload succeeds, `error` will be `null,` and the `result` will be the same as what is received from ImageKit's servers.
 If the upload fails, the `error` will be the same as what is received from ImageKit's servers, and the `result` will be null.
 
-
-
 ## File Management
 
 The SDK provides a simple interface for all the [media APIs mentioned here](https://docs.imagekit.io/api-reference/media-api) to manage your files. You can use a callback function with all API interfaces. The first argument of the callback function is the error, and the second is the result of the API call. The error will be `null` if the API succeeds.
@@ -394,25 +393,30 @@ Accepts an object specifying the parameters used to list and search files. All p
 ```js
 // Using Callback Function
 
-imagekit.listFiles({
-    skip : 10,
-    limit : 10
-}, function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
-
+imagekit.listFiles(
+    {
+        skip: 10,
+        limit: 10,
+    },
+    function (error, result) {
+        if (error) console.log(error);
+        else console.log(result);
+    },
+);
 
 // Using Promises
 
-imagekit.listFiles({
-    skip : 10,
-    limit : 10
-}).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .listFiles({
+        skip: 10,
+        limit: 10,
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Get File Details**
@@ -499,34 +503,40 @@ Note: If `publish` is included in the update options, no other parameters are al
 ```js
 // Using Callback Function
 
-imagekit.updateFileDetails("file_id", {
-    tags : ['image_tag'],
-    customCoordinates : "10,10,100,100",
-    extensions: [
-        {
-            name: "google-auto-tagging",
-            maxTags: 5,
-            minConfidence: 95
-        }
-    ]
-}, function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
-
+imagekit.updateFileDetails(
+    "file_id",
+    {
+        tags: ["image_tag"],
+        customCoordinates: "10,10,100,100",
+        extensions: [
+            {
+                name: "google-auto-tagging",
+                maxTags: 5,
+                minConfidence: 95,
+            },
+        ],
+    },
+    function (error, result) {
+        if (error) console.log(error);
+        else console.log(result);
+    },
+);
 
 // Using Promises
 
-imagekit.updateFileDetails("file_id", {
-    publish: {
-        isPublished: true,
-        includeFileVersions: true
-    }
-}).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .updateFileDetails("file_id", {
+        publish: {
+            isPublished: true,
+            includeFileVersions: true,
+        },
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Bulk Add tags**
@@ -536,18 +546,21 @@ Add tags to multiple files in a single request as per [API documentation here](h
 ```js
 // Using Callback Function
 
-imagekit.bulkAddTags(["file_id_1", "file_id_2"], ["tag1", "tag2"], function(error, result) {
-    if(error) console.log(error);
+imagekit.bulkAddTags(["file_id_1", "file_id_2"], ["tag1", "tag2"], function (error, result) {
+    if (error) console.log(error);
     else console.log(result);
 });
 
 // Using Promises
 
-imagekit.bulkAddTags(["file_id_1", "file_id_2"], ["tag1", "tag2"]).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .bulkAddTags(["file_id_1", "file_id_2"], ["tag1", "tag2"])
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Bulk Remove tags**
@@ -557,18 +570,21 @@ Remove tags from multiple files in a single request as per [API documentation he
 ```js
 // Using Callback Function
 
-imagekit.bulkRemoveTags(["file_id_1", "file_id_2"], ["tags"], function(error, result) {
-    if(error) console.log(error);
+imagekit.bulkRemoveTags(["file_id_1", "file_id_2"], ["tags"], function (error, result) {
+    if (error) console.log(error);
     else console.log(result);
 });
 
 // Using Promises
 
-imagekit.bulkRemoveTags(["file_id_1", "file_id_2"], ["tags"]).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .bulkRemoveTags(["file_id_1", "file_id_2"], ["tags"])
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Bulk Remove AI Tags**
@@ -578,18 +594,21 @@ Remove AI tags from multiple files in a single request as per [API documentation
 ```js
 // Using Callback Function
 
-imagekit.bulkRemoveAITags(["file_id_1", "file_id_2"], ["ai-tag1", "ai-tag2"], function(error, result) {
-    if(error) console.log(error);
+imagekit.bulkRemoveAITags(["file_id_1", "file_id_2"], ["ai-tag1", "ai-tag2"], function (error, result) {
+    if (error) console.log(error);
     else console.log(result);
 });
 
 // Using Promises
 
-imagekit.bulkRemoveAITags(["file_id_1", "file_id_2"], ["ai-tag1", "ai-tag2"]).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .bulkRemoveAITags(["file_id_1", "file_id_2"], ["ai-tag1", "ai-tag2"])
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Delete File**
@@ -599,19 +618,21 @@ Delete a file as per the [API documentation here](https://docs.imagekit.io/api-r
 ```js
 // Using Callback Function
 
-imagekit.deleteFile("file_id", function(error, result) {
-    if(error) console.log(error);
+imagekit.deleteFile("file_id", function (error, result) {
+    if (error) console.log(error);
     else console.log(result);
 });
 
-
 // Using Promises
 
-imagekit.deleteFile("file_id").then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .deleteFile("file_id")
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Delete File Version**
@@ -621,25 +642,30 @@ Delete any non-current version of a file as per the [API documentation here](htt
 ```js
 // Using Callback Function
 
-imagekit.deleteFileVersion({
-    fileId: "file_id",
-    versionId: "version_id",
-}, function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
-
+imagekit.deleteFileVersion(
+    {
+        fileId: "file_id",
+        versionId: "version_id",
+    },
+    function (error, result) {
+        if (error) console.log(error);
+        else console.log(result);
+    },
+);
 
 // Using Promises
 
-imagekit.deleteFile({
-    fileId: "file_id",
-    versionId: "version_id",
-}).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .deleteFile({
+        fileId: "file_id",
+        versionId: "version_id",
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Bulk Delete Files**
@@ -649,19 +675,21 @@ Delete multiple files as per the [API documentation here](https://docs.imagekit.
 ```js
 // Using Callback Function
 
-imagekit.bulkDeleteFiles(["file_id_1", "file_id_2"], function(error, result) {
-    if(error) console.log(error);
+imagekit.bulkDeleteFiles(["file_id_1", "file_id_2"], function (error, result) {
+    if (error) console.log(error);
     else console.log(result);
 });
 
-
 // Using Promises
 
-imagekit.bulkDeleteFiles(["file_id_1", "file_id_2"]).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .bulkDeleteFiles(["file_id_1", "file_id_2"])
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Copy File**
@@ -700,24 +728,30 @@ This will move a file from one location to another as per [API documentation her
 ```js
 // Using Callback Function
 
-imagekit.moveFile({
-    sourceFilePath: "/path/to/file.jpg",
-    destinationPath: "/folder/to/copy/into/",
-}, function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
+imagekit.moveFile(
+    {
+        sourceFilePath: "/path/to/file.jpg",
+        destinationPath: "/folder/to/copy/into/",
+    },
+    function (error, result) {
+        if (error) console.log(error);
+        else console.log(result);
+    },
+);
 
 // Using Promises
 
-imagekit.moveFile({
-    sourceFilePath: "/path/to/file.jpg",
-    destinationPath: "/folder/to/copy/into/",
-}).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .moveFile({
+        sourceFilePath: "/path/to/file.jpg",
+        destinationPath: "/folder/to/copy/into/",
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Rename File**
@@ -727,26 +761,32 @@ Rename the file as per [API documentation here](https://docs.imagekit.io/api-ref
 ```js
 // Using Callback Function
 
-imagekit.renameFile({
-    filePath: "/path/to/old-file-name.jpg",
-    newFileName: "new-file-name.jpg",
-    purgeCache: false // optional
-}, function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
+imagekit.renameFile(
+    {
+        filePath: "/path/to/old-file-name.jpg",
+        newFileName: "new-file-name.jpg",
+        purgeCache: false, // optional
+    },
+    function (error, result) {
+        if (error) console.log(error);
+        else console.log(result);
+    },
+);
 
 // Using Promises
 
-imagekit.renameFile({
-    filePath: "/path/to/old-file-name.jpg",
-    newFileName: "new-file-name.jpg",
-    purgeCache: false // optional
-}).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .renameFile({
+        filePath: "/path/to/old-file-name.jpg",
+        newFileName: "new-file-name.jpg",
+        purgeCache: false, // optional
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Restore File Version**
@@ -756,24 +796,30 @@ Restore the file version as per [API documentation here](https://docs.imagekit.i
 ```js
 // Using Callback Function
 
-imagekit.restoreFileVersion({
-    fileId: "file_id",
-    versionId: "version_id"
-}, function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
+imagekit.restoreFileVersion(
+    {
+        fileId: "file_id",
+        versionId: "version_id",
+    },
+    function (error, result) {
+        if (error) console.log(error);
+        else console.log(result);
+    },
+);
 
 // Using Promises
 
-imagekit.restoreFileVersion({
-    fileId: "file_id",
-    versionId: "version_id"
-}).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .restoreFileVersion({
+        fileId: "file_id",
+        versionId: "version_id",
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Create Folder**
@@ -783,24 +829,30 @@ This will create a new folder as per [API documentation here](https://docs.image
 ```js
 // Using Callback Function
 
-imagekit.createFolder({
-    folderName: "new_folder",
-    parentFolderPath: "source/folder/path"
-}, function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
+imagekit.createFolder(
+    {
+        folderName: "new_folder",
+        parentFolderPath: "source/folder/path",
+    },
+    function (error, result) {
+        if (error) console.log(error);
+        else console.log(result);
+    },
+);
 
 // Using Promises
 
-imagekit.createFolder({
-    folderName: "new_folder",
-    parentFolderPath: "source/folder/path"
-}).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .createFolder({
+        folderName: "new_folder",
+        parentFolderPath: "source/folder/path",
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Delete Folder**
@@ -810,18 +862,21 @@ This will delete the specified Folder and all nested files & folders as per [API
 ```js
 // Using Callback Function
 
-imagekit.deleteFolder("folderPath", function(error, result) {
-    if(error) console.log(error);
+imagekit.deleteFolder("folderPath", function (error, result) {
+    if (error) console.log(error);
     else console.log(result);
 });
 
 // Using Promises
 
-imagekit.deleteFolder("folderPath").then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .deleteFolder("folderPath")
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Copy Folder**
@@ -831,26 +886,32 @@ This will copy one Folder into another as per [API documentation here](https://d
 ```js
 // Using Callback Function
 
-imagekit.copyFolder({
-    sourceFolderPath: "/folder/to/copy",
-    destinationPath: "/folder/to/copy/into/",
-    includeFileVersions: false // optional
-}, function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
+imagekit.copyFolder(
+    {
+        sourceFolderPath: "/folder/to/copy",
+        destinationPath: "/folder/to/copy/into/",
+        includeFileVersions: false, // optional
+    },
+    function (error, result) {
+        if (error) console.log(error);
+        else console.log(result);
+    },
+);
 
 // Using Promises
 
-imagekit.copyFolder({
-    sourceFolderPath: "/folder/to/copy",
-    destinationPath: "/folder/to/copy/into/",
-    includeFileVersions: false // optional
-}).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .copyFolder({
+        sourceFolderPath: "/folder/to/copy",
+        destinationPath: "/folder/to/copy/into/",
+        includeFileVersions: false, // optional
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Move Folder**
@@ -860,24 +921,30 @@ This will move one Folder into another as per [API documentation here](https://d
 ```js
 // Using Callback Function
 
-imagekit.moveFolder({
-    sourceFolderPath: "/folder/to/move",
-    destinationPath: "/folder/to/move/into/"
-}, function(error, result) {
-    if(error) console.log(error);
-    else console.log(result);
-});
+imagekit.moveFolder(
+    {
+        sourceFolderPath: "/folder/to/move",
+        destinationPath: "/folder/to/move/into/",
+    },
+    function (error, result) {
+        if (error) console.log(error);
+        else console.log(result);
+    },
+);
 
 // Using Promises
 
-imagekit.moveFolder({
-    sourceFolderPath: "/folder/to/move",
-    destinationPath: "/folder/to/move/into/"
-}).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .moveFolder({
+        sourceFolderPath: "/folder/to/move",
+        destinationPath: "/folder/to/move/into/",
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Get bulk job status**
@@ -887,18 +954,21 @@ This allows us to get a bulk operation status e.g. copy or move Folder as per [A
 ```js
 // Using Callback Function
 
-imagekit.getBulkJobStatus("jobId", function(error, result) {
-    if(error) console.log(error);
+imagekit.getBulkJobStatus("jobId", function (error, result) {
+    if (error) console.log(error);
     else console.log(result);
 });
 
 // Using Promises
 
-imagekit.getBulkJobStatus("jobId").then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .getBulkJobStatus("jobId")
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Purge Cache**
@@ -908,19 +978,21 @@ Programmatically issue a clear cache request as per the [API documentation here]
 ```js
 // Using Callback Function
 
-imagekit.purgeCache("full_url", function(error, result) {
-    if(error) console.log(error);
+imagekit.purgeCache("full_url", function (error, result) {
+    if (error) console.log(error);
     else console.log(result);
 });
 
-
 // Using Promises
 
-imagekit.purgeCache("full_url").then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .purgeCache("full_url")
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Purge Cache Status**
@@ -930,19 +1002,21 @@ Get the purge cache request status using the request ID returned when a purge ca
 ```js
 // Using Callback Function
 
-imagekit.getPurgeCacheStatus("cache_request_id", function(error, result) {
-    if(error) console.log(error);
+imagekit.getPurgeCacheStatus("cache_request_id", function (error, result) {
+    if (error) console.log(error);
     else console.log(result);
 });
 
-
 // Using Promises
 
-imagekit.getPurgeCacheStatus("cache_request_id").then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .getPurgeCacheStatus("cache_request_id")
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Get File Metadata**
@@ -999,33 +1073,33 @@ imagekit.createCustomMetadataField(
         schema: {
             type: "Number",
             minValue: 1000,
-            maxValue: 3000
-        }
+            maxValue: 3000,
+        },
     },
-    function(error, result) {
-        if(error) console.log(error);
+    function (error, result) {
+        if (error) console.log(error);
         else console.log(result);
-    }
+    },
 );
-
 
 // Using Promises
 
-imagekit.createCustomMetadataField(
-    {
+imagekit
+    .createCustomMetadataField({
         name: "price",
         label: "price",
         schema: {
             type: "Number",
             minValue: 1000,
-            maxValue: 3000
-        }
-    }
-).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+            maxValue: 3000,
+        },
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Get all custom metadata fields**
@@ -1037,26 +1111,26 @@ Get the list of all custom metadata fields as per the [API documentation here](h
 
 imagekit.getCustomMetadataFields(
     {
-       includeDeleted: false // optional
+        includeDeleted: false, // optional
     },
-    function(error, result) {
-        if(error) console.log(error);
+    function (error, result) {
+        if (error) console.log(error);
         else console.log(result);
-    }
+    },
 );
-
 
 // Using Promises
 
-imagekit.getCustomMetadataFields(
-    {
-       includeDeleted: false // optional
-    }
-).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .getCustomMetadataFields({
+        includeDeleted: false, // optional
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Update a custom metadata field**
@@ -1071,31 +1145,30 @@ imagekit.updateCustomMetadataField(
     {
         schema: {
             minValue: 500,
-            maxValue: 2500
-        }
+            maxValue: 2500,
+        },
     },
-    function(error, result) {
-        if(error) console.log(error);
+    function (error, result) {
+        if (error) console.log(error);
         else console.log(result);
-    }
+    },
 );
-
 
 // Using Promises
 
-imagekit.updateCustomMetadataField(
-    "field_id",
-    {
+imagekit
+    .updateCustomMetadataField("field_id", {
         schema: {
             minValue: 500,
-            maxValue: 2500
-        }
-    },
-).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+            maxValue: 2500,
+        },
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 **Delete a custom metadata field**
@@ -1105,24 +1178,21 @@ delete a custom metadata field as per the [API documentation here](https://docs.
 ```js
 // Using Callback Function
 
-imagekit.deleteCustomMetadataField(
-    "field_id",
-    function(error, result) {
-        if(error) console.log(error);
-        else console.log(result);
-    }
-);
-
+imagekit.deleteCustomMetadataField("field_id", function (error, result) {
+    if (error) console.log(error);
+    else console.log(result);
+});
 
 // Using Promises
 
-imagekit.deleteCustomMetadataField(
-    "field_id"
-).then(response => {
-    console.log(response);
-}).catch(error => {
-    console.log(error);
-});
+imagekit
+    .deleteCustomMetadataField("field_id")
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 ## Utility functions
@@ -1133,13 +1203,14 @@ We have included the following commonly used utility functions in this package.
 
 If you want to implement client-side file upload, you will need a token, expiry timestamp, and a valid signature for that upload. The SDK provides a simple method you can use in your backend code to generate these authentication parameters.
 
-*Note: The Private API Key should never be exposed in any client-side code. You must always generate these authentication parameters on the server-side*
+_Note: The Private API Key should never be exposed in any client-side code. You must always generate these authentication parameters on the server-side_
 
 ```js
 var authenticationParameters = imagekit.getAuthenticationParameters(token, expire);
 ```
 
 Returns
+
 ```js
 {
     token : "unique_token",
@@ -1165,21 +1236,24 @@ const calculateDistance = () => {
     // Calculate the distance between them:
     const distance = imagekit.pHashDistance(firstHash, secondHash);
     return distance;
-}
+};
 ```
+
 #### Distance calculation examples
 
 ```js
-imagekit.pHashDistance('f06830ca9f1e3e90', 'f06830ca9f1e3e90');
+imagekit.pHashDistance("f06830ca9f1e3e90", "f06830ca9f1e3e90");
 // output: 0 (same image)
 
-imagekit.pHashDistance('2d5ad3936d2e015b', '2d6ed293db36a4fb');
+imagekit.pHashDistance("2d5ad3936d2e015b", "2d6ed293db36a4fb");
 // output: 17 (similar images)
 
-imagekit.pHashDistance('a4a65595ac94518b', '7838873e791f8400');
+imagekit.pHashDistance("a4a65595ac94518b", "7838873e791f8400");
 // output: 37 (dissimilar images)
 ```
+
 ## Access request-id, other response headers and HTTP status code
+
 You can access `$ResponseMetadata` on success or error object to access the HTTP status code and response headers.
 
 ```javascript
@@ -1202,15 +1276,16 @@ try {
 ```
 
 ## Rate limits
+
 Except for upload API, all [ImageKit APIs are rate limited](https://docs.imagekit.io/api-reference/api-introduction/rate-limits) to protect the infrastructure from excessive requests rates and to keep ImageKit.io fast and stable for everyone.
 
 When you exceed the rate limits for an endpoint, you will receive a `429` status code. The Node.js library reads the [rate limiting response headers](https://docs.imagekit.io/api-reference/api-introduction/rate-limits#response-headers-to-understand-rate-limits) provided in the API response and adds these in the error argument of the callback or `.catch` when using promises. Please sleep/pause for the number of milliseconds specified by the value of the `X-RateLimit-Reset` property before making additional requests to that endpoint.
 
-| Property | Description |
-|----------|-------------|
-| `X-RateLimit-Limit` | The maximum number of requests that can be made to this endpoint in the interval specified by the `X-RateLimit-Interval` response header. |
-| `X-RateLimit-Reset` | The amount of time in milliseconds before you can make another request to this endpoint. Pause/sleep your workflow for this duration. |
-| `X-RateLimit-Interval` | The duration of interval in milliseconds for which this rate limit was exceeded. |
+| Property               | Description                                                                                                                               |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `X-RateLimit-Limit`    | The maximum number of requests that can be made to this endpoint in the interval specified by the `X-RateLimit-Interval` response header. |
+| `X-RateLimit-Reset`    | The amount of time in milliseconds before you can make another request to this endpoint. Pause/sleep your workflow for this duration.     |
+| `X-RateLimit-Interval` | The duration of interval in milliseconds for which this rate limit was exceeded.                                                          |
 
 ## Verify webhook events
 
@@ -1221,22 +1296,22 @@ Verifying webhook signature is easy with imagekit SDK. All you need is the value
 Here is an example using the express.js server.
 
 ```js
-const express = require('express');
-const Imagekit = require('imagekit');
+const express = require("express");
+const Imagekit = require("imagekit");
 
 // Webhook configs
-const WEBHOOK_SECRET = 'whsec_...'; // Copy from Imagekit dashboard
+const WEBHOOK_SECRET = "whsec_..."; // Copy from Imagekit dashboard
 const WEBHOOK_EXPIRY_DURATION = 300 * 1000; // 300 seconds for example
 
 const imagekit = new Imagekit({
-  publicKey: 'public_...',
-  urlEndpoint: 'https://ik.imagekit.io/imagekit_id',
-  privateKey: 'private_...',
-})
+    publicKey: "public_...",
+    urlEndpoint: "https://ik.imagekit.io/imagekit_id",
+    privateKey: "private_...",
+});
 
 const app = express();
 
-app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+app.post("/webhook", express.raw({ type: "application/json" }), (req, res) => {
     const signature = req.headers["x-ik-signature"];
     const requestBody = req.body;
     let webhookResult;
@@ -1257,13 +1332,13 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
 
     // Handle webhook
     switch (event.type) {
-        case 'video.transformation.accepted':
+        case "video.transformation.accepted":
             // It is triggered when a new video transformation request is accepted for processing. You can use this for debugging purposes.
             break;
-        case 'video.transformation.ready':
+        case "video.transformation.ready":
             // It is triggered when a video encoding is finished, and the transformed resource is ready to be served. You should listen to this webhook and update any flag in your database or CMS against that particular asset so your application can start showing it to users.
             break;
-        case 'video.transformation.error':
+        case "video.transformation.error":
             // It is triggered if an error occurs during encoding. Listen to this webhook to log the reason. You should check your origin and URL-endpoint settings if the reason is related to download failure. If the reason seems like an error on the ImageKit side, then raise a support ticket at support@imagekit.io.
             break;
         default:
@@ -1273,11 +1348,11 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
 
     // Return a response to acknowledge receipt of the event
     res.send();
-})
+});
 
 app.listen(3000, () => {
-    console.log(`Example app listening on port 3000`)
-})
+    console.log(`Example app listening on port 3000`);
+});
 ```
 
 ## Support
@@ -1285,9 +1360,162 @@ app.listen(3000, () => {
 For any feedback or to report any issues or general implementation support, please reach out to [support@imagekit.io](mailto:support@imagekit.io)
 
 ## Links
-* [Documentation](https://docs.imagekit.io)
-* [Main website](https://imagekit.io)
+
+- [Documentation](https://docs.imagekit.io)
+- [Main website](https://imagekit.io)
 
 ## License
 
 Released under the MIT license.
+
+## Reference
+
+A full reference for this library is available [here](https://github.com/imagekit-developer/imagekit-nodejs/blob/HEAD/./reference.md).
+
+## Request And Response Types
+
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
+
+```typescript
+import { ImageKit } from "imagekit";
+
+const request: ImageKit.FileUploadV1 = {
+    ...
+};
+```
+
+## Exception Handling
+
+When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+will be thrown.
+
+```typescript
+import { ImageKitError } from "imagekit";
+
+try {
+    await client.files.upload(...);
+} catch (err) {
+    if (err instanceof ImageKitError) {
+        console.log(err.statusCode);
+        console.log(err.message);
+        console.log(err.body);
+        console.log(err.rawResponse);
+    }
+}
+```
+
+## Advanced
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `headers` request option.
+
+```typescript
+const response = await client.files.upload(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+
+```typescript
+const response = await client.files.upload(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
+    }
+});
+```
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retryable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `maxRetries` request option to configure this behavior.
+
+```typescript
+const response = await client.files.upload(..., {
+    maxRetries: 0 // override maxRetries at the request level
+});
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
+
+```typescript
+const response = await client.files.upload(..., {
+    timeoutInSeconds: 30 // override timeout to 30s
+});
+```
+
+### Aborting Requests
+
+The SDK allows users to abort requests at any point by passing in an abort signal.
+
+```typescript
+const controller = new AbortController();
+const response = await client.files.upload(..., {
+    abortSignal: controller.signal
+});
+controller.abort(); // aborts the request
+```
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.withRawResponse()` method.
+The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
+
+```typescript
+const { data, rawResponse } = await client.files.upload(...).withRawResponse();
+
+console.log(data);
+console.log(rawResponse.headers['X-My-Header']);
+```
+
+### Runtime Compatibility
+
+The SDK works in the following runtimes:
+
+- Node.js 18+
+- Vercel
+- Cloudflare Workers
+- Deno v1.25+
+- Bun 1.0+
+- React Native
+
+### Customizing Fetch Client
+
+The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
+unsupported environment, this provides a way for you to break glass and ensure the SDK works.
+
+```typescript
+import { ImageKitClient } from "imagekit";
+
+const client = new ImageKitClient({
+    ...
+    fetcher: // provide your implementation here
+});
+```
+
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!
