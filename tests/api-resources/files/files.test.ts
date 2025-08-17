@@ -29,7 +29,7 @@ describe('resource files', () => {
         'fileId',
         {
           customCoordinates: 'customCoordinates',
-          customMetadata: {},
+          customMetadata: { foo: 'bar' },
           description: 'description',
           extensions: [
             {

@@ -117,7 +117,7 @@ export class Files extends APIResource {
    * });
    * ```
    */
-  copy(body: FileCopyParams, options?: RequestOptions): APIPromise<unknown> {
+  copy(body: FileCopyParams, options?: RequestOptions): APIPromise<FileCopyResponse> {
     return this._client.post('/v1/files/copy', { body, ...options });
   }
 
@@ -148,7 +148,7 @@ export class Files extends APIResource {
    * });
    * ```
    */
-  move(body: FileMoveParams, options?: RequestOptions): APIPromise<unknown> {
+  move(body: FileMoveParams, options?: RequestOptions): APIPromise<FileMoveResponse> {
     return this._client.post('/v1/files/move', { body, ...options });
   }
 
@@ -239,7 +239,7 @@ export interface FileUpdateResponse {
   /**
    * An object with custom metadata for the file.
    */
-  customMetadata?: unknown;
+  customMetadata?: { [key: string]: unknown };
 
   extensionStatus?: FileUpdateResponse.ExtensionStatus;
 
@@ -380,7 +380,7 @@ export namespace FileUpdateResponse {
   }
 }
 
-export type FileCopyResponse = unknown;
+export interface FileCopyResponse {}
 
 /**
  * Object containing details of a file or file version.
@@ -405,7 +405,7 @@ export interface FileGetResponse {
   /**
    * An object with custom metadata for the file.
    */
-  customMetadata?: unknown;
+  customMetadata?: { [key: string]: unknown };
 
   /**
    * Unique identifier of the asset.
@@ -534,7 +534,7 @@ export namespace FileGetResponse {
   }
 }
 
-export type FileMoveResponse = unknown;
+export interface FileMoveResponse {}
 
 export interface FileRenameResponse {
   /**
@@ -578,7 +578,7 @@ export interface FileUploadResponse {
    * API. Send `customMetadata` in `responseFields` in API request to get the value
    * of this field.
    */
-  customMetadata?: unknown;
+  customMetadata?: { [key: string]: unknown };
 
   /**
    * The duration of the video in seconds (only for video).
@@ -864,7 +864,7 @@ export declare namespace FileUpdateParams {
      * value for that key. Before setting any custom metadata on an asset you have to
      * create the field using custom metadata fields API.
      */
-    customMetadata?: unknown;
+    customMetadata?: { [key: string]: unknown };
 
     /**
      * Optional text to describe the contents of the file.
@@ -876,9 +876,7 @@ export declare namespace FileUpdateParams {
      * with specific parameters based on the extension type.
      */
     extensions?: Array<
-      | UpdateFileDetails.RemovedotBgExtension
-      | UpdateFileDetails.AutoTaggingExtension
-      | UpdateFileDetails.AutoDescriptionExtension
+      Shared.RemovedotBgExtension | Shared.AutoTaggingExtension | Shared.AutoDescriptionExtension
     >;
 
     /**
@@ -906,70 +904,6 @@ export declare namespace FileUpdateParams {
      * about the webhook payload structure.
      */
     webhookUrl?: string;
-  }
-
-  export namespace UpdateFileDetails {
-    export interface RemovedotBgExtension {
-      /**
-       * Specifies the background removal extension.
-       */
-      name: 'remove-bg';
-
-      options?: RemovedotBgExtension.Options;
-    }
-
-    export namespace RemovedotBgExtension {
-      export interface Options {
-        /**
-         * Whether to add an artificial shadow to the result. Default is false. Note:
-         * Adding shadows is currently only supported for car photos.
-         */
-        add_shadow?: boolean;
-
-        /**
-         * Specifies a solid color background using hex code (e.g., "81d4fa", "fff") or
-         * color name (e.g., "green"). If this parameter is set, `bg_image_url` must be
-         * empty.
-         */
-        bg_color?: string;
-
-        /**
-         * Sets a background image from a URL. If this parameter is set, `bg_color` must be
-         * empty.
-         */
-        bg_image_url?: string;
-
-        /**
-         * Allows semi-transparent regions in the result. Default is true. Note:
-         * Semitransparency is currently only supported for car windows.
-         */
-        semitransparency?: boolean;
-      }
-    }
-
-    export interface AutoTaggingExtension {
-      /**
-       * Maximum number of tags to attach to the asset.
-       */
-      maxTags: number;
-
-      /**
-       * Minimum confidence level for tags to be considered valid.
-       */
-      minConfidence: number;
-
-      /**
-       * Specifies the auto-tagging extension used.
-       */
-      name: 'google-auto-tagging' | 'aws-auto-tagging';
-    }
-
-    export interface AutoDescriptionExtension {
-      /**
-       * Specifies the auto description extension.
-       */
-      name: 'ai-auto-description';
-    }
   }
 
   export interface ChangePublicationStatus {
@@ -1145,9 +1079,7 @@ export interface FileUploadParams {
    * with specific parameters based on the extension type.
    */
   extensions?: Array<
-    | FileUploadParams.RemovedotBgExtension
-    | FileUploadParams.AutoTaggingExtension
-    | FileUploadParams.AutoDescriptionExtension
+    Shared.RemovedotBgExtension | Shared.AutoTaggingExtension | Shared.AutoDescriptionExtension
   >;
 
   /**
@@ -1280,68 +1212,6 @@ export interface FileUploadParams {
 }
 
 export namespace FileUploadParams {
-  export interface RemovedotBgExtension {
-    /**
-     * Specifies the background removal extension.
-     */
-    name: 'remove-bg';
-
-    options?: RemovedotBgExtension.Options;
-  }
-
-  export namespace RemovedotBgExtension {
-    export interface Options {
-      /**
-       * Whether to add an artificial shadow to the result. Default is false. Note:
-       * Adding shadows is currently only supported for car photos.
-       */
-      add_shadow?: boolean;
-
-      /**
-       * Specifies a solid color background using hex code (e.g., "81d4fa", "fff") or
-       * color name (e.g., "green"). If this parameter is set, `bg_image_url` must be
-       * empty.
-       */
-      bg_color?: string;
-
-      /**
-       * Sets a background image from a URL. If this parameter is set, `bg_color` must be
-       * empty.
-       */
-      bg_image_url?: string;
-
-      /**
-       * Allows semi-transparent regions in the result. Default is true. Note:
-       * Semitransparency is currently only supported for car windows.
-       */
-      semitransparency?: boolean;
-    }
-  }
-
-  export interface AutoTaggingExtension {
-    /**
-     * Maximum number of tags to attach to the asset.
-     */
-    maxTags: number;
-
-    /**
-     * Minimum confidence level for tags to be considered valid.
-     */
-    minConfidence: number;
-
-    /**
-     * Specifies the auto-tagging extension used.
-     */
-    name: 'google-auto-tagging' | 'aws-auto-tagging';
-  }
-
-  export interface AutoDescriptionExtension {
-    /**
-     * Specifies the auto description extension.
-     */
-    name: 'ai-auto-description';
-  }
-
   /**
    * Configure pre-processing (`pre`) and post-processing (`post`) transformations.
    *

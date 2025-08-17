@@ -45,7 +45,7 @@ export namespace AssetListResponse {
     /**
      * An object with custom metadata for the file.
      */
-    customMetadata?: unknown;
+    customMetadata?: { [key: string]: unknown };
 
     /**
      * Unique identifier of the asset.

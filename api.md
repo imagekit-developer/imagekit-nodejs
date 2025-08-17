@@ -2,10 +2,13 @@
 
 Types:
 
+- <code><a href="./src/resources/shared.ts">AutoDescriptionExtension</a></code>
+- <code><a href="./src/resources/shared.ts">AutoTaggingExtension</a></code>
 - <code><a href="./src/resources/shared.ts">ExifDetails</a></code>
 - <code><a href="./src/resources/shared.ts">ExifImage</a></code>
 - <code><a href="./src/resources/shared.ts">Gps</a></code>
 - <code><a href="./src/resources/shared.ts">Interoperability</a></code>
+- <code><a href="./src/resources/shared.ts">RemovedotBgExtension</a></code>
 - <code><a href="./src/resources/shared.ts">Thumbnail</a></code>
 
 # CustomMetadataFields
@@ -22,7 +25,7 @@ Methods:
 - <code title="post /v1/customMetadataFields">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">create</a>({ ...params }) -> CustomMetadataFieldCreateResponse</code>
 - <code title="patch /v1/customMetadataFields/{id}">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">update</a>(id, { ...params }) -> CustomMetadataFieldUpdateResponse</code>
 - <code title="get /v1/customMetadataFields">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">list</a>({ ...params }) -> CustomMetadataFieldListResponse</code>
-- <code title="delete /v1/customMetadataFields/{id}">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">delete</a>(id) -> unknown</code>
+- <code title="delete /v1/customMetadataFields/{id}">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">delete</a>(id) -> CustomMetadataFieldDeleteResponse</code>
 
 # Files
 
@@ -39,9 +42,9 @@ Methods:
 
 - <code title="patch /v1/files/{fileId}/details">client.files.<a href="./src/resources/files/files.ts">update</a>(fileID, { ...params }) -> FileUpdateResponse</code>
 - <code title="delete /v1/files/{fileId}">client.files.<a href="./src/resources/files/files.ts">delete</a>(fileID) -> void</code>
-- <code title="post /v1/files/copy">client.files.<a href="./src/resources/files/files.ts">copy</a>({ ...params }) -> unknown</code>
+- <code title="post /v1/files/copy">client.files.<a href="./src/resources/files/files.ts">copy</a>({ ...params }) -> FileCopyResponse</code>
 - <code title="get /v1/files/{fileId}/details">client.files.<a href="./src/resources/files/files.ts">get</a>(fileID) -> FileGetResponse</code>
-- <code title="post /v1/files/move">client.files.<a href="./src/resources/files/files.ts">move</a>({ ...params }) -> unknown</code>
+- <code title="post /v1/files/move">client.files.<a href="./src/resources/files/files.ts">move</a>({ ...params }) -> FileMoveResponse</code>
 - <code title="put /v1/files/rename">client.files.<a href="./src/resources/files/files.ts">rename</a>({ ...params }) -> FileRenameResponse</code>
 - <code title="post /api/v1/files/upload">client.files.<a href="./src/resources/files/files.ts">upload</a>({ ...params }) -> FileUploadResponse</code>
 
@@ -73,7 +76,7 @@ Types:
 Methods:
 
 - <code title="get /v1/files/{fileId}/versions">client.files.versions.<a href="./src/resources/files/versions.ts">list</a>(fileID) -> VersionListResponse</code>
-- <code title="delete /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">delete</a>(versionID, { ...params }) -> unknown</code>
+- <code title="delete /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">delete</a>(versionID, { ...params }) -> VersionDeleteResponse</code>
 - <code title="get /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">get</a>(versionID, { ...params }) -> VersionGetResponse</code>
 - <code title="put /v1/files/{fileId}/versions/{versionId}/restore">client.files.versions.<a href="./src/resources/files/versions.ts">restore</a>(versionID, { ...params }) -> VersionRestoreResponse</code>
 
@@ -125,8 +128,8 @@ Types:
 
 Methods:
 
-- <code title="post /v1/folder">client.folders.<a href="./src/resources/folders/folders.ts">create</a>({ ...params }) -> unknown</code>
-- <code title="delete /v1/folder">client.folders.<a href="./src/resources/folders/folders.ts">delete</a>({ ...params }) -> unknown</code>
+- <code title="post /v1/folder">client.folders.<a href="./src/resources/folders/folders.ts">create</a>({ ...params }) -> FolderCreateResponse</code>
+- <code title="delete /v1/folder">client.folders.<a href="./src/resources/folders/folders.ts">delete</a>({ ...params }) -> FolderDeleteResponse</code>
 - <code title="post /v1/bulkJobs/copyFolder">client.folders.<a href="./src/resources/folders/folders.ts">copy</a>({ ...params }) -> FolderCopyResponse</code>
 - <code title="post /v1/bulkJobs/moveFolder">client.folders.<a href="./src/resources/folders/folders.ts">move</a>({ ...params }) -> FolderMoveResponse</code>
 - <code title="post /v1/bulkJobs/renameFolder">client.folders.<a href="./src/resources/folders/folders.ts">rename</a>({ ...params }) -> FolderRenameResponse</code>

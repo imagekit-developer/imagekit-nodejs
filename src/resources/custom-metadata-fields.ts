@@ -85,7 +85,7 @@ export class CustomMetadataFields extends APIResource {
    *   await client.customMetadataFields.delete('id');
    * ```
    */
-  delete(id: string, options?: RequestOptions): APIPromise<unknown> {
+  delete(id: string, options?: RequestOptions): APIPromise<CustomMetadataFieldDeleteResponse> {
     return this._client.delete(path`/v1/customMetadataFields/${id}`, options);
   }
 }
@@ -335,7 +335,7 @@ export namespace CustomMetadataFieldListResponse {
   }
 }
 
-export type CustomMetadataFieldDeleteResponse = unknown;
+export interface CustomMetadataFieldDeleteResponse {}
 
 export interface CustomMetadataFieldCreateParams {
   /**

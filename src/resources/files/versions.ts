@@ -32,7 +32,11 @@ export class Versions extends APIResource {
    * );
    * ```
    */
-  delete(versionID: string, params: VersionDeleteParams, options?: RequestOptions): APIPromise<unknown> {
+  delete(
+    versionID: string,
+    params: VersionDeleteParams,
+    options?: RequestOptions,
+  ): APIPromise<VersionDeleteResponse> {
     const { fileId } = params;
     return this._client.delete(path`/v1/files/${fileId}/versions/${versionID}`, options);
   }
@@ -100,7 +104,7 @@ export namespace VersionListResponse {
     /**
      * An object with custom metadata for the file.
      */
-    customMetadata?: unknown;
+    customMetadata?: { [key: string]: unknown };
 
     /**
      * Unique identifier of the asset.
@@ -230,7 +234,7 @@ export namespace VersionListResponse {
   }
 }
 
-export type VersionDeleteResponse = unknown;
+export interface VersionDeleteResponse {}
 
 /**
  * Object containing details of a file or file version.
@@ -255,7 +259,7 @@ export interface VersionGetResponse {
   /**
    * An object with custom metadata for the file.
    */
-  customMetadata?: unknown;
+  customMetadata?: { [key: string]: unknown };
 
   /**
    * Unique identifier of the asset.
@@ -407,7 +411,7 @@ export interface VersionRestoreResponse {
   /**
    * An object with custom metadata for the file.
    */
-  customMetadata?: unknown;
+  customMetadata?: { [key: string]: unknown };
 
   /**
    * Unique identifier of the asset.

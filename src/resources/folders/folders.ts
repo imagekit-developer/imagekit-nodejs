@@ -21,7 +21,7 @@ export class Folders extends APIResource {
    * });
    * ```
    */
-  create(body: FolderCreateParams, options?: RequestOptions): APIPromise<unknown> {
+  create(body: FolderCreateParams, options?: RequestOptions): APIPromise<FolderCreateResponse> {
     return this._client.post('/v1/folder', { body, ...options });
   }
 
@@ -36,7 +36,7 @@ export class Folders extends APIResource {
    * });
    * ```
    */
-  delete(body: FolderDeleteParams, options?: RequestOptions): APIPromise<unknown> {
+  delete(body: FolderDeleteParams, options?: RequestOptions): APIPromise<FolderDeleteResponse> {
     return this._client.delete('/v1/folder', { body, ...options });
   }
 
@@ -95,9 +95,9 @@ export class Folders extends APIResource {
   }
 }
 
-export type FolderCreateResponse = unknown;
+export interface FolderCreateResponse {}
 
-export type FolderDeleteResponse = unknown;
+export interface FolderDeleteResponse {}
 
 export interface FolderCopyResponse {
   /**
