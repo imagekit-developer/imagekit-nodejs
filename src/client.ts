@@ -16,15 +16,7 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { AccountGetUsageParams, AccountGetUsageResponse, Accounts } from './resources/accounts';
-import {
-  BulkJobCopyFolderParams,
-  BulkJobCopyFolderResponse,
-  BulkJobMoveFolderParams,
-  BulkJobMoveFolderResponse,
-  BulkJobRetrieveStatusResponse,
-  BulkJobs,
-} from './resources/bulk-jobs';
+import { AssetListParams, AssetListResponse, Assets } from './resources/assets';
 import {
   CustomMetadataFieldCreateParams,
   CustomMetadataFieldCreateResponse,
@@ -35,39 +27,36 @@ import {
   CustomMetadataFieldUpdateResponse,
   CustomMetadataFields,
 } from './resources/custom-metadata-fields';
+import { Accounts } from './resources/accounts/accounts';
+import { Beta } from './resources/beta/beta';
+import { Cache } from './resources/cache/cache';
 import {
-  Folder,
+  FileCopyParams,
+  FileCopyResponse,
+  FileGetResponse,
+  FileMoveParams,
+  FileMoveResponse,
+  FileRenameParams,
+  FileRenameResponse,
+  FileUpdateParams,
+  FileUpdateResponse,
+  FileUploadParams,
+  FileUploadResponse,
+  Files,
+} from './resources/files/files';
+import {
+  FolderCopyParams,
+  FolderCopyResponse,
   FolderCreateParams,
   FolderCreateResponse,
   FolderDeleteParams,
   FolderDeleteResponse,
-} from './resources/folder';
-import {
-  ExifDetails,
-  ExifImage,
-  FileAddTagsParams,
-  FileAddTagsResponse,
-  FileCopyParams,
-  FileCopyResponse,
-  FileListParams,
-  FileListResponse,
-  FileMoveParams,
-  FileMoveResponse,
-  FileRemoveAITagsParams,
-  FileRemoveAITagsResponse,
-  FileRemoveTagsParams,
-  FileRemoveTagsResponse,
-  FileRenameParams,
-  FileRenameResponse,
-  FileUploadV1Params,
-  FileUploadV1Response,
-  FileUploadV2Params,
-  FileUploadV2Response,
-  Files,
-  Gps,
-  Interoperability,
-  Thumbnail,
-} from './resources/files/files';
+  FolderMoveParams,
+  FolderMoveResponse,
+  FolderRenameParams,
+  FolderRenameResponse,
+  Folders,
+} from './resources/folders/folders';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -798,16 +787,20 @@ export class ImageKit {
 
   customMetadataFields: API.CustomMetadataFields = new API.CustomMetadataFields(this);
   files: API.Files = new API.Files(this);
-  folder: API.Folder = new API.Folder(this);
-  bulkJobs: API.BulkJobs = new API.BulkJobs(this);
+  assets: API.Assets = new API.Assets(this);
+  cache: API.Cache = new API.Cache(this);
+  folders: API.Folders = new API.Folders(this);
   accounts: API.Accounts = new API.Accounts(this);
+  beta: API.Beta = new API.Beta(this);
 }
 
 ImageKit.CustomMetadataFields = CustomMetadataFields;
 ImageKit.Files = Files;
-ImageKit.Folder = Folder;
-ImageKit.BulkJobs = BulkJobs;
+ImageKit.Assets = Assets;
+ImageKit.Cache = Cache;
+ImageKit.Folders = Folders;
 ImageKit.Accounts = Accounts;
+ImageKit.Beta = Beta;
 
 export declare namespace ImageKit {
   export type RequestOptions = Opts.RequestOptions;
@@ -825,51 +818,42 @@ export declare namespace ImageKit {
 
   export {
     Files as Files,
-    type ExifDetails as ExifDetails,
-    type ExifImage as ExifImage,
-    type Gps as Gps,
-    type Interoperability as Interoperability,
-    type Thumbnail as Thumbnail,
-    type FileListResponse as FileListResponse,
-    type FileAddTagsResponse as FileAddTagsResponse,
+    type FileUpdateResponse as FileUpdateResponse,
     type FileCopyResponse as FileCopyResponse,
+    type FileGetResponse as FileGetResponse,
     type FileMoveResponse as FileMoveResponse,
-    type FileRemoveAITagsResponse as FileRemoveAITagsResponse,
-    type FileRemoveTagsResponse as FileRemoveTagsResponse,
     type FileRenameResponse as FileRenameResponse,
-    type FileUploadV1Response as FileUploadV1Response,
-    type FileUploadV2Response as FileUploadV2Response,
-    type FileListParams as FileListParams,
-    type FileAddTagsParams as FileAddTagsParams,
+    type FileUploadResponse as FileUploadResponse,
+    type FileUpdateParams as FileUpdateParams,
     type FileCopyParams as FileCopyParams,
     type FileMoveParams as FileMoveParams,
-    type FileRemoveAITagsParams as FileRemoveAITagsParams,
-    type FileRemoveTagsParams as FileRemoveTagsParams,
     type FileRenameParams as FileRenameParams,
-    type FileUploadV1Params as FileUploadV1Params,
-    type FileUploadV2Params as FileUploadV2Params,
+    type FileUploadParams as FileUploadParams,
   };
 
   export {
-    Folder as Folder,
+    Assets as Assets,
+    type AssetListResponse as AssetListResponse,
+    type AssetListParams as AssetListParams,
+  };
+
+  export { Cache as Cache };
+
+  export {
+    Folders as Folders,
     type FolderCreateResponse as FolderCreateResponse,
     type FolderDeleteResponse as FolderDeleteResponse,
+    type FolderCopyResponse as FolderCopyResponse,
+    type FolderMoveResponse as FolderMoveResponse,
+    type FolderRenameResponse as FolderRenameResponse,
     type FolderCreateParams as FolderCreateParams,
     type FolderDeleteParams as FolderDeleteParams,
+    type FolderCopyParams as FolderCopyParams,
+    type FolderMoveParams as FolderMoveParams,
+    type FolderRenameParams as FolderRenameParams,
   };
 
-  export {
-    BulkJobs as BulkJobs,
-    type BulkJobCopyFolderResponse as BulkJobCopyFolderResponse,
-    type BulkJobMoveFolderResponse as BulkJobMoveFolderResponse,
-    type BulkJobRetrieveStatusResponse as BulkJobRetrieveStatusResponse,
-    type BulkJobCopyFolderParams as BulkJobCopyFolderParams,
-    type BulkJobMoveFolderParams as BulkJobMoveFolderParams,
-  };
+  export { Accounts as Accounts };
 
-  export {
-    Accounts as Accounts,
-    type AccountGetUsageResponse as AccountGetUsageResponse,
-    type AccountGetUsageParams as AccountGetUsageParams,
-  };
+  export { Beta as Beta };
 }

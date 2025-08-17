@@ -18,128 +18,175 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/files/files.ts">ExifDetails</a></code>
-- <code><a href="./src/resources/files/files.ts">ExifImage</a></code>
-- <code><a href="./src/resources/files/files.ts">Gps</a></code>
-- <code><a href="./src/resources/files/files.ts">Interoperability</a></code>
-- <code><a href="./src/resources/files/files.ts">Thumbnail</a></code>
-- <code><a href="./src/resources/files/files.ts">FileListResponse</a></code>
-- <code><a href="./src/resources/files/files.ts">FileAddTagsResponse</a></code>
+- <code><a href="./src/resources/files/files.ts">FileUpdateResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileCopyResponse</a></code>
+- <code><a href="./src/resources/files/files.ts">FileGetResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileMoveResponse</a></code>
-- <code><a href="./src/resources/files/files.ts">FileRemoveAITagsResponse</a></code>
-- <code><a href="./src/resources/files/files.ts">FileRemoveTagsResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileRenameResponse</a></code>
-- <code><a href="./src/resources/files/files.ts">FileUploadV1Response</a></code>
-- <code><a href="./src/resources/files/files.ts">FileUploadV2Response</a></code>
+- <code><a href="./src/resources/files/files.ts">FileUploadResponse</a></code>
 
 Methods:
 
-- <code title="get /v1/files">client.files.<a href="./src/resources/files/files.ts">list</a>({ ...params }) -> FileListResponse</code>
+- <code title="patch /v1/files/{fileId}/details">client.files.<a href="./src/resources/files/files.ts">update</a>(fileID, { ...params }) -> FileUpdateResponse</code>
 - <code title="delete /v1/files/{fileId}">client.files.<a href="./src/resources/files/files.ts">delete</a>(fileID) -> void</code>
-- <code title="post /v1/files/addTags">client.files.<a href="./src/resources/files/files.ts">addTags</a>({ ...params }) -> FileAddTagsResponse</code>
 - <code title="post /v1/files/copy">client.files.<a href="./src/resources/files/files.ts">copy</a>({ ...params }) -> unknown</code>
+- <code title="get /v1/files/{fileId}/details">client.files.<a href="./src/resources/files/files.ts">get</a>(fileID) -> FileGetResponse</code>
 - <code title="post /v1/files/move">client.files.<a href="./src/resources/files/files.ts">move</a>({ ...params }) -> unknown</code>
-- <code title="post /v1/files/removeAITags">client.files.<a href="./src/resources/files/files.ts">removeAITags</a>({ ...params }) -> FileRemoveAITagsResponse</code>
-- <code title="post /v1/files/removeTags">client.files.<a href="./src/resources/files/files.ts">removeTags</a>({ ...params }) -> FileRemoveTagsResponse</code>
 - <code title="put /v1/files/rename">client.files.<a href="./src/resources/files/files.ts">rename</a>({ ...params }) -> FileRenameResponse</code>
-- <code title="post /api/v1/files/upload">client.files.<a href="./src/resources/files/files.ts">uploadV1</a>({ ...params }) -> FileUploadV1Response</code>
-- <code title="post /api/v2/files/upload">client.files.<a href="./src/resources/files/files.ts">uploadV2</a>({ ...params }) -> FileUploadV2Response</code>
+- <code title="post /api/v1/files/upload">client.files.<a href="./src/resources/files/files.ts">upload</a>({ ...params }) -> FileUploadResponse</code>
 
-## Details
-
-Types:
-
-- <code><a href="./src/resources/files/details.ts">DetailRetrieveResponse</a></code>
-- <code><a href="./src/resources/files/details.ts">DetailUpdateResponse</a></code>
-
-Methods:
-
-- <code title="get /v1/files/{fileId}/details">client.files.details.<a href="./src/resources/files/details.ts">retrieve</a>(fileID) -> DetailRetrieveResponse</code>
-- <code title="patch /v1/files/{fileId}/details">client.files.details.<a href="./src/resources/files/details.ts">update</a>(fileID, { ...params }) -> DetailUpdateResponse</code>
-
-## Batch
+## Bulk
 
 Types:
 
-- <code><a href="./src/resources/files/batch.ts">BatchDeleteResponse</a></code>
+- <code><a href="./src/resources/files/bulk.ts">BulkDeleteResponse</a></code>
+- <code><a href="./src/resources/files/bulk.ts">BulkAddTagsResponse</a></code>
+- <code><a href="./src/resources/files/bulk.ts">BulkRemoveAITagsResponse</a></code>
+- <code><a href="./src/resources/files/bulk.ts">BulkRemoveTagsResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/files/batch/deleteByFileIds">client.files.batch.<a href="./src/resources/files/batch.ts">delete</a>({ ...params }) -> BatchDeleteResponse</code>
+- <code title="post /v1/files/batch/deleteByFileIds">client.files.bulk.<a href="./src/resources/files/bulk.ts">delete</a>({ ...params }) -> BulkDeleteResponse</code>
+- <code title="post /v1/files/addTags">client.files.bulk.<a href="./src/resources/files/bulk.ts">addTags</a>({ ...params }) -> BulkAddTagsResponse</code>
+- <code title="post /v1/files/removeAITags">client.files.bulk.<a href="./src/resources/files/bulk.ts">removeAITags</a>({ ...params }) -> BulkRemoveAITagsResponse</code>
+- <code title="post /v1/files/removeTags">client.files.bulk.<a href="./src/resources/files/bulk.ts">removeTags</a>({ ...params }) -> BulkRemoveTagsResponse</code>
 
 ## Versions
 
 Types:
 
-- <code><a href="./src/resources/files/versions.ts">VersionRetrieveResponse</a></code>
 - <code><a href="./src/resources/files/versions.ts">VersionListResponse</a></code>
 - <code><a href="./src/resources/files/versions.ts">VersionDeleteResponse</a></code>
+- <code><a href="./src/resources/files/versions.ts">VersionGetResponse</a></code>
 - <code><a href="./src/resources/files/versions.ts">VersionRestoreResponse</a></code>
 
 Methods:
 
-- <code title="get /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">retrieve</a>(versionID, { ...params }) -> VersionRetrieveResponse</code>
 - <code title="get /v1/files/{fileId}/versions">client.files.versions.<a href="./src/resources/files/versions.ts">list</a>(fileID) -> VersionListResponse</code>
 - <code title="delete /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">delete</a>(versionID, { ...params }) -> unknown</code>
+- <code title="get /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">get</a>(versionID, { ...params }) -> VersionGetResponse</code>
 - <code title="put /v1/files/{fileId}/versions/{versionId}/restore">client.files.versions.<a href="./src/resources/files/versions.ts">restore</a>(versionID, { ...params }) -> VersionRestoreResponse</code>
-
-## Purge
-
-Types:
-
-- <code><a href="./src/resources/files/purge.ts">PurgeExecuteResponse</a></code>
-- <code><a href="./src/resources/files/purge.ts">PurgeStatusResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/files/purge">client.files.purge.<a href="./src/resources/files/purge.ts">execute</a>({ ...params }) -> PurgeExecuteResponse</code>
-- <code title="get /v1/files/purge/{requestId}">client.files.purge.<a href="./src/resources/files/purge.ts">status</a>(requestID) -> PurgeStatusResponse</code>
 
 ## Metadata
 
 Types:
 
-- <code><a href="./src/resources/files/metadata.ts">MetadataRetrieveResponse</a></code>
-- <code><a href="./src/resources/files/metadata.ts">MetadataFromURLResponse</a></code>
+- <code><a href="./src/resources/files/metadata.ts">MetadataGetResponse</a></code>
+- <code><a href="./src/resources/files/metadata.ts">MetadataGetFromURLResponse</a></code>
 
 Methods:
 
-- <code title="get /v1/files/{fileId}/metadata">client.files.metadata.<a href="./src/resources/files/metadata.ts">retrieve</a>(fileID) -> MetadataRetrieveResponse</code>
-- <code title="get /v1/files/metadata">client.files.metadata.<a href="./src/resources/files/metadata.ts">fromURL</a>({ ...params }) -> MetadataFromURLResponse</code>
+- <code title="get /v1/files/{fileId}/metadata">client.files.metadata.<a href="./src/resources/files/metadata.ts">get</a>(fileID) -> MetadataGetResponse</code>
+- <code title="get /v1/files/metadata">client.files.metadata.<a href="./src/resources/files/metadata.ts">getFromURL</a>({ ...params }) -> MetadataGetFromURLResponse</code>
 
-# Folder
+# Assets
 
 Types:
 
-- <code><a href="./src/resources/folder.ts">FolderCreateResponse</a></code>
-- <code><a href="./src/resources/folder.ts">FolderDeleteResponse</a></code>
+- <code><a href="./src/resources/assets.ts">AssetListResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/folder">client.folder.<a href="./src/resources/folder.ts">create</a>({ ...params }) -> unknown</code>
-- <code title="delete /v1/folder">client.folder.<a href="./src/resources/folder.ts">delete</a>({ ...params }) -> unknown</code>
+- <code title="get /v1/files">client.assets.<a href="./src/resources/assets.ts">list</a>({ ...params }) -> AssetListResponse</code>
 
-# BulkJobs
+# Cache
+
+## Invalidation
 
 Types:
 
-- <code><a href="./src/resources/bulk-jobs.ts">BulkJobCopyFolderResponse</a></code>
-- <code><a href="./src/resources/bulk-jobs.ts">BulkJobMoveFolderResponse</a></code>
-- <code><a href="./src/resources/bulk-jobs.ts">BulkJobRetrieveStatusResponse</a></code>
+- <code><a href="./src/resources/cache/invalidation.ts">InvalidationCreateResponse</a></code>
+- <code><a href="./src/resources/cache/invalidation.ts">InvalidationGetResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/bulkJobs/copyFolder">client.bulkJobs.<a href="./src/resources/bulk-jobs.ts">copyFolder</a>({ ...params }) -> BulkJobCopyFolderResponse</code>
-- <code title="post /v1/bulkJobs/moveFolder">client.bulkJobs.<a href="./src/resources/bulk-jobs.ts">moveFolder</a>({ ...params }) -> BulkJobMoveFolderResponse</code>
-- <code title="get /v1/bulkJobs/{jobId}">client.bulkJobs.<a href="./src/resources/bulk-jobs.ts">retrieveStatus</a>(jobID) -> BulkJobRetrieveStatusResponse</code>
+- <code title="post /v1/files/purge">client.cache.invalidation.<a href="./src/resources/cache/invalidation.ts">create</a>({ ...params }) -> InvalidationCreateResponse</code>
+- <code title="get /v1/files/purge/{requestId}">client.cache.invalidation.<a href="./src/resources/cache/invalidation.ts">get</a>(requestID) -> InvalidationGetResponse</code>
+
+# Folders
+
+Types:
+
+- <code><a href="./src/resources/folders/folders.ts">FolderCreateResponse</a></code>
+- <code><a href="./src/resources/folders/folders.ts">FolderDeleteResponse</a></code>
+- <code><a href="./src/resources/folders/folders.ts">FolderCopyResponse</a></code>
+- <code><a href="./src/resources/folders/folders.ts">FolderMoveResponse</a></code>
+- <code><a href="./src/resources/folders/folders.ts">FolderRenameResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/folder">client.folders.<a href="./src/resources/folders/folders.ts">create</a>({ ...params }) -> unknown</code>
+- <code title="delete /v1/folder">client.folders.<a href="./src/resources/folders/folders.ts">delete</a>({ ...params }) -> unknown</code>
+- <code title="post /v1/bulkJobs/copyFolder">client.folders.<a href="./src/resources/folders/folders.ts">copy</a>({ ...params }) -> FolderCopyResponse</code>
+- <code title="post /v1/bulkJobs/moveFolder">client.folders.<a href="./src/resources/folders/folders.ts">move</a>({ ...params }) -> FolderMoveResponse</code>
+- <code title="post /v1/bulkJobs/renameFolder">client.folders.<a href="./src/resources/folders/folders.ts">rename</a>({ ...params }) -> FolderRenameResponse</code>
+
+## Job
+
+Types:
+
+- <code><a href="./src/resources/folders/job.ts">JobGetResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/bulkJobs/{jobId}">client.folders.job.<a href="./src/resources/folders/job.ts">get</a>(jobID) -> JobGetResponse</code>
 
 # Accounts
 
+## Usage
+
 Types:
 
-- <code><a href="./src/resources/accounts.ts">AccountGetUsageResponse</a></code>
+- <code><a href="./src/resources/accounts/usage.ts">UsageGetResponse</a></code>
 
 Methods:
 
-- <code title="get /v1/accounts/usage">client.accounts.<a href="./src/resources/accounts.ts">getUsage</a>({ ...params }) -> AccountGetUsageResponse</code>
+- <code title="get /v1/accounts/usage">client.accounts.usage.<a href="./src/resources/accounts/usage.ts">get</a>({ ...params }) -> UsageGetResponse</code>
+
+## Origins
+
+Types:
+
+- <code><a href="./src/resources/accounts/origins.ts">OriginCreateResponse</a></code>
+- <code><a href="./src/resources/accounts/origins.ts">OriginUpdateResponse</a></code>
+- <code><a href="./src/resources/accounts/origins.ts">OriginListResponse</a></code>
+- <code><a href="./src/resources/accounts/origins.ts">OriginGetResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/accounts/origins">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">create</a>({ ...params }) -> OriginCreateResponse</code>
+- <code title="put /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">update</a>(id, { ...params }) -> OriginUpdateResponse</code>
+- <code title="get /v1/accounts/origins">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">list</a>() -> OriginListResponse</code>
+- <code title="delete /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">delete</a>(id) -> void</code>
+- <code title="get /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">get</a>(id) -> OriginGetResponse</code>
+
+## URLEndpoints
+
+Types:
+
+- <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointCreateResponse</a></code>
+- <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointUpdateResponse</a></code>
+- <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointListResponse</a></code>
+- <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointGetResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/accounts/url-endpoints">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">create</a>({ ...params }) -> URLEndpointCreateResponse</code>
+- <code title="put /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">update</a>(id, { ...params }) -> URLEndpointUpdateResponse</code>
+- <code title="get /v1/accounts/url-endpoints">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">list</a>() -> URLEndpointListResponse</code>
+- <code title="delete /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">delete</a>(id) -> void</code>
+- <code title="get /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">get</a>(id) -> URLEndpointGetResponse</code>
+
+# Beta
+
+## V2
+
+### Files
+
+Types:
+
+- <code><a href="./src/resources/beta/v2/files.ts">FileUploadResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v2/files/upload">client.beta.v2.files.<a href="./src/resources/beta/v2/files.ts">upload</a>({ ...params }) -> FileUploadResponse</code>

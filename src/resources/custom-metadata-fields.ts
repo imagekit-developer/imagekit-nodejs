@@ -126,7 +126,7 @@ export namespace CustomMetadataFieldCreateResponse {
     /**
      * Type of the custom metadata field.
      */
-    type: 'Text' | 'TextArea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
+    type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
 
     /**
      * The default value for this custom metadata field. Date type of default value
@@ -206,7 +206,7 @@ export namespace CustomMetadataFieldUpdateResponse {
     /**
      * Type of the custom metadata field.
      */
-    type: 'Text' | 'TextArea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
+    type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
 
     /**
      * The default value for this custom metadata field. Date type of default value
@@ -290,7 +290,7 @@ export namespace CustomMetadataFieldListResponse {
       /**
        * Type of the custom metadata field.
        */
-      type: 'Text' | 'TextArea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
+      type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
 
       /**
        * The default value for this custom metadata field. Date type of default value
@@ -360,7 +360,7 @@ export namespace CustomMetadataFieldCreateParams {
     /**
      * Type of the custom metadata field.
      */
-    type: 'Text' | 'TextArea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
+    type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
 
     /**
      * The default value for this custom metadata field. This property is only required
@@ -486,8 +486,7 @@ export namespace CustomMetadataFieldUpdateParams {
 
 export interface CustomMetadataFieldListParams {
   /**
-   * Set it to `true` to include deleted field objects in the API response. Default
-   * value is `false`.
+   * Set it to `true` to include deleted field objects in the API response.
    */
   includeDeleted?: boolean;
 }

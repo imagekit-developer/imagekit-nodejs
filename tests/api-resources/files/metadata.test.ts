@@ -10,8 +10,8 @@ const client = new ImageKit({
 
 describe('resource metadata', () => {
   // Prism tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.files.metadata.retrieve('fileId');
+  test.skip('get', async () => {
+    const responsePromise = client.files.metadata.get('fileId');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,8 +22,8 @@ describe('resource metadata', () => {
   });
 
   // Prism tests are disabled
-  test.skip('fromURL: only required params', async () => {
-    const responsePromise = client.files.metadata.fromURL({ url: 'url' });
+  test.skip('getFromURL: only required params', async () => {
+    const responsePromise = client.files.metadata.getFromURL({ url: 'https://example.com' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -34,7 +34,7 @@ describe('resource metadata', () => {
   });
 
   // Prism tests are disabled
-  test.skip('fromURL: required and optional params', async () => {
-    const response = await client.files.metadata.fromURL({ url: 'url' });
+  test.skip('getFromURL: required and optional params', async () => {
+    const response = await client.files.metadata.getFromURL({ url: 'https://example.com' });
   });
 });

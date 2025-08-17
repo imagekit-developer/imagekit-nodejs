@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import ImageKit from '@imagekit/nodejs';
+import ImageKit, { toFile } from '@imagekit/nodejs';
 
 const client = new ImageKit({
   privateAPIKey: 'My Private API Key',
@@ -10,8 +10,8 @@ const client = new ImageKit({
 
 describe('resource files', () => {
   // Prism tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.files.list();
+  test.skip('update', async () => {
+    const responsePromise = client.files.update('fileId');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,18 +22,29 @@ describe('resource files', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
+  test.skip('update: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.files.list(
+      client.files.update(
+        'fileId',
         {
-          fileType: 'fileType',
-          limit: 'limit',
-          path: 'path',
-          searchQuery: 'searchQuery',
-          skip: 'skip',
-          sort: 'sort',
-          type: 'file',
+          customCoordinates: 'customCoordinates',
+          customMetadata: {},
+          description: 'description',
+          extensions: [
+            {
+              name: 'remove-bg',
+              options: {
+                add_shadow: true,
+                bg_color: 'bg_color',
+                bg_image_url: 'bg_image_url',
+                semitransparency: true,
+              },
+            },
+          ],
+          removeAITags: ['string'],
+          tags: ['tag1', 'tag2'],
+          webhookUrl: 'https://example.com',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -50,29 +61,6 @@ describe('resource files', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('addTags: only required params', async () => {
-    const responsePromise = client.files.addTags({
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-      tags: ['t-shirt', 'round-neck', 'sale2019'],
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('addTags: required and optional params', async () => {
-    const response = await client.files.addTags({
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-      tags: ['t-shirt', 'round-neck', 'sale2019'],
-    });
   });
 
   // Prism tests are disabled
@@ -100,6 +88,18 @@ describe('resource files', () => {
   });
 
   // Prism tests are disabled
+  test.skip('get', async () => {
+    const responsePromise = client.files.get('fileId');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
   test.skip('move: only required params', async () => {
     const responsePromise = client.files.move({
       destinationPath: '/folder/to/move/into/',
@@ -119,52 +119,6 @@ describe('resource files', () => {
     const response = await client.files.move({
       destinationPath: '/folder/to/move/into/',
       sourceFilePath: '/path/to/file.jpg',
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('removeAITags: only required params', async () => {
-    const responsePromise = client.files.removeAITags({
-      AITags: ['t-shirt', 'round-neck', 'sale2019'],
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('removeAITags: required and optional params', async () => {
-    const response = await client.files.removeAITags({
-      AITags: ['t-shirt', 'round-neck', 'sale2019'],
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('removeTags: only required params', async () => {
-    const responsePromise = client.files.removeTags({
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-      tags: ['t-shirt', 'round-neck', 'sale2019'],
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('removeTags: required and optional params', async () => {
-    const response = await client.files.removeTags({
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-      tags: ['t-shirt', 'round-neck', 'sale2019'],
     });
   });
 
@@ -193,9 +147,9 @@ describe('resource files', () => {
   });
 
   // Prism tests are disabled
-  test.skip('uploadV1: only required params', async () => {
-    const responsePromise = client.files.uploadV1({
-      file: 'https://www.example.com/rest-of-the-image-path.jpg',
+  test.skip('upload: only required params', async () => {
+    const responsePromise = client.files.upload({
+      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       fileName: 'fileName',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -208,74 +162,48 @@ describe('resource files', () => {
   });
 
   // Prism tests are disabled
-  test.skip('uploadV1: required and optional params', async () => {
-    const response = await client.files.uploadV1({
-      file: 'https://www.example.com/rest-of-the-image-path.jpg',
+  test.skip('upload: required and optional params', async () => {
+    const response = await client.files.upload({
+      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       fileName: 'fileName',
       token: 'token',
       checks: '"request.folder" : "marketing/"\n',
       customCoordinates: 'customCoordinates',
-      customMetadata: '"\n  {\n    "brand": "Nike",\n    "color":"red"\n  }\n"\n',
-      expire: 'expire',
-      extensions:
-        '"\n[\n  {"name":"remove-bg","options":{"add_shadow":true,"bg_colour":"green"}},\n  {"name":"google-auto-tagging","maxTags":5,"minConfidence":95}\n]\n"\n',
+      customMetadata: { brand: 'bar', color: 'bar' },
+      description: 'Running shoes',
+      expire: 0,
+      extensions: [
+        {
+          name: 'remove-bg',
+          options: {
+            add_shadow: true,
+            bg_color: 'bg_color',
+            bg_image_url: 'bg_image_url',
+            semitransparency: true,
+          },
+        },
+        { maxTags: 5, minConfidence: 95, name: 'google-auto-tagging' },
+      ],
       folder: 'folder',
-      isPrivateFile: 'true',
-      isPublished: 'true',
-      overwriteAITags: 'true',
-      overwriteCustomMetadata: 'true',
-      overwriteFile: 'overwriteFile',
-      overwriteTags: 'true',
+      isPrivateFile: true,
+      isPublished: true,
+      overwriteAITags: true,
+      overwriteCustomMetadata: true,
+      overwriteFile: true,
+      overwriteTags: true,
       publicKey: 'publicKey',
-      responseFields: 'responseFields',
+      responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],
       signature: 'signature',
-      tags: 't-shirt,round-neck,men',
-      transformation:
-        '\'{"pre":"width:300,height:300,quality:80","post":[{"type":"thumbnail","value":"width:100,height:100"}]}\'\n',
-      useUniqueFileName: 'true',
-      webhookUrl: 'webhookUrl',
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('uploadV2: only required params', async () => {
-    const responsePromise = client.files.uploadV2({
-      file: 'https://www.example.com/rest-of-the-image-path.jpg',
-      fileName: 'fileName',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('uploadV2: required and optional params', async () => {
-    const response = await client.files.uploadV2({
-      file: 'https://www.example.com/rest-of-the-image-path.jpg',
-      fileName: 'fileName',
-      token: 'token',
-      checks: '"request.folder" : "marketing/"\n',
-      customCoordinates: 'customCoordinates',
-      customMetadata: '"\n  {\n    "brand": "Nike",\n    "color":"red"\n  }\n"\n',
-      extensions:
-        '"\n[\n  {"name":"remove-bg","options":{"add_shadow":true,"bg_colour":"green"}},\n  {"name":"google-auto-tagging","maxTags":5,"minConfidence":95}\n]\n"\n',
-      folder: 'folder',
-      isPrivateFile: 'true',
-      isPublished: 'true',
-      overwriteAITags: 'true',
-      overwriteCustomMetadata: 'true',
-      overwriteFile: 'overwriteFile',
-      overwriteTags: 'true',
-      responseFields: 'responseFields',
-      tags: 't-shirt,round-neck,men',
-      transformation:
-        '\'{"pre":"width:300,height:300,quality:80","post":[{"type":"thumbnail","value":"width:100,height:100"}]}\'\n',
-      useUniqueFileName: 'true',
-      webhookUrl: 'webhookUrl',
+      tags: ['t-shirt', 'round-neck', 'men'],
+      transformation: {
+        post: [
+          { type: 'thumbnail', value: 'w-150,h-150' },
+          { protocol: 'dash', type: 'abs', value: 'sr-240_360_480_720_1080' },
+        ],
+        pre: 'w-300,h-300,q-80',
+      },
+      useUniqueFileName: true,
+      webhookUrl: 'https://example.com',
     });
   });
 });

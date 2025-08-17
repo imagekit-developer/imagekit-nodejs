@@ -1,60 +1,85 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as FilesAPI from './files';
-import * as BatchAPI from './batch';
-import { Batch, BatchDeleteParams, BatchDeleteResponse } from './batch';
-import * as DetailsAPI from './details';
-import { DetailRetrieveResponse, DetailUpdateParams, DetailUpdateResponse, Details } from './details';
+import * as BulkAPI from './bulk';
+import {
+  Bulk,
+  BulkAddTagsParams,
+  BulkAddTagsResponse,
+  BulkDeleteParams,
+  BulkDeleteResponse,
+  BulkRemoveAITagsParams,
+  BulkRemoveAITagsResponse,
+  BulkRemoveTagsParams,
+  BulkRemoveTagsResponse,
+} from './bulk';
 import * as MetadataAPI from './metadata';
 import {
   Metadata as MetadataAPIMetadata,
-  MetadataFromURLParams,
-  MetadataFromURLResponse,
-  MetadataRetrieveResponse,
+  MetadataGetFromURLParams,
+  MetadataGetFromURLResponse,
+  MetadataGetResponse,
 } from './metadata';
-import * as PurgeAPI from './purge';
-import { Purge, PurgeExecuteParams, PurgeExecuteResponse, PurgeStatusResponse } from './purge';
 import * as VersionsAPI from './versions';
 import {
   VersionDeleteParams,
   VersionDeleteResponse,
+  VersionGetParams,
+  VersionGetResponse,
   VersionListResponse,
   VersionRestoreParams,
   VersionRestoreResponse,
-  VersionRetrieveParams,
-  VersionRetrieveResponse,
   Versions,
 } from './versions';
 import { APIPromise } from '../../core/api-promise';
+import { type Uploadable } from '../../core/uploads';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { multipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
 export class Files extends APIResource {
-  details: DetailsAPI.Details = new DetailsAPI.Details(this._client);
-  batch: BatchAPI.Batch = new BatchAPI.Batch(this._client);
+  bulk: BulkAPI.Bulk = new BulkAPI.Bulk(this._client);
   versions: VersionsAPI.Versions = new VersionsAPI.Versions(this._client);
-  purge: PurgeAPI.Purge = new PurgeAPI.Purge(this._client);
   metadata: MetadataAPI.Metadata = new MetadataAPI.Metadata(this._client);
 
   /**
-   * This API can list all the uploaded files and folders in your ImageKit.io media
-   * library. In addition, you can fine-tune your query by specifying various filters
-   * by generating a query string in a Lucene-like syntax and provide this generated
-   * string as the value of the `searchQuery`.
+   * This API updates the details or attributes of the current version of the file.
+   * You can update `tags`, `customCoordinates`, `customMetadata`, publication
+   * status, remove existing `AITags` and apply extensions using this API.
    *
    * @example
    * ```ts
-   * const files = await client.files.list();
+   * const file = await client.files.update('fileId', {
+   *   customCoordinates: '10,10,100,100',
+   *   customMetadata: { brand: 'Nike', color: 'red' },
+   *   extensions: [
+   *     { name: 'remove-bg', options: { add_shadow: true } },
+   *     {
+   *       name: 'google-auto-tagging',
+   *       minConfidence: 80,
+   *       maxTags: 10,
+   *     },
+   *     {
+   *       name: 'aws-auto-tagging',
+   *       minConfidence: 80,
+   *       maxTags: 10,
+   *     },
+   *     { name: 'ai-auto-description' },
+   *   ],
+   *   removeAITags: ['car', 'vehicle', 'motorsports'],
+   *   tags: ['tag1', 'tag2'],
+   *   webhookUrl:
+   *     'https://webhook.site/0d6b6c7a-8e5a-4b3a-8b7c-0d6b6c7a8e5a',
+   * });
    * ```
    */
-  list(
-    query: FileListParams | null | undefined = {},
+  update(
+    fileID: string,
+    body: FileUpdateParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<FileListResponse> {
-    return this._client.get('/v1/files', { query, ...options });
+  ): APIPromise<FileUpdateResponse> {
+    return this._client.patch(path`/v1/files/${fileID}/details`, { body, ...options });
   }
 
   /**
@@ -77,25 +102,6 @@ export class Files extends APIResource {
   }
 
   /**
-   * This API adds tags to multiple files in bulk. A maximum of 50 files can be
-   * specified at a time.
-   *
-   * @example
-   * ```ts
-   * const response = await client.files.addTags({
-   *   fileIds: [
-   *     '598821f949c0a938d57563bd',
-   *     '598821f949c0a938d57563be',
-   *   ],
-   *   tags: ['t-shirt', 'round-neck', 'sale2019'],
-   * });
-   * ```
-   */
-  addTags(body: FileAddTagsParams, options?: RequestOptions): APIPromise<FileAddTagsResponse> {
-    return this._client.post('/v1/files/addTags', { body, ...options });
-  }
-
-  /**
    * This will copy a file from one folder to another.
    *
    * Note: If any file at the destination has the same name as the source file, then
@@ -115,6 +121,19 @@ export class Files extends APIResource {
   }
 
   /**
+   * This API returns an object with details or attributes about the current version
+   * of the file.
+   *
+   * @example
+   * ```ts
+   * const file = await client.files.get('fileId');
+   * ```
+   */
+  get(fileID: string, options?: RequestOptions): APIPromise<FileGetResponse> {
+    return this._client.get(path`/v1/files/${fileID}/details`, options);
+  }
+
+  /**
    * This will move a file and all its versions from one folder to another.
    *
    * Note: If any file at the destination has the same name as the source file, then
@@ -130,44 +149,6 @@ export class Files extends APIResource {
    */
   move(body: FileMoveParams, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post('/v1/files/move', { body, ...options });
-  }
-
-  /**
-   * This API removes AITags from multiple files in bulk. A maximum of 50 files can
-   * be specified at a time.
-   *
-   * @example
-   * ```ts
-   * const response = await client.files.removeAITags({
-   *   AITags: ['t-shirt', 'round-neck', 'sale2019'],
-   *   fileIds: [
-   *     '598821f949c0a938d57563bd',
-   *     '598821f949c0a938d57563be',
-   *   ],
-   * });
-   * ```
-   */
-  removeAITags(body: FileRemoveAITagsParams, options?: RequestOptions): APIPromise<FileRemoveAITagsResponse> {
-    return this._client.post('/v1/files/removeAITags', { body, ...options });
-  }
-
-  /**
-   * This API removes tags from multiple files in bulk. A maximum of 50 files can be
-   * specified at a time.
-   *
-   * @example
-   * ```ts
-   * const response = await client.files.removeTags({
-   *   fileIds: [
-   *     '598821f949c0a938d57563bd',
-   *     '598821f949c0a938d57563be',
-   *   ],
-   *   tags: ['t-shirt', 'round-neck', 'sale2019'],
-   * });
-   * ```
-   */
-  removeTags(body: FileRemoveTagsParams, options?: RequestOptions): APIPromise<FileRemoveTagsResponse> {
-    return this._client.post('/v1/files/removeTags', { body, ...options });
   }
 
   /**
@@ -220,13 +201,13 @@ export class Files extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.files.uploadV1({
-   *   file: 'https://www.example.com/rest-of-the-image-path.jpg',
+   * const response = await client.files.upload({
+   *   file: fs.createReadStream('path/to/file'),
    *   fileName: 'fileName',
    * });
    * ```
    */
-  uploadV1(body: FileUploadV1Params, options?: RequestOptions): APIPromise<FileUploadV1Response> {
+  upload(body: FileUploadParams, options?: RequestOptions): APIPromise<FileUploadResponse> {
     return this._client.post(
       '/api/v1/files/upload',
       multipartFormRequestOptions(
@@ -235,352 +216,324 @@ export class Files extends APIResource {
       ),
     );
   }
+}
+
+export interface FileUpdateResponse {
+  /**
+   * An array of tags assigned to the file by auto tagging.
+   */
+  AITags?: Array<FileUpdateResponse.AITag> | null;
 
   /**
-   * The V2 API enhances security by verifying the entire payload using JWT. This API
-   * is in beta.
-   *
-   * ImageKit.io allows you to upload files directly from both the server and client
-   * sides. For server-side uploads, private API key authentication is used. For
-   * client-side uploads, generate a one-time `token` from your secure backend using
-   * private API.
-   * [Learn more](/docs/api-reference/upload-file/upload-file-v2#how-to-implement-secure-client-side-file-upload)
-   * about how to implement secure client-side file upload.
-   *
-   * **File size limit** \
-   * On the free plan, the maximum upload file sizes are 20MB for images, audio, and raw
-   * files, and 100MB for videos. On the paid plan, these limits increase to 40MB for
-   * images, audio, and raw files, and 2GB for videos. These limits can be further increased
-   * with higher-tier plans.
-   *
-   * **Version limit** \
-   * A file can have a maximum of 100 versions.
-   *
-   * **Demo applications**
-   *
-   * - A full-fledged
-   *   [upload widget using Uppy](https://github.com/imagekit-samples/uppy-uploader),
-   *   supporting file selections from local storage, URL, Dropbox, Google Drive,
-   *   Instagram, and more.
-   * - [Quick start guides](/docs/quick-start-guides) for various frameworks and
-   *   technologies.
-   *
-   * @example
-   * ```ts
-   * const response = await client.files.uploadV2({
-   *   file: 'https://www.example.com/rest-of-the-image-path.jpg',
-   *   fileName: 'fileName',
-   * });
-   * ```
+   * Date and time when the file was uploaded. The date and time is in ISO8601
+   * format.
    */
-  uploadV2(body: FileUploadV2Params, options?: RequestOptions): APIPromise<FileUploadV2Response> {
-    return this._client.post(
-      '/api/v2/files/upload',
-      multipartFormRequestOptions(
-        { body, defaultBaseURL: 'https://upload.imagekit.io', ...options },
-        this._client,
-      ),
-    );
-  }
-}
+  createdAt?: string;
 
-/**
- * Object containing Exif details.
- */
-export interface ExifDetails {
-  ApertureValue?: number;
-
-  ColorSpace?: number;
-
-  CreateDate?: string;
-
-  CustomRendered?: number;
-
-  DateTimeOriginal?: string;
-
-  ExifImageHeight?: number;
-
-  ExifImageWidth?: number;
-
-  ExifVersion?: string;
-
-  ExposureCompensation?: number;
-
-  ExposureMode?: number;
-
-  ExposureProgram?: number;
-
-  ExposureTime?: number;
-
-  Flash?: number;
-
-  FlashpixVersion?: string;
-
-  FNumber?: number;
-
-  FocalLength?: number;
-
-  FocalPlaneResolutionUnit?: number;
-
-  FocalPlaneXResolution?: number;
-
-  FocalPlaneYResolution?: number;
-
-  InteropOffset?: number;
-
-  ISO?: number;
-
-  MeteringMode?: number;
-
-  SceneCaptureType?: number;
-
-  ShutterSpeedValue?: number;
-
-  SubSecTime?: string;
-
-  WhiteBalance?: number;
-}
-
-/**
- * Object containing EXIF image information.
- */
-export interface ExifImage {
-  ExifOffset?: number;
-
-  GPSInfo?: number;
-
-  Make?: string;
-
-  Model?: string;
-
-  ModifyDate?: string;
-
-  Orientation?: number;
-
-  ResolutionUnit?: number;
-
-  Software?: string;
-
-  XResolution?: number;
-
-  YCbCrPositioning?: number;
-
-  YResolution?: number;
-}
-
-/**
- * Object containing GPS information.
- */
-export interface Gps {
-  GPSVersionID?: Array<number>;
-}
-
-/**
- * JSON object.
- */
-export interface Interoperability {
-  InteropIndex?: string;
-
-  InteropVersion?: string;
-}
-
-/**
- * Object containing Thumbnail information.
- */
-export interface Thumbnail {
-  Compression?: number;
-
-  ResolutionUnit?: number;
-
-  ThumbnailLength?: number;
-
-  ThumbnailOffset?: number;
-
-  XResolution?: number;
-
-  YResolution?: number;
-}
-
-export type FileListResponse = Array<FileListResponse.FileListResponseItem>;
-
-export namespace FileListResponse {
   /**
-   * Object containing details of a file or file version.
+   * An string with custom coordinates of the file.
    */
-  export interface FileListResponseItem {
+  customCoordinates?: string | null;
+
+  /**
+   * An object with custom metadata for the file.
+   */
+  customMetadata?: unknown;
+
+  extensionStatus?: FileUpdateResponse.ExtensionStatus;
+
+  /**
+   * Unique identifier of the asset.
+   */
+  fileId?: string;
+
+  /**
+   * Path of the file. This is the path you would use in the URL to access the file.
+   * For example, if the file is at the root of the media library, the path will be
+   * `/file.jpg`. If the file is inside a folder named `images`, the path will be
+   * `/images/file.jpg`.
+   */
+  filePath?: string;
+
+  /**
+   * Type of the file. Possible values are `image`, `non-image`.
+   */
+  fileType?: string;
+
+  /**
+   * Specifies if the image has an alpha channel.
+   */
+  hasAlpha?: boolean;
+
+  /**
+   * Height of the file.
+   */
+  height?: number;
+
+  /**
+   * Specifies if the file is private or not.
+   */
+  isPrivateFile?: boolean;
+
+  /**
+   * Specifies if the file is published or not.
+   */
+  isPublished?: boolean;
+
+  /**
+   * MIME type of the file.
+   */
+  mime?: string;
+
+  /**
+   * Name of the asset.
+   */
+  name?: string;
+
+  /**
+   * Size of the file in bytes.
+   */
+  size?: number;
+
+  /**
+   * An array of tags assigned to the file. Tags are used to search files in the
+   * media library.
+   */
+  tags?: Array<string> | null;
+
+  /**
+   * URL of the thumbnail image. This URL is used to access the thumbnail image of
+   * the file in the media library.
+   */
+  thumbnail?: string;
+
+  /**
+   * Type of the asset.
+   */
+  type?: string;
+
+  /**
+   * Date and time when the file was last updated. The date and time is in ISO8601
+   * format.
+   */
+  updatedAt?: string;
+
+  /**
+   * URL of the file.
+   */
+  url?: string;
+
+  /**
+   * An object with details of the file version.
+   */
+  versionInfo?: FileUpdateResponse.VersionInfo;
+
+  /**
+   * Width of the file.
+   */
+  width?: number;
+}
+
+export namespace FileUpdateResponse {
+  export interface AITag {
     /**
-     * An array of tags assigned to the file by auto tagging.
+     * Confidence score of the tag.
      */
-    AITags?: Array<FileListResponseItem.AITag> | null;
+    confidence?: number;
 
     /**
-     * Date and time when the file was uploaded. The date and time is in ISO8601
-     * format.
-     */
-    createdAt?: string;
-
-    /**
-     * An string with custom coordinates of the file.
-     */
-    customCoordinates?: string | null;
-
-    /**
-     * An object with custom metadata for the file.
-     */
-    customMetadata?: unknown;
-
-    /**
-     * Unique identifier of the asset.
-     */
-    fileId?: string;
-
-    /**
-     * Path of the file. This is the path you would use in the URL to access the file.
-     * For example, if the file is at the root of the media library, the path will be
-     * `/file.jpg`. If the file is inside a folder named `images`, the path will be
-     * `/images/file.jpg`.
-     */
-    filePath?: string;
-
-    /**
-     * Type of the file. Possible values are `image`, `non-image`.
-     */
-    fileType?: string;
-
-    /**
-     * Specifies if the image has an alpha channel.
-     */
-    hasAlpha?: boolean;
-
-    /**
-     * Height of the file.
-     */
-    height?: number;
-
-    /**
-     * Specifies if the file is private or not.
-     */
-    isPrivateFile?: boolean;
-
-    /**
-     * Specifies if the file is published or not.
-     */
-    isPublished?: boolean;
-
-    /**
-     * MIME type of the file.
-     */
-    mime?: string;
-
-    /**
-     * Name of the asset.
+     * Name of the tag.
      */
     name?: string;
 
     /**
-     * Size of the file in bytes.
+     * Source of the tag. Possible values are `google-auto-tagging` and
+     * `aws-auto-tagging`.
      */
-    size?: number;
-
-    /**
-     * An array of tags assigned to the file. Tags are used to search files in the
-     * media library.
-     */
-    tags?: Array<string> | null;
-
-    /**
-     * URL of the thumbnail image. This URL is used to access the thumbnail image of
-     * the file in the media library.
-     */
-    thumbnail?: string;
-
-    /**
-     * Type of the asset.
-     */
-    type?: string;
-
-    /**
-     * Date and time when the file was last updated. The date and time is in ISO8601
-     * format.
-     */
-    updatedAt?: string;
-
-    /**
-     * URL of the file.
-     */
-    url?: string;
-
-    /**
-     * An object with details of the file version.
-     */
-    versionInfo?: FileListResponseItem.VersionInfo;
-
-    /**
-     * Width of the file.
-     */
-    width?: number;
+    source?: string;
   }
 
-  export namespace FileListResponseItem {
-    export interface AITag {
-      /**
-       * Confidence score of the tag.
-       */
-      confidence?: number;
+  export interface ExtensionStatus {
+    'ai-auto-description'?: 'success' | 'pending' | 'failed';
 
-      /**
-       * Name of the tag.
-       */
-      name?: string;
+    'aws-auto-tagging'?: 'success' | 'pending' | 'failed';
 
-      /**
-       * Source of the tag. Possible values are `google-auto-tagging` and
-       * `aws-auto-tagging`.
-       */
-      source?: string;
-    }
+    'google-auto-tagging'?: 'success' | 'pending' | 'failed';
 
-    /**
-     * An object with details of the file version.
-     */
-    export interface VersionInfo {
-      /**
-       * Unique identifier of the file version.
-       */
-      id?: string;
-
-      /**
-       * Name of the file version.
-       */
-      name?: string;
-    }
+    'remove-bg'?: 'success' | 'pending' | 'failed';
   }
-}
 
-export interface FileAddTagsResponse {
   /**
-   * An array of fileIds that in which tags were successfully added.
+   * An object with details of the file version.
    */
-  successfullyUpdatedFileIds?: Array<string>;
+  export interface VersionInfo {
+    /**
+     * Unique identifier of the file version.
+     */
+    id?: string;
+
+    /**
+     * Name of the file version.
+     */
+    name?: string;
+  }
 }
 
 export type FileCopyResponse = unknown;
 
+/**
+ * Object containing details of a file or file version.
+ */
+export interface FileGetResponse {
+  /**
+   * An array of tags assigned to the file by auto tagging.
+   */
+  AITags?: Array<FileGetResponse.AITag> | null;
+
+  /**
+   * Date and time when the file was uploaded. The date and time is in ISO8601
+   * format.
+   */
+  createdAt?: string;
+
+  /**
+   * An string with custom coordinates of the file.
+   */
+  customCoordinates?: string | null;
+
+  /**
+   * An object with custom metadata for the file.
+   */
+  customMetadata?: unknown;
+
+  /**
+   * Unique identifier of the asset.
+   */
+  fileId?: string;
+
+  /**
+   * Path of the file. This is the path you would use in the URL to access the file.
+   * For example, if the file is at the root of the media library, the path will be
+   * `/file.jpg`. If the file is inside a folder named `images`, the path will be
+   * `/images/file.jpg`.
+   */
+  filePath?: string;
+
+  /**
+   * Type of the file. Possible values are `image`, `non-image`.
+   */
+  fileType?: string;
+
+  /**
+   * Specifies if the image has an alpha channel.
+   */
+  hasAlpha?: boolean;
+
+  /**
+   * Height of the file.
+   */
+  height?: number;
+
+  /**
+   * Specifies if the file is private or not.
+   */
+  isPrivateFile?: boolean;
+
+  /**
+   * Specifies if the file is published or not.
+   */
+  isPublished?: boolean;
+
+  /**
+   * MIME type of the file.
+   */
+  mime?: string;
+
+  /**
+   * Name of the asset.
+   */
+  name?: string;
+
+  /**
+   * Size of the file in bytes.
+   */
+  size?: number;
+
+  /**
+   * An array of tags assigned to the file. Tags are used to search files in the
+   * media library.
+   */
+  tags?: Array<string> | null;
+
+  /**
+   * URL of the thumbnail image. This URL is used to access the thumbnail image of
+   * the file in the media library.
+   */
+  thumbnail?: string;
+
+  /**
+   * Type of the asset.
+   */
+  type?: string;
+
+  /**
+   * Date and time when the file was last updated. The date and time is in ISO8601
+   * format.
+   */
+  updatedAt?: string;
+
+  /**
+   * URL of the file.
+   */
+  url?: string;
+
+  /**
+   * An object with details of the file version.
+   */
+  versionInfo?: FileGetResponse.VersionInfo;
+
+  /**
+   * Width of the file.
+   */
+  width?: number;
+}
+
+export namespace FileGetResponse {
+  export interface AITag {
+    /**
+     * Confidence score of the tag.
+     */
+    confidence?: number;
+
+    /**
+     * Name of the tag.
+     */
+    name?: string;
+
+    /**
+     * Source of the tag. Possible values are `google-auto-tagging` and
+     * `aws-auto-tagging`.
+     */
+    source?: string;
+  }
+
+  /**
+   * An object with details of the file version.
+   */
+  export interface VersionInfo {
+    /**
+     * Unique identifier of the file version.
+     */
+    id?: string;
+
+    /**
+     * Name of the file version.
+     */
+    name?: string;
+  }
+}
+
 export type FileMoveResponse = unknown;
-
-export interface FileRemoveAITagsResponse {
-  /**
-   * An array of fileIds that in which AITags were successfully removed.
-   */
-  successfullyUpdatedFileIds?: Array<string>;
-}
-
-export interface FileRemoveTagsResponse {
-  /**
-   * An array of fileIds that in which tags were successfully removed.
-   */
-  successfullyUpdatedFileIds?: Array<string>;
-}
 
 export interface FileRenameResponse {
   /**
@@ -593,11 +546,11 @@ export interface FileRenameResponse {
 /**
  * Object containing details of a successful upload.
  */
-export interface FileUploadV1Response {
+export interface FileUploadResponse {
   /**
    * An array of tags assigned to the uploaded file by auto tagging.
    */
-  AITags?: Array<FileUploadV1Response.AITag> | null;
+  AITags?: Array<FileUploadResponse.AITag> | null;
 
   /**
    * The audio codec used in the video (only for video).
@@ -636,7 +589,7 @@ export interface FileUploadV1Response {
    * and xmp data. Send `embeddedMetadata` in `responseFields` in API request to get
    * embeddedMetadata in the upload API response.
    */
-  embeddedMetadata?: FileUploadV1Response.EmbeddedMetadata;
+  embeddedMetadata?: { [key: string]: unknown };
 
   /**
    * Extension names with their processing status at the time of completion of the
@@ -649,7 +602,7 @@ export interface FileUploadV1Response {
    *
    * If no extension was requested, then this parameter is not returned.
    */
-  extensionStatus?: FileUploadV1Response.ExtensionStatus;
+  extensionStatus?: FileUploadResponse.ExtensionStatus;
 
   /**
    * Unique fileId. Store this fileld in your database, as this will be used to
@@ -691,7 +644,7 @@ export interface FileUploadV1Response {
    * Legacy metadata. Send `metadata` in `responseFields` in API request to get
    * metadata in the upload API response.
    */
-  metadata?: FileUploadV1Response.Metadata;
+  metadata?: FileUploadResponse.Metadata;
 
   /**
    * Name of the asset.
@@ -723,7 +676,7 @@ export interface FileUploadV1Response {
   /**
    * An object containing the file or file version's `id` (versionId) and `name`.
    */
-  versionInfo?: FileUploadV1Response.VersionInfo;
+  versionInfo?: FileUploadResponse.VersionInfo;
 
   /**
    * The video codec used in the video (only for video).
@@ -736,7 +689,7 @@ export interface FileUploadV1Response {
   width?: number;
 }
 
-export namespace FileUploadV1Response {
+export namespace FileUploadResponse {
   export interface AITag {
     /**
      * Confidence score of the tag.
@@ -754,373 +707,6 @@ export namespace FileUploadV1Response {
      * `aws-auto-tagging` extensions.
      */
     source?: string;
-  }
-
-  /**
-   * Consolidated embedded metadata associated with the file. It includes exif, iptc,
-   * and xmp data. Send `embeddedMetadata` in `responseFields` in API request to get
-   * embeddedMetadata in the upload API response.
-   */
-  export interface EmbeddedMetadata {
-    AboutCvTermCvId?: string;
-
-    AboutCvTermId?: string;
-
-    AboutCvTermName?: string;
-
-    AboutCvTermRefinedAbout?: string;
-
-    AdditionalModelInformation?: string;
-
-    ApplicationRecordVersion?: number;
-
-    Artist?: string;
-
-    ArtworkCircaDateCreated?: string;
-
-    ArtworkContentDescription?: string;
-
-    ArtworkContributionDescription?: string;
-
-    ArtworkCopyrightNotice?: string;
-
-    ArtworkCopyrightOwnerID?: string;
-
-    ArtworkCopyrightOwnerName?: string;
-
-    ArtworkCreator?: Array<string>;
-
-    ArtworkCreatorID?: Array<string>;
-
-    ArtworkDateCreated?: string;
-
-    ArtworkLicensorID?: string;
-
-    ArtworkLicensorName?: string;
-
-    ArtworkPhysicalDescription?: string;
-
-    ArtworkSource?: string;
-
-    ArtworkSourceInventoryNo?: string;
-
-    ArtworkSourceInvURL?: string;
-
-    ArtworkStylePeriod?: Array<string>;
-
-    ArtworkTitle?: string;
-
-    AuthorsPosition?: string;
-
-    Byline?: string;
-
-    BylineTitle?: string;
-
-    Caption?: string;
-
-    CaptionAbstract?: string;
-
-    CaptionWriter?: string;
-
-    City?: string;
-
-    ColorSpace?: string;
-
-    ComponentsConfiguration?: string;
-
-    Copyright?: string;
-
-    CopyrightNotice?: string;
-
-    CopyrightOwnerID?: Array<string>;
-
-    CopyrightOwnerName?: Array<string>;
-
-    Country?: string;
-
-    CountryCode?: string;
-
-    CountryPrimaryLocationCode?: string;
-
-    CountryPrimaryLocationName?: string;
-
-    Creator?: string;
-
-    CreatorAddress?: string;
-
-    CreatorCity?: string;
-
-    CreatorCountry?: string;
-
-    CreatorPostalCode?: string;
-
-    CreatorRegion?: string;
-
-    CreatorWorkEmail?: string;
-
-    CreatorWorkTelephone?: string;
-
-    CreatorWorkURL?: string;
-
-    Credit?: string;
-
-    DateCreated?: string;
-
-    DateTimeCreated?: string;
-
-    DateTimeOriginal?: string;
-
-    Description?: string;
-
-    DigitalImageGUID?: string;
-
-    DigitalSourceType?: string;
-
-    EmbeddedEncodedRightsExpr?: string;
-
-    EmbeddedEncodedRightsExprLangID?: string;
-
-    EmbeddedEncodedRightsExprType?: string;
-
-    Event?: string;
-
-    ExifVersion?: string;
-
-    FlashpixVersion?: string;
-
-    GenreCvId?: string;
-
-    GenreCvTermId?: string;
-
-    GenreCvTermName?: string;
-
-    GenreCvTermRefinedAbout?: string;
-
-    Headline?: string;
-
-    ImageCreatorID?: string;
-
-    ImageCreatorImageID?: string;
-
-    ImageCreatorName?: string;
-
-    ImageDescription?: string;
-
-    ImageRegionBoundaryH?: Array<number>;
-
-    ImageRegionBoundaryRx?: Array<number>;
-
-    ImageRegionBoundaryShape?: Array<string>;
-
-    ImageRegionBoundaryUnit?: Array<string>;
-
-    ImageRegionBoundaryVerticesX?: Array<number>;
-
-    ImageRegionBoundaryVerticesY?: Array<number>;
-
-    ImageRegionBoundaryW?: Array<number>;
-
-    ImageRegionBoundaryX?: Array<number>;
-
-    ImageRegionBoundaryY?: Array<number>;
-
-    ImageRegionCtypeIdentifier?: Array<string>;
-
-    ImageRegionCtypeName?: Array<string>;
-
-    ImageRegionID?: Array<string>;
-
-    ImageRegionName?: Array<string>;
-
-    ImageRegionOrganisationInImageName?: Array<string>;
-
-    ImageRegionPersonInImage?: Array<string>;
-
-    ImageRegionRoleIdentifier?: Array<string>;
-
-    ImageRegionRoleName?: Array<string>;
-
-    ImageSupplierID?: string;
-
-    ImageSupplierImageID?: string;
-
-    ImageSupplierName?: string;
-
-    Instructions?: string;
-
-    IntellectualGenre?: string;
-
-    Keywords?: Array<string>;
-
-    LicensorCity?: Array<string>;
-
-    LicensorCountry?: Array<string>;
-
-    LicensorEmail?: Array<string>;
-
-    LicensorExtendedAddress?: Array<string>;
-
-    LicensorID?: Array<string>;
-
-    LicensorName?: Array<string>;
-
-    LicensorPostalCode?: Array<string>;
-
-    LicensorRegion?: Array<string>;
-
-    LicensorStreetAddress?: Array<string>;
-
-    LicensorTelephone1?: Array<string>;
-
-    LicensorTelephone2?: Array<string>;
-
-    LicensorURL?: Array<string>;
-
-    LinkedEncodedRightsExpr?: string;
-
-    LinkedEncodedRightsExprLangID?: string;
-
-    LinkedEncodedRightsExprType?: string;
-
-    Location?: string;
-
-    LocationCreatedCity?: string;
-
-    LocationCreatedCountryCode?: string;
-
-    LocationCreatedCountryName?: string;
-
-    LocationCreatedGPSAltitude?: string;
-
-    LocationCreatedGPSLatitude?: string;
-
-    LocationCreatedGPSLongitude?: string;
-
-    LocationCreatedLocationId?: string;
-
-    LocationCreatedLocationName?: string;
-
-    LocationCreatedProvinceState?: string;
-
-    LocationCreatedSublocation?: string;
-
-    LocationCreatedWorldRegion?: string;
-
-    LocationShownCity?: Array<string>;
-
-    LocationShownCountryCode?: Array<string>;
-
-    LocationShownCountryName?: Array<string>;
-
-    LocationShownGPSAltitude?: Array<string>;
-
-    LocationShownGPSLatitude?: Array<string>;
-
-    LocationShownGPSLongitude?: Array<string>;
-
-    LocationShownLocationId?: Array<string>;
-
-    LocationShownLocationName?: Array<string>;
-
-    LocationShownProvinceState?: Array<string>;
-
-    LocationShownSublocation?: Array<string>;
-
-    LocationShownWorldRegion?: Array<string>;
-
-    MaxAvailHeight?: number;
-
-    MaxAvailWidth?: number;
-
-    ModelAge?: Array<number>;
-
-    ModelReleaseID?: Array<string>;
-
-    ObjectAttributeReference?: string;
-
-    ObjectName?: string;
-
-    OffsetTimeOriginal?: string;
-
-    OrganisationInImageCode?: Array<string>;
-
-    OrganisationInImageName?: Array<string>;
-
-    Orientation?: string;
-
-    OriginalTransmissionReference?: string;
-
-    PersonInImage?: Array<string>;
-
-    PersonInImageCvTermCvId?: Array<string>;
-
-    PersonInImageCvTermId?: Array<string>;
-
-    PersonInImageCvTermName?: Array<string>;
-
-    PersonInImageCvTermRefinedAbout?: Array<string>;
-
-    PersonInImageDescription?: Array<string>;
-
-    PersonInImageId?: Array<string>;
-
-    PersonInImageName?: Array<string>;
-
-    ProductInImageDescription?: Array<string>;
-
-    ProductInImageGTIN?: Array<number>;
-
-    ProductInImageName?: Array<string>;
-
-    PropertyReleaseID?: Array<string>;
-
-    ProvinceState?: string;
-
-    Rating?: number;
-
-    RegistryEntryRole?: Array<string>;
-
-    RegistryItemID?: Array<string>;
-
-    RegistryOrganisationID?: Array<string>;
-
-    ResolutionUnit?: string;
-
-    Rights?: string;
-
-    Scene?: Array<string>;
-
-    Source?: string;
-
-    SpecialInstructions?: string;
-
-    State?: string;
-
-    Subject?: Array<string>;
-
-    SubjectCode?: Array<string>;
-
-    SubjectReference?: Array<string>;
-
-    Sublocation?: string;
-
-    TimeCreated?: string;
-
-    Title?: string;
-
-    TransmissionReference?: string;
-
-    UsageTerms?: string;
-
-    WebStatement?: string;
-
-    Writer?: string;
-
-    WriterEditor?: string;
-
-    XResolution?: number;
-
-    YResolution?: number;
   }
 
   /**
@@ -1220,701 +806,148 @@ export namespace FileUploadV1Response {
       /**
        * Object containing Exif details.
        */
-      exif?: FilesAPI.ExifDetails;
+      exif?: Exif.Exif;
 
       /**
        * Object containing GPS information.
        */
-      gps?: FilesAPI.Gps;
+      gps?: Exif.Gps;
 
       /**
        * Object containing EXIF image information.
        */
-      image?: FilesAPI.ExifImage;
+      image?: Exif.Image;
 
       /**
        * JSON object.
        */
-      interoperability?: FilesAPI.Interoperability;
+      interoperability?: Exif.Interoperability;
 
       makernote?: { [key: string]: unknown };
 
       /**
        * Object containing Thumbnail information.
        */
-      thumbnail?: FilesAPI.Thumbnail;
+      thumbnail?: Exif.Thumbnail;
     }
-  }
 
-  /**
-   * An object containing the file or file version's `id` (versionId) and `name`.
-   */
-  export interface VersionInfo {
-    /**
-     * Unique identifier of the file version.
-     */
-    id?: string;
-
-    /**
-     * Name of the file version.
-     */
-    name?: string;
-  }
-}
-
-/**
- * Object containing details of a successful upload.
- */
-export interface FileUploadV2Response {
-  /**
-   * An array of tags assigned to the uploaded file by auto tagging.
-   */
-  AITags?: Array<FileUploadV2Response.AITag> | null;
-
-  /**
-   * The audio codec used in the video (only for video).
-   */
-  audioCodec?: string;
-
-  /**
-   * The bit rate of the video in kbps (only for video).
-   */
-  bitRate?: number;
-
-  /**
-   * Value of custom coordinates associated with the image in the format
-   * `x,y,width,height`. If `customCoordinates` are not defined, then it is `null`.
-   * Send `customCoordinates` in `responseFields` in API request to get the value of
-   * this field.
-   */
-  customCoordinates?: string | null;
-
-  /**
-   * A key-value data associated with the asset. Use `responseField` in API request
-   * to get `customMetadata` in the upload API response. Before setting any custom
-   * metadata on an asset, you have to create the field using custom metadata fields
-   * API. Send `customMetadata` in `responseFields` in API request to get the value
-   * of this field.
-   */
-  customMetadata?: unknown;
-
-  /**
-   * The duration of the video in seconds (only for video).
-   */
-  duration?: number;
-
-  /**
-   * Consolidated embedded metadata associated with the file. It includes exif, iptc,
-   * and xmp data. Send `embeddedMetadata` in `responseFields` in API request to get
-   * embeddedMetadata in the upload API response.
-   */
-  embeddedMetadata?: FileUploadV2Response.EmbeddedMetadata;
-
-  /**
-   * Extension names with their processing status at the time of completion of the
-   * request. It could have one of the following status values:
-   *
-   * `success`: The extension has been successfully applied. `failed`: The extension
-   * has failed and will not be retried. `pending`: The extension will finish
-   * processing in some time. On completion, the final status (success / failed) will
-   * be sent to the `webhookUrl` provided.
-   *
-   * If no extension was requested, then this parameter is not returned.
-   */
-  extensionStatus?: FileUploadV2Response.ExtensionStatus;
-
-  /**
-   * Unique fileId. Store this fileld in your database, as this will be used to
-   * perform update action on this file.
-   */
-  fileId?: string;
-
-  /**
-   * The relative path of the file in the media library e.g.
-   * `/marketing-assets/new-banner.jpg`.
-   */
-  filePath?: string;
-
-  /**
-   * Type of the uploaded file. Possible values are `image`, `non-image`.
-   */
-  fileType?: string;
-
-  /**
-   * Height of the image in pixels (Only for images)
-   */
-  height?: number;
-
-  /**
-   * Is the file marked as private. It can be either `true` or `false`. Send
-   * `isPrivateFile` in `responseFields` in API request to get the value of this
-   * field.
-   */
-  isPrivateFile?: boolean;
-
-  /**
-   * Is the file published or in draft state. It can be either `true` or `false`.
-   * Send `isPublished` in `responseFields` in API request to get the value of this
-   * field.
-   */
-  isPublished?: boolean;
-
-  /**
-   * Legacy metadata. Send `metadata` in `responseFields` in API request to get
-   * metadata in the upload API response.
-   */
-  metadata?: FileUploadV2Response.Metadata;
-
-  /**
-   * Name of the asset.
-   */
-  name?: string;
-
-  /**
-   * Size of the image file in Bytes.
-   */
-  size?: number;
-
-  /**
-   * The array of tags associated with the asset. If no tags are set, it will be
-   * `null`. Send `tags` in `responseFields` in API request to get the value of this
-   * field.
-   */
-  tags?: Array<string> | null;
-
-  /**
-   * In the case of an image, a small thumbnail URL.
-   */
-  thumbnailUrl?: string;
-
-  /**
-   * A publicly accessible URL of the file.
-   */
-  url?: string;
-
-  /**
-   * An object containing the file or file version's `id` (versionId) and `name`.
-   */
-  versionInfo?: FileUploadV2Response.VersionInfo;
-
-  /**
-   * The video codec used in the video (only for video).
-   */
-  videoCodec?: string;
-
-  /**
-   * Width of the image in pixels (Only for Images)
-   */
-  width?: number;
-}
-
-export namespace FileUploadV2Response {
-  export interface AITag {
-    /**
-     * Confidence score of the tag.
-     */
-    confidence?: number;
-
-    /**
-     * Name of the tag.
-     */
-    name?: string;
-
-    /**
-     * Array of `AITags` associated with the image. If no `AITags` are set, it will be
-     * null. These tags can be added using the `google-auto-tagging` or
-     * `aws-auto-tagging` extensions.
-     */
-    source?: string;
-  }
-
-  /**
-   * Consolidated embedded metadata associated with the file. It includes exif, iptc,
-   * and xmp data. Send `embeddedMetadata` in `responseFields` in API request to get
-   * embeddedMetadata in the upload API response.
-   */
-  export interface EmbeddedMetadata {
-    AboutCvTermCvId?: string;
-
-    AboutCvTermId?: string;
-
-    AboutCvTermName?: string;
-
-    AboutCvTermRefinedAbout?: string;
-
-    AdditionalModelInformation?: string;
-
-    ApplicationRecordVersion?: number;
-
-    Artist?: string;
-
-    ArtworkCircaDateCreated?: string;
-
-    ArtworkContentDescription?: string;
-
-    ArtworkContributionDescription?: string;
-
-    ArtworkCopyrightNotice?: string;
-
-    ArtworkCopyrightOwnerID?: string;
-
-    ArtworkCopyrightOwnerName?: string;
-
-    ArtworkCreator?: Array<string>;
-
-    ArtworkCreatorID?: Array<string>;
-
-    ArtworkDateCreated?: string;
-
-    ArtworkLicensorID?: string;
-
-    ArtworkLicensorName?: string;
-
-    ArtworkPhysicalDescription?: string;
-
-    ArtworkSource?: string;
-
-    ArtworkSourceInventoryNo?: string;
-
-    ArtworkSourceInvURL?: string;
-
-    ArtworkStylePeriod?: Array<string>;
-
-    ArtworkTitle?: string;
-
-    AuthorsPosition?: string;
-
-    Byline?: string;
-
-    BylineTitle?: string;
-
-    Caption?: string;
-
-    CaptionAbstract?: string;
-
-    CaptionWriter?: string;
-
-    City?: string;
-
-    ColorSpace?: string;
-
-    ComponentsConfiguration?: string;
-
-    Copyright?: string;
-
-    CopyrightNotice?: string;
-
-    CopyrightOwnerID?: Array<string>;
-
-    CopyrightOwnerName?: Array<string>;
-
-    Country?: string;
-
-    CountryCode?: string;
-
-    CountryPrimaryLocationCode?: string;
-
-    CountryPrimaryLocationName?: string;
-
-    Creator?: string;
-
-    CreatorAddress?: string;
-
-    CreatorCity?: string;
-
-    CreatorCountry?: string;
-
-    CreatorPostalCode?: string;
-
-    CreatorRegion?: string;
-
-    CreatorWorkEmail?: string;
-
-    CreatorWorkTelephone?: string;
-
-    CreatorWorkURL?: string;
-
-    Credit?: string;
-
-    DateCreated?: string;
-
-    DateTimeCreated?: string;
-
-    DateTimeOriginal?: string;
-
-    Description?: string;
-
-    DigitalImageGUID?: string;
-
-    DigitalSourceType?: string;
-
-    EmbeddedEncodedRightsExpr?: string;
-
-    EmbeddedEncodedRightsExprLangID?: string;
-
-    EmbeddedEncodedRightsExprType?: string;
-
-    Event?: string;
-
-    ExifVersion?: string;
-
-    FlashpixVersion?: string;
-
-    GenreCvId?: string;
-
-    GenreCvTermId?: string;
-
-    GenreCvTermName?: string;
-
-    GenreCvTermRefinedAbout?: string;
-
-    Headline?: string;
-
-    ImageCreatorID?: string;
-
-    ImageCreatorImageID?: string;
-
-    ImageCreatorName?: string;
-
-    ImageDescription?: string;
-
-    ImageRegionBoundaryH?: Array<number>;
-
-    ImageRegionBoundaryRx?: Array<number>;
-
-    ImageRegionBoundaryShape?: Array<string>;
-
-    ImageRegionBoundaryUnit?: Array<string>;
-
-    ImageRegionBoundaryVerticesX?: Array<number>;
-
-    ImageRegionBoundaryVerticesY?: Array<number>;
-
-    ImageRegionBoundaryW?: Array<number>;
-
-    ImageRegionBoundaryX?: Array<number>;
-
-    ImageRegionBoundaryY?: Array<number>;
-
-    ImageRegionCtypeIdentifier?: Array<string>;
-
-    ImageRegionCtypeName?: Array<string>;
-
-    ImageRegionID?: Array<string>;
-
-    ImageRegionName?: Array<string>;
-
-    ImageRegionOrganisationInImageName?: Array<string>;
-
-    ImageRegionPersonInImage?: Array<string>;
-
-    ImageRegionRoleIdentifier?: Array<string>;
-
-    ImageRegionRoleName?: Array<string>;
-
-    ImageSupplierID?: string;
-
-    ImageSupplierImageID?: string;
-
-    ImageSupplierName?: string;
-
-    Instructions?: string;
-
-    IntellectualGenre?: string;
-
-    Keywords?: Array<string>;
-
-    LicensorCity?: Array<string>;
-
-    LicensorCountry?: Array<string>;
-
-    LicensorEmail?: Array<string>;
-
-    LicensorExtendedAddress?: Array<string>;
-
-    LicensorID?: Array<string>;
-
-    LicensorName?: Array<string>;
-
-    LicensorPostalCode?: Array<string>;
-
-    LicensorRegion?: Array<string>;
-
-    LicensorStreetAddress?: Array<string>;
-
-    LicensorTelephone1?: Array<string>;
-
-    LicensorTelephone2?: Array<string>;
-
-    LicensorURL?: Array<string>;
-
-    LinkedEncodedRightsExpr?: string;
-
-    LinkedEncodedRightsExprLangID?: string;
-
-    LinkedEncodedRightsExprType?: string;
-
-    Location?: string;
-
-    LocationCreatedCity?: string;
-
-    LocationCreatedCountryCode?: string;
-
-    LocationCreatedCountryName?: string;
-
-    LocationCreatedGPSAltitude?: string;
-
-    LocationCreatedGPSLatitude?: string;
-
-    LocationCreatedGPSLongitude?: string;
-
-    LocationCreatedLocationId?: string;
-
-    LocationCreatedLocationName?: string;
-
-    LocationCreatedProvinceState?: string;
-
-    LocationCreatedSublocation?: string;
-
-    LocationCreatedWorldRegion?: string;
-
-    LocationShownCity?: Array<string>;
-
-    LocationShownCountryCode?: Array<string>;
-
-    LocationShownCountryName?: Array<string>;
-
-    LocationShownGPSAltitude?: Array<string>;
-
-    LocationShownGPSLatitude?: Array<string>;
-
-    LocationShownGPSLongitude?: Array<string>;
-
-    LocationShownLocationId?: Array<string>;
-
-    LocationShownLocationName?: Array<string>;
-
-    LocationShownProvinceState?: Array<string>;
-
-    LocationShownSublocation?: Array<string>;
-
-    LocationShownWorldRegion?: Array<string>;
-
-    MaxAvailHeight?: number;
-
-    MaxAvailWidth?: number;
-
-    ModelAge?: Array<number>;
-
-    ModelReleaseID?: Array<string>;
-
-    ObjectAttributeReference?: string;
-
-    ObjectName?: string;
-
-    OffsetTimeOriginal?: string;
-
-    OrganisationInImageCode?: Array<string>;
-
-    OrganisationInImageName?: Array<string>;
-
-    Orientation?: string;
-
-    OriginalTransmissionReference?: string;
-
-    PersonInImage?: Array<string>;
-
-    PersonInImageCvTermCvId?: Array<string>;
-
-    PersonInImageCvTermId?: Array<string>;
-
-    PersonInImageCvTermName?: Array<string>;
-
-    PersonInImageCvTermRefinedAbout?: Array<string>;
-
-    PersonInImageDescription?: Array<string>;
-
-    PersonInImageId?: Array<string>;
-
-    PersonInImageName?: Array<string>;
-
-    ProductInImageDescription?: Array<string>;
-
-    ProductInImageGTIN?: Array<number>;
-
-    ProductInImageName?: Array<string>;
-
-    PropertyReleaseID?: Array<string>;
-
-    ProvinceState?: string;
-
-    Rating?: number;
-
-    RegistryEntryRole?: Array<string>;
-
-    RegistryItemID?: Array<string>;
-
-    RegistryOrganisationID?: Array<string>;
-
-    ResolutionUnit?: string;
-
-    Rights?: string;
-
-    Scene?: Array<string>;
-
-    Source?: string;
-
-    SpecialInstructions?: string;
-
-    State?: string;
-
-    Subject?: Array<string>;
-
-    SubjectCode?: Array<string>;
-
-    SubjectReference?: Array<string>;
-
-    Sublocation?: string;
-
-    TimeCreated?: string;
-
-    Title?: string;
-
-    TransmissionReference?: string;
-
-    UsageTerms?: string;
-
-    WebStatement?: string;
-
-    Writer?: string;
-
-    WriterEditor?: string;
-
-    XResolution?: number;
-
-    YResolution?: number;
-  }
-
-  /**
-   * Extension names with their processing status at the time of completion of the
-   * request. It could have one of the following status values:
-   *
-   * `success`: The extension has been successfully applied. `failed`: The extension
-   * has failed and will not be retried. `pending`: The extension will finish
-   * processing in some time. On completion, the final status (success / failed) will
-   * be sent to the `webhookUrl` provided.
-   *
-   * If no extension was requested, then this parameter is not returned.
-   */
-  export interface ExtensionStatus {
-    'aws-auto-tagging'?: 'success' | 'pending' | 'failed';
-
-    'google-auto-tagging'?: 'success' | 'pending' | 'failed';
-
-    'remove-bg'?: 'success' | 'pending' | 'failed';
-  }
-
-  /**
-   * Legacy metadata. Send `metadata` in `responseFields` in API request to get
-   * metadata in the upload API response.
-   */
-  export interface Metadata {
-    /**
-     * The audio codec used in the video (only for video).
-     */
-    audioCodec?: string;
-
-    /**
-     * The bit rate of the video in kbps (only for video).
-     */
-    bitRate?: number;
-
-    /**
-     * The density of the image in DPI.
-     */
-    density?: number;
-
-    /**
-     * The duration of the video in seconds (only for video).
-     */
-    duration?: number;
-
-    exif?: Metadata.Exif;
-
-    /**
-     * The format of the file (e.g., 'jpg', 'mp4').
-     */
-    format?: string;
-
-    /**
-     * Indicates if the image has a color profile.
-     */
-    hasColorProfile?: boolean;
-
-    /**
-     * Indicates if the image contains transparent areas.
-     */
-    hasTransparency?: boolean;
-
-    /**
-     * The height of the image or video in pixels.
-     */
-    height?: number;
-
-    /**
-     * Perceptual hash of the image.
-     */
-    pHash?: string;
-
-    /**
-     * The quality indicator of the image.
-     */
-    quality?: number;
-
-    /**
-     * The file size in bytes.
-     */
-    size?: number;
-
-    /**
-     * The video codec used in the video (only for video).
-     */
-    videoCodec?: string;
-
-    /**
-     * The width of the image or video in pixels.
-     */
-    width?: number;
-  }
-
-  export namespace Metadata {
-    export interface Exif {
+    export namespace Exif {
       /**
        * Object containing Exif details.
        */
-      exif?: FilesAPI.ExifDetails;
+      export interface Exif {
+        ApertureValue?: number;
+
+        ColorSpace?: number;
+
+        CreateDate?: string;
+
+        CustomRendered?: number;
+
+        DateTimeOriginal?: string;
+
+        ExifImageHeight?: number;
+
+        ExifImageWidth?: number;
+
+        ExifVersion?: string;
+
+        ExposureCompensation?: number;
+
+        ExposureMode?: number;
+
+        ExposureProgram?: number;
+
+        ExposureTime?: number;
+
+        Flash?: number;
+
+        FlashpixVersion?: string;
+
+        FNumber?: number;
+
+        FocalLength?: number;
+
+        FocalPlaneResolutionUnit?: number;
+
+        FocalPlaneXResolution?: number;
+
+        FocalPlaneYResolution?: number;
+
+        InteropOffset?: number;
+
+        ISO?: number;
+
+        MeteringMode?: number;
+
+        SceneCaptureType?: number;
+
+        ShutterSpeedValue?: number;
+
+        SubSecTime?: string;
+
+        WhiteBalance?: number;
+      }
 
       /**
        * Object containing GPS information.
        */
-      gps?: FilesAPI.Gps;
+      export interface Gps {
+        GPSVersionID?: Array<number>;
+      }
 
       /**
        * Object containing EXIF image information.
        */
-      image?: FilesAPI.ExifImage;
+      export interface Image {
+        ExifOffset?: number;
+
+        GPSInfo?: number;
+
+        Make?: string;
+
+        Model?: string;
+
+        ModifyDate?: string;
+
+        Orientation?: number;
+
+        ResolutionUnit?: number;
+
+        Software?: string;
+
+        XResolution?: number;
+
+        YCbCrPositioning?: number;
+
+        YResolution?: number;
+      }
 
       /**
        * JSON object.
        */
-      interoperability?: FilesAPI.Interoperability;
+      export interface Interoperability {
+        InteropIndex?: string;
 
-      makernote?: { [key: string]: unknown };
+        InteropVersion?: string;
+      }
 
       /**
        * Object containing Thumbnail information.
        */
-      thumbnail?: FilesAPI.Thumbnail;
+      export interface Thumbnail {
+        Compression?: number;
+
+        ResolutionUnit?: number;
+
+        ThumbnailLength?: number;
+
+        ThumbnailOffset?: number;
+
+        XResolution?: number;
+
+        YResolution?: number;
+      }
     }
   }
 
@@ -1934,93 +967,153 @@ export namespace FileUploadV2Response {
   }
 }
 
-export interface FileListParams {
-  /**
-   * Type of files to include in the result set. Accepts three values:
-   *
-   * `all` - include all types of files in the result set. `image` - only search in
-   * image type files. `non-image` - only search in files that are not images, e.g.,
-   * JS or CSS or video files.
-   *
-   * Default value - `all`
-   */
-  fileType?: string;
+export type FileUpdateParams = FileUpdateParams.UpdateFileDetails | FileUpdateParams.ChangePublicationStatus;
 
-  /**
-   * The maximum number of results to return in response:
-   *
-   * Minimum value - 1
-   *
-   * Maximum value - 1000
-   *
-   * Default value - 1000
-   */
-  limit?: string;
+export declare namespace FileUpdateParams {
+  export interface UpdateFileDetails {
+    /**
+     * Define an important area in the image in the format `x,y,width,height` e.g.
+     * `10,10,100,100`. Send `null` to unset this value.
+     */
+    customCoordinates?: string | null;
 
-  /**
-   * Folder path if you want to limit the search within a specific folder. For
-   * example, `/sales-banner/` will only search in folder sales-banner.
-   */
-  path?: string;
+    /**
+     * A key-value data to be associated with the asset. To unset a key, send `null`
+     * value for that key. Before setting any custom metadata on an asset you have to
+     * create the field using custom metadata fields API.
+     */
+    customMetadata?: unknown;
 
-  /**
-   * Query string in a Lucene-like query language e.g. `createdAt > "7d"`.
-   *
-   * Note : When the searchQuery parameter is present, the following query parameters
-   * will have no effect on the result:
-   *
-   * 1. `tags`
-   * 2. `type`
-   * 3. `name`
-   *
-   * [Learn more](/docs/api-reference/digital-asset-management-dam/list-and-search-assets#advanced-search-queries)
-   * from examples.
-   */
-  searchQuery?: string;
+    /**
+     * Optional text to describe the contents of the file.
+     */
+    description?: string;
 
-  /**
-   * The number of results to skip before returning results:
-   *
-   * Minimum value - 0
-   *
-   * Default value - 0
-   */
-  skip?: string;
+    /**
+     * Array of extensions to be applied to the asset. Each extension can be configured
+     * with specific parameters based on the extension type.
+     */
+    extensions?: Array<
+      | UpdateFileDetails.RemovedotBgExtension
+      | UpdateFileDetails.AutoTaggingExtension
+      | UpdateFileDetails.AutoDescriptionExtension
+    >;
 
-  /**
-   * You can sort based on the following fields:
-   *
-   * 1. name - `ASC_NAME` or `DESC_NAME`
-   * 2. createdAt - `ASC_CREATED` or `DESC_CREATED`
-   * 3. updatedAt - `ASC_UPDATED` or `DESC_UPDATED`
-   * 4. height - `ASC_HEIGHT` or `DESC_HEIGHT`
-   * 5. width - `ASC_WIDTH` or `DESC_WIDTH`
-   * 6. size - `ASC_SIZE` or `DESC_SIZE`
-   *
-   * Default value - `ASC_CREATED`
-   */
-  sort?: string;
+    /**
+     * An array of AITags associated with the file that you want to remove, e.g.
+     * `["car", "vehicle", "motorsports"]`.
+     *
+     * If you want to remove all AITags associated with the file, send a string -
+     * "all".
+     *
+     * Note: The remove operation for `AITags` executes before any of the `extensions`
+     * are processed.
+     */
+    removeAITags?: Array<string> | 'all';
 
-  /**
-   * Limit search to one of `file`, `file-version`, or `folder`. Pass `all` to
-   * include `files` and `folders` in search results (`file-version` will not be
-   * included in this case).
-   *
-   * Default value - `file`
-   */
-  type?: 'file' | 'file-version' | 'folder' | 'all';
-}
+    /**
+     * An array of tags associated with the file, such as `["tag1", "tag2"]`. Send
+     * `null` to unset all tags associated with the file.
+     */
+    tags?: Array<string> | null;
 
-export interface FileAddTagsParams {
-  /**
-   * An array of fileIds to which you want to add tags.
-   */
-  fileIds: Array<string>;
+    /**
+     * The final status of extensions after they have completed execution will be
+     * delivered to this endpoint as a POST request.
+     * [Learn more](/docs/api-reference/digital-asset-management-dam/managing-assets/update-file-details#webhook-payload-structure)
+     * about the webhook payload structure.
+     */
+    webhookUrl?: string;
+  }
 
-  /**
-   * An array of tags that you want to add to the files.
-   */
-  tags: Array<string>;
+  export namespace UpdateFileDetails {
+    export interface RemovedotBgExtension {
+      /**
+       * Specifies the background removal extension.
+       */
+      name: 'remove-bg';
+
+      options?: RemovedotBgExtension.Options;
+    }
+
+    export namespace RemovedotBgExtension {
+      export interface Options {
+        /**
+         * Whether to add an artificial shadow to the result. Default is false. Note:
+         * Adding shadows is currently only supported for car photos.
+         */
+        add_shadow?: boolean;
+
+        /**
+         * Specifies a solid color background using hex code (e.g., "81d4fa", "fff") or
+         * color name (e.g., "green"). If this parameter is set, `bg_image_url` must be
+         * empty.
+         */
+        bg_color?: string;
+
+        /**
+         * Sets a background image from a URL. If this parameter is set, `bg_color` must be
+         * empty.
+         */
+        bg_image_url?: string;
+
+        /**
+         * Allows semi-transparent regions in the result. Default is true. Note:
+         * Semitransparency is currently only supported for car windows.
+         */
+        semitransparency?: boolean;
+      }
+    }
+
+    export interface AutoTaggingExtension {
+      /**
+       * Maximum number of tags to attach to the asset.
+       */
+      maxTags: number;
+
+      /**
+       * Minimum confidence level for tags to be considered valid.
+       */
+      minConfidence: number;
+
+      /**
+       * Specifies the auto-tagging extension used.
+       */
+      name: 'google-auto-tagging' | 'aws-auto-tagging';
+    }
+
+    export interface AutoDescriptionExtension {
+      /**
+       * Specifies the auto description extension.
+       */
+      name: 'ai-auto-description';
+    }
+  }
+
+  export interface ChangePublicationStatus {
+    /**
+     * Configure the publication status of a file and its versions.
+     */
+    publish?: ChangePublicationStatus.Publish;
+  }
+
+  export namespace ChangePublicationStatus {
+    /**
+     * Configure the publication status of a file and its versions.
+     */
+    export interface Publish {
+      /**
+       * Set to `true` to publish the file. Set to `false` to unpublish the file.
+       */
+      isPublished: boolean;
+
+      /**
+       * Set to `true` to publish/unpublish all versions of the file. Set to `false` to
+       * publish/unpublish only the current version of the file.
+       */
+      includeFileVersions?: boolean;
+    }
+  }
 }
 
 export interface FileCopyParams {
@@ -2052,30 +1145,6 @@ export interface FileMoveParams {
    * The full path of the file you want to move.
    */
   sourceFilePath: string;
-}
-
-export interface FileRemoveAITagsParams {
-  /**
-   * An array of AITags that you want to remove from the files.
-   */
-  AITags: Array<string>;
-
-  /**
-   * An array of fileIds from which you want to remove AITags.
-   */
-  fileIds: Array<string>;
-}
-
-export interface FileRemoveTagsParams {
-  /**
-   * An array of fileIds from which you want to remove tags.
-   */
-  fileIds: Array<string>;
-
-  /**
-   * An array of tags that you want to remove from the files.
-   */
-  tags: Array<string>;
 }
 
 export interface FileRenameParams {
@@ -2115,15 +1184,19 @@ export interface FileRenameParams {
   purgeCache?: boolean;
 }
 
-export interface FileUploadV1Params {
+export interface FileUploadParams {
   /**
-   * Pass the HTTP URL or base64 string. When passing a URL in the file parameter,
-   * please ensure that our servers can access the URL. In case ImageKit is unable to
-   * download the file from the specified URL, a `400` error response is returned.
-   * This will also result in a `400` error if the file download request is aborted
-   * if response headers are not received in 8 seconds.
+   * The API accepts any of the following:
+   *
+   * - **Binary data** – send the raw bytes as `multipart/form-data`.
+   * - **HTTP / HTTPS URL** – a publicly reachable URL that ImageKit’s servers can
+   *   fetch.
+   * - **Base64 string** – the file encoded as a Base64 data URI or plain Base64.
+   *
+   * When supplying a URL, the server must receive the response headers within 8
+   * seconds; otherwise the request fails with 400 Bad Request.
    */
-  file: string;
+  file: Uploadable;
 
   /**
    * The name with which the file has to be uploaded. The file name can contain:
@@ -2167,9 +1240,15 @@ export interface FileUploadV1Params {
   customCoordinates?: string;
 
   /**
-   * Stringified JSON key-value data to be associated with the asset.
+   * JSON key-value pairs to associate with the asset. Create the custom metadata
+   * fields before setting these values.
    */
-  customMetadata?: string;
+  customMetadata?: { [key: string]: unknown };
+
+  /**
+   * Optional text to describe the contents of the file.
+   */
+  description?: string;
 
   /**
    * The time until your signature is valid. It must be a
@@ -2177,14 +1256,17 @@ export interface FileUploadV1Params {
    * the future. It should be in seconds. This field is only required for
    * authentication when uploading a file from the client side.
    */
-  expire?: string;
+  expire?: number;
 
   /**
-   * Stringified JSON object with an array of extensions to be applied to the image.
-   * Refer to extensions schema in
-   * [update file API request body](/docs/api-reference/digital-asset-management-dam/managing-assets/update-file-details#request-body).
+   * Array of extensions to be applied to the image. Each extension can be configured
+   * with specific parameters based on the extension type.
    */
-  extensions?: string;
+  extensions?: Array<
+    | FileUploadParams.RemovedotBgExtension
+    | FileUploadParams.AutoTaggingExtension
+    | FileUploadParams.AutoDescriptionExtension
+  >;
 
   /**
    * The folder path in which the image has to be uploaded. If the folder(s) didn't
@@ -2205,7 +1287,7 @@ export interface FileUploadV1Params {
    * If `true`, the file is marked as private and is accessible only using named
    * transformation or signed URL.
    */
-  isPrivateFile?: 'true' | 'false';
+  isPrivateFile?: boolean;
 
   /**
    * Whether to upload file as published or not.
@@ -2217,31 +1299,31 @@ export interface FileUploadV1Params {
    * The option to upload in draft state is only available in custom enterprise
    * pricing plans.
    */
-  isPublished?: 'true' | 'false';
+  isPublished?: boolean;
 
   /**
    * If set to `true` and a file already exists at the exact location, its AITags
    * will be removed. Set `overwriteAITags` to `false` to preserve AITags.
    */
-  overwriteAITags?: 'true' | 'false';
+  overwriteAITags?: boolean;
 
   /**
    * If the request does not have `customMetadata`, and a file already exists at the
    * exact location, existing customMetadata will be removed.
    */
-  overwriteCustomMetadata?: 'true' | 'false';
+  overwriteCustomMetadata?: boolean;
 
   /**
    * If `false` and `useUniqueFileName` is also `false`, and a file already exists at
    * the exact location, upload API will return an error immediately.
    */
-  overwriteFile?: string;
+  overwriteFile?: boolean;
 
   /**
    * If the request does not have `tags`, and a file already exists at the exact
    * location, existing tags will be removed.
    */
-  overwriteTags?: 'true' | 'false';
+  overwriteTags?: boolean;
 
   /**
    * Your ImageKit.io public key. This field is only required for authentication when
@@ -2250,17 +1332,17 @@ export interface FileUploadV1Params {
   publicKey?: string;
 
   /**
-   * Comma-separated values of the fields that you want the API to return in the
-   * response.
-   *
-   * For example, set the value of this field to
-   * `tags,customCoordinates,isPrivateFile` to get the value of `tags`,
-   * `customCoordinates`, and `isPrivateFile` in the response.
-   *
-   * Accepts combination of `tags`, `customCoordinates`, `isPrivateFile`,
-   * `embeddedMetadata`, `isPublished`, `customMetadata`, and `metadata`.
+   * Array of response field keys to include in the API response body.
    */
-  responseFields?: string;
+  responseFields?: Array<
+    | 'tags'
+    | 'customCoordinates'
+    | 'isPrivateFile'
+    | 'embeddedMetadata'
+    | 'isPublished'
+    | 'customMetadata'
+    | 'metadata'
+  >;
 
   /**
    * HMAC-SHA1 digest of the token+expire using your ImageKit.io private API key as a
@@ -2273,35 +1355,27 @@ export interface FileUploadV1Params {
   signature?: string;
 
   /**
-   * Set the tags while uploading the file.
-   *
-   * Comma-separated value of tags in the format `tag1,tag2,tag3`. The maximum length
-   * of all characters should not exceed 500. `%` is not allowed.
-   *
-   * If this field is not specified and the file is overwritten then the tags will be
-   * removed.
+   * Set the tags while uploading the file. Provide an array of tag strings (e.g.
+   * `["tag1", "tag2", "tag3"]`). The combined length of all tag characters must not
+   * exceed 500, and the `%` character is not allowed. If this field is not specified
+   * and the file is overwritten, the existing tags will be removed.
    */
-  tags?: string;
+  tags?: Array<string>;
 
   /**
-   * Stringified JSON object with properties for pre and post transformations:
+   * Configure pre-processing (`pre`) and post-processing (`post`) transformations.
    *
-   * `pre` - Accepts a "string" containing a valid transformation used for requesting
-   * a pre-transformation for an image or a video file.
+   * - `pre` — applied before the file is uploaded to the Media Library.
+   *   Useful for reducing file size or applying basic optimizations upfront (e.g.,
+   *   resize, compress).
    *
-   * `post` - Accepts an array of objects with properties:
+   * - `post` — applied immediately after upload.
+   *   Ideal for generating transformed versions (like video encodes or thumbnails)
+   *   in advance, so they're ready for delivery without delay.
    *
-   * - `type`: One of `transformation`, `gif-to-video`, `thumbnail`, or `abs`
-   *   (Adaptive bitrate streaming).
-   * - `value`: A "string" corresponding to the required transformation. Required if
-   *   `type` is `transformation` or `abs`. Optional if `type` is `gif-to-video` or
-   *   `thumbnail`.
-   * - `protocol`: Either `hls` or `dash`, applicable only if `type` is `abs`.
-   *
-   * Read more about
-   * [Adaptive bitrate streaming (ABS)](/docs/adaptive-bitrate-streaming).
+   * You can mix and match any combination of post-processing types.
    */
-  transformation?: string;
+  transformation?: FileUploadParams.Transformation;
 
   /**
    * Whether to use a unique filename for this file or not.
@@ -2312,7 +1386,7 @@ export interface FileUploadV1Params {
    * If `false`, then the image is uploaded with the provided filename parameter, and
    * any existing file with the same name is replaced.
    */
-  useUniqueFileName?: 'true' | 'false';
+  useUniqueFileName?: boolean;
 
   /**
    * The final status of extensions after they have completed execution will be
@@ -2323,252 +1397,207 @@ export interface FileUploadV1Params {
   webhookUrl?: string;
 }
 
-export interface FileUploadV2Params {
-  /**
-   * Pass the HTTP URL or base64 string. When passing a URL in the file parameter,
-   * please ensure that our servers can access the URL. In case ImageKit is unable to
-   * download the file from the specified URL, a `400` error response is returned.
-   * This will also result in a `400` error if the file download request is aborted
-   * if response headers are not received in 8 seconds.
-   */
-  file: string;
+export namespace FileUploadParams {
+  export interface RemovedotBgExtension {
+    /**
+     * Specifies the background removal extension.
+     */
+    name: 'remove-bg';
+
+    options?: RemovedotBgExtension.Options;
+  }
+
+  export namespace RemovedotBgExtension {
+    export interface Options {
+      /**
+       * Whether to add an artificial shadow to the result. Default is false. Note:
+       * Adding shadows is currently only supported for car photos.
+       */
+      add_shadow?: boolean;
+
+      /**
+       * Specifies a solid color background using hex code (e.g., "81d4fa", "fff") or
+       * color name (e.g., "green"). If this parameter is set, `bg_image_url` must be
+       * empty.
+       */
+      bg_color?: string;
+
+      /**
+       * Sets a background image from a URL. If this parameter is set, `bg_color` must be
+       * empty.
+       */
+      bg_image_url?: string;
+
+      /**
+       * Allows semi-transparent regions in the result. Default is true. Note:
+       * Semitransparency is currently only supported for car windows.
+       */
+      semitransparency?: boolean;
+    }
+  }
+
+  export interface AutoTaggingExtension {
+    /**
+     * Maximum number of tags to attach to the asset.
+     */
+    maxTags: number;
+
+    /**
+     * Minimum confidence level for tags to be considered valid.
+     */
+    minConfidence: number;
+
+    /**
+     * Specifies the auto-tagging extension used.
+     */
+    name: 'google-auto-tagging' | 'aws-auto-tagging';
+  }
+
+  export interface AutoDescriptionExtension {
+    /**
+     * Specifies the auto description extension.
+     */
+    name: 'ai-auto-description';
+  }
 
   /**
-   * The name with which the file has to be uploaded.
-   */
-  fileName: string;
-
-  /**
-   * This is the client-generated JSON Web Token (JWT). The ImageKit.io server uses
-   * it to authenticate and check that the upload request parameters have not been
-   * tampered with after the token has been generated. Learn how to create the token
-   * on the page below. This field is only required for authentication when uploading
-   * a file from the client side.
+   * Configure pre-processing (`pre`) and post-processing (`post`) transformations.
    *
-   * **Note**: Sending a JWT that has been used in the past will result in a
-   * validation error. Even if your previous request resulted in an error, you should
-   * always send a new token.
+   * - `pre` — applied before the file is uploaded to the Media Library.
+   *   Useful for reducing file size or applying basic optimizations upfront (e.g.,
+   *   resize, compress).
    *
-   * **⚠️Warning**: JWT must be generated on the server-side because it is generated
-   * using your account's private API key. This field is required for authentication
-   * when uploading a file from the client-side.
-   */
-  token?: string;
-
-  /**
-   * Server-side checks to run on the asset. Read more about
-   * [Upload API checks](/docs/api-reference/upload-file/upload-file-v2#upload-api-checks).
-   */
-  checks?: string;
-
-  /**
-   * Define an important area in the image. This is only relevant for image type
-   * files.
+   * - `post` — applied immediately after upload.
+   *   Ideal for generating transformed versions (like video encodes or thumbnails)
+   *   in advance, so they're ready for delivery without delay.
    *
-   * - To be passed as a string with the x and y coordinates of the top-left corner,
-   *   and width and height of the area of interest in the format `x,y,width,height`.
-   *   For example - `10,10,100,100`
-   * - Can be used with fo-customtransformation.
-   * - If this field is not specified and the file is overwritten, then
-   *   customCoordinates will be removed.
+   * You can mix and match any combination of post-processing types.
    */
-  customCoordinates?: string;
+  export interface Transformation {
+    /**
+     * List of transformations to apply _after_ the file is uploaded.
+     * Each item must match one of the following types: `transformation`,
+     * `gif-to-video`, `thumbnail`, `abs`.
+     */
+    post?: Array<
+      | Transformation.SimplePostTransformation
+      | Transformation.ConvertGifToVideo
+      | Transformation.GenerateAThumbnail
+      | Transformation.AdaptiveBitrateStreaming
+    >;
 
-  /**
-   * Stringified JSON key-value data to be associated with the asset.
-   */
-  customMetadata?: string;
+    /**
+     * Transformation string to apply before uploading the file to the Media Library.
+     * Useful for optimizing files at ingestion.
+     */
+    pre?: string;
+  }
 
-  /**
-   * Stringified JSON object with an array of extensions to be applied to the image.
-   * Refer to extensions schema in
-   * [update file API request body](/docs/api-reference/digital-asset-management-dam/managing-assets/update-file-details#request-body).
-   */
-  extensions?: string;
+  export namespace Transformation {
+    export interface SimplePostTransformation {
+      /**
+       * Transformation type.
+       */
+      type: 'transformation';
 
-  /**
-   * The folder path in which the image has to be uploaded. If the folder(s) didn't
-   * exist before, a new folder(s) is created. Using multiple `/` creates a nested
-   * folder.
-   */
-  folder?: string;
+      /**
+       * Transformation string (e.g. `w-200,h-200`).
+       * Same syntax as ImageKit URL-based transformations.
+       */
+      value: string;
+    }
 
-  /**
-   * Whether to mark the file as private or not.
-   *
-   * If `true`, the file is marked as private and is accessible only using named
-   * transformation or signed URL.
-   */
-  isPrivateFile?: 'true' | 'false';
+    export interface ConvertGifToVideo {
+      /**
+       * Converts an animated GIF into an MP4.
+       */
+      type: 'gif-to-video';
 
-  /**
-   * Whether to upload file as published or not.
-   *
-   * If `false`, the file is marked as unpublished, which restricts access to the
-   * file only via the media library. Files in draft or unpublished state can only be
-   * publicly accessed after being published.
-   *
-   * The option to upload in draft state is only available in custom enterprise
-   * pricing plans.
-   */
-  isPublished?: 'true' | 'false';
+      /**
+       * Optional transformation string to apply to the output video.
+       * **Example**: `q-80`
+       */
+      value?: string;
+    }
 
-  /**
-   * If set to `true` and a file already exists at the exact location, its AITags
-   * will be removed. Set `overwriteAITags` to `false` to preserve AITags.
-   */
-  overwriteAITags?: 'true' | 'false';
+    export interface GenerateAThumbnail {
+      /**
+       * Generates a thumbnail image.
+       */
+      type: 'thumbnail';
 
-  /**
-   * If the request does not have `customMetadata`, and a file already exists at the
-   * exact location, existing customMetadata will be removed.
-   */
-  overwriteCustomMetadata?: 'true' | 'false';
+      /**
+       * Optional transformation string.
+       * **Example**: `w-150,h-150`
+       */
+      value?: string;
+    }
 
-  /**
-   * If `false` and `useUniqueFileName` is also `false`, and a file already exists at
-   * the exact location, upload API will return an error immediately.
-   */
-  overwriteFile?: string;
+    export interface AdaptiveBitrateStreaming {
+      /**
+       * Streaming protocol to use (`hls` or `dash`).
+       */
+      protocol: 'hls' | 'dash';
 
-  /**
-   * If the request does not have `tags`, and a file already exists at the exact
-   * location, existing tags will be removed.
-   */
-  overwriteTags?: 'true' | 'false';
+      /**
+       * Adaptive Bitrate Streaming (ABS) setup.
+       */
+      type: 'abs';
 
-  /**
-   * Comma-separated values of the fields that you want the API to return in the
-   * response.
-   *
-   * For example, set the value of this field to
-   * `tags,customCoordinates,isPrivateFile` to get the value of `tags`,
-   * `customCoordinates`, and `isPrivateFile` in the response.
-   *
-   * Accepts combination of `tags`, `customCoordinates`, `isPrivateFile`,
-   * `embeddedMetadata`, `isPublished`, `customMetadata`, and `metadata`.
-   */
-  responseFields?: string;
-
-  /**
-   * Set the tags while uploading the file.
-   *
-   * Comma-separated value of tags in the format `tag1,tag2,tag3`. The maximum length
-   * of all characters should not exceed 500. `%` is not allowed.
-   *
-   * If this field is not specified and the file is overwritten then the tags will be
-   * removed.
-   */
-  tags?: string;
-
-  /**
-   * Stringified JSON object with properties for pre and post transformations:
-   *
-   * `pre` - Accepts a "string" containing a valid transformation used for requesting
-   * a pre-transformation for an image or a video file.
-   *
-   * `post` - Accepts an array of objects with properties:
-   *
-   * - `type`: One of `transformation`, `gif-to-video`, `thumbnail`, or `abs`
-   *   (Adaptive bitrate streaming).
-   * - `value`: A "string" corresponding to the required transformation. Required if
-   *   `type` is `transformation` or `abs`. Optional if `type` is `gif-to-video` or
-   *   `thumbnail`.
-   * - `protocol`: Either `hls` or `dash`, applicable only if `type` is `abs`.
-   *
-   * Read more about
-   * [Adaptive bitrate streaming (ABS)](/docs/adaptive-bitrate-streaming).
-   */
-  transformation?: string;
-
-  /**
-   * Whether to use a unique filename for this file or not.
-   *
-   * If `true`, ImageKit.io will add a unique suffix to the filename parameter to get
-   * a unique filename.
-   *
-   * If `false`, then the image is uploaded with the provided filename parameter, and
-   * any existing file with the same name is replaced.
-   */
-  useUniqueFileName?: 'true' | 'false';
-
-  /**
-   * The final status of extensions after they have completed execution will be
-   * delivered to this endpoint as a POST request.
-   * [Learn more](/docs/api-reference/digital-asset-management-dam/managing-assets/update-file-details#webhook-payload-structure)
-   * about the webhook payload structure.
-   */
-  webhookUrl?: string;
+      /**
+       * List of different representations you want to create separated by an underscore.
+       */
+      value: string;
+    }
+  }
 }
 
-Files.Details = Details;
-Files.Batch = Batch;
+Files.Bulk = Bulk;
 Files.Versions = Versions;
-Files.Purge = Purge;
 Files.Metadata = MetadataAPIMetadata;
 
 export declare namespace Files {
   export {
-    type ExifDetails as ExifDetails,
-    type ExifImage as ExifImage,
-    type Gps as Gps,
-    type Interoperability as Interoperability,
-    type Thumbnail as Thumbnail,
-    type FileListResponse as FileListResponse,
-    type FileAddTagsResponse as FileAddTagsResponse,
+    type FileUpdateResponse as FileUpdateResponse,
     type FileCopyResponse as FileCopyResponse,
+    type FileGetResponse as FileGetResponse,
     type FileMoveResponse as FileMoveResponse,
-    type FileRemoveAITagsResponse as FileRemoveAITagsResponse,
-    type FileRemoveTagsResponse as FileRemoveTagsResponse,
     type FileRenameResponse as FileRenameResponse,
-    type FileUploadV1Response as FileUploadV1Response,
-    type FileUploadV2Response as FileUploadV2Response,
-    type FileListParams as FileListParams,
-    type FileAddTagsParams as FileAddTagsParams,
+    type FileUploadResponse as FileUploadResponse,
+    type FileUpdateParams as FileUpdateParams,
     type FileCopyParams as FileCopyParams,
     type FileMoveParams as FileMoveParams,
-    type FileRemoveAITagsParams as FileRemoveAITagsParams,
-    type FileRemoveTagsParams as FileRemoveTagsParams,
     type FileRenameParams as FileRenameParams,
-    type FileUploadV1Params as FileUploadV1Params,
-    type FileUploadV2Params as FileUploadV2Params,
+    type FileUploadParams as FileUploadParams,
   };
 
   export {
-    Details as Details,
-    type DetailRetrieveResponse as DetailRetrieveResponse,
-    type DetailUpdateResponse as DetailUpdateResponse,
-    type DetailUpdateParams as DetailUpdateParams,
-  };
-
-  export {
-    Batch as Batch,
-    type BatchDeleteResponse as BatchDeleteResponse,
-    type BatchDeleteParams as BatchDeleteParams,
+    Bulk as Bulk,
+    type BulkDeleteResponse as BulkDeleteResponse,
+    type BulkAddTagsResponse as BulkAddTagsResponse,
+    type BulkRemoveAITagsResponse as BulkRemoveAITagsResponse,
+    type BulkRemoveTagsResponse as BulkRemoveTagsResponse,
+    type BulkDeleteParams as BulkDeleteParams,
+    type BulkAddTagsParams as BulkAddTagsParams,
+    type BulkRemoveAITagsParams as BulkRemoveAITagsParams,
+    type BulkRemoveTagsParams as BulkRemoveTagsParams,
   };
 
   export {
     Versions as Versions,
-    type VersionRetrieveResponse as VersionRetrieveResponse,
     type VersionListResponse as VersionListResponse,
     type VersionDeleteResponse as VersionDeleteResponse,
+    type VersionGetResponse as VersionGetResponse,
     type VersionRestoreResponse as VersionRestoreResponse,
-    type VersionRetrieveParams as VersionRetrieveParams,
     type VersionDeleteParams as VersionDeleteParams,
+    type VersionGetParams as VersionGetParams,
     type VersionRestoreParams as VersionRestoreParams,
   };
 
   export {
-    Purge as Purge,
-    type PurgeExecuteResponse as PurgeExecuteResponse,
-    type PurgeStatusResponse as PurgeStatusResponse,
-    type PurgeExecuteParams as PurgeExecuteParams,
-  };
-
-  export {
     MetadataAPIMetadata as Metadata,
-    type MetadataRetrieveResponse as MetadataRetrieveResponse,
-    type MetadataFromURLResponse as MetadataFromURLResponse,
-    type MetadataFromURLParams as MetadataFromURLParams,
+    type MetadataGetResponse as MetadataGetResponse,
+    type MetadataGetFromURLResponse as MetadataGetFromURLResponse,
+    type MetadataGetFromURLParams as MetadataGetFromURLParams,
   };
 }

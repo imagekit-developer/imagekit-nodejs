@@ -1,14 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Accounts, type AccountGetUsageResponse, type AccountGetUsageParams } from './accounts';
-export {
-  BulkJobs,
-  type BulkJobCopyFolderResponse,
-  type BulkJobMoveFolderResponse,
-  type BulkJobRetrieveStatusResponse,
-  type BulkJobCopyFolderParams,
-  type BulkJobMoveFolderParams,
-} from './bulk-jobs';
+export { Accounts } from './accounts/accounts';
+export { Assets, type AssetListResponse, type AssetListParams } from './assets';
+export { Beta } from './beta/beta';
+export { Cache } from './cache/cache';
 export {
   CustomMetadataFields,
   type CustomMetadataFieldCreateResponse,
@@ -21,34 +16,28 @@ export {
 } from './custom-metadata-fields';
 export {
   Files,
-  type ExifDetails,
-  type ExifImage,
-  type Gps,
-  type Interoperability,
-  type Thumbnail,
-  type FileListResponse,
-  type FileAddTagsResponse,
+  type FileUpdateResponse,
   type FileCopyResponse,
+  type FileGetResponse,
   type FileMoveResponse,
-  type FileRemoveAITagsResponse,
-  type FileRemoveTagsResponse,
   type FileRenameResponse,
-  type FileUploadV1Response,
-  type FileUploadV2Response,
-  type FileListParams,
-  type FileAddTagsParams,
+  type FileUploadResponse,
+  type FileUpdateParams,
   type FileCopyParams,
   type FileMoveParams,
-  type FileRemoveAITagsParams,
-  type FileRemoveTagsParams,
   type FileRenameParams,
-  type FileUploadV1Params,
-  type FileUploadV2Params,
+  type FileUploadParams,
 } from './files/files';
 export {
-  Folder,
+  Folders,
   type FolderCreateResponse,
   type FolderDeleteResponse,
+  type FolderCopyResponse,
+  type FolderMoveResponse,
+  type FolderRenameResponse,
   type FolderCreateParams,
   type FolderDeleteParams,
-} from './folder';
+  type FolderCopyParams,
+  type FolderMoveParams,
+  type FolderRenameParams,
+} from './folders/folders';

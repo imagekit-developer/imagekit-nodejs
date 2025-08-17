@@ -30,8 +30,8 @@ const client = new ImageKit({
   password: process.env['ORG_MY_PASSWORD_TOKEN'], // This is the default and can be omitted
 });
 
-const response = await client.files.uploadV1({
-  file: 'https://www.example.com/rest-of-the-image-path.jpg',
+const response = await client.files.upload({
+  file: fs.createReadStream('path/to/file'),
   fileName: 'fileName',
 });
 
@@ -51,14 +51,40 @@ const client = new ImageKit({
   password: process.env['ORG_MY_PASSWORD_TOKEN'], // This is the default and can be omitted
 });
 
-const params: ImageKit.FileUploadV1Params = {
-  file: 'https://www.example.com/rest-of-the-image-path.jpg',
-  fileName: 'fileName',
-};
-const response: ImageKit.FileUploadV1Response = await client.files.uploadV1(params);
+const params: ImageKit.FileUploadParams = { file: fs.createReadStream('path/to/file'), fileName: 'fileName' };
+const response: ImageKit.FileUploadResponse = await client.files.upload(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
+
+## File uploads
+
+Request parameters that correspond to file uploads can be passed in many different forms:
+
+- `File` (or an object with the same structure)
+- a `fetch` `Response` (or an object with the same structure)
+- an `fs.ReadStream`
+- the return value of our `toFile` helper
+
+```ts
+import fs from 'fs';
+import ImageKit, { toFile } from '@imagekit/nodejs';
+
+const client = new ImageKit();
+
+// If you have access to Node `fs` we recommend using `fs.createReadStream()`:
+await client.files.upload({ file: fs.createReadStream('/path/to/file'), fileName: 'fileName' });
+
+// Or if you have the web `File` API you can pass a `File` instance:
+await client.files.upload({ file: new File(['my bytes'], 'file'), fileName: 'fileName' });
+
+// You can also pass a `fetch` `Response`:
+await client.files.upload({ file: await fetch('https://somesite/file'), fileName: 'fileName' });
+
+// Finally, if none of the above are convenient, you can use our `toFile` helper:
+await client.files.upload({ file: await toFile(Buffer.from('my bytes'), 'file'), fileName: 'fileName' });
+await client.files.upload({ file: await toFile(new Uint8Array([0, 1, 2]), 'file'), fileName: 'fileName' });
+```
 
 ## Handling errors
 
@@ -69,7 +95,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const response = await client.files
-  .uploadV1({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' })
+  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'fileName' })
   .catch(async (err) => {
     if (err instanceof ImageKit.APIError) {
       console.log(err.status); // 400
@@ -110,7 +136,7 @@ const client = new ImageKit({
 });
 
 // Or, configure per-request:
-await client.files.uploadV1({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' }, {
+await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'fileName' }, {
   maxRetries: 5,
 });
 ```
@@ -127,7 +153,7 @@ const client = new ImageKit({
 });
 
 // Override per-request:
-await client.files.uploadV1({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' }, {
+await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'fileName' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -151,13 +177,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new ImageKit();
 
 const response = await client.files
-  .uploadV1({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' })
+  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'fileName' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client.files
-  .uploadV1({ file: 'https://www.example.com/rest-of-the-image-path.jpg', fileName: 'fileName' })
+  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'fileName' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.videoCodec);
@@ -240,7 +266,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.files.uploadV1({
+client.files.upload({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

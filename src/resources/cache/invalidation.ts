@@ -5,7 +5,7 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-export class Purge extends APIResource {
+export class Invalidation extends APIResource {
   /**
    * This API will purge CDN cache and ImageKit.io's internal cache for a file. Note:
    * Purge cache is an asynchronous process and it may take some time to reflect the
@@ -13,12 +13,14 @@ export class Purge extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.files.purge.execute({
-   *   url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg',
-   * });
+   * const invalidation = await client.cache.invalidation.create(
+   *   {
+   *     url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg',
+   *   },
+   * );
    * ```
    */
-  execute(body: PurgeExecuteParams, options?: RequestOptions): APIPromise<PurgeExecuteResponse> {
+  create(body: InvalidationCreateParams, options?: RequestOptions): APIPromise<InvalidationCreateResponse> {
     return this._client.post('/v1/files/purge', { body, ...options });
   }
 
@@ -27,17 +29,17 @@ export class Purge extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.files.purge.status(
+   * const invalidation = await client.cache.invalidation.get(
    *   'requestId',
    * );
    * ```
    */
-  status(requestID: string, options?: RequestOptions): APIPromise<PurgeStatusResponse> {
+  get(requestID: string, options?: RequestOptions): APIPromise<InvalidationGetResponse> {
     return this._client.get(path`/v1/files/purge/${requestID}`, options);
   }
 }
 
-export interface PurgeExecuteResponse {
+export interface InvalidationCreateResponse {
   /**
    * Unique identifier of the purge request. This can be used to check the status of
    * the purge request.
@@ -45,24 +47,24 @@ export interface PurgeExecuteResponse {
   requestId?: string;
 }
 
-export interface PurgeStatusResponse {
+export interface InvalidationGetResponse {
   /**
    * Status of the purge request.
    */
   status?: 'Pending' | 'Completed';
 }
 
-export interface PurgeExecuteParams {
+export interface InvalidationCreateParams {
   /**
    * The full URL of the file to be purged.
    */
   url: string;
 }
 
-export declare namespace Purge {
+export declare namespace Invalidation {
   export {
-    type PurgeExecuteResponse as PurgeExecuteResponse,
-    type PurgeStatusResponse as PurgeStatusResponse,
-    type PurgeExecuteParams as PurgeExecuteParams,
+    type InvalidationCreateResponse as InvalidationCreateResponse,
+    type InvalidationGetResponse as InvalidationGetResponse,
+    type InvalidationCreateParams as InvalidationCreateParams,
   };
 }
