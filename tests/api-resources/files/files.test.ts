@@ -28,23 +28,28 @@ describe('resource files', () => {
       client.files.update(
         'fileId',
         {
-          customCoordinates: 'customCoordinates',
-          customMetadata: { foo: 'bar' },
-          description: 'description',
-          extensions: [
-            {
-              name: 'remove-bg',
-              options: {
-                add_shadow: true,
-                bg_color: 'bg_color',
-                bg_image_url: 'bg_image_url',
-                semitransparency: true,
+          update: {
+            customCoordinates: '10,10,100,100',
+            customMetadata: { brand: 'bar', color: 'bar' },
+            description: 'description',
+            extensions: [
+              {
+                name: 'remove-bg',
+                options: {
+                  add_shadow: true,
+                  bg_color: 'bg_color',
+                  bg_image_url: 'bg_image_url',
+                  semitransparency: true,
+                },
               },
-            },
-          ],
-          removeAITags: ['string'],
-          tags: ['tag1', 'tag2'],
-          webhookUrl: 'https://example.com',
+              { maxTags: 10, minConfidence: 80, name: 'google-auto-tagging' },
+              { maxTags: 10, minConfidence: 80, name: 'aws-auto-tagging' },
+              { name: 'ai-auto-description' },
+            ],
+            removeAITags: ['car', 'vehicle', 'motorsports'],
+            tags: ['tag1', 'tag2'],
+            webhookUrl: 'https://webhook.site/0d6b6c7a-8e5a-4b3a-8b7c-0d6b6c7a8e5a',
+          },
         },
         { path: '/_stainless_unknown_path' },
       ),

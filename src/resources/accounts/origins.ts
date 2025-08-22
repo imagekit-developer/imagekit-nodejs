@@ -36,16 +36,19 @@ export class Origins extends APIResource {
    * @example
    * ```ts
    * const origin = await client.accounts.origins.update('id', {
-   *   accessKey: 'AKIAIOSFODNN7EXAMPLE',
-   *   bucket: 'product-images',
-   *   name: 'US S3 Storage',
-   *   secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
-   *   type: 'S3',
+   *   origin: {
+   *     accessKey: 'AKIATEST123',
+   *     bucket: 'test-bucket',
+   *     name: 'My S3 Origin',
+   *     secretKey: 'secrettest123',
+   *     type: 'S3',
+   *   },
    * });
    * ```
    */
-  update(id: string, body: OriginUpdateParams, options?: RequestOptions): APIPromise<OriginUpdateResponse> {
-    return this._client.put(path`/v1/accounts/origins/${id}`, { body, ...options });
+  update(id: string, params: OriginUpdateParams, options?: RequestOptions): APIPromise<OriginUpdateResponse> {
+    const { origin } = params;
+    return this._client.put(path`/v1/accounts/origins/${id}`, { body: origin, ...options });
   }
 
   /**
@@ -1508,17 +1511,22 @@ export namespace OriginCreateParams {
   }
 }
 
-export type OriginUpdateParams =
-  | OriginUpdateParams.S3
-  | OriginUpdateParams.S3Compatible
-  | OriginUpdateParams.CloudinaryBackup
-  | OriginUpdateParams.WebFolder
-  | OriginUpdateParams.WebProxy
-  | OriginUpdateParams.GoogleCloudStorageGcs
-  | OriginUpdateParams.AzureBlobStorage
-  | OriginUpdateParams.AkeneoPim;
+export interface OriginUpdateParams {
+  /**
+   * Schema for origin resources.
+   */
+  origin:
+    | OriginUpdateParams.S3
+    | OriginUpdateParams.S3Compatible
+    | OriginUpdateParams.CloudinaryBackup
+    | OriginUpdateParams.WebFolder
+    | OriginUpdateParams.WebProxy
+    | OriginUpdateParams.GoogleCloudStorageGcs
+    | OriginUpdateParams.AzureBlobStorage
+    | OriginUpdateParams.AkeneoPim;
+}
 
-export declare namespace OriginUpdateParams {
+export namespace OriginUpdateParams {
   export interface S3 {
     /**
      * Access key for the bucket.
