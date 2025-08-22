@@ -1216,17 +1216,17 @@ export namespace OriginGetResponse {
 }
 
 export type OriginCreateParams =
-  | OriginCreateParams.S3
-  | OriginCreateParams.S3Compatible
-  | OriginCreateParams.CloudinaryBackup
-  | OriginCreateParams.WebFolder
-  | OriginCreateParams.WebProxy
-  | OriginCreateParams.GoogleCloudStorageGcs
-  | OriginCreateParams.AzureBlobStorage
-  | OriginCreateParams.AkeneoPim;
+  | OriginCreateParams.S3Origin
+  | OriginCreateParams.S3CompatibleOrigin
+  | OriginCreateParams.CloudinaryBackupOrigin
+  | OriginCreateParams.WebFolderOrigin
+  | OriginCreateParams.WebProxyOrigin
+  | OriginCreateParams.GcsOrigin
+  | OriginCreateParams.AzureBlobOrigin
+  | OriginCreateParams.AkeneoPimOrigin;
 
 export declare namespace OriginCreateParams {
-  export interface S3 {
+  export interface S3Origin {
     /**
      * Access key for the bucket.
      */
@@ -1247,7 +1247,15 @@ export declare namespace OriginCreateParams {
      */
     secretKey: string;
 
-    type: 'S3';
+    type:
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_FOLDER'
+      | 'WEB_PROXY'
+      | 'GCS'
+      | 'AZURE_BLOB'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1265,7 +1273,7 @@ export declare namespace OriginCreateParams {
     prefix?: string;
   }
 
-  export interface S3Compatible {
+  export interface S3CompatibleOrigin {
     /**
      * Access key for the bucket.
      */
@@ -1291,7 +1299,15 @@ export declare namespace OriginCreateParams {
      */
     secretKey: string;
 
-    type: 'S3_COMPATIBLE';
+    type:
+      | 'S3_COMPATIBLE'
+      | 'S3'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_FOLDER'
+      | 'WEB_PROXY'
+      | 'GCS'
+      | 'AZURE_BLOB'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1314,7 +1330,7 @@ export declare namespace OriginCreateParams {
     s3ForcePathStyle?: boolean;
   }
 
-  export interface CloudinaryBackup {
+  export interface CloudinaryBackupOrigin {
     /**
      * Access key for the bucket.
      */
@@ -1335,7 +1351,15 @@ export declare namespace OriginCreateParams {
      */
     secretKey: string;
 
-    type: 'CLOUDINARY_BACKUP';
+    type:
+      | 'CLOUDINARY_BACKUP'
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'WEB_FOLDER'
+      | 'WEB_PROXY'
+      | 'GCS'
+      | 'AZURE_BLOB'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1353,7 +1377,7 @@ export declare namespace OriginCreateParams {
     prefix?: string;
   }
 
-  export interface WebFolder {
+  export interface WebFolderOrigin {
     /**
      * Root URL for the web folder origin.
      */
@@ -1364,7 +1388,15 @@ export declare namespace OriginCreateParams {
      */
     name: string;
 
-    type: 'WEB_FOLDER';
+    type:
+      | 'WEB_FOLDER'
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_PROXY'
+      | 'GCS'
+      | 'AZURE_BLOB'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1382,13 +1414,21 @@ export declare namespace OriginCreateParams {
     includeCanonicalHeader?: boolean;
   }
 
-  export interface WebProxy {
+  export interface WebProxyOrigin {
     /**
      * Display name of the origin.
      */
     name: string;
 
-    type: 'WEB_PROXY';
+    type:
+      | 'WEB_PROXY'
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_FOLDER'
+      | 'GCS'
+      | 'AZURE_BLOB'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1401,7 +1441,7 @@ export declare namespace OriginCreateParams {
     includeCanonicalHeader?: boolean;
   }
 
-  export interface GoogleCloudStorageGcs {
+  export interface GcsOrigin {
     bucket: string;
 
     clientEmail: string;
@@ -1413,7 +1453,15 @@ export declare namespace OriginCreateParams {
 
     privateKey: string;
 
-    type: 'GCS';
+    type:
+      | 'GCS'
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_FOLDER'
+      | 'WEB_PROXY'
+      | 'AZURE_BLOB'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1428,7 +1476,7 @@ export declare namespace OriginCreateParams {
     prefix?: string;
   }
 
-  export interface AzureBlobStorage {
+  export interface AzureBlobOrigin {
     accountName: string;
 
     container: string;
@@ -1440,7 +1488,15 @@ export declare namespace OriginCreateParams {
 
     sasToken: string;
 
-    type: 'AZURE_BLOB';
+    type:
+      | 'AZURE_BLOB'
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_FOLDER'
+      | 'WEB_PROXY'
+      | 'GCS'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1455,7 +1511,7 @@ export declare namespace OriginCreateParams {
     prefix?: string;
   }
 
-  export interface AkeneoPim {
+  export interface AkeneoPimOrigin {
     /**
      * Akeneo instance base URL.
      */
@@ -1481,7 +1537,15 @@ export declare namespace OriginCreateParams {
      */
     password: string;
 
-    type: 'AKENEO_PIM';
+    type:
+      | 'AKENEO_PIM'
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_FOLDER'
+      | 'WEB_PROXY'
+      | 'GCS'
+      | 'AZURE_BLOB';
 
     /**
      * Akeneo API username.
@@ -1501,17 +1565,17 @@ export declare namespace OriginCreateParams {
 }
 
 export type OriginUpdateParams =
-  | OriginUpdateParams.S3
-  | OriginUpdateParams.S3Compatible
-  | OriginUpdateParams.CloudinaryBackup
-  | OriginUpdateParams.WebFolder
-  | OriginUpdateParams.WebProxy
-  | OriginUpdateParams.GoogleCloudStorageGcs
-  | OriginUpdateParams.AzureBlobStorage
-  | OriginUpdateParams.AkeneoPim;
+  | OriginUpdateParams.S3Origin
+  | OriginUpdateParams.S3CompatibleOrigin
+  | OriginUpdateParams.CloudinaryBackupOrigin
+  | OriginUpdateParams.WebFolderOrigin
+  | OriginUpdateParams.WebProxyOrigin
+  | OriginUpdateParams.GcsOrigin
+  | OriginUpdateParams.AzureBlobOrigin
+  | OriginUpdateParams.AkeneoPimOrigin;
 
 export declare namespace OriginUpdateParams {
-  export interface S3 {
+  export interface S3Origin {
     /**
      * Access key for the bucket.
      */
@@ -1532,7 +1596,15 @@ export declare namespace OriginUpdateParams {
      */
     secretKey: string;
 
-    type: 'S3';
+    type:
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_FOLDER'
+      | 'WEB_PROXY'
+      | 'GCS'
+      | 'AZURE_BLOB'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1550,7 +1622,7 @@ export declare namespace OriginUpdateParams {
     prefix?: string;
   }
 
-  export interface S3Compatible {
+  export interface S3CompatibleOrigin {
     /**
      * Access key for the bucket.
      */
@@ -1576,7 +1648,15 @@ export declare namespace OriginUpdateParams {
      */
     secretKey: string;
 
-    type: 'S3_COMPATIBLE';
+    type:
+      | 'S3_COMPATIBLE'
+      | 'S3'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_FOLDER'
+      | 'WEB_PROXY'
+      | 'GCS'
+      | 'AZURE_BLOB'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1599,7 +1679,7 @@ export declare namespace OriginUpdateParams {
     s3ForcePathStyle?: boolean;
   }
 
-  export interface CloudinaryBackup {
+  export interface CloudinaryBackupOrigin {
     /**
      * Access key for the bucket.
      */
@@ -1620,7 +1700,15 @@ export declare namespace OriginUpdateParams {
      */
     secretKey: string;
 
-    type: 'CLOUDINARY_BACKUP';
+    type:
+      | 'CLOUDINARY_BACKUP'
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'WEB_FOLDER'
+      | 'WEB_PROXY'
+      | 'GCS'
+      | 'AZURE_BLOB'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1638,7 +1726,7 @@ export declare namespace OriginUpdateParams {
     prefix?: string;
   }
 
-  export interface WebFolder {
+  export interface WebFolderOrigin {
     /**
      * Root URL for the web folder origin.
      */
@@ -1649,7 +1737,15 @@ export declare namespace OriginUpdateParams {
      */
     name: string;
 
-    type: 'WEB_FOLDER';
+    type:
+      | 'WEB_FOLDER'
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_PROXY'
+      | 'GCS'
+      | 'AZURE_BLOB'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1667,13 +1763,21 @@ export declare namespace OriginUpdateParams {
     includeCanonicalHeader?: boolean;
   }
 
-  export interface WebProxy {
+  export interface WebProxyOrigin {
     /**
      * Display name of the origin.
      */
     name: string;
 
-    type: 'WEB_PROXY';
+    type:
+      | 'WEB_PROXY'
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_FOLDER'
+      | 'GCS'
+      | 'AZURE_BLOB'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1686,7 +1790,7 @@ export declare namespace OriginUpdateParams {
     includeCanonicalHeader?: boolean;
   }
 
-  export interface GoogleCloudStorageGcs {
+  export interface GcsOrigin {
     bucket: string;
 
     clientEmail: string;
@@ -1698,7 +1802,15 @@ export declare namespace OriginUpdateParams {
 
     privateKey: string;
 
-    type: 'GCS';
+    type:
+      | 'GCS'
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_FOLDER'
+      | 'WEB_PROXY'
+      | 'AZURE_BLOB'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1713,7 +1825,7 @@ export declare namespace OriginUpdateParams {
     prefix?: string;
   }
 
-  export interface AzureBlobStorage {
+  export interface AzureBlobOrigin {
     accountName: string;
 
     container: string;
@@ -1725,7 +1837,15 @@ export declare namespace OriginUpdateParams {
 
     sasToken: string;
 
-    type: 'AZURE_BLOB';
+    type:
+      | 'AZURE_BLOB'
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_FOLDER'
+      | 'WEB_PROXY'
+      | 'GCS'
+      | 'AKENEO_PIM';
 
     /**
      * URL used in the Canonical header (if enabled).
@@ -1740,7 +1860,7 @@ export declare namespace OriginUpdateParams {
     prefix?: string;
   }
 
-  export interface AkeneoPim {
+  export interface AkeneoPimOrigin {
     /**
      * Akeneo instance base URL.
      */
@@ -1766,7 +1886,15 @@ export declare namespace OriginUpdateParams {
      */
     password: string;
 
-    type: 'AKENEO_PIM';
+    type:
+      | 'AKENEO_PIM'
+      | 'S3'
+      | 'S3_COMPATIBLE'
+      | 'CLOUDINARY_BACKUP'
+      | 'WEB_FOLDER'
+      | 'WEB_PROXY'
+      | 'GCS'
+      | 'AZURE_BLOB';
 
     /**
      * Akeneo API username.
