@@ -128,7 +128,7 @@ export namespace OriginCreateResponse {
     /**
      * Path prefix inside the bucket.
      */
-    prefix: unknown;
+    prefix: string;
 
     type: 'S3';
 
@@ -168,7 +168,7 @@ export namespace OriginCreateResponse {
     /**
      * Path prefix inside the bucket.
      */
-    prefix: unknown;
+    prefix: string;
 
     /**
      * Use path-style S3 URLs?
@@ -208,7 +208,7 @@ export namespace OriginCreateResponse {
     /**
      * Path prefix inside the bucket.
      */
-    prefix: unknown;
+    prefix: string;
 
     type: 'CLOUDINARY_BACKUP';
 
@@ -228,7 +228,7 @@ export namespace OriginCreateResponse {
     /**
      * Root URL for the web folder origin.
      */
-    baseUrl: unknown;
+    baseUrl: string;
 
     /**
      * Forward the Host header to origin?
@@ -299,7 +299,7 @@ export namespace OriginCreateResponse {
      */
     name: string;
 
-    prefix: unknown;
+    prefix: string;
 
     type: 'GCS';
 
@@ -330,7 +330,7 @@ export namespace OriginCreateResponse {
      */
     name: string;
 
-    prefix: unknown;
+    prefix: string;
 
     type: 'AZURE_BLOB';
 
@@ -350,7 +350,7 @@ export namespace OriginCreateResponse {
     /**
      * Akeneo instance base URL.
      */
-    baseUrl: unknown;
+    baseUrl: string;
 
     /**
      * Whether to send a Canonical header.
@@ -410,7 +410,7 @@ export namespace OriginUpdateResponse {
     /**
      * Path prefix inside the bucket.
      */
-    prefix: unknown;
+    prefix: string;
 
     type: 'S3';
 
@@ -450,7 +450,7 @@ export namespace OriginUpdateResponse {
     /**
      * Path prefix inside the bucket.
      */
-    prefix: unknown;
+    prefix: string;
 
     /**
      * Use path-style S3 URLs?
@@ -490,7 +490,7 @@ export namespace OriginUpdateResponse {
     /**
      * Path prefix inside the bucket.
      */
-    prefix: unknown;
+    prefix: string;
 
     type: 'CLOUDINARY_BACKUP';
 
@@ -510,7 +510,7 @@ export namespace OriginUpdateResponse {
     /**
      * Root URL for the web folder origin.
      */
-    baseUrl: unknown;
+    baseUrl: string;
 
     /**
      * Forward the Host header to origin?
@@ -581,7 +581,7 @@ export namespace OriginUpdateResponse {
      */
     name: string;
 
-    prefix: unknown;
+    prefix: string;
 
     type: 'GCS';
 
@@ -612,7 +612,7 @@ export namespace OriginUpdateResponse {
      */
     name: string;
 
-    prefix: unknown;
+    prefix: string;
 
     type: 'AZURE_BLOB';
 
@@ -632,7 +632,7 @@ export namespace OriginUpdateResponse {
     /**
      * Akeneo instance base URL.
      */
-    baseUrl: unknown;
+    baseUrl: string;
 
     /**
      * Whether to send a Canonical header.
@@ -690,7 +690,7 @@ export namespace OriginListResponse {
     /**
      * Path prefix inside the bucket.
      */
-    prefix: unknown;
+    prefix: string;
 
     type: 'S3';
 
@@ -730,7 +730,7 @@ export namespace OriginListResponse {
     /**
      * Path prefix inside the bucket.
      */
-    prefix: unknown;
+    prefix: string;
 
     /**
      * Use path-style S3 URLs?
@@ -770,7 +770,7 @@ export namespace OriginListResponse {
     /**
      * Path prefix inside the bucket.
      */
-    prefix: unknown;
+    prefix: string;
 
     type: 'CLOUDINARY_BACKUP';
 
@@ -790,7 +790,7 @@ export namespace OriginListResponse {
     /**
      * Root URL for the web folder origin.
      */
-    baseUrl: unknown;
+    baseUrl: string;
 
     /**
      * Forward the Host header to origin?
@@ -861,7 +861,7 @@ export namespace OriginListResponse {
      */
     name: string;
 
-    prefix: unknown;
+    prefix: string;
 
     type: 'GCS';
 
@@ -892,7 +892,7 @@ export namespace OriginListResponse {
      */
     name: string;
 
-    prefix: unknown;
+    prefix: string;
 
     type: 'AZURE_BLOB';
 
@@ -912,7 +912,7 @@ export namespace OriginListResponse {
     /**
      * Akeneo instance base URL.
      */
-    baseUrl: unknown;
+    baseUrl: string;
 
     /**
      * Whether to send a Canonical header.
@@ -972,7 +972,7 @@ export namespace OriginGetResponse {
     /**
      * Path prefix inside the bucket.
      */
-    prefix: unknown;
+    prefix: string;
 
     type: 'S3';
 
@@ -1012,7 +1012,7 @@ export namespace OriginGetResponse {
     /**
      * Path prefix inside the bucket.
      */
-    prefix: unknown;
+    prefix: string;
 
     /**
      * Use path-style S3 URLs?
@@ -1052,7 +1052,7 @@ export namespace OriginGetResponse {
     /**
      * Path prefix inside the bucket.
      */
-    prefix: unknown;
+    prefix: string;
 
     type: 'CLOUDINARY_BACKUP';
 
@@ -1072,7 +1072,7 @@ export namespace OriginGetResponse {
     /**
      * Root URL for the web folder origin.
      */
-    baseUrl: unknown;
+    baseUrl: string;
 
     /**
      * Forward the Host header to origin?
@@ -1143,7 +1143,7 @@ export namespace OriginGetResponse {
      */
     name: string;
 
-    prefix: unknown;
+    prefix: string;
 
     type: 'GCS';
 
@@ -1174,7 +1174,7 @@ export namespace OriginGetResponse {
      */
     name: string;
 
-    prefix: unknown;
+    prefix: string;
 
     type: 'AZURE_BLOB';
 
@@ -1194,7 +1194,7 @@ export namespace OriginGetResponse {
     /**
      * Akeneo instance base URL.
      */
-    baseUrl: unknown;
+    baseUrl: string;
 
     /**
      * Whether to send a Canonical header.
