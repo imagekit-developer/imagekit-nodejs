@@ -124,13 +124,13 @@ export interface URLEndpointCreateResponse {
    * Configuration for third-party URL rewriting.
    */
   urlRewriter?:
-    | URLEndpointCreateResponse.CloudinaryURLRewriter
-    | URLEndpointCreateResponse.ImgixURLRewriter
-    | URLEndpointCreateResponse.AkamaiURLRewriter;
+    | URLEndpointCreateResponse.Cloudinary
+    | URLEndpointCreateResponse.Imgix
+    | URLEndpointCreateResponse.Akamai;
 }
 
 export namespace URLEndpointCreateResponse {
-  export interface CloudinaryURLRewriter {
+  export interface Cloudinary {
     /**
      * Whether to preserve `<asset_type>/<delivery_type>` in the rewritten URL.
      */
@@ -139,11 +139,11 @@ export namespace URLEndpointCreateResponse {
     type: 'CLOUDINARY';
   }
 
-  export interface ImgixURLRewriter {
+  export interface Imgix {
     type: 'IMGIX';
   }
 
-  export interface AkamaiURLRewriter {
+  export interface Akamai {
     type: 'AKAMAI';
   }
 }
@@ -181,13 +181,13 @@ export interface URLEndpointUpdateResponse {
    * Configuration for third-party URL rewriting.
    */
   urlRewriter?:
-    | URLEndpointUpdateResponse.CloudinaryURLRewriter
-    | URLEndpointUpdateResponse.ImgixURLRewriter
-    | URLEndpointUpdateResponse.AkamaiURLRewriter;
+    | URLEndpointUpdateResponse.Cloudinary
+    | URLEndpointUpdateResponse.Imgix
+    | URLEndpointUpdateResponse.Akamai;
 }
 
 export namespace URLEndpointUpdateResponse {
-  export interface CloudinaryURLRewriter {
+  export interface Cloudinary {
     /**
      * Whether to preserve `<asset_type>/<delivery_type>` in the rewritten URL.
      */
@@ -196,11 +196,11 @@ export namespace URLEndpointUpdateResponse {
     type: 'CLOUDINARY';
   }
 
-  export interface ImgixURLRewriter {
+  export interface Imgix {
     type: 'IMGIX';
   }
 
-  export interface AkamaiURLRewriter {
+  export interface Akamai {
     type: 'AKAMAI';
   }
 }
@@ -241,13 +241,13 @@ export namespace URLEndpointListResponse {
      * Configuration for third-party URL rewriting.
      */
     urlRewriter?:
-      | URLEndpointListResponseItem.CloudinaryURLRewriter
-      | URLEndpointListResponseItem.ImgixURLRewriter
-      | URLEndpointListResponseItem.AkamaiURLRewriter;
+      | URLEndpointListResponseItem.Cloudinary
+      | URLEndpointListResponseItem.Imgix
+      | URLEndpointListResponseItem.Akamai;
   }
 
   export namespace URLEndpointListResponseItem {
-    export interface CloudinaryURLRewriter {
+    export interface Cloudinary {
       /**
        * Whether to preserve `<asset_type>/<delivery_type>` in the rewritten URL.
        */
@@ -256,11 +256,11 @@ export namespace URLEndpointListResponse {
       type: 'CLOUDINARY';
     }
 
-    export interface ImgixURLRewriter {
+    export interface Imgix {
       type: 'IMGIX';
     }
 
-    export interface AkamaiURLRewriter {
+    export interface Akamai {
       type: 'AKAMAI';
     }
   }
@@ -299,13 +299,13 @@ export interface URLEndpointGetResponse {
    * Configuration for third-party URL rewriting.
    */
   urlRewriter?:
-    | URLEndpointGetResponse.CloudinaryURLRewriter
-    | URLEndpointGetResponse.ImgixURLRewriter
-    | URLEndpointGetResponse.AkamaiURLRewriter;
+    | URLEndpointGetResponse.Cloudinary
+    | URLEndpointGetResponse.Imgix
+    | URLEndpointGetResponse.Akamai;
 }
 
 export namespace URLEndpointGetResponse {
-  export interface CloudinaryURLRewriter {
+  export interface Cloudinary {
     /**
      * Whether to preserve `<asset_type>/<delivery_type>` in the rewritten URL.
      */
@@ -314,11 +314,11 @@ export namespace URLEndpointGetResponse {
     type: 'CLOUDINARY';
   }
 
-  export interface ImgixURLRewriter {
+  export interface Imgix {
     type: 'IMGIX';
   }
 
-  export interface AkamaiURLRewriter {
+  export interface Akamai {
     type: 'AKAMAI';
   }
 }
