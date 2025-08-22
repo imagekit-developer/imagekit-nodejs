@@ -42,3 +42,10 @@ export {
   type FolderMoveParams,
   type FolderRenameParams,
 } from './folders/folders';
+export {
+  Webhooks,
+  type VideoTransformationAcceptedWebhookEvent,
+  type VideoTransformationReadyWebhookEvent,
+  type VideoTransformationErrorWebhookEvent,
+  type UnwrapWebhookEvent,
+} from './webhooks';

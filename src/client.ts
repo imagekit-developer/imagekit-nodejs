@@ -27,6 +27,13 @@ import {
   CustomMetadataFieldUpdateResponse,
   CustomMetadataFields,
 } from './resources/custom-metadata-fields';
+import {
+  UnwrapWebhookEvent,
+  VideoTransformationAcceptedWebhookEvent,
+  VideoTransformationErrorWebhookEvent,
+  VideoTransformationReadyWebhookEvent,
+  Webhooks,
+} from './resources/webhooks';
 import { Accounts } from './resources/accounts/accounts';
 import { Beta } from './resources/beta/beta';
 import { Cache } from './resources/cache/cache';
@@ -792,6 +799,7 @@ export class ImageKit {
   folders: API.Folders = new API.Folders(this);
   accounts: API.Accounts = new API.Accounts(this);
   beta: API.Beta = new API.Beta(this);
+  webhooks: API.Webhooks = new API.Webhooks(this);
 }
 
 ImageKit.CustomMetadataFields = CustomMetadataFields;
@@ -801,6 +809,7 @@ ImageKit.Cache = Cache;
 ImageKit.Folders = Folders;
 ImageKit.Accounts = Accounts;
 ImageKit.Beta = Beta;
+ImageKit.Webhooks = Webhooks;
 
 export declare namespace ImageKit {
   export type RequestOptions = Opts.RequestOptions;
@@ -856,6 +865,14 @@ export declare namespace ImageKit {
   export { Accounts as Accounts };
 
   export { Beta as Beta };
+
+  export {
+    Webhooks as Webhooks,
+    type VideoTransformationAcceptedWebhookEvent as VideoTransformationAcceptedWebhookEvent,
+    type VideoTransformationReadyWebhookEvent as VideoTransformationReadyWebhookEvent,
+    type VideoTransformationErrorWebhookEvent as VideoTransformationErrorWebhookEvent,
+    type UnwrapWebhookEvent as UnwrapWebhookEvent,
+  };
 
   export type AutoDescriptionExtension = API.AutoDescriptionExtension;
   export type AutoTaggingExtension = API.AutoTaggingExtension;

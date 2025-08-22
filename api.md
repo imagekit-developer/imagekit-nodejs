@@ -203,3 +203,16 @@ Types:
 Methods:
 
 - <code title="post /api/v2/files/upload">client.beta.v2.files.<a href="./src/resources/beta/v2/files.ts">upload</a>({ ...params }) -> FileUploadResponse</code>
+
+# Webhooks
+
+Types:
+
+- <code><a href="./src/resources/webhooks.ts">VideoTransformationAcceptedWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">VideoTransformationReadyWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">VideoTransformationErrorWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">UnwrapWebhookEvent</a></code>
+
+Methods:
+
+- <code>client.webhooks.<a href="./src/resources/webhooks.ts">unwrap</a>(body) -> void</code>
