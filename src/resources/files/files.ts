@@ -994,9 +994,9 @@ export declare namespace FileUpdateParams {
      * with specific parameters based on the extension type.
      */
     extensions?: Array<
-      | UpdateFileDetails.RemovedotBgExtension
+      | UpdateFileDetails.RemoveBg
       | UpdateFileDetails.AutoTaggingExtension
-      | UpdateFileDetails.AutoDescriptionExtension
+      | UpdateFileDetails.AIAutoDescription
     >;
 
     /**
@@ -1027,16 +1027,16 @@ export declare namespace FileUpdateParams {
   }
 
   export namespace UpdateFileDetails {
-    export interface RemovedotBgExtension {
+    export interface RemoveBg {
       /**
        * Specifies the background removal extension.
        */
       name: 'remove-bg';
 
-      options?: RemovedotBgExtension.Options;
+      options?: RemoveBg.Options;
     }
 
-    export namespace RemovedotBgExtension {
+    export namespace RemoveBg {
       export interface Options {
         /**
          * Whether to add an artificial shadow to the result. Default is false. Note:
@@ -1082,7 +1082,7 @@ export declare namespace FileUpdateParams {
       name: 'google-auto-tagging' | 'aws-auto-tagging';
     }
 
-    export interface AutoDescriptionExtension {
+    export interface AIAutoDescription {
       /**
        * Specifies the auto description extension.
        */
