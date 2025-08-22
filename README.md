@@ -32,7 +32,7 @@ const client = new ImageKit({
 
 const response = await client.files.upload({
   file: fs.createReadStream('path/to/file'),
-  fileName: 'file-name.jpg',
+  fileName: 'fileName',
 });
 
 console.log(response.videoCodec);
@@ -51,10 +51,7 @@ const client = new ImageKit({
   password: process.env['ORG_MY_PASSWORD_TOKEN'], // This is the default and can be omitted
 });
 
-const params: ImageKit.FileUploadParams = {
-  file: fs.createReadStream('path/to/file'),
-  fileName: 'file-name.jpg',
-};
+const params: ImageKit.FileUploadParams = { file: fs.createReadStream('path/to/file'), fileName: 'fileName' };
 const response: ImageKit.FileUploadResponse = await client.files.upload(params);
 ```
 
@@ -98,7 +95,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const response = await client.files
-  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' })
+  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'fileName' })
   .catch(async (err) => {
     if (err instanceof ImageKit.APIError) {
       console.log(err.status); // 400
@@ -139,7 +136,7 @@ const client = new ImageKit({
 });
 
 // Or, configure per-request:
-await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' }, {
+await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'fileName' }, {
   maxRetries: 5,
 });
 ```
@@ -156,7 +153,7 @@ const client = new ImageKit({
 });
 
 // Override per-request:
-await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' }, {
+await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'fileName' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -180,13 +177,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new ImageKit();
 
 const response = await client.files
-  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' })
+  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'fileName' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client.files
-  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' })
+  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'fileName' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.videoCodec);
