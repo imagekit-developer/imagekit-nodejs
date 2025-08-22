@@ -28,6 +28,7 @@ import {
   CustomMetadataFields,
 } from './resources/custom-metadata-fields';
 import {
+  UnsafeUnwrapWebhookEvent,
   UnwrapWebhookEvent,
   VideoTransformationAcceptedWebhookEvent,
   VideoTransformationErrorWebhookEvent,
@@ -871,6 +872,7 @@ export declare namespace ImageKit {
     type VideoTransformationAcceptedWebhookEvent as VideoTransformationAcceptedWebhookEvent,
     type VideoTransformationReadyWebhookEvent as VideoTransformationReadyWebhookEvent,
     type VideoTransformationErrorWebhookEvent as VideoTransformationErrorWebhookEvent,
+    type UnsafeUnwrapWebhookEvent as UnsafeUnwrapWebhookEvent,
     type UnwrapWebhookEvent as UnwrapWebhookEvent,
   };
 

@@ -47,5 +47,6 @@ export {
   type VideoTransformationAcceptedWebhookEvent,
   type VideoTransformationReadyWebhookEvent,
   type VideoTransformationErrorWebhookEvent,
+  type UnsafeUnwrapWebhookEvent,
   type UnwrapWebhookEvent,
 } from './webhooks';
