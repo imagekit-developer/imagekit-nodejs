@@ -1263,9 +1263,7 @@ export interface FileUploadParams {
    * with specific parameters based on the extension type.
    */
   extensions?: Array<
-    | FileUploadParams.RemovedotBgExtension
-    | FileUploadParams.AutoTaggingExtension
-    | FileUploadParams.AutoDescriptionExtension
+    FileUploadParams.RemoveBg | FileUploadParams.AutoTaggingExtension | FileUploadParams.AIAutoDescription
   >;
 
   /**
@@ -1398,16 +1396,16 @@ export interface FileUploadParams {
 }
 
 export namespace FileUploadParams {
-  export interface RemovedotBgExtension {
+  export interface RemoveBg {
     /**
      * Specifies the background removal extension.
      */
     name: 'remove-bg';
 
-    options?: RemovedotBgExtension.Options;
+    options?: RemoveBg.Options;
   }
 
-  export namespace RemovedotBgExtension {
+  export namespace RemoveBg {
     export interface Options {
       /**
        * Whether to add an artificial shadow to the result. Default is false. Note:
@@ -1453,7 +1451,7 @@ export namespace FileUploadParams {
     name: 'google-auto-tagging' | 'aws-auto-tagging';
   }
 
-  export interface AutoDescriptionExtension {
+  export interface AIAutoDescription {
     /**
      * Specifies the auto description extension.
      */
@@ -1480,10 +1478,10 @@ export namespace FileUploadParams {
      * `gif-to-video`, `thumbnail`, `abs`.
      */
     post?: Array<
-      | Transformation.SimplePostTransformation
-      | Transformation.ConvertGifToVideo
-      | Transformation.GenerateAThumbnail
-      | Transformation.AdaptiveBitrateStreaming
+      | Transformation.Transformation
+      | Transformation.GifToVideo
+      | Transformation.Thumbnail
+      | Transformation.Abs
     >;
 
     /**
@@ -1494,7 +1492,7 @@ export namespace FileUploadParams {
   }
 
   export namespace Transformation {
-    export interface SimplePostTransformation {
+    export interface Transformation {
       /**
        * Transformation type.
        */
@@ -1507,7 +1505,7 @@ export namespace FileUploadParams {
       value: string;
     }
 
-    export interface ConvertGifToVideo {
+    export interface GifToVideo {
       /**
        * Converts an animated GIF into an MP4.
        */
@@ -1520,7 +1518,7 @@ export namespace FileUploadParams {
       value?: string;
     }
 
-    export interface GenerateAThumbnail {
+    export interface Thumbnail {
       /**
        * Generates a thumbnail image.
        */
@@ -1533,7 +1531,7 @@ export namespace FileUploadParams {
       value?: string;
     }
 
-    export interface AdaptiveBitrateStreaming {
+    export interface Abs {
       /**
        * Streaming protocol to use (`hls` or `dash`).
        */
