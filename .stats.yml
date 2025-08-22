@@ -1,4 +1,4 @@
 configured_endpoints: 42
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/imagekit-inc%2Fimagekit-d9f06036e82cb9fcefe298e18ab40671a4454cf02c433e42c7281391543fde39.yml
-openapi_spec_hash: bfad95cff6d56f887ac5ecfa1ab2c7dd
-config_hash: c9b1142a72b93ad4d66f0433dca1392e
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/imagekit-inc%2Fimagekit-ce1742072cca1d90af9b0be8cc75dac4f2d5b3258041c3cede545e6521f4d72a.yml
+openapi_spec_hash: 5e896419003b5ef3728293241e9dd37e
+config_hash: ecd4e1fc35135b5e53487ca547e46fd7
