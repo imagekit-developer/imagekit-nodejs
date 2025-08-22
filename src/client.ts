@@ -875,13 +875,4 @@ export declare namespace ImageKit {
     type UnsafeUnwrapWebhookEvent as UnsafeUnwrapWebhookEvent,
     type UnwrapWebhookEvent as UnwrapWebhookEvent,
   };
-
-  export type AutoDescriptionExtension = API.AutoDescriptionExtension;
-  export type AutoTaggingExtension = API.AutoTaggingExtension;
-  export type ExifDetails = API.ExifDetails;
-  export type ExifImage = API.ExifImage;
-  export type Gps = API.Gps;
-  export type Interoperability = API.Interoperability;
-  export type RemovedotBgExtension = API.RemovedotBgExtension;
-  export type Thumbnail = API.Thumbnail;
 }

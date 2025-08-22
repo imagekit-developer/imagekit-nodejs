@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export * from './shared';
 export { Accounts } from './accounts/accounts';
 export { Assets, type AssetListResponse, type AssetListParams } from './assets';
 export { Beta } from './beta/beta';
