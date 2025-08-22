@@ -50,36 +50,16 @@ export class Files extends APIResource {
    *
    * @example
    * ```ts
-   * const file = await client.files.update('fileId', {
-   *   customCoordinates: '10,10,100,100',
-   *   customMetadata: { brand: 'Nike', color: 'red' },
-   *   extensions: [
-   *     { name: 'remove-bg', options: { add_shadow: true } },
-   *     {
-   *       name: 'google-auto-tagging',
-   *       minConfidence: 80,
-   *       maxTags: 10,
-   *     },
-   *     {
-   *       name: 'aws-auto-tagging',
-   *       minConfidence: 80,
-   *       maxTags: 10,
-   *     },
-   *     { name: 'ai-auto-description' },
-   *   ],
-   *   removeAITags: ['car', 'vehicle', 'motorsports'],
-   *   tags: ['tag1', 'tag2'],
-   *   webhookUrl:
-   *     'https://webhook.site/0d6b6c7a-8e5a-4b3a-8b7c-0d6b6c7a8e5a',
-   * });
+   * const file = await client.files.update('fileId');
    * ```
    */
   update(
     fileID: string,
-    body: FileUpdateParams | null | undefined = {},
+    params: FileUpdateParams | null | undefined = undefined,
     options?: RequestOptions,
   ): APIPromise<FileUpdateResponse> {
-    return this._client.patch(path`/v1/files/${fileID}/details`, { body, ...options });
+    const { update } = params ?? {};
+    return this._client.patch(path`/v1/files/${fileID}/details`, { body: update, ...options });
   }
 
   /**
@@ -967,9 +947,11 @@ export namespace FileUploadResponse {
   }
 }
 
-export type FileUpdateParams = FileUpdateParams.UpdateFileDetails | FileUpdateParams.ChangePublicationStatus;
+export interface FileUpdateParams {
+  update?: FileUpdateParams.UpdateFileDetails | FileUpdateParams.ChangePublicationStatus;
+}
 
-export declare namespace FileUpdateParams {
+export namespace FileUpdateParams {
   export interface UpdateFileDetails {
     /**
      * Define an important area in the image in the format `x,y,width,height` e.g.
