@@ -2,14 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as OriginsAPI from './origins';
-import {
-  Origin,
-  OriginCreateParams,
-  OriginListResponse,
-  OriginResponse,
-  OriginUpdateParams,
-  Origins,
-} from './origins';
+import { Origin, OriginCreateParams, OriginListResponse, OriginUpdateParams, Origins } from './origins';
 import * as URLEndpointsAPI from './url-endpoints';
 import {
   URLEndpoint,
@@ -40,7 +33,6 @@ export declare namespace Accounts {
   export {
     Origins as Origins,
     type Origin as Origin,
-    type OriginResponse as OriginResponse,
     type OriginListResponse as OriginListResponse,
     type OriginCreateParams as OriginCreateParams,
     type OriginUpdateParams as OriginUpdateParams,

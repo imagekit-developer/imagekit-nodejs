@@ -146,16 +146,15 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/accounts/origins.ts">Origin</a></code>
-- <code><a href="./src/resources/accounts/origins.ts">OriginResponse</a></code>
 - <code><a href="./src/resources/accounts/origins.ts">OriginListResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/accounts/origins">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">create</a>({ ...params }) -> OriginResponse</code>
-- <code title="put /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">update</a>(id, { ...params }) -> OriginResponse</code>
+- <code title="post /v1/accounts/origins">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">create</a>({ ...params }) -> Origin</code>
+- <code title="put /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">update</a>(id, { ...params }) -> Origin</code>
 - <code title="get /v1/accounts/origins">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">list</a>() -> OriginListResponse</code>
 - <code title="delete /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">delete</a>(id) -> void</code>
-- <code title="get /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">get</a>(id) -> OriginResponse</code>
+- <code title="get /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">get</a>(id) -> Origin</code>
 
 ## URLEndpoints
 
