@@ -163,6 +163,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpoint</a></code>
 - <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointCreateResponse</a></code>
 - <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointUpdateResponse</a></code>
 - <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointListResponse</a></code>

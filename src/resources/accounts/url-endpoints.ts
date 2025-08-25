@@ -92,6 +92,53 @@ export class URLEndpoints extends APIResource {
 }
 
 /**
+ * Schema for URL endpoint resource.
+ */
+export interface URLEndpoint {
+  /**
+   * Description of the URL endpoint.
+   */
+  description: string;
+
+  /**
+   * Ordered list of origin IDs to try when the file isn’t in the Media Library;
+   * ImageKit checks them in the sequence provided. Origin must be created before it
+   * can be used in a URL endpoint.
+   */
+  origins?: Array<string>;
+
+  /**
+   * Path segment appended to your base URL to form the endpoint (letters, digits,
+   * and hyphens only — or empty for the default endpoint).
+   */
+  urlPrefix?: string;
+
+  /**
+   * Configuration for third-party URL rewriting.
+   */
+  urlRewriter?: URLEndpoint.Cloudinary | URLEndpoint.Imgix | URLEndpoint.Akamai;
+}
+
+export namespace URLEndpoint {
+  export interface Cloudinary {
+    type: 'CLOUDINARY';
+
+    /**
+     * Whether to preserve `<asset_type>/<delivery_type>` in the rewritten URL.
+     */
+    preserveAssetDeliveryTypes?: boolean;
+  }
+
+  export interface Imgix {
+    type: 'IMGIX';
+  }
+
+  export interface Akamai {
+    type: 'AKAMAI';
+  }
+}
+
+/**
  * URL‑endpoint object as returned by the API.
  */
 export interface URLEndpointCreateResponse {
@@ -419,6 +466,7 @@ export namespace URLEndpointUpdateParams {
 
 export declare namespace URLEndpoints {
   export {
+    type URLEndpoint as URLEndpoint,
     type URLEndpointCreateResponse as URLEndpointCreateResponse,
     type URLEndpointUpdateResponse as URLEndpointUpdateResponse,
     type URLEndpointListResponse as URLEndpointListResponse,

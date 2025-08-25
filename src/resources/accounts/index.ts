@@ -13,6 +13,7 @@ export {
 } from './origins';
 export {
   URLEndpoints,
+  type URLEndpoint,
   type URLEndpointCreateResponse,
   type URLEndpointUpdateResponse,
   type URLEndpointListResponse,

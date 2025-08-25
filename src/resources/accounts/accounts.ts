@@ -14,6 +14,7 @@ import {
 } from './origins';
 import * as URLEndpointsAPI from './url-endpoints';
 import {
+  URLEndpoint,
   URLEndpointCreateParams,
   URLEndpointCreateResponse,
   URLEndpointGetResponse,
@@ -51,6 +52,7 @@ export declare namespace Accounts {
 
   export {
     URLEndpoints as URLEndpoints,
+    type URLEndpoint as URLEndpoint,
     type URLEndpointCreateResponse as URLEndpointCreateResponse,
     type URLEndpointUpdateResponse as URLEndpointUpdateResponse,
     type URLEndpointListResponse as URLEndpointListResponse,
