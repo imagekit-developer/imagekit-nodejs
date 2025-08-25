@@ -2,7 +2,7 @@
 
 export {
   Folders,
-  type AsyncBulkJobResponse,
+  type JobResponse,
   type FolderCreateResponse,
   type FolderDeleteResponse,
   type FolderCreateParams,

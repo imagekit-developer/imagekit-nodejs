@@ -31,7 +31,7 @@ export {
 } from './files/files';
 export {
   Folders,
-  type AsyncBulkJobResponse,
+  type JobResponse,
   type FolderCreateResponse,
   type FolderDeleteResponse,
   type FolderCreateParams,
