@@ -290,7 +290,7 @@ export interface FileUpdateResponse {
   /**
    * Type of the asset.
    */
-  type?: string;
+  type?: 'file' | 'file-version';
 
   /**
    * Date and time when the file was last updated. The date and time is in ISO8601
@@ -454,7 +454,7 @@ export interface FileGetResponse {
   /**
    * Type of the asset.
    */
-  type?: string;
+  type?: 'file' | 'file-version';
 
   /**
    * Date and time when the file was last updated. The date and time is in ISO8601
