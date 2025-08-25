@@ -217,6 +217,12 @@ export interface File {
   customMetadata?: { [key: string]: unknown };
 
   /**
+   * Optional text to describe the contents of the file. Can be set by the user or
+   * the ai-auto-description extension.
+   */
+  description?: string;
+
+  /**
    * Unique identifier of the asset.
    */
   fileId?: string;
@@ -668,6 +674,12 @@ export interface FileUploadResponse {
    * of this field.
    */
   customMetadata?: { [key: string]: unknown };
+
+  /**
+   * Optional text to describe the contents of the file. Can be set by the user or
+   * the ai-auto-description extension.
+   */
+  description?: string;
 
   /**
    * The duration of the video in seconds (only for video).

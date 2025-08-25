@@ -93,6 +93,12 @@ export interface FileUploadResponse {
   customMetadata?: { [key: string]: unknown };
 
   /**
+   * Optional text to describe the contents of the file. Can be set by the user or
+   * the ai-auto-description extension.
+   */
+  description?: string;
+
+  /**
    * The duration of the video in seconds (only for video).
    */
   duration?: number;
