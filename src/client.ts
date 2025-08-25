@@ -38,7 +38,6 @@ import { Accounts } from './resources/accounts/accounts';
 import { Beta } from './resources/beta/beta';
 import { Cache } from './resources/cache/cache';
 import {
-  AsyncBulkJobResponse,
   File,
   FileCopyParams,
   FileCopyResponse,
@@ -55,6 +54,7 @@ import {
   Metadata,
 } from './resources/files/files';
 import {
+  AsyncBulkJobResponse,
   FolderCopyParams,
   FolderCopyResponse,
   FolderCreateParams,
@@ -829,7 +829,6 @@ export declare namespace ImageKit {
 
   export {
     Files as Files,
-    type AsyncBulkJobResponse as AsyncBulkJobResponse,
     type File as File,
     type Folder as Folder,
     type Metadata as Metadata,
@@ -855,6 +854,7 @@ export declare namespace ImageKit {
 
   export {
     Folders as Folders,
+    type AsyncBulkJobResponse as AsyncBulkJobResponse,
     type FolderCreateResponse as FolderCreateResponse,
     type FolderDeleteResponse as FolderDeleteResponse,
     type FolderCopyResponse as FolderCopyResponse,

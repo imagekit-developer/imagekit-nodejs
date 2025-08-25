@@ -17,7 +17,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/files/files.ts">AsyncBulkJobResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">File</a></code>
 - <code><a href="./src/resources/files/files.ts">Folder</a></code>
 - <code><a href="./src/resources/files/files.ts">Metadata</a></code>
@@ -102,6 +101,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/folders/folders.ts">AsyncBulkJobResponse</a></code>
 - <code><a href="./src/resources/folders/folders.ts">FolderCreateResponse</a></code>
 - <code><a href="./src/resources/folders/folders.ts">FolderDeleteResponse</a></code>
 - <code><a href="./src/resources/folders/folders.ts">FolderCopyResponse</a></code>

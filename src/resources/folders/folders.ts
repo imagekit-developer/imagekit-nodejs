@@ -95,6 +95,11 @@ export class Folders extends APIResource {
   }
 }
 
+/**
+ * Job submitted successfully. A `jobId` will be returned.
+ */
+export type AsyncBulkJobResponse = unknown;
+
 export interface FolderCreateResponse {}
 
 export interface FolderDeleteResponse {}
@@ -224,6 +229,7 @@ Folders.Job = Job;
 
 export declare namespace Folders {
   export {
+    type AsyncBulkJobResponse as AsyncBulkJobResponse,
     type FolderCreateResponse as FolderCreateResponse,
     type FolderDeleteResponse as FolderDeleteResponse,
     type FolderCopyResponse as FolderCopyResponse,

@@ -15,7 +15,6 @@ export {
 } from './custom-metadata-fields';
 export {
   Files,
-  type AsyncBulkJobResponse,
   type File,
   type Folder,
   type Metadata,
@@ -32,6 +31,7 @@ export {
 } from './files/files';
 export {
   Folders,
+  type AsyncBulkJobResponse,
   type FolderCreateResponse,
   type FolderDeleteResponse,
   type FolderCopyResponse,

@@ -192,11 +192,6 @@ export class Files extends APIResource {
 }
 
 /**
- * Job submitted successfully. A `jobId` will be returned.
- */
-export type AsyncBulkJobResponse = unknown;
-
-/**
  * Object containing details of a file or file version.
  */
 export interface File {
@@ -1429,7 +1424,6 @@ Files.Versions = Versions;
 
 export declare namespace Files {
   export {
-    type AsyncBulkJobResponse as AsyncBulkJobResponse,
     type File as File,
     type Folder as Folder,
     type Metadata as Metadata,
