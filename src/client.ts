@@ -55,14 +55,16 @@ import {
 } from './resources/files/files';
 import {
   FolderCopyParams,
+  FolderCopyResponse,
   FolderCreateParams,
   FolderCreateResponse,
   FolderDeleteParams,
   FolderDeleteResponse,
   FolderMoveParams,
+  FolderMoveResponse,
   FolderRenameParams,
+  FolderRenameResponse,
   Folders,
-  JobResponse,
 } from './resources/folders/folders';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -851,9 +853,11 @@ export declare namespace ImageKit {
 
   export {
     Folders as Folders,
-    type JobResponse as JobResponse,
     type FolderCreateResponse as FolderCreateResponse,
     type FolderDeleteResponse as FolderDeleteResponse,
+    type FolderCopyResponse as FolderCopyResponse,
+    type FolderMoveResponse as FolderMoveResponse,
+    type FolderRenameResponse as FolderRenameResponse,
     type FolderCreateParams as FolderCreateParams,
     type FolderDeleteParams as FolderDeleteParams,
     type FolderCopyParams as FolderCopyParams,

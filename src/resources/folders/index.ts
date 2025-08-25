@@ -2,9 +2,11 @@
 
 export {
   Folders,
-  type JobResponse,
   type FolderCreateResponse,
   type FolderDeleteResponse,
+  type FolderCopyResponse,
+  type FolderMoveResponse,
+  type FolderRenameResponse,
   type FolderCreateParams,
   type FolderDeleteParams,
   type FolderCopyParams,

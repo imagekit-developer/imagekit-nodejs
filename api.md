@@ -101,17 +101,19 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/folders/folders.ts">JobResponse</a></code>
 - <code><a href="./src/resources/folders/folders.ts">FolderCreateResponse</a></code>
 - <code><a href="./src/resources/folders/folders.ts">FolderDeleteResponse</a></code>
+- <code><a href="./src/resources/folders/folders.ts">FolderCopyResponse</a></code>
+- <code><a href="./src/resources/folders/folders.ts">FolderMoveResponse</a></code>
+- <code><a href="./src/resources/folders/folders.ts">FolderRenameResponse</a></code>
 
 Methods:
 
 - <code title="post /v1/folder">client.folders.<a href="./src/resources/folders/folders.ts">create</a>({ ...params }) -> FolderCreateResponse</code>
 - <code title="delete /v1/folder">client.folders.<a href="./src/resources/folders/folders.ts">delete</a>({ ...params }) -> FolderDeleteResponse</code>
-- <code title="post /v1/bulkJobs/copyFolder">client.folders.<a href="./src/resources/folders/folders.ts">copy</a>({ ...params }) -> JobResponse</code>
-- <code title="post /v1/bulkJobs/moveFolder">client.folders.<a href="./src/resources/folders/folders.ts">move</a>({ ...params }) -> JobResponse</code>
-- <code title="post /v1/bulkJobs/renameFolder">client.folders.<a href="./src/resources/folders/folders.ts">rename</a>({ ...params }) -> JobResponse</code>
+- <code title="post /v1/bulkJobs/copyFolder">client.folders.<a href="./src/resources/folders/folders.ts">copy</a>({ ...params }) -> FolderCopyResponse</code>
+- <code title="post /v1/bulkJobs/moveFolder">client.folders.<a href="./src/resources/folders/folders.ts">move</a>({ ...params }) -> FolderMoveResponse</code>
+- <code title="post /v1/bulkJobs/renameFolder">client.folders.<a href="./src/resources/folders/folders.ts">rename</a>({ ...params }) -> FolderRenameResponse</code>
 
 ## Job
 
