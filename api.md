@@ -2,15 +2,14 @@
 
 Types:
 
-- <code><a href="./src/resources/custom-metadata-fields.ts">CustomMetadataFieldCreateResponse</a></code>
-- <code><a href="./src/resources/custom-metadata-fields.ts">CustomMetadataFieldUpdateResponse</a></code>
+- <code><a href="./src/resources/custom-metadata-fields.ts">CustomMetadataField</a></code>
 - <code><a href="./src/resources/custom-metadata-fields.ts">CustomMetadataFieldListResponse</a></code>
 - <code><a href="./src/resources/custom-metadata-fields.ts">CustomMetadataFieldDeleteResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/customMetadataFields">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">create</a>({ ...params }) -> CustomMetadataFieldCreateResponse</code>
-- <code title="patch /v1/customMetadataFields/{id}">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">update</a>(id, { ...params }) -> CustomMetadataFieldUpdateResponse</code>
+- <code title="post /v1/customMetadataFields">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">create</a>({ ...params }) -> CustomMetadataField</code>
+- <code title="patch /v1/customMetadataFields/{id}">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">update</a>(id, { ...params }) -> CustomMetadataField</code>
 - <code title="get /v1/customMetadataFields">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">list</a>({ ...params }) -> CustomMetadataFieldListResponse</code>
 - <code title="delete /v1/customMetadataFields/{id}">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">delete</a>(id) -> CustomMetadataFieldDeleteResponse</code>
 

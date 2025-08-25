@@ -26,10 +26,7 @@ export class CustomMetadataFields extends APIResource {
    *   });
    * ```
    */
-  create(
-    body: CustomMetadataFieldCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<CustomMetadataFieldCreateResponse> {
+  create(body: CustomMetadataFieldCreateParams, options?: RequestOptions): APIPromise<CustomMetadataField> {
     return this._client.post('/v1/customMetadataFields', { body, ...options });
   }
 
@@ -53,7 +50,7 @@ export class CustomMetadataFields extends APIResource {
     id: string,
     body: CustomMetadataFieldUpdateParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<CustomMetadataFieldUpdateResponse> {
+  ): APIPromise<CustomMetadataField> {
     return this._client.patch(path`/v1/customMetadataFields/${id}`, { body, ...options });
   }
 
@@ -93,7 +90,7 @@ export class CustomMetadataFields extends APIResource {
 /**
  * Object containing details of a custom metadata field.
  */
-export interface CustomMetadataFieldCreateResponse {
+export interface CustomMetadataField {
   /**
    * Unique identifier for the custom metadata field. Use this to update the field.
    */
@@ -115,10 +112,10 @@ export interface CustomMetadataFieldCreateResponse {
   /**
    * An object that describes the rules for the custom metadata field value.
    */
-  schema: CustomMetadataFieldCreateResponse.Schema;
+  schema: CustomMetadataField.Schema;
 }
 
-export namespace CustomMetadataFieldCreateResponse {
+export namespace CustomMetadataField {
   /**
    * An object that describes the rules for the custom metadata field value.
    */
@@ -170,170 +167,7 @@ export namespace CustomMetadataFieldCreateResponse {
   }
 }
 
-/**
- * Object containing details of a custom metadata field.
- */
-export interface CustomMetadataFieldUpdateResponse {
-  /**
-   * Unique identifier for the custom metadata field. Use this to update the field.
-   */
-  id: string;
-
-  /**
-   * Human readable name of the custom metadata field. This name is displayed as form
-   * field label to the users while setting field value on the asset in the media
-   * library UI.
-   */
-  label: string;
-
-  /**
-   * API name of the custom metadata field. This becomes the key while setting
-   * `customMetadata` (key-value object) for an asset using upload or update API.
-   */
-  name: string;
-
-  /**
-   * An object that describes the rules for the custom metadata field value.
-   */
-  schema: CustomMetadataFieldUpdateResponse.Schema;
-}
-
-export namespace CustomMetadataFieldUpdateResponse {
-  /**
-   * An object that describes the rules for the custom metadata field value.
-   */
-  export interface Schema {
-    /**
-     * Type of the custom metadata field.
-     */
-    type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
-
-    /**
-     * The default value for this custom metadata field. Date type of default value
-     * depends on the field type.
-     */
-    defaultValue?: string | number | boolean | Array<string | number | boolean>;
-
-    /**
-     * Specifies if the this custom metadata field is required or not.
-     */
-    isValueRequired?: boolean;
-
-    /**
-     * Maximum length of string. Only set if `type` is set to `Text` or `Textarea`.
-     */
-    maxLength?: number;
-
-    /**
-     * Maximum value of the field. Only set if field type is `Date` or `Number`. For
-     * `Date` type field, the value will be in ISO8601 string format. For `Number` type
-     * field, it will be a numeric value.
-     */
-    maxValue?: string | number;
-
-    /**
-     * Minimum length of string. Only set if `type` is set to `Text` or `Textarea`.
-     */
-    minLength?: number;
-
-    /**
-     * Minimum value of the field. Only set if field type is `Date` or `Number`. For
-     * `Date` type field, the value will be in ISO8601 string format. For `Number` type
-     * field, it will be a numeric value.
-     */
-    minValue?: string | number;
-
-    /**
-     * An array of allowed values when field type is `SingleSelect` or `MultiSelect`.
-     */
-    selectOptions?: Array<string | number | boolean>;
-  }
-}
-
-export type CustomMetadataFieldListResponse =
-  Array<CustomMetadataFieldListResponse.CustomMetadataFieldListResponseItem>;
-
-export namespace CustomMetadataFieldListResponse {
-  /**
-   * Object containing details of a custom metadata field.
-   */
-  export interface CustomMetadataFieldListResponseItem {
-    /**
-     * Unique identifier for the custom metadata field. Use this to update the field.
-     */
-    id: string;
-
-    /**
-     * Human readable name of the custom metadata field. This name is displayed as form
-     * field label to the users while setting field value on the asset in the media
-     * library UI.
-     */
-    label: string;
-
-    /**
-     * API name of the custom metadata field. This becomes the key while setting
-     * `customMetadata` (key-value object) for an asset using upload or update API.
-     */
-    name: string;
-
-    /**
-     * An object that describes the rules for the custom metadata field value.
-     */
-    schema: CustomMetadataFieldListResponseItem.Schema;
-  }
-
-  export namespace CustomMetadataFieldListResponseItem {
-    /**
-     * An object that describes the rules for the custom metadata field value.
-     */
-    export interface Schema {
-      /**
-       * Type of the custom metadata field.
-       */
-      type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
-
-      /**
-       * The default value for this custom metadata field. Date type of default value
-       * depends on the field type.
-       */
-      defaultValue?: string | number | boolean | Array<string | number | boolean>;
-
-      /**
-       * Specifies if the this custom metadata field is required or not.
-       */
-      isValueRequired?: boolean;
-
-      /**
-       * Maximum length of string. Only set if `type` is set to `Text` or `Textarea`.
-       */
-      maxLength?: number;
-
-      /**
-       * Maximum value of the field. Only set if field type is `Date` or `Number`. For
-       * `Date` type field, the value will be in ISO8601 string format. For `Number` type
-       * field, it will be a numeric value.
-       */
-      maxValue?: string | number;
-
-      /**
-       * Minimum length of string. Only set if `type` is set to `Text` or `Textarea`.
-       */
-      minLength?: number;
-
-      /**
-       * Minimum value of the field. Only set if field type is `Date` or `Number`. For
-       * `Date` type field, the value will be in ISO8601 string format. For `Number` type
-       * field, it will be a numeric value.
-       */
-      minValue?: string | number;
-
-      /**
-       * An array of allowed values when field type is `SingleSelect` or `MultiSelect`.
-       */
-      selectOptions?: Array<string | number | boolean>;
-    }
-  }
-}
+export type CustomMetadataFieldListResponse = Array<CustomMetadataField>;
 
 export interface CustomMetadataFieldDeleteResponse {}
 
@@ -493,8 +327,7 @@ export interface CustomMetadataFieldListParams {
 
 export declare namespace CustomMetadataFields {
   export {
-    type CustomMetadataFieldCreateResponse as CustomMetadataFieldCreateResponse,
-    type CustomMetadataFieldUpdateResponse as CustomMetadataFieldUpdateResponse,
+    type CustomMetadataField as CustomMetadataField,
     type CustomMetadataFieldListResponse as CustomMetadataFieldListResponse,
     type CustomMetadataFieldDeleteResponse as CustomMetadataFieldDeleteResponse,
     type CustomMetadataFieldCreateParams as CustomMetadataFieldCreateParams,

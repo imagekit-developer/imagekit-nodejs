@@ -18,13 +18,12 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { AssetListParams, AssetListResponse, Assets } from './resources/assets';
 import {
+  CustomMetadataField,
   CustomMetadataFieldCreateParams,
-  CustomMetadataFieldCreateResponse,
   CustomMetadataFieldDeleteResponse,
   CustomMetadataFieldListParams,
   CustomMetadataFieldListResponse,
   CustomMetadataFieldUpdateParams,
-  CustomMetadataFieldUpdateResponse,
   CustomMetadataFields,
 } from './resources/custom-metadata-fields';
 import {
@@ -817,8 +816,7 @@ export declare namespace ImageKit {
 
   export {
     CustomMetadataFields as CustomMetadataFields,
-    type CustomMetadataFieldCreateResponse as CustomMetadataFieldCreateResponse,
-    type CustomMetadataFieldUpdateResponse as CustomMetadataFieldUpdateResponse,
+    type CustomMetadataField as CustomMetadataField,
     type CustomMetadataFieldListResponse as CustomMetadataFieldListResponse,
     type CustomMetadataFieldDeleteResponse as CustomMetadataFieldDeleteResponse,
     type CustomMetadataFieldCreateParams as CustomMetadataFieldCreateParams,

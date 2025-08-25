@@ -6,8 +6,7 @@ export { Beta } from './beta/beta';
 export { Cache } from './cache/cache';
 export {
   CustomMetadataFields,
-  type CustomMetadataFieldCreateResponse,
-  type CustomMetadataFieldUpdateResponse,
+  type CustomMetadataField,
   type CustomMetadataFieldListResponse,
   type CustomMetadataFieldDeleteResponse,
   type CustomMetadataFieldCreateParams,
