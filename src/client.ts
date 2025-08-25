@@ -56,15 +56,12 @@ import {
 import {
   AsyncBulkJobResponse,
   FolderCopyParams,
-  FolderCopyResponse,
   FolderCreateParams,
   FolderCreateResponse,
   FolderDeleteParams,
   FolderDeleteResponse,
   FolderMoveParams,
-  FolderMoveResponse,
   FolderRenameParams,
-  FolderRenameResponse,
   Folders,
 } from './resources/folders/folders';
 import { type Fetch } from './internal/builtin-types';
@@ -857,9 +854,6 @@ export declare namespace ImageKit {
     type AsyncBulkJobResponse as AsyncBulkJobResponse,
     type FolderCreateResponse as FolderCreateResponse,
     type FolderDeleteResponse as FolderDeleteResponse,
-    type FolderCopyResponse as FolderCopyResponse,
-    type FolderMoveResponse as FolderMoveResponse,
-    type FolderRenameResponse as FolderRenameResponse,
     type FolderCreateParams as FolderCreateParams,
     type FolderDeleteParams as FolderDeleteParams,
     type FolderCopyParams as FolderCopyParams,

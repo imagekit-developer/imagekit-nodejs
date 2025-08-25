@@ -49,13 +49,13 @@ export class Folders extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.folders.copy({
+   * const asyncBulkJobResponse = await client.folders.copy({
    *   destinationPath: '/path/of/destination/folder',
    *   sourceFolderPath: '/path/of/source/folder',
    * });
    * ```
    */
-  copy(body: FolderCopyParams, options?: RequestOptions): APIPromise<FolderCopyResponse> {
+  copy(body: FolderCopyParams, options?: RequestOptions): APIPromise<AsyncBulkJobResponse> {
     return this._client.post('/v1/bulkJobs/copyFolder', { body, ...options });
   }
 
@@ -67,13 +67,13 @@ export class Folders extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.folders.move({
+   * const asyncBulkJobResponse = await client.folders.move({
    *   destinationPath: '/path/of/destination/folder',
    *   sourceFolderPath: '/path/of/source/folder',
    * });
    * ```
    */
-  move(body: FolderMoveParams, options?: RequestOptions): APIPromise<FolderMoveResponse> {
+  move(body: FolderMoveParams, options?: RequestOptions): APIPromise<AsyncBulkJobResponse> {
     return this._client.post('/v1/bulkJobs/moveFolder', { body, ...options });
   }
 
@@ -84,13 +84,13 @@ export class Folders extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.folders.rename({
+   * const asyncBulkJobResponse = await client.folders.rename({
    *   folderPath: '/path/of/folder',
    *   newFolderName: 'new-folder-name',
    * });
    * ```
    */
-  rename(body: FolderRenameParams, options?: RequestOptions): APIPromise<FolderRenameResponse> {
+  rename(body: FolderRenameParams, options?: RequestOptions): APIPromise<AsyncBulkJobResponse> {
     return this._client.post('/v1/bulkJobs/renameFolder', { body, ...options });
   }
 }
@@ -98,35 +98,17 @@ export class Folders extends APIResource {
 /**
  * Job submitted successfully. A `jobId` will be returned.
  */
-export type AsyncBulkJobResponse = unknown;
+export interface AsyncBulkJobResponse {
+  /**
+   * Unique identifier of the bulk job. This can be used to check the status of the
+   * bulk job.
+   */
+  jobId: string;
+}
 
 export interface FolderCreateResponse {}
 
 export interface FolderDeleteResponse {}
-
-export interface FolderCopyResponse {
-  /**
-   * Unique identifier of the bulk job. This can be used to check the status of the
-   * bulk job.
-   */
-  jobId?: string;
-}
-
-export interface FolderMoveResponse {
-  /**
-   * Unique identifier of the bulk job. This can be used to check the status of the
-   * bulk job.
-   */
-  jobId?: string;
-}
-
-export interface FolderRenameResponse {
-  /**
-   * Unique identifier of the bulk job. This can be used to check the status of the
-   * bulk job.
-   */
-  jobId?: string;
-}
 
 export interface FolderCreateParams {
   /**
@@ -232,9 +214,6 @@ export declare namespace Folders {
     type AsyncBulkJobResponse as AsyncBulkJobResponse,
     type FolderCreateResponse as FolderCreateResponse,
     type FolderDeleteResponse as FolderDeleteResponse,
-    type FolderCopyResponse as FolderCopyResponse,
-    type FolderMoveResponse as FolderMoveResponse,
-    type FolderRenameResponse as FolderRenameResponse,
     type FolderCreateParams as FolderCreateParams,
     type FolderDeleteParams as FolderDeleteParams,
     type FolderCopyParams as FolderCopyParams,
