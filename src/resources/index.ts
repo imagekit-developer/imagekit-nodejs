@@ -15,6 +15,7 @@ export {
 } from './custom-metadata-fields';
 export {
   Files,
+  type AsyncBulkJobResponse,
   type File,
   type Folder,
   type Metadata,

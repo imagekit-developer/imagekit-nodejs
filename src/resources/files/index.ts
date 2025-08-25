@@ -13,6 +13,7 @@ export {
 } from './bulk';
 export {
   Files,
+  type AsyncBulkJobResponse,
   type File,
   type Folder,
   type Metadata,
