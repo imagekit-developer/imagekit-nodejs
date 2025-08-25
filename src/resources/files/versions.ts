@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as FilesAPI from './files';
+import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -52,7 +52,7 @@ export class Versions extends APIResource {
    * });
    * ```
    */
-  get(versionID: string, params: VersionGetParams, options?: RequestOptions): APIPromise<FilesAPI.File> {
+  get(versionID: string, params: VersionGetParams, options?: RequestOptions): APIPromise<Shared.File> {
     const { fileId } = params;
     return this._client.get(path`/v1/files/${fileId}/versions/${versionID}`, options);
   }
@@ -72,13 +72,13 @@ export class Versions extends APIResource {
     versionID: string,
     params: VersionRestoreParams,
     options?: RequestOptions,
-  ): APIPromise<FilesAPI.File> {
+  ): APIPromise<Shared.File> {
     const { fileId } = params;
     return this._client.put(path`/v1/files/${fileId}/versions/${versionID}/restore`, options);
   }
 }
 
-export type VersionListResponse = Array<FilesAPI.File>;
+export type VersionListResponse = Array<Shared.File>;
 
 export interface VersionDeleteResponse {}
 

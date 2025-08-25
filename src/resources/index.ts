@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+export * from './shared';
 export { Accounts } from './accounts/accounts';
 export { Assets, type AssetListResponse, type AssetListParams } from './assets';
 export { Beta } from './beta/beta';
@@ -15,8 +16,6 @@ export {
 } from './custom-metadata-fields';
 export {
   Files,
-  type File,
-  type Folder,
   type Metadata,
   type FileUpdateResponse,
   type FileCopyResponse,

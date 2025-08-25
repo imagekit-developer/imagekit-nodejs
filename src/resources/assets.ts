@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as FilesAPI from './files/files';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -20,7 +20,7 @@ export class Assets extends APIResource {
   }
 }
 
-export type AssetListResponse = Array<FilesAPI.File | FilesAPI.Folder>;
+export type AssetListResponse = Array<Shared.File | Shared.Folder>;
 
 export interface AssetListParams {
   /**
