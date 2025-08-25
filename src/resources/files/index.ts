@@ -13,9 +13,10 @@ export {
 } from './bulk';
 export {
   Files,
+  type File,
+  type Folder,
   type FileUpdateResponse,
   type FileCopyResponse,
-  type FileGetResponse,
   type FileMoveResponse,
   type FileRenameResponse,
   type FileUploadResponse,
@@ -35,8 +36,6 @@ export {
   Versions,
   type VersionListResponse,
   type VersionDeleteResponse,
-  type VersionGetResponse,
-  type VersionRestoreResponse,
   type VersionDeleteParams,
   type VersionGetParams,
   type VersionRestoreParams,

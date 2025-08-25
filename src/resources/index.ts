@@ -15,9 +15,10 @@ export {
 } from './custom-metadata-fields';
 export {
   Files,
+  type File,
+  type Folder,
   type FileUpdateResponse,
   type FileCopyResponse,
-  type FileGetResponse,
   type FileMoveResponse,
   type FileRenameResponse,
   type FileUploadResponse,

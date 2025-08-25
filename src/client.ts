@@ -38,9 +38,9 @@ import { Accounts } from './resources/accounts/accounts';
 import { Beta } from './resources/beta/beta';
 import { Cache } from './resources/cache/cache';
 import {
+  File,
   FileCopyParams,
   FileCopyResponse,
-  FileGetResponse,
   FileMoveParams,
   FileMoveResponse,
   FileRenameParams,
@@ -50,6 +50,7 @@ import {
   FileUploadParams,
   FileUploadResponse,
   Files,
+  Folder,
 } from './resources/files/files';
 import {
   FolderCopyParams,
@@ -826,9 +827,10 @@ export declare namespace ImageKit {
 
   export {
     Files as Files,
+    type File as File,
+    type Folder as Folder,
     type FileUpdateResponse as FileUpdateResponse,
     type FileCopyResponse as FileCopyResponse,
-    type FileGetResponse as FileGetResponse,
     type FileMoveResponse as FileMoveResponse,
     type FileRenameResponse as FileRenameResponse,
     type FileUploadResponse as FileUploadResponse,

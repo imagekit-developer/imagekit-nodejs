@@ -17,9 +17,10 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/files/files.ts">File</a></code>
+- <code><a href="./src/resources/files/files.ts">Folder</a></code>
 - <code><a href="./src/resources/files/files.ts">FileUpdateResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileCopyResponse</a></code>
-- <code><a href="./src/resources/files/files.ts">FileGetResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileMoveResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileRenameResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileUploadResponse</a></code>
@@ -29,7 +30,7 @@ Methods:
 - <code title="patch /v1/files/{fileId}/details">client.files.<a href="./src/resources/files/files.ts">update</a>(fileID, { ...params }) -> FileUpdateResponse</code>
 - <code title="delete /v1/files/{fileId}">client.files.<a href="./src/resources/files/files.ts">delete</a>(fileID) -> void</code>
 - <code title="post /v1/files/copy">client.files.<a href="./src/resources/files/files.ts">copy</a>({ ...params }) -> FileCopyResponse</code>
-- <code title="get /v1/files/{fileId}/details">client.files.<a href="./src/resources/files/files.ts">get</a>(fileID) -> FileGetResponse</code>
+- <code title="get /v1/files/{fileId}/details">client.files.<a href="./src/resources/files/files.ts">get</a>(fileID) -> File</code>
 - <code title="post /v1/files/move">client.files.<a href="./src/resources/files/files.ts">move</a>({ ...params }) -> FileMoveResponse</code>
 - <code title="put /v1/files/rename">client.files.<a href="./src/resources/files/files.ts">rename</a>({ ...params }) -> FileRenameResponse</code>
 - <code title="post /api/v1/files/upload">client.files.<a href="./src/resources/files/files.ts">upload</a>({ ...params }) -> FileUploadResponse</code>
@@ -56,15 +57,13 @@ Types:
 
 - <code><a href="./src/resources/files/versions.ts">VersionListResponse</a></code>
 - <code><a href="./src/resources/files/versions.ts">VersionDeleteResponse</a></code>
-- <code><a href="./src/resources/files/versions.ts">VersionGetResponse</a></code>
-- <code><a href="./src/resources/files/versions.ts">VersionRestoreResponse</a></code>
 
 Methods:
 
 - <code title="get /v1/files/{fileId}/versions">client.files.versions.<a href="./src/resources/files/versions.ts">list</a>(fileID) -> VersionListResponse</code>
 - <code title="delete /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">delete</a>(versionID, { ...params }) -> VersionDeleteResponse</code>
-- <code title="get /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">get</a>(versionID, { ...params }) -> VersionGetResponse</code>
-- <code title="put /v1/files/{fileId}/versions/{versionId}/restore">client.files.versions.<a href="./src/resources/files/versions.ts">restore</a>(versionID, { ...params }) -> VersionRestoreResponse</code>
+- <code title="get /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">get</a>(versionID, { ...params }) -> File</code>
+- <code title="put /v1/files/{fileId}/versions/{versionId}/restore">client.files.versions.<a href="./src/resources/files/versions.ts">restore</a>(versionID, { ...params }) -> File</code>
 
 ## Metadata
 
