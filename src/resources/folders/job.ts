@@ -32,15 +32,14 @@ export interface JobGetResponse {
   purgeRequestId?: string;
 
   /**
-   * Status of the bulk job. Possible values - `Pending`, `Completed`.
+   * Status of the bulk job.
    */
-  status?: string;
+  status?: 'Pending' | 'Completed';
 
   /**
-   * Type of the bulk job. Possible values - `COPY_FOLDER`, `MOVE_FOLDER`,
-   * `RENAME_FOLDER`.
+   * Type of the bulk job.
    */
-  type?: string;
+  type?: 'COPY_FOLDER' | 'MOVE_FOLDER' | 'RENAME_FOLDER';
 }
 
 export declare namespace Job {
