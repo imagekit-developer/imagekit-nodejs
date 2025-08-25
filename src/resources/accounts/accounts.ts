@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as OriginsAPI from './origins';
 import {
+  Origin,
   OriginCreateParams,
   OriginCreateResponse,
   OriginGetResponse,
@@ -39,6 +40,7 @@ export declare namespace Accounts {
 
   export {
     Origins as Origins,
+    type Origin as Origin,
     type OriginCreateResponse as OriginCreateResponse,
     type OriginUpdateResponse as OriginUpdateResponse,
     type OriginListResponse as OriginListResponse,

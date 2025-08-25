@@ -3,6 +3,7 @@
 export { Accounts } from './accounts';
 export {
   Origins,
+  type Origin,
   type OriginCreateResponse,
   type OriginUpdateResponse,
   type OriginListResponse,

@@ -145,6 +145,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/accounts/origins.ts">Origin</a></code>
 - <code><a href="./src/resources/accounts/origins.ts">OriginCreateResponse</a></code>
 - <code><a href="./src/resources/accounts/origins.ts">OriginUpdateResponse</a></code>
 - <code><a href="./src/resources/accounts/origins.ts">OriginListResponse</a></code>
