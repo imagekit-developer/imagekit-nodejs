@@ -188,6 +188,7 @@ describe('resource files', () => {
           },
         },
         { maxTags: 5, minConfidence: 95, name: 'google-auto-tagging' },
+        { name: 'ai-auto-description' },
       ],
       folder: 'folder',
       isPrivateFile: true,
