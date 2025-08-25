@@ -161,19 +161,17 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpoint</a></code>
-- <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointCreateResponse</a></code>
-- <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointUpdateResponse</a></code>
+- <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointRequest</a></code>
+- <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointResponse</a></code>
 - <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointListResponse</a></code>
-- <code><a href="./src/resources/accounts/url-endpoints.ts">URLEndpointGetResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/accounts/url-endpoints">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">create</a>({ ...params }) -> URLEndpointCreateResponse</code>
-- <code title="put /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">update</a>(id, { ...params }) -> URLEndpointUpdateResponse</code>
+- <code title="post /v1/accounts/url-endpoints">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">create</a>({ ...params }) -> URLEndpointResponse</code>
+- <code title="put /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">update</a>(id, { ...params }) -> URLEndpointResponse</code>
 - <code title="get /v1/accounts/url-endpoints">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">list</a>() -> URLEndpointListResponse</code>
 - <code title="delete /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">delete</a>(id) -> void</code>
-- <code title="get /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">get</a>(id) -> URLEndpointGetResponse</code>
+- <code title="get /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">get</a>(id) -> URLEndpointResponse</code>
 
 # Beta
 

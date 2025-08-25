@@ -11,11 +11,9 @@ export {
 } from './origins';
 export {
   URLEndpoints,
-  type URLEndpoint,
-  type URLEndpointCreateResponse,
-  type URLEndpointUpdateResponse,
+  type URLEndpointRequest,
+  type URLEndpointResponse,
   type URLEndpointListResponse,
-  type URLEndpointGetResponse,
   type URLEndpointCreateParams,
   type URLEndpointUpdateParams,
 } from './url-endpoints';

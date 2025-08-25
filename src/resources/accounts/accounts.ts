@@ -12,13 +12,11 @@ import {
 } from './origins';
 import * as URLEndpointsAPI from './url-endpoints';
 import {
-  URLEndpoint,
   URLEndpointCreateParams,
-  URLEndpointCreateResponse,
-  URLEndpointGetResponse,
   URLEndpointListResponse,
+  URLEndpointRequest,
+  URLEndpointResponse,
   URLEndpointUpdateParams,
-  URLEndpointUpdateResponse,
   URLEndpoints,
 } from './url-endpoints';
 import * as UsageAPI from './usage';
@@ -48,11 +46,9 @@ export declare namespace Accounts {
 
   export {
     URLEndpoints as URLEndpoints,
-    type URLEndpoint as URLEndpoint,
-    type URLEndpointCreateResponse as URLEndpointCreateResponse,
-    type URLEndpointUpdateResponse as URLEndpointUpdateResponse,
+    type URLEndpointRequest as URLEndpointRequest,
+    type URLEndpointResponse as URLEndpointResponse,
     type URLEndpointListResponse as URLEndpointListResponse,
-    type URLEndpointGetResponse as URLEndpointGetResponse,
     type URLEndpointCreateParams as URLEndpointCreateParams,
     type URLEndpointUpdateParams as URLEndpointUpdateParams,
   };
