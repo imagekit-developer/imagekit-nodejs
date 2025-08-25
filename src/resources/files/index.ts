@@ -15,6 +15,7 @@ export {
   Files,
   type File,
   type Folder,
+  type Metadata,
   type FileUpdateResponse,
   type FileCopyResponse,
   type FileMoveResponse,
@@ -27,12 +28,6 @@ export {
   type FileUploadParams,
 } from './files';
 export {
-  Metadata,
-  type MetadataGetResponse,
-  type MetadataGetFromURLResponse,
-  type MetadataGetFromURLParams,
-} from './metadata';
-export {
   Versions,
   type VersionListResponse,
   type VersionDeleteResponse,
@@ -40,3 +35,4 @@ export {
   type VersionGetParams,
   type VersionRestoreParams,
 } from './versions';
+export { type MetadataGetFromURLParams } from './metadata';

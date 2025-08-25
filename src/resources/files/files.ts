@@ -14,12 +14,7 @@ import {
   BulkRemoveTagsResponse,
 } from './bulk';
 import * as MetadataAPI from './metadata';
-import {
-  Metadata as MetadataAPIMetadata,
-  MetadataGetFromURLParams,
-  MetadataGetFromURLResponse,
-  MetadataGetResponse,
-} from './metadata';
+import { MetadataGetFromURLParams } from './metadata';
 import * as VersionsAPI from './versions';
 import {
   VersionDeleteParams,
@@ -386,6 +381,228 @@ export interface Folder {
 }
 
 /**
+ * JSON object containing metadata.
+ */
+export interface Metadata {
+  /**
+   * The audio codec used in the video (only for video).
+   */
+  audioCodec?: string;
+
+  /**
+   * The bit rate of the video in kbps (only for video).
+   */
+  bitRate?: number;
+
+  /**
+   * The density of the image in DPI.
+   */
+  density?: number;
+
+  /**
+   * The duration of the video in seconds (only for video).
+   */
+  duration?: number;
+
+  exif?: Metadata.Exif;
+
+  /**
+   * The format of the file (e.g., 'jpg', 'mp4').
+   */
+  format?: string;
+
+  /**
+   * Indicates if the image has a color profile.
+   */
+  hasColorProfile?: boolean;
+
+  /**
+   * Indicates if the image contains transparent areas.
+   */
+  hasTransparency?: boolean;
+
+  /**
+   * The height of the image or video in pixels.
+   */
+  height?: number;
+
+  /**
+   * Perceptual hash of the image.
+   */
+  pHash?: string;
+
+  /**
+   * The quality indicator of the image.
+   */
+  quality?: number;
+
+  /**
+   * The file size in bytes.
+   */
+  size?: number;
+
+  /**
+   * The video codec used in the video (only for video).
+   */
+  videoCodec?: string;
+
+  /**
+   * The width of the image or video in pixels.
+   */
+  width?: number;
+}
+
+export namespace Metadata {
+  export interface Exif {
+    /**
+     * Object containing Exif details.
+     */
+    exif?: Exif.Exif;
+
+    /**
+     * Object containing GPS information.
+     */
+    gps?: Exif.Gps;
+
+    /**
+     * Object containing EXIF image information.
+     */
+    image?: Exif.Image;
+
+    /**
+     * JSON object.
+     */
+    interoperability?: Exif.Interoperability;
+
+    makernote?: { [key: string]: unknown };
+
+    /**
+     * Object containing Thumbnail information.
+     */
+    thumbnail?: Exif.Thumbnail;
+  }
+
+  export namespace Exif {
+    /**
+     * Object containing Exif details.
+     */
+    export interface Exif {
+      ApertureValue?: number;
+
+      ColorSpace?: number;
+
+      CreateDate?: string;
+
+      CustomRendered?: number;
+
+      DateTimeOriginal?: string;
+
+      ExifImageHeight?: number;
+
+      ExifImageWidth?: number;
+
+      ExifVersion?: string;
+
+      ExposureCompensation?: number;
+
+      ExposureMode?: number;
+
+      ExposureProgram?: number;
+
+      ExposureTime?: number;
+
+      Flash?: number;
+
+      FlashpixVersion?: string;
+
+      FNumber?: number;
+
+      FocalLength?: number;
+
+      FocalPlaneResolutionUnit?: number;
+
+      FocalPlaneXResolution?: number;
+
+      FocalPlaneYResolution?: number;
+
+      InteropOffset?: number;
+
+      ISO?: number;
+
+      MeteringMode?: number;
+
+      SceneCaptureType?: number;
+
+      ShutterSpeedValue?: number;
+
+      SubSecTime?: string;
+
+      WhiteBalance?: number;
+    }
+
+    /**
+     * Object containing GPS information.
+     */
+    export interface Gps {
+      GPSVersionID?: Array<number>;
+    }
+
+    /**
+     * Object containing EXIF image information.
+     */
+    export interface Image {
+      ExifOffset?: number;
+
+      GPSInfo?: number;
+
+      Make?: string;
+
+      Model?: string;
+
+      ModifyDate?: string;
+
+      Orientation?: number;
+
+      ResolutionUnit?: number;
+
+      Software?: string;
+
+      XResolution?: number;
+
+      YCbCrPositioning?: number;
+
+      YResolution?: number;
+    }
+
+    /**
+     * JSON object.
+     */
+    export interface Interoperability {
+      InteropIndex?: string;
+
+      InteropVersion?: string;
+    }
+
+    /**
+     * Object containing Thumbnail information.
+     */
+    export interface Thumbnail {
+      Compression?: number;
+
+      ResolutionUnit?: number;
+
+      ThumbnailLength?: number;
+
+      ThumbnailOffset?: number;
+
+      XResolution?: number;
+
+      YResolution?: number;
+    }
+  }
+}
+
+/**
  * Object containing details of a file or file version.
  */
 export interface FileUpdateResponse extends File {
@@ -517,7 +734,7 @@ export interface FileUploadResponse {
    * Legacy metadata. Send `metadata` in `responseFields` in API request to get
    * metadata in the upload API response.
    */
-  metadata?: FileUploadResponse.Metadata;
+  metadata?: Metadata;
 
   /**
    * Name of the asset.
@@ -599,229 +816,6 @@ export namespace FileUploadResponse {
     'google-auto-tagging'?: 'success' | 'pending' | 'failed';
 
     'remove-bg'?: 'success' | 'pending' | 'failed';
-  }
-
-  /**
-   * Legacy metadata. Send `metadata` in `responseFields` in API request to get
-   * metadata in the upload API response.
-   */
-  export interface Metadata {
-    /**
-     * The audio codec used in the video (only for video).
-     */
-    audioCodec?: string;
-
-    /**
-     * The bit rate of the video in kbps (only for video).
-     */
-    bitRate?: number;
-
-    /**
-     * The density of the image in DPI.
-     */
-    density?: number;
-
-    /**
-     * The duration of the video in seconds (only for video).
-     */
-    duration?: number;
-
-    exif?: Metadata.Exif;
-
-    /**
-     * The format of the file (e.g., 'jpg', 'mp4').
-     */
-    format?: string;
-
-    /**
-     * Indicates if the image has a color profile.
-     */
-    hasColorProfile?: boolean;
-
-    /**
-     * Indicates if the image contains transparent areas.
-     */
-    hasTransparency?: boolean;
-
-    /**
-     * The height of the image or video in pixels.
-     */
-    height?: number;
-
-    /**
-     * Perceptual hash of the image.
-     */
-    pHash?: string;
-
-    /**
-     * The quality indicator of the image.
-     */
-    quality?: number;
-
-    /**
-     * The file size in bytes.
-     */
-    size?: number;
-
-    /**
-     * The video codec used in the video (only for video).
-     */
-    videoCodec?: string;
-
-    /**
-     * The width of the image or video in pixels.
-     */
-    width?: number;
-  }
-
-  export namespace Metadata {
-    export interface Exif {
-      /**
-       * Object containing Exif details.
-       */
-      exif?: Exif.Exif;
-
-      /**
-       * Object containing GPS information.
-       */
-      gps?: Exif.Gps;
-
-      /**
-       * Object containing EXIF image information.
-       */
-      image?: Exif.Image;
-
-      /**
-       * JSON object.
-       */
-      interoperability?: Exif.Interoperability;
-
-      makernote?: { [key: string]: unknown };
-
-      /**
-       * Object containing Thumbnail information.
-       */
-      thumbnail?: Exif.Thumbnail;
-    }
-
-    export namespace Exif {
-      /**
-       * Object containing Exif details.
-       */
-      export interface Exif {
-        ApertureValue?: number;
-
-        ColorSpace?: number;
-
-        CreateDate?: string;
-
-        CustomRendered?: number;
-
-        DateTimeOriginal?: string;
-
-        ExifImageHeight?: number;
-
-        ExifImageWidth?: number;
-
-        ExifVersion?: string;
-
-        ExposureCompensation?: number;
-
-        ExposureMode?: number;
-
-        ExposureProgram?: number;
-
-        ExposureTime?: number;
-
-        Flash?: number;
-
-        FlashpixVersion?: string;
-
-        FNumber?: number;
-
-        FocalLength?: number;
-
-        FocalPlaneResolutionUnit?: number;
-
-        FocalPlaneXResolution?: number;
-
-        FocalPlaneYResolution?: number;
-
-        InteropOffset?: number;
-
-        ISO?: number;
-
-        MeteringMode?: number;
-
-        SceneCaptureType?: number;
-
-        ShutterSpeedValue?: number;
-
-        SubSecTime?: string;
-
-        WhiteBalance?: number;
-      }
-
-      /**
-       * Object containing GPS information.
-       */
-      export interface Gps {
-        GPSVersionID?: Array<number>;
-      }
-
-      /**
-       * Object containing EXIF image information.
-       */
-      export interface Image {
-        ExifOffset?: number;
-
-        GPSInfo?: number;
-
-        Make?: string;
-
-        Model?: string;
-
-        ModifyDate?: string;
-
-        Orientation?: number;
-
-        ResolutionUnit?: number;
-
-        Software?: string;
-
-        XResolution?: number;
-
-        YCbCrPositioning?: number;
-
-        YResolution?: number;
-      }
-
-      /**
-       * JSON object.
-       */
-      export interface Interoperability {
-        InteropIndex?: string;
-
-        InteropVersion?: string;
-      }
-
-      /**
-       * Object containing Thumbnail information.
-       */
-      export interface Thumbnail {
-        Compression?: number;
-
-        ResolutionUnit?: number;
-
-        ThumbnailLength?: number;
-
-        ThumbnailOffset?: number;
-
-        XResolution?: number;
-
-        YResolution?: number;
-      }
-    }
   }
 
   /**
@@ -1427,12 +1421,12 @@ export namespace FileUploadParams {
 
 Files.Bulk = Bulk;
 Files.Versions = Versions;
-Files.Metadata = MetadataAPIMetadata;
 
 export declare namespace Files {
   export {
     type File as File,
     type Folder as Folder,
+    type Metadata as Metadata,
     type FileUpdateResponse as FileUpdateResponse,
     type FileCopyResponse as FileCopyResponse,
     type FileMoveResponse as FileMoveResponse,
@@ -1466,10 +1460,5 @@ export declare namespace Files {
     type VersionRestoreParams as VersionRestoreParams,
   };
 
-  export {
-    MetadataAPIMetadata as Metadata,
-    type MetadataGetResponse as MetadataGetResponse,
-    type MetadataGetFromURLResponse as MetadataGetFromURLResponse,
-    type MetadataGetFromURLParams as MetadataGetFromURLParams,
-  };
+  export { type MetadataGetFromURLParams as MetadataGetFromURLParams };
 }

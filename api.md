@@ -19,6 +19,7 @@ Types:
 
 - <code><a href="./src/resources/files/files.ts">File</a></code>
 - <code><a href="./src/resources/files/files.ts">Folder</a></code>
+- <code><a href="./src/resources/files/files.ts">Metadata</a></code>
 - <code><a href="./src/resources/files/files.ts">FileUpdateResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileCopyResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileMoveResponse</a></code>
@@ -67,15 +68,10 @@ Methods:
 
 ## Metadata
 
-Types:
-
-- <code><a href="./src/resources/files/metadata.ts">MetadataGetResponse</a></code>
-- <code><a href="./src/resources/files/metadata.ts">MetadataGetFromURLResponse</a></code>
-
 Methods:
 
-- <code title="get /v1/files/{fileId}/metadata">client.files.metadata.<a href="./src/resources/files/metadata.ts">get</a>(fileID) -> MetadataGetResponse</code>
-- <code title="get /v1/files/metadata">client.files.metadata.<a href="./src/resources/files/metadata.ts">getFromURL</a>({ ...params }) -> MetadataGetFromURLResponse</code>
+- <code title="get /v1/files/{fileId}/metadata">client.files.metadata.<a href="./src/resources/files/metadata.ts">get</a>(fileID) -> Metadata</code>
+- <code title="get /v1/files/metadata">client.files.metadata.<a href="./src/resources/files/metadata.ts">getFromURL</a>({ ...params }) -> Metadata</code>
 
 # Assets
 
