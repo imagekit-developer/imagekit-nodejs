@@ -16,7 +16,7 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { AssetListParams, AssetListResponse, Assets, File, Folder } from './resources/assets';
+import { AssetListParams, AssetListResponse, Assets } from './resources/assets';
 import {
   CustomMetadataField,
   CustomMetadataFieldCreateParams,
@@ -38,7 +38,7 @@ import { Accounts } from './resources/accounts/accounts';
 import { Beta } from './resources/beta/beta';
 import { Cache } from './resources/cache/cache';
 import {
-  File as FilesAPIFile,
+  File,
   FileCopyParams,
   FileCopyResponse,
   FileMoveParams,
@@ -50,7 +50,7 @@ import {
   FileUploadParams,
   FileUploadResponse,
   Files,
-  Folder as FilesAPIFolder,
+  Folder,
 } from './resources/files/files';
 import {
   FolderCopyParams,
@@ -827,8 +827,8 @@ export declare namespace ImageKit {
 
   export {
     Files as Files,
-    type FilesAPIFile as File,
-    type FilesAPIFolder as Folder,
+    type File as File,
+    type Folder as Folder,
     type FileUpdateResponse as FileUpdateResponse,
     type FileCopyResponse as FileCopyResponse,
     type FileMoveResponse as FileMoveResponse,
@@ -843,8 +843,6 @@ export declare namespace ImageKit {
 
   export {
     Assets as Assets,
-    type File as File,
-    type Folder as Folder,
     type AssetListResponse as AssetListResponse,
     type AssetListParams as AssetListParams,
   };

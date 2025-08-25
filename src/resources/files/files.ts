@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as AssetsAPI from '../assets';
 import * as BulkAPI from './bulk';
 import {
   Bulk,
@@ -108,7 +107,7 @@ export class Files extends APIResource {
    * const file = await client.files.get('fileId');
    * ```
    */
-  get(fileID: string, options?: RequestOptions): APIPromise<AssetsAPI.File> {
+  get(fileID: string, options?: RequestOptions): APIPromise<File> {
     return this._client.get(path`/v1/files/${fileID}/details`, options);
   }
 
@@ -389,7 +388,7 @@ export interface Folder {
 /**
  * Object containing details of a file or file version.
  */
-export interface FileUpdateResponse extends AssetsAPI.File {
+export interface FileUpdateResponse extends File {
   extensionStatus?: FileUpdateResponse.ExtensionStatus;
 }
 

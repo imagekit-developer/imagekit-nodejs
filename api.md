@@ -81,8 +81,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/assets.ts">File</a></code>
-- <code><a href="./src/resources/assets.ts">Folder</a></code>
 - <code><a href="./src/resources/assets.ts">AssetListResponse</a></code>
 
 Methods:
