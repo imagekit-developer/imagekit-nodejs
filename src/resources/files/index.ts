@@ -13,6 +13,8 @@ export {
 } from './bulk';
 export {
   Files,
+  type File,
+  type Folder,
   type Metadata,
   type FileUpdateResponse,
   type FileCopyResponse,

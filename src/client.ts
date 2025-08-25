@@ -38,6 +38,7 @@ import { Accounts } from './resources/accounts/accounts';
 import { Beta } from './resources/beta/beta';
 import { Cache } from './resources/cache/cache';
 import {
+  File,
   FileCopyParams,
   FileCopyResponse,
   FileMoveParams,
@@ -49,6 +50,7 @@ import {
   FileUploadParams,
   FileUploadResponse,
   Files,
+  Folder,
   Metadata,
 } from './resources/files/files';
 import {
@@ -826,6 +828,8 @@ export declare namespace ImageKit {
 
   export {
     Files as Files,
+    type File as File,
+    type Folder as Folder,
     type Metadata as Metadata,
     type FileUpdateResponse as FileUpdateResponse,
     type FileCopyResponse as FileCopyResponse,
@@ -873,7 +877,4 @@ export declare namespace ImageKit {
     type UnsafeUnwrapWebhookEvent as UnsafeUnwrapWebhookEvent,
     type UnwrapWebhookEvent as UnwrapWebhookEvent,
   };
-
-  export type File = API.File;
-  export type Folder = API.Folder;
 }
