@@ -146,18 +146,16 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/accounts/origins.ts">Origin</a></code>
-- <code><a href="./src/resources/accounts/origins.ts">OriginCreateResponse</a></code>
-- <code><a href="./src/resources/accounts/origins.ts">OriginUpdateResponse</a></code>
+- <code><a href="./src/resources/accounts/origins.ts">OriginResponse</a></code>
 - <code><a href="./src/resources/accounts/origins.ts">OriginListResponse</a></code>
-- <code><a href="./src/resources/accounts/origins.ts">OriginGetResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/accounts/origins">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">create</a>({ ...params }) -> OriginCreateResponse</code>
-- <code title="put /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">update</a>(id, { ...params }) -> OriginUpdateResponse</code>
+- <code title="post /v1/accounts/origins">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">create</a>({ ...params }) -> OriginResponse</code>
+- <code title="put /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">update</a>(id, { ...params }) -> OriginResponse</code>
 - <code title="get /v1/accounts/origins">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">list</a>() -> OriginListResponse</code>
 - <code title="delete /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">delete</a>(id) -> void</code>
-- <code title="get /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">get</a>(id) -> OriginGetResponse</code>
+- <code title="get /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">get</a>(id) -> OriginResponse</code>
 
 ## URLEndpoints
 

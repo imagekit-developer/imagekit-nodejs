@@ -4,10 +4,8 @@ export { Accounts } from './accounts';
 export {
   Origins,
   type Origin,
-  type OriginCreateResponse,
-  type OriginUpdateResponse,
+  type OriginResponse,
   type OriginListResponse,
-  type OriginGetResponse,
   type OriginCreateParams,
   type OriginUpdateParams,
 } from './origins';
