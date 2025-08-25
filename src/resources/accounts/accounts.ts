@@ -5,6 +5,7 @@ import * as OriginsAPI from './origins';
 import {
   OriginCreateParams,
   OriginListResponse,
+  OriginRequest,
   OriginResponse,
   OriginUpdateParams,
   Origins,
@@ -38,6 +39,7 @@ export declare namespace Accounts {
 
   export {
     Origins as Origins,
+    type OriginRequest as OriginRequest,
     type OriginResponse as OriginResponse,
     type OriginListResponse as OriginListResponse,
     type OriginCreateParams as OriginCreateParams,
