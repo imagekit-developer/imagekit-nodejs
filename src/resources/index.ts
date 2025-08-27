@@ -44,9 +44,9 @@ export {
 } from './folders/folders';
 export {
   Webhooks,
-  type VideoTransformationAcceptedWebhookEvent,
-  type VideoTransformationReadyWebhookEvent,
-  type VideoTransformationErrorWebhookEvent,
+  type VideoTransformationAcceptedEvent,
+  type VideoTransformationErrorEvent,
+  type VideoTransformationReadyEvent,
   type UnsafeUnwrapWebhookEvent,
   type UnwrapWebhookEvent,
 } from './webhooks';
