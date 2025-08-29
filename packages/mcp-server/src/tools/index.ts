@@ -46,8 +46,6 @@ import list_accounts_url_endpoints from './accounts/url-endpoints/list-accounts-
 import delete_accounts_url_endpoints from './accounts/url-endpoints/delete-accounts-url-endpoints';
 import get_accounts_url_endpoints from './accounts/url-endpoints/get-accounts-url-endpoints';
 import upload_v2_beta_files from './beta/v2/files/upload-v2-beta-files';
-import unsafe_unwrap_webhooks from './webhooks/unsafe-unwrap-webhooks';
-import unwrap_webhooks from './webhooks/unwrap-webhooks';
 
 export const endpoints: Endpoint[] = [];
 
@@ -97,8 +95,6 @@ addEndpoint(list_accounts_url_endpoints);
 addEndpoint(delete_accounts_url_endpoints);
 addEndpoint(get_accounts_url_endpoints);
 addEndpoint(upload_v2_beta_files);
-addEndpoint(unsafe_unwrap_webhooks);
-addEndpoint(unwrap_webhooks);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';

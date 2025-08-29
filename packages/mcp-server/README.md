@@ -365,8 +365,3 @@ The following tools are available in this MCP server.
 
   - A full-fledged [upload widget using Uppy](https://github.com/imagekit-samples/uppy-uploader), supporting file selections from local storage, URL, Dropbox, Google Drive, Instagram, and more.
   - [Quick start guides](/docs/quick-start-guides) for various frameworks and technologies.
-
-### Resource `webhooks`:
-
-- `unsafe_unwrap_webhooks` (`write`):
-- `unwrap_webhooks` (`write`):
