@@ -29,9 +29,9 @@ import {
 import {
   UnsafeUnwrapWebhookEvent,
   UnwrapWebhookEvent,
-  VideoTransformationAcceptedEvent,
-  VideoTransformationErrorEvent,
-  VideoTransformationReadyEvent,
+  VideoTransformationAcceptedWebhookEvent,
+  VideoTransformationErrorWebhookEvent,
+  VideoTransformationReadyWebhookEvent,
   Webhooks,
 } from './resources/webhooks';
 import { Accounts } from './resources/accounts/accounts';
@@ -871,9 +871,9 @@ export declare namespace ImageKit {
 
   export {
     Webhooks as Webhooks,
-    type VideoTransformationAcceptedEvent as VideoTransformationAcceptedEvent,
-    type VideoTransformationErrorEvent as VideoTransformationErrorEvent,
-    type VideoTransformationReadyEvent as VideoTransformationReadyEvent,
+    type VideoTransformationAcceptedWebhookEvent as VideoTransformationAcceptedWebhookEvent,
+    type VideoTransformationReadyWebhookEvent as VideoTransformationReadyWebhookEvent,
+    type VideoTransformationErrorWebhookEvent as VideoTransformationErrorWebhookEvent,
     type UnsafeUnwrapWebhookEvent as UnsafeUnwrapWebhookEvent,
     type UnwrapWebhookEvent as UnwrapWebhookEvent,
   };
