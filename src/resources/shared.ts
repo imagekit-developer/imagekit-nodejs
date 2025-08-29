@@ -4,8 +4,6 @@ export interface BaseOverlay {
   position?: OverlayPosition;
 
   timing?: OverlayTiming;
-
-  [k: string]: string | OverlayPosition | OverlayTiming | undefined;
 }
 
 export interface ImageOverlay extends BaseOverlay {
@@ -67,21 +65,6 @@ export interface OverlayPosition {
    * expressions such as `bh_mul_0.4` or `bh_sub_ch`. Maps to `ly` in the URL.
    */
   y?: number | string;
-
-  [k: string]:
-    | string
-    | 'center'
-    | 'top'
-    | 'left'
-    | 'bottom'
-    | 'right'
-    | 'top_left'
-    | 'top_right'
-    | 'bottom_left'
-    | 'bottom_right'
-    | number
-    | string
-    | undefined;
 }
 
 export interface OverlayTiming {
@@ -109,8 +92,6 @@ export interface OverlayTiming {
    * Applies only if the base asset is a video. Maps to `lso` in the URL.
    */
   start?: number | string;
-
-  [k: string]: string | number | string | undefined;
 }
 
 export interface SolidColorOverlay extends BaseOverlay {
@@ -161,8 +142,6 @@ export interface SolidColorOverlayTransformation {
    * Width of the solid color overlay
    */
   width?: number | string;
-
-  [k: string]: string | number | true | string | number | string | number | 'max' | undefined;
 }
 
 /**
@@ -187,7 +166,7 @@ export interface SrcOptions {
    * They can be any query parameters and not necessarily related to ImageKit. This
    * is especially useful if you want to add a versioning parameter to your URLs.
    */
-  queryParameters?: { [key: string]: string | number };
+  queryParameters?: { [key: string]: string };
 
   /**
    * An array of objects specifying the transformations to be applied in the URL. If
@@ -202,14 +181,6 @@ export interface SrcOptions {
    * path of the URL, set this to `path`.
    */
   transformationPosition?: TransformationPosition;
-
-  [k: string]:
-    | string
-    | string
-    | { [key: string]: string | number }
-    | Array<Transformation>
-    | TransformationPosition
-    | undefined;
 }
 
 /**
@@ -275,8 +246,6 @@ export interface SubtitleOverlayTransformation {
    * Typography style for subtitles
    */
   typography?: 'b' | 'i' | 'b_i';
-
-  [k: string]: string | number | string | 'b' | 'i' | 'b_i' | undefined;
 }
 
 export interface TextOverlay extends BaseOverlay {
@@ -381,25 +350,6 @@ export interface TextOverlayTransformation {
    * supported. Useful when used in conjunction with the `background`.
    */
   width?: number | string;
-
-  [k: string]:
-    | string
-    | number
-    | 'h'
-    | 'v'
-    | 'h_v'
-    | 'v_h'
-    | number
-    | string
-    | 'left'
-    | 'right'
-    | 'center'
-    | number
-    | 'max'
-    | 'b'
-    | 'i'
-    | 'b_i'
-    | undefined;
 }
 
 /**
@@ -731,53 +681,6 @@ export interface Transformation {
    * cropped area. It should be used in conjunction with fo-face or fo-<object_name>.
    */
   zoom?: number;
-
-  [k: string]:
-    | string
-    | true
-    | string
-    | true
-    | number
-    | string
-    | 'aac'
-    | 'opus'
-    | 'none'
-    | number
-    | boolean
-    | 'force'
-    | 'at_max'
-    | 'at_max_enlarge'
-    | 'at_least'
-    | 'maintain_ratio'
-    | 'pad_resize'
-    | 'extract'
-    | 'pad_extract'
-    | 'h'
-    | 'v'
-    | 'h_v'
-    | 'v_h'
-    | 'auto'
-    | 'webp'
-    | 'jpg'
-    | 'jpeg'
-    | 'png'
-    | 'gif'
-    | 'svg'
-    | 'mp4'
-    | 'webm'
-    | 'avif'
-    | 'orig'
-    | Overlay
-    | number
-    | 'max'
-    | true
-    | number
-    | Array<StreamingResolution>
-    | 'h264'
-    | 'vp9'
-    | 'av1'
-    | 'none'
-    | undefined;
 }
 
 /**
