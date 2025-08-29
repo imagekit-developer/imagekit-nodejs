@@ -1,3 +1,24 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">BaseOverlay</a></code>
+- <code><a href="./src/resources/shared.ts">ImageOverlay</a></code>
+- <code><a href="./src/resources/shared.ts">Overlay</a></code>
+- <code><a href="./src/resources/shared.ts">OverlayPosition</a></code>
+- <code><a href="./src/resources/shared.ts">OverlayTiming</a></code>
+- <code><a href="./src/resources/shared.ts">SolidColorOverlay</a></code>
+- <code><a href="./src/resources/shared.ts">SolidColorOverlayTransformation</a></code>
+- <code><a href="./src/resources/shared.ts">SrcOptions</a></code>
+- <code><a href="./src/resources/shared.ts">StreamingResolution</a></code>
+- <code><a href="./src/resources/shared.ts">SubtitleOverlay</a></code>
+- <code><a href="./src/resources/shared.ts">SubtitleOverlayTransformation</a></code>
+- <code><a href="./src/resources/shared.ts">TextOverlay</a></code>
+- <code><a href="./src/resources/shared.ts">TextOverlayTransformation</a></code>
+- <code><a href="./src/resources/shared.ts">Transformation</a></code>
+- <code><a href="./src/resources/shared.ts">TransformationPosition</a></code>
+- <code><a href="./src/resources/shared.ts">VideoOverlay</a></code>
+
 # CustomMetadataFields
 
 Types:

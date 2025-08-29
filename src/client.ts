@@ -877,4 +877,21 @@ export declare namespace ImageKit {
     type UnsafeUnwrapWebhookEvent as UnsafeUnwrapWebhookEvent,
     type UnwrapWebhookEvent as UnwrapWebhookEvent,
   };
+
+  export type BaseOverlay = API.BaseOverlay;
+  export type ImageOverlay = API.ImageOverlay;
+  export type Overlay = API.Overlay;
+  export type OverlayPosition = API.OverlayPosition;
+  export type OverlayTiming = API.OverlayTiming;
+  export type SolidColorOverlay = API.SolidColorOverlay;
+  export type SolidColorOverlayTransformation = API.SolidColorOverlayTransformation;
+  export type SrcOptions = API.SrcOptions;
+  export type StreamingResolution = API.StreamingResolution;
+  export type SubtitleOverlay = API.SubtitleOverlay;
+  export type SubtitleOverlayTransformation = API.SubtitleOverlayTransformation;
+  export type TextOverlay = API.TextOverlay;
+  export type TextOverlayTransformation = API.TextOverlayTransformation;
+  export type Transformation = API.Transformation;
+  export type TransformationPosition = API.TransformationPosition;
+  export type VideoOverlay = API.VideoOverlay;
 }
