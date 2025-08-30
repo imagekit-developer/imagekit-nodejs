@@ -9,8 +9,8 @@ It is generated with [Stainless](https://www.stainless.com/).
 Because it's not published yet, clone the repo and build it:
 
 ```sh
-git clone git@github.com:stainless-sdks/imagekit-typescript.git
-cd imagekit-typescript
+git clone git@github.com:imagekit-developer/imagekit-nodejs.git
+cd imagekit-nodejs
 ./scripts/bootstrap
 ./scripts/build
 ```
@@ -41,11 +41,7 @@ For clients with a configuration JSON, it might look something like this:
   "mcpServers": {
     "imagekit_nodejs_api": {
       "command": "node",
-      "args": [
-        "/path/to/local/imagekit-typescript/packages/mcp-server",
-        "--client=claude",
-        "--tools=dynamic"
-      ],
+      "args": ["/path/to/local/imagekit-nodejs/packages/mcp-server", "--client=claude", "--tools=dynamic"],
       "env": {
         "IMAGEKIT_PRIVATE_API_KEY": "My Private API Key",
         "ORG_MY_PASSWORD_TOKEN": "My Password"
