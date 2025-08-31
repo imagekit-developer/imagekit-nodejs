@@ -204,147 +204,144 @@ describe('Overlay Transformation Test Cases', function () {
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
       src: '/base-image.jpg',
       transformation: [
-        {
-          // Text overlay
-          overlay: {
-            type: 'text',
-            text: 'Every thing',
-            position: {
-              x: '10',
-              y: '20',
-              focus: 'center',
-            },
-            timing: {
-              start: 5,
-              duration: '10',
-              end: 15,
-            },
-            transformation: [
-              {
-                width: 'bw_mul_0.5',
-                fontSize: 20,
-                fontFamily: 'Arial',
-                fontColor: '0000ff',
-                innerAlignment: 'left',
-                padding: 5,
-                alpha: 7,
-                typography: 'b',
-                background: 'red',
-                radius: 10,
-                rotation: 'N45',
-                flip: 'h',
-                lineHeight: 20,
-              },
-            ],
-          },
-        },
-        {
-          // Image overlay
-          overlay: {
-            type: 'image',
-            input: 'logo.png',
-            position: {
-              x: '10',
-              y: '20',
-              focus: 'center',
-            },
-            timing: {
-              start: 5,
-              duration: '10',
-              end: 15,
-            },
-            transformation: [
-              {
-                width: 'bw_mul_0.5',
-                height: 'bh_mul_0.5',
-                rotation: 'N45',
-                flip: 'h',
-                overlay: {
-                  type: 'text',
-                  text: 'Nested text overlay',
+                {
+                    // Text overlay
+                    overlay: {
+                        type: "text",
+                        text: "Every thing",
+                        position: {
+                            x: "10",
+                            y: "20",
+                            focus: "center"
+                        },
+                        timing: {
+                            start: 5,
+                            duration: "10",
+                            end: 15
+                        },
+                        transformation: [{
+                            width: "bw_mul_0.5",
+                            fontSize: 20,
+                            fontFamily: "Arial",
+                            fontColor: "0000ff",
+                            innerAlignment: "left",
+                            padding: 5,
+                            alpha: 7,
+                            typography: "b",
+                            background: "red",
+                            radius: 10,
+                            rotation: "N45",
+                            flip: "h",
+                            lineHeight: 20
+                        }]
+                    }
                 },
-              },
-            ],
-          },
-        },
-        {
-          // Video overlay. Just for URL generation testing, you can't actually overlay a video on an image.
-          overlay: {
-            type: 'video',
-            input: 'play-pause-loop.mp4',
-            position: {
-              x: '10',
-              y: '20',
-              focus: 'center',
-            },
-            timing: {
-              start: 5,
-              duration: '10',
-              end: 15,
-            },
-            transformation: [
-              {
-                width: 'bw_mul_0.5',
-                height: 'bh_mul_0.5',
-                rotation: 'N45',
-                flip: 'h',
-              },
-            ],
-          },
-        },
-        {
-          // Subtitle overlay. Just for URL generation testing, you can't actually overlay a subtitle on an image.
-          overlay: {
-            type: 'subtitle',
-            input: 'subtitle.srt',
-            position: {
-              x: '10',
-              y: '20',
-              focus: 'center',
-            },
-            timing: {
-              start: 5,
-              duration: '10',
-              end: 15,
-            },
-            transformation: [
-              {
-                fontSize: 12,
-                fontColor: 'white',
-              } as any, // Using any to allow general transformations in subtitle overlay for testing
-            ],
-          },
-        },
-        {
-          // Solid color overlay
-          overlay: {
-            type: 'solidColor',
-            color: 'FF0000',
-            position: {
-              x: '10',
-              y: '20',
-              focus: 'center',
-            },
-            timing: {
-              start: 5,
-              duration: '10',
-              end: 15,
-            },
-            transformation: [
-              {
-                width: 100,
-                height: 50,
-                // Using type assertion to allow general transformation params for testing
-              } as any,
-            ],
-          },
-        },
+                {
+                    // Image overlay
+                    overlay: {
+                        type: "image",
+                        input: "logo.png",
+                        position: {
+                            x: "10",
+                            y: "20",
+                            focus: "center"
+                        },
+                        timing: {
+                            start: 5,
+                            duration: "10",
+                            end: 15
+                        },
+                        transformation: [
+                            {
+                                width: "bw_mul_0.5",
+                                height: "bh_mul_0.5",
+                                rotation: "N45",
+                                flip: "h",
+                                overlay: {
+                                    type: "text",
+                                    text: "Nested text overlay",
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    // Video overlay. Just for URL generation testing, you can't actually overlay a video on an image.
+                    overlay: {
+                        type: "video",
+                        input: "play-pause-loop.mp4",
+                        position: {
+                            x: "10",
+                            y: "20",
+                            focus: "center"
+                        },
+                        timing: {
+                            start: 5,
+                            duration: "10",
+                            end: 15
+                        },
+                        transformation: [{
+                            width: "bw_mul_0.5",
+                            height: "bh_mul_0.5",
+                            rotation: "N45",
+                            flip: "h",
+                        }]
+                    }
+                },
+                {
+                    // Subtitle overlay. Just for URL generation testing, you can't actually overlay a subtitle on an image.
+                    overlay: {
+                        type: "subtitle",
+                        input: "subtitle.srt",
+                        position: {
+                            x: "10",
+                            y: "20",
+                            focus: "center"
+                        },
+                        timing: {
+                            start: 5,
+                            duration: "10",
+                            end: 15
+                        },
+                        transformation: [{
+                            background: "red",
+                            color: "0000ff",
+                            fontFamily: "Arial",
+                            fontOutline: "2_A1CCDD50",
+                            fontShadow: "A1CCDD_3"
+                        }]
+                    }
+                },
+                {
+                    // Solid color overlay
+                    overlay: {
+                        type: "solidColor",
+                        color: "FF0000",
+                        position: {
+                            x: "10",
+                            y: "20",
+                            focus: "center"
+                        },
+                        timing: {
+                            start: 5,
+                            duration: "10",
+                            end: 15
+                        },
+                        transformation: [{
+                            width: "bw_mul_0.5",
+                            height: "bh_mul_0.5",
+                            alpha: 0.5,
+                            background: "red",
+                            gradient: true,
+                            radius: "max"
+                        }]
+                    }
+                }
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-${encodeURIComponent('Every thing')},lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,fs-20,ff-Arial,co-0000ff,ia-left,pa-5,al-7,tg-b,bg-red,r-10,rt-N45,fl-h,lh-20,l-end:l-image,i-logo.png,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-text,i-${encodeURIComponent('Nested text overlay')},l-end,l-end:l-video,i-play-pause-loop.mp4,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,l-end:l-subtitle,i-subtitle.srt,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,l-end:l-image,i-ik_canvas,bg-FF0000,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-end/base-image.jpg`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Every%20thing,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,fs-20,ff-Arial,co-0000ff,ia-left,pa-5,al-7,tg-b,bg-red,r-10,rt-N45,fl-h,lh-20,l-end:l-image,i-logo.png,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-text,i-Nested%20text%20overlay,l-end,l-end:l-video,i-play-pause-loop.mp4,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-end:l-subtitle,i-subtitle.srt,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,bg-red,color-0000ff,ff-Arial,fol-2_A1CCDD50,fsh-A1CCDD_3,l-end:l-image,i-ik_canvas,bg-FF0000,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,al-0.5,bg-red,e-gradient,r-max,l-end/base-image.jpg`);
+
   });
 });
 
@@ -383,8 +380,12 @@ describe('Overlay encoding test cases', function () {
         },
       ],
     });
+
+    // Buffer.from(decodeURIComponent("Y3VzdG9tZXJfbG9nby%2FDkXlrYWEucG5n"),"base64").toString() = customer_logo/Ñykaa.png
+    // Exactly what we want
+    
     expect(url).toBe(
-      `https://ik.imagekit.io/demo/tr:l-image,ie-Y3VzdG9tZXJfbG9nby9OzIN5a2FhLnBuZw%3D%3D,l-end/medium_cafe_B1iTdD0C.jpg`,
+      `https://ik.imagekit.io/demo/tr:l-image,ie-Y3VzdG9tZXJfbG9nby%2FDkXlrYWEucG5n,l-end/medium_cafe_B1iTdD0C.jpg`,
     );
   });
 

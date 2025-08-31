@@ -2,6 +2,7 @@
 // This file is in src/lib/ to avoid conflicts with generated code
 
 import type { SrcOptions, TransformationPosition } from '../resources/shared';
+import { toBase64 } from '../internal/utils/base64';
 
 const QUERY_TRANSFORMATION_POSITION: TransformationPosition = 'query';
 const PATH_TRANSFORMATION_POSITION: TransformationPosition = 'path';
@@ -113,11 +114,6 @@ export default {
 };
 
 export const safeBtoa = function (str: string): string {
-  // Check if running in browser environment
-  if (typeof globalThis !== 'undefined' && 'btoa' in globalThis) {
-    return (globalThis as any).btoa(str);
-  } else {
-    // Node.js fallback
-    return Buffer.from(str, 'utf8').toString('base64');
-  }
+  // Use the SDK's built-in base64 utility that properly handles different runtimes
+  return toBase64(str);
 };
