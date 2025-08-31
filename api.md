@@ -211,6 +211,14 @@ Types:
 - <code><a href="./src/resources/webhooks.ts">VideoTransformationAcceptedEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">VideoTransformationErrorEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">VideoTransformationReadyEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">UploadPreTransformSuccessWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">UploadPreTransformErrorWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">UploadPostTransformSuccessWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">UploadPostTransformErrorWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">UploadPreTransformSuccessWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">UploadPreTransformErrorWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">UploadPostTransformSuccessWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">UploadPostTransformErrorWebhookEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UnsafeUnwrapWebhookEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UnwrapWebhookEvent</a></code>
 
