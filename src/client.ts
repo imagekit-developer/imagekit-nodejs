@@ -806,6 +806,7 @@ export class ImageKit {
   accounts: API.Accounts = new API.Accounts(this);
   beta: API.Beta = new API.Beta(this);
   webhooks: API.Webhooks = new API.Webhooks(this);
+  helper: API.Helper = new API.Helper(this);
 }
 
 ImageKit.CustomMetadataFields = CustomMetadataFields;
