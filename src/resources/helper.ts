@@ -289,7 +289,6 @@ export class Helper extends APIResource {
         isSrcParameterUsedForURL = true;
       }
     } catch (e) {
-      console.error(e);
       return '';
     }
 
