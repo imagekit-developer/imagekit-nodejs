@@ -29,6 +29,10 @@ import {
 import {
   UnsafeUnwrapWebhookEvent,
   UnwrapWebhookEvent,
+  UploadPostTransformErrorWebhookEvent,
+  UploadPostTransformSuccessWebhookEvent,
+  UploadPreTransformErrorWebhookEvent,
+  UploadPreTransformSuccessWebhookEvent,
   VideoTransformationAcceptedEvent,
   VideoTransformationErrorEvent,
   VideoTransformationReadyEvent,
@@ -874,6 +878,10 @@ export declare namespace ImageKit {
     type VideoTransformationAcceptedEvent as VideoTransformationAcceptedEvent,
     type VideoTransformationErrorEvent as VideoTransformationErrorEvent,
     type VideoTransformationReadyEvent as VideoTransformationReadyEvent,
+    type UploadPreTransformSuccessWebhookEvent as UploadPreTransformSuccessWebhookEvent,
+    type UploadPreTransformErrorWebhookEvent as UploadPreTransformErrorWebhookEvent,
+    type UploadPostTransformSuccessWebhookEvent as UploadPostTransformSuccessWebhookEvent,
+    type UploadPostTransformErrorWebhookEvent as UploadPostTransformErrorWebhookEvent,
     type UnsafeUnwrapWebhookEvent as UnsafeUnwrapWebhookEvent,
     type UnwrapWebhookEvent as UnwrapWebhookEvent,
   };
