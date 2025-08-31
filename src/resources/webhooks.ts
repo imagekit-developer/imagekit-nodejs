@@ -129,9 +129,9 @@ export namespace VideoTransformationAcceptedEvent {
         variants?: Array<string>;
 
         /**
-         * Video codec used for encoding (h264 or vp9).
+         * Video codec used for encoding (h264, vp9, or av1).
          */
-        video_codec?: 'h264' | 'vp9';
+        video_codec?: 'h264' | 'vp9' | 'av1';
       }
     }
   }
@@ -277,9 +277,9 @@ export namespace VideoTransformationErrorEvent {
         variants?: Array<string>;
 
         /**
-         * Video codec used for encoding (h264 or vp9).
+         * Video codec used for encoding (h264, vp9, or av1).
          */
-        video_codec?: 'h264' | 'vp9';
+        video_codec?: 'h264' | 'vp9' | 'av1';
       }
     }
   }
@@ -416,9 +416,9 @@ export namespace VideoTransformationReadyEvent {
         variants?: Array<string>;
 
         /**
-         * Video codec used for encoding (h264 or vp9).
+         * Video codec used for encoding (h264, vp9, or av1).
          */
-        video_codec?: 'h264' | 'vp9';
+        video_codec?: 'h264' | 'vp9' | 'av1';
       }
 
       /**
