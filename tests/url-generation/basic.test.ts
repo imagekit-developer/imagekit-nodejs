@@ -82,9 +82,7 @@ describe('URL generation', function () {
         },
       ],
     });
-    expect(url).toBe(
-      'https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400:rt-90',
-    );
+    expect(url).toBe('https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400:rt-90');
   });
 
   it('should generate the URL without sdk version', function () {
@@ -100,9 +98,7 @@ describe('URL generation', function () {
       transformationPosition: 'path',
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400/test_path.jpg`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/tr:h-300,w-400/test_path.jpg`);
   });
 
   it('should generate the correct URL with a valid src and transformation', function () {
@@ -119,9 +115,7 @@ describe('URL generation', function () {
     });
 
     // Now transformed URL goes into query since transformationPosition is "query".
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400`);
   });
 
   it('should generate the correct URL when the provided path contains multiple leading slashes', function () {
@@ -137,9 +131,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400`);
   });
 
   it('should generate the correct URL when the urlEndpoint is overridden', function () {
@@ -156,9 +148,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint_alt/test_path.jpg?tr=h-300,w-400`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint_alt/test_path.jpg?tr=h-300,w-400`);
   });
 
   it('should generate the correct URL with transformationPosition as query parameter when src is provided', function () {
@@ -174,9 +164,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400`);
   });
 
   it('should generate the correct URL with a valid src parameter and transformation', function () {
@@ -192,9 +180,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path_alt.jpg?tr=h-300,w-400`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path_alt.jpg?tr=h-300,w-400`);
   });
 
   it('should generate the correct URL with transformationPosition as query parameter when src is provided', function () {
@@ -210,9 +196,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path_alt.jpg?tr=h-300,w-400`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path_alt.jpg?tr=h-300,w-400`);
   });
 
   it('should merge query parameters correctly in the generated URL', function () {
@@ -250,9 +234,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400:rt-90`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400:rt-90`);
   });
 
   it('should generate the correct URL with chained transformations including a new undocumented transformation parameter', function () {
@@ -271,9 +253,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400:rndm_trnsf-abcd`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400:rndm_trnsf-abcd`);
   });
 
   it('should generate the correct URL when overlay image transformation is provided', function () {
@@ -328,9 +308,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400,b-20_FF0000`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400,b-20_FF0000`);
   });
 
   it('should generate the correct URL when transformation has empty key and value', function () {
@@ -360,9 +338,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=undefined-transform-true`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=undefined-transform-true`);
   });
 
   it('should generate the correct URL when transformation key has an empty value', function () {
@@ -377,9 +353,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=di-`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=di-`);
   });
 
   it("should generate the correct URL when transformation key has '-' as its value", function () {
@@ -394,9 +368,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=e-contrast`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=e-contrast`);
   });
 
   it('should skip transformation parameters that are undefined or null', function () {
@@ -413,9 +385,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=di-test_path.jpg`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=di-test_path.jpg`);
   });
 
   it('should skip transformation parameters that are false', function () {
@@ -431,9 +401,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=di-test_path.jpg`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=di-test_path.jpg`);
   });
 
   it('should include only the key when transformation value is an empty string', function () {
@@ -449,9 +417,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=di-test_path.jpg,e-shadow`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=di-test_path.jpg,e-shadow`);
   });
 
   it('should include both key and value when transformation parameter value is provided', function () {
@@ -485,9 +451,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=di-test_path.jpg,t-true`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=di-test_path.jpg,t-true`);
   });
 
   it('should generate the correct URL when trim transformation is set to true as a string', function () {
@@ -503,9 +467,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=di-test_path.jpg,t-true`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=di-test_path.jpg,t-true`);
   });
 
   it('should generate the correct URL for AI background removal when set to true', function () {
@@ -520,9 +482,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-bgremove`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-bgremove`);
   });
 
   it("should generate the correct URL for AI background removal when 'true' is provided as a string", function () {
@@ -537,9 +497,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-bgremove`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-bgremove`);
   });
 
   it('should not apply AI background removal when value is not true', function () {
@@ -569,9 +527,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-removedotbg`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-removedotbg`);
   });
 
   it("should generate the correct URL for external AI background removal when 'true' is provided as a string", function () {
@@ -586,9 +542,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-removedotbg`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-removedotbg`);
   });
 
   it('should not apply external AI background removal when value is not true', function () {
@@ -635,9 +589,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-gradient`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-gradient`);
   });
 
   it('should generate the correct URL when gradient transformation is set to true', function () {
@@ -652,9 +604,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-gradient`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-gradient`);
   });
 
   it('should generate the correct URL when AI drop shadow transformation is set to true', function () {
@@ -669,9 +619,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-dropshadow`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-dropshadow`);
   });
 
   it('should generate the correct URL when AI drop shadow transformation is provided as an empty string', function () {
@@ -686,9 +634,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-dropshadow`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-dropshadow`);
   });
 
   it('should generate the correct URL when AI drop shadow transformation is provided with a specific string value', function () {
@@ -703,9 +649,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-dropshadow-az-45`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-dropshadow-az-45`);
   });
 
   it('should generate the correct URL when shadow transformation is set to true', function () {
@@ -720,9 +664,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-shadow`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-shadow`);
   });
 
   it('should generate the correct URL when shadow transformation is provided as an empty string', function () {
@@ -737,9 +679,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-shadow`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-shadow`);
   });
 
   it('should generate the correct URL when shadow transformation is provided with a specific string value', function () {
@@ -771,9 +711,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-sharpen`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-sharpen`);
   });
 
   it('should generate the correct URL when sharpen transformation is provided as an empty string', function () {
@@ -788,9 +726,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-sharpen`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-sharpen`);
   });
 
   it('should generate the correct URL when sharpen transformation is provided with a number value', function () {
@@ -805,9 +741,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-sharpen-10`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-sharpen-10`);
   });
 
   it('should generate the correct URL when unsharpMask transformation is set to true', function () {
@@ -822,9 +756,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-usm`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-usm`);
   });
 
   it('should generate the correct URL when unsharpMask transformation is provided as an empty string', function () {
@@ -839,9 +771,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-usm`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-usm`);
   });
 
   it('should generate the correct URL when unsharpMask transformation is provided with a string value', function () {
@@ -856,9 +786,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-usm-2-2-0.8-0.024`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=e-usm-2-2-0.8-0.024`);
   });
 
   it('should generate the correct URL for trim transformation when set to true (boolean)', function () {
@@ -873,9 +801,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=t-true`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=t-true`);
   });
 
   it('should generate the correct URL for trim transformation when provided as an empty string', function () {
@@ -890,9 +816,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=t-true`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=t-true`);
   });
 
   it('should generate the correct URL for trim transformation when provided with a number value', function () {
@@ -907,9 +831,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=t-5`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=t-5`);
   });
 
   // Width parameter tests
@@ -925,9 +847,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=w-400`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=w-400`);
   });
 
   it('should generate the correct URL for width transformation when provided with a string value', function () {
@@ -942,9 +862,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=w-400`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=w-400`);
   });
 
   it('should generate the correct URL for width transformation when provided with an arithmetic expression', function () {
@@ -959,9 +877,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=w-iw_div_2`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=w-iw_div_2`);
   });
 
   // Height parameter tests
@@ -977,9 +893,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=h-300`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=h-300`);
   });
 
   it('should generate the correct URL for height transformation when provided with a string value', function () {
@@ -994,9 +908,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=h-300`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=h-300`);
   });
 
   it('should generate the correct URL for height transformation when provided with an arithmetic expression', function () {
@@ -1011,9 +923,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=h-ih_mul_0.5`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=h-ih_mul_0.5`);
   });
 
   // AspectRatio parameter tests
@@ -1029,9 +939,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=ar-4:3`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=ar-4:3`);
   });
 
   it('should generate the correct URL for aspectRatio transformation when provided with an alternate underscore format', function () {
@@ -1046,9 +954,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=ar-4_3`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=ar-4_3`);
   });
 
   it('should generate the correct URL for aspectRatio transformation when provided with an arithmetic expression', function () {
@@ -1063,9 +969,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=ar-iar_div_2`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=ar-iar_div_2`);
   });
 
   // Background parameter tests
@@ -1081,9 +985,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=bg-FF0000`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=bg-FF0000`);
   });
 
   it('should generate the correct URL for background transformation when provided with the blurred option', function () {
@@ -1098,9 +1000,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=bg-blurred`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=bg-blurred`);
   });
 
   it('should generate the correct URL for background transformation when provided with the genfill option', function () {
@@ -1115,9 +1015,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=bg-genfill`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=bg-genfill`);
   });
 
   // Crop parameter tests
@@ -1133,9 +1031,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=c-force`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=c-force`);
   });
 
   it('should generate the correct URL for crop transformation when provided with at_max value', function () {
@@ -1150,9 +1046,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=c-at_max`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=c-at_max`);
   });
 
   // CropMode parameter tests
@@ -1168,9 +1062,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=cm-pad_resize`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=cm-pad_resize`);
   });
 
   it('should generate the correct URL for cropMode transformation when provided with extract value', function () {
@@ -1185,9 +1077,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=cm-extract`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=cm-extract`);
   });
 
   // Focus parameter tests
@@ -1203,9 +1093,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=fo-center`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=fo-center`);
   });
 
   it('should generate the correct URL for focus transformation when face detection is specified', function () {
@@ -1220,9 +1108,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=fo-face`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=fo-face`);
   });
 
   // Quality parameter test
@@ -1238,9 +1124,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=q-80`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=q-80`);
   });
 
   // Coordinate parameters tests
@@ -1256,9 +1140,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=x-10`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=x-10`);
   });
 
   it('should generate the correct URL for y coordinate transformation when provided with a number value', function () {
@@ -1273,9 +1155,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=y-20`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=y-20`);
   });
 
   it('should generate the correct URL for xCenter transformation when provided with a number value', function () {
@@ -1290,9 +1170,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=xc-30`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=xc-30`);
   });
 
   it('should generate the correct URL for yCenter transformation when provided with a number value', function () {
@@ -1307,9 +1185,7 @@ describe('URL generation', function () {
       ],
     });
 
-    expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=yc-40`,
-    );
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path1.jpg?tr=yc-40`);
   });
 
   it('Including deprecated properties', function () {
