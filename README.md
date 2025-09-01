@@ -108,7 +108,7 @@ const client = new ImageKit({
 // Basic URL without transformations
 const url = client.helper.buildSrc({
   urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/path/to/image.jpg'
+  src: '/path/to/image.jpg',
 });
 // Result: https://ik.imagekit.io/your_imagekit_id/path/to/image.jpg
 ```
@@ -128,9 +128,9 @@ const transformedUrl = client.helper.buildSrc({
       height: 300,
       crop: 'maintain_ratio',
       quality: 80,
-      format: 'webp'
-    }
-  ]
+      format: 'webp',
+    },
+  ],
 });
 // Result: https://ik.imagekit.io/your_imagekit_id/path/to/image.jpg?tr=w-400,h-300,c-maintain_ratio,q-80,f-webp
 ```
@@ -153,17 +153,17 @@ const imageOverlayUrl = client.helper.buildSrc({
         input: '/path/to/overlay-logo.png',
         position: {
           x: 10,
-          y: 10
+          y: 10,
         },
         transformation: [
           {
             width: 100,
-            height: 50
-          }
-        ]
-      }
-    }
-  ]
+            height: 50,
+          },
+        ],
+      },
+    },
+  ],
 });
 // Result: URL with image overlay positioned at x:10, y:10
 ```
@@ -187,19 +187,19 @@ const textOverlayUrl = client.helper.buildSrc({
         position: {
           x: 50,
           y: 50,
-          focus: 'center'
+          focus: 'center',
         },
         transformation: [
           {
             fontSize: 40,
             fontFamily: 'Arial',
             fontColor: 'FFFFFF',
-            typography: 'b'  // bold
-          }
-        ]
-      }
-    }
-  ]
+            typography: 'b', // bold
+          },
+        ],
+      },
+    },
+  ],
 });
 // Result: URL with bold white Arial text overlay at center position
 ```
@@ -221,18 +221,18 @@ const multipleOverlaysUrl = client.helper.buildSrc({
         type: 'text',
         text: 'Header Text',
         position: { x: 20, y: 20 },
-        transformation: [{ fontSize: 30, fontColor: '000000' }]
-      }
+        transformation: [{ fontSize: 30, fontColor: '000000' }],
+      },
     },
     {
       overlay: {
         type: 'image',
         input: '/watermark.png',
         position: { focus: 'bottom_right' },
-        transformation: [{ width: 100, opacity: 70 }]
-      }
-    }
-  ]
+        transformation: [{ width: 100, opacity: 70 }],
+      },
+    },
+  ],
 });
 // Result: URL with text overlay at top-left and semi-transparent watermark at bottom-right
 ```
@@ -250,11 +250,11 @@ const signedUrl = client.helper.buildSrc({
     {
       width: 400,
       height: 300,
-      quality: 90
-    }
+      quality: 90,
+    },
   ],
   signed: true,
-  expiresIn: 3600  // URL expires in 1 hour
+  expiresIn: 3600, // URL expires in 1 hour
 });
 // Result: URL with signature parameters (?ik-t=timestamp&ik-s=signature)
 
@@ -262,7 +262,7 @@ const signedUrl = client.helper.buildSrc({
 const permanentSignedUrl = client.helper.buildSrc({
   urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
   src: '/private/secure-image.jpg',
-  signed: true
+  signed: true,
   // No expiresIn means the URL won't expire
 });
 // Result: URL with signature parameter (?ik-s=signature)
