@@ -6,6 +6,7 @@ import { APIPromise } from '../../../core/api-promise';
 import { type Uploadable } from '../../../core/uploads';
 import { RequestOptions } from '../../../internal/request-options';
 import { multipartFormRequestOptions } from '../../../internal/uploads';
+import { serializeUploadOptions } from '../../../lib/serialization-utils';
 
 export class Files extends APIResource {
   /**
@@ -46,10 +47,12 @@ export class Files extends APIResource {
    * ```
    */
   upload(body: FileUploadParams, options?: RequestOptions): APIPromise<FileUploadResponse> {
+    const serializedBody = serializeUploadOptions(body);
+
     return this._client.post(
       '/api/v2/files/upload',
       multipartFormRequestOptions(
-        { body, defaultBaseURL: 'https://upload.imagekit.io', ...options },
+        { body: serializedBody, defaultBaseURL: 'https://upload.imagekit.io', ...options },
         this._client,
       ),
     );

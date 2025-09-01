@@ -30,6 +30,7 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { multipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
+import { serializeUploadOptions } from '../../lib/serialization-utils';
 
 export class Files extends APIResource {
   bulk: BulkAPI.Bulk = new BulkAPI.Bulk(this._client);
@@ -181,10 +182,12 @@ export class Files extends APIResource {
    * ```
    */
   upload(body: FileUploadParams, options?: RequestOptions): APIPromise<FileUploadResponse> {
+    const serializedBody = serializeUploadOptions(body);
+
     return this._client.post(
       '/api/v1/files/upload',
       multipartFormRequestOptions(
-        { body, defaultBaseURL: 'https://upload.imagekit.io', ...options },
+        { body: serializedBody, defaultBaseURL: 'https://upload.imagekit.io', ...options },
         this._client,
       ),
     );
