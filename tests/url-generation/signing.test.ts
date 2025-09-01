@@ -132,4 +132,21 @@ describe('URL Signing', function () {
     expect(url).not.toContain('ik-s=');
     expect(url).not.toContain('ik-t=');
   });
+
+  it('transformationPosition as path', function () {
+    const url = client.helper.buildSrc({
+      urlEndpoint: 'https://ik.imagekit.io/demo/',
+      src: 'sdk-testing-files/future-search.png',
+      transformation: [{ width: 300, height: 200 }],
+      transformationPosition: 'path',
+      queryParameters: {
+        version: '2.0',
+      },
+      signed: true,
+    });
+
+    expect(url).toBe(
+      'https://ik.imagekit.io/demo/tr:w-300,h-200/sdk-testing-files/future-search.png?version=2.0&ik-s=dd1ee8f83d019bc59fd57a5fc4674a11eb8a3496',
+    );
+  });
 });
