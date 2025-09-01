@@ -1,4 +1,3 @@
-import { expect } from '@jest/globals';
 import ImageKit from '@imagekit/nodejs';
 import { safeBtoa } from '../../src/lib/transformation-utils';
 
