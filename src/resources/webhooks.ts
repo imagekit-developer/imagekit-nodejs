@@ -24,6 +24,479 @@ export class Webhooks extends APIResource {
 }
 
 /**
+ * Triggered when a post-transformation fails. The original file remains available,
+ * but the requested transformation could not be generated.
+ */
+export interface UploadPostTransformErrorEvent {
+  /**
+   * Unique identifier for the event.
+   */
+  id: string;
+
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: UploadPostTransformErrorEvent.Data;
+
+  request: UploadPostTransformErrorEvent.Request;
+
+  type: 'upload.post-transform.error';
+}
+
+export namespace UploadPostTransformErrorEvent {
+  export interface Data {
+    /**
+     * Unique identifier of the originally uploaded file.
+     */
+    fileId: string;
+
+    /**
+     * Name of the file.
+     */
+    name: string;
+
+    /**
+     * Path of the file.
+     */
+    path: string;
+
+    transformation: Data.Transformation;
+
+    /**
+     * URL of the attempted post-transformation.
+     */
+    url: string;
+  }
+
+  export namespace Data {
+    export interface Transformation {
+      error: Transformation.Error;
+    }
+
+    export namespace Transformation {
+      export interface Error {
+        /**
+         * Reason for the post-transformation failure.
+         */
+        reason: string;
+      }
+    }
+  }
+
+  export interface Request {
+    transformation: Request.Transformation;
+
+    /**
+     * Unique identifier for the originating request.
+     */
+    x_request_id: string;
+  }
+
+  export namespace Request {
+    export interface Transformation {
+      /**
+       * Type of the requested post-transformation.
+       */
+      type: 'transformation' | 'abs' | 'gif-to-video' | 'thumbnail';
+
+      /**
+       * Only applicable if transformation type is 'abs'. Streaming protocol used.
+       */
+      protocol?: 'hls' | 'dash';
+
+      /**
+       * Value for the requested transformation type.
+       */
+      value?: string;
+    }
+  }
+}
+
+/**
+ * Triggered when a post-transformation completes successfully. The transformed
+ * version of the file is now ready and can be accessed via the provided URL. Note
+ * that each post-transformation generates a separate webhook event.
+ */
+export interface UploadPostTransformSuccessEvent {
+  /**
+   * Unique identifier for the event.
+   */
+  id: string;
+
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: UploadPostTransformSuccessEvent.Data;
+
+  request: UploadPostTransformSuccessEvent.Request;
+
+  type: 'upload.post-transform.success';
+}
+
+export namespace UploadPostTransformSuccessEvent {
+  export interface Data {
+    /**
+     * Unique identifier of the originally uploaded file.
+     */
+    fileId: string;
+
+    /**
+     * Name of the file.
+     */
+    name: string;
+
+    /**
+     * URL of the generated post-transformation.
+     */
+    url: string;
+  }
+
+  export interface Request {
+    transformation: Request.Transformation;
+
+    /**
+     * Unique identifier for the originating request.
+     */
+    x_request_id: string;
+  }
+
+  export namespace Request {
+    export interface Transformation {
+      /**
+       * Type of the requested post-transformation.
+       */
+      type: 'transformation' | 'abs' | 'gif-to-video' | 'thumbnail';
+
+      /**
+       * Only applicable if transformation type is 'abs'. Streaming protocol used.
+       */
+      protocol?: 'hls' | 'dash';
+
+      /**
+       * Value for the requested transformation type.
+       */
+      value?: string;
+    }
+  }
+}
+
+/**
+ * Triggered when a pre-transformation fails. The file upload may have been
+ * accepted, but the requested transformation could not be applied.
+ */
+export interface UploadPreTransformErrorEvent {
+  /**
+   * Unique identifier for the event.
+   */
+  id: string;
+
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: UploadPreTransformErrorEvent.Data;
+
+  request: UploadPreTransformErrorEvent.Request;
+
+  type: 'upload.pre-transform.error';
+}
+
+export namespace UploadPreTransformErrorEvent {
+  export interface Data {
+    /**
+     * Name of the file.
+     */
+    name: string;
+
+    /**
+     * Path of the file.
+     */
+    path: string;
+
+    transformation: Data.Transformation;
+  }
+
+  export namespace Data {
+    export interface Transformation {
+      error: Transformation.Error;
+    }
+
+    export namespace Transformation {
+      export interface Error {
+        /**
+         * Reason for the pre-transformation failure.
+         */
+        reason: string;
+      }
+    }
+  }
+
+  export interface Request {
+    /**
+     * The requested pre-transformation string.
+     */
+    transformation: string;
+
+    /**
+     * Unique identifier for the originating request.
+     */
+    x_request_id: string;
+  }
+}
+
+/**
+ * Triggered when a pre-transformation completes successfully. The file has been
+ * processed with the requested transformation and is now available in the Media
+ * Library.
+ */
+export interface UploadPreTransformSuccessEvent {
+  /**
+   * Unique identifier for the event.
+   */
+  id: string;
+
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  /**
+   * Object containing details of a successful upload.
+   */
+  data: UploadPreTransformSuccessEvent.Data;
+
+  request: UploadPreTransformSuccessEvent.Request;
+
+  type: 'upload.pre-transform.success';
+}
+
+export namespace UploadPreTransformSuccessEvent {
+  /**
+   * Object containing details of a successful upload.
+   */
+  export interface Data {
+    /**
+     * An array of tags assigned to the uploaded file by auto tagging.
+     */
+    AITags?: Array<Data.AITag> | null;
+
+    /**
+     * The audio codec used in the video (only for video).
+     */
+    audioCodec?: string;
+
+    /**
+     * The bit rate of the video in kbps (only for video).
+     */
+    bitRate?: number;
+
+    /**
+     * Value of custom coordinates associated with the image in the format
+     * `x,y,width,height`. If `customCoordinates` are not defined, then it is `null`.
+     * Send `customCoordinates` in `responseFields` in API request to get the value of
+     * this field.
+     */
+    customCoordinates?: string | null;
+
+    /**
+     * A key-value data associated with the asset. Use `responseField` in API request
+     * to get `customMetadata` in the upload API response. Before setting any custom
+     * metadata on an asset, you have to create the field using custom metadata fields
+     * API. Send `customMetadata` in `responseFields` in API request to get the value
+     * of this field.
+     */
+    customMetadata?: { [key: string]: unknown };
+
+    /**
+     * Optional text to describe the contents of the file. Can be set by the user or
+     * the ai-auto-description extension.
+     */
+    description?: string;
+
+    /**
+     * The duration of the video in seconds (only for video).
+     */
+    duration?: number;
+
+    /**
+     * Consolidated embedded metadata associated with the file. It includes exif, iptc,
+     * and xmp data. Send `embeddedMetadata` in `responseFields` in API request to get
+     * embeddedMetadata in the upload API response.
+     */
+    embeddedMetadata?: { [key: string]: unknown };
+
+    /**
+     * Extension names with their processing status at the time of completion of the
+     * request. It could have one of the following status values:
+     *
+     * `success`: The extension has been successfully applied. `failed`: The extension
+     * has failed and will not be retried. `pending`: The extension will finish
+     * processing in some time. On completion, the final status (success / failed) will
+     * be sent to the `webhookUrl` provided.
+     *
+     * If no extension was requested, then this parameter is not returned.
+     */
+    extensionStatus?: Data.ExtensionStatus;
+
+    /**
+     * Unique fileId. Store this fileld in your database, as this will be used to
+     * perform update action on this file.
+     */
+    fileId?: string;
+
+    /**
+     * The relative path of the file in the media library e.g.
+     * `/marketing-assets/new-banner.jpg`.
+     */
+    filePath?: string;
+
+    /**
+     * Type of the uploaded file. Possible values are `image`, `non-image`.
+     */
+    fileType?: string;
+
+    /**
+     * Height of the image in pixels (Only for images)
+     */
+    height?: number;
+
+    /**
+     * Is the file marked as private. It can be either `true` or `false`. Send
+     * `isPrivateFile` in `responseFields` in API request to get the value of this
+     * field.
+     */
+    isPrivateFile?: boolean;
+
+    /**
+     * Is the file published or in draft state. It can be either `true` or `false`.
+     * Send `isPublished` in `responseFields` in API request to get the value of this
+     * field.
+     */
+    isPublished?: boolean;
+
+    /**
+     * Legacy metadata. Send `metadata` in `responseFields` in API request to get
+     * metadata in the upload API response.
+     */
+    metadata?: FilesAPI.Metadata;
+
+    /**
+     * Name of the asset.
+     */
+    name?: string;
+
+    /**
+     * Size of the image file in Bytes.
+     */
+    size?: number;
+
+    /**
+     * The array of tags associated with the asset. If no tags are set, it will be
+     * `null`. Send `tags` in `responseFields` in API request to get the value of this
+     * field.
+     */
+    tags?: Array<string> | null;
+
+    /**
+     * In the case of an image, a small thumbnail URL.
+     */
+    thumbnailUrl?: string;
+
+    /**
+     * A publicly accessible URL of the file.
+     */
+    url?: string;
+
+    /**
+     * An object containing the file or file version's `id` (versionId) and `name`.
+     */
+    versionInfo?: Data.VersionInfo;
+
+    /**
+     * The video codec used in the video (only for video).
+     */
+    videoCodec?: string;
+
+    /**
+     * Width of the image in pixels (Only for Images)
+     */
+    width?: number;
+  }
+
+  export namespace Data {
+    export interface AITag {
+      /**
+       * Confidence score of the tag.
+       */
+      confidence?: number;
+
+      /**
+       * Name of the tag.
+       */
+      name?: string;
+
+      /**
+       * Array of `AITags` associated with the image. If no `AITags` are set, it will be
+       * null. These tags can be added using the `google-auto-tagging` or
+       * `aws-auto-tagging` extensions.
+       */
+      source?: string;
+    }
+
+    /**
+     * Extension names with their processing status at the time of completion of the
+     * request. It could have one of the following status values:
+     *
+     * `success`: The extension has been successfully applied. `failed`: The extension
+     * has failed and will not be retried. `pending`: The extension will finish
+     * processing in some time. On completion, the final status (success / failed) will
+     * be sent to the `webhookUrl` provided.
+     *
+     * If no extension was requested, then this parameter is not returned.
+     */
+    export interface ExtensionStatus {
+      'aws-auto-tagging'?: 'success' | 'pending' | 'failed';
+
+      'google-auto-tagging'?: 'success' | 'pending' | 'failed';
+
+      'remove-bg'?: 'success' | 'pending' | 'failed';
+    }
+
+    /**
+     * An object containing the file or file version's `id` (versionId) and `name`.
+     */
+    export interface VersionInfo {
+      /**
+       * Unique identifier of the file version.
+       */
+      id?: string;
+
+      /**
+       * Name of the file version.
+       */
+      name?: string;
+    }
+  }
+
+  export interface Request {
+    /**
+     * The requested pre-transformation string.
+     */
+    transformation: string;
+
+    /**
+     * Unique identifier for the originating request.
+     */
+    x_request_id: string;
+  }
+}
+
+/**
  * Triggered when a new video transformation request is accepted for processing.
  * This event confirms that ImageKit has received and queued your transformation
  * request. Use this for debugging and tracking transformation lifecycle.
@@ -503,952 +976,6 @@ export namespace VideoTransformationReadyEvent {
 }
 
 /**
- * Triggered when a pre-transformation completes successfully. The file has been
- * processed with the requested transformation and is now available in the Media
- * Library.
- */
-export interface UploadPreTransformSuccessWebhookEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
-  /**
-   * Timestamp of when the event occurred in ISO8601 format.
-   */
-  created_at: string;
-
-  /**
-   * Object containing details of a successful upload.
-   */
-  data: UploadPreTransformSuccessWebhookEvent.Data;
-
-  request: UploadPreTransformSuccessWebhookEvent.Request;
-
-  type: 'upload.pre-transform.success';
-}
-
-export namespace UploadPreTransformSuccessWebhookEvent {
-  /**
-   * Object containing details of a successful upload.
-   */
-  export interface Data {
-    /**
-     * An array of tags assigned to the uploaded file by auto tagging.
-     */
-    AITags?: Array<Data.AITag> | null;
-
-    /**
-     * The audio codec used in the video (only for video).
-     */
-    audioCodec?: string;
-
-    /**
-     * The bit rate of the video in kbps (only for video).
-     */
-    bitRate?: number;
-
-    /**
-     * Value of custom coordinates associated with the image in the format
-     * `x,y,width,height`. If `customCoordinates` are not defined, then it is `null`.
-     * Send `customCoordinates` in `responseFields` in API request to get the value of
-     * this field.
-     */
-    customCoordinates?: string | null;
-
-    /**
-     * A key-value data associated with the asset. Use `responseField` in API request
-     * to get `customMetadata` in the upload API response. Before setting any custom
-     * metadata on an asset, you have to create the field using custom metadata fields
-     * API. Send `customMetadata` in `responseFields` in API request to get the value
-     * of this field.
-     */
-    customMetadata?: { [key: string]: unknown };
-
-    /**
-     * Optional text to describe the contents of the file. Can be set by the user or
-     * the ai-auto-description extension.
-     */
-    description?: string;
-
-    /**
-     * The duration of the video in seconds (only for video).
-     */
-    duration?: number;
-
-    /**
-     * Consolidated embedded metadata associated with the file. It includes exif, iptc,
-     * and xmp data. Send `embeddedMetadata` in `responseFields` in API request to get
-     * embeddedMetadata in the upload API response.
-     */
-    embeddedMetadata?: { [key: string]: unknown };
-
-    /**
-     * Extension names with their processing status at the time of completion of the
-     * request. It could have one of the following status values:
-     *
-     * `success`: The extension has been successfully applied. `failed`: The extension
-     * has failed and will not be retried. `pending`: The extension will finish
-     * processing in some time. On completion, the final status (success / failed) will
-     * be sent to the `webhookUrl` provided.
-     *
-     * If no extension was requested, then this parameter is not returned.
-     */
-    extensionStatus?: Data.ExtensionStatus;
-
-    /**
-     * Unique fileId. Store this fileld in your database, as this will be used to
-     * perform update action on this file.
-     */
-    fileId?: string;
-
-    /**
-     * The relative path of the file in the media library e.g.
-     * `/marketing-assets/new-banner.jpg`.
-     */
-    filePath?: string;
-
-    /**
-     * Type of the uploaded file. Possible values are `image`, `non-image`.
-     */
-    fileType?: string;
-
-    /**
-     * Height of the image in pixels (Only for images)
-     */
-    height?: number;
-
-    /**
-     * Is the file marked as private. It can be either `true` or `false`. Send
-     * `isPrivateFile` in `responseFields` in API request to get the value of this
-     * field.
-     */
-    isPrivateFile?: boolean;
-
-    /**
-     * Is the file published or in draft state. It can be either `true` or `false`.
-     * Send `isPublished` in `responseFields` in API request to get the value of this
-     * field.
-     */
-    isPublished?: boolean;
-
-    /**
-     * Legacy metadata. Send `metadata` in `responseFields` in API request to get
-     * metadata in the upload API response.
-     */
-    metadata?: FilesAPI.Metadata;
-
-    /**
-     * Name of the asset.
-     */
-    name?: string;
-
-    /**
-     * Size of the image file in Bytes.
-     */
-    size?: number;
-
-    /**
-     * The array of tags associated with the asset. If no tags are set, it will be
-     * `null`. Send `tags` in `responseFields` in API request to get the value of this
-     * field.
-     */
-    tags?: Array<string> | null;
-
-    /**
-     * In the case of an image, a small thumbnail URL.
-     */
-    thumbnailUrl?: string;
-
-    /**
-     * A publicly accessible URL of the file.
-     */
-    url?: string;
-
-    /**
-     * An object containing the file or file version's `id` (versionId) and `name`.
-     */
-    versionInfo?: Data.VersionInfo;
-
-    /**
-     * The video codec used in the video (only for video).
-     */
-    videoCodec?: string;
-
-    /**
-     * Width of the image in pixels (Only for Images)
-     */
-    width?: number;
-  }
-
-  export namespace Data {
-    export interface AITag {
-      /**
-       * Confidence score of the tag.
-       */
-      confidence?: number;
-
-      /**
-       * Name of the tag.
-       */
-      name?: string;
-
-      /**
-       * Array of `AITags` associated with the image. If no `AITags` are set, it will be
-       * null. These tags can be added using the `google-auto-tagging` or
-       * `aws-auto-tagging` extensions.
-       */
-      source?: string;
-    }
-
-    /**
-     * Extension names with their processing status at the time of completion of the
-     * request. It could have one of the following status values:
-     *
-     * `success`: The extension has been successfully applied. `failed`: The extension
-     * has failed and will not be retried. `pending`: The extension will finish
-     * processing in some time. On completion, the final status (success / failed) will
-     * be sent to the `webhookUrl` provided.
-     *
-     * If no extension was requested, then this parameter is not returned.
-     */
-    export interface ExtensionStatus {
-      'aws-auto-tagging'?: 'success' | 'pending' | 'failed';
-
-      'google-auto-tagging'?: 'success' | 'pending' | 'failed';
-
-      'remove-bg'?: 'success' | 'pending' | 'failed';
-    }
-
-    /**
-     * An object containing the file or file version's `id` (versionId) and `name`.
-     */
-    export interface VersionInfo {
-      /**
-       * Unique identifier of the file version.
-       */
-      id?: string;
-
-      /**
-       * Name of the file version.
-       */
-      name?: string;
-    }
-  }
-
-  export interface Request {
-    /**
-     * The requested pre-transformation string.
-     */
-    transformation: string;
-
-    /**
-     * Unique identifier for the originating request.
-     */
-    x_request_id: string;
-  }
-}
-
-/**
- * Triggered when a pre-transformation fails. The file upload may have been
- * accepted, but the requested transformation could not be applied.
- */
-export interface UploadPreTransformErrorWebhookEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
-  /**
-   * Timestamp of when the event occurred in ISO8601 format.
-   */
-  created_at: string;
-
-  data: UploadPreTransformErrorWebhookEvent.Data;
-
-  request: UploadPreTransformErrorWebhookEvent.Request;
-
-  type: 'upload.pre-transform.error';
-}
-
-export namespace UploadPreTransformErrorWebhookEvent {
-  export interface Data {
-    /**
-     * Name of the file.
-     */
-    name: string;
-
-    /**
-     * Path of the file.
-     */
-    path: string;
-
-    transformation: Data.Transformation;
-  }
-
-  export namespace Data {
-    export interface Transformation {
-      error: Transformation.Error;
-    }
-
-    export namespace Transformation {
-      export interface Error {
-        /**
-         * Reason for the pre-transformation failure.
-         */
-        reason: string;
-      }
-    }
-  }
-
-  export interface Request {
-    /**
-     * The requested pre-transformation string.
-     */
-    transformation: string;
-
-    /**
-     * Unique identifier for the originating request.
-     */
-    x_request_id: string;
-  }
-}
-
-/**
- * Triggered when a post-transformation completes successfully. The transformed
- * version of the file is now ready and can be accessed via the provided URL. Note
- * that each post-transformation generates a separate webhook event.
- */
-export interface UploadPostTransformSuccessWebhookEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
-  /**
-   * Timestamp of when the event occurred in ISO8601 format.
-   */
-  created_at: string;
-
-  data: UploadPostTransformSuccessWebhookEvent.Data;
-
-  request: UploadPostTransformSuccessWebhookEvent.Request;
-
-  type: 'upload.post-transform.success';
-}
-
-export namespace UploadPostTransformSuccessWebhookEvent {
-  export interface Data {
-    /**
-     * Unique identifier of the originally uploaded file.
-     */
-    fileId: string;
-
-    /**
-     * Name of the file.
-     */
-    name: string;
-
-    /**
-     * URL of the generated post-transformation.
-     */
-    url: string;
-  }
-
-  export interface Request {
-    transformation: Request.Transformation;
-
-    /**
-     * Unique identifier for the originating request.
-     */
-    x_request_id: string;
-  }
-
-  export namespace Request {
-    export interface Transformation {
-      /**
-       * Type of the requested post-transformation.
-       */
-      type: 'transformation' | 'abs' | 'gif-to-video' | 'thumbnail';
-
-      /**
-       * Only applicable if transformation type is 'abs'. Streaming protocol used.
-       */
-      protocol?: 'hls' | 'dash';
-
-      /**
-       * Value for the requested transformation type.
-       */
-      value?: string;
-    }
-  }
-}
-
-/**
- * Triggered when a post-transformation fails. The original file remains available,
- * but the requested transformation could not be generated.
- */
-export interface UploadPostTransformErrorWebhookEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
-  /**
-   * Timestamp of when the event occurred in ISO8601 format.
-   */
-  created_at: string;
-
-  data: UploadPostTransformErrorWebhookEvent.Data;
-
-  request: UploadPostTransformErrorWebhookEvent.Request;
-
-  type: 'upload.post-transform.error';
-}
-
-export namespace UploadPostTransformErrorWebhookEvent {
-  export interface Data {
-    /**
-     * Unique identifier of the originally uploaded file.
-     */
-    fileId: string;
-
-    /**
-     * Name of the file.
-     */
-    name: string;
-
-    /**
-     * Path of the file.
-     */
-    path: string;
-
-    transformation: Data.Transformation;
-
-    /**
-     * URL of the attempted post-transformation.
-     */
-    url: string;
-  }
-
-  export namespace Data {
-    export interface Transformation {
-      error: Transformation.Error;
-    }
-
-    export namespace Transformation {
-      export interface Error {
-        /**
-         * Reason for the post-transformation failure.
-         */
-        reason: string;
-      }
-    }
-  }
-
-  export interface Request {
-    transformation: Request.Transformation;
-
-    /**
-     * Unique identifier for the originating request.
-     */
-    x_request_id: string;
-  }
-
-  export namespace Request {
-    export interface Transformation {
-      /**
-       * Type of the requested post-transformation.
-       */
-      type: 'transformation' | 'abs' | 'gif-to-video' | 'thumbnail';
-
-      /**
-       * Only applicable if transformation type is 'abs'. Streaming protocol used.
-       */
-      protocol?: 'hls' | 'dash';
-
-      /**
-       * Value for the requested transformation type.
-       */
-      value?: string;
-    }
-  }
-}
-
-/**
- * Triggered when a pre-transformation completes successfully. The file has been
- * processed with the requested transformation and is now available in the Media
- * Library.
- */
-export interface UploadPreTransformSuccessWebhookEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
-  /**
-   * Timestamp of when the event occurred in ISO8601 format.
-   */
-  created_at: string;
-
-  /**
-   * Object containing details of a successful upload.
-   */
-  data: UploadPreTransformSuccessWebhookEvent.Data;
-
-  request: UploadPreTransformSuccessWebhookEvent.Request;
-
-  type: 'upload.pre-transform.success';
-}
-
-export namespace UploadPreTransformSuccessWebhookEvent {
-  /**
-   * Object containing details of a successful upload.
-   */
-  export interface Data {
-    /**
-     * An array of tags assigned to the uploaded file by auto tagging.
-     */
-    AITags?: Array<Data.AITag> | null;
-
-    /**
-     * The audio codec used in the video (only for video).
-     */
-    audioCodec?: string;
-
-    /**
-     * The bit rate of the video in kbps (only for video).
-     */
-    bitRate?: number;
-
-    /**
-     * Value of custom coordinates associated with the image in the format
-     * `x,y,width,height`. If `customCoordinates` are not defined, then it is `null`.
-     * Send `customCoordinates` in `responseFields` in API request to get the value of
-     * this field.
-     */
-    customCoordinates?: string | null;
-
-    /**
-     * A key-value data associated with the asset. Use `responseField` in API request
-     * to get `customMetadata` in the upload API response. Before setting any custom
-     * metadata on an asset, you have to create the field using custom metadata fields
-     * API. Send `customMetadata` in `responseFields` in API request to get the value
-     * of this field.
-     */
-    customMetadata?: { [key: string]: unknown };
-
-    /**
-     * Optional text to describe the contents of the file. Can be set by the user or
-     * the ai-auto-description extension.
-     */
-    description?: string;
-
-    /**
-     * The duration of the video in seconds (only for video).
-     */
-    duration?: number;
-
-    /**
-     * Consolidated embedded metadata associated with the file. It includes exif, iptc,
-     * and xmp data. Send `embeddedMetadata` in `responseFields` in API request to get
-     * embeddedMetadata in the upload API response.
-     */
-    embeddedMetadata?: { [key: string]: unknown };
-
-    /**
-     * Extension names with their processing status at the time of completion of the
-     * request. It could have one of the following status values:
-     *
-     * `success`: The extension has been successfully applied. `failed`: The extension
-     * has failed and will not be retried. `pending`: The extension will finish
-     * processing in some time. On completion, the final status (success / failed) will
-     * be sent to the `webhookUrl` provided.
-     *
-     * If no extension was requested, then this parameter is not returned.
-     */
-    extensionStatus?: Data.ExtensionStatus;
-
-    /**
-     * Unique fileId. Store this fileld in your database, as this will be used to
-     * perform update action on this file.
-     */
-    fileId?: string;
-
-    /**
-     * The relative path of the file in the media library e.g.
-     * `/marketing-assets/new-banner.jpg`.
-     */
-    filePath?: string;
-
-    /**
-     * Type of the uploaded file. Possible values are `image`, `non-image`.
-     */
-    fileType?: string;
-
-    /**
-     * Height of the image in pixels (Only for images)
-     */
-    height?: number;
-
-    /**
-     * Is the file marked as private. It can be either `true` or `false`. Send
-     * `isPrivateFile` in `responseFields` in API request to get the value of this
-     * field.
-     */
-    isPrivateFile?: boolean;
-
-    /**
-     * Is the file published or in draft state. It can be either `true` or `false`.
-     * Send `isPublished` in `responseFields` in API request to get the value of this
-     * field.
-     */
-    isPublished?: boolean;
-
-    /**
-     * Legacy metadata. Send `metadata` in `responseFields` in API request to get
-     * metadata in the upload API response.
-     */
-    metadata?: FilesAPI.Metadata;
-
-    /**
-     * Name of the asset.
-     */
-    name?: string;
-
-    /**
-     * Size of the image file in Bytes.
-     */
-    size?: number;
-
-    /**
-     * The array of tags associated with the asset. If no tags are set, it will be
-     * `null`. Send `tags` in `responseFields` in API request to get the value of this
-     * field.
-     */
-    tags?: Array<string> | null;
-
-    /**
-     * In the case of an image, a small thumbnail URL.
-     */
-    thumbnailUrl?: string;
-
-    /**
-     * A publicly accessible URL of the file.
-     */
-    url?: string;
-
-    /**
-     * An object containing the file or file version's `id` (versionId) and `name`.
-     */
-    versionInfo?: Data.VersionInfo;
-
-    /**
-     * The video codec used in the video (only for video).
-     */
-    videoCodec?: string;
-
-    /**
-     * Width of the image in pixels (Only for Images)
-     */
-    width?: number;
-  }
-
-  export namespace Data {
-    export interface AITag {
-      /**
-       * Confidence score of the tag.
-       */
-      confidence?: number;
-
-      /**
-       * Name of the tag.
-       */
-      name?: string;
-
-      /**
-       * Array of `AITags` associated with the image. If no `AITags` are set, it will be
-       * null. These tags can be added using the `google-auto-tagging` or
-       * `aws-auto-tagging` extensions.
-       */
-      source?: string;
-    }
-
-    /**
-     * Extension names with their processing status at the time of completion of the
-     * request. It could have one of the following status values:
-     *
-     * `success`: The extension has been successfully applied. `failed`: The extension
-     * has failed and will not be retried. `pending`: The extension will finish
-     * processing in some time. On completion, the final status (success / failed) will
-     * be sent to the `webhookUrl` provided.
-     *
-     * If no extension was requested, then this parameter is not returned.
-     */
-    export interface ExtensionStatus {
-      'aws-auto-tagging'?: 'success' | 'pending' | 'failed';
-
-      'google-auto-tagging'?: 'success' | 'pending' | 'failed';
-
-      'remove-bg'?: 'success' | 'pending' | 'failed';
-    }
-
-    /**
-     * An object containing the file or file version's `id` (versionId) and `name`.
-     */
-    export interface VersionInfo {
-      /**
-       * Unique identifier of the file version.
-       */
-      id?: string;
-
-      /**
-       * Name of the file version.
-       */
-      name?: string;
-    }
-  }
-
-  export interface Request {
-    /**
-     * The requested pre-transformation string.
-     */
-    transformation: string;
-
-    /**
-     * Unique identifier for the originating request.
-     */
-    x_request_id: string;
-  }
-}
-
-/**
- * Triggered when a pre-transformation fails. The file upload may have been
- * accepted, but the requested transformation could not be applied.
- */
-export interface UploadPreTransformErrorWebhookEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
-  /**
-   * Timestamp of when the event occurred in ISO8601 format.
-   */
-  created_at: string;
-
-  data: UploadPreTransformErrorWebhookEvent.Data;
-
-  request: UploadPreTransformErrorWebhookEvent.Request;
-
-  type: 'upload.pre-transform.error';
-}
-
-export namespace UploadPreTransformErrorWebhookEvent {
-  export interface Data {
-    /**
-     * Name of the file.
-     */
-    name: string;
-
-    /**
-     * Path of the file.
-     */
-    path: string;
-
-    transformation: Data.Transformation;
-  }
-
-  export namespace Data {
-    export interface Transformation {
-      error: Transformation.Error;
-    }
-
-    export namespace Transformation {
-      export interface Error {
-        /**
-         * Reason for the pre-transformation failure.
-         */
-        reason: string;
-      }
-    }
-  }
-
-  export interface Request {
-    /**
-     * The requested pre-transformation string.
-     */
-    transformation: string;
-
-    /**
-     * Unique identifier for the originating request.
-     */
-    x_request_id: string;
-  }
-}
-
-/**
- * Triggered when a post-transformation completes successfully. The transformed
- * version of the file is now ready and can be accessed via the provided URL. Note
- * that each post-transformation generates a separate webhook event.
- */
-export interface UploadPostTransformSuccessWebhookEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
-  /**
-   * Timestamp of when the event occurred in ISO8601 format.
-   */
-  created_at: string;
-
-  data: UploadPostTransformSuccessWebhookEvent.Data;
-
-  request: UploadPostTransformSuccessWebhookEvent.Request;
-
-  type: 'upload.post-transform.success';
-}
-
-export namespace UploadPostTransformSuccessWebhookEvent {
-  export interface Data {
-    /**
-     * Unique identifier of the originally uploaded file.
-     */
-    fileId: string;
-
-    /**
-     * Name of the file.
-     */
-    name: string;
-
-    /**
-     * URL of the generated post-transformation.
-     */
-    url: string;
-  }
-
-  export interface Request {
-    transformation: Request.Transformation;
-
-    /**
-     * Unique identifier for the originating request.
-     */
-    x_request_id: string;
-  }
-
-  export namespace Request {
-    export interface Transformation {
-      /**
-       * Type of the requested post-transformation.
-       */
-      type: 'transformation' | 'abs' | 'gif-to-video' | 'thumbnail';
-
-      /**
-       * Only applicable if transformation type is 'abs'. Streaming protocol used.
-       */
-      protocol?: 'hls' | 'dash';
-
-      /**
-       * Value for the requested transformation type.
-       */
-      value?: string;
-    }
-  }
-}
-
-/**
- * Triggered when a post-transformation fails. The original file remains available,
- * but the requested transformation could not be generated.
- */
-export interface UploadPostTransformErrorWebhookEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
-  /**
-   * Timestamp of when the event occurred in ISO8601 format.
-   */
-  created_at: string;
-
-  data: UploadPostTransformErrorWebhookEvent.Data;
-
-  request: UploadPostTransformErrorWebhookEvent.Request;
-
-  type: 'upload.post-transform.error';
-}
-
-export namespace UploadPostTransformErrorWebhookEvent {
-  export interface Data {
-    /**
-     * Unique identifier of the originally uploaded file.
-     */
-    fileId: string;
-
-    /**
-     * Name of the file.
-     */
-    name: string;
-
-    /**
-     * Path of the file.
-     */
-    path: string;
-
-    transformation: Data.Transformation;
-
-    /**
-     * URL of the attempted post-transformation.
-     */
-    url: string;
-  }
-
-  export namespace Data {
-    export interface Transformation {
-      error: Transformation.Error;
-    }
-
-    export namespace Transformation {
-      export interface Error {
-        /**
-         * Reason for the post-transformation failure.
-         */
-        reason: string;
-      }
-    }
-  }
-
-  export interface Request {
-    transformation: Request.Transformation;
-
-    /**
-     * Unique identifier for the originating request.
-     */
-    x_request_id: string;
-  }
-
-  export namespace Request {
-    export interface Transformation {
-      /**
-       * Type of the requested post-transformation.
-       */
-      type: 'transformation' | 'abs' | 'gif-to-video' | 'thumbnail';
-
-      /**
-       * Only applicable if transformation type is 'abs'. Streaming protocol used.
-       */
-      protocol?: 'hls' | 'dash';
-
-      /**
-       * Value for the requested transformation type.
-       */
-      value?: string;
-    }
-  }
-}
-
-/**
  * Triggered when a new video transformation request is accepted for processing.
  * This event confirms that ImageKit has received and queued your transformation
  * request. Use this for debugging and tracking transformation lifecycle.
@@ -1457,10 +984,10 @@ export type UnsafeUnwrapWebhookEvent =
   | VideoTransformationAcceptedEvent
   | VideoTransformationReadyEvent
   | VideoTransformationErrorEvent
-  | UploadPreTransformSuccessWebhookEvent
-  | UploadPreTransformErrorWebhookEvent
-  | UploadPostTransformSuccessWebhookEvent
-  | UploadPostTransformErrorWebhookEvent;
+  | UploadPreTransformSuccessEvent
+  | UploadPreTransformErrorEvent
+  | UploadPostTransformSuccessEvent
+  | UploadPostTransformErrorEvent;
 
 /**
  * Triggered when a new video transformation request is accepted for processing.
@@ -1471,20 +998,20 @@ export type UnwrapWebhookEvent =
   | VideoTransformationAcceptedEvent
   | VideoTransformationReadyEvent
   | VideoTransformationErrorEvent
-  | UploadPreTransformSuccessWebhookEvent
-  | UploadPreTransformErrorWebhookEvent
-  | UploadPostTransformSuccessWebhookEvent
-  | UploadPostTransformErrorWebhookEvent;
+  | UploadPreTransformSuccessEvent
+  | UploadPreTransformErrorEvent
+  | UploadPostTransformSuccessEvent
+  | UploadPostTransformErrorEvent;
 
 export declare namespace Webhooks {
   export {
+    type UploadPostTransformErrorEvent as UploadPostTransformErrorEvent,
+    type UploadPostTransformSuccessEvent as UploadPostTransformSuccessEvent,
+    type UploadPreTransformErrorEvent as UploadPreTransformErrorEvent,
+    type UploadPreTransformSuccessEvent as UploadPreTransformSuccessEvent,
     type VideoTransformationAcceptedEvent as VideoTransformationAcceptedEvent,
     type VideoTransformationErrorEvent as VideoTransformationErrorEvent,
     type VideoTransformationReadyEvent as VideoTransformationReadyEvent,
-    type UploadPreTransformSuccessWebhookEvent as UploadPreTransformSuccessWebhookEvent,
-    type UploadPreTransformErrorWebhookEvent as UploadPreTransformErrorWebhookEvent,
-    type UploadPostTransformSuccessWebhookEvent as UploadPostTransformSuccessWebhookEvent,
-    type UploadPostTransformErrorWebhookEvent as UploadPostTransformErrorWebhookEvent,
     type UnsafeUnwrapWebhookEvent as UnsafeUnwrapWebhookEvent,
     type UnwrapWebhookEvent as UnwrapWebhookEvent,
   };
