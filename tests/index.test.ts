@@ -485,7 +485,7 @@ describe('instantiate client', () => {
   test('with environment variable arguments', () => {
     // set options via env var
     process.env['IMAGEKIT_PRIVATE_API_KEY'] = 'My Private API Key';
-    process.env['ORG_MY_PASSWORD_TOKEN'] = 'My Password';
+    process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'] = 'My Password';
     const client = new ImageKit();
     expect(client.privateAPIKey).toBe('My Private API Key');
     expect(client.password).toBe('My Password');
@@ -494,7 +494,7 @@ describe('instantiate client', () => {
   test('with overridden environment variable arguments', () => {
     // set options via env var
     process.env['IMAGEKIT_PRIVATE_API_KEY'] = 'another My Private API Key';
-    process.env['ORG_MY_PASSWORD_TOKEN'] = 'another My Password';
+    process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'] = 'another My Password';
     const client = new ImageKit({ privateAPIKey: 'My Private API Key', password: 'My Password' });
     expect(client.privateAPIKey).toBe('My Private API Key');
     expect(client.password).toBe('My Password');

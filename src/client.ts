@@ -86,12 +86,16 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * Your ImageKit private key starts with `private_`.
+   * Your ImageKit private API key (it starts with `private_`).
+   * You can view and manage API keys in the [dashboard](https://imagekit.io/dashboard/developer/api-keys).
+   *
    */
   privateAPIKey?: string | undefined;
 
   /**
-   * Do not set this, its value is ignored
+   * ImageKit Basic Auth only uses the username field and ignores the password.
+   * This field is unused.
+   *
    */
   password?: string | null | undefined;
 
@@ -187,7 +191,7 @@ export class ImageKit {
    * API Client for interfacing with the Image Kit API.
    *
    * @param {string | undefined} [opts.privateAPIKey=process.env['IMAGEKIT_PRIVATE_API_KEY'] ?? undefined]
-   * @param {string | null | undefined} [opts.password=process.env['ORG_MY_PASSWORD_TOKEN'] ?? does_not_matter]
+   * @param {string | null | undefined} [opts.password=process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'] ?? do_not_set]
    * @param {string} [opts.baseURL=process.env['IMAGE_KIT_BASE_URL'] ?? https://api.imagekit.io] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -199,7 +203,7 @@ export class ImageKit {
   constructor({
     baseURL = readEnv('IMAGE_KIT_BASE_URL'),
     privateAPIKey = readEnv('IMAGEKIT_PRIVATE_API_KEY'),
-    password = readEnv('ORG_MY_PASSWORD_TOKEN') ?? 'does_not_matter',
+    password = readEnv('OPTIONAL_IMAGEKIT_IGNORES_THIS') ?? 'do_not_set',
     ...opts
   }: ClientOptions = {}) {
     if (privateAPIKey === undefined) {
