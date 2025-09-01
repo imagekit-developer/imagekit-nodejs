@@ -117,6 +117,39 @@ describe('URL generation', function () {
     expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400`);
   });
 
+  it('should add transformation as query when src has absolute url even if transformationPosition is path', function () {
+    const url = client.helper.buildSrc({
+      urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
+      transformationPosition: 'path',
+      src: 'https://my.custom.domain.com/test_path.jpg',
+      transformation: [
+        {
+          height: '300',
+          width: '400',
+        },
+      ],
+    });
+
+    // Now transformed URL goes into query since transformationPosition is "query".
+    expect(url).toBe(`https://my.custom.domain.com/test_path.jpg?tr=h-300,w-400`);
+  });
+
+  it('Handle non-default url-endpoint case', function () {
+    const url = client.helper.buildSrc({
+      urlEndpoint: 'https://ik.imagekit.io/imagekit_id/new-endpoint/',
+      src: '/test_path.jpg',
+      transformation: [
+        {
+          height: '300',
+          width: '400',
+        },
+      ],
+    });
+
+    // Now transformed URL goes into query since transformationPosition is "query".
+    expect(url).toBe(`https://ik.imagekit.io/imagekit_id/new-endpoint/test_path.jpg?tr=h-300,w-400`);
+  });
+
   it('should generate the correct URL when the provided path contains multiple leading slashes', function () {
     const url = client.helper.buildSrc({
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
