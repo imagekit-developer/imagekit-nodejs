@@ -460,6 +460,8 @@ export namespace UploadPreTransformSuccessEvent {
      * If no extension was requested, then this parameter is not returned.
      */
     export interface ExtensionStatus {
+      'ai-auto-description'?: 'success' | 'pending' | 'failed';
+
       'aws-auto-tagging'?: 'success' | 'pending' | 'failed';
 
       'google-auto-tagging'?: 'success' | 'pending' | 'failed';
