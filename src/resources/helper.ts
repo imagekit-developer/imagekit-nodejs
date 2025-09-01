@@ -14,6 +14,7 @@ import type {
 } from './shared';
 import transformationUtils, { safeBtoa } from '../lib/transformation-utils';
 import { createHmacSha1 } from '../lib/crypto-utils';
+import { uuid4 } from '../internal/utils/uuid';
 
 const TRANSFORMATION_PARAMETER = 'tr';
 const SIGNATURE_PARAMETER = 'ik-s';
@@ -132,7 +133,51 @@ export class Helper extends APIResource {
   buildTransformationString(transformation: Transformation[] | undefined): string {
     return buildTransformationString(transformation);
   }
+
+  /**
+   * Generates authentication parameters for client-side file uploads using ImageKit's Upload API V1.
+   *
+   * This method creates the required authentication signature that allows secure file uploads
+   * directly from the browser or mobile applications without exposing your private API key.
+   * The generated parameters include a unique token, expiration timestamp, and HMAC signature.
+   *
+   * @param token - Custom token for the upload session. If not provided, a UUID v4 will be generated automatically.
+   * @param expire - Expiration time in seconds from now. If not provided, defaults to 1800 seconds (30 minutes).
+   * @returns Authentication parameters object containing:
+   *   - `token`: Unique identifier for this upload session
+   *   - `expire`: Unix timestamp when these parameters expire
+   *   - `signature`: HMAC-SHA1 signature for authenticating the upload
+   *
+   * @throws {Error} If the private API key is not configured (should not happen in normal usage)
+   */
+  getAuthenticationParameters(token?: string, expire?: number) {
+    if (!this._client.privateAPIKey) {
+      throw new Error('Private API key is required for authentication parameters generation');
+    }
+
+    const DEFAULT_TIME_DIFF = 60 * 30;
+    const defaultExpire = Math.floor(Date.now() / 1000) + DEFAULT_TIME_DIFF;
+
+    const finalToken = token || uuid4();
+    const finalExpire = expire || defaultExpire;
+
+    return getAuthenticationParameters(finalToken, finalExpire, this._client.privateAPIKey);
+  }
 }
+
+const getAuthenticationParameters = function (token: string, expire: number, privateKey: string) {
+  var authParameters = {
+    token: token,
+    expire: expire,
+    signature: '',
+  };
+
+  var signature = createHmacSha1(privateKey, token + expire);
+
+  authParameters.signature = signature;
+
+  return authParameters;
+};
 
 function removeTrailingSlash(str: string): string {
   if (typeof str == 'string' && str[str.length - 1] == '/') {
