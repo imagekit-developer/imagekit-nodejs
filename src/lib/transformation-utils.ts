@@ -54,6 +54,7 @@ export const supportedTransforms: { [key: string]: string } = {
   aiChangeBackground: 'e-changebg',
   aiRemoveBackground: 'e-bgremove',
   aiRemoveBackgroundExternal: 'e-removedotbg',
+  aiEdit: 'e-edit',
   contrastStretch: 'e-contrast',
   shadow: 'e-shadow',
   sharpen: 'e-sharpen',
@@ -86,9 +87,6 @@ export const supportedTransforms: { [key: string]: string } = {
 
   // Raw pass-through
   raw: 'raw',
-
-  // Additional missing mappings from JS SDK
-  aiEdit: 'e-edit',
 };
 
 export default {

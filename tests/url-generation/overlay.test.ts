@@ -414,6 +414,30 @@ describe('Overlay encoding test cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/demo/tr:l-text,i-Manu,l-end/medium_cafe_B1iTdD0C.jpg`);
   });
 
+  it('Handle slash in fontFamily in case of custom fonts', function () {
+    const url = client.helper.buildSrc({
+      transformationPosition: 'path',
+      urlEndpoint: 'https://ik.imagekit.io/demo',
+      src: '/medium_cafe_B1iTdD0C.jpg',
+      transformation: [
+        {
+          overlay: {
+            type: 'text',
+            text: 'Manu',
+            transformation: [
+              {
+                fontFamily: 'nested-path/Poppins-Regular_Q15GrYWmL.ttf',
+              },
+            ],
+          },
+        },
+      ],
+    });
+    expect(url).toBe(
+      `https://ik.imagekit.io/demo/tr:l-text,i-Manu,ff-nested-path@@Poppins-Regular_Q15GrYWmL.ttf,l-end/medium_cafe_B1iTdD0C.jpg`,
+    );
+  });
+
   it('Simple text overlay with spaces and other safe characters, should use i instead of ie', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',

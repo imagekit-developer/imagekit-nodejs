@@ -13,10 +13,126 @@ import type {
   SolidColorOverlay,
 } from './shared';
 import transformationUtils, { safeBtoa } from '../lib/transformation-utils';
+import { createHmacSha1 } from '../lib/crypto-utils';
 
 const TRANSFORMATION_PARAMETER = 'tr';
+const SIGNATURE_PARAMETER = 'ik-s';
+const TIMESTAMP_PARAMETER = 'ik-t';
+const DEFAULT_TIMESTAMP = 9999999999;
 const SIMPLE_OVERLAY_PATH_REGEX = new RegExp('^[a-zA-Z0-9-._/ ]*$');
 const SIMPLE_OVERLAY_TEXT_REGEX = new RegExp('^[a-zA-Z0-9-._ ]*$');
+
+export class Helper extends APIResource {
+  constructor(client: ImageKit) {
+    super(client);
+  }
+
+  /**
+   * Builds a source URL with the given options.
+   *
+   * @param opts - The options for building the source URL.
+   * @returns The constructed source URL.
+   */
+  buildSrc(opts: SrcOptions): string {
+    opts.urlEndpoint = opts.urlEndpoint || '';
+    opts.src = opts.src || '';
+    opts.transformationPosition = opts.transformationPosition || 'query';
+
+    if (!opts.src) {
+      return '';
+    }
+
+    const isAbsoluteURL = opts.src.startsWith('http://') || opts.src.startsWith('https://');
+
+    var urlObj, isSrcParameterUsedForURL, urlEndpointPattern;
+
+    try {
+      if (!isAbsoluteURL) {
+        urlEndpointPattern = new URL(opts.urlEndpoint).pathname;
+        urlObj = new URL(pathJoin([opts.urlEndpoint.replace(urlEndpointPattern, ''), opts.src]));
+      } else {
+        urlObj = new URL(opts.src!);
+        isSrcParameterUsedForURL = true;
+      }
+    } catch (e) {
+      return '';
+    }
+
+    for (var i in opts.queryParameters) {
+      urlObj.searchParams.append(i, String(opts.queryParameters[i]));
+    }
+
+    var transformationString = this.buildTransformationString(opts.transformation);
+
+    if (transformationString && transformationString.length) {
+      if (!transformationUtils.addAsQueryParameter(opts) && !isSrcParameterUsedForURL) {
+        urlObj.pathname = pathJoin([
+          TRANSFORMATION_PARAMETER + transformationUtils.getChainTransformDelimiter() + transformationString,
+          urlObj.pathname,
+        ]);
+      }
+    }
+
+    if (urlEndpointPattern) {
+      urlObj.pathname = pathJoin([urlEndpointPattern, urlObj.pathname]);
+    } else {
+      urlObj.pathname = pathJoin([urlObj.pathname]);
+    }
+
+    // First, build the complete URL with transformations
+    let finalUrl = urlObj.href;
+
+    // Add transformation parameter manually to avoid URL encoding
+    // URLSearchParams.set() would encode commas and colons in transformation string,
+    // It would work correctly but not very readable e.g., "w-300,h-400" is better than "w-300%2Ch-400"
+    if (transformationString && transformationString.length) {
+      if (transformationUtils.addAsQueryParameter(opts) || isSrcParameterUsedForURL) {
+        const separator = urlObj.searchParams.toString() ? '&' : '?';
+        finalUrl = `${finalUrl}${separator}${TRANSFORMATION_PARAMETER}=${transformationString}`;
+      }
+    }
+
+    // Then sign the URL if needed
+    if (opts.signed === true || (opts.expiresIn && opts.expiresIn > 0)) {
+      const expiryTimestamp = getSignatureTimestamp(opts.expiresIn);
+
+      const urlSignature = getSignature({
+        privateKey: this._client.privateAPIKey,
+        url: finalUrl,
+        urlEndpoint: opts.urlEndpoint,
+        expiryTimestamp,
+      });
+
+      // Add signature parameters to the final URL
+      // Use URL object to properly determine if we need ? or & separator
+      const finalUrlObj = new URL(finalUrl);
+      const hasExistingParams = finalUrlObj.searchParams.toString().length > 0;
+      const separator = hasExistingParams ? '&' : '?';
+      let signedUrl = finalUrl;
+
+      if (expiryTimestamp && expiryTimestamp !== DEFAULT_TIMESTAMP) {
+        signedUrl += `${separator}${TIMESTAMP_PARAMETER}=${expiryTimestamp}`;
+        signedUrl += `&${SIGNATURE_PARAMETER}=${urlSignature}`;
+      } else {
+        signedUrl += `${separator}${SIGNATURE_PARAMETER}=${urlSignature}`;
+      }
+
+      return signedUrl;
+    }
+
+    return finalUrl;
+  }
+
+  /**
+   * Builds a transformation string from the given transformations.
+   *
+   * @param transformation - The transformations to apply.
+   * @returns The constructed transformation string.
+   */
+  buildTransformationString(transformation: Transformation[] | undefined): string {
+    return buildTransformationString(transformation);
+  }
+}
 
 function removeTrailingSlash(str: string): string {
   if (typeof str == 'string' && str[str.length - 1] == '/') {
@@ -231,7 +347,7 @@ function buildTransformationString(transformation: Transformation[] | undefined)
       } else if (key === 'raw') {
         parsedTransformStep.push(currentTransform[key] as string);
       } else {
-        if (transformKey === 'di') {
+        if (transformKey === 'di' || transformKey === 'ff') {
           value = removeTrailingSlash(removeLeadingSlash((value as string) || ''));
           value = value.replace(/\//g, '@@');
         }
@@ -256,84 +372,46 @@ function buildTransformationString(transformation: Transformation[] | undefined)
   return parsedTransforms.join(transformationUtils.getChainTransformDelimiter());
 }
 
-export class Helper extends APIResource {
-  constructor(client: ImageKit) {
-    super(client);
+/**
+ * Calculates the expiry timestamp for URL signing
+ *
+ * @param seconds - Number of seconds from now when the URL should expire
+ * @returns Unix timestamp for expiry, or DEFAULT_TIMESTAMP if invalid/not provided
+ */
+function getSignatureTimestamp(seconds: number | undefined): number {
+  if (!seconds || seconds <= 0) return DEFAULT_TIMESTAMP;
+
+  const sec = parseInt(String(seconds), 10);
+  if (!sec || isNaN(sec)) return DEFAULT_TIMESTAMP;
+
+  const currentTimestamp = Math.floor(new Date().getTime() / 1000);
+  return currentTimestamp + sec;
+}
+
+/**
+ * Generates an HMAC-SHA1 signature for URL signing
+ *
+ * @param opts - Options containing private key, URL, endpoint, and expiry timestamp
+ * @returns Hex-encoded signature, or empty string if required params missing
+ */
+function getSignature(opts: {
+  privateKey: string;
+  url: string;
+  urlEndpoint: string;
+  expiryTimestamp: number;
+}): string {
+  if (!opts.privateKey || !opts.url || !opts.urlEndpoint) return '';
+
+  // Create the string to sign: relative path + expiry timestamp
+  const stringToSign =
+    opts.url.replace(addTrailingSlash(opts.urlEndpoint), '') + String(opts.expiryTimestamp);
+
+  return createHmacSha1(opts.privateKey, stringToSign);
+}
+
+function addTrailingSlash(str: string): string {
+  if (typeof str === 'string' && str[str.length - 1] !== '/') {
+    str = str + '/';
   }
-
-  /**
-   * Builds a source URL with the given options.
-   *
-   * @param opts - The options for building the source URL.
-   * @returns The constructed source URL.
-   */
-  buildSrc(opts: SrcOptions): string {
-    opts.urlEndpoint = opts.urlEndpoint || '';
-    opts.src = opts.src || '';
-    opts.transformationPosition = opts.transformationPosition || 'query';
-
-    if (!opts.src) {
-      return '';
-    }
-
-    const isAbsoluteURL = opts.src.startsWith('http://') || opts.src.startsWith('https://');
-
-    var urlObj, isSrcParameterUsedForURL, urlEndpointPattern;
-
-    try {
-      if (!isAbsoluteURL) {
-        urlEndpointPattern = new URL(opts.urlEndpoint).pathname;
-        urlObj = new URL(pathJoin([opts.urlEndpoint.replace(urlEndpointPattern, ''), opts.src]));
-      } else {
-        urlObj = new URL(opts.src!);
-        isSrcParameterUsedForURL = true;
-      }
-    } catch (e) {
-      return '';
-    }
-
-    for (var i in opts.queryParameters) {
-      urlObj.searchParams.append(i, String(opts.queryParameters[i]));
-    }
-
-    var transformationString = this.buildTransformationString(opts.transformation);
-
-    if (transformationString && transformationString.length) {
-      if (!transformationUtils.addAsQueryParameter(opts) && !isSrcParameterUsedForURL) {
-        urlObj.pathname = pathJoin([
-          TRANSFORMATION_PARAMETER + transformationUtils.getChainTransformDelimiter() + transformationString,
-          urlObj.pathname,
-        ]);
-      }
-    }
-
-    if (urlEndpointPattern) {
-      urlObj.pathname = pathJoin([urlEndpointPattern, urlObj.pathname]);
-    } else {
-      urlObj.pathname = pathJoin([urlObj.pathname]);
-    }
-
-    if (transformationString && transformationString.length) {
-      if (transformationUtils.addAsQueryParameter(opts) || isSrcParameterUsedForURL) {
-        if (urlObj.searchParams.toString() !== '') {
-          // In 12 node.js .size was not there. So, we need to check if it is an object or not.
-          return `${urlObj.href}&${TRANSFORMATION_PARAMETER}=${transformationString}`;
-        } else {
-          return `${urlObj.href}?${TRANSFORMATION_PARAMETER}=${transformationString}`;
-        }
-      }
-    }
-
-    return urlObj.href;
-  }
-
-  /**
-   * Builds a transformation string from the given transformations.
-   *
-   * @param transformation - The transformations to apply.
-   * @returns The constructed transformation string.
-   */
-  buildTransformationString(transformation: Transformation[] | undefined): string {
-    return buildTransformationString(transformation);
-  }
+  return str;
 }
