@@ -45,13 +45,13 @@ export {
 } from './folders/folders';
 export {
   Webhooks,
+  type UploadPostTransformErrorEvent,
+  type UploadPostTransformSuccessEvent,
+  type UploadPreTransformErrorEvent,
+  type UploadPreTransformSuccessEvent,
   type VideoTransformationAcceptedEvent,
   type VideoTransformationErrorEvent,
   type VideoTransformationReadyEvent,
-  type UploadPreTransformSuccessWebhookEvent,
-  type UploadPreTransformErrorWebhookEvent,
-  type UploadPostTransformSuccessWebhookEvent,
-  type UploadPostTransformErrorWebhookEvent,
   type UnsafeUnwrapWebhookEvent,
   type UnwrapWebhookEvent,
 } from './webhooks';
