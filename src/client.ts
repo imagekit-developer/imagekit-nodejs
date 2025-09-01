@@ -100,6 +100,15 @@ export interface ClientOptions {
   password?: string | null | undefined;
 
   /**
+   * Your ImageKit webhook secret. This is used by the SDK to verify webhook signatures. It starts with a `whsec_` prefix.
+   * You can view and manage your webhook secret in the [dashboard](https://imagekit.io/dashboard/developer/webhooks).
+   * Treat the secret like a password, keep it private and do not expose it publicly.
+   * Learn more about [webhook verification](https://imagekit.io/docs/webhooks#verify-webhook-signature).
+   *
+   */
+  webhookSecret?: string | null | undefined;
+
+  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env['IMAGE_KIT_BASE_URL'].
@@ -174,6 +183,7 @@ export interface ClientOptions {
 export class ImageKit {
   privateAPIKey: string;
   password: string | null;
+  webhookSecret: string | null;
 
   baseURL: string;
   maxRetries: number;
@@ -192,6 +202,7 @@ export class ImageKit {
    *
    * @param {string | undefined} [opts.privateAPIKey=process.env['IMAGEKIT_PRIVATE_API_KEY'] ?? undefined]
    * @param {string | null | undefined} [opts.password=process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'] ?? do_not_set]
+   * @param {string | null | undefined} [opts.webhookSecret=process.env['IMAGEKIT_WEBHOOK_SECRET'] ?? null]
    * @param {string} [opts.baseURL=process.env['IMAGE_KIT_BASE_URL'] ?? https://api.imagekit.io] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -204,6 +215,7 @@ export class ImageKit {
     baseURL = readEnv('IMAGE_KIT_BASE_URL'),
     privateAPIKey = readEnv('IMAGEKIT_PRIVATE_API_KEY'),
     password = readEnv('OPTIONAL_IMAGEKIT_IGNORES_THIS') ?? 'do_not_set',
+    webhookSecret = readEnv('IMAGEKIT_WEBHOOK_SECRET') ?? null,
     ...opts
   }: ClientOptions = {}) {
     if (privateAPIKey === undefined) {
@@ -215,6 +227,7 @@ export class ImageKit {
     const options: ClientOptions = {
       privateAPIKey,
       password,
+      webhookSecret,
       ...opts,
       baseURL: baseURL || `https://api.imagekit.io`,
     };
@@ -238,6 +251,7 @@ export class ImageKit {
 
     this.privateAPIKey = privateAPIKey;
     this.password = password;
+    this.webhookSecret = webhookSecret;
   }
 
   /**
@@ -255,6 +269,7 @@ export class ImageKit {
       fetchOptions: this.fetchOptions,
       privateAPIKey: this.privateAPIKey,
       password: this.password,
+      webhookSecret: this.webhookSecret,
       ...options,
     });
     return client;
