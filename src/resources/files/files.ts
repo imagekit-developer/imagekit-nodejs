@@ -174,7 +174,7 @@ export class Files extends APIResource {
    * @example
    * ```ts
    * const response = await client.files.upload({
-   *   file: 'https://www.example.com/path/to-image.jpg',
+   *   file: 'file',
    *   fileName: 'fileName',
    * });
    * ```
