@@ -24,10 +24,6 @@ export class Webhooks extends APIResource {
   }
 }
 
-/**
- * Triggered when a post-transformation fails. The original file remains available,
- * but the requested transformation could not be generated.
- */
 export interface UploadPostTransformErrorEvent {
   /**
    * Unique identifier for the event.
@@ -115,11 +111,6 @@ export namespace UploadPostTransformErrorEvent {
   }
 }
 
-/**
- * Triggered when a post-transformation completes successfully. The transformed
- * version of the file is now ready and can be accessed via the provided URL. Note
- * that each post-transformation generates a separate webhook event.
- */
 export interface UploadPostTransformSuccessEvent {
   /**
    * Unique identifier for the event.
@@ -185,10 +176,6 @@ export namespace UploadPostTransformSuccessEvent {
   }
 }
 
-/**
- * Triggered when a pre-transformation fails. The file upload may have been
- * accepted, but the requested transformation could not be applied.
- */
 export interface UploadPreTransformErrorEvent {
   /**
    * Unique identifier for the event.
@@ -250,11 +237,6 @@ export namespace UploadPreTransformErrorEvent {
   }
 }
 
-/**
- * Triggered when a pre-transformation completes successfully. The file has been
- * processed with the requested transformation and is now available in the Media
- * Library.
- */
 export interface UploadPreTransformSuccessEvent {
   /**
    * Unique identifier for the event.
@@ -499,11 +481,6 @@ export namespace UploadPreTransformSuccessEvent {
   }
 }
 
-/**
- * Triggered when a new video transformation request is accepted for processing.
- * This event confirms that ImageKit has received and queued your transformation
- * request. Use this for debugging and tracking transformation lifecycle.
- */
 export interface VideoTransformationAcceptedEvent {
   /**
    * Unique identifier for the event.
@@ -633,12 +610,6 @@ export namespace VideoTransformationAcceptedEvent {
   }
 }
 
-/**
- * Triggered when an error occurs during video encoding. Listen to this webhook to
- * log error reasons and debug issues. Check your origin and URL endpoint settings
- * if the reason is related to download failure. For other errors, contact ImageKit
- * support.
- */
 export interface VideoTransformationErrorEvent {
   /**
    * Unique identifier for the event.
@@ -781,12 +752,6 @@ export namespace VideoTransformationErrorEvent {
   }
 }
 
-/**
- * Triggered when video encoding is finished and the transformed resource is ready
- * to be served. This is the key event to listen for - update your database or CMS
- * flags when you receive this so your application can start showing the
- * transformed video to users.
- */
 export interface VideoTransformationReadyEvent {
   /**
    * Unique identifier for the event.
@@ -978,11 +943,6 @@ export namespace VideoTransformationReadyEvent {
   }
 }
 
-/**
- * Triggered when a new video transformation request is accepted for processing.
- * This event confirms that ImageKit has received and queued your transformation
- * request. Use this for debugging and tracking transformation lifecycle.
- */
 export type UnsafeUnwrapWebhookEvent =
   | VideoTransformationAcceptedEvent
   | VideoTransformationReadyEvent
@@ -992,11 +952,6 @@ export type UnsafeUnwrapWebhookEvent =
   | UploadPostTransformSuccessEvent
   | UploadPostTransformErrorEvent;
 
-/**
- * Triggered when a new video transformation request is accepted for processing.
- * This event confirms that ImageKit has received and queued your transformation
- * request. Use this for debugging and tracking transformation lifecycle.
- */
 export type UnwrapWebhookEvent =
   | VideoTransformationAcceptedEvent
   | VideoTransformationReadyEvent
