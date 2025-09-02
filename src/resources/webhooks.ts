@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import { toBase64 } from '../internal/utils';
 import * as FilesAPI from './files/files';
 import { Webhook } from 'standardwebhooks';
 
@@ -16,7 +17,7 @@ export class Webhooks extends APIResource {
     if (headers !== undefined) {
       const keyStr: string | null = key === undefined ? this._client.webhookSecret : key;
       if (keyStr === null) throw new Error('Webhook key must not be null in order to unwrap');
-      const wh = new Webhook(keyStr);
+      const wh = new Webhook(toBase64(keyStr));
       wh.verify(body, headers);
     }
     return JSON.parse(body) as UnwrapWebhookEvent;
