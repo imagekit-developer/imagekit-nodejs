@@ -25,6 +25,7 @@ import {
   Versions,
 } from './versions';
 import { APIPromise } from '../../core/api-promise';
+import { type Uploadable } from '../../core/uploads';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { multipartFormRequestOptions } from '../../internal/uploads';
@@ -175,7 +176,7 @@ export class Files extends APIResource {
    * @example
    * ```ts
    * const response = await client.files.upload({
-   *   file: 'file',
+   *   file: fs.createReadStream('path/to/file'),
    *   fileName: 'fileName',
    * });
    * ```
@@ -1081,7 +1082,7 @@ export interface FileUploadParams {
    * When supplying a URL, the server must receive the response headers within 8
    * seconds; otherwise the request fails with 400 Bad Request.
    */
-  file: string;
+  file: Uploadable;
 
   /**
    * The name with which the file has to be uploaded. The file name can contain:
