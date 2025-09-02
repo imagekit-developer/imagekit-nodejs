@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import ImageKit, { toFile } from '@imagekit/nodejs';
+import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
   privateAPIKey: 'My Private API Key',
@@ -154,7 +154,7 @@ describe('resource files', () => {
   // Prism tests are disabled
   test.skip('upload: only required params', async () => {
     const responsePromise = client.files.upload({
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      file: 'https://www.example.com/path/to-image.jpg',
       fileName: 'fileName',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -169,7 +169,7 @@ describe('resource files', () => {
   // Prism tests are disabled
   test.skip('upload: required and optional params', async () => {
     const response = await client.files.upload({
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      file: 'https://www.example.com/path/to-image.jpg',
       fileName: 'fileName',
       token: 'token',
       checks: '"request.folder" : "marketing/"\n',

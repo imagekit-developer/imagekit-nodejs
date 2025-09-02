@@ -31,7 +31,7 @@ const client = new ImageKit({
 });
 
 const response = await client.files.upload({
-  file: fs.createReadStream('path/to/file'),
+  file: 'https://www.example.com/public-url.jpg',
   fileName: 'file-name.jpg',
 });
 
@@ -52,7 +52,7 @@ const client = new ImageKit({
 });
 
 const params: ImageKit.FileUploadParams = {
-  file: fs.createReadStream('path/to/file'),
+  file: 'https://www.example.com/public-url.jpg',
   fileName: 'file-name.jpg',
 };
 const response: ImageKit.FileUploadResponse = await client.files.upload(params);
@@ -76,17 +76,23 @@ import ImageKit, { toFile } from '@imagekit/nodejs';
 const client = new ImageKit();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.files.upload({ file: fs.createReadStream('/path/to/file'), fileName: 'fileName' });
+await client.beta.v2.files.upload({ file: fs.createReadStream('/path/to/file'), fileName: 'fileName' });
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.files.upload({ file: new File(['my bytes'], 'file'), fileName: 'fileName' });
+await client.beta.v2.files.upload({ file: new File(['my bytes'], 'file'), fileName: 'fileName' });
 
 // You can also pass a `fetch` `Response`:
-await client.files.upload({ file: await fetch('https://somesite/file'), fileName: 'fileName' });
+await client.beta.v2.files.upload({ file: await fetch('https://somesite/file'), fileName: 'fileName' });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.files.upload({ file: await toFile(Buffer.from('my bytes'), 'file'), fileName: 'fileName' });
-await client.files.upload({ file: await toFile(new Uint8Array([0, 1, 2]), 'file'), fileName: 'fileName' });
+await client.beta.v2.files.upload({
+  file: await toFile(Buffer.from('my bytes'), 'file'),
+  fileName: 'fileName',
+});
+await client.beta.v2.files.upload({
+  file: await toFile(new Uint8Array([0, 1, 2]), 'file'),
+  fileName: 'fileName',
+});
 ```
 
 ## Handling errors
@@ -98,7 +104,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const response = await client.files
-  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' })
+  .upload({ file: 'https://www.example.com/public-url.jpg', fileName: 'file-name.jpg' })
   .catch(async (err) => {
     if (err instanceof ImageKit.APIError) {
       console.log(err.status); // 400
@@ -139,7 +145,7 @@ const client = new ImageKit({
 });
 
 // Or, configure per-request:
-await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' }, {
+await client.files.upload({ file: 'https://www.example.com/public-url.jpg', fileName: 'file-name.jpg' }, {
   maxRetries: 5,
 });
 ```
@@ -156,7 +162,7 @@ const client = new ImageKit({
 });
 
 // Override per-request:
-await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' }, {
+await client.files.upload({ file: 'https://www.example.com/public-url.jpg', fileName: 'file-name.jpg' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -180,13 +186,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new ImageKit();
 
 const response = await client.files
-  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' })
+  .upload({ file: 'https://www.example.com/public-url.jpg', fileName: 'file-name.jpg' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client.files
-  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' })
+  .upload({ file: 'https://www.example.com/public-url.jpg', fileName: 'file-name.jpg' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.videoCodec);
