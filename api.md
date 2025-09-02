@@ -208,6 +208,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/webhooks.ts">BaseWebhookEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UploadPostTransformErrorEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UploadPostTransformSuccessEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UploadPreTransformErrorEvent</a></code>

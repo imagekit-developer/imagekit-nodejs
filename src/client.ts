@@ -27,6 +27,7 @@ import {
   CustomMetadataFields,
 } from './resources/custom-metadata-fields';
 import {
+  BaseWebhookEvent,
   UnsafeUnwrapWebhookEvent,
   UnwrapWebhookEvent,
   UploadPostTransformErrorEvent,
@@ -895,6 +896,7 @@ export declare namespace ImageKit {
 
   export {
     Webhooks as Webhooks,
+    type BaseWebhookEvent as BaseWebhookEvent,
     type UploadPostTransformErrorEvent as UploadPostTransformErrorEvent,
     type UploadPostTransformSuccessEvent as UploadPostTransformSuccessEvent,
     type UploadPreTransformErrorEvent as UploadPreTransformErrorEvent,

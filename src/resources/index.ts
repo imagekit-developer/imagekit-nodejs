@@ -45,6 +45,7 @@ export {
 } from './folders/folders';
 export {
   Webhooks,
+  type BaseWebhookEvent,
   type UploadPostTransformErrorEvent,
   type UploadPostTransformSuccessEvent,
   type UploadPreTransformErrorEvent,

@@ -24,12 +24,23 @@ export class Webhooks extends APIResource {
   }
 }
 
-export interface UploadPostTransformErrorEvent {
+export interface BaseWebhookEvent {
   /**
    * Unique identifier for the event.
    */
   id: string;
 
+  /**
+   * The type of webhook event.
+   */
+  type: string;
+}
+
+/**
+ * Triggered when a post-transformation fails. The original file remains available,
+ * but the requested transformation could not be generated.
+ */
+export interface UploadPostTransformErrorEvent extends BaseWebhookEvent {
   /**
    * Timestamp of when the event occurred in ISO8601 format.
    */
@@ -111,12 +122,12 @@ export namespace UploadPostTransformErrorEvent {
   }
 }
 
-export interface UploadPostTransformSuccessEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
+/**
+ * Triggered when a post-transformation completes successfully. The transformed
+ * version of the file is now ready and can be accessed via the provided URL. Note
+ * that each post-transformation generates a separate webhook event.
+ */
+export interface UploadPostTransformSuccessEvent extends BaseWebhookEvent {
   /**
    * Timestamp of when the event occurred in ISO8601 format.
    */
@@ -176,12 +187,11 @@ export namespace UploadPostTransformSuccessEvent {
   }
 }
 
-export interface UploadPreTransformErrorEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
+/**
+ * Triggered when a pre-transformation fails. The file upload may have been
+ * accepted, but the requested transformation could not be applied.
+ */
+export interface UploadPreTransformErrorEvent extends BaseWebhookEvent {
   /**
    * Timestamp of when the event occurred in ISO8601 format.
    */
@@ -237,12 +247,12 @@ export namespace UploadPreTransformErrorEvent {
   }
 }
 
-export interface UploadPreTransformSuccessEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
+/**
+ * Triggered when a pre-transformation completes successfully. The file has been
+ * processed with the requested transformation and is now available in the Media
+ * Library.
+ */
+export interface UploadPreTransformSuccessEvent extends BaseWebhookEvent {
   /**
    * Timestamp of when the event occurred in ISO8601 format.
    */
@@ -481,12 +491,12 @@ export namespace UploadPreTransformSuccessEvent {
   }
 }
 
-export interface VideoTransformationAcceptedEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
+/**
+ * Triggered when a new video transformation request is accepted for processing.
+ * This event confirms that ImageKit has received and queued your transformation
+ * request. Use this for debugging and tracking transformation lifecycle.
+ */
+export interface VideoTransformationAcceptedEvent extends BaseWebhookEvent {
   /**
    * Timestamp when the event was created in ISO8601 format.
    */
@@ -610,12 +620,13 @@ export namespace VideoTransformationAcceptedEvent {
   }
 }
 
-export interface VideoTransformationErrorEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
+/**
+ * Triggered when an error occurs during video encoding. Listen to this webhook to
+ * log error reasons and debug issues. Check your origin and URL endpoint settings
+ * if the reason is related to download failure. For other errors, contact ImageKit
+ * support.
+ */
+export interface VideoTransformationErrorEvent extends BaseWebhookEvent {
   /**
    * Timestamp when the event was created in ISO8601 format.
    */
@@ -752,12 +763,13 @@ export namespace VideoTransformationErrorEvent {
   }
 }
 
-export interface VideoTransformationReadyEvent {
-  /**
-   * Unique identifier for the event.
-   */
-  id: string;
-
+/**
+ * Triggered when video encoding is finished and the transformed resource is ready
+ * to be served. This is the key event to listen for - update your database or CMS
+ * flags when you receive this so your application can start showing the
+ * transformed video to users.
+ */
+export interface VideoTransformationReadyEvent extends BaseWebhookEvent {
   /**
    * Timestamp when the event was created in ISO8601 format.
    */
@@ -943,6 +955,11 @@ export namespace VideoTransformationReadyEvent {
   }
 }
 
+/**
+ * Triggered when a new video transformation request is accepted for processing.
+ * This event confirms that ImageKit has received and queued your transformation
+ * request. Use this for debugging and tracking transformation lifecycle.
+ */
 export type UnsafeUnwrapWebhookEvent =
   | VideoTransformationAcceptedEvent
   | VideoTransformationReadyEvent
@@ -952,6 +969,11 @@ export type UnsafeUnwrapWebhookEvent =
   | UploadPostTransformSuccessEvent
   | UploadPostTransformErrorEvent;
 
+/**
+ * Triggered when a new video transformation request is accepted for processing.
+ * This event confirms that ImageKit has received and queued your transformation
+ * request. Use this for debugging and tracking transformation lifecycle.
+ */
 export type UnwrapWebhookEvent =
   | VideoTransformationAcceptedEvent
   | VideoTransformationReadyEvent
@@ -963,6 +985,7 @@ export type UnwrapWebhookEvent =
 
 export declare namespace Webhooks {
   export {
+    type BaseWebhookEvent as BaseWebhookEvent,
     type UploadPostTransformErrorEvent as UploadPostTransformErrorEvent,
     type UploadPostTransformSuccessEvent as UploadPostTransformSuccessEvent,
     type UploadPreTransformErrorEvent as UploadPreTransformErrorEvent,
