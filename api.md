@@ -3,6 +3,7 @@
 Types:
 
 - <code><a href="./src/resources/shared.ts">BaseOverlay</a></code>
+- <code><a href="./src/resources/shared.ts">Extensions</a></code>
 - <code><a href="./src/resources/shared.ts">ImageOverlay</a></code>
 - <code><a href="./src/resources/shared.ts">Overlay</a></code>
 - <code><a href="./src/resources/shared.ts">OverlayPosition</a></code>
