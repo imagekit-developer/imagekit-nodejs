@@ -12,13 +12,11 @@ describe('resource origins', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.accounts.origins.create({
-      origin: {
-        accessKey: 'AKIATEST123',
-        bucket: 'test-bucket',
-        name: 'My S3 Origin',
-        secretKey: 'secrettest123',
-        type: 'S3',
-      },
+      accessKey: 'AKIAIOSFODNN7EXAMPLE',
+      bucket: 'product-images',
+      name: 'US S3 Storage',
+      secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      type: 'S3',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -32,29 +30,25 @@ describe('resource origins', () => {
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.accounts.origins.create({
-      origin: {
-        accessKey: 'AKIATEST123',
-        bucket: 'test-bucket',
-        name: 'My S3 Origin',
-        secretKey: 'secrettest123',
-        type: 'S3',
-        baseUrlForCanonicalHeader: 'https://cdn.example.com',
-        includeCanonicalHeader: false,
-        prefix: 'images',
-      },
+      accessKey: 'AKIAIOSFODNN7EXAMPLE',
+      bucket: 'product-images',
+      name: 'US S3 Storage',
+      secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      type: 'S3',
+      baseUrlForCanonicalHeader: 'https://cdn.example.com',
+      includeCanonicalHeader: false,
+      prefix: 'raw-assets',
     });
   });
 
   // Prism tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.accounts.origins.update('id', {
-      origin: {
-        accessKey: 'AKIATEST123',
-        bucket: 'test-bucket',
-        name: 'My S3 Origin',
-        secretKey: 'secrettest123',
-        type: 'S3',
-      },
+      accessKey: 'AKIAIOSFODNN7EXAMPLE',
+      bucket: 'product-images',
+      name: 'US S3 Storage',
+      secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      type: 'S3',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -68,16 +62,14 @@ describe('resource origins', () => {
   // Prism tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.accounts.origins.update('id', {
-      origin: {
-        accessKey: 'AKIATEST123',
-        bucket: 'test-bucket',
-        name: 'My S3 Origin',
-        secretKey: 'secrettest123',
-        type: 'S3',
-        baseUrlForCanonicalHeader: 'https://cdn.example.com',
-        includeCanonicalHeader: false,
-        prefix: 'images',
-      },
+      accessKey: 'AKIAIOSFODNN7EXAMPLE',
+      bucket: 'product-images',
+      name: 'US S3 Storage',
+      secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      type: 'S3',
+      baseUrlForCanonicalHeader: 'https://cdn.example.com',
+      includeCanonicalHeader: false,
+      prefix: 'raw-assets',
     });
   });
 
