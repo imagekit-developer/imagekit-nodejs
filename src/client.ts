@@ -909,6 +909,7 @@ export declare namespace ImageKit {
   };
 
   export type BaseOverlay = API.BaseOverlay;
+  export type Extensions = API.Extensions;
   export type ImageOverlay = API.ImageOverlay;
   export type Overlay = API.Overlay;
   export type OverlayPosition = API.OverlayPosition;
