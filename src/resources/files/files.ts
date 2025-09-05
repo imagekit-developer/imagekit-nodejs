@@ -632,6 +632,89 @@ export namespace Metadata {
   }
 }
 
+export type UpdateFileDetailsRequest =
+  | UpdateFileDetailsRequest.UpdateFileDetails
+  | UpdateFileDetailsRequest.ChangePublicationStatus;
+
+export namespace UpdateFileDetailsRequest {
+  export interface UpdateFileDetails {
+    /**
+     * Define an important area in the image in the format `x,y,width,height` e.g.
+     * `10,10,100,100`. Send `null` to unset this value.
+     */
+    customCoordinates?: string | null;
+
+    /**
+     * A key-value data to be associated with the asset. To unset a key, send `null`
+     * value for that key. Before setting any custom metadata on an asset you have to
+     * create the field using custom metadata fields API.
+     */
+    customMetadata?: { [key: string]: unknown };
+
+    /**
+     * Optional text to describe the contents of the file.
+     */
+    description?: string;
+
+    /**
+     * Array of extensions to be applied to the asset. Each extension can be configured
+     * with specific parameters based on the extension type.
+     */
+    extensions?: Shared.Extensions;
+
+    /**
+     * An array of AITags associated with the file that you want to remove, e.g.
+     * `["car", "vehicle", "motorsports"]`.
+     *
+     * If you want to remove all AITags associated with the file, send a string -
+     * "all".
+     *
+     * Note: The remove operation for `AITags` executes before any of the `extensions`
+     * are processed.
+     */
+    removeAITags?: Array<string> | 'all';
+
+    /**
+     * An array of tags associated with the file, such as `["tag1", "tag2"]`. Send
+     * `null` to unset all tags associated with the file.
+     */
+    tags?: Array<string> | null;
+
+    /**
+     * The final status of extensions after they have completed execution will be
+     * delivered to this endpoint as a POST request.
+     * [Learn more](/docs/api-reference/digital-asset-management-dam/managing-assets/update-file-details#webhook-payload-structure)
+     * about the webhook payload structure.
+     */
+    webhookUrl?: string;
+  }
+
+  export interface ChangePublicationStatus {
+    /**
+     * Configure the publication status of a file and its versions.
+     */
+    publish?: ChangePublicationStatus.Publish;
+  }
+
+  export namespace ChangePublicationStatus {
+    /**
+     * Configure the publication status of a file and its versions.
+     */
+    export interface Publish {
+      /**
+       * Set to `true` to publish the file. Set to `false` to unpublish the file.
+       */
+      isPublished: boolean;
+
+      /**
+       * Set to `true` to publish/unpublish all versions of the file. Set to `false` to
+       * publish/unpublish only the current version of the file.
+       */
+      includeFileVersions?: boolean;
+    }
+  }
+}
+
 /**
  * Object containing details of a file or file version.
  */
@@ -1331,6 +1414,7 @@ export declare namespace Files {
     type File as File,
     type Folder as Folder,
     type Metadata as Metadata,
+    type UpdateFileDetailsRequest as UpdateFileDetailsRequest,
     type FileUpdateResponse as FileUpdateResponse,
     type FileCopyResponse as FileCopyResponse,
     type FileMoveResponse as FileMoveResponse,
