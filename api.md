@@ -42,6 +42,7 @@ Types:
 - <code><a href="./src/resources/files/files.ts">File</a></code>
 - <code><a href="./src/resources/files/files.ts">Folder</a></code>
 - <code><a href="./src/resources/files/files.ts">Metadata</a></code>
+- <code><a href="./src/resources/files/files.ts">UpdateFileDetailsRequest</a></code>
 - <code><a href="./src/resources/files/files.ts">FileUpdateResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileCopyResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileMoveResponse</a></code>
