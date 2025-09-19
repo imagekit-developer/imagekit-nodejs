@@ -30,7 +30,7 @@ const serverConfig: ServerConfig = {
       key: 'password',
       label: 'Password',
       description:
-        'Leave this field unset. ImageKit uses Basic Authentication scheme that requires the `private_key` as the username and empty string as the password.\nThe password field is automatically managed by the SDK and should not be set.\n',
+        'ImageKit uses your API key as username and ignores the password. \nThe SDK sets a dummy value. You can ignore this field.\n',
       required: false,
       default: 'do_not_set',
       placeholder: 'My Password',
@@ -40,7 +40,7 @@ const serverConfig: ServerConfig = {
       key: 'webhookSecret',
       label: 'Webhook Secret',
       description:
-        'Your ImageKit webhook secret used by the SDK to verify webhook signatures for security.\nThis secret starts with a `whsec_` prefix and is essential for webhook verification.\nYou can view and manage your webhook secret in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\n\n**Security Note**: Treat this secret like a password - keep it private and never expose it publicly.\nThis field is optional and only required if you plan to use webhook signature verification.\nLearn more about [webhook verification](https://imagekit.io/docs/webhooks#verify-webhook-signature).\n',
+        "Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you're using webhooks.\n",
       required: false,
       default: null,
       placeholder: 'My Webhook Secret',
