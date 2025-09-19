@@ -23,7 +23,7 @@ describe('instantiate client', () => {
     const client = new ImageKit({
       baseURL: 'http://localhost:5000/',
       defaultHeaders: { 'X-My-Default-Header': '2' },
-      privateAPIKey: 'My Private API Key',
+      privateKey: 'My Private Key',
       password: 'My Password',
     });
 
@@ -91,7 +91,7 @@ describe('instantiate client', () => {
       const client = new ImageKit({
         logger: logger,
         logLevel: 'debug',
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
 
@@ -100,7 +100,7 @@ describe('instantiate client', () => {
     });
 
     test('default logLevel is warn', async () => {
-      const client = new ImageKit({ privateAPIKey: 'My Private API Key', password: 'My Password' });
+      const client = new ImageKit({ privateKey: 'My Private Key', password: 'My Password' });
       expect(client.logLevel).toBe('warn');
     });
 
@@ -116,7 +116,7 @@ describe('instantiate client', () => {
       const client = new ImageKit({
         logger: logger,
         logLevel: 'info',
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
 
@@ -134,11 +134,7 @@ describe('instantiate client', () => {
       };
 
       process.env['IMAGE_KIT_LOG'] = 'debug';
-      const client = new ImageKit({
-        logger: logger,
-        privateAPIKey: 'My Private API Key',
-        password: 'My Password',
-      });
+      const client = new ImageKit({ logger: logger, privateKey: 'My Private Key', password: 'My Password' });
       expect(client.logLevel).toBe('debug');
 
       await forceAPIResponseForClient(client);
@@ -155,11 +151,7 @@ describe('instantiate client', () => {
       };
 
       process.env['IMAGE_KIT_LOG'] = 'not a log level';
-      const client = new ImageKit({
-        logger: logger,
-        privateAPIKey: 'My Private API Key',
-        password: 'My Password',
-      });
+      const client = new ImageKit({ logger: logger, privateKey: 'My Private Key', password: 'My Password' });
       expect(client.logLevel).toBe('warn');
       expect(warnMock).toHaveBeenCalledWith(
         'process.env[\'IMAGE_KIT_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
@@ -179,7 +171,7 @@ describe('instantiate client', () => {
       const client = new ImageKit({
         logger: logger,
         logLevel: 'off',
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
 
@@ -200,7 +192,7 @@ describe('instantiate client', () => {
       const client = new ImageKit({
         logger: logger,
         logLevel: 'debug',
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
       expect(client.logLevel).toBe('debug');
@@ -213,7 +205,7 @@ describe('instantiate client', () => {
       const client = new ImageKit({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo' },
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/foo?apiVersion=foo');
@@ -223,7 +215,7 @@ describe('instantiate client', () => {
       const client = new ImageKit({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo', hello: 'world' },
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/foo?apiVersion=foo&hello=world');
@@ -233,7 +225,7 @@ describe('instantiate client', () => {
       const client = new ImageKit({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { hello: 'world' },
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
       expect(client.buildURL('/foo', { hello: undefined })).toEqual('http://localhost:5000/foo');
@@ -243,7 +235,7 @@ describe('instantiate client', () => {
   test('custom fetch', async () => {
     const client = new ImageKit({
       baseURL: 'http://localhost:5000/',
-      privateAPIKey: 'My Private API Key',
+      privateKey: 'My Private Key',
       password: 'My Password',
       fetch: (url) => {
         return Promise.resolve(
@@ -262,7 +254,7 @@ describe('instantiate client', () => {
     // make sure the global fetch type is assignable to our Fetch type
     const client = new ImageKit({
       baseURL: 'http://localhost:5000/',
-      privateAPIKey: 'My Private API Key',
+      privateKey: 'My Private Key',
       password: 'My Password',
       fetch: defaultFetch,
     });
@@ -271,7 +263,7 @@ describe('instantiate client', () => {
   test('custom signal', async () => {
     const client = new ImageKit({
       baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-      privateAPIKey: 'My Private API Key',
+      privateKey: 'My Private Key',
       password: 'My Password',
       fetch: (...args) => {
         return new Promise((resolve, reject) =>
@@ -304,7 +296,7 @@ describe('instantiate client', () => {
 
     const client = new ImageKit({
       baseURL: 'http://localhost:5000/',
-      privateAPIKey: 'My Private API Key',
+      privateKey: 'My Private Key',
       password: 'My Password',
       fetch: testFetch,
     });
@@ -317,7 +309,7 @@ describe('instantiate client', () => {
     test('trailing slash', () => {
       const client = new ImageKit({
         baseURL: 'http://localhost:5000/custom/path/',
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
@@ -326,7 +318,7 @@ describe('instantiate client', () => {
     test('no trailing slash', () => {
       const client = new ImageKit({
         baseURL: 'http://localhost:5000/custom/path',
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
@@ -339,7 +331,7 @@ describe('instantiate client', () => {
     test('explicit option', () => {
       const client = new ImageKit({
         baseURL: 'https://example.com',
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
       expect(client.baseURL).toEqual('https://example.com');
@@ -347,24 +339,24 @@ describe('instantiate client', () => {
 
     test('env variable', () => {
       process.env['IMAGE_KIT_BASE_URL'] = 'https://example.com/from_env';
-      const client = new ImageKit({ privateAPIKey: 'My Private API Key', password: 'My Password' });
+      const client = new ImageKit({ privateKey: 'My Private Key', password: 'My Password' });
       expect(client.baseURL).toEqual('https://example.com/from_env');
     });
 
     test('empty env variable', () => {
       process.env['IMAGE_KIT_BASE_URL'] = ''; // empty
-      const client = new ImageKit({ privateAPIKey: 'My Private API Key', password: 'My Password' });
+      const client = new ImageKit({ privateKey: 'My Private Key', password: 'My Password' });
       expect(client.baseURL).toEqual('https://api.imagekit.io');
     });
 
     test('blank env variable', () => {
       process.env['IMAGE_KIT_BASE_URL'] = '  '; // blank
-      const client = new ImageKit({ privateAPIKey: 'My Private API Key', password: 'My Password' });
+      const client = new ImageKit({ privateKey: 'My Private Key', password: 'My Password' });
       expect(client.baseURL).toEqual('https://api.imagekit.io');
     });
 
     test('in request options', () => {
-      const client = new ImageKit({ privateAPIKey: 'My Private API Key', password: 'My Password' });
+      const client = new ImageKit({ privateKey: 'My Private Key', password: 'My Password' });
       expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
         'http://localhost:5000/option/foo',
       );
@@ -372,7 +364,7 @@ describe('instantiate client', () => {
 
     test('in request options overridden by client options', () => {
       const client = new ImageKit({
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
         baseURL: 'http://localhost:5000/client',
       });
@@ -383,7 +375,7 @@ describe('instantiate client', () => {
 
     test('in request options overridden by env variable', () => {
       process.env['IMAGE_KIT_BASE_URL'] = 'http://localhost:5000/env';
-      const client = new ImageKit({ privateAPIKey: 'My Private API Key', password: 'My Password' });
+      const client = new ImageKit({ privateKey: 'My Private Key', password: 'My Password' });
       expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
         'http://localhost:5000/env/foo',
       );
@@ -391,15 +383,11 @@ describe('instantiate client', () => {
   });
 
   test('maxRetries option is correctly set', () => {
-    const client = new ImageKit({
-      maxRetries: 4,
-      privateAPIKey: 'My Private API Key',
-      password: 'My Password',
-    });
+    const client = new ImageKit({ maxRetries: 4, privateKey: 'My Private Key', password: 'My Password' });
     expect(client.maxRetries).toEqual(4);
 
     // default
-    const client2 = new ImageKit({ privateAPIKey: 'My Private API Key', password: 'My Password' });
+    const client2 = new ImageKit({ privateKey: 'My Private Key', password: 'My Password' });
     expect(client2.maxRetries).toEqual(2);
   });
 
@@ -408,7 +396,7 @@ describe('instantiate client', () => {
       const client = new ImageKit({
         baseURL: 'http://localhost:5000/',
         maxRetries: 3,
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
 
@@ -435,7 +423,7 @@ describe('instantiate client', () => {
         baseURL: 'http://localhost:5000/',
         defaultHeaders: { 'X-Test-Header': 'test-value' },
         defaultQuery: { 'test-param': 'test-value' },
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
 
@@ -454,7 +442,7 @@ describe('instantiate client', () => {
       const client = new ImageKit({
         baseURL: 'http://localhost:5000/',
         timeout: 1000,
-        privateAPIKey: 'My Private API Key',
+        privateKey: 'My Private Key',
         password: 'My Password',
       });
 
@@ -484,25 +472,25 @@ describe('instantiate client', () => {
 
   test('with environment variable arguments', () => {
     // set options via env var
-    process.env['IMAGEKIT_PRIVATE_API_KEY'] = 'My Private API Key';
+    process.env['IMAGEKIT_PRIVATE_API_KEY'] = 'My Private Key';
     process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'] = 'My Password';
     const client = new ImageKit();
-    expect(client.privateAPIKey).toBe('My Private API Key');
+    expect(client.privateKey).toBe('My Private Key');
     expect(client.password).toBe('My Password');
   });
 
   test('with overridden environment variable arguments', () => {
     // set options via env var
-    process.env['IMAGEKIT_PRIVATE_API_KEY'] = 'another My Private API Key';
+    process.env['IMAGEKIT_PRIVATE_API_KEY'] = 'another My Private Key';
     process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'] = 'another My Password';
-    const client = new ImageKit({ privateAPIKey: 'My Private API Key', password: 'My Password' });
-    expect(client.privateAPIKey).toBe('My Private API Key');
+    const client = new ImageKit({ privateKey: 'My Private Key', password: 'My Password' });
+    expect(client.privateKey).toBe('My Private Key');
     expect(client.password).toBe('My Password');
   });
 });
 
 describe('request building', () => {
-  const client = new ImageKit({ privateAPIKey: 'My Private API Key', password: 'My Password' });
+  const client = new ImageKit({ privateKey: 'My Private Key', password: 'My Password' });
 
   describe('custom headers', () => {
     test('handles undefined', async () => {
@@ -521,7 +509,7 @@ describe('request building', () => {
 });
 
 describe('default encoder', () => {
-  const client = new ImageKit({ privateAPIKey: 'My Private API Key', password: 'My Password' });
+  const client = new ImageKit({ privateKey: 'My Private Key', password: 'My Password' });
 
   class Serializable {
     toJSON() {
@@ -607,7 +595,7 @@ describe('retries', () => {
     };
 
     const client = new ImageKit({
-      privateAPIKey: 'My Private API Key',
+      privateKey: 'My Private Key',
       password: 'My Password',
       timeout: 10,
       fetch: testFetch,
@@ -642,7 +630,7 @@ describe('retries', () => {
     };
 
     const client = new ImageKit({
-      privateAPIKey: 'My Private API Key',
+      privateKey: 'My Private Key',
       password: 'My Password',
       fetch: testFetch,
       maxRetries: 4,
@@ -671,7 +659,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
     const client = new ImageKit({
-      privateAPIKey: 'My Private API Key',
+      privateKey: 'My Private Key',
       password: 'My Password',
       fetch: testFetch,
       maxRetries: 4,
@@ -705,7 +693,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
     const client = new ImageKit({
-      privateAPIKey: 'My Private API Key',
+      privateKey: 'My Private Key',
       password: 'My Password',
       fetch: testFetch,
       maxRetries: 4,
@@ -739,7 +727,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
     const client = new ImageKit({
-      privateAPIKey: 'My Private API Key',
+      privateKey: 'My Private Key',
       password: 'My Password',
       fetch: testFetch,
       maxRetries: 4,
@@ -773,11 +761,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new ImageKit({
-      privateAPIKey: 'My Private API Key',
-      password: 'My Password',
-      fetch: testFetch,
-    });
+    const client = new ImageKit({ privateKey: 'My Private Key', password: 'My Password', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -807,11 +791,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new ImageKit({
-      privateAPIKey: 'My Private API Key',
-      password: 'My Password',
-      fetch: testFetch,
-    });
+    const client = new ImageKit({ privateKey: 'My Private Key', password: 'My Password', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
