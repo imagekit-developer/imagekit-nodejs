@@ -57,7 +57,7 @@ import {
   Files,
   Folder,
   Metadata,
-  UpdateFileDetailsRequest,
+  UpdateFileRequest,
 } from './resources/files/files';
 import {
   FolderCopyParams,
@@ -856,7 +856,7 @@ export declare namespace ImageKit {
     type File as File,
     type Folder as Folder,
     type Metadata as Metadata,
-    type UpdateFileDetailsRequest as UpdateFileDetailsRequest,
+    type UpdateFileRequest as UpdateFileRequest,
     type FileUpdateResponse as FileUpdateResponse,
     type FileCopyResponse as FileCopyResponse,
     type FileMoveResponse as FileMoveResponse,

@@ -11,7 +11,7 @@ const client = new ImageKit({
 describe('resource files', () => {
   // Prism tests are disabled
   test.skip('update', async () => {
-    const responsePromise = client.files.update('fileId');
+    const responsePromise = client.files.update('fileId', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -19,38 +19,6 @@ describe('resource files', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('update: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.files.update(
-        'fileId',
-        {
-          customCoordinates: 'customCoordinates',
-          customMetadata: { foo: 'bar' },
-          description: 'description',
-          extensions: [
-            {
-              name: 'remove-bg',
-              options: {
-                add_shadow: true,
-                bg_color: 'bg_color',
-                bg_image_url: 'bg_image_url',
-                semitransparency: true,
-              },
-            },
-            { maxTags: 5, minConfidence: 95, name: 'google-auto-tagging' },
-            { name: 'ai-auto-description' },
-          ],
-          removeAITags: ['string'],
-          tags: ['tag1', 'tag2'],
-          webhookUrl: 'https://example.com',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(ImageKit.NotFoundError);
   });
 
   // Prism tests are disabled

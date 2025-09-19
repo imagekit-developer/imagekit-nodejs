@@ -19,7 +19,7 @@ export {
   type File,
   type Folder,
   type Metadata,
-  type UpdateFileDetailsRequest,
+  type UpdateFileRequest,
   type FileUpdateResponse,
   type FileCopyResponse,
   type FileMoveResponse,
