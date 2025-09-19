@@ -45,35 +45,11 @@ export class Files extends APIResource {
    *
    * @example
    * ```ts
-   * const file = await client.files.update('fileId', {
-   *   customCoordinates: '10,10,100,100',
-   *   customMetadata: { brand: 'Nike', color: 'red' },
-   *   extensions: [
-   *     { name: 'remove-bg', options: { add_shadow: true } },
-   *     {
-   *       name: 'google-auto-tagging',
-   *       minConfidence: 80,
-   *       maxTags: 10,
-   *     },
-   *     {
-   *       name: 'aws-auto-tagging',
-   *       minConfidence: 80,
-   *       maxTags: 10,
-   *     },
-   *     { name: 'ai-auto-description' },
-   *   ],
-   *   removeAITags: ['car', 'vehicle', 'motorsports'],
-   *   tags: ['tag1', 'tag2'],
-   *   webhookUrl:
-   *     'https://webhook.site/0d6b6c7a-8e5a-4b3a-8b7c-0d6b6c7a8e5a',
-   * });
+   * const file = await client.files.update('fileId');
    * ```
    */
-  update(
-    fileID: string,
-    body: FileUpdateParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<FileUpdateResponse> {
+  update(fileID: string, params: FileUpdateParams, options?: RequestOptions): APIPromise<FileUpdateResponse> {
+    const body = 'body' in params ? params.body : params;
     return this._client.patch(path`/v1/files/${fileID}/details`, { body, ...options });
   }
 
@@ -632,11 +608,12 @@ export namespace Metadata {
   }
 }
 
-export type UpdateFileDetailsRequest =
-  | UpdateFileDetailsRequest.UpdateFileDetails
-  | UpdateFileDetailsRequest.ChangePublicationStatus;
+/**
+ * Schema for update file update request.
+ */
+export type UpdateFileRequest = UpdateFileRequest.UpdateFileDetails | unknown;
 
-export namespace UpdateFileDetailsRequest {
+export namespace UpdateFileRequest {
   export interface UpdateFileDetails {
     /**
      * Define an important area in the image in the format `x,y,width,height` e.g.
@@ -687,31 +664,6 @@ export namespace UpdateFileDetailsRequest {
      * about the webhook payload structure.
      */
     webhookUrl?: string;
-  }
-
-  export interface ChangePublicationStatus {
-    /**
-     * Configure the publication status of a file and its versions.
-     */
-    publish?: ChangePublicationStatus.Publish;
-  }
-
-  export namespace ChangePublicationStatus {
-    /**
-     * Configure the publication status of a file and its versions.
-     */
-    export interface Publish {
-      /**
-       * Set to `true` to publish the file. Set to `false` to unpublish the file.
-       */
-      isPublished: boolean;
-
-      /**
-       * Set to `true` to publish/unpublish all versions of the file. Set to `false` to
-       * publish/unpublish only the current version of the file.
-       */
-      includeFileVersions?: boolean;
-    }
   }
 }
 
@@ -1011,28 +963,7 @@ export declare namespace FileUpdateParams {
   }
 
   export interface ChangePublicationStatus {
-    /**
-     * Configure the publication status of a file and its versions.
-     */
-    publish?: ChangePublicationStatus.Publish;
-  }
-
-  export namespace ChangePublicationStatus {
-    /**
-     * Configure the publication status of a file and its versions.
-     */
-    export interface Publish {
-      /**
-       * Set to `true` to publish the file. Set to `false` to unpublish the file.
-       */
-      isPublished: boolean;
-
-      /**
-       * Set to `true` to publish/unpublish all versions of the file. Set to `false` to
-       * publish/unpublish only the current version of the file.
-       */
-      includeFileVersions?: boolean;
-    }
+    body: unknown;
   }
 }
 
@@ -1414,7 +1345,7 @@ export declare namespace Files {
     type File as File,
     type Folder as Folder,
     type Metadata as Metadata,
-    type UpdateFileDetailsRequest as UpdateFileDetailsRequest,
+    type UpdateFileRequest as UpdateFileRequest,
     type FileUpdateResponse as FileUpdateResponse,
     type FileCopyResponse as FileCopyResponse,
     type FileMoveResponse as FileMoveResponse,
