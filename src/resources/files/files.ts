@@ -48,8 +48,7 @@ export class Files extends APIResource {
    * const file = await client.files.update('fileId');
    * ```
    */
-  update(fileID: string, params: FileUpdateParams, options?: RequestOptions): APIPromise<FileUpdateResponse> {
-    const body = 'body' in params ? params.body : params;
+  update(fileID: string, body: FileUpdateParams, options?: RequestOptions): APIPromise<FileUpdateResponse> {
     return this._client.patch(path`/v1/files/${fileID}/details`, { body, ...options });
   }
 
@@ -611,7 +610,9 @@ export namespace Metadata {
 /**
  * Schema for update file update request.
  */
-export type UpdateFileRequest = UpdateFileRequest.UpdateFileDetails | unknown;
+export type UpdateFileRequest =
+  | UpdateFileRequest.UpdateFileDetails
+  | UpdateFileRequest.ChangePublicationStatus;
 
 export namespace UpdateFileRequest {
   export interface UpdateFileDetails {
@@ -664,6 +665,31 @@ export namespace UpdateFileRequest {
      * about the webhook payload structure.
      */
     webhookUrl?: string;
+  }
+
+  export interface ChangePublicationStatus {
+    /**
+     * Configure the publication status of a file and its versions.
+     */
+    publish?: ChangePublicationStatus.Publish;
+  }
+
+  export namespace ChangePublicationStatus {
+    /**
+     * Configure the publication status of a file and its versions.
+     */
+    export interface Publish {
+      /**
+       * Set to `true` to publish the file. Set to `false` to unpublish the file.
+       */
+      isPublished: boolean;
+
+      /**
+       * Set to `true` to publish/unpublish all versions of the file. Set to `false` to
+       * publish/unpublish only the current version of the file.
+       */
+      includeFileVersions?: boolean;
+    }
   }
 }
 
@@ -963,7 +989,28 @@ export declare namespace FileUpdateParams {
   }
 
   export interface ChangePublicationStatus {
-    body: unknown;
+    /**
+     * Configure the publication status of a file and its versions.
+     */
+    publish?: ChangePublicationStatus.Publish;
+  }
+
+  export namespace ChangePublicationStatus {
+    /**
+     * Configure the publication status of a file and its versions.
+     */
+    export interface Publish {
+      /**
+       * Set to `true` to publish the file. Set to `false` to unpublish the file.
+       */
+      isPublished: boolean;
+
+      /**
+       * Set to `true` to publish/unpublish all versions of the file. Set to `false` to
+       * publish/unpublish only the current version of the file.
+       */
+      includeFileVersions?: boolean;
+    }
   }
 }
 
