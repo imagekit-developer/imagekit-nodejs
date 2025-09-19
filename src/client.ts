@@ -92,11 +92,10 @@ export interface ClientOptions {
    * You can view and manage API keys in the [dashboard](https://imagekit.io/dashboard/developer/api-keys).
    *
    */
-  privateAPIKey?: string | undefined;
+  privateKey?: string | undefined;
 
   /**
-   * ImageKit Basic Auth only uses the username field and ignores the password.
-   * This field is unused.
+   * ImageKit Basic Auth only uses the `private_key` as username and ignores the password.
    *
    */
   password?: string | null | undefined;
@@ -183,7 +182,7 @@ export interface ClientOptions {
  * API Client for interfacing with the Image Kit API.
  */
 export class ImageKit {
-  privateAPIKey: string;
+  privateKey: string;
   password: string | null;
   webhookSecret: string | null;
 
@@ -202,7 +201,7 @@ export class ImageKit {
   /**
    * API Client for interfacing with the Image Kit API.
    *
-   * @param {string | undefined} [opts.privateAPIKey=process.env['IMAGEKIT_PRIVATE_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.privateKey=process.env['IMAGEKIT_PRIVATE_API_KEY'] ?? undefined]
    * @param {string | null | undefined} [opts.password=process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'] ?? do_not_set]
    * @param {string | null | undefined} [opts.webhookSecret=process.env['IMAGEKIT_WEBHOOK_SECRET'] ?? null]
    * @param {string} [opts.baseURL=process.env['IMAGE_KIT_BASE_URL'] ?? https://api.imagekit.io] - Override the default base URL for the API.
@@ -215,19 +214,19 @@ export class ImageKit {
    */
   constructor({
     baseURL = readEnv('IMAGE_KIT_BASE_URL'),
-    privateAPIKey = readEnv('IMAGEKIT_PRIVATE_API_KEY'),
+    privateKey = readEnv('IMAGEKIT_PRIVATE_API_KEY'),
     password = readEnv('OPTIONAL_IMAGEKIT_IGNORES_THIS') ?? 'do_not_set',
     webhookSecret = readEnv('IMAGEKIT_WEBHOOK_SECRET') ?? null,
     ...opts
   }: ClientOptions = {}) {
-    if (privateAPIKey === undefined) {
+    if (privateKey === undefined) {
       throw new Errors.ImageKitError(
-        "The IMAGEKIT_PRIVATE_API_KEY environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an privateAPIKey option, like new ImageKit({ privateAPIKey: 'My Private API Key' }).",
+        "The IMAGEKIT_PRIVATE_API_KEY environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an privateKey option, like new ImageKit({ privateKey: 'My Private Key' }).",
       );
     }
 
     const options: ClientOptions = {
-      privateAPIKey,
+      privateKey,
       password,
       webhookSecret,
       ...opts,
@@ -251,7 +250,7 @@ export class ImageKit {
 
     this._options = options;
 
-    this.privateAPIKey = privateAPIKey;
+    this.privateKey = privateKey;
     this.password = password;
     this.webhookSecret = webhookSecret;
   }
@@ -269,7 +268,7 @@ export class ImageKit {
       logLevel: this.logLevel,
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
-      privateAPIKey: this.privateAPIKey,
+      privateKey: this.privateKey,
       password: this.password,
       webhookSecret: this.webhookSecret,
       ...options,
@@ -289,7 +288,7 @@ export class ImageKit {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    if (this.privateAPIKey && this.password && values.get('authorization')) {
+    if (this.privateKey && this.password && values.get('authorization')) {
       return;
     }
     if (nulls.has('authorization')) {
@@ -297,12 +296,12 @@ export class ImageKit {
     }
 
     throw new Error(
-      'Could not resolve authentication method. Expected the privateAPIKey or password to be set. Or for the "Authorization" headers to be explicitly omitted',
+      'Could not resolve authentication method. Expected the privateKey or password to be set. Or for the "Authorization" headers to be explicitly omitted',
     );
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    if (!this.privateAPIKey) {
+    if (!this.privateKey) {
       return undefined;
     }
 
@@ -310,7 +309,7 @@ export class ImageKit {
       return undefined;
     }
 
-    const credentials = `${this.privateAPIKey}:${this.password}`;
+    const credentials = `${this.privateKey}:${this.password}`;
     const Authorization = `Basic ${toBase64(credentials)}`;
     return buildHeaders([{ Authorization }]);
   }
