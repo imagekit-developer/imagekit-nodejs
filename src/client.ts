@@ -95,20 +95,16 @@ export interface ClientOptions {
   privateKey?: string | undefined;
 
   /**
-   * Leave this field unset. ImageKit uses Basic Authentication scheme that requires the `private_key` as the username and empty string as the password.
-   * The password field is automatically managed by the SDK and should not be set.
+   * ImageKit uses your API key as username and ignores the password.
+   * The SDK sets a dummy value. You can ignore this field.
    *
    */
   password?: string | null | undefined;
 
   /**
-   * Your ImageKit webhook secret used by the SDK to verify webhook signatures for security.
-   * This secret starts with a `whsec_` prefix and is essential for webhook verification.
-   * You can view and manage your webhook secret in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).
-   *
-   * **Security Note**: Treat this secret like a password - keep it private and never expose it publicly.
-   * This field is optional and only required if you plan to use webhook signature verification.
-   * Learn more about [webhook verification](https://imagekit.io/docs/webhooks#verify-webhook-signature).
+   * Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).
+   * You can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).
+   * Only required if you're using webhooks.
    *
    */
   webhookSecret?: string | null | undefined;
