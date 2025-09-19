@@ -88,22 +88,26 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * Your ImageKit private API key (it starts with `private_`).
-   * You can view and manage API keys in the [dashboard](https://imagekit.io/dashboard/developer/api-keys).
+   * Your ImageKit private API key (starts with `private_`).
+   * You can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/api-keys).
    *
    */
   privateKey?: string | undefined;
 
   /**
-   * ImageKit Basic Auth only uses the `private_key` as username and ignores the password.
+   * Leave this field unset. ImageKit uses Basic Authentication scheme that requires the `private_key` as the username and empty string as the password.
+   * The password field is automatically managed by the SDK and should not be set.
    *
    */
   password?: string | null | undefined;
 
   /**
-   * Your ImageKit webhook secret. This is used by the SDK to verify webhook signatures. It starts with a `whsec_` prefix.
-   * You can view and manage your webhook secret in the [dashboard](https://imagekit.io/dashboard/developer/webhooks).
-   * Treat the secret like a password, keep it private and do not expose it publicly.
+   * Your ImageKit webhook secret used by the SDK to verify webhook signatures for security.
+   * This secret starts with a `whsec_` prefix and is essential for webhook verification.
+   * You can view and manage your webhook secret in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).
+   *
+   * **Security Note**: Treat this secret like a password - keep it private and never expose it publicly.
+   * This field is optional and only required if you plan to use webhook signature verification.
    * Learn more about [webhook verification](https://imagekit.io/docs/webhooks#verify-webhook-signature).
    *
    */
