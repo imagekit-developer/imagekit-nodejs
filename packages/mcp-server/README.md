@@ -19,7 +19,7 @@ cd imagekit-nodejs
 
 ```sh
 # set env vars as needed
-export IMAGEKIT_PRIVATE_API_KEY="My Private Key"
+export IMAGEKIT_PRIVATE_KEY="My Private Key"
 export OPTIONAL_IMAGEKIT_IGNORES_THIS="My Password"
 export IMAGEKIT_WEBHOOK_SECRET="My Webhook Secret"
 node ./packages/mcp-server/dist/index.js
@@ -44,7 +44,7 @@ For clients with a configuration JSON, it might look something like this:
       "command": "node",
       "args": ["/path/to/local/imagekit-nodejs/packages/mcp-server", "--client=claude", "--tools=dynamic"],
       "env": {
-        "IMAGEKIT_PRIVATE_API_KEY": "My Private Key",
+        "IMAGEKIT_PRIVATE_KEY": "My Private Key",
         "OPTIONAL_IMAGEKIT_IGNORES_THIS": "My Password",
         "IMAGEKIT_WEBHOOK_SECRET": "My Webhook Secret"
       }
@@ -154,7 +154,7 @@ Authorization can be provided via the `Authorization` header using the Basic sch
 Additionally, authorization can be provided via the following headers:
 | Header | Equivalent client option | Security scheme |
 | ---------------------------------- | ------------------------ | --------------- |
-| `x-imagekit-private-api-key` | `privateKey` | basicAuth |
+| `x-imagekit-private-key` | `privateKey` | basicAuth |
 | `x-optional-imagekit-ignores-this` | `password` | basicAuth |
 
 A configuration JSON for this server might look like this, assuming the server is hosted at `http://localhost:3000`:

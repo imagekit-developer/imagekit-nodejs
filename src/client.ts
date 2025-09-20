@@ -201,7 +201,7 @@ export class ImageKit {
   /**
    * API Client for interfacing with the Image Kit API.
    *
-   * @param {string | undefined} [opts.privateKey=process.env['IMAGEKIT_PRIVATE_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.privateKey=process.env['IMAGEKIT_PRIVATE_KEY'] ?? undefined]
    * @param {string | null | undefined} [opts.password=process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'] ?? do_not_set]
    * @param {string | null | undefined} [opts.webhookSecret=process.env['IMAGEKIT_WEBHOOK_SECRET'] ?? null]
    * @param {string} [opts.baseURL=process.env['IMAGE_KIT_BASE_URL'] ?? https://api.imagekit.io] - Override the default base URL for the API.
@@ -214,14 +214,14 @@ export class ImageKit {
    */
   constructor({
     baseURL = readEnv('IMAGE_KIT_BASE_URL'),
-    privateKey = readEnv('IMAGEKIT_PRIVATE_API_KEY'),
+    privateKey = readEnv('IMAGEKIT_PRIVATE_KEY'),
     password = readEnv('OPTIONAL_IMAGEKIT_IGNORES_THIS') ?? 'do_not_set',
     webhookSecret = readEnv('IMAGEKIT_WEBHOOK_SECRET') ?? null,
     ...opts
   }: ClientOptions = {}) {
     if (privateKey === undefined) {
       throw new Errors.ImageKitError(
-        "The IMAGEKIT_PRIVATE_API_KEY environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an privateKey option, like new ImageKit({ privateKey: 'My Private Key' }).",
+        "The IMAGEKIT_PRIVATE_KEY environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an privateKey option, like new ImageKit({ privateKey: 'My Private Key' }).",
       );
     }
 
