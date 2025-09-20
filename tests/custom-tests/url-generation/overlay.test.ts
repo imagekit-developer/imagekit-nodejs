@@ -1,5 +1,5 @@
 import ImageKit from '@imagekit/nodejs';
-import { safeBtoa } from '../../src/lib/transformation-utils';
+import { safeBtoa } from '../../../src/lib/transformation-utils';
 
 const client = new ImageKit({
   privateKey: 'My Private API Key',

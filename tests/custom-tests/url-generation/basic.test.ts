@@ -1,5 +1,5 @@
 import ImageKit from '@imagekit/nodejs';
-import type { SrcOptions } from '../../src/resources/shared';
+import type { SrcOptions } from '../../../src/resources/shared';
 
 const client = new ImageKit({
   privateKey: 'My Private API Key',

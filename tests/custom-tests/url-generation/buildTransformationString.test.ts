@@ -1,5 +1,5 @@
 import ImageKit from '@imagekit/nodejs';
-import type { Transformation } from '../../src/resources/shared';
+import type { Transformation } from '../../../src/resources/shared';
 
 const client = new ImageKit({
   privateKey: 'My Private API Key',
