@@ -2,7 +2,6 @@ import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
   privateKey: 'private_key_test',
-  password: 'My Password',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
