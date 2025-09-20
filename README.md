@@ -26,7 +26,7 @@ The full API of this library can be found in [api.md](api.md).
 import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
-  privateKey: process.env['IMAGEKIT_PRIVATE_API_KEY'], // This is the default and can be omitted
+  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted
   password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted
 });
 
@@ -47,7 +47,7 @@ This library includes TypeScript definitions for all request params and response
 import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
-  privateKey: process.env['IMAGEKIT_PRIVATE_API_KEY'], // This is the default and can be omitted
+  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted
   password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted
 });
 

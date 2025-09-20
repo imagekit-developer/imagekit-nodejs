@@ -20,9 +20,9 @@ export const parseAuthHeaders = (req: IncomingMessage): Partial<ClientOptions> =
   }
 
   const privateKey =
-    Array.isArray(req.headers['x-imagekit-private-api-key']) ?
-      req.headers['x-imagekit-private-api-key'][0]
-    : req.headers['x-imagekit-private-api-key'];
+    Array.isArray(req.headers['x-imagekit-private-key']) ?
+      req.headers['x-imagekit-private-key'][0]
+    : req.headers['x-imagekit-private-key'];
   const password =
     Array.isArray(req.headers['x-optional-imagekit-ignores-this']) ?
       req.headers['x-optional-imagekit-ignores-this'][0]
