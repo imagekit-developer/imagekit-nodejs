@@ -6,8 +6,6 @@ This library provides convenient access to the Image Kit REST API from server-si
 
 The REST API documentation can be found on [imagekit.io](https://imagekit.io/docs/api-reference). The full API of this library can be found in [api.md](api.md).
 
-It is generated with [Stainless](https://www.stainless.com/).
-
 ## Installation
 
 ```sh
