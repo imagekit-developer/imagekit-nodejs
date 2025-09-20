@@ -12,7 +12,7 @@
     "url": "git+https://github.com/imagekit-developer/imagekit-nodejs.git"
   },
   "homepage": "https://github.com/imagekit-developer/imagekit-nodejs/tree/main/packages/mcp-server#readme",
-  "documentation": "https://imagekit.io/docs",
+  "documentation": "https://imagekit.io/docs/api-reference",
   "server": {
     "type": "node",
     "entry_point": "index.js",
