@@ -1,10 +1,19 @@
-# Image Kit TypeScript API Library
+# ImageKit.io Node.js SDK
 
 [![NPM version](<https://img.shields.io/npm/v/@imagekit/nodejs.svg?label=npm%20(stable)>)](https://npmjs.org/package/@imagekit/nodejs) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@imagekit/nodejs)
 
-This library provides convenient access to the Image Kit REST API from server-side TypeScript or JavaScript.
+This SDK provides everything you need to integrate ImageKit into your server-side applications. Beyond convenient access to the ImageKit REST API, the library includes:
+
+- **URL Builder & Transformations** - Helper functions to generate optimized image and video URLs with real-time transformations.
+- **URL Signing** - Built-in support for generating signed URLs for secure content delivery.
+- **Authentication Helpers** - Generate authentication parameters for secure client-side file uploads.
+- **Webhook Verification** - Utilities to verify webhook signatures for secure event handling.
 
 The REST API documentation can be found on [imagekit.io](https://imagekit.io/docs/api-reference). The full API of this library can be found in [api.md](api.md).
+
+Refer to the ImageKit official [quick start guide](https://imagekit.io/docs/integration/nodejs) for more details on using the SDK.
+
+If you are looking to integrate file uploads on the client-side, use one of the [client-side SDKs](https://imagekit.io/docs/quick-start-guides#front-end) for easy integration.
 
 ## Installation
 
@@ -32,7 +41,7 @@ const response = await client.files.upload({
   fileName: 'file-name.jpg',
 });
 
-console.log(response.videoCodec);
+console.log(response);
 ```
 
 ### Request & Response types
@@ -84,202 +93,6 @@ await client.files.upload({ file: await fetch('https://somesite/file'), fileName
 await client.files.upload({ file: await toFile(Buffer.from('my bytes'), 'file'), fileName: 'fileName' });
 await client.files.upload({ file: await toFile(new Uint8Array([0, 1, 2]), 'file'), fileName: 'fileName' });
 ```
-
-## URL generation
-
-The ImageKit SDK provides a powerful `helper.buildSrc()` method for generating optimized image and video URLs with transformations. Here are examples ranging from simple URLs to complex transformations with overlays and signed URLs.
-
-### Basic URL generation
-
-Generate a simple URL without any transformations:
-
-```ts
-import ImageKit from '@imagekit/nodejs';
-
-const client = new ImageKit({
-  privateKey: process.env['IMAGEKIT_PRIVATE_KEY']
-});
-
-// Basic URL without transformations
-const url = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/path/to/image.jpg',
-});
-// Result: https://ik.imagekit.io/your_imagekit_id/path/to/image.jpg
-```
-
-### URL generation with transformations
-
-Apply common transformations like resizing, cropping, and format conversion:
-
-```ts
-// URL with basic transformations
-const transformedUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/path/to/image.jpg',
-  transformation: [
-    {
-      width: 400,
-      height: 300,
-      crop: 'maintain_ratio',
-      quality: 80,
-      format: 'webp',
-    },
-  ],
-});
-// Result: https://ik.imagekit.io/your_imagekit_id/path/to/image.jpg?tr=w-400,h-300,c-maintain_ratio,q-80,f-webp
-```
-
-### URL generation with image overlay
-
-Add image overlays to your base image:
-
-```ts
-// URL with image overlay
-const imageOverlayUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/path/to/base-image.jpg',
-  transformation: [
-    {
-      width: 500,
-      height: 400,
-      overlay: {
-        type: 'image',
-        input: '/path/to/overlay-logo.png',
-        position: {
-          x: 10,
-          y: 10,
-        },
-        transformation: [
-          {
-            width: 100,
-            height: 50,
-          },
-        ],
-      },
-    },
-  ],
-});
-// Result: URL with image overlay positioned at x:10, y:10
-```
-
-### URL generation with text overlay
-
-Add customized text overlays:
-
-```ts
-// URL with text overlay
-const textOverlayUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/path/to/base-image.jpg',
-  transformation: [
-    {
-      width: 600,
-      height: 400,
-      overlay: {
-        type: 'text',
-        text: 'Sample Text Overlay',
-        position: {
-          x: 50,
-          y: 50,
-          focus: 'center',
-        },
-        transformation: [
-          {
-            fontSize: 40,
-            fontFamily: 'Arial',
-            fontColor: 'FFFFFF',
-            typography: 'b', // bold
-          },
-        ],
-      },
-    },
-  ],
-});
-// Result: URL with bold white Arial text overlay at center position
-```
-
-### URL generation with multiple overlays
-
-Combine multiple overlays for complex compositions:
-
-```ts
-// URL with multiple overlays (text + image)
-const multipleOverlaysUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/path/to/base-image.jpg',
-  transformation: [
-    {
-      width: 800,
-      height: 600,
-      overlay: {
-        type: 'text',
-        text: 'Header Text',
-        position: { x: 20, y: 20 },
-        transformation: [{ fontSize: 30, fontColor: '000000' }],
-      },
-    },
-    {
-      overlay: {
-        type: 'image',
-        input: '/watermark.png',
-        position: { focus: 'bottom_right' },
-        transformation: [{ width: 100, opacity: 70 }],
-      },
-    },
-  ],
-});
-// Result: URL with text overlay at top-left and semi-transparent watermark at bottom-right
-```
-
-### Signed URLs for secure delivery
-
-Generate signed URLs that expire after a specified time for secure content delivery:
-
-```ts
-// Generate a signed URL that expires in 1 hour (3600 seconds)
-const signedUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/private/secure-image.jpg',
-  transformation: [
-    {
-      width: 400,
-      height: 300,
-      quality: 90,
-    },
-  ],
-  signed: true,
-  expiresIn: 3600, // URL expires in 1 hour
-});
-// Result: URL with signature parameters (?ik-t=timestamp&ik-s=signature)
-
-// Generate a signed URL that doesn't expire
-const permanentSignedUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/private/secure-image.jpg',
-  signed: true,
-  // No expiresIn means the URL won't expire
-});
-// Result: URL with signature parameter (?ik-s=signature)
-```
-
-### Authentication parameters for client-side uploads
-
-Generate authentication parameters for secure client-side file uploads:
-
-```ts
-// Generate authentication parameters for client-side uploads
-const authParams = client.helper.getAuthenticationParameters();
-console.log(authParams);
-// Result: { token: 'uuid-token', expire: timestamp, signature: 'hmac-signature' }
-
-// Generate with custom token and expiry
-const customAuthParams = client.helper.getAuthenticationParameters('my-custom-token', 1800);
-console.log(customAuthParams);
-// Result: { token: 'my-custom-token', expire: 1800, signature: 'hmac-signature' }
-```
-
-These authentication parameters can be used in client-side upload forms to securely upload files without exposing your private API key.
 
 ## Handling errors
 
