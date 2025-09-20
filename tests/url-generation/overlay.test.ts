@@ -2,7 +2,7 @@ import ImageKit from '@imagekit/nodejs';
 import { safeBtoa } from '../../src/lib/transformation-utils';
 
 const client = new ImageKit({
-  privateAPIKey: 'My Private API Key',
+  privateKey: 'My Private API Key',
   password: 'My Password',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });

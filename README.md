@@ -101,7 +101,7 @@ Generate a simple URL without any transformations:
 import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
-  privateAPIKey: process.env['IMAGEKIT_PRIVATE_API_KEY'],
+  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'],
   password: process.env['ORG_MY_PASSWORD_TOKEN'],
 });
 

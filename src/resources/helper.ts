@@ -98,7 +98,7 @@ export class Helper extends APIResource {
       const expiryTimestamp = getSignatureTimestamp(opts.expiresIn);
 
       const urlSignature = getSignature({
-        privateKey: this._client.privateAPIKey,
+        privateKey: this._client.privateKey,
         url: finalUrl,
         urlEndpoint: opts.urlEndpoint,
         expiryTimestamp,
@@ -151,7 +151,7 @@ export class Helper extends APIResource {
    * @throws {Error} If the private API key is not configured (should not happen in normal usage)
    */
   getAuthenticationParameters(token?: string, expire?: number) {
-    if (!this._client.privateAPIKey) {
+    if (!this._client.privateKey) {
       throw new Error('Private API key is required for authentication parameters generation');
     }
 
@@ -161,7 +161,7 @@ export class Helper extends APIResource {
     const finalToken = token || uuid4();
     const finalExpire = expire || defaultExpire;
 
-    return getAuthenticationParameters(finalToken, finalExpire, this._client.privateAPIKey);
+    return getAuthenticationParameters(finalToken, finalExpire, this._client.privateKey);
   }
 }
 
