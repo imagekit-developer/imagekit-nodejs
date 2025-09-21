@@ -2,18 +2,13 @@
 
 [![NPM version](<https://img.shields.io/npm/v/@imagekit/nodejs.svg?label=npm%20(stable)>)](https://npmjs.org/package/@imagekit/nodejs) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@imagekit/nodejs)
 
-This SDK provides everything you need to integrate ImageKit into your server-side applications. Beyond convenient access to the ImageKit REST API, the library includes:
+The ImageKit Node.js SDK is a comprehensive library designed to simplify the integration of ImageKit into your server-side applications. It provides powerful tools for working with the ImageKit REST API, including building and transforming URLs, generating signed URLs for secure content delivery, verifying webhooks, and handling file uploads. With robust TypeScript support, this SDK ensures excellent type safety and a seamless developer experience.
 
-- **URL Builder & Transformations** - Helper functions to generate optimized image and video URLs with real-time transformations.
-- **URL Signing** - Built-in support for generating signed URLs for secure content delivery.
-- **Authentication Helpers** - Generate authentication parameters for secure client-side file uploads.
-- **Webhook Verification** - Utilities to verify webhook signatures for secure event handling.
+The full API of this library is documented in [api.md](api.md). All request parameters and response types are fully typed and importable, offering unparalleled TypeScript support. This ensures that you can rely on accurate type definitions and enjoy a smooth development workflow with modern editors.
 
-The REST API documentation can be found on [imagekit.io](https://imagekit.io/docs/api-reference). The full API of this library can be found in [api.md](api.md).
+For additional details, refer to the [ImageKit REST API documentation](https://imagekit.io/docs/api-reference).
 
-Refer to the ImageKit official [quick start guide](https://imagekit.io/docs/integration/nodejs) for more details on using the SDK.
-
-If you are looking to integrate file uploads on the client-side, use one of the [client-side SDKs](https://imagekit.io/docs/quick-start-guides#front-end) for easy integration.
+If you are looking to integrate file uploads in browsers, use one of our [frontend SDKs](https://imagekit.io/docs/quick-start-guides#front-end).
 
 ## Installation
 
