@@ -2,33 +2,18 @@
 
 ## Installation
 
-### Building
+### Direct invocation
 
-Because it's not published yet, clone the repo and build it:
-
-```sh
-git clone git@github.com:imagekit-developer/imagekit-nodejs.git
-cd imagekit-nodejs
-./scripts/bootstrap
-./scripts/build
-```
-
-### Running
+You can run the MCP Server directly via `npx`:
 
 ```sh
-# set env vars as needed
 export IMAGEKIT_PRIVATE_KEY="My Private Key"
 export OPTIONAL_IMAGEKIT_IGNORES_THIS="My Password"
 export IMAGEKIT_WEBHOOK_SECRET="My Webhook Secret"
-node ./packages/mcp-server/dist/index.js
+npx -y imagekit-api-mcp@latest
 ```
 
-> [!NOTE]
-> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npx -y imagekit-api-mcp`
-
 ### Via MCP Client
-
-[Build the project](#building) as mentioned above.
 
 There is a partial list of existing clients at [modelcontextprotocol.io](https://modelcontextprotocol.io/clients). If you already
 have a client, consult their documentation to install the MCP server.
@@ -39,8 +24,8 @@ For clients with a configuration JSON, it might look something like this:
 {
   "mcpServers": {
     "imagekit_nodejs_api": {
-      "command": "node",
-      "args": ["/path/to/local/imagekit-nodejs/packages/mcp-server", "--client=claude", "--tools=dynamic"],
+      "command": "npx",
+      "args": ["-y", "imagekit-api-mcp", "--client=claude", "--tools=dynamic"],
       "env": {
         "IMAGEKIT_PRIVATE_KEY": "My Private Key",
         "OPTIONAL_IMAGEKIT_IGNORES_THIS": "My Password",
