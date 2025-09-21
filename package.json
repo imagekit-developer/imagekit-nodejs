@@ -1,6 +1,6 @@
 {
   "name": "@imagekit/nodejs",
-  "version": "0.0.1-alpha.0",
+  "version": "7.0.0",
   "description": "The official TypeScript library for the Image Kit API",
   "author": "Image Kit <developer@imagekit.io>",
   "types": "dist/index.d.ts",
