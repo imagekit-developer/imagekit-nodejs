@@ -281,7 +281,7 @@ export interface FileUploadParams {
    * When supplying a URL, the server must receive the response headers within 8
    * seconds; otherwise the request fails with 400 Bad Request.
    */
-  file: Uploadable;
+  file: Uploadable | string;
 
   /**
    * The name with which the file has to be uploaded.
