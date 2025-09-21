@@ -9,11 +9,8 @@ The REST API documentation can be found on [imagekit.io](https://imagekit.io/doc
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:imagekit-developer/imagekit-nodejs.git
+npm install @imagekit/nodejs
 ```
-
-> [!NOTE]
-> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npm install @imagekit/nodejs`
 
 ## Usage
 
