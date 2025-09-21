@@ -1,0 +1,57 @@
+{
+  "dxt_version": "0.2",
+  "name": "imagekit-api-mcp",
+  "version": "0.0.1-alpha.0",
+  "description": "The official MCP Server for the Image Kit API",
+  "author": {
+    "name": "Image Kit",
+    "email": "developer@imagekit.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imagekit-developer/imagekit-nodejs.git"
+  },
+  "homepage": "https://github.com/imagekit-developer/imagekit-nodejs/tree/main/packages/mcp-server#readme",
+  "documentation": "https://imagekit.io/docs/api-reference",
+  "server": {
+    "type": "node",
+    "entry_point": "index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/index.js"],
+      "env": {
+        "IMAGEKIT_PRIVATE_KEY": "${user_config.IMAGEKIT_PRIVATE_KEY}",
+        "OPTIONAL_IMAGEKIT_IGNORES_THIS": "${user_config.OPTIONAL_IMAGEKIT_IGNORES_THIS}",
+        "IMAGEKIT_WEBHOOK_SECRET": "${user_config.IMAGEKIT_WEBHOOK_SECRET}"
+      }
+    }
+  },
+  "user_config": {
+    "IMAGEKIT_PRIVATE_KEY": {
+      "title": "private_key",
+      "description": "Your ImageKit private API key (starts with `private_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/api-keys).\n",
+      "required": true,
+      "type": "string"
+    },
+    "OPTIONAL_IMAGEKIT_IGNORES_THIS": {
+      "title": "password",
+      "description": "ImageKit uses your API key as username and ignores the password. \nThe SDK sets a dummy value. You can ignore this field.\n",
+      "required": false,
+      "type": "string"
+    },
+    "IMAGEKIT_WEBHOOK_SECRET": {
+      "title": "webhook_secret",
+      "description": "Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you're using webhooks.\n",
+      "required": false,
+      "type": "string"
+    }
+  },
+  "tools": [],
+  "tools_generated": true,
+  "compatibility": {
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  },
+  "keywords": ["api"]
+}

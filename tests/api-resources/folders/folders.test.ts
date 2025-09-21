@@ -1,0 +1,122 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+import ImageKit from '@imagekit/nodejs';
+
+const client = new ImageKit({
+  privateKey: 'My Private Key',
+  password: 'My Password',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
+
+describe('resource folders', () => {
+  // Prism tests are disabled
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.folders.create({
+      folderName: 'summer',
+      parentFolderPath: '/product/images/',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.folders.create({
+      folderName: 'summer',
+      parentFolderPath: '/product/images/',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('delete: only required params', async () => {
+    const responsePromise = client.folders.delete({ folderPath: '/folder/to/delete/' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('delete: required and optional params', async () => {
+    const response = await client.folders.delete({ folderPath: '/folder/to/delete/' });
+  });
+
+  // Prism tests are disabled
+  test.skip('copy: only required params', async () => {
+    const responsePromise = client.folders.copy({
+      destinationPath: '/path/of/destination/folder',
+      sourceFolderPath: '/path/of/source/folder',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('copy: required and optional params', async () => {
+    const response = await client.folders.copy({
+      destinationPath: '/path/of/destination/folder',
+      sourceFolderPath: '/path/of/source/folder',
+      includeVersions: true,
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('move: only required params', async () => {
+    const responsePromise = client.folders.move({
+      destinationPath: '/path/of/destination/folder',
+      sourceFolderPath: '/path/of/source/folder',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('move: required and optional params', async () => {
+    const response = await client.folders.move({
+      destinationPath: '/path/of/destination/folder',
+      sourceFolderPath: '/path/of/source/folder',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('rename: only required params', async () => {
+    const responsePromise = client.folders.rename({
+      folderPath: '/path/of/folder',
+      newFolderName: 'new-folder-name',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('rename: required and optional params', async () => {
+    const response = await client.folders.rename({
+      folderPath: '/path/of/folder',
+      newFolderName: 'new-folder-name',
+      purgeCache: true,
+    });
+  });
+});
