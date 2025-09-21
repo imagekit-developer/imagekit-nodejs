@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.0.1 (2025-09-21)
+
+Full Changelog: [v7.0.0...v7.0.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.0.0...v7.0.1)
+
+### Chores
+
+* update SDK settings ([0a6ec00](https://github.com/imagekit-developer/imagekit-nodejs/commit/0a6ec001c489c53040ea197d6c864f8b96fa8ac4))
+
 ## 7.0.0 (2025-09-21)
 
 Full Changelog: [v0.0.1-alpha.0...v7.0.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v0.0.1-alpha.0...v7.0.0)
