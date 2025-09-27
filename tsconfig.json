@@ -7,10 +7,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./",
     "paths": {
-      "@imagekit/nodejs/*": ["src/*"],
-      "@imagekit/nodejs": ["src/index.ts"]
+      "@imagekit/nodejs/*": ["./src/*"],
+      "@imagekit/nodejs": ["./src/index.ts"]
     },
     "noEmit": true,
 
