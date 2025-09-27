@@ -1,5 +1,28 @@
 # Changelog
 
+## 7.1.0 (2025-09-27)
+
+Full Changelog: [v7.0.1...v7.1.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.0.1...v7.1.0)
+
+### Features
+
+* **mcp:** add option for including docs tools ([e1a3b52](https://github.com/imagekit-developer/imagekit-nodejs/commit/e1a3b52f5691f398669cd682c57d5a6dc4e5895a))
+
+
+### Performance Improvements
+
+* faster formatting ([7e8cfad](https://github.com/imagekit-developer/imagekit-nodejs/commit/7e8cfadd5473e55e83c6659c4033f9b852d3f91c))
+
+
+### Chores
+
+* **internal:** codegen related update ([ca24cab](https://github.com/imagekit-developer/imagekit-nodejs/commit/ca24cab20bc7d4450623d67b0ebcb4e2a0ef7633))
+* **internal:** codegen related update ([2acb106](https://github.com/imagekit-developer/imagekit-nodejs/commit/2acb106595f0642dcdb81bcd9a041a1bf059d307))
+* **internal:** fix incremental formatting in some cases ([863e6b7](https://github.com/imagekit-developer/imagekit-nodejs/commit/863e6b7b6cff10c81fc07524b038972db2ce76b6))
+* **internal:** ignore .eslintcache ([f991673](https://github.com/imagekit-developer/imagekit-nodejs/commit/f99167394b66562e972b54730a4cf65aed8e33fd))
+* **internal:** remove deprecated `compilerOptions.baseUrl` from tsconfig.json ([9e0e5b0](https://github.com/imagekit-developer/imagekit-nodejs/commit/9e0e5b0c46930798e8d06f553fd91a57d9692d2b))
+* **mcp:** allow pointing `docs_search` tool at other URLs ([bbe84b3](https://github.com/imagekit-developer/imagekit-nodejs/commit/bbe84b3a9a5b30fc11c7b074cea447632740f512))
+
 ## 7.0.1 (2025-09-21)
 
 Full Changelog: [v7.0.0...v7.0.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.0.0...v7.0.1)
