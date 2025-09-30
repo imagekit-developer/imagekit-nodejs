@@ -110,12 +110,6 @@ export const tool: Tool = {
           ],
         },
       },
-      selectedFieldsSchema: {
-        type: 'object',
-        description:
-          'This field is included in the response only if the Path policy feature is available in the plan.\nIt contains schema definitions for the custom metadata fields selected for the specified file path.\nField selection can only be done when the Path policy feature is enabled.\n\nKeys are the names of the custom metadata fields; the value object has details about the custom metadata schema.\n',
-        additionalProperties: true,
-      },
       tags: {
         type: 'array',
         description:
