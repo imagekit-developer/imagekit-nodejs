@@ -131,7 +131,7 @@ export namespace CustomMetadataField {
     type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
 
     /**
-     * The default value for this custom metadata field. Date type of default value
+     * The default value for this custom metadata field. Data type of default value
      * depends on the field type.
      */
     defaultValue?: string | number | boolean | Array<string | number | boolean>;
