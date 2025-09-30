@@ -55,6 +55,20 @@ describe('resource files', () => {
       overwriteFile: true,
       overwriteTags: true,
       responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],
+      selectedFieldsSchema: {
+        foo: {
+          type: 'Text',
+          defaultValue: 'string',
+          isValueRequired: true,
+          maxLength: 0,
+          maxValue: 'string',
+          minLength: 0,
+          minValue: 'string',
+          readOnly: true,
+          selectOptions: ['small', 'medium', 'large', 30, 40, true],
+          selectOptionsTruncated: true,
+        },
+      },
       tags: ['t-shirt', 'round-neck', 'men'],
       transformation: {
         post: [
