@@ -175,6 +175,17 @@ export interface FileUploadResponse {
   name?: string;
 
   /**
+   * This field is included in the response only if the Path policy feature is
+   * available in the plan. It contains schema definitions for the custom metadata
+   * fields selected for the specified file path. Field selection can only be done
+   * when the Path policy feature is enabled.
+   *
+   * Keys are the names of the custom metadata fields; the value object has details
+   * about the custom metadata schema.
+   */
+  selectedFieldsSchema?: { [key: string]: FileUploadResponse.SelectedFieldsSchema };
+
+  /**
    * Size of the image file in Bytes.
    */
   size?: number;
@@ -251,6 +262,66 @@ export namespace FileUploadResponse {
     'google-auto-tagging'?: 'success' | 'pending' | 'failed';
 
     'remove-bg'?: 'success' | 'pending' | 'failed';
+  }
+
+  export interface SelectedFieldsSchema {
+    /**
+     * Type of the custom metadata field.
+     */
+    type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
+
+    /**
+     * The default value for this custom metadata field. The value should match the
+     * `type` of custom metadata field.
+     */
+    defaultValue?: string | number | boolean | Array<string | number | boolean>;
+
+    /**
+     * Specifies if the custom metadata field is required or not.
+     */
+    isValueRequired?: boolean;
+
+    /**
+     * Maximum length of string. Only set if `type` is set to `Text` or `Textarea`.
+     */
+    maxLength?: number;
+
+    /**
+     * Maximum value of the field. Only set if field type is `Date` or `Number`. For
+     * `Date` type field, the value will be in ISO8601 string format. For `Number` type
+     * field, it will be a numeric value.
+     */
+    maxValue?: string | number;
+
+    /**
+     * Minimum length of string. Only set if `type` is set to `Text` or `Textarea`.
+     */
+    minLength?: number;
+
+    /**
+     * Minimum value of the field. Only set if field type is `Date` or `Number`. For
+     * `Date` type field, the value will be in ISO8601 string format. For `Number` type
+     * field, it will be a numeric value.
+     */
+    minValue?: string | number;
+
+    /**
+     * Indicates whether the custom metadata field is read only. A read only field
+     * cannot be modified after being set. This field is configurable only via the
+     * **Path policy** feature.
+     */
+    readOnly?: boolean;
+
+    /**
+     * An array of allowed values when field type is `SingleSelect` or `MultiSelect`.
+     */
+    selectOptions?: Array<string | number | boolean>;
+
+    /**
+     * Specifies if the selectOptions array is truncated. It is truncated when number
+     * of options are > 100.
+     */
+    selectOptionsTruncated?: boolean;
   }
 
   /**
@@ -403,6 +474,7 @@ export interface FileUploadParams {
     | 'isPublished'
     | 'customMetadata'
     | 'metadata'
+    | 'selectedFieldsSchema'
   >;
 
   /**

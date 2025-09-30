@@ -59,6 +59,11 @@ export class CustomMetadataFields extends APIResource {
    * the API returns only non deleted field objects, but you can include deleted
    * fields in the API response.
    *
+   * You can also filter results by a specific folder path to retrieve custom
+   * metadata fields applicable at that location. This path-specific filtering is
+   * useful when using the **Path policy** feature to determine which custom metadata
+   * fields are selected for a given path.
+   *
    * @example
    * ```ts
    * const customMetadataFields =
@@ -126,7 +131,7 @@ export namespace CustomMetadataField {
     type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
 
     /**
-     * The default value for this custom metadata field. Date type of default value
+     * The default value for this custom metadata field. Data type of default value
      * depends on the field type.
      */
     defaultValue?: string | number | boolean | Array<string | number | boolean>;
@@ -319,6 +324,14 @@ export namespace CustomMetadataFieldUpdateParams {
 }
 
 export interface CustomMetadataFieldListParams {
+  /**
+   * The folder path (e.g., `/path/to/folder`) for which to retrieve applicable
+   * custom metadata fields. Useful for determining path-specific field selections
+   * when the [Path policy](https://imagekit.io/docs/dam/path-policy) feature is in
+   * use.
+   */
+  folderPath?: string;
+
   /**
    * Set it to `true` to include deleted field objects in the API response.
    */

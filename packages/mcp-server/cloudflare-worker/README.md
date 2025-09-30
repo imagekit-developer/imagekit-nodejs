@@ -7,7 +7,7 @@ API token and any other client configuration options that you'd need to instanti
 
 The recommended way to use this project is to use the below "deploy to cloudflare" button to use this repo as a template for generating a server.
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/imagekit-developer/imagekit-nodejs/tree/main/packages/mcp-server/cloudflare-worker)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/imagekit-developer/imagekit-nodejs/tree/master/packages/mcp-server/cloudflare-worker)
 
 ## Develop locally
 
