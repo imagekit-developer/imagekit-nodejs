@@ -106,6 +106,7 @@ export const tool: Tool = {
             'isPublished',
             'customMetadata',
             'metadata',
+            'selectedFieldsSchema',
           ],
         },
       },

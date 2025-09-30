@@ -94,7 +94,10 @@ describe('resource customMetadataFields', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.customMetadataFields.list({ includeDeleted: true }, { path: '/_stainless_unknown_path' }),
+      client.customMetadataFields.list(
+        { folderPath: 'folderPath', includeDeleted: true },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(ImageKit.NotFoundError);
   });
 

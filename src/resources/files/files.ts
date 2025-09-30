@@ -1236,6 +1236,7 @@ export interface FileUploadParams {
     | 'isPublished'
     | 'customMetadata'
     | 'metadata'
+    | 'selectedFieldsSchema'
   >;
 
   /**

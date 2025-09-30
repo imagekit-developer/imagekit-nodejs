@@ -212,6 +212,9 @@ The following tools are available in this MCP server.
 - `create_custom_metadata_fields` (`write`): This API creates a new custom metadata field. Once a custom metadata field is created either through this API or using the dashboard UI, its value can be set on the assets. The value of a field for an asset can be set using the media library UI or programmatically through upload or update assets API.
 - `update_custom_metadata_fields` (`write`): This API updates the label or schema of an existing custom metadata field.
 - `list_custom_metadata_fields` (`read`): This API returns the array of created custom metadata field objects. By default the API returns only non deleted field objects, but you can include deleted fields in the API response.
+
+  You can also filter results by a specific folder path to retrieve custom metadata fields applicable at that location. This path-specific filtering is useful when using the **Path policy** feature to determine which custom metadata fields are selected for a given path.
+
 - `delete_custom_metadata_fields` (`write`): This API deletes a custom metadata field. Even after deleting a custom metadata field, you cannot create any new custom metadata field with the same name.
 
 ### Resource `files`:
