@@ -164,6 +164,20 @@ describe('resource files', () => {
       overwriteTags: true,
       publicKey: 'publicKey',
       responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],
+      selectedFieldsSchema: {
+        foo: {
+          type: 'Text',
+          defaultValue: 'string',
+          isValueRequired: true,
+          maxLength: 0,
+          maxValue: 'string',
+          minLength: 0,
+          minValue: 'string',
+          readOnly: true,
+          selectOptions: ['small', 'medium', 'large', 30, 40, true],
+          selectOptionsTruncated: true,
+        },
+      },
       signature: 'signature',
       tags: ['t-shirt', 'round-neck', 'men'],
       transformation: {
