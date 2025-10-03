@@ -10,7 +10,7 @@ You can run the MCP Server directly via `npx`:
 export IMAGEKIT_PRIVATE_KEY="My Private Key"
 export OPTIONAL_IMAGEKIT_IGNORES_THIS="My Password"
 export IMAGEKIT_WEBHOOK_SECRET="My Webhook Secret"
-npx -y @imagekit/nodejs-mcp@latest
+npx -y @imagekit/api-mcp@latest
 ```
 
 ### Via MCP Client
@@ -25,7 +25,7 @@ For clients with a configuration JSON, it might look something like this:
   "mcpServers": {
     "imagekit_nodejs_api": {
       "command": "npx",
-      "args": ["-y", "@imagekit/nodejs-mcp", "--client=claude", "--tools=dynamic"],
+      "args": ["-y", "@imagekit/api-mcp", "--client=claude", "--tools=dynamic"],
       "env": {
         "IMAGEKIT_PRIVATE_KEY": "My Private Key",
         "OPTIONAL_IMAGEKIT_IGNORES_THIS": "My Password",
@@ -172,10 +172,10 @@ http://localhost:3000?client=cursor&capability=tool-name-length%3D40
 
 ```js
 // Import the server, generated endpoints, or the init function
-import { server, endpoints, init } from "@imagekit/nodejs-mcp/server";
+import { server, endpoints, init } from "@imagekit/api-mcp/server";
 
 // import a specific tool
-import createCustomMetadataFields from "@imagekit/nodejs-mcp/tools/custom-metadata-fields/create-custom-metadata-fields";
+import createCustomMetadataFields from "@imagekit/api-mcp/tools/custom-metadata-fields/create-custom-metadata-fields";
 
 // initialize the server and all endpoints
 init({ server, endpoints });

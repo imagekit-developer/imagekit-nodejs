@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "@imagekit/nodejs-mcp/*": ["./src/*"],
-      "@imagekit/nodejs-mcp": ["./src/index.ts"]
+      "@imagekit/api-mcp/*": ["./src/*"],
+      "@imagekit/api-mcp": ["./src/index.ts"]
     },
     "noEmit": true,
 
