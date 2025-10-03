@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'imagekit-api-mcp/filtering';
-import { Metadata, asTextContentResult } from 'imagekit-api-mcp/tools/types';
+import { maybeFilter } from '@imagekit/nodejs-mcp/filtering';
+import { Metadata, asTextContentResult } from '@imagekit/nodejs-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import ImageKit from '@imagekit/nodejs';

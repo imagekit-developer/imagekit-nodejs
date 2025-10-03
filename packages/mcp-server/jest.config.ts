@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^imagekit-api-mcp$': '<rootDir>/src/index.ts',
-    '^imagekit-api-mcp/(.*)$': '<rootDir>/src/$1',
+    '^@imagekit/nodejs-mcp$': '<rootDir>/src/index.ts',
+    '^@imagekit/nodejs-mcp/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: ['<rootDir>/dist/'],
   testPathIgnorePatterns: ['scripts'],

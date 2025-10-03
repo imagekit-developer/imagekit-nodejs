@@ -4,7 +4,7 @@ import type { HtmlEscapedString } from 'hono/utils/html';
 import { marked } from 'marked';
 import type { AuthRequest } from '@cloudflare/workers-oauth-provider';
 import { env } from 'cloudflare:workers';
-import { ServerConfig, McpOptions, ClientType, Filter, ClientProperty } from 'imagekit-api-mcp/server';
+import { ServerConfig, McpOptions, ClientType, Filter, ClientProperty } from '@imagekit/nodejs-mcp/server';
 
 export const layout = (content: HtmlEscapedString | string, title: string, config: ServerConfig) => html`
   <!doctype html>

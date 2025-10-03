@@ -8,7 +8,7 @@ import {
   renderAuthorizationRejectedContent,
 } from './utils';
 import type { OAuthHelpers } from '@cloudflare/workers-oauth-provider';
-import { McpOptions } from 'imagekit-api-mcp/server';
+import { McpOptions } from '@imagekit/nodejs-mcp/server';
 import { ServerConfig } from '.';
 
 export type Bindings = Env & {
