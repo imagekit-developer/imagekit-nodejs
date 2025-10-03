@@ -1,6 +1,6 @@
 {
   "dxt_version": "0.2",
-  "name": "imagekit-api-mcp",
+  "name": "@imagekit/nodejs-mcp",
   "version": "0.0.1-alpha.0",
   "description": "The official MCP Server for the Image Kit API",
   "author": {
