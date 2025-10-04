@@ -46,6 +46,26 @@ describe('URL generation', function () {
     expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg`);
   });
 
+  it('should generate a valid URL when cname is used', function () {
+    const url = client.helper.buildSrc({
+      urlEndpoint: 'https://custom.domain.com',
+      transformationPosition: 'query',
+      src: '/test_path.jpg',
+    });
+
+    expect(url).toBe(`https://custom.domain.com/test_path.jpg`);
+  });
+
+  it('should generate a valid URL when cname is used with a url-pattern', function () {
+    const url = client.helper.buildSrc({
+      urlEndpoint: 'https://custom.domain.com/url-pattern',
+      transformationPosition: 'query',
+      src: '/test_path.jpg',
+    });
+
+    expect(url).toBe(`https://custom.domain.com/url-pattern/test_path.jpg`);
+  });
+
   it('should generate a valid URL when a src is provided without transformation', function () {
     const url = client.helper.buildSrc({
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
