@@ -65,8 +65,10 @@ export class Helper extends APIResource {
 
     var transformationString = this.buildTransformationString(opts.transformation);
 
+    const addAsQuery = transformationUtils.addAsQueryParameter(opts) || isSrcParameterUsedForURL;
+
     if (transformationString && transformationString.length) {
-      if (!transformationUtils.addAsQueryParameter(opts) && !isSrcParameterUsedForURL) {
+      if (!addAsQuery) {
         urlObj.pathname = pathJoin([
           TRANSFORMATION_PARAMETER + transformationUtils.getChainTransformDelimiter() + transformationString,
           urlObj.pathname,
@@ -86,11 +88,9 @@ export class Helper extends APIResource {
     // Add transformation parameter manually to avoid URL encoding
     // URLSearchParams.set() would encode commas and colons in transformation string,
     // It would work correctly but not very readable e.g., "w-300,h-400" is better than "w-300%2Ch-400"
-    if (transformationString && transformationString.length) {
-      if (transformationUtils.addAsQueryParameter(opts) || isSrcParameterUsedForURL) {
-        const separator = urlObj.searchParams.toString() ? '&' : '?';
-        finalUrl = `${finalUrl}${separator}${TRANSFORMATION_PARAMETER}=${transformationString}`;
-      }
+    if (transformationString && transformationString.length && addAsQuery) {
+      const separator = urlObj.searchParams.toString() ? '&' : '?';
+      finalUrl = `${finalUrl}${separator}${TRANSFORMATION_PARAMETER}=${transformationString}`;
     }
 
     // Then sign the URL if needed
