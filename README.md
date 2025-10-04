@@ -98,7 +98,7 @@ Generate a simple URL without any transformations:
 import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
-  privateKey: process.env['IMAGEKIT_PRIVATE_KEY']
+  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'],
 });
 
 // Basic URL without transformations
@@ -300,11 +300,11 @@ try {
   // Verify and unwrap webhook payload
   const event = client.webhooks.unwrap(
     webhookBody, // Raw webhook payload (string)
-    { 
+    {
       headers: webhookHeaders, // Request headers containing signature
-    }
+    },
   );
-  
+
   console.log('Webhook signature is valid');
   console.log('Event type:', event.type);
   console.log('Event data:', event.data);
