@@ -1,6 +1,6 @@
 {
   "name": "@imagekit/api-mcp",
-  "version": "7.1.0",
+  "version": "7.1.1",
   "description": "The official MCP Server for the Image Kit API",
   "author": "Image Kit <developer@imagekit.io>",
   "types": "dist/index.d.ts",
