@@ -66,7 +66,7 @@ export class Helper extends APIResource {
 
     const addAsQuery = transformationUtils.addAsQueryParameter(opts) || isSrcParameterUsedForURL;
 
-    const TRANSFORMATION_PLACEHOLDER = "PLEASEREPLACEJUSTBEFORESIGN";
+    const TRANSFORMATION_PLACEHOLDER = 'PLEASEREPLACEJUSTBEFORESIGN';
 
     if (!isAbsoluteURL) {
       // For non-absolute URLs, construct the path: endpoint_path + transformations + src
@@ -74,7 +74,11 @@ export class Helper extends APIResource {
       const pathParts = [endpointPath];
 
       if (transformationString && transformationString.length && !addAsQuery) {
-        pathParts.push(TRANSFORMATION_PARAMETER + transformationUtils.getChainTransformDelimiter() + TRANSFORMATION_PLACEHOLDER);
+        pathParts.push(
+          TRANSFORMATION_PARAMETER +
+            transformationUtils.getChainTransformDelimiter() +
+            TRANSFORMATION_PLACEHOLDER,
+        );
       }
 
       pathParts.push(opts.src);
