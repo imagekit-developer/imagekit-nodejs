@@ -13,8 +13,8 @@ type MCPProps = {
  */
 const serverConfig: ServerConfig = {
   orgName: 'ImageKit',
-  instructionsUrl: "https://imagekit.io/docs/mcp-server", // Set a url for where you show users how to get an API key
-  logoUrl: "https://ik.imagekit.io/ikmedia/logo/light_T4buIzohVH.svg", // Set a custom logo url to appear during the OAuth flow
+  instructionsUrl: 'https://imagekit.io/docs/mcp-server', // Set a url for where you show users how to get an API key
+  logoUrl: 'https://ik.imagekit.io/ikmedia/logo/light_T4buIzohVH.svg', // Set a custom logo url to appear during the OAuth flow
   clientProperties: [
     {
       key: 'privateKey',
