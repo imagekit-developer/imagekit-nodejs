@@ -307,7 +307,7 @@ const customTransformUrl = client.helper.buildSrc({
     {
       width: 400,
       height: 300,
-      raw: 'something-new', // Custom contrast transformation
+      raw: 'something-new',
     },
   ],
 });
