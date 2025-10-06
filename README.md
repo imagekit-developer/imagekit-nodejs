@@ -10,6 +10,36 @@ For additional details, refer to the [ImageKit REST API documentation](https://i
 
 If you are looking to integrate file uploads in browsers, use one of our [frontend SDKs](https://imagekit.io/docs/quick-start-guides#front-end).
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Request & Response types](#request--response-types)
+- [File uploads](#file-uploads)
+- [URL generation](#url-generation)
+  - [Basic URL generation](#basic-url-generation)
+  - [URL generation with transformations](#url-generation-with-transformations)
+  - [URL generation with image overlay](#url-generation-with-image-overlay)
+  - [URL generation with text overlay](#url-generation-with-text-overlay)
+  - [URL generation with multiple overlays](#url-generation-with-multiple-overlays)
+  - [Signed URLs for secure delivery](#signed-urls-for-secure-delivery)
+  - [Using Raw parameter for custom transformations](#using-raw-parameter-for-custom-transformations)
+- [Authentication parameters for client-side uploads](#authentication-parameters-for-client-side-uploads)
+- [Webhook verification](#webhook-verification)
+  - [Verifying webhook signatures](#verifying-webhook-signatures)
+- [Handling errors](#handling-errors)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+- [Advanced Usage](#advanced-usage)
+  - [Accessing raw Response data (e.g., headers)](#accessing-raw-response-data-eg-headers)
+  - [Logging](#logging)
+  - [Making custom/undocumented requests](#making-customundocumented-requests)
+  - [Customizing the fetch client](#customizing-the-fetch-client)
+  - [Fetch options](#fetch-options)
+- [Semantic versioning](#semantic-versioning)
+- [Requirements](#requirements)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -98,7 +128,7 @@ Generate a simple URL without any transformations:
 import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
-  privateKey: process.env['IMAGEKIT_PRIVATE_KEY']
+  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'],
 });
 
 // Basic URL without transformations
@@ -264,6 +294,26 @@ const permanentSignedUrl = client.helper.buildSrc({
 // Result: URL with signature parameter (?ik-s=signature)
 ```
 
+### Using Raw parameter for custom transformations
+
+ImageKit frequently adds new transformation parameters that might not yet be documented in the SDK. You can use the `raw` parameter to access these features or create custom transformation strings:
+
+```ts
+// Using raw parameter for custom transformations
+const customTransformUrl = client.helper.buildSrc({
+  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
+  src: '/path/to/image.jpg',
+  transformation: [
+    {
+      width: 400,
+      height: 300,
+      raw: 'something-new',
+    },
+  ],
+});
+// Result: https://ik.imagekit.io/your_imagekit_id/path/to/image.jpg?tr=w-400,h-300,something-new
+```
+
 ## Authentication parameters for client-side uploads
 
 Generate authentication parameters for secure client-side file uploads:
@@ -300,11 +350,11 @@ try {
   // Verify and unwrap webhook payload
   const event = client.webhooks.unwrap(
     webhookBody, // Raw webhook payload (string)
-    { 
+    {
       headers: webhookHeaders, // Request headers containing signature
-    }
+    },
   );
-  
+
   console.log('Webhook signature is valid');
   console.log('Event type:', event.type);
   console.log('Event data:', event.data);
@@ -594,8 +644,6 @@ const client = new ImageKit({
   },
 });
 ```
-
-## Frequently Asked Questions
 
 ## Semantic versioning
 

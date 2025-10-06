@@ -45,12 +45,11 @@ export class Helper extends APIResource {
 
     const isAbsoluteURL = opts.src.startsWith('http://') || opts.src.startsWith('https://');
 
-    var urlObj, isSrcParameterUsedForURL, urlEndpointPattern;
+    var urlObj, isSrcParameterUsedForURL;
 
     try {
       if (!isAbsoluteURL) {
-        urlEndpointPattern = new URL(opts.urlEndpoint).pathname;
-        urlObj = new URL(pathJoin([opts.urlEndpoint.replace(urlEndpointPattern, ''), opts.src]));
+        urlObj = new URL(opts.urlEndpoint);
       } else {
         urlObj = new URL(opts.src!);
         isSrcParameterUsedForURL = true;
@@ -65,19 +64,25 @@ export class Helper extends APIResource {
 
     var transformationString = this.buildTransformationString(opts.transformation);
 
-    if (transformationString && transformationString.length) {
-      if (!transformationUtils.addAsQueryParameter(opts) && !isSrcParameterUsedForURL) {
-        urlObj.pathname = pathJoin([
-          TRANSFORMATION_PARAMETER + transformationUtils.getChainTransformDelimiter() + transformationString,
-          urlObj.pathname,
-        ]);
-      }
-    }
+    const addAsQuery = transformationUtils.addAsQueryParameter(opts) || isSrcParameterUsedForURL;
 
-    if (urlEndpointPattern) {
-      urlObj.pathname = pathJoin([urlEndpointPattern, urlObj.pathname]);
-    } else {
-      urlObj.pathname = pathJoin([urlObj.pathname]);
+    const TRANSFORMATION_PLACEHOLDER = 'PLEASEREPLACEJUSTBEFORESIGN';
+
+    if (!isAbsoluteURL) {
+      // For non-absolute URLs, construct the path: endpoint_path + transformations + src
+      const endpointPath = new URL(opts.urlEndpoint).pathname;
+      const pathParts = [endpointPath];
+
+      if (transformationString && transformationString.length && !addAsQuery) {
+        pathParts.push(
+          TRANSFORMATION_PARAMETER +
+            transformationUtils.getChainTransformDelimiter() +
+            TRANSFORMATION_PLACEHOLDER,
+        );
+      }
+
+      pathParts.push(opts.src);
+      urlObj.pathname = pathJoin(pathParts);
     }
 
     // First, build the complete URL with transformations
@@ -85,12 +90,16 @@ export class Helper extends APIResource {
 
     // Add transformation parameter manually to avoid URL encoding
     // URLSearchParams.set() would encode commas and colons in transformation string,
-    // It would work correctly but not very readable e.g., "w-300,h-400" is better than "w-300%2Ch-400"
+    // It would work correctly but not very readable e.g., "w-300,h-400" is better than "w-300%2Ch-400". Moreover we ensure transformation string is URL safe by encoding individual components while building it.
+    if (transformationString && transformationString.length && addAsQuery) {
+      const separator = urlObj.searchParams.toString() ? '&' : '?';
+      finalUrl = `${finalUrl}${separator}${TRANSFORMATION_PARAMETER}=${TRANSFORMATION_PLACEHOLDER}`;
+    }
+
+    // Replace the placeholder with actual transformation string
+    // We don't put actual transformation string before signing to avoid issues with URL encoding. Though in node it works correctly but other libraries use this code as blueprint and can double encode when using URL object .href equivalent.
     if (transformationString && transformationString.length) {
-      if (transformationUtils.addAsQueryParameter(opts) || isSrcParameterUsedForURL) {
-        const separator = urlObj.searchParams.toString() ? '&' : '?';
-        finalUrl = `${finalUrl}${separator}${TRANSFORMATION_PARAMETER}=${transformationString}`;
-      }
+      finalUrl = finalUrl.replace(TRANSFORMATION_PLACEHOLDER, transformationString);
     }
 
     // Then sign the URL if needed

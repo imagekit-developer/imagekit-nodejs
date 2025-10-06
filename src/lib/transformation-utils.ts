@@ -84,6 +84,7 @@ export const supportedTransforms: { [key: string]: string } = {
   // Subtitles transformations
   fontOutline: 'fol',
   fontShadow: 'fsh',
+  color: 'co',
 
   // Raw pass-through
   raw: 'raw',

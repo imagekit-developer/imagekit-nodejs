@@ -7,7 +7,7 @@ const client = new ImageKit({
 });
 
 describe('Overlay Transformation Test Cases', function () {
-  it('Ignore invalid values if text is missing', function () {
+  it('should ignore text overlay when text property is missing', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
@@ -23,7 +23,7 @@ describe('Overlay Transformation Test Cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/base-image.jpg`);
   });
 
-  it('Ignore if type is missing', function () {
+  it('should ignore overlay when type property is missing', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
@@ -37,7 +37,7 @@ describe('Overlay Transformation Test Cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/base-image.jpg`);
   });
 
-  it('Ignore invalid values if input (image)', function () {
+  it('should ignore image overlay when input property is missing', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
@@ -53,7 +53,7 @@ describe('Overlay Transformation Test Cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/base-image.jpg`);
   });
 
-  it('Ignore invalid values if input (video)', function () {
+  it('should ignore video overlay when input property is missing', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
@@ -69,7 +69,7 @@ describe('Overlay Transformation Test Cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/base-image.jpg`);
   });
 
-  it('Ignore invalid values if input (subtitle)', function () {
+  it('should ignore subtitle overlay when input property is missing', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
@@ -85,7 +85,7 @@ describe('Overlay Transformation Test Cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/base-image.jpg`);
   });
 
-  it('Ignore invalid values if color is missing (solidColor)', function () {
+  it('should ignore solid color overlay when color property is missing', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
@@ -101,7 +101,7 @@ describe('Overlay Transformation Test Cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/base-image.jpg`);
   });
 
-  it('Text overlay generates correct URL with encoded overlay text', function () {
+  it('should generate URL with text overlay using URL encoding', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
@@ -122,7 +122,7 @@ describe('Overlay Transformation Test Cases', function () {
     );
   });
 
-  it('Image overlay generates correct URL with input logo.png', function () {
+  it('should generate URL with image overlay from input file', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
@@ -139,7 +139,7 @@ describe('Overlay Transformation Test Cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/tr:l-image,i-logo.png,l-end/base-image.jpg`);
   });
 
-  it('Video overlay generates correct URL with input play-pause-loop.mp4', function () {
+  it('should generate URL with video overlay from input file', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
@@ -158,7 +158,7 @@ describe('Overlay Transformation Test Cases', function () {
     );
   });
 
-  it('Subtitle overlay generates correct URL with input subtitle.srt', function () {
+  it('should generate URL with subtitle overlay from input file', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
@@ -177,7 +177,7 @@ describe('Overlay Transformation Test Cases', function () {
     );
   });
 
-  it('Solid color overlay generates correct URL with background color FF0000', function () {
+  it('should generate URL with solid color overlay using background color', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
@@ -196,7 +196,7 @@ describe('Overlay Transformation Test Cases', function () {
     );
   });
 
-  it('Combined overlay transformations generate correct URL including nested overlays', function () {
+  it('should generate URL with multiple complex overlays including nested transformations', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
@@ -347,13 +347,13 @@ describe('Overlay Transformation Test Cases', function () {
     });
 
     expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Every%20thing,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,fs-20,ff-Arial,co-0000ff,ia-left,pa-5,al-7,tg-b,bg-red,r-10,rt-N45,fl-h,lh-20,l-end:l-image,i-logo.png,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-text,i-Nested%20text%20overlay,l-end,l-end:l-video,i-play-pause-loop.mp4,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-end:l-subtitle,i-subtitle.srt,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,bg-red,color-0000ff,ff-Arial,fol-2_A1CCDD50,fsh-A1CCDD_3,l-end:l-image,i-ik_canvas,bg-FF0000,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,al-0.5,bg-red,e-gradient,r-max,l-end/base-image.jpg`,
+      `https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Every%20thing,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,fs-20,ff-Arial,co-0000ff,ia-left,pa-5,al-7,tg-b,bg-red,r-10,rt-N45,fl-h,lh-20,l-end:l-image,i-logo.png,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-text,i-Nested%20text%20overlay,l-end,l-end:l-video,i-play-pause-loop.mp4,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-end:l-subtitle,i-subtitle.srt,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,bg-red,co-0000ff,ff-Arial,fol-2_A1CCDD50,fsh-A1CCDD_3,l-end:l-image,i-ik_canvas,bg-FF0000,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,al-0.5,bg-red,e-gradient,r-max,l-end/base-image.jpg`,
     );
   });
 });
 
 describe('Overlay encoding test cases', function () {
-  it('Nested simple path, should use i instead of ie, handle slash properly', function () {
+  it('should use plain encoding for simple image paths with slashes converted to @@', function () {
     const url = client.helper.buildSrc({
       // Using a different endpoint here, as we are checking for /demo
       transformationPosition: 'path',
@@ -373,7 +373,7 @@ describe('Overlay encoding test cases', function () {
     );
   });
 
-  it('Nested non-simple path, should use ie instead of i', function () {
+  it('should use base64 encoding for image paths containing special characters', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/demo',
@@ -396,7 +396,7 @@ describe('Overlay encoding test cases', function () {
     );
   });
 
-  it('Simple text overlay, should use i instead of ie', function () {
+  it('should use plain encoding for simple text overlays', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/demo',
@@ -413,7 +413,7 @@ describe('Overlay encoding test cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/demo/tr:l-text,i-Manu,l-end/medium_cafe_B1iTdD0C.jpg`);
   });
 
-  it('Handle slash in fontFamily in case of custom fonts', function () {
+  it('should convert slashes to @@ in fontFamily paths for custom fonts', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/demo',
@@ -437,7 +437,7 @@ describe('Overlay encoding test cases', function () {
     );
   });
 
-  it('Simple text overlay with spaces and other safe characters, should use i instead of ie', function () {
+  it('should use URL encoding for text overlays with spaces and safe characters', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/demo',
@@ -458,7 +458,7 @@ describe('Overlay encoding test cases', function () {
     );
   });
 
-  it('Non simple text overlay, should use ie instead of i', function () {
+  it('should use base64 encoding for text overlays with special unicode characters', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/demo',
@@ -477,7 +477,7 @@ describe('Overlay encoding test cases', function () {
     );
   });
 
-  it('Text overlay with explicit plain encoding', function () {
+  it('should use plain encoding when explicitly specified for text overlay', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/demo',
@@ -495,7 +495,7 @@ describe('Overlay encoding test cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/demo/tr:l-text,i-HelloWorld,l-end/sample.jpg`);
   });
 
-  it('Text overlay with explicit base64 encoding', function () {
+  it('should use base64 encoding when explicitly specified for text overlay', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/demo',
@@ -517,7 +517,7 @@ describe('Overlay encoding test cases', function () {
     );
   });
 
-  it('Image overlay with explicit plain encoding', function () {
+  it('should use plain encoding when explicitly specified for image overlay', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/demo',
@@ -535,7 +535,7 @@ describe('Overlay encoding test cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/demo/tr:l-image,i-customer@@logo.png,l-end/sample.jpg`);
   });
 
-  it('Image overlay with explicit base64 encoding', function () {
+  it('should use base64 encoding when explicitly specified for image overlay', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/demo',
@@ -557,7 +557,7 @@ describe('Overlay encoding test cases', function () {
     );
   });
 
-  it('Video overlay with explicit base64 encoding', function () {
+  it('should use base64 encoding when explicitly specified for video overlay', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/demo',
@@ -579,7 +579,7 @@ describe('Overlay encoding test cases', function () {
     );
   });
 
-  it('Subtitle overlay with explicit plain encoding', function () {
+  it('should use plain encoding when explicitly specified for subtitle overlay', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/demo',
@@ -597,7 +597,7 @@ describe('Overlay encoding test cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/demo/tr:l-subtitle,i-sub.srt,l-end/sample.mp4`);
   });
 
-  it('Subtitle overlay with explicit base64 encoding', function () {
+  it('should use base64 encoding when explicitly specified for subtitle overlay', function () {
     const url = client.helper.buildSrc({
       transformationPosition: 'path',
       urlEndpoint: 'https://ik.imagekit.io/demo',
@@ -619,7 +619,7 @@ describe('Overlay encoding test cases', function () {
     );
   });
 
-  it('Avoid double encoding when transformation string is in query params', function () {
+  it('should properly encode overlay text when transformations are in query parameters', function () {
     const url = client.helper.buildSrc({
       urlEndpoint: 'https://ik.imagekit.io/demo',
       src: '/sample.jpg',

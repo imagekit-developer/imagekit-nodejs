@@ -1,5 +1,39 @@
 # Changelog
 
+## 7.1.1 (2025-10-06)
+
+Full Changelog: [v7.1.0...v7.1.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.1.0...v7.1.1)
+
+### Features
+
+* **api:** use scoped package for mcp server ([af9b0f4](https://github.com/imagekit-developer/imagekit-nodejs/commit/af9b0f4abeeef59418ae6fc2dabf65d6270c9bb1))
+
+
+### Bug Fixes
+
+* add missing 'color' parameter mapping for subtitle overlays transformation. ([2c4a6d2](https://github.com/imagekit-developer/imagekit-nodejs/commit/2c4a6d20aec544c01fb29e7b2d64513527a11ccc))
+* lint error ([b320d6f](https://github.com/imagekit-developer/imagekit-nodejs/commit/b320d6f9a03f1aefd1d9edad23618953b29d100c))
+* linting issues ([3794fe5](https://github.com/imagekit-developer/imagekit-nodejs/commit/3794fe565330087cae39bb5e35c77b0ecc6c2a2a))
+* update raw parameter example in README for clarity ([e86beab](https://github.com/imagekit-developer/imagekit-nodejs/commit/e86beabfa77291baaf3cd3bf6be7f1336170e51d))
+* update serverConfig to include valid URLs and improve label descriptions ([49d048f](https://github.com/imagekit-developer/imagekit-nodejs/commit/49d048fba3d9ede0e3e92991e8829d51c04c1229))
+
+
+### Chores
+
+* configure new SDK language ([33d1237](https://github.com/imagekit-developer/imagekit-nodejs/commit/33d12370088d062a282f81625c63522a5d961308))
+* **internal:** remove .eslintcache ([ec12af7](https://github.com/imagekit-developer/imagekit-nodejs/commit/ec12af7ecad37e8f7a227b356acd0d0cc1c52255))
+* **jsdoc:** fix [@link](https://github.com/link) annotations to refer only to parts of the package‘s public interface ([4332a7e](https://github.com/imagekit-developer/imagekit-nodejs/commit/4332a7e3680d596f508b6d2c83b1e9faab6af878))
+
+
+### Documentation
+
+* update README to enhance Table of Contents and add raw transformations parameter ([892d31c](https://github.com/imagekit-developer/imagekit-nodejs/commit/892d31c9105c1c8c9bbd08983c2a0c9a62aee883))
+
+
+### Refactors
+
+* streamline transformation string handling in URL construction ([6e99777](https://github.com/imagekit-developer/imagekit-nodejs/commit/6e99777260db5c7fe833d4e71abe5abafb95156d))
+
 ## 7.1.0 (2025-09-30)
 
 Full Changelog: [v7.0.1...v7.1.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.0.1...v7.1.0)

@@ -1,7 +1,7 @@
 import { makeOAuthConsent } from './app';
 import { McpAgent } from 'agents/mcp';
 import OAuthProvider from '@cloudflare/workers-oauth-provider';
-import { McpOptions, initMcpServer, server, ClientOptions } from 'imagekit-api-mcp/server';
+import { McpOptions, initMcpServer, server, ClientOptions } from '@imagekit/api-mcp/server';
 
 type MCPProps = {
   clientProps: ClientOptions;
@@ -13,39 +13,39 @@ type MCPProps = {
  */
 const serverConfig: ServerConfig = {
   orgName: 'ImageKit',
-  instructionsUrl: undefined, // Set a url for where you show users how to get an API key
-  logoUrl: undefined, // Set a custom logo url to appear during the OAuth flow
+  instructionsUrl: 'https://imagekit.io/docs/mcp-server', // Set a url for where you show users how to get an API key
+  logoUrl: 'https://ik.imagekit.io/ikmedia/logo/light_T4buIzohVH.svg', // Set a custom logo url to appear during the OAuth flow
   clientProperties: [
     {
       key: 'privateKey',
-      label: 'Private Key',
+      label: 'ImageKit Private Key',
       description:
         'Your ImageKit private API key (starts with `private_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/api-keys).\n',
       required: true,
       default: undefined,
-      placeholder: 'My Private Key',
+      placeholder: 'ImageKit Private Key',
       type: 'password',
     },
-    {
-      key: 'password',
-      label: 'Password',
-      description:
-        'ImageKit uses your API key as username and ignores the password. \nThe SDK sets a dummy value. You can ignore this field.\n',
-      required: false,
-      default: 'do_not_set',
-      placeholder: 'My Password',
-      type: 'password',
-    },
-    {
-      key: 'webhookSecret',
-      label: 'Webhook Secret',
-      description:
-        "Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you're using webhooks.\n",
-      required: false,
-      default: null,
-      placeholder: 'My Webhook Secret',
-      type: 'string',
-    },
+    // {
+    //   key: 'password',
+    //   label: 'Password',
+    //   description:
+    //     'ImageKit uses your API key as username and ignores the password. \nThe SDK sets a dummy value. You can ignore this field.\n',
+    //   required: false,
+    //   default: 'do_not_set',
+    //   placeholder: 'My Password',
+    //   type: 'password',
+    // },
+    // {
+    //   key: 'webhookSecret',
+    //   label: 'Webhook Secret',
+    //   description:
+    //     "Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you're using webhooks.\n",
+    //   required: false,
+    //   default: null,
+    //   placeholder: 'My Webhook Secret',
+    //   type: 'string',
+    // },
   ],
 };
 

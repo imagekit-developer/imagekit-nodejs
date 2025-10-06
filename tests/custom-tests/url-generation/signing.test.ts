@@ -49,7 +49,7 @@ describe('URL Signing', function () {
     expect(url).toContain('ik-t');
   });
 
-  it('Special characters', function () {
+  it('should generate signed URL with special characters in filename', function () {
     const url = client.helper.buildSrc({
       urlEndpoint: 'https://ik.imagekit.io/demo/',
       src: 'sdk-testing-files/हिन्दी.png',
@@ -61,7 +61,7 @@ describe('URL Signing', function () {
     );
   });
 
-  it('Text overlay with special characters', function () {
+  it('should generate signed URL with text overlay containing special characters', function () {
     const url = client.helper.buildSrc({
       urlEndpoint: 'https://ik.imagekit.io/demo/',
       src: 'sdk-testing-files/हिन्दी.png',
@@ -85,6 +85,34 @@ describe('URL Signing', function () {
 
     expect(url).toBe(
       'https://ik.imagekit.io/demo/sdk-testing-files/%E0%A4%B9%E0%A4%BF%E0%A4%A8%E0%A5%8D%E0%A4%A6%E0%A5%80.png?tr=l-text,ie-4KS54KS%2F4KSo4KWN4KSm4KWA,co-red,fs-32,ff-sdk-testing-files@@Poppins-Regular_Q15GrYWmL.ttf,l-end&ik-s=ac9f24a03080102555e492185533c1ae6bd93fa7',
+    );
+  });
+
+  it('should generate signed URL with text overlay and special characters using path transformation position', function () {
+    const url = client.helper.buildSrc({
+      urlEndpoint: 'https://ik.imagekit.io/demo/',
+      src: 'sdk-testing-files/हिन्दी.png',
+      transformationPosition: 'path',
+      transformation: [
+        {
+          overlay: {
+            type: 'text',
+            text: 'हिन्दी',
+            transformation: [
+              {
+                fontColor: 'red',
+                fontSize: '32',
+                fontFamily: 'sdk-testing-files/Poppins-Regular_Q15GrYWmL.ttf',
+              },
+            ],
+          },
+        },
+      ],
+      signed: true,
+    });
+
+    expect(url).toBe(
+      'https://ik.imagekit.io/demo/tr:l-text,ie-4KS54KS%2F4KSo4KWN4KSm4KWA,co-red,fs-32,ff-sdk-testing-files@@Poppins-Regular_Q15GrYWmL.ttf,l-end/sdk-testing-files/%E0%A4%B9%E0%A4%BF%E0%A4%A8%E0%A5%8D%E0%A4%A6%E0%A5%80.png?ik-s=69f2ecbb7364bbbad24616e1f7f1bac5a560fc71',
     );
   });
 
@@ -132,7 +160,7 @@ describe('URL Signing', function () {
     expect(url).not.toContain('ik-t=');
   });
 
-  it('transformationPosition as path', function () {
+  it('should generate signed URL with transformations in path position and query parameters', function () {
     const url = client.helper.buildSrc({
       urlEndpoint: 'https://ik.imagekit.io/demo/',
       src: 'sdk-testing-files/future-search.png',
