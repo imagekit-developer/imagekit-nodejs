@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'create_folders',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nThis will create a new folder. You can specify the folder name and location of the parent folder where this new folder should be created.\n\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {}\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nThis will create a new folder. You can specify the folder name and location of the parent folder where this new folder should be created.\n\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/folder_create_response',\n  $defs: {\n    folder_create_response: {\n      type: 'object',\n      properties: {}\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {

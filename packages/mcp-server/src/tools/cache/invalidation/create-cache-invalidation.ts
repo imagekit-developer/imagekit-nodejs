@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'create_cache_invalidation',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nThis API will purge CDN cache and ImageKit.io's internal cache for a file.  Note: Purge cache is an asynchronous process and it may take some time to reflect the changes.\n\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    requestId: {\n      type: 'string',\n      description: 'Unique identifier of the purge request. This can be used to check the status of the purge request.\\n'\n    }\n  }\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nThis API will purge CDN cache and ImageKit.io's internal cache for a file.  Note: Purge cache is an asynchronous process and it may take some time to reflect the changes.\n\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/invalidation_create_response',\n  $defs: {\n    invalidation_create_response: {\n      type: 'object',\n      properties: {\n        requestId: {\n          type: 'string',\n          description: 'Unique identifier of the purge request. This can be used to check the status of the purge request.\\n'\n        }\n      }\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
