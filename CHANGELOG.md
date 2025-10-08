@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.1.2 (2025-10-08)
+
+Full Changelog: [v7.1.1...v7.1.2](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.1.1...v7.1.2)
+
+### Chores
+
+* extract some types in mcp docs ([de606ba](https://github.com/imagekit-developer/imagekit-nodejs/commit/de606ba3b734389e1c52a9929dbf8487828822e0))
+* **internal:** use npm pack for build uploads ([bdfd369](https://github.com/imagekit-developer/imagekit-nodejs/commit/bdfd369118542dad02cf8a0fae8713d0d8bea4eb))
+
 ## 7.1.1 (2025-10-06)
 
 Full Changelog: [v7.1.0...v7.1.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.1.0...v7.1.1)
