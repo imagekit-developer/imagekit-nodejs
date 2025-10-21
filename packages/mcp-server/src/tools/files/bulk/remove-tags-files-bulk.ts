@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'remove_tags_files_bulk',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nThis API removes tags from multiple files in bulk. A maximum of 50 files can be specified at a time.\n\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    successfullyUpdatedFileIds: {\n      type: 'array',\n      description: 'An array of fileIds that in which tags were successfully removed.\\n',\n      items: {\n        type: 'string'\n      }\n    }\n  }\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nThis API removes tags from multiple files in bulk. A maximum of 50 files can be specified at a time.\n\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/bulk_remove_tags_response',\n  $defs: {\n    bulk_remove_tags_response: {\n      type: 'object',\n      properties: {\n        successfullyUpdatedFileIds: {\n          type: 'array',\n          description: 'An array of fileIds that in which tags were successfully removed.\\n',\n          items: {\n            type: 'string'\n          }\n        }\n      }\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {

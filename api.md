@@ -4,10 +4,12 @@ Types:
 
 - <code><a href="./src/resources/shared.ts">BaseOverlay</a></code>
 - <code><a href="./src/resources/shared.ts">Extensions</a></code>
+- <code><a href="./src/resources/shared.ts">GetImageAttributesOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ImageOverlay</a></code>
 - <code><a href="./src/resources/shared.ts">Overlay</a></code>
 - <code><a href="./src/resources/shared.ts">OverlayPosition</a></code>
 - <code><a href="./src/resources/shared.ts">OverlayTiming</a></code>
+- <code><a href="./src/resources/shared.ts">ResponsiveImageAttributes</a></code>
 - <code><a href="./src/resources/shared.ts">SolidColorOverlay</a></code>
 - <code><a href="./src/resources/shared.ts">SolidColorOverlayTransformation</a></code>
 - <code><a href="./src/resources/shared.ts">SrcOptions</a></code>
