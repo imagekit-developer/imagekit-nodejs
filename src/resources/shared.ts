@@ -78,6 +78,54 @@ export namespace Extensions {
   }
 }
 
+/**
+ * Options for generating responsive image attributes including `src`, `srcSet`,
+ * and `sizes` for HTML `<img>` elements. This schema extends `SrcOptions` to add
+ * support for responsive image generation with breakpoints.
+ */
+export interface GetImageAttributesOptions extends SrcOptions {
+  /**
+   * Custom list of **device-width breakpoints** in pixels. These define common
+   * screen widths for responsive image generation.
+   *
+   * Defaults to `[640, 750, 828, 1080, 1200, 1920, 2048, 3840]`. Sorted
+   * automatically.
+   */
+  deviceBreakpoints?: Array<number>;
+
+  /**
+   * Custom list of **image-specific breakpoints** in pixels. Useful for generating
+   * small variants (e.g., placeholders or thumbnails).
+   *
+   * Merged with `deviceBreakpoints` before calculating `srcSet`. Defaults to
+   * `[16, 32, 48, 64, 96, 128, 256, 384]`. Sorted automatically.
+   */
+  imageBreakpoints?: Array<number>;
+
+  /**
+   * The value for the HTML `sizes` attribute (e.g., `"100vw"` or
+   * `"(min-width:768px) 50vw, 100vw"`).
+   *
+   * - If it includes one or more `vw` units, breakpoints smaller than the
+   *   corresponding percentage of the smallest device width are excluded.
+   * - If it contains no `vw` units, the full breakpoint list is used.
+   *
+   * Enables a width-based strategy and generates `w` descriptors in `srcSet`.
+   */
+  sizes?: string;
+
+  /**
+   * The intended display width of the image in pixels, used **only when the `sizes`
+   * attribute is not provided**.
+   *
+   * Triggers a DPR-based strategy (1x and 2x variants) and generates `x` descriptors
+   * in `srcSet`.
+   *
+   * Ignored if `sizes` is present.
+   */
+  width?: number;
+}
+
 export interface ImageOverlay extends BaseOverlay {
   /**
    * Specifies the relative path to the image used as an overlay.
@@ -173,6 +221,34 @@ export interface OverlayTiming {
    * Applies only if the base asset is a video. Maps to `lso` in the URL.
    */
   start?: number | string;
+}
+
+/**
+ * Resulting set of attributes suitable for an HTML `<img>` element. Useful for
+ * enabling responsive image loading with `srcSet` and `sizes`.
+ */
+export interface ResponsiveImageAttributes {
+  /**
+   * URL for the _largest_ candidate (assigned to plain `src`).
+   */
+  src: string;
+
+  /**
+   * `sizes` returned (or synthesised as `100vw`). The value for the HTML `sizes`
+   * attribute.
+   */
+  sizes?: string;
+
+  /**
+   * Candidate set with `w` or `x` descriptors. Multiple image URLs separated by
+   * commas, each with a descriptor.
+   */
+  srcSet?: string;
+
+  /**
+   * Width as a number (if `width` was provided in the input options).
+   */
+  width?: number;
 }
 
 export interface SolidColorOverlay extends BaseOverlay {

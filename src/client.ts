@@ -911,10 +911,12 @@ export declare namespace ImageKit {
 
   export type BaseOverlay = API.BaseOverlay;
   export type Extensions = API.Extensions;
+  export type GetImageAttributesOptions = API.GetImageAttributesOptions;
   export type ImageOverlay = API.ImageOverlay;
   export type Overlay = API.Overlay;
   export type OverlayPosition = API.OverlayPosition;
   export type OverlayTiming = API.OverlayTiming;
+  export type ResponsiveImageAttributes = API.ResponsiveImageAttributes;
   export type SolidColorOverlay = API.SolidColorOverlay;
   export type SolidColorOverlayTransformation = API.SolidColorOverlayTransformation;
   export type SrcOptions = API.SrcOptions;
