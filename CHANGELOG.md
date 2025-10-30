@@ -1,5 +1,24 @@
 # Changelog
 
+## 7.2.0 (2025-10-30)
+
+Full Changelog: [v7.1.1...v7.2.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.1.1...v7.2.0)
+
+### Features
+
+* **api:** add GetImageAttributesOptions and ResponsiveImageAttributes schemas; update resource references in main.yaml; remove dummy endpoint ([9ea439a](https://github.com/imagekit-developer/imagekit-nodejs/commit/9ea439a2d0a4c8300d14d4424dc72ab40a67c4d4))
+
+
+### Bug Fixes
+
+* **mcpb:** pin @anthropic-ai/mcpb version ([d81e225](https://github.com/imagekit-developer/imagekit-nodejs/commit/d81e22560aab772ee9b241fb44a50561b8837034))
+
+
+### Chores
+
+* extract some types in mcp docs ([de606ba](https://github.com/imagekit-developer/imagekit-nodejs/commit/de606ba3b734389e1c52a9929dbf8487828822e0))
+* **internal:** use npm pack for build uploads ([bdfd369](https://github.com/imagekit-developer/imagekit-nodejs/commit/bdfd369118542dad02cf8a0fae8713d0d8bea4eb))
+
 ## 7.1.1 (2025-10-06)
 
 Full Changelog: [v7.1.0...v7.1.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.1.0...v7.1.1)
