@@ -38,17 +38,18 @@ For clients with a configuration JSON, it might look something like this:
 
 ### Cursor
 
-      If you use Cursor, you can install the MCP server by using the button below. You will need to set your environment variables
-      in Cursor's `mcp.json`, which can be found in Cursor Settings > Tools & MCP > New MCP Server.
+If you use Cursor, you can install the MCP server by using the button below. You will need to set your environment variables
+in Cursor's `mcp.json`, which can be found in Cursor Settings > Tools & MCP > New MCP Server.
 
-      [![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=@imagekit/api-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBpbWFnZWtpdC9hcGktbWNwIl0sImVudiI6eyJJTUFHRUtJVF9QUklWQVRFX0tFWSI6IlNldCB5b3VyIElNQUdFS0lUX1BSSVZBVEVfS0VZIGhlcmUuIiwiT1BUSU9OQUxfSU1BR0VLSVRfSUdOT1JFU19USElTIjoiU2V0IHlvdXIgT1BUSU9OQUxfSU1BR0VLSVRfSUdOT1JFU19USElTIGhlcmUuIiwiSU1BR0VLSVRfV0VCSE9PS19TRUNSRVQiOiJTZXQgeW91ciBJTUFHRUtJVF9XRUJIT09LX1NFQ1JFVCBoZXJlLiJ9fQ)
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=@imagekit/api-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBpbWFnZWtpdC9hcGktbWNwIl0sImVudiI6eyJJTUFHRUtJVF9QUklWQVRFX0tFWSI6IlNldCB5b3VyIElNQUdFS0lUX1BSSVZBVEVfS0VZIGhlcmUuIiwiT1BUSU9OQUxfSU1BR0VLSVRfSUdOT1JFU19USElTIjoiU2V0IHlvdXIgT1BUSU9OQUxfSU1BR0VLSVRfSUdOT1JFU19USElTIGhlcmUuIiwiSU1BR0VLSVRfV0VCSE9PS19TRUNSRVQiOiJTZXQgeW91ciBJTUFHRUtJVF9XRUJIT09LX1NFQ1JFVCBoZXJlLiJ9fQ)
 
 ## Exposing endpoints to your MCP Client
 
-There are two ways to expose endpoints as tools in the MCP server:
+There are three ways to expose endpoints as tools in the MCP server:
 
 1. Exposing one tool per endpoint, and filtering as necessary
 2. Exposing a set of tools to dynamically discover and invoke endpoints from the API
+3. Exposing a docs search tool and a code execution tool, allowing the client to write code to be executed against the TypeScript client
 
 ### Filtering endpoints and tools
 
@@ -82,6 +83,18 @@ See more information with `--help`.
 All of these command-line options can be repeated, combined together, and have corresponding exclusion versions (e.g. `--no-tool`).
 
 Use `--list` to see the list of available tools, or see below.
+
+### Code execution
+
+If you specify `--tools=code` to the MCP server, it will expose just two tools:
+
+- `search_docs` - Searches the API documentation and returns a list of markdown results
+- `execute` - Runs code against the TypeScript client
+
+This allows the LLM to implement more complex logic by chaining together many API calls without loading
+intermediary results into its context window.
+
+The code execution itself happens in a Deno sandbox that has network access only to the base URL for the API.
 
 ### Specifying the MCP Client
 
