@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from '@imagekit/api-mcp/filtering';
-import { Metadata, asTextContentResult } from '@imagekit/api-mcp/tools/types';
+import { isJqError, maybeFilter } from '@imagekit/api-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from '@imagekit/api-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import ImageKit from '@imagekit/nodejs';
@@ -50,7 +50,14 @@ export const tool: Tool = {
 
 export const handler = async (client: ImageKit, args: Record<string, unknown> | undefined) => {
   const { jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.folders.rename(body)));
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.folders.rename(body)));
+  } catch (error) {
+    if (isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };
