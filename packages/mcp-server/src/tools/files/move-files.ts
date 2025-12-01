@@ -47,7 +47,7 @@ export const handler = async (client: ImageKit, args: Record<string, unknown> | 
   try {
     return asTextContentResult(await maybeFilter(jq_filter, await client.files.move(body)));
   } catch (error) {
-    if (isJqError(error)) {
+    if (error instanceof ImageKit.APIError || isJqError(error)) {
       return asErrorResult(error.message);
     }
     throw error;
