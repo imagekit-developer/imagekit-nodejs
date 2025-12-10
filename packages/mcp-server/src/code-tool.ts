@@ -43,6 +43,7 @@ export async function codeTool() {
       },
       body: JSON.stringify({
         project_name: 'imagekit',
+        client_opts: {},
         code,
       }),
     });
