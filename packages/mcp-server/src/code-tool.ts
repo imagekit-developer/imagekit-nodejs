@@ -39,6 +39,7 @@ export async function codeTool() {
           IMAGEKIT_PRIVATE_KEY: readEnv('IMAGEKIT_PRIVATE_KEY'),
           OPTIONAL_IMAGEKIT_IGNORES_THIS: readEnv('OPTIONAL_IMAGEKIT_IGNORES_THIS'),
           IMAGEKIT_WEBHOOK_SECRET: readEnv('IMAGEKIT_WEBHOOK_SECRET'),
+          IMAGE_KIT_BASE_URL: readEnv('IMAGE_KIT_BASE_URL'),
         }),
       },
       body: JSON.stringify({
