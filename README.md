@@ -121,8 +121,14 @@ await client.files.upload({ file: new File(['my bytes'], 'file'), fileName: 'fil
 await client.files.upload({ file: await fetch('https://somesite/file'), fileName: 'fileName' });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.files.upload({ file: await toFile(Buffer.from('my bytes'), 'file'), fileName: 'fileName' });
-await client.files.upload({ file: await toFile(new Uint8Array([0, 1, 2]), 'file'), fileName: 'fileName' });
+await client.files.upload({
+  file: await toFile(Buffer.from('my bytes'), 'file'),
+  fileName: 'fileName',
+});
+await client.files.upload({
+  file: await toFile(new Uint8Array([0, 1, 2]), 'file'),
+  fileName: 'fileName',
+});
 ```
 
 ## URL generation
