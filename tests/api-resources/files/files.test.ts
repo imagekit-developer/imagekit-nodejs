@@ -152,7 +152,11 @@ describe('resource files', () => {
             semitransparency: true,
           },
         },
-        { maxTags: 5, minConfidence: 95, name: 'google-auto-tagging' },
+        {
+          maxTags: 5,
+          minConfidence: 95,
+          name: 'google-auto-tagging',
+        },
         { name: 'ai-auto-description' },
       ],
       folder: 'folder',
@@ -169,7 +173,11 @@ describe('resource files', () => {
       transformation: {
         post: [
           { type: 'thumbnail', value: 'w-150,h-150' },
-          { protocol: 'dash', type: 'abs', value: 'sr-240_360_480_720_1080' },
+          {
+            protocol: 'dash',
+            type: 'abs',
+            value: 'sr-240_360_480_720_1080',
+          },
         ],
         pre: 'w-300,h-300,q-80',
       },
