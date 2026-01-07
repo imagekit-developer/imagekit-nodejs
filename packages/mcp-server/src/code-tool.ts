@@ -2,7 +2,7 @@
 
 import { McpTool, Metadata, ToolCallResult, asErrorResult, asTextContentResult } from './types';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import { readEnv } from './server';
+import { readEnv, readEnvOrError } from './server';
 import { WorkerInput, WorkerOutput } from './code-tool-types';
 /**
  * A tool that runs code against a copy of the SDK.
@@ -36,7 +36,7 @@ export function codeTool(): McpTool {
         ...(stainlessAPIKey && { Authorization: stainlessAPIKey }),
         'Content-Type': 'application/json',
         client_envs: JSON.stringify({
-          IMAGEKIT_PRIVATE_KEY: readEnv('IMAGEKIT_PRIVATE_KEY'),
+          IMAGEKIT_PRIVATE_KEY: readEnvOrError('IMAGEKIT_PRIVATE_KEY'),
           OPTIONAL_IMAGEKIT_IGNORES_THIS: readEnv('OPTIONAL_IMAGEKIT_IGNORES_THIS'),
           IMAGEKIT_WEBHOOK_SECRET: readEnv('IMAGEKIT_WEBHOOK_SECRET'),
           IMAGE_KIT_BASE_URL: readEnv('IMAGE_KIT_BASE_URL'),
