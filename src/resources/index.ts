@@ -45,6 +45,12 @@ export {
   type FolderRenameParams,
 } from './folders/folders';
 export {
+  SavedExtensions,
+  type SavedExtensionListResponse,
+  type SavedExtensionCreateParams,
+  type SavedExtensionUpdateParams,
+} from './saved-extensions';
+export {
   Webhooks,
   type BaseWebhookEvent,
   type UploadPostTransformErrorEvent,

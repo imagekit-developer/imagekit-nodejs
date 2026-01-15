@@ -1,9 +1,361 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export interface BaseOverlay {
+  /**
+   * Controls how the layer blends with the base image or underlying content. Maps to
+   * `lm` in the URL. By default, layers completely cover the base image beneath
+   * them. Layer modes change this behavior:
+   *
+   * - `multiply`: Multiplies the pixel values of the layer with the base image. The
+   *   result is always darker than the original images. This is ideal for applying
+   *   shadows or color tints.
+   * - `displace`: Uses the layer as a displacement map to distort pixels in the base
+   *   image. The red channel controls horizontal displacement, and the green channel
+   *   controls vertical displacement. Requires `x` or `y` parameter to control
+   *   displacement magnitude.
+   * - `cutout`: Acts as an inverse mask where opaque areas of the layer turn the
+   *   base image transparent, while transparent areas leave the base image
+   *   unchanged. This mode functions like a hole-punch, effectively cutting the
+   *   shape of the layer out of the underlying image.
+   * - `cutter`: Acts as a shape mask where only the parts of the base image that
+   *   fall inside the opaque area of the layer are preserved. This mode functions
+   *   like a cookie-cutter, trimming the base image to match the specific dimensions
+   *   and shape of the layer. See
+   *   [Layer modes](https://imagekit.io/docs/add-overlays-on-images#layer-modes).
+   */
+  layerMode?: 'multiply' | 'cutter' | 'cutout' | 'displace';
+
+  /**
+   * Specifies the overlay's position relative to the parent asset. See
+   * [Position of Layer](https://imagekit.io/docs/transformations#position-of-layer).
+   */
   position?: OverlayPosition;
 
+  /**
+   * Specifies timing information for the overlay (only applicable if the base asset
+   * is a video). See
+   * [Position of Layer](https://imagekit.io/docs/transformations#position-of-layer).
+   */
   timing?: OverlayTiming;
+}
+
+/**
+ * Configuration object for an extension (base extensions only, not saved extension
+ * references).
+ */
+export type ExtensionConfig =
+  | ExtensionConfig.RemoveBg
+  | ExtensionConfig.AutoTaggingExtension
+  | ExtensionConfig.AIAutoDescription
+  | ExtensionConfig.AITasks;
+
+export namespace ExtensionConfig {
+  export interface RemoveBg {
+    /**
+     * Specifies the background removal extension.
+     */
+    name: 'remove-bg';
+
+    options?: RemoveBg.Options;
+  }
+
+  export namespace RemoveBg {
+    export interface Options {
+      /**
+       * Whether to add an artificial shadow to the result. Default is false. Note:
+       * Adding shadows is currently only supported for car photos.
+       */
+      add_shadow?: boolean;
+
+      /**
+       * Specifies a solid color background using hex code (e.g., "81d4fa", "fff") or
+       * color name (e.g., "green"). If this parameter is set, `bg_image_url` must be
+       * empty.
+       */
+      bg_color?: string;
+
+      /**
+       * Sets a background image from a URL. If this parameter is set, `bg_color` must be
+       * empty.
+       */
+      bg_image_url?: string;
+
+      /**
+       * Allows semi-transparent regions in the result. Default is true. Note:
+       * Semitransparency is currently only supported for car windows.
+       */
+      semitransparency?: boolean;
+    }
+  }
+
+  export interface AutoTaggingExtension {
+    /**
+     * Maximum number of tags to attach to the asset.
+     */
+    maxTags: number;
+
+    /**
+     * Minimum confidence level for tags to be considered valid.
+     */
+    minConfidence: number;
+
+    /**
+     * Specifies the auto-tagging extension used.
+     */
+    name: 'google-auto-tagging' | 'aws-auto-tagging';
+  }
+
+  export interface AIAutoDescription {
+    /**
+     * Specifies the auto description extension.
+     */
+    name: 'ai-auto-description';
+  }
+
+  export interface AITasks {
+    /**
+     * Specifies the AI tasks extension for automated image analysis using AI models.
+     */
+    name: 'ai-tasks';
+
+    /**
+     * Array of task objects defining AI operations to perform on the asset.
+     */
+    tasks: Array<AITasks.SelectTags | AITasks.SelectMetadata | AITasks.YesNo>;
+  }
+
+  export namespace AITasks {
+    export interface SelectTags {
+      /**
+       * The question or instruction for the AI to analyze the image.
+       */
+      instruction: string;
+
+      /**
+       * Task type that analyzes the image and adds matching tags from a vocabulary.
+       */
+      type: 'select_tags';
+
+      /**
+       * Array of possible tag values. Combined length of all strings must not exceed 500
+       * characters. Cannot contain the `%` character.
+       */
+      vocabulary: Array<string>;
+
+      /**
+       * Maximum number of tags to select from the vocabulary.
+       */
+      max_selections?: number;
+
+      /**
+       * Minimum number of tags to select from the vocabulary.
+       */
+      min_selections?: number;
+    }
+
+    export interface SelectMetadata {
+      /**
+       * Name of the custom metadata field to set. The field must exist in your account.
+       */
+      field: string;
+
+      /**
+       * The question or instruction for the AI to analyze the image.
+       */
+      instruction: string;
+
+      /**
+       * Task type that analyzes the image and sets a custom metadata field value from a
+       * vocabulary.
+       */
+      type: 'select_metadata';
+
+      /**
+       * Maximum number of values to select from the vocabulary.
+       */
+      max_selections?: number;
+
+      /**
+       * Minimum number of values to select from the vocabulary.
+       */
+      min_selections?: number;
+
+      /**
+       * Array of possible values matching the custom metadata field type.
+       */
+      vocabulary?: Array<string | number | boolean>;
+    }
+
+    export interface YesNo {
+      /**
+       * The yes/no question for the AI to answer about the image.
+       */
+      instruction: string;
+
+      /**
+       * Task type that asks a yes/no question and executes actions based on the answer.
+       */
+      type: 'yes_no';
+
+      /**
+       * Actions to execute if the AI answers no.
+       */
+      on_no?: YesNo.OnNo;
+
+      /**
+       * Actions to execute if the AI cannot determine the answer.
+       */
+      on_unknown?: YesNo.OnUnknown;
+
+      /**
+       * Actions to execute if the AI answers yes.
+       */
+      on_yes?: YesNo.OnYes;
+    }
+
+    export namespace YesNo {
+      /**
+       * Actions to execute if the AI answers no.
+       */
+      export interface OnNo {
+        /**
+         * Array of tag strings to add to the asset.
+         */
+        add_tags?: Array<string>;
+
+        /**
+         * Array of tag strings to remove from the asset.
+         */
+        remove_tags?: Array<string>;
+
+        /**
+         * Array of custom metadata field updates.
+         */
+        set_metadata?: Array<OnNo.SetMetadata>;
+
+        /**
+         * Array of custom metadata fields to remove.
+         */
+        unset_metadata?: Array<OnNo.UnsetMetadata>;
+      }
+
+      export namespace OnNo {
+        export interface SetMetadata {
+          /**
+           * Name of the custom metadata field to set.
+           */
+          field: string;
+
+          /**
+           * Value to set for the custom metadata field. The value type should match the
+           * custom metadata field type.
+           */
+          value: string | number | boolean | Array<string | number | boolean>;
+        }
+
+        export interface UnsetMetadata {
+          /**
+           * Name of the custom metadata field to remove.
+           */
+          field: string;
+        }
+      }
+
+      /**
+       * Actions to execute if the AI cannot determine the answer.
+       */
+      export interface OnUnknown {
+        /**
+         * Array of tag strings to add to the asset.
+         */
+        add_tags?: Array<string>;
+
+        /**
+         * Array of tag strings to remove from the asset.
+         */
+        remove_tags?: Array<string>;
+
+        /**
+         * Array of custom metadata field updates.
+         */
+        set_metadata?: Array<OnUnknown.SetMetadata>;
+
+        /**
+         * Array of custom metadata fields to remove.
+         */
+        unset_metadata?: Array<OnUnknown.UnsetMetadata>;
+      }
+
+      export namespace OnUnknown {
+        export interface SetMetadata {
+          /**
+           * Name of the custom metadata field to set.
+           */
+          field: string;
+
+          /**
+           * Value to set for the custom metadata field. The value type should match the
+           * custom metadata field type.
+           */
+          value: string | number | boolean | Array<string | number | boolean>;
+        }
+
+        export interface UnsetMetadata {
+          /**
+           * Name of the custom metadata field to remove.
+           */
+          field: string;
+        }
+      }
+
+      /**
+       * Actions to execute if the AI answers yes.
+       */
+      export interface OnYes {
+        /**
+         * Array of tag strings to add to the asset.
+         */
+        add_tags?: Array<string>;
+
+        /**
+         * Array of tag strings to remove from the asset.
+         */
+        remove_tags?: Array<string>;
+
+        /**
+         * Array of custom metadata field updates.
+         */
+        set_metadata?: Array<OnYes.SetMetadata>;
+
+        /**
+         * Array of custom metadata fields to remove.
+         */
+        unset_metadata?: Array<OnYes.UnsetMetadata>;
+      }
+
+      export namespace OnYes {
+        export interface SetMetadata {
+          /**
+           * Name of the custom metadata field to set.
+           */
+          field: string;
+
+          /**
+           * Value to set for the custom metadata field. The value type should match the
+           * custom metadata field type.
+           */
+          value: string | number | boolean | Array<string | number | boolean>;
+        }
+
+        export interface UnsetMetadata {
+          /**
+           * Name of the custom metadata field to remove.
+           */
+          field: string;
+        }
+      }
+    }
+  }
 }
 
 /**
@@ -11,7 +363,11 @@ export interface BaseOverlay {
  * with specific parameters based on the extension type.
  */
 export type Extensions = Array<
-  Extensions.RemoveBg | Extensions.AutoTaggingExtension | Extensions.AIAutoDescription
+  | Extensions.RemoveBg
+  | Extensions.AutoTaggingExtension
+  | Extensions.AIAutoDescription
+  | Extensions.AITasks
+  | Extensions.SavedExtension
 >;
 
 export namespace Extensions {
@@ -75,6 +431,263 @@ export namespace Extensions {
      * Specifies the auto description extension.
      */
     name: 'ai-auto-description';
+  }
+
+  export interface AITasks {
+    /**
+     * Specifies the AI tasks extension for automated image analysis using AI models.
+     */
+    name: 'ai-tasks';
+
+    /**
+     * Array of task objects defining AI operations to perform on the asset.
+     */
+    tasks: Array<AITasks.SelectTags | AITasks.SelectMetadata | AITasks.YesNo>;
+  }
+
+  export namespace AITasks {
+    export interface SelectTags {
+      /**
+       * The question or instruction for the AI to analyze the image.
+       */
+      instruction: string;
+
+      /**
+       * Task type that analyzes the image and adds matching tags from a vocabulary.
+       */
+      type: 'select_tags';
+
+      /**
+       * Array of possible tag values. Combined length of all strings must not exceed 500
+       * characters. Cannot contain the `%` character.
+       */
+      vocabulary: Array<string>;
+
+      /**
+       * Maximum number of tags to select from the vocabulary.
+       */
+      max_selections?: number;
+
+      /**
+       * Minimum number of tags to select from the vocabulary.
+       */
+      min_selections?: number;
+    }
+
+    export interface SelectMetadata {
+      /**
+       * Name of the custom metadata field to set. The field must exist in your account.
+       */
+      field: string;
+
+      /**
+       * The question or instruction for the AI to analyze the image.
+       */
+      instruction: string;
+
+      /**
+       * Task type that analyzes the image and sets a custom metadata field value from a
+       * vocabulary.
+       */
+      type: 'select_metadata';
+
+      /**
+       * Maximum number of values to select from the vocabulary.
+       */
+      max_selections?: number;
+
+      /**
+       * Minimum number of values to select from the vocabulary.
+       */
+      min_selections?: number;
+
+      /**
+       * Array of possible values matching the custom metadata field type.
+       */
+      vocabulary?: Array<string | number | boolean>;
+    }
+
+    export interface YesNo {
+      /**
+       * The yes/no question for the AI to answer about the image.
+       */
+      instruction: string;
+
+      /**
+       * Task type that asks a yes/no question and executes actions based on the answer.
+       */
+      type: 'yes_no';
+
+      /**
+       * Actions to execute if the AI answers no.
+       */
+      on_no?: YesNo.OnNo;
+
+      /**
+       * Actions to execute if the AI cannot determine the answer.
+       */
+      on_unknown?: YesNo.OnUnknown;
+
+      /**
+       * Actions to execute if the AI answers yes.
+       */
+      on_yes?: YesNo.OnYes;
+    }
+
+    export namespace YesNo {
+      /**
+       * Actions to execute if the AI answers no.
+       */
+      export interface OnNo {
+        /**
+         * Array of tag strings to add to the asset.
+         */
+        add_tags?: Array<string>;
+
+        /**
+         * Array of tag strings to remove from the asset.
+         */
+        remove_tags?: Array<string>;
+
+        /**
+         * Array of custom metadata field updates.
+         */
+        set_metadata?: Array<OnNo.SetMetadata>;
+
+        /**
+         * Array of custom metadata fields to remove.
+         */
+        unset_metadata?: Array<OnNo.UnsetMetadata>;
+      }
+
+      export namespace OnNo {
+        export interface SetMetadata {
+          /**
+           * Name of the custom metadata field to set.
+           */
+          field: string;
+
+          /**
+           * Value to set for the custom metadata field. The value type should match the
+           * custom metadata field type.
+           */
+          value: string | number | boolean | Array<string | number | boolean>;
+        }
+
+        export interface UnsetMetadata {
+          /**
+           * Name of the custom metadata field to remove.
+           */
+          field: string;
+        }
+      }
+
+      /**
+       * Actions to execute if the AI cannot determine the answer.
+       */
+      export interface OnUnknown {
+        /**
+         * Array of tag strings to add to the asset.
+         */
+        add_tags?: Array<string>;
+
+        /**
+         * Array of tag strings to remove from the asset.
+         */
+        remove_tags?: Array<string>;
+
+        /**
+         * Array of custom metadata field updates.
+         */
+        set_metadata?: Array<OnUnknown.SetMetadata>;
+
+        /**
+         * Array of custom metadata fields to remove.
+         */
+        unset_metadata?: Array<OnUnknown.UnsetMetadata>;
+      }
+
+      export namespace OnUnknown {
+        export interface SetMetadata {
+          /**
+           * Name of the custom metadata field to set.
+           */
+          field: string;
+
+          /**
+           * Value to set for the custom metadata field. The value type should match the
+           * custom metadata field type.
+           */
+          value: string | number | boolean | Array<string | number | boolean>;
+        }
+
+        export interface UnsetMetadata {
+          /**
+           * Name of the custom metadata field to remove.
+           */
+          field: string;
+        }
+      }
+
+      /**
+       * Actions to execute if the AI answers yes.
+       */
+      export interface OnYes {
+        /**
+         * Array of tag strings to add to the asset.
+         */
+        add_tags?: Array<string>;
+
+        /**
+         * Array of tag strings to remove from the asset.
+         */
+        remove_tags?: Array<string>;
+
+        /**
+         * Array of custom metadata field updates.
+         */
+        set_metadata?: Array<OnYes.SetMetadata>;
+
+        /**
+         * Array of custom metadata fields to remove.
+         */
+        unset_metadata?: Array<OnYes.UnsetMetadata>;
+      }
+
+      export namespace OnYes {
+        export interface SetMetadata {
+          /**
+           * Name of the custom metadata field to set.
+           */
+          field: string;
+
+          /**
+           * Value to set for the custom metadata field. The value type should match the
+           * custom metadata field type.
+           */
+          value: string | number | boolean | Array<string | number | boolean>;
+        }
+
+        export interface UnsetMetadata {
+          /**
+           * Name of the custom metadata field to remove.
+           */
+          field: string;
+        }
+      }
+    }
+  }
+
+  export interface SavedExtension {
+    /**
+     * The unique ID of the saved extension to apply.
+     */
+    id: string;
+
+    /**
+     * Indicates this is a reference to a saved extension.
+     */
+    name: 'saved-extension';
   }
 }
 
@@ -140,6 +753,12 @@ export interface ImageOverlay extends BaseOverlay {
    * format automatically. To always use base64 encoding (`ie-{base64}`), set this
    * parameter to `base64`. To always use plain text (`i-{input}`), set it to
    * `plain`.
+   *
+   * Regardless of the encoding method:
+   *
+   * - Leading and trailing slashes are removed.
+   * - Remaining slashes within the path are replaced with `@@` when using plain
+   *   text.
    */
   encoding?: 'auto' | 'plain' | 'base64';
 
@@ -251,6 +870,42 @@ export interface ResponsiveImageAttributes {
   width?: number;
 }
 
+/**
+ * Saved extension object containing extension configuration.
+ */
+export interface SavedExtension {
+  /**
+   * Unique identifier of the saved extension.
+   */
+  id?: string;
+
+  /**
+   * Configuration object for an extension (base extensions only, not saved extension
+   * references).
+   */
+  config?: ExtensionConfig;
+
+  /**
+   * Timestamp when the saved extension was created.
+   */
+  createdAt?: string;
+
+  /**
+   * Description of the saved extension.
+   */
+  description?: string;
+
+  /**
+   * Name of the saved extension.
+   */
+  name?: string;
+
+  /**
+   * Timestamp when the saved extension was last updated.
+   */
+  updatedAt?: string;
+}
+
 export interface SolidColorOverlay extends BaseOverlay {
   /**
    * Specifies the color of the block using an RGB hex code (e.g., `FF0000`), an RGBA
@@ -274,8 +929,8 @@ export interface SolidColorOverlay extends BaseOverlay {
 
 export interface SolidColorOverlayTransformation {
   /**
-   * Specifies the transparency level of the solid color overlay. Accepts integers
-   * from `1` to `9`.
+   * Specifies the transparency level of the overlaid solid color layer. Supports
+   * integers from `1` to `9`.
    */
   alpha?: number;
 
@@ -301,11 +956,16 @@ export interface SolidColorOverlayTransformation {
   height?: number | string;
 
   /**
-   * Specifies the corner radius of the solid color overlay. Set to `max` for
-   * circular or oval shape. See
-   * [radius](https://imagekit.io/docs/effects-and-enhancements#radius---r).
+   * Specifies the corner radius of the solid color overlay.
+   *
+   * - Single value (positive integer): Applied to all corners (e.g., `20`).
+   * - `max`: Creates a circular or oval shape.
+   * - Per-corner array: Provide four underscore-separated values representing
+   *   top-left, top-right, bottom-right, and bottom-left corners respectively (e.g.,
+   *   `10_20_30_40`). See
+   *   [Radius](https://imagekit.io/docs/effects-and-enhancements#radius---r).
    */
-  radius?: number | 'max';
+  radius?: number | 'max' | string;
 
   /**
    * Controls the width of the solid color overlay. Accepts a numeric value or an
@@ -400,6 +1060,12 @@ export interface SubtitleOverlay extends BaseOverlay {
    * format automatically. To always use base64 encoding (`ie-{base64}`), set this
    * parameter to `base64`. To always use plain text (`i-{input}`), set it to
    * `plain`.
+   *
+   * Regardless of the encoding method:
+   *
+   * - Leading and trailing slashes are removed.
+   * - Remaining slashes within the path are replaced with `@@` when using plain
+   *   text.
    */
   encoding?: 'auto' | 'plain' | 'base64';
 
@@ -433,8 +1099,9 @@ export interface SubtitleOverlayTransformation {
   color?: string;
 
   /**
-   * Font family for subtitles. Refer to the
-   * [supported fonts](https://imagekit.io/docs/add-overlays-on-images#supported-text-font-list).
+   * Sets the font family of subtitle text. Refer to the
+   * [supported fonts documented](https://imagekit.io/docs/add-overlays-on-images#supported-text-font-list)
+   * in the ImageKit transformations guide.
    */
   fontFamily?: string;
 
@@ -492,6 +1159,9 @@ export interface TextOverlay extends BaseOverlay {
    * appropriate format based on the input text. To always use base64
    * (`ie-{base64}`), set this parameter to `base64`. To always use plain text
    * (`i-{input}`), set it to `plain`.
+   *
+   * Regardless of the encoding method, the input text is always percent-encoded to
+   * ensure it is URL-safe.
    */
   encoding?: 'auto' | 'plain' | 'base64';
 
@@ -516,7 +1186,9 @@ export interface TextOverlayTransformation {
   background?: string;
 
   /**
-   * Flip the text overlay horizontally, vertically, or both.
+   * Flip/mirror the text horizontally, vertically, or in both directions. Acceptable
+   * values: `h` (horizontal), `v` (vertical), `h_v` (horizontal and vertical), or
+   * `v_h`.
    */
   flip?: 'h' | 'v' | 'h_v' | 'v_h';
 
@@ -548,10 +1220,9 @@ export interface TextOverlayTransformation {
   innerAlignment?: 'left' | 'right' | 'center';
 
   /**
-   * Specifies the line height of the text overlay. Accepts integer values
-   * representing line height in points. It can also accept
-   * [arithmetic expressions](https://imagekit.io/docs/arithmetic-expressions-in-transformations)
-   * such as `bw_mul_0.2`, or `bh_div_20`.
+   * Specifies the line height for multi-line text overlays. It will come into effect
+   * only if the text wraps over multiple lines. Accepts either an integer value or
+   * an arithmetic expression.
    */
   lineHeight?: number | string;
 
@@ -563,10 +1234,16 @@ export interface TextOverlayTransformation {
   padding?: number | string;
 
   /**
-   * Specifies the corner radius of the text overlay. Set to `max` to achieve a
-   * circular or oval shape.
+   * Specifies the corner radius:
+   *
+   * - Single value (positive integer): Applied to all corners (e.g., `20`).
+   * - `max`: Creates a circular or oval shape.
+   * - Per-corner array: Provide four underscore-separated values representing
+   *   top-left, top-right, bottom-right, and bottom-left corners respectively (e.g.,
+   *   `10_20_30_40`). See
+   *   [Radius](https://imagekit.io/docs/effects-and-enhancements#radius---r).
    */
-  radius?: number | 'max';
+  radius?: number | 'max' | string;
 
   /**
    * Specifies the rotation angle of the text overlay. Accepts a numeric value for
@@ -684,6 +1361,12 @@ export interface Transformation {
    *
    * - A solid color: e.g., `red`, `F3F3F3`, `AAFF0010`. See
    *   [Solid color background](https://imagekit.io/docs/effects-and-enhancements#solid-color-background).
+   * - Dominant color: `dominant` extracts the dominant color from the image. See
+   *   [Dominant color background](https://imagekit.io/docs/effects-and-enhancements#dominant-color-background).
+   * - Gradient: `gradient_dominant` or `gradient_dominant_2` creates a gradient
+   *   using the dominant colors. Optionally specify palette size (2 or 4), e.g.,
+   *   `gradient_dominant_4`. See
+   *   [Gradient background](https://imagekit.io/docs/effects-and-enhancements#gradient-background).
    * - A blurred background: e.g., `blurred`, `blurred_25_N15`, etc. See
    *   [Blurred background](https://imagekit.io/docs/effects-and-enhancements#blurred-background).
    * - Expand the image boundaries using generative fill: `genfill`. Not supported
@@ -716,6 +1399,18 @@ export interface Transformation {
   colorProfile?: boolean;
 
   /**
+   * Replaces colors in the image. Supports three formats:
+   *
+   * - `toColor` - Replace dominant color with the specified color.
+   * - `toColor_tolerance` - Replace dominant color with specified tolerance (0-100).
+   * - `toColor_tolerance_fromColor` - Replace a specific color with another within
+   *   tolerance range. Colors can be hex codes (e.g., `FF0022`) or names (e.g.,
+   *   `red`, `blue`). See
+   *   [Color replacement](https://imagekit.io/docs/effects-and-enhancements#color-replace---cr).
+   */
+  colorReplace?: string;
+
+  /**
    * Automatically enhances the contrast of an image (contrast stretch). See
    * [Contrast Stretch](https://imagekit.io/docs/effects-and-enhancements#contrast-stretch---e-contrast).
    */
@@ -741,9 +1436,23 @@ export interface Transformation {
   defaultImage?: string;
 
   /**
+   * Distorts the shape of an image. Supports two modes:
+   *
+   * - Perspective distortion: `p-x1_y1_x2_y2_x3_y3_x4_y4` changes the position of
+   *   the four corners starting clockwise from top-left.
+   * - Arc distortion: `a-degrees` curves the image upwards (positive values) or
+   *   downwards (negative values). See
+   *   [Distort effect](https://imagekit.io/docs/effects-and-enhancements#distort---e-distort).
+   */
+  distort?: string;
+
+  /**
    * Accepts values between 0.1 and 5, or `auto` for automatic device pixel ratio
-   * (DPR) calculation. See
-   * [DPR](https://imagekit.io/docs/image-resize-and-crop#dpr---dpr).
+   * (DPR) calculation. Also accepts arithmetic expressions.
+   *
+   * - Learn about
+   *   [Arithmetic expressions](https://imagekit.io/docs/arithmetic-expressions-in-transformations).
+   * - See [DPR](https://imagekit.io/docs/image-resize-and-crop#dpr---dpr).
    */
   dpr?: number;
 
@@ -882,11 +1591,16 @@ export interface Transformation {
   quality?: number;
 
   /**
-   * Specifies the corner radius for rounded corners (e.g., 20) or `max` for circular
-   * or oval shape. See
-   * [Radius](https://imagekit.io/docs/effects-and-enhancements#radius---r).
+   * Specifies the corner radius for rounded corners.
+   *
+   * - Single value (positive integer): Applied to all corners (e.g., `20`).
+   * - `max`: Creates a circular or oval shape.
+   * - Per-corner array: Provide four underscore-separated values representing
+   *   top-left, top-right, bottom-right, and bottom-left corners respectively (e.g.,
+   *   `10_20_30_40`). See
+   *   [Radius](https://imagekit.io/docs/effects-and-enhancements#radius---r).
    */
-  radius?: number | 'max';
+  radius?: number | 'max' | string;
 
   /**
    * Pass any transformation not directly supported by the SDK. This transformation
@@ -1016,6 +1730,12 @@ export interface VideoOverlay extends BaseOverlay {
    * format automatically. To always use base64 encoding (`ie-{base64}`), set this
    * parameter to `base64`. To always use plain text (`i-{input}`), set it to
    * `plain`.
+   *
+   * Regardless of the encoding method:
+   *
+   * - Leading and trailing slashes are removed.
+   * - Remaining slashes within the path are replaced with `@@` when using plain
+   *   text.
    */
   encoding?: 'auto' | 'plain' | 'base64';
 
