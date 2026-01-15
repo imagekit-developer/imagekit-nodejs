@@ -35,7 +35,7 @@ export class Metadata extends APIResource {
    * ```
    */
   getFromURL(query: MetadataGetFromURLParams, options?: RequestOptions): APIPromise<FilesAPI.Metadata> {
-    return this._client.get('/v1/files/metadata', { query, ...options });
+    return this._client.get('/v1/metadata', { query, ...options });
   }
 }
 

@@ -3,6 +3,7 @@
 Types:
 
 - <code><a href="./src/resources/shared.ts">BaseOverlay</a></code>
+- <code><a href="./src/resources/shared.ts">ExtensionConfig</a></code>
 - <code><a href="./src/resources/shared.ts">Extensions</a></code>
 - <code><a href="./src/resources/shared.ts">GetImageAttributesOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ImageOverlay</a></code>
@@ -10,6 +11,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">OverlayPosition</a></code>
 - <code><a href="./src/resources/shared.ts">OverlayTiming</a></code>
 - <code><a href="./src/resources/shared.ts">ResponsiveImageAttributes</a></code>
+- <code><a href="./src/resources/shared.ts">SavedExtension</a></code>
 - <code><a href="./src/resources/shared.ts">SolidColorOverlay</a></code>
 - <code><a href="./src/resources/shared.ts">SolidColorOverlayTransformation</a></code>
 - <code><a href="./src/resources/shared.ts">SrcOptions</a></code>
@@ -96,7 +98,21 @@ Methods:
 Methods:
 
 - <code title="get /v1/files/{fileId}/metadata">client.files.metadata.<a href="./src/resources/files/metadata.ts">get</a>(fileID) -> Metadata</code>
-- <code title="get /v1/files/metadata">client.files.metadata.<a href="./src/resources/files/metadata.ts">getFromURL</a>({ ...params }) -> Metadata</code>
+- <code title="get /v1/metadata">client.files.metadata.<a href="./src/resources/files/metadata.ts">getFromURL</a>({ ...params }) -> Metadata</code>
+
+# SavedExtensions
+
+Types:
+
+- <code><a href="./src/resources/saved-extensions.ts">SavedExtensionListResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/saved-extensions">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">create</a>({ ...params }) -> SavedExtension</code>
+- <code title="patch /v1/saved-extensions/{id}">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">update</a>(id, { ...params }) -> SavedExtension</code>
+- <code title="get /v1/saved-extensions">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">list</a>() -> SavedExtensionListResponse</code>
+- <code title="delete /v1/saved-extensions/{id}">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">delete</a>(id) -> void</code>
+- <code title="get /v1/saved-extensions/{id}">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">get</a>(id) -> SavedExtension</code>
 
 # Assets
 
