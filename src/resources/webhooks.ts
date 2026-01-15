@@ -466,6 +466,8 @@ export namespace UploadPreTransformSuccessEvent {
     export interface ExtensionStatus {
       'ai-auto-description'?: 'success' | 'pending' | 'failed';
 
+      'ai-tasks'?: 'success' | 'pending' | 'failed';
+
       'aws-auto-tagging'?: 'success' | 'pending' | 'failed';
 
       'google-auto-tagging'?: 'success' | 'pending' | 'failed';
