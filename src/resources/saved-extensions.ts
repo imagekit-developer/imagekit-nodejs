@@ -19,10 +19,19 @@ export class SavedExtensions extends APIResource {
    * @example
    * ```ts
    * const savedExtension = await client.savedExtensions.create({
-   *   config: { name: 'remove-bg' },
-   *   description:
-   *     'Analyzes vehicle images for type, condition, and quality assessment',
-   *   name: 'Car Quality Analysis',
+   *   config: {
+   *     name: 'ai-tasks',
+   *     tasks: [
+   *       {
+   *         instruction: 'What types of clothing items are visible in this image?',
+   *         type: 'select_tags',
+   *         vocabulary: ['shirt', 'dress', 'pants', 'jacket', 'shoes'],
+   *         max_selections: 3,
+   *       },
+   *     ],
+   *   },
+   *   description: 'Automatically categorizes clothing items in fashion images',
+   *   name: 'Fashion Item Categorization',
    * });
    * ```
    */
