@@ -309,6 +309,11 @@ function processOverlay(overlay: Transformation['overlay']): string | undefined 
       break;
   }
 
+  // Add layerMode if present (only applicable to certain overlay types)
+  if (overlay?.layerMode) {
+    entries.push(`lm-${overlay.layerMode}`);
+  }
+
   const { x, y, focus } = position;
   if (x) {
     entries.push(`lx-${x}`);

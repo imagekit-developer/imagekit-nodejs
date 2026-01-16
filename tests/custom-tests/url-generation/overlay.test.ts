@@ -350,6 +350,90 @@ describe('Overlay Transformation Test Cases', function () {
       `https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Every%20thing,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,fs-20,ff-Arial,co-0000ff,ia-left,pa-5,al-7,tg-b,bg-red,r-10,rt-N45,fl-h,lh-20,l-end:l-image,i-logo.png,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-text,i-Nested%20text%20overlay,l-end,l-end:l-video,i-play-pause-loop.mp4,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-end:l-subtitle,i-subtitle.srt,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,bg-red,co-0000ff,ff-Arial,fol-2_A1CCDD50,fsh-A1CCDD_3,l-end:l-image,i-ik_canvas,bg-FF0000,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,al-0.5,bg-red,e-gradient,r-max,l-end/base-image.jpg`,
     );
   });
+
+  it('should generate URL with image overlay using layer mode multiply', function () {
+    const url = client.helper.buildSrc({
+      transformationPosition: 'path',
+      urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
+      src: '/base-image.jpg',
+      transformation: [
+        {
+          overlay: {
+            type: 'image',
+            input: 'overlay.png',
+            layerMode: 'multiply',
+          },
+        },
+      ],
+    });
+    expect(url).toBe(
+      `https://ik.imagekit.io/test_url_endpoint/tr:l-image,i-overlay.png,lm-multiply,l-end/base-image.jpg`,
+    );
+  });
+
+  it('should generate URL with image overlay using layer mode cutter', function () {
+    const url = client.helper.buildSrc({
+      transformationPosition: 'path',
+      urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
+      src: '/base-image.jpg',
+      transformation: [
+        {
+          overlay: {
+            type: 'image',
+            input: 'mask.png',
+            layerMode: 'cutter',
+          },
+        },
+      ],
+    });
+    expect(url).toBe(
+      `https://ik.imagekit.io/test_url_endpoint/tr:l-image,i-mask.png,lm-cutter,l-end/base-image.jpg`,
+    );
+  });
+
+  it('should generate URL with image overlay using layer mode cutout', function () {
+    const url = client.helper.buildSrc({
+      transformationPosition: 'path',
+      urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
+      src: '/base-image.jpg',
+      transformation: [
+        {
+          overlay: {
+            type: 'image',
+            input: 'mask.png',
+            layerMode: 'cutout',
+          },
+        },
+      ],
+    });
+    expect(url).toBe(
+      `https://ik.imagekit.io/test_url_endpoint/tr:l-image,i-mask.png,lm-cutout,l-end/base-image.jpg`,
+    );
+  });
+
+  it('should generate URL with image overlay using layer mode displace', function () {
+    const url = client.helper.buildSrc({
+      transformationPosition: 'path',
+      urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
+      src: '/base-image.jpg',
+      transformation: [
+        {
+          overlay: {
+            type: 'image',
+            input: 'displacement-map.png',
+            layerMode: 'displace',
+            position: {
+              x: '50',
+              y: '50',
+            },
+          },
+        },
+      ],
+    });
+    expect(url).toBe(
+      `https://ik.imagekit.io/test_url_endpoint/tr:l-image,i-displacement-map.png,lm-displace,lx-50,ly-50,l-end/base-image.jpg`,
+    );
+  });
 });
 
 describe('Overlay encoding test cases', function () {
