@@ -21,7 +21,7 @@ export const newMcpServer = () =>
   new McpServer(
     {
       name: 'imagekit_nodejs_api',
-      version: '7.2.0',
+      version: '7.2.1',
     },
     { capabilities: { tools: {}, logging: {} } },
   );

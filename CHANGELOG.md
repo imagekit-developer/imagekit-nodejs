@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.2.1 (2026-01-16)
+
+Full Changelog: [v7.2.0...v7.2.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.2.0...v7.2.1)
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([6f64673](https://github.com/imagekit-developer/imagekit-nodejs/commit/6f646734061e67193ecdda3eb6c507787b2785d5))
+
 ## 7.2.0 (2026-01-16)
 
 Full Changelog: [v7.1.1...v7.2.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.1.1...v7.2.0)
