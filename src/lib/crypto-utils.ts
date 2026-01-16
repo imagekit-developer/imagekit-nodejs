@@ -7,6 +7,12 @@
 
 import { ImageKitError } from '../core/error';
 
+// Import crypto at the top level - works in both ESM and CJS
+import * as cryptoImport from 'crypto';
+
+// Handle the different ways crypto might be exported
+const crypto = (cryptoImport as any).default || cryptoImport;
+
 /**
  * Creates an HMAC-SHA1 hash using Node.js crypto module
  *
@@ -16,11 +22,7 @@ import { ImageKitError } from '../core/error';
  * @throws ImageKitError if crypto module is not available or operation fails
  */
 export function createHmacSha1(key: string, data: string): string {
-  let crypto: any;
-
-  try {
-    crypto = require('crypto');
-  } catch (err) {
+  if (!crypto || typeof crypto.createHmac !== 'function') {
     throw new ImageKitError(
       'URL signing requires Node.js crypto module which is not available in this runtime. ' +
         'Please use Node.js environment for URL signing functionality.',
