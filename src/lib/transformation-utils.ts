@@ -60,6 +60,8 @@ export const supportedTransforms: { [key: string]: string } = {
   sharpen: 'e-sharpen',
   unsharpMask: 'e-usm',
   gradient: 'e-gradient',
+  colorReplace: 'cr',
+  distort: 'e-distort',
 
   // Other flags & finishing
   progressive: 'pr',

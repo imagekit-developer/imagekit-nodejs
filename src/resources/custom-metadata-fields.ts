@@ -38,11 +38,7 @@ export class CustomMetadataFields extends APIResource {
    * const customMetadataField =
    *   await client.customMetadataFields.update('id', {
    *     label: 'price',
-   *     schema: {
-   *       type: 'Number',
-   *       minValue: 1000,
-   *       maxValue: 3000,
-   *     },
+   *     schema: { minValue: 1000, maxValue: 3000 },
    *   });
    * ```
    */

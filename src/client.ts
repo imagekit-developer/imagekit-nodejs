@@ -27,6 +27,12 @@ import {
   CustomMetadataFields,
 } from './resources/custom-metadata-fields';
 import {
+  SavedExtensionCreateParams,
+  SavedExtensionListResponse,
+  SavedExtensionUpdateParams,
+  SavedExtensions,
+} from './resources/saved-extensions';
+import {
   BaseWebhookEvent,
   UnsafeUnwrapWebhookEvent,
   UnwrapWebhookEvent,
@@ -189,7 +195,7 @@ export class ImageKit {
   baseURL: string;
   maxRetries: number;
   timeout: number;
-  logger: Logger | undefined;
+  logger: Logger;
   logLevel: LogLevel | undefined;
   fetchOptions: MergedRequestInit | undefined;
 
@@ -820,6 +826,7 @@ export class ImageKit {
 
   customMetadataFields: API.CustomMetadataFields = new API.CustomMetadataFields(this);
   files: API.Files = new API.Files(this);
+  savedExtensions: API.SavedExtensions = new API.SavedExtensions(this);
   assets: API.Assets = new API.Assets(this);
   cache: API.Cache = new API.Cache(this);
   folders: API.Folders = new API.Folders(this);
@@ -831,6 +838,7 @@ export class ImageKit {
 
 ImageKit.CustomMetadataFields = CustomMetadataFields;
 ImageKit.Files = Files;
+ImageKit.SavedExtensions = SavedExtensions;
 ImageKit.Assets = Assets;
 ImageKit.Cache = Cache;
 ImageKit.Folders = Folders;
@@ -867,6 +875,13 @@ export declare namespace ImageKit {
     type FileMoveParams as FileMoveParams,
     type FileRenameParams as FileRenameParams,
     type FileUploadParams as FileUploadParams,
+  };
+
+  export {
+    SavedExtensions as SavedExtensions,
+    type SavedExtensionListResponse as SavedExtensionListResponse,
+    type SavedExtensionCreateParams as SavedExtensionCreateParams,
+    type SavedExtensionUpdateParams as SavedExtensionUpdateParams,
   };
 
   export {
@@ -910,11 +925,15 @@ export declare namespace ImageKit {
   };
 
   export type BaseOverlay = API.BaseOverlay;
+  export type ExtensionConfig = API.ExtensionConfig;
   export type Extensions = API.Extensions;
+  export type GetImageAttributesOptions = API.GetImageAttributesOptions;
   export type ImageOverlay = API.ImageOverlay;
   export type Overlay = API.Overlay;
   export type OverlayPosition = API.OverlayPosition;
   export type OverlayTiming = API.OverlayTiming;
+  export type ResponsiveImageAttributes = API.ResponsiveImageAttributes;
+  export type SavedExtension = API.SavedExtension;
   export type SolidColorOverlay = API.SolidColorOverlay;
   export type SolidColorOverlayTransformation = API.SolidColorOverlayTransformation;
   export type SrcOptions = API.SrcOptions;

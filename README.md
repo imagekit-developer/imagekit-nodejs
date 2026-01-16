@@ -13,6 +13,7 @@ If you are looking to integrate file uploads in browsers, use one of our [fronte
 ## Table of Contents
 
 - [Installation](#installation)
+- [MCP Server Package](#mcp-server-package)
 - [Usage](#usage)
   - [Request & Response types](#request--response-types)
 - [File uploads](#file-uploads)
@@ -45,6 +46,16 @@ If you are looking to integrate file uploads in browsers, use one of our [fronte
 ```sh
 npm install @imagekit/nodejs
 ```
+
+## MCP Server Package
+
+This repository also includes a separate **Model Context Protocol (MCP) server** package published as [`@imagekit/api-mcp`](https://www.npmjs.com/package/@imagekit/api-mcp). This MCP server enables AI assistants and agents to interact with the ImageKit API directly.
+
+> **Important Note on Versioning:** The MCP server package (`@imagekit/api-mcp`) is maintained within this monorepo and shares the same version number as the main Node.js SDK. **However, semantic versioning for this repository is determined solely based on changes to the Node.js SDK (`@imagekit/nodejs`).** This means the MCP server package may contain breaking changes in minor or patch releases, as its versioning does not follow independent semantic versioning conventions. If you use the MCP server package, always review the [CHANGELOG](CHANGELOG.md) to understand what has changed before upgrading.
+
+For detailed installation instructions, usage examples, and documentation about the MCP server, please visit:
+- **MCP Server Documentation:** [https://imagekit.io/docs/mcp-server](https://imagekit.io/docs/mcp-server)
+- **Package README:** [packages/mcp-server/README.md](packages/mcp-server/README.md)
 
 ## Usage
 
@@ -112,8 +123,14 @@ await client.files.upload({ file: new File(['my bytes'], 'file'), fileName: 'fil
 await client.files.upload({ file: await fetch('https://somesite/file'), fileName: 'fileName' });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.files.upload({ file: await toFile(Buffer.from('my bytes'), 'file'), fileName: 'fileName' });
-await client.files.upload({ file: await toFile(new Uint8Array([0, 1, 2]), 'file'), fileName: 'fileName' });
+await client.files.upload({
+  file: await toFile(Buffer.from('my bytes'), 'file'),
+  fileName: 'fileName',
+});
+await client.files.upload({
+  file: await toFile(new Uint8Array([0, 1, 2]), 'file'),
+  fileName: 'fileName',
+});
 ```
 
 ## URL generation

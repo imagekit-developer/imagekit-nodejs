@@ -1342,6 +1342,9 @@ describe('URL generation', function () {
           sharpen: 10,
           unsharpMask: '2-2-0.8-0.024',
           gradient: 'from-red_to-white',
+          // New transformation parameters
+          colorReplace: 'FF0000_50_00FF00',
+          distort: 'p-50_50_150_50_150_150_50_150',
           original: true,
           page: '2_4',
           raw: 'h-200,w-300,l-image,i-logo.png,l-end',
@@ -1350,7 +1353,24 @@ describe('URL generation', function () {
     });
 
     expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400,ar-4-3,q-40,c-force,cm-extract,fo-left,f-jpeg,r-50,bg-A94D34,b-5-A94D34,rt-90,bl-10,n-some_name,pr-true,lo-true,t-5,md-true,cp-true,di-folder@@file.jpg,dpr-3,x-10,y-20,xc-30,yc-40,fl-h,o-0.8,z-2,vc-h264,ac-aac,so-5,eo-15,du-10,sr-1440_1080,e-grayscale,e-upscale,e-retouch,e-genvar,e-dropshadow,e-changebg-prompt-car,e-edit-prompt-make it vintage,e-bgremove,e-contrast,e-shadow-bl-15_st-40_x-10_y-N5,e-sharpen-10,e-usm-2-2-0.8-0.024,e-gradient-from-red_to-white,orig-true,pg-2_4,h-200,w-300,l-image,i-logo.png,l-end`,
+      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400,ar-4-3,q-40,c-force,cm-extract,fo-left,f-jpeg,r-50,bg-A94D34,b-5-A94D34,rt-90,bl-10,n-some_name,pr-true,lo-true,t-5,md-true,cp-true,di-folder@@file.jpg,dpr-3,x-10,y-20,xc-30,yc-40,fl-h,o-0.8,z-2,vc-h264,ac-aac,so-5,eo-15,du-10,sr-1440_1080,e-grayscale,e-upscale,e-retouch,e-genvar,e-dropshadow,e-changebg-prompt-car,e-edit-prompt-make it vintage,e-bgremove,e-contrast,e-shadow-bl-15_st-40_x-10_y-N5,e-sharpen-10,e-usm-2-2-0.8-0.024,e-gradient-from-red_to-white,cr-FF0000_50_00FF00,e-distort-p-50_50_150_50_150_150_50_150,orig-true,pg-2_4,h-200,w-300,l-image,i-logo.png,l-end`,
     );
+  });
+
+  it('should generate the correct URL when radius is provided as a string value', function () {
+    const url = client.helper.buildSrc({
+      urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
+      transformationPosition: 'query',
+      src: '/test_path.jpg',
+      transformation: [
+        {
+          width: 400,
+          height: 300,
+          radius: '10_max_20_30',
+        },
+      ],
+    });
+
+    expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=w-400,h-300,r-10_max_20_30`);
   });
 });
