@@ -1,5 +1,91 @@
 # Changelog
 
+## 7.2.0 (2026-01-16)
+
+Full Changelog: [v7.1.1...v7.2.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.1.1...v7.2.0)
+
+### ⚠ BREAKING CHANGES
+
+* **mcp:** remove deprecated tool schemes
+* **mcp:** **Migration:** To migrate, simply modify the command used to invoke the MCP server. Currently, the only supported tool scheme is code mode. Now, starting the server with just `node /path/to/mcp/server` or `npx package-name` will invoke code tools: changing your command to one of these is likely all you will need to do.
+
+### Features
+
+* **api:** add GetImageAttributesOptions and ResponsiveImageAttributes schemas; update resource references in main.yaml; remove dummy endpoint ([9ea439a](https://github.com/imagekit-developer/imagekit-nodejs/commit/9ea439a2d0a4c8300d14d4424dc72ab40a67c4d4))
+* **api:** Add saved extensions API and enhance transformation options ([7916069](https://github.com/imagekit-developer/imagekit-nodejs/commit/791606953c40bd9962591516767c44473d71c0ee))
+* **mcp:** add detail field to docs search tool ([f36d795](https://github.com/imagekit-developer/imagekit-nodejs/commit/f36d79523b0613a27afd45d56f4e1e906e6fdfe9))
+* **mcp:** add typescript check to code execution tool ([63ab735](https://github.com/imagekit-developer/imagekit-nodejs/commit/63ab735bf6c8458a53bd66c8c437b45a7aef60fe))
+* **mcp:** enable optional code execution tool on http mcp servers ([cc68e38](https://github.com/imagekit-developer/imagekit-nodejs/commit/cc68e38fa61078db6a5c961e7ed75dad342dc7e8))
+* **mcp:** handle code mode calls in the Stainless API ([eb22f08](https://github.com/imagekit-developer/imagekit-nodejs/commit/eb22f0883fc74c94959fdd97e50d41d940e1aed6))
+* **mcp:** return logs on code tool errors ([6118fe4](https://github.com/imagekit-developer/imagekit-nodejs/commit/6118fe4804be492482268ff25e0afc714bea7613))
+* **saved-extensions:** update example for creating saved extension to use AI tasks for fashion item categorization ([79e535b](https://github.com/imagekit-developer/imagekit-nodejs/commit/79e535b8725ebc847ffed30b3ec4bad7c06073d3))
+* **transformation:** add colorReplace and distort transformations; update tests for new parameters ([e59b5a7](https://github.com/imagekit-developer/imagekit-nodejs/commit/e59b5a74ec330189d6441ff6c00e7f36f88cffad))
+
+
+### Bug Fixes
+
+* add ai-tasks property to response schemas with enum values ([370cf0f](https://github.com/imagekit-developer/imagekit-nodejs/commit/370cf0ff0d07a404b03d994dd0404301f1af83c4))
+* **docs:** remove extraneous example object fields ([a043056](https://github.com/imagekit-developer/imagekit-nodejs/commit/a043056abd2f86bcb5a691ac8f5c7ccf8a17663c))
+* **mcp:** add client instantiation options to code tool ([967c8d9](https://github.com/imagekit-developer/imagekit-nodejs/commit/967c8d90503b2e0ed0576b919be09f3b924ec890))
+* **mcpb:** pin @anthropic-ai/mcpb version ([d81e225](https://github.com/imagekit-developer/imagekit-nodejs/commit/d81e22560aab772ee9b241fb44a50561b8837034))
+* **mcp:** correct code tool API endpoint ([f4d2b6c](https://github.com/imagekit-developer/imagekit-nodejs/commit/f4d2b6c9989e8cc6c69badba7de0abb57e6de398))
+* **mcp:** correct code tool api output types ([0371082](https://github.com/imagekit-developer/imagekit-nodejs/commit/03710823b0d477506a6a321c8aa68cba1a95e452))
+* **mcp:** fix env parsing ([b33b4e9](https://github.com/imagekit-developer/imagekit-nodejs/commit/b33b4e9c4f595d850403d292057e5d0810303e62))
+* **mcp:** fix options parsing ([de44ed6](https://github.com/imagekit-developer/imagekit-nodejs/commit/de44ed62ad53d22aa4b196ca2416d33d784242ee))
+* **mcp:** pass base url to code tool ([908fa87](https://github.com/imagekit-developer/imagekit-nodejs/commit/908fa874d20613761caa76cd4b2151524ef87606))
+* **mcp:** return correct lines on typescript errors ([aa7ae07](https://github.com/imagekit-developer/imagekit-nodejs/commit/aa7ae07286cf492a7b1fecce34697006837beeef))
+* **mcp:** return tool execution error on api error ([1e866f8](https://github.com/imagekit-developer/imagekit-nodejs/commit/1e866f8e5254ecc305b3dfee53ec232455143cc4))
+* **mcp:** return tool execution error on jq failure ([d1949db](https://github.com/imagekit-developer/imagekit-nodejs/commit/d1949dbef79859b446ee9ee2c8a2d562568c1cca))
+* **mcp:** update cloudflare worker host page ([664a668](https://github.com/imagekit-developer/imagekit-nodejs/commit/664a6686e0b268c2b3d3985508c744358b937cf3))
+* **mcp:** update code tool prompt ([e3a5c5e](https://github.com/imagekit-developer/imagekit-nodejs/commit/e3a5c5ed81f7f05cdd00a1703a8e3f8aa24a0eb6))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([011013e](https://github.com/imagekit-developer/imagekit-nodejs/commit/011013e6bac4c2ca8c6253d3ef482641bb089560))
+* **client:** fix logger property type ([6269318](https://github.com/imagekit-developer/imagekit-nodejs/commit/6269318024cd320f3038def32c3d5bf1f1da77a1))
+* extract some types in mcp docs ([de606ba](https://github.com/imagekit-developer/imagekit-nodejs/commit/de606ba3b734389e1c52a9929dbf8487828822e0))
+* **internal:** bump MCP dependencies ([7c9719e](https://github.com/imagekit-developer/imagekit-nodejs/commit/7c9719e1f913770b5d489c9698342c94d6e8ed98))
+* **internal:** codegen related update ([21edf78](https://github.com/imagekit-developer/imagekit-nodejs/commit/21edf78a2165e77fe1ccf766061a64a5caaa5199))
+* **internal:** codegen related update ([b42a623](https://github.com/imagekit-developer/imagekit-nodejs/commit/b42a623f7fbdd81ec751b3da2c4c61bd46b92c8c))
+* **internal:** codegen related update ([9c3b709](https://github.com/imagekit-developer/imagekit-nodejs/commit/9c3b709077301f692b7ad7696fe532a0247b1180))
+* **internal:** codegen related update ([1170954](https://github.com/imagekit-developer/imagekit-nodejs/commit/11709542b015a148d76c641b92f072deefc67d1f))
+* **internal:** codegen related update ([4b79947](https://github.com/imagekit-developer/imagekit-nodejs/commit/4b79947c8eb22cf9c609da4efd9ea703caea0c41))
+* **internal:** codegen related update ([b6b0d1a](https://github.com/imagekit-developer/imagekit-nodejs/commit/b6b0d1a7d2f00d9ecaa9e0e630a012c25f6a00f4))
+* **internal:** codegen related update ([26acc3a](https://github.com/imagekit-developer/imagekit-nodejs/commit/26acc3a9fe08c7c478eed956dd553333bd8cf210))
+* **internal:** codegen related update ([662aa87](https://github.com/imagekit-developer/imagekit-nodejs/commit/662aa87091dc519bb811554438eaf978660d035e))
+* **internal:** codegen related update ([8c9026a](https://github.com/imagekit-developer/imagekit-nodejs/commit/8c9026ace5d217264e5753c01309a02a2c09095e))
+* **internal:** grammar fix (it's -&gt; its) ([71e22a3](https://github.com/imagekit-developer/imagekit-nodejs/commit/71e22a30017324842fed5ab08ee1efbb1eecb6d2))
+* **internal:** upgrade babel, qs, js-yaml ([6896958](https://github.com/imagekit-developer/imagekit-nodejs/commit/689695871e48e9d8b28fb002a8b0f161017ca865))
+* **internal:** upgrade eslint ([310bf0d](https://github.com/imagekit-developer/imagekit-nodejs/commit/310bf0d0cc1d5b15d08a2cbb483a9969ebf4f11d))
+* **internal:** use npm pack for build uploads ([bdfd369](https://github.com/imagekit-developer/imagekit-nodejs/commit/bdfd369118542dad02cf8a0fae8713d0d8bea4eb))
+* mcp code tool explicit error message when missing a run function ([6678ee1](https://github.com/imagekit-developer/imagekit-nodejs/commit/6678ee13cc1eee5ce1ac51b672144be77c38e9ea))
+* **mcp:** add friendlier MCP code tool errors on incorrect method invocations ([636829d](https://github.com/imagekit-developer/imagekit-nodejs/commit/636829d18a7dda730b65c0549298258afcea6341))
+* **mcp:** add intent param to execute tool ([fb2ca9e](https://github.com/imagekit-developer/imagekit-nodejs/commit/fb2ca9eec87dd05ff93481e2fbc3a7885447b022))
+* **mcp:** add line numbers to code tool errors ([25e4e59](https://github.com/imagekit-developer/imagekit-nodejs/commit/25e4e59f434c07c2d9afeef3f548dd99e250a7ab))
+* **mcp:** clarify http auth error ([00789ac](https://github.com/imagekit-developer/imagekit-nodejs/commit/00789acfb9ceb07af0cd03b1951090f430691592))
+* **mcp:** pass intent param to execute handler ([ffd4b9f](https://github.com/imagekit-developer/imagekit-nodejs/commit/ffd4b9f6bb5d6ee10b15fd68f55420e387ddff7d))
+* **mcp:** remove deprecated tool schemes ([b1a0e60](https://github.com/imagekit-developer/imagekit-nodejs/commit/b1a0e607e55f27ffed93b2862e8f4466bc609809))
+* **mcp:** update lockfile ([0703827](https://github.com/imagekit-developer/imagekit-nodejs/commit/07038271d5ec459516a8a936eb49f31490ccf6b0))
+* **mcp:** upgrade dependencies ([7fcf371](https://github.com/imagekit-developer/imagekit-nodejs/commit/7fcf371b0744cdb77ed0e7ec206ad1a9afa78529))
+* **mcp:** upgrade jq-web ([0750770](https://github.com/imagekit-developer/imagekit-nodejs/commit/075077081fc5826a4502a76a2abc40788f7915a3))
+* use latest @modelcontextprotocol/sdk ([f7b9b4e](https://github.com/imagekit-developer/imagekit-nodejs/commit/f7b9b4e55919b644d9445730c03c8972ecdfe0b7))
+* use structured error when code execution tool errors ([451f306](https://github.com/imagekit-developer/imagekit-nodejs/commit/451f306f6328e6c48374d0525dad9a0ddc6511d6))
+
+
+### Documentation
+
+* add MCP Server Package section to README with details on usage and versioning ([5710576](https://github.com/imagekit-developer/imagekit-nodejs/commit/57105760c82ffa95b80375db3ec985505c197d02))
+* **mcp:** add a README button for one-click add to Cursor ([a7575d3](https://github.com/imagekit-developer/imagekit-nodejs/commit/a7575d308e3038715964f7416284bb012e27b240))
+* **mcp:** add a README link to add server to VS Code or Claude Code ([2a90d28](https://github.com/imagekit-developer/imagekit-nodejs/commit/2a90d2802e4814d97ec5bba77097eec2f0a5a718))
+* prominently feature MCP server setup in root SDK readmes ([80ce57e](https://github.com/imagekit-developer/imagekit-nodejs/commit/80ce57e3dee9eb822c8251ee8ed1c66afcfc156a))
+* remove MCP Server section from README ([df32859](https://github.com/imagekit-developer/imagekit-nodejs/commit/df3285946139b100f60c812cf65bcca2d2bf8dd3))
+
+
+### Refactors
+
+* **crypto-utils:** streamline crypto module import and error handling. Fixes https://github.com/imagekit-developer/imagekit-nodejs/issues/128 ([71910d6](https://github.com/imagekit-developer/imagekit-nodejs/commit/71910d66638a765cb333ee293002946e29b7e6ac))
+
 ## 7.1.1 (2025-10-06)
 
 Full Changelog: [v7.1.0...v7.1.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.1.0...v7.1.1)
