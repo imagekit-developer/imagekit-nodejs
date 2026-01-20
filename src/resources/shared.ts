@@ -137,12 +137,6 @@ export namespace ExtensionConfig {
       type: 'select_tags';
 
       /**
-       * Array of possible tag values. Combined length of all strings must not exceed 500
-       * characters. Cannot contain the `%` character.
-       */
-      vocabulary: Array<string>;
-
-      /**
        * Maximum number of tags to select from the vocabulary.
        */
       max_selections?: number;
@@ -151,6 +145,12 @@ export namespace ExtensionConfig {
        * Minimum number of tags to select from the vocabulary.
        */
       min_selections?: number;
+
+      /**
+       * Array of possible tag values. Combined length of all strings must not exceed 500
+       * characters. Cannot contain the `%` character.
+       */
+      vocabulary?: Array<string>;
     }
 
     export interface SelectMetadata {
@@ -458,12 +458,6 @@ export namespace Extensions {
       type: 'select_tags';
 
       /**
-       * Array of possible tag values. Combined length of all strings must not exceed 500
-       * characters. Cannot contain the `%` character.
-       */
-      vocabulary: Array<string>;
-
-      /**
        * Maximum number of tags to select from the vocabulary.
        */
       max_selections?: number;
@@ -472,6 +466,12 @@ export namespace Extensions {
        * Minimum number of tags to select from the vocabulary.
        */
       min_selections?: number;
+
+      /**
+       * Array of possible tag values. Combined length of all strings must not exceed 500
+       * characters. Cannot contain the `%` character.
+       */
+      vocabulary?: Array<string>;
     }
 
     export interface SelectMetadata {

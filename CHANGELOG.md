@@ -1,5 +1,18 @@
 # Changelog
 
+## 7.2.1 (2026-01-20)
+
+Full Changelog: [v7.2.0...v7.2.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.2.0...v7.2.1)
+
+### Bug Fixes
+
+* vocab field is required ([e6d0e58](https://github.com/imagekit-developer/imagekit-nodejs/commit/e6d0e58cb00e59a4fbfd81ed9b555bcc7fd97f2c))
+
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([6f64673](https://github.com/imagekit-developer/imagekit-nodejs/commit/6f646734061e67193ecdda3eb6c507787b2785d5))
+
 ## 7.2.0 (2026-01-16)
 
 Full Changelog: [v7.1.1...v7.2.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.1.1...v7.2.0)
