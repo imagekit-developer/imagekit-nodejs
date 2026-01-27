@@ -2,7 +2,7 @@
 
 import { McpTool, Metadata, ToolCallResult, asErrorResult, asTextContentResult } from './types';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import { readEnv, readEnvOrError } from './server';
+import { readEnv, requireValue } from './server';
 import { WorkerInput, WorkerOutput } from './code-tool-types';
 import { ImageKit } from '@imagekit/nodejs';
 
@@ -71,7 +71,10 @@ export function codeTool(): McpTool {
         ...(stainlessAPIKey && { Authorization: stainlessAPIKey }),
         'Content-Type': 'application/json',
         client_envs: JSON.stringify({
-          IMAGEKIT_PRIVATE_KEY: readEnvOrError('IMAGEKIT_PRIVATE_KEY') ?? client.privateKey ?? undefined,
+          IMAGEKIT_PRIVATE_KEY: requireValue(
+            readEnv('IMAGEKIT_PRIVATE_KEY') ?? client.privateKey,
+            'set IMAGEKIT_PRIVATE_KEY environment variable or provide privateKey client option',
+          ),
           OPTIONAL_IMAGEKIT_IGNORES_THIS:
             readEnv('OPTIONAL_IMAGEKIT_IGNORES_THIS') ?? client.password ?? undefined,
           IMAGEKIT_WEBHOOK_SECRET: readEnv('IMAGEKIT_WEBHOOK_SECRET') ?? client.webhookSecret ?? undefined,
