@@ -1,5 +1,26 @@
 # Changelog
 
+## 7.2.2 (2026-01-29)
+
+Full Changelog: [v7.2.1...v7.2.2](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.2.1...v7.2.2)
+
+### Bug Fixes
+
+* **docs:** fix mcp installation instructions for remote servers ([ee47d5b](https://github.com/imagekit-developer/imagekit-nodejs/commit/ee47d5b46bb0afc38f5809234096766204f035ae))
+* **mcp:** allow falling back for required env variables ([f028ce8](https://github.com/imagekit-developer/imagekit-nodejs/commit/f028ce8ce2ba895d6db244fefc9183405bf2bd27))
+* **overlay:** update subtitle overlay parameter to plural form ([22f0dfb](https://github.com/imagekit-developer/imagekit-nodejs/commit/22f0dfb35d183471ae799fad14130211d51dfc62))
+
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([0f7befe](https://github.com/imagekit-developer/imagekit-nodejs/commit/0f7befeb90a4fc79be9237f4ece4ba14d0d7b00f))
+* **internal:** codegen related update ([5adb9c4](https://github.com/imagekit-developer/imagekit-nodejs/commit/5adb9c42ba77e464f9ed88e3675010cb0872a541))
+* **internal:** codegen related update ([4a66092](https://github.com/imagekit-developer/imagekit-nodejs/commit/4a6609212873e4cc9763a1b583b764a6ed98ab00))
+* **internal:** codegen related update ([20d55fc](https://github.com/imagekit-developer/imagekit-nodejs/commit/20d55fc5ee61452b573d8a85b4823553b2794e9e))
+* **internal:** update lock file ([1a431a8](https://github.com/imagekit-developer/imagekit-nodejs/commit/1a431a801f32d32b08e512fbd9c69b8fdf5bafd6))
+* **internal:** upgrade wrangler version ([3042a38](https://github.com/imagekit-developer/imagekit-nodejs/commit/3042a38b910d43e8bc3f51c90fa93c007d9b13d0))
+* **mcp:** up tsconfig lib version to es2022 ([f9bd7c0](https://github.com/imagekit-developer/imagekit-nodejs/commit/f9bd7c00e2fa3bc37e4a9922482c4cfc199b50a0))
+
 ## 7.2.1 (2026-01-20)
 
 Full Changelog: [v7.2.0...v7.2.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.2.0...v7.2.1)
