@@ -2,8 +2,9 @@
 
 import { McpTool, Metadata, ToolCallResult, asErrorResult, asTextContentResult } from './types';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import { readEnv, readEnvOrError } from './server';
+import { readEnv, requireValue } from './server';
 import { WorkerInput, WorkerOutput } from './code-tool-types';
+import { ImageKit } from '@imagekit/nodejs';
 
 const prompt = `Runs JavaScript code to interact with the Image Kit API.
 
@@ -54,7 +55,7 @@ export function codeTool(): McpTool {
       required: ['code'],
     },
   };
-  const handler = async (_: unknown, args: any): Promise<ToolCallResult> => {
+  const handler = async (client: ImageKit, args: any): Promise<ToolCallResult> => {
     const code = args.code as string;
     const intent = args.intent as string | undefined;
 
@@ -70,10 +71,14 @@ export function codeTool(): McpTool {
         ...(stainlessAPIKey && { Authorization: stainlessAPIKey }),
         'Content-Type': 'application/json',
         client_envs: JSON.stringify({
-          IMAGEKIT_PRIVATE_KEY: readEnvOrError('IMAGEKIT_PRIVATE_KEY'),
-          OPTIONAL_IMAGEKIT_IGNORES_THIS: readEnv('OPTIONAL_IMAGEKIT_IGNORES_THIS'),
-          IMAGEKIT_WEBHOOK_SECRET: readEnv('IMAGEKIT_WEBHOOK_SECRET'),
-          IMAGE_KIT_BASE_URL: readEnv('IMAGE_KIT_BASE_URL'),
+          IMAGEKIT_PRIVATE_KEY: requireValue(
+            readEnv('IMAGEKIT_PRIVATE_KEY') ?? client.privateKey,
+            'set IMAGEKIT_PRIVATE_KEY environment variable or provide privateKey client option',
+          ),
+          OPTIONAL_IMAGEKIT_IGNORES_THIS:
+            readEnv('OPTIONAL_IMAGEKIT_IGNORES_THIS') ?? client.password ?? undefined,
+          IMAGEKIT_WEBHOOK_SECRET: readEnv('IMAGEKIT_WEBHOOK_SECRET') ?? client.webhookSecret ?? undefined,
+          IMAGE_KIT_BASE_URL: readEnv('IMAGE_KIT_BASE_URL') ?? client.baseURL ?? undefined,
         }),
       },
       body: JSON.stringify({

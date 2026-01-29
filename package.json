@@ -1,6 +1,6 @@
 {
   "name": "@imagekit/nodejs",
-  "version": "7.2.1",
+  "version": "7.2.2",
   "description": "Offical NodeJS SDK for ImageKit.io integration",
   "author": "Image Kit <developer@imagekit.io>",
   "types": "dist/index.d.ts",
