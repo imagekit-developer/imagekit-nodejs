@@ -173,7 +173,7 @@ describe('Overlay Transformation Test Cases', function () {
       ],
     });
     expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/tr:l-subtitle,i-subtitle.srt,l-end/base-video.mp4`,
+      `https://ik.imagekit.io/test_url_endpoint/tr:l-subtitles,i-subtitle.srt,l-end/base-video.mp4`,
     );
   });
 
@@ -347,7 +347,7 @@ describe('Overlay Transformation Test Cases', function () {
     });
 
     expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Every%20thing,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,fs-20,ff-Arial,co-0000ff,ia-left,pa-5,al-7,tg-b,bg-red,r-10,rt-N45,fl-h,lh-20,l-end:l-image,i-logo.png,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-text,i-Nested%20text%20overlay,l-end,l-end:l-video,i-play-pause-loop.mp4,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-end:l-subtitle,i-subtitle.srt,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,bg-red,co-0000ff,ff-Arial,fol-2_A1CCDD50,fsh-A1CCDD_3,l-end:l-image,i-ik_canvas,bg-FF0000,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,al-0.5,bg-red,e-gradient,r-max,l-end/base-image.jpg`,
+      `https://ik.imagekit.io/test_url_endpoint/tr:l-text,i-Every%20thing,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,fs-20,ff-Arial,co-0000ff,ia-left,pa-5,al-7,tg-b,bg-red,r-10,rt-N45,fl-h,lh-20,l-end:l-image,i-logo.png,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-text,i-Nested%20text%20overlay,l-end,l-end:l-video,i-play-pause-loop.mp4,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,rt-N45,fl-h,l-end:l-subtitles,i-subtitle.srt,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,bg-red,co-0000ff,ff-Arial,fol-2_A1CCDD50,fsh-A1CCDD_3,l-end:l-image,i-ik_canvas,bg-FF0000,lx-10,ly-20,lfo-center,lso-5,leo-15,ldu-10,w-bw_mul_0.5,h-bh_mul_0.5,al-0.5,bg-red,e-gradient,r-max,l-end/base-image.jpg`,
     );
   });
 
@@ -678,7 +678,7 @@ describe('Overlay encoding test cases', function () {
         },
       ],
     });
-    expect(url).toBe(`https://ik.imagekit.io/demo/tr:l-subtitle,i-sub.srt,l-end/sample.mp4`);
+    expect(url).toBe(`https://ik.imagekit.io/demo/tr:l-subtitles,i-sub.srt,l-end/sample.mp4`);
   });
 
   it('should use base64 encoding when explicitly specified for subtitle overlay', function () {
@@ -697,7 +697,7 @@ describe('Overlay encoding test cases', function () {
       ],
     });
     expect(url).toBe(
-      `https://ik.imagekit.io/demo/tr:l-subtitle,ie-${encodeURIComponent(
+      `https://ik.imagekit.io/demo/tr:l-subtitles,ie-${encodeURIComponent(
         safeBtoa('sub.srt'),
       )},l-end/sample.mp4`,
     );
