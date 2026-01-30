@@ -427,6 +427,11 @@ export interface Folder {
   createdAt?: string;
 
   /**
+   * An object with custom metadata for the folder.
+   */
+  customMetadata?: { [key: string]: unknown };
+
+  /**
    * Unique identifier of the asset.
    */
   folderId?: string;
