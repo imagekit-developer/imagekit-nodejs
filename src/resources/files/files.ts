@@ -200,6 +200,16 @@ export interface File {
   AITags?: Array<File.AITag> | null;
 
   /**
+   * The audio codec used in the video (only for video/audio).
+   */
+  audioCodec?: string;
+
+  /**
+   * The bit rate of the video in kbps (only for video).
+   */
+  bitRate?: number;
+
+  /**
    * Date and time when the file was uploaded. The date and time is in ISO8601
    * format.
    */
@@ -220,6 +230,17 @@ export interface File {
    * the ai-auto-description extension.
    */
   description?: string;
+
+  /**
+   * The duration of the video in seconds (only for video).
+   */
+  duration?: number;
+
+  /**
+   * Consolidated embedded metadata associated with the file. It includes exif, iptc,
+   * and xmp data.
+   */
+  embeddedMetadata?: { [key: string]: unknown };
 
   /**
    * Unique identifier of the asset.
@@ -317,6 +338,11 @@ export interface File {
    * An object with details of the file version.
    */
   versionInfo?: File.VersionInfo;
+
+  /**
+   * The video codec used in the video (only for video).
+   */
+  videoCodec?: string;
 
   /**
    * Width of the file.
@@ -425,6 +451,12 @@ export interface Folder {
    * format.
    */
   createdAt?: string;
+
+  /**
+   * An object with custom metadata for the folder. Returns empty object if no custom
+   * metadata is set.
+   */
+  customMetadata?: { [key: string]: unknown };
 
   /**
    * Unique identifier of the asset.

@@ -1,5 +1,18 @@
 # Changelog
 
+## 7.3.0 (2026-02-02)
+
+Full Changelog: [v7.2.2...v7.3.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.2.2...v7.3.0)
+
+### Features
+
+* **api:** add customMetadata property to folder schema ([e51825b](https://github.com/imagekit-developer/imagekit-nodejs/commit/e51825b8fb5909c28e25ed11ced5e3fcb05ea0a4))
+
+
+### Bug Fixes
+
+* **api:** add missing embeddedMetadata and video properties to FileDetails ([6100f86](https://github.com/imagekit-developer/imagekit-nodejs/commit/6100f86642919ca1061d1f31a07407ad8a32fe3b))
+
 ## 7.2.2 (2026-01-29)
 
 Full Changelog: [v7.2.1...v7.2.2](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.2.1...v7.2.2)
