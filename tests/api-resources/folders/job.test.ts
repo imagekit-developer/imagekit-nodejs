@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource job', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.folders.job.get('jobId');
     const rawResponse = await responsePromise.asResponse();

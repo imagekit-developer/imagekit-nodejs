@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource savedExtensions', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.savedExtensions.create({
       config: { name: 'remove-bg' },
@@ -25,7 +25,7 @@ describe('resource savedExtensions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.savedExtensions.create({
       config: {
@@ -42,7 +42,7 @@ describe('resource savedExtensions', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.savedExtensions.update('id', {});
     const rawResponse = await responsePromise.asResponse();
@@ -54,7 +54,7 @@ describe('resource savedExtensions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.savedExtensions.list();
     const rawResponse = await responsePromise.asResponse();
@@ -66,7 +66,7 @@ describe('resource savedExtensions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.savedExtensions.delete('id');
     const rawResponse = await responsePromise.asResponse();
@@ -78,7 +78,7 @@ describe('resource savedExtensions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.savedExtensions.get('id');
     const rawResponse = await responsePromise.asResponse();
