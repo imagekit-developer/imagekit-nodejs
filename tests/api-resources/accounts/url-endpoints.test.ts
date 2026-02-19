@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource urlEndpoints', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.accounts.urlEndpoints.create({ description: 'My custom URL endpoint' });
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource urlEndpoints', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.accounts.urlEndpoints.create({
       description: 'My custom URL endpoint',
@@ -31,7 +31,7 @@ describe('resource urlEndpoints', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.accounts.urlEndpoints.update('id', {
       description: 'My custom URL endpoint',
@@ -45,7 +45,7 @@ describe('resource urlEndpoints', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.accounts.urlEndpoints.update('id', {
       description: 'My custom URL endpoint',
@@ -55,7 +55,7 @@ describe('resource urlEndpoints', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.accounts.urlEndpoints.list();
     const rawResponse = await responsePromise.asResponse();
@@ -67,7 +67,7 @@ describe('resource urlEndpoints', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.accounts.urlEndpoints.delete('id');
     const rawResponse = await responsePromise.asResponse();
@@ -79,7 +79,7 @@ describe('resource urlEndpoints', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.accounts.urlEndpoints.get('id');
     const rawResponse = await responsePromise.asResponse();

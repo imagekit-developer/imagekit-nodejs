@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource folders', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.folders.create({
       folderName: 'summer',
@@ -24,7 +24,7 @@ describe('resource folders', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.folders.create({
       folderName: 'summer',
@@ -32,7 +32,7 @@ describe('resource folders', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.folders.delete({ folderPath: '/folder/to/delete/' });
     const rawResponse = await responsePromise.asResponse();
@@ -44,12 +44,12 @@ describe('resource folders', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.folders.delete({ folderPath: '/folder/to/delete/' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('copy: only required params', async () => {
     const responsePromise = client.folders.copy({
       destinationPath: '/path/of/destination/folder',
@@ -64,7 +64,7 @@ describe('resource folders', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('copy: required and optional params', async () => {
     const response = await client.folders.copy({
       destinationPath: '/path/of/destination/folder',
@@ -73,7 +73,7 @@ describe('resource folders', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('move: only required params', async () => {
     const responsePromise = client.folders.move({
       destinationPath: '/path/of/destination/folder',
@@ -88,7 +88,7 @@ describe('resource folders', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('move: required and optional params', async () => {
     const response = await client.folders.move({
       destinationPath: '/path/of/destination/folder',
@@ -96,7 +96,7 @@ describe('resource folders', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('rename: only required params', async () => {
     const responsePromise = client.folders.rename({
       folderPath: '/path/of/folder',
@@ -111,7 +111,7 @@ describe('resource folders', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('rename: required and optional params', async () => {
     const response = await client.folders.rename({
       folderPath: '/path/of/folder',

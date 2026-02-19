@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource invalidation', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.cache.invalidation.create({
       url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg',
@@ -23,14 +23,14 @@ describe('resource invalidation', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.cache.invalidation.create({
       url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg',
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.cache.invalidation.get('requestId');
     const rawResponse = await responsePromise.asResponse();

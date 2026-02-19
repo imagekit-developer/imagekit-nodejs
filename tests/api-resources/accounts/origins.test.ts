@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource origins', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.accounts.origins.create({
       accessKey: 'AKIAIOSFODNN7EXAMPLE',
@@ -27,7 +27,7 @@ describe('resource origins', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.accounts.origins.create({
       accessKey: 'AKIAIOSFODNN7EXAMPLE',
@@ -41,7 +41,7 @@ describe('resource origins', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.accounts.origins.update('id', {
       accessKey: 'AKIAIOSFODNN7EXAMPLE',
@@ -59,7 +59,7 @@ describe('resource origins', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.accounts.origins.update('id', {
       accessKey: 'AKIAIOSFODNN7EXAMPLE',
@@ -73,7 +73,7 @@ describe('resource origins', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.accounts.origins.list();
     const rawResponse = await responsePromise.asResponse();
@@ -85,7 +85,7 @@ describe('resource origins', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.accounts.origins.delete('id');
     const rawResponse = await responsePromise.asResponse();
@@ -97,7 +97,7 @@ describe('resource origins', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.accounts.origins.get('id');
     const rawResponse = await responsePromise.asResponse();

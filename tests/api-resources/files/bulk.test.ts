@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource bulk', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.files.bulk.delete({
       fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
@@ -23,14 +23,14 @@ describe('resource bulk', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.files.bulk.delete({
       fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addTags: only required params', async () => {
     const responsePromise = client.files.bulk.addTags({
       fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
@@ -45,7 +45,7 @@ describe('resource bulk', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addTags: required and optional params', async () => {
     const response = await client.files.bulk.addTags({
       fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
@@ -53,7 +53,7 @@ describe('resource bulk', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('removeAITags: only required params', async () => {
     const responsePromise = client.files.bulk.removeAITags({
       AITags: ['t-shirt', 'round-neck', 'sale2019'],
@@ -68,7 +68,7 @@ describe('resource bulk', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('removeAITags: required and optional params', async () => {
     const response = await client.files.bulk.removeAITags({
       AITags: ['t-shirt', 'round-neck', 'sale2019'],
@@ -76,7 +76,7 @@ describe('resource bulk', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('removeTags: only required params', async () => {
     const responsePromise = client.files.bulk.removeTags({
       fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
@@ -91,7 +91,7 @@ describe('resource bulk', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('removeTags: required and optional params', async () => {
     const response = await client.files.bulk.removeTags({
       fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
