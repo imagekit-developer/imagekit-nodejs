@@ -60,7 +60,7 @@ $ yarn link @imagekit/nodejs
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global @imagekit/nodejs
+$ pnpm link --global @imagekit/nodejs
 ```
 
 ## Running tests
