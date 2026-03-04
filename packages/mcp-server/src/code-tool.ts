@@ -155,7 +155,7 @@ const remoteStainlessHandler = async ({
     headers: {
       ...(reqContext.stainlessApiKey && { Authorization: reqContext.stainlessApiKey }),
       'Content-Type': 'application/json',
-      client_envs: JSON.stringify({
+      'x-stainless-mcp-client-envs': JSON.stringify({
         IMAGEKIT_PRIVATE_KEY: requireValue(
           readEnv('IMAGEKIT_PRIVATE_KEY') ?? client.privateKey,
           'set IMAGEKIT_PRIVATE_KEY environment variable or provide privateKey client option',
