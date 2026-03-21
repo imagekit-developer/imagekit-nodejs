@@ -17,6 +17,7 @@ If you are looking to integrate file uploads in browsers, use one of our [fronte
 - [Usage](#usage)
   - [Request & Response types](#request--response-types)
 - [File uploads](#file-uploads)
+- [File Delete](#file-delete)
 - [URL generation](#url-generation)
   - [Basic URL generation](#basic-url-generation)
   - [URL generation with transformations](#url-generation-with-transformations)
@@ -131,6 +132,20 @@ await client.files.upload({
   file: await toFile(new Uint8Array([0, 1, 2]), 'file'),
   fileName: 'fileName',
 });
+```
+
+### File Delete
+
+```ts
+import { ImageKit } from "@imagekit/nodejs";
+
+const imagekit = new ImageKit({
+  publicKey: "your_public_key",
+  privateKey: "your_private_key",
+  urlEndpoint: "your_url_endpoint",
+});
+
+await imagekit.files.delete("file_id");
 ```
 
 ## URL generation
