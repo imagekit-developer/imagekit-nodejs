@@ -74,6 +74,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit custom-metadata-fields create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --label price \\\n  --name price \\\n  --schema '{type: Number}'",
       },
+      csharp: {
+        method: 'CustomMetadataFields.Create',
+        example:
+          'CustomMetadataFieldCreateParams parameters = new()\n{\n    Label = "price",\n    Name = "price",\n    Schema = new()\n    {\n        Type = Type.Number,\n        DefaultValue = "string",\n        IsValueRequired = true,\n        MaxLength = 0,\n        MaxValue = 3000,\n        MinLength = 0,\n        MinValue = 1000,\n        SelectOptions =\n        [\n            "small", "medium", "large", 30, 40, true\n        ],\n    },\n};\n\nvar customMetadataField = await client.CustomMetadataFields.Create(parameters);\n\nConsole.WriteLine(customMetadataField);',
+      },
       go: {
         method: 'client.CustomMetadataFields.New',
         example:
@@ -87,6 +92,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'customMetadataFields().create',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataField;\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataFieldCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        CustomMetadataFieldCreateParams params = CustomMetadataFieldCreateParams.builder()\n            .label("price")\n            .name("price")\n            .schema(CustomMetadataFieldCreateParams.Schema.builder()\n                .type(CustomMetadataFieldCreateParams.Schema.Type.NUMBER)\n                .build())\n            .build();\n        CustomMetadataField customMetadataField = client.customMetadataFields().create(params);\n    }\n}',
+      },
+      php: {
+        method: 'customMetadataFields->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataField = $client->customMetadataFields->create(\n  label: 'price',\n  name: 'price',\n  schema: [\n    'type' => 'Number',\n    'defaultValue' => 'string',\n    'isValueRequired' => true,\n    'maxLength' => 0,\n    'maxValue' => 3000,\n    'minLength' => 0,\n    'minValue' => 1000,\n    'selectOptions' => ['small', 'medium', 'large', 30, 40, true],\n  ],\n);\n\nvar_dump($customMetadataField);",
       },
       python: {
         method: 'custom_metadata_fields.create',
@@ -125,6 +135,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit custom-metadata-fields list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
       },
+      csharp: {
+        method: 'CustomMetadataFields.List',
+        example:
+          'CustomMetadataFieldListParams parameters = new();\n\nvar customMetadataFields = await client.CustomMetadataFields.List(parameters);\n\nConsole.WriteLine(customMetadataFields);',
+      },
       go: {
         method: 'client.CustomMetadataFields.List',
         example:
@@ -138,6 +153,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'customMetadataFields().list',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataField;\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataFieldListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        List<CustomMetadataField> customMetadataFields = client.customMetadataFields().list();\n    }\n}',
+      },
+      php: {
+        method: 'customMetadataFields->list',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataFields = $client->customMetadataFields->list(\n  folderPath: 'folderPath', includeDeleted: true\n);\n\nvar_dump($customMetadataFields);",
       },
       python: {
         method: 'custom_metadata_fields.list',
@@ -179,6 +199,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit custom-metadata-fields update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
       },
+      csharp: {
+        method: 'CustomMetadataFields.Update',
+        example:
+          'CustomMetadataFieldUpdateParams parameters = new() { ID = "id" };\n\nvar customMetadataField = await client.CustomMetadataFields.Update(parameters);\n\nConsole.WriteLine(customMetadataField);',
+      },
       go: {
         method: 'client.CustomMetadataFields.Update',
         example:
@@ -192,6 +217,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'customMetadataFields().update',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataField;\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataFieldUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        CustomMetadataField customMetadataField = client.customMetadataFields().update("id");\n    }\n}',
+      },
+      php: {
+        method: 'customMetadataFields->update',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataField = $client->customMetadataFields->update(\n  'id',\n  label: 'price',\n  schema: [\n    'defaultValue' => 'string',\n    'isValueRequired' => true,\n    'maxLength' => 0,\n    'maxValue' => 3000,\n    'minLength' => 0,\n    'minValue' => 1000,\n    'selectOptions' => ['small', 'medium', 'large', 30, 40, true],\n  ],\n);\n\nvar_dump($customMetadataField);",
       },
       python: {
         method: 'custom_metadata_fields.update',
@@ -229,6 +259,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit custom-metadata-fields delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
       },
+      csharp: {
+        method: 'CustomMetadataFields.Delete',
+        example:
+          'CustomMetadataFieldDeleteParams parameters = new() { ID = "id" };\n\nvar customMetadataField = await client.CustomMetadataFields.Delete(parameters);\n\nConsole.WriteLine(customMetadataField);',
+      },
       go: {
         method: 'client.CustomMetadataFields.Delete',
         example:
@@ -242,6 +277,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'customMetadataFields().delete',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataFieldDeleteParams;\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataFieldDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        CustomMetadataFieldDeleteResponse customMetadataField = client.customMetadataFields().delete("id");\n    }\n}',
+      },
+      php: {
+        method: 'customMetadataFields->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataField = $client->customMetadataFields->delete('id');\n\nvar_dump($customMetadataField);",
       },
       python: {
         method: 'custom_metadata_fields.delete',
@@ -304,6 +344,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files upload \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file 'Example data' \\\n  --file-name fileName",
       },
+      csharp: {
+        method: 'Files.Upload',
+        example:
+          'FileUploadParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("Example data"),\n    FileName = "fileName",\n};\n\nvar response = await client.Files.Upload(parameters);\n\nConsole.WriteLine(response);',
+      },
       go: {
         method: 'client.Files.Upload',
         example:
@@ -317,6 +362,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().upload',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.FileUploadParams;\nimport com.imagekit.api.models.files.FileUploadResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        FileUploadParams params = FileUploadParams.builder()\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .fileName("fileName")\n            .build();\n        FileUploadResponse response = client.files().upload(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->upload',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->upload(\n  file: 'file',\n  fileName: 'fileName',\n  token: 'token',\n  checks: \"\\\"request.folder\\\" : \\\"marketing/\\\"\\n\",\n  customCoordinates: 'customCoordinates',\n  customMetadata: ['brand' => 'bar', 'color' => 'bar'],\n  description: 'Running shoes',\n  expire: 0,\n  extensions: [\n    [\n      'name' => 'remove-bg',\n      'options' => [\n        'addShadow' => true,\n        'bgColor' => 'bg_color',\n        'bgImageURL' => 'bg_image_url',\n        'semitransparency' => true,\n      ],\n    ],\n    ['maxTags' => 5, 'minConfidence' => 95, 'name' => 'google-auto-tagging'],\n    ['name' => 'ai-auto-description'],\n    [\n      'name' => 'ai-tasks',\n      'tasks' => [\n        [\n          'instruction' => 'What types of clothing items are visible in this image?',\n          'type' => 'select_tags',\n          'maxSelections' => 1,\n          'minSelections' => 0,\n          'vocabulary' => ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],\n        ],\n        [\n          'instruction' => 'Is this a luxury or high-end fashion item?',\n          'type' => 'yes_no',\n          'onNo' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onUnknown' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onYes' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n        ],\n      ],\n    ],\n    ['id' => 'ext_abc123', 'name' => 'saved-extension'],\n  ],\n  folder: 'folder',\n  isPrivateFile: true,\n  isPublished: true,\n  overwriteAITags: true,\n  overwriteCustomMetadata: true,\n  overwriteFile: true,\n  overwriteTags: true,\n  publicKey: 'publicKey',\n  responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],\n  signature: 'signature',\n  tags: ['t-shirt', 'round-neck', 'men'],\n  transformation: [\n    'post' => [\n      ['type' => 'thumbnail', 'value' => 'w-150,h-150'],\n      [\n        'protocol' => 'dash',\n        'type' => 'abs',\n        'value' => 'sr-240_360_480_720_1080',\n      ],\n    ],\n    'pre' => 'w-300,h-300,q-80',\n  ],\n  useUniqueFileName: true,\n  webhookURL: 'https://example.com',\n);\n\nvar_dump($response);",
       },
       python: {
         method: 'files.upload',
@@ -355,6 +405,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
       },
+      csharp: {
+        method: 'Files.Get',
+        example:
+          'FileGetParams parameters = new() { FileID = "fileId" };\n\nvar file = await client.Files.Get(parameters);\n\nConsole.WriteLine(file);',
+      },
       go: {
         method: 'client.Files.Get',
         example:
@@ -368,6 +423,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().get',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.File;\nimport com.imagekit.api.models.files.FileGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        File file = client.files().get("fileId");\n    }\n}',
+      },
+      php: {
+        method: 'files->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->get('fileId');\n\nvar_dump($file);",
       },
       python: {
         method: 'files.get',
@@ -407,6 +467,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
       },
+      csharp: {
+        method: 'Files.Update',
+        example:
+          'FileUpdateParams parameters = new()\n{\n    FileID = "fileId",\n    UpdateFileRequest = new UpdateFileDetails()\n    {\n        CustomCoordinates = "10,10,100,100",\n        CustomMetadata = new Dictionary<string, JsonElement>()\n        {\n            { "brand", JsonSerializer.SerializeToElement("bar") },\n            { "color", JsonSerializer.SerializeToElement("bar") },\n        },\n        Description = "description",\n        Extensions =\n        [\n            new RemoveBg()\n            {\n                Options = new()\n                {\n                    AddShadow = true,\n                    BgColor = "bg_color",\n                    BgImageUrl = "bg_image_url",\n                    Semitransparency = true,\n                },\n            },\n            new AutoTaggingExtension()\n            {\n                MaxTags = 10,\n                MinConfidence = 80,\n                Name = Name.GoogleAutoTagging,\n            },\n            new AutoTaggingExtension()\n            {\n                MaxTags = 10,\n                MinConfidence = 80,\n                Name = Name.AwsAutoTagging,\n            },\n            new AIAutoDescription(),\n            new AITasks(\n\n                [\n                    new SelectTags()\n                    {\n                        Instruction = "What types of clothing items are visible?",\n                        MaxSelections = 1,\n                        MinSelections = 0,\n                        Vocabulary =\n                        [\n                            "shirt", "dress", "jacket"\n                        ],\n                    },\n                ]\n            ),\n            new SavedExtension("ext_abc123"),\n        ],\n        RemoveAITags = new(\n\n            [\n                "car", "vehicle", "motorsports"\n            ]\n        ),\n        Tags =\n        [\n            "tag1", "tag2"\n        ],\n        WebhookUrl = "https://webhook.site/0d6b6c7a-8e5a-4b3a-8b7c-0d6b6c7a8e5a",\n    },\n};\n\nvar file = await client.Files.Update(parameters);\n\nConsole.WriteLine(file);',
+      },
       go: {
         method: 'client.Files.Update',
         example:
@@ -420,6 +485,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().update',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.FileUpdateParams;\nimport com.imagekit.api.models.files.FileUpdateResponse;\nimport com.imagekit.api.models.files.UpdateFileRequest;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        FileUpdateParams params = FileUpdateParams.builder()\n            .fileId("fileId")\n            .updateFileRequest(UpdateFileRequest.UpdateFileDetails.builder().build())\n            .build();\n        FileUpdateResponse file = client.files().update(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->update',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->update(\n  'fileId',\n  customCoordinates: 'customCoordinates',\n  customMetadata: ['foo' => 'bar'],\n  description: 'description',\n  extensions: [\n    [\n      'name' => 'remove-bg',\n      'options' => [\n        'addShadow' => true,\n        'bgColor' => 'bg_color',\n        'bgImageURL' => 'bg_image_url',\n        'semitransparency' => true,\n      ],\n    ],\n    ['maxTags' => 5, 'minConfidence' => 95, 'name' => 'google-auto-tagging'],\n    ['name' => 'ai-auto-description'],\n    [\n      'name' => 'ai-tasks',\n      'tasks' => [\n        [\n          'instruction' => 'What types of clothing items are visible in this image?',\n          'type' => 'select_tags',\n          'maxSelections' => 1,\n          'minSelections' => 0,\n          'vocabulary' => ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],\n        ],\n        [\n          'instruction' => 'Is this a luxury or high-end fashion item?',\n          'type' => 'yes_no',\n          'onNo' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onUnknown' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onYes' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n        ],\n      ],\n    ],\n    ['id' => 'ext_abc123', 'name' => 'saved-extension'],\n  ],\n  removeAITags: ['string'],\n  tags: ['tag1', 'tag2'],\n  webhookURL: 'https://example.com',\n  publish: ['isPublished' => true, 'includeFileVersions' => true],\n);\n\nvar_dump($file);",
       },
       python: {
         method: 'files.update',
@@ -456,6 +526,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
       },
+      csharp: {
+        method: 'Files.Delete',
+        example:
+          'FileDeleteParams parameters = new() { FileID = "fileId" };\n\nawait client.Files.Delete(parameters);',
+      },
       go: {
         method: 'client.Files.Delete',
         example:
@@ -469,6 +544,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().delete',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.FileDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        client.files().delete("fileId");\n    }\n}',
+      },
+      php: {
+        method: 'files->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->files->delete('fileId');\n\nvar_dump($result);",
       },
       python: {
         method: 'files.delete',
@@ -506,6 +586,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files copy \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --destination-path /folder/to/copy/into/ \\\n  --source-file-path /path/to/file.jpg",
       },
+      csharp: {
+        method: 'Files.Copy',
+        example:
+          'FileCopyParams parameters = new()\n{\n    DestinationPath = "/folder/to/copy/into/",\n    SourceFilePath = "/path/to/file.jpg",\n};\n\nvar response = await client.Files.Copy(parameters);\n\nConsole.WriteLine(response);',
+      },
       go: {
         method: 'client.Files.Copy',
         example:
@@ -519,6 +604,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().copy',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.FileCopyParams;\nimport com.imagekit.api.models.files.FileCopyResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        FileCopyParams params = FileCopyParams.builder()\n            .destinationPath("/folder/to/copy/into/")\n            .sourceFilePath("/path/to/file.jpg")\n            .build();\n        FileCopyResponse response = client.files().copy(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->copy',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->copy(\n  destinationPath: '/folder/to/copy/into/',\n  sourceFilePath: '/path/to/file.jpg',\n  includeFileVersions: false,\n);\n\nvar_dump($response);",
       },
       python: {
         method: 'files.copy',
@@ -556,6 +646,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files move \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --destination-path /folder/to/move/into/ \\\n  --source-file-path /path/to/file.jpg",
       },
+      csharp: {
+        method: 'Files.Move',
+        example:
+          'FileMoveParams parameters = new()\n{\n    DestinationPath = "/folder/to/move/into/",\n    SourceFilePath = "/path/to/file.jpg",\n};\n\nvar response = await client.Files.Move(parameters);\n\nConsole.WriteLine(response);',
+      },
       go: {
         method: 'client.Files.Move',
         example:
@@ -569,6 +664,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().move',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.FileMoveParams;\nimport com.imagekit.api.models.files.FileMoveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        FileMoveParams params = FileMoveParams.builder()\n            .destinationPath("/folder/to/move/into/")\n            .sourceFilePath("/path/to/file.jpg")\n            .build();\n        FileMoveResponse response = client.files().move(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->move',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->move(\n  destinationPath: '/folder/to/move/into/', sourceFilePath: '/path/to/file.jpg'\n);\n\nvar_dump($response);",
       },
       python: {
         method: 'files.move',
@@ -606,6 +706,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files rename \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-path /path/to/file.jpg \\\n  --new-file-name newFileName.jpg",
       },
+      csharp: {
+        method: 'Files.Rename',
+        example:
+          'FileRenameParams parameters = new()\n{\n    FilePath = "/path/to/file.jpg",\n    NewFileName = "newFileName.jpg",\n};\n\nvar response = await client.Files.Rename(parameters);\n\nConsole.WriteLine(response);',
+      },
       go: {
         method: 'client.Files.Rename',
         example:
@@ -619,6 +724,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().rename',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.FileRenameParams;\nimport com.imagekit.api.models.files.FileRenameResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        FileRenameParams params = FileRenameParams.builder()\n            .filePath("/path/to/file.jpg")\n            .newFileName("newFileName.jpg")\n            .build();\n        FileRenameResponse response = client.files().rename(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->rename',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->rename(\n  filePath: '/path/to/file.jpg',\n  newFileName: 'newFileName.jpg',\n  purgeCache: true,\n);\n\nvar_dump($response);",
       },
       python: {
         method: 'files.rename',
@@ -656,6 +766,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files:bulk delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id 598821f949c0a938d57563bd \\\n  --file-id 598821f949c0a938d57563be",
       },
+      csharp: {
+        method: 'Files.Bulk.Delete',
+        example:
+          'BulkDeleteParams parameters = new()\n{\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n};\n\nvar bulk = await client.Files.Bulk.Delete(parameters);\n\nConsole.WriteLine(bulk);',
+      },
       go: {
         method: 'client.Files.Bulk.Delete',
         example:
@@ -669,6 +784,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().bulk().delete',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.bulk.BulkDeleteParams;\nimport com.imagekit.api.models.files.bulk.BulkDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        BulkDeleteParams params = BulkDeleteParams.builder()\n            .addFileId("598821f949c0a938d57563bd")\n            .addFileId("598821f949c0a938d57563be")\n            .build();\n        BulkDeleteResponse bulk = client.files().bulk().delete(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->bulk->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$bulk = $client->files->bulk->delete(\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be']\n);\n\nvar_dump($bulk);",
       },
       python: {
         method: 'files.bulk.delete',
@@ -706,6 +826,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files:bulk add-tags \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id 598821f949c0a938d57563bd \\\n  --file-id 598821f949c0a938d57563be \\\n  --tag t-shirt \\\n  --tag round-neck \\\n  --tag sale2019",
       },
+      csharp: {
+        method: 'Files.Bulk.AddTags',
+        example:
+          'BulkAddTagsParams parameters = new()\n{\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n    Tags =\n    [\n        "t-shirt", "round-neck", "sale2019"\n    ],\n};\n\nvar response = await client.Files.Bulk.AddTags(parameters);\n\nConsole.WriteLine(response);',
+      },
       go: {
         method: 'client.Files.Bulk.AddTags',
         example:
@@ -719,6 +844,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().bulk().addTags',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.bulk.BulkAddTagsParams;\nimport com.imagekit.api.models.files.bulk.BulkAddTagsResponse;\nimport java.util.List;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        BulkAddTagsParams params = BulkAddTagsParams.builder()\n            .addFileId("598821f949c0a938d57563bd")\n            .addFileId("598821f949c0a938d57563be")\n            .tags(List.of(\n              "t-shirt",\n              "round-neck",\n              "sale2019"\n            ))\n            .build();\n        BulkAddTagsResponse response = client.files().bulk().addTags(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->bulk->addTags',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->bulk->addTags(\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n  tags: ['t-shirt', 'round-neck', 'sale2019'],\n);\n\nvar_dump($response);",
       },
       python: {
         method: 'files.bulk.add_tags',
@@ -756,6 +886,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files:bulk remove-tags \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id 598821f949c0a938d57563bd \\\n  --file-id 598821f949c0a938d57563be \\\n  --tag t-shirt \\\n  --tag round-neck \\\n  --tag sale2019",
       },
+      csharp: {
+        method: 'Files.Bulk.RemoveTags',
+        example:
+          'BulkRemoveTagsParams parameters = new()\n{\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n    Tags =\n    [\n        "t-shirt", "round-neck", "sale2019"\n    ],\n};\n\nvar response = await client.Files.Bulk.RemoveTags(parameters);\n\nConsole.WriteLine(response);',
+      },
       go: {
         method: 'client.Files.Bulk.RemoveTags',
         example:
@@ -769,6 +904,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().bulk().removeTags',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.bulk.BulkRemoveTagsParams;\nimport com.imagekit.api.models.files.bulk.BulkRemoveTagsResponse;\nimport java.util.List;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        BulkRemoveTagsParams params = BulkRemoveTagsParams.builder()\n            .addFileId("598821f949c0a938d57563bd")\n            .addFileId("598821f949c0a938d57563be")\n            .tags(List.of(\n              "t-shirt",\n              "round-neck",\n              "sale2019"\n            ))\n            .build();\n        BulkRemoveTagsResponse response = client.files().bulk().removeTags(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->bulk->removeTags',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->bulk->removeTags(\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n  tags: ['t-shirt', 'round-neck', 'sale2019'],\n);\n\nvar_dump($response);",
       },
       python: {
         method: 'files.bulk.remove_tags',
@@ -806,6 +946,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files:bulk remove-ai-tags \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --ai-tag t-shirt \\\n  --ai-tag round-neck \\\n  --ai-tag sale2019 \\\n  --file-id 598821f949c0a938d57563bd \\\n  --file-id 598821f949c0a938d57563be",
       },
+      csharp: {
+        method: 'Files.Bulk.RemoveAITags',
+        example:
+          'BulkRemoveAITagsParams parameters = new()\n{\n    AITags =\n    [\n        "t-shirt", "round-neck", "sale2019"\n    ],\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n};\n\nvar response = await client.Files.Bulk.RemoveAITags(parameters);\n\nConsole.WriteLine(response);',
+      },
       go: {
         method: 'client.Files.Bulk.RemoveAITags',
         example:
@@ -819,6 +964,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().bulk().removeAiTags',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.bulk.BulkRemoveAiTagsParams;\nimport com.imagekit.api.models.files.bulk.BulkRemoveAiTagsResponse;\nimport java.util.List;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        BulkRemoveAiTagsParams params = BulkRemoveAiTagsParams.builder()\n            .aiTags(List.of(\n              "t-shirt",\n              "round-neck",\n              "sale2019"\n            ))\n            .addFileId("598821f949c0a938d57563bd")\n            .addFileId("598821f949c0a938d57563be")\n            .build();\n        BulkRemoveAiTagsResponse response = client.files().bulk().removeAiTags(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->bulk->removeAITags',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->bulk->removeAITags(\n  aiTags: ['t-shirt', 'round-neck', 'sale2019'],\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n);\n\nvar_dump($response);",
       },
       python: {
         method: 'files.bulk.remove_ai_tags',
@@ -856,6 +1006,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files:versions list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
       },
+      csharp: {
+        method: 'Files.Versions.List',
+        example:
+          'VersionListParams parameters = new() { FileID = "fileId" };\n\nvar files = await client.Files.Versions.List(parameters);\n\nConsole.WriteLine(files);',
+      },
       go: {
         method: 'client.Files.Versions.List',
         example:
@@ -869,6 +1024,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().versions().list',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.File;\nimport com.imagekit.api.models.files.versions.VersionListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        List<File> files = client.files().versions().list("fileId");\n    }\n}',
+      },
+      php: {
+        method: 'files->versions->list',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$files = $client->files->versions->list('fileId');\n\nvar_dump($files);",
       },
       python: {
         method: 'files.versions.list',
@@ -906,6 +1066,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files:versions get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId \\\n  --version-id versionId",
       },
+      csharp: {
+        method: 'Files.Versions.Get',
+        example:
+          'VersionGetParams parameters = new()\n{\n    FileID = "fileId",\n    VersionID = "versionId",\n};\n\nvar file = await client.Files.Versions.Get(parameters);\n\nConsole.WriteLine(file);',
+      },
       go: {
         method: 'client.Files.Versions.Get',
         example:
@@ -919,6 +1084,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().versions().get',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.File;\nimport com.imagekit.api.models.files.versions.VersionGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        VersionGetParams params = VersionGetParams.builder()\n            .fileId("fileId")\n            .versionId("versionId")\n            .build();\n        File file = client.files().versions().get(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->versions->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->versions->get('versionId', fileID: 'fileId');\n\nvar_dump($file);",
       },
       python: {
         method: 'files.versions.get',
@@ -956,6 +1126,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files:versions delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId \\\n  --version-id versionId",
       },
+      csharp: {
+        method: 'Files.Versions.Delete',
+        example:
+          'VersionDeleteParams parameters = new()\n{\n    FileID = "fileId",\n    VersionID = "versionId",\n};\n\nvar version = await client.Files.Versions.Delete(parameters);\n\nConsole.WriteLine(version);',
+      },
       go: {
         method: 'client.Files.Versions.Delete',
         example:
@@ -969,6 +1144,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().versions().delete',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.versions.VersionDeleteParams;\nimport com.imagekit.api.models.files.versions.VersionDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        VersionDeleteParams params = VersionDeleteParams.builder()\n            .fileId("fileId")\n            .versionId("versionId")\n            .build();\n        VersionDeleteResponse version = client.files().versions().delete(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->versions->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$version = $client->files->versions->delete('versionId', fileID: 'fileId');\n\nvar_dump($version);",
       },
       python: {
         method: 'files.versions.delete',
@@ -1006,6 +1186,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files:versions restore \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId \\\n  --version-id versionId",
       },
+      csharp: {
+        method: 'Files.Versions.Restore',
+        example:
+          'VersionRestoreParams parameters = new()\n{\n    FileID = "fileId",\n    VersionID = "versionId",\n};\n\nvar file = await client.Files.Versions.Restore(parameters);\n\nConsole.WriteLine(file);',
+      },
       go: {
         method: 'client.Files.Versions.Restore',
         example:
@@ -1019,6 +1204,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().versions().restore',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.File;\nimport com.imagekit.api.models.files.versions.VersionRestoreParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        VersionRestoreParams params = VersionRestoreParams.builder()\n            .fileId("fileId")\n            .versionId("versionId")\n            .build();\n        File file = client.files().versions().restore(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->versions->restore',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->versions->restore('versionId', fileID: 'fileId');\n\nvar_dump($file);",
       },
       python: {
         method: 'files.versions.restore',
@@ -1057,6 +1247,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files:metadata get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
       },
+      csharp: {
+        method: 'Files.Metadata.Get',
+        example:
+          'MetadataGetParams parameters = new() { FileID = "fileId" };\n\nvar metadata = await client.Files.Metadata.Get(parameters);\n\nConsole.WriteLine(metadata);',
+      },
       go: {
         method: 'client.Files.Metadata.Get',
         example:
@@ -1070,6 +1265,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().metadata().get',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.Metadata;\nimport com.imagekit.api.models.files.metadata.MetadataGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        Metadata metadata = client.files().metadata().get("fileId");\n    }\n}',
+      },
+      php: {
+        method: 'files->metadata->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$metadata = $client->files->metadata->get('fileId');\n\nvar_dump($metadata);",
       },
       python: {
         method: 'files.metadata.get',
@@ -1108,6 +1308,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit files:metadata get-from-url \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --url https://example.com",
       },
+      csharp: {
+        method: 'Files.Metadata.GetFromUrl',
+        example:
+          'MetadataGetFromUrlParams parameters = new() { Url = "https://example.com" };\n\nvar metadata = await client.Files.Metadata.GetFromUrl(parameters);\n\nConsole.WriteLine(metadata);',
+      },
       go: {
         method: 'client.Files.Metadata.GetFromURL',
         example:
@@ -1121,6 +1326,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().metadata().getFromUrl',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.Metadata;\nimport com.imagekit.api.models.files.metadata.MetadataGetFromUrlParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        MetadataGetFromUrlParams params = MetadataGetFromUrlParams.builder()\n            .url("https://example.com")\n            .build();\n        Metadata metadata = client.files().metadata().getFromUrl(params);\n    }\n}',
+      },
+      php: {
+        method: 'files->metadata->getFromURL',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$metadata = $client->files->metadata->getFromURL(url: 'https://example.com');\n\nvar_dump($metadata);",
       },
       python: {
         method: 'files.metadata.get_from_url',
@@ -1158,6 +1368,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit saved-extensions list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
       },
+      csharp: {
+        method: 'SavedExtensions.List',
+        example:
+          'SavedExtensionListParams parameters = new();\n\nvar savedExtensions = await client.SavedExtensions.List(parameters);\n\nConsole.WriteLine(savedExtensions);',
+      },
       go: {
         method: 'client.SavedExtensions.List',
         example:
@@ -1171,6 +1386,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'savedExtensions().list',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.SavedExtension;\nimport com.imagekit.api.models.savedextensions.SavedExtensionListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        List<SavedExtension> savedExtensions = client.savedExtensions().list();\n    }\n}',
+      },
+      php: {
+        method: 'savedExtensions->list',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtensions = $client->savedExtensions->list();\n\nvar_dump($savedExtensions);",
       },
       python: {
         method: 'saved_extensions.list',
@@ -1213,6 +1433,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit saved-extensions create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --config '{name: remove-bg}' \\\n  --description 'Analyzes vehicle images for type, condition, and quality assessment' \\\n  --name 'Car Quality Analysis'",
       },
+      csharp: {
+        method: 'SavedExtensions.Create',
+        example:
+          'SavedExtensionCreateParams parameters = new()\n{\n    Config = new RemoveBg()\n    {\n        Options = new()\n        {\n            AddShadow = true,\n            BgColor = "bg_color",\n            BgImageUrl = "bg_image_url",\n            Semitransparency = true,\n        },\n    },\n    Description = "Analyzes vehicle images for type, condition, and quality assessment",\n    Name = "Car Quality Analysis",\n};\n\nvar savedExtension = await client.SavedExtensions.Create(parameters);\n\nConsole.WriteLine(savedExtension);',
+      },
       go: {
         method: 'client.SavedExtensions.New',
         example:
@@ -1226,6 +1451,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'savedExtensions().create',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.ExtensionConfig;\nimport com.imagekit.api.models.SavedExtension;\nimport com.imagekit.api.models.savedextensions.SavedExtensionCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        SavedExtensionCreateParams params = SavedExtensionCreateParams.builder()\n            .config(ExtensionConfig.RemoveBg.builder().build())\n            .description("Analyzes vehicle images for type, condition, and quality assessment")\n            .name("Car Quality Analysis")\n            .build();\n        SavedExtension savedExtension = client.savedExtensions().create(params);\n    }\n}',
+      },
+      php: {
+        method: 'savedExtensions->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtension = $client->savedExtensions->create(\n  config: [\n    'name' => 'remove-bg',\n    'options' => [\n      'addShadow' => true,\n      'bgColor' => 'bg_color',\n      'bgImageURL' => 'bg_image_url',\n      'semitransparency' => true,\n    ],\n  ],\n  description: 'Analyzes vehicle images for type, condition, and quality assessment',\n  name: 'Car Quality Analysis',\n);\n\nvar_dump($savedExtension);",
       },
       python: {
         method: 'saved_extensions.create',
@@ -1263,6 +1493,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit saved-extensions get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
       },
+      csharp: {
+        method: 'SavedExtensions.Get',
+        example:
+          'SavedExtensionGetParams parameters = new() { ID = "id" };\n\nvar savedExtension = await client.SavedExtensions.Get(parameters);\n\nConsole.WriteLine(savedExtension);',
+      },
       go: {
         method: 'client.SavedExtensions.Get',
         example:
@@ -1276,6 +1511,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'savedExtensions().get',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.SavedExtension;\nimport com.imagekit.api.models.savedextensions.SavedExtensionGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        SavedExtension savedExtension = client.savedExtensions().get("id");\n    }\n}',
+      },
+      php: {
+        method: 'savedExtensions->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtension = $client->savedExtensions->get('id');\n\nvar_dump($savedExtension);",
       },
       python: {
         method: 'saved_extensions.get',
@@ -1319,6 +1559,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit saved-extensions update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
       },
+      csharp: {
+        method: 'SavedExtensions.Update',
+        example:
+          'SavedExtensionUpdateParams parameters = new() { ID = "id" };\n\nvar savedExtension = await client.SavedExtensions.Update(parameters);\n\nConsole.WriteLine(savedExtension);',
+      },
       go: {
         method: 'client.SavedExtensions.Update',
         example:
@@ -1332,6 +1577,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'savedExtensions().update',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.SavedExtension;\nimport com.imagekit.api.models.savedextensions.SavedExtensionUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        SavedExtension savedExtension = client.savedExtensions().update("id");\n    }\n}',
+      },
+      php: {
+        method: 'savedExtensions->update',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtension = $client->savedExtensions->update(\n  'id',\n  config: [\n    'name' => 'remove-bg',\n    'options' => [\n      'addShadow' => true,\n      'bgColor' => 'bg_color',\n      'bgImageURL' => 'bg_image_url',\n      'semitransparency' => true,\n    ],\n  ],\n  description: 'x',\n  name: 'x',\n);\n\nvar_dump($savedExtension);",
       },
       python: {
         method: 'saved_extensions.update',
@@ -1367,6 +1617,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit saved-extensions delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
       },
+      csharp: {
+        method: 'SavedExtensions.Delete',
+        example:
+          'SavedExtensionDeleteParams parameters = new() { ID = "id" };\n\nawait client.SavedExtensions.Delete(parameters);',
+      },
       go: {
         method: 'client.SavedExtensions.Delete',
         example:
@@ -1380,6 +1635,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'savedExtensions().delete',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.savedextensions.SavedExtensionDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        client.savedExtensions().delete("id");\n    }\n}',
+      },
+      php: {
+        method: 'savedExtensions->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->savedExtensions->delete('id');\n\nvar_dump($result);",
       },
       python: {
         method: 'saved_extensions.delete',
@@ -1425,6 +1685,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'assets list',
         example: "imagekit assets list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
       },
+      csharp: {
+        method: 'Assets.List',
+        example:
+          'AssetListParams parameters = new();\n\nvar assets = await client.Assets.List(parameters);\n\nConsole.WriteLine(assets);',
+      },
       go: {
         method: 'client.Assets.List',
         example:
@@ -1438,6 +1703,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'assets().list',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.assets.AssetListParams;\nimport com.imagekit.api.models.assets.AssetListResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        List<AssetListResponse> assets = client.assets().list();\n    }\n}',
+      },
+      php: {
+        method: 'assets->list',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$assets = $client->assets->list(\n  fileType: 'all',\n  limit: 1,\n  path: 'path',\n  searchQuery: 'searchQuery',\n  skip: 0,\n  sort: 'ASC_NAME',\n  type: 'file',\n);\n\nvar_dump($assets);",
       },
       python: {
         method: 'assets.list',
@@ -1475,6 +1745,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit cache:invalidation create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --url https://ik.imagekit.io/your_imagekit_id/default-image.jpg",
       },
+      csharp: {
+        method: 'Cache.Invalidation.Create',
+        example:
+          'InvalidationCreateParams parameters = new()\n{\n    Url = "https://ik.imagekit.io/your_imagekit_id/default-image.jpg"\n};\n\nvar invalidation = await client.Cache.Invalidation.Create(parameters);\n\nConsole.WriteLine(invalidation);',
+      },
       go: {
         method: 'client.Cache.Invalidation.New',
         example:
@@ -1488,6 +1763,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'cache().invalidation().create',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.cache.invalidation.InvalidationCreateParams;\nimport com.imagekit.api.models.cache.invalidation.InvalidationCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        InvalidationCreateParams params = InvalidationCreateParams.builder()\n            .url("https://ik.imagekit.io/your_imagekit_id/default-image.jpg")\n            .build();\n        InvalidationCreateResponse invalidation = client.cache().invalidation().create(params);\n    }\n}',
+      },
+      php: {
+        method: 'cache->invalidation->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$invalidation = $client->cache->invalidation->create(\n  url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg'\n);\n\nvar_dump($invalidation);",
       },
       python: {
         method: 'cache.invalidation.create',
@@ -1524,6 +1804,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit cache:invalidation get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --request-id requestId",
       },
+      csharp: {
+        method: 'Cache.Invalidation.Get',
+        example:
+          'InvalidationGetParams parameters = new() { RequestID = "requestId" };\n\nvar invalidation = await client.Cache.Invalidation.Get(parameters);\n\nConsole.WriteLine(invalidation);',
+      },
       go: {
         method: 'client.Cache.Invalidation.Get',
         example:
@@ -1537,6 +1822,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'cache().invalidation().get',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.cache.invalidation.InvalidationGetParams;\nimport com.imagekit.api.models.cache.invalidation.InvalidationGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        InvalidationGetResponse invalidation = client.cache().invalidation().get("requestId");\n    }\n}',
+      },
+      php: {
+        method: 'cache->invalidation->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$invalidation = $client->cache->invalidation->get('requestId');\n\nvar_dump($invalidation);",
       },
       python: {
         method: 'cache.invalidation.get',
@@ -1574,6 +1864,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit folders create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --folder-name summer \\\n  --parent-folder-path /product/images/",
       },
+      csharp: {
+        method: 'Folders.Create',
+        example:
+          'FolderCreateParams parameters = new()\n{\n    FolderName = "summer",\n    ParentFolderPath = "/product/images/",\n};\n\nvar folder = await client.Folders.Create(parameters);\n\nConsole.WriteLine(folder);',
+      },
       go: {
         method: 'client.Folders.New',
         example:
@@ -1587,6 +1882,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'folders().create',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.folders.FolderCreateParams;\nimport com.imagekit.api.models.folders.FolderCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        FolderCreateParams params = FolderCreateParams.builder()\n            .folderName("summer")\n            .parentFolderPath("/product/images/")\n            .build();\n        FolderCreateResponse folder = client.folders().create(params);\n    }\n}',
+      },
+      php: {
+        method: 'folders->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$folder = $client->folders->create(\n  folderName: 'summer', parentFolderPath: '/product/images/'\n);\n\nvar_dump($folder);",
       },
       python: {
         method: 'folders.create',
@@ -1624,6 +1924,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit folders delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --folder-path /folder/to/delete/",
       },
+      csharp: {
+        method: 'Folders.Delete',
+        example:
+          'FolderDeleteParams parameters = new() { FolderPath = "/folder/to/delete/" };\n\nvar folder = await client.Folders.Delete(parameters);\n\nConsole.WriteLine(folder);',
+      },
       go: {
         method: 'client.Folders.Delete',
         example:
@@ -1637,6 +1942,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'folders().delete',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.folders.FolderDeleteParams;\nimport com.imagekit.api.models.folders.FolderDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        FolderDeleteParams params = FolderDeleteParams.builder()\n            .folderPath("/folder/to/delete/")\n            .build();\n        FolderDeleteResponse folder = client.folders().delete(params);\n    }\n}',
+      },
+      php: {
+        method: 'folders->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$folder = $client->folders->delete(folderPath: '/folder/to/delete/');\n\nvar_dump($folder);",
       },
       python: {
         method: 'folders.delete',
@@ -1674,6 +1984,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit folders copy \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --destination-path /path/of/destination/folder \\\n  --source-folder-path /path/of/source/folder",
       },
+      csharp: {
+        method: 'Folders.Copy',
+        example:
+          'FolderCopyParams parameters = new()\n{\n    DestinationPath = "/path/of/destination/folder",\n    SourceFolderPath = "/path/of/source/folder",\n};\n\nvar response = await client.Folders.Copy(parameters);\n\nConsole.WriteLine(response);',
+      },
       go: {
         method: 'client.Folders.Copy',
         example:
@@ -1687,6 +2002,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'folders().copy',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.folders.FolderCopyParams;\nimport com.imagekit.api.models.folders.FolderCopyResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        FolderCopyParams params = FolderCopyParams.builder()\n            .destinationPath("/path/of/destination/folder")\n            .sourceFolderPath("/path/of/source/folder")\n            .build();\n        FolderCopyResponse response = client.folders().copy(params);\n    }\n}',
+      },
+      php: {
+        method: 'folders->copy',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->folders->copy(\n  destinationPath: '/path/of/destination/folder',\n  sourceFolderPath: '/path/of/source/folder',\n  includeVersions: true,\n);\n\nvar_dump($response);",
       },
       python: {
         method: 'folders.copy',
@@ -1724,6 +2044,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit folders move \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --destination-path /path/of/destination/folder \\\n  --source-folder-path /path/of/source/folder",
       },
+      csharp: {
+        method: 'Folders.Move',
+        example:
+          'FolderMoveParams parameters = new()\n{\n    DestinationPath = "/path/of/destination/folder",\n    SourceFolderPath = "/path/of/source/folder",\n};\n\nvar response = await client.Folders.Move(parameters);\n\nConsole.WriteLine(response);',
+      },
       go: {
         method: 'client.Folders.Move',
         example:
@@ -1737,6 +2062,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'folders().move',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.folders.FolderMoveParams;\nimport com.imagekit.api.models.folders.FolderMoveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        FolderMoveParams params = FolderMoveParams.builder()\n            .destinationPath("/path/of/destination/folder")\n            .sourceFolderPath("/path/of/source/folder")\n            .build();\n        FolderMoveResponse response = client.folders().move(params);\n    }\n}',
+      },
+      php: {
+        method: 'folders->move',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->folders->move(\n  destinationPath: '/path/of/destination/folder',\n  sourceFolderPath: '/path/of/source/folder',\n);\n\nvar_dump($response);",
       },
       python: {
         method: 'folders.move',
@@ -1774,6 +2104,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit folders rename \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --folder-path /path/of/folder \\\n  --new-folder-name new-folder-name",
       },
+      csharp: {
+        method: 'Folders.Rename',
+        example:
+          'FolderRenameParams parameters = new()\n{\n    FolderPath = "/path/of/folder",\n    NewFolderName = "new-folder-name",\n};\n\nvar response = await client.Folders.Rename(parameters);\n\nConsole.WriteLine(response);',
+      },
       go: {
         method: 'client.Folders.Rename',
         example:
@@ -1787,6 +2122,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'folders().rename',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.folders.FolderRenameParams;\nimport com.imagekit.api.models.folders.FolderRenameResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        FolderRenameParams params = FolderRenameParams.builder()\n            .folderPath("/path/of/folder")\n            .newFolderName("new-folder-name")\n            .build();\n        FolderRenameResponse response = client.folders().rename(params);\n    }\n}',
+      },
+      php: {
+        method: 'folders->rename',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->folders->rename(\n  folderPath: '/path/of/folder',\n  newFolderName: 'new-folder-name',\n  purgeCache: true,\n);\n\nvar_dump($response);",
       },
       python: {
         method: 'folders.rename',
@@ -1824,6 +2164,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit folders:job get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --job-id jobId",
       },
+      csharp: {
+        method: 'Folders.Job.Get',
+        example:
+          'JobGetParams parameters = new() { JobID = "jobId" };\n\nvar job = await client.Folders.Job.Get(parameters);\n\nConsole.WriteLine(job);',
+      },
       go: {
         method: 'client.Folders.Job.Get',
         example:
@@ -1837,6 +2182,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'folders().job().get',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.folders.job.JobGetParams;\nimport com.imagekit.api.models.folders.job.JobGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        JobGetResponse job = client.folders().job().get("jobId");\n    }\n}',
+      },
+      php: {
+        method: 'folders->job->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$job = $client->folders->job->get('jobId');\n\nvar_dump($job);",
       },
       python: {
         method: 'folders.job.get',
@@ -1875,6 +2225,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit accounts:usage get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --end-date \"'2019-12-27'\" \\\n  --start-date \"'2019-12-27'\"",
       },
+      csharp: {
+        method: 'Accounts.Usage.Get',
+        example:
+          'UsageGetParams parameters = new()\n{\n    EndDate = "2019-12-27",\n    StartDate = "2019-12-27",\n};\n\nvar usage = await client.Accounts.Usage.Get(parameters);\n\nConsole.WriteLine(usage);',
+      },
       go: {
         method: 'client.Accounts.Usage.Get',
         example:
@@ -1888,6 +2243,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts().usage().get',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.accounts.usage.UsageGetParams;\nimport com.imagekit.api.models.accounts.usage.UsageGetResponse;\nimport java.time.LocalDate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        UsageGetParams params = UsageGetParams.builder()\n            .endDate(LocalDate.parse("2019-12-27"))\n            .startDate(LocalDate.parse("2019-12-27"))\n            .build();\n        UsageGetResponse usage = client.accounts().usage().get(params);\n    }\n}',
+      },
+      php: {
+        method: 'accounts->usage->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$usage = $client->accounts->usage->get(\n  endDate: '2019-12-27', startDate: '2019-12-27'\n);\n\nvar_dump($usage);",
       },
       python: {
         method: 'accounts.usage.get',
@@ -1924,6 +2284,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit accounts:origins list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
       },
+      csharp: {
+        method: 'Accounts.Origins.List',
+        example:
+          'OriginListParams parameters = new();\n\nvar originResponses = await client.Accounts.Origins.List(parameters);\n\nConsole.WriteLine(originResponses);',
+      },
       go: {
         method: 'client.Accounts.Origins.List',
         example:
@@ -1937,6 +2302,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts().origins().list',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.accounts.origins.OriginListParams;\nimport com.imagekit.api.models.accounts.origins.OriginResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        List<OriginResponse> originResponses = client.accounts().origins().list();\n    }\n}',
+      },
+      php: {
+        method: 'accounts->origins->list',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponses = $client->accounts->origins->list();\n\nvar_dump($originResponses);",
       },
       python: {
         method: 'accounts.origins.list',
@@ -1974,6 +2344,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit accounts:origins create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --access-key AKIAIOSFODNN7EXAMPLE \\\n  --bucket product-images \\\n  --name 'US S3 Storage' \\\n  --secret-key wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY \\\n  --type S3 \\\n  --endpoint https://s3.eu-central-1.wasabisys.com \\\n  --base-url https://images.example.com/assets \\\n  --client-email service-account@project.iam.gserviceaccount.com \\\n  --private-key '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...' \\\n  --account-name account123 \\\n  --container images \\\n  --sas-token '?sv=2023-01-03&sr=c&sig=abc123' \\\n  --client-id akeneo-client-id \\\n  --client-secret akeneo-client-secret \\\n  --password strongpassword123 \\\n  --username integration-user",
       },
+      csharp: {
+        method: 'Accounts.Origins.Create',
+        example:
+          'OriginCreateParams parameters = new()\n{\n    OriginRequest = new S3()\n    {\n        AccessKey = "AKIATEST123",\n        Bucket = "test-bucket",\n        Name = "My S3 Origin",\n        SecretKey = "secrettest123",\n        BaseUrlForCanonicalHeader = "https://cdn.example.com",\n        IncludeCanonicalHeader = false,\n        Prefix = "images",\n    },\n};\n\nvar originResponse = await client.Accounts.Origins.Create(parameters);\n\nConsole.WriteLine(originResponse);',
+      },
       go: {
         method: 'client.Accounts.Origins.New',
         example:
@@ -1987,6 +2362,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts().origins().create',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.accounts.origins.OriginCreateParams;\nimport com.imagekit.api.models.accounts.origins.OriginRequest;\nimport com.imagekit.api.models.accounts.origins.OriginResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        OriginRequest.S3 params = OriginRequest.S3.builder()\n            .accessKey("AKIATEST123")\n            .bucket("test-bucket")\n            .name("My S3 Origin")\n            .secretKey("secrettest123")\n            .build();\n        OriginResponse originResponse = client.accounts().origins().create(params);\n    }\n}',
+      },
+      php: {
+        method: 'accounts->origins->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponse = $client->accounts->origins->create(\n  accessKey: 'AKIAIOSFODNN7EXAMPLE',\n  bucket: 'gcs-media',\n  name: 'US S3 Storage',\n  secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n  type: 'AKENEO_PIM',\n  baseURLForCanonicalHeader: 'https://cdn.example.com',\n  includeCanonicalHeader: false,\n  prefix: 'uploads',\n  endpoint: 'https://s3.eu-central-1.wasabisys.com',\n  s3ForcePathStyle: true,\n  baseURL: 'https://akeneo.company.com',\n  forwardHostHeaderToOrigin: false,\n  clientEmail: 'service-account@project.iam.gserviceaccount.com',\n  privateKey: '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...',\n  accountName: 'account123',\n  container: 'images',\n  sasToken: '?sv=2023-01-03&sr=c&sig=abc123',\n  clientID: 'akeneo-client-id',\n  clientSecret: 'akeneo-client-secret',\n  password: 'strongpassword123',\n  username: 'integration-user',\n);\n\nvar_dump($originResponse);",
       },
       python: {
         method: 'accounts.origins.create',
@@ -2023,6 +2403,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit accounts:origins get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
       },
+      csharp: {
+        method: 'Accounts.Origins.Get',
+        example:
+          'OriginGetParams parameters = new() { ID = "id" };\n\nvar originResponse = await client.Accounts.Origins.Get(parameters);\n\nConsole.WriteLine(originResponse);',
+      },
       go: {
         method: 'client.Accounts.Origins.Get',
         example:
@@ -2036,6 +2421,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts().origins().get',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.accounts.origins.OriginGetParams;\nimport com.imagekit.api.models.accounts.origins.OriginResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        OriginResponse originResponse = client.accounts().origins().get("id");\n    }\n}',
+      },
+      php: {
+        method: 'accounts->origins->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponse = $client->accounts->origins->get('id');\n\nvar_dump($originResponse);",
       },
       python: {
         method: 'accounts.origins.get',
@@ -2074,6 +2464,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit accounts:origins update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id \\\n  --access-key AKIAIOSFODNN7EXAMPLE \\\n  --bucket product-images \\\n  --name 'US S3 Storage' \\\n  --secret-key wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY \\\n  --type S3 \\\n  --endpoint https://s3.eu-central-1.wasabisys.com \\\n  --base-url https://images.example.com/assets \\\n  --client-email service-account@project.iam.gserviceaccount.com \\\n  --private-key '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...' \\\n  --account-name account123 \\\n  --container images \\\n  --sas-token '?sv=2023-01-03&sr=c&sig=abc123' \\\n  --client-id akeneo-client-id \\\n  --client-secret akeneo-client-secret \\\n  --password strongpassword123 \\\n  --username integration-user",
       },
+      csharp: {
+        method: 'Accounts.Origins.Update',
+        example:
+          'OriginUpdateParams parameters = new()\n{\n    ID = "id",\n    OriginRequest = new S3()\n    {\n        AccessKey = "AKIATEST123",\n        Bucket = "test-bucket",\n        Name = "My S3 Origin",\n        SecretKey = "secrettest123",\n        BaseUrlForCanonicalHeader = "https://cdn.example.com",\n        IncludeCanonicalHeader = false,\n        Prefix = "images",\n    },\n};\n\nvar originResponse = await client.Accounts.Origins.Update(parameters);\n\nConsole.WriteLine(originResponse);',
+      },
       go: {
         method: 'client.Accounts.Origins.Update',
         example:
@@ -2087,6 +2482,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts().origins().update',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.accounts.origins.OriginRequest;\nimport com.imagekit.api.models.accounts.origins.OriginResponse;\nimport com.imagekit.api.models.accounts.origins.OriginUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        OriginUpdateParams params = OriginUpdateParams.builder()\n            .id("id")\n            .originRequest(OriginRequest.S3.builder()\n                .accessKey("AKIATEST123")\n                .bucket("test-bucket")\n                .name("My S3 Origin")\n                .secretKey("secrettest123")\n                .build())\n            .build();\n        OriginResponse originResponse = client.accounts().origins().update(params);\n    }\n}',
+      },
+      php: {
+        method: 'accounts->origins->update',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponse = $client->accounts->origins->update(\n  'id',\n  accessKey: 'AKIAIOSFODNN7EXAMPLE',\n  bucket: 'gcs-media',\n  name: 'US S3 Storage',\n  secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n  type: 'AKENEO_PIM',\n  baseURLForCanonicalHeader: 'https://cdn.example.com',\n  includeCanonicalHeader: false,\n  prefix: 'uploads',\n  endpoint: 'https://s3.eu-central-1.wasabisys.com',\n  s3ForcePathStyle: true,\n  baseURL: 'https://akeneo.company.com',\n  forwardHostHeaderToOrigin: false,\n  clientEmail: 'service-account@project.iam.gserviceaccount.com',\n  privateKey: '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...',\n  accountName: 'account123',\n  container: 'images',\n  sasToken: '?sv=2023-01-03&sr=c&sig=abc123',\n  clientID: 'akeneo-client-id',\n  clientSecret: 'akeneo-client-secret',\n  password: 'strongpassword123',\n  username: 'integration-user',\n);\n\nvar_dump($originResponse);",
       },
       python: {
         method: 'accounts.origins.update',
@@ -2123,6 +2523,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit accounts:origins delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
       },
+      csharp: {
+        method: 'Accounts.Origins.Delete',
+        example:
+          'OriginDeleteParams parameters = new() { ID = "id" };\n\nawait client.Accounts.Origins.Delete(parameters);',
+      },
       go: {
         method: 'client.Accounts.Origins.Delete',
         example:
@@ -2136,6 +2541,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts().origins().delete',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.accounts.origins.OriginDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        client.accounts().origins().delete("id");\n    }\n}',
+      },
+      php: {
+        method: 'accounts->origins->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->accounts->origins->delete('id');\n\nvar_dump($result);",
       },
       python: {
         method: 'accounts.origins.delete',
@@ -2173,6 +2583,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit accounts:url-endpoints list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
       },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.List',
+        example:
+          'UrlEndpointListParams parameters = new();\n\nvar urlEndpointResponses = await client.Accounts.UrlEndpoints.List(parameters);\n\nConsole.WriteLine(urlEndpointResponses);',
+      },
       go: {
         method: 'client.Accounts.URLEndpoints.List',
         example:
@@ -2186,6 +2601,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts().urlEndpoints().list',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointListParams;\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        List<UrlEndpointResponse> urlEndpointResponses = client.accounts().urlEndpoints().list();\n    }\n}',
+      },
+      php: {
+        method: 'accounts->urlEndpoints->list',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponses = $client->accounts->urlEndpoints->list();\n\nvar_dump($urlEndpointResponses);",
       },
       python: {
         method: 'accounts.url_endpoints.list',
@@ -2229,6 +2649,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit accounts:url-endpoints create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --description 'My custom URL endpoint'",
       },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.Create',
+        example:
+          'UrlEndpointCreateParams parameters = new()\n{\n    Description = "My custom URL endpoint"\n};\n\nvar urlEndpointResponse = await client.Accounts.UrlEndpoints.Create(parameters);\n\nConsole.WriteLine(urlEndpointResponse);',
+      },
       go: {
         method: 'client.Accounts.URLEndpoints.New',
         example:
@@ -2242,6 +2667,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts().urlEndpoints().create',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointCreateParams;\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointRequest;\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        UrlEndpointRequest params = UrlEndpointRequest.builder()\n            .description("My custom URL endpoint")\n            .build();\n        UrlEndpointResponse urlEndpointResponse = client.accounts().urlEndpoints().create(params);\n    }\n}',
+      },
+      php: {
+        method: 'accounts->urlEndpoints->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponse = $client->accounts->urlEndpoints->create(\n  description: 'My custom URL endpoint',\n  origins: ['origin-id-1'],\n  urlPrefix: 'product-images',\n  urlRewriter: ['type' => 'CLOUDINARY', 'preserveAssetDeliveryTypes' => true],\n);\n\nvar_dump($urlEndpointResponse);",
       },
       python: {
         method: 'accounts.url_endpoints.create',
@@ -2280,6 +2710,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit accounts:url-endpoints get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
       },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.Get',
+        example:
+          'UrlEndpointGetParams parameters = new() { ID = "id" };\n\nvar urlEndpointResponse = await client.Accounts.UrlEndpoints.Get(parameters);\n\nConsole.WriteLine(urlEndpointResponse);',
+      },
       go: {
         method: 'client.Accounts.URLEndpoints.Get',
         example:
@@ -2293,6 +2728,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts().urlEndpoints().get',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointGetParams;\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        UrlEndpointResponse urlEndpointResponse = client.accounts().urlEndpoints().get("id");\n    }\n}',
+      },
+      php: {
+        method: 'accounts->urlEndpoints->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponse = $client->accounts->urlEndpoints->get('id');\n\nvar_dump($urlEndpointResponse);",
       },
       python: {
         method: 'accounts.url_endpoints.get',
@@ -2337,6 +2777,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit accounts:url-endpoints update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id \\\n  --description 'My custom URL endpoint'",
       },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.Update',
+        example:
+          'UrlEndpointUpdateParams parameters = new()\n{\n    ID = "id",\n    Description = "My custom URL endpoint",\n};\n\nvar urlEndpointResponse = await client.Accounts.UrlEndpoints.Update(parameters);\n\nConsole.WriteLine(urlEndpointResponse);',
+      },
       go: {
         method: 'client.Accounts.URLEndpoints.Update',
         example:
@@ -2350,6 +2795,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts().urlEndpoints().update',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointRequest;\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointResponse;\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        UrlEndpointUpdateParams params = UrlEndpointUpdateParams.builder()\n            .id("id")\n            .urlEndpointRequest(UrlEndpointRequest.builder()\n                .description("My custom URL endpoint")\n                .build())\n            .build();\n        UrlEndpointResponse urlEndpointResponse = client.accounts().urlEndpoints().update(params);\n    }\n}',
+      },
+      php: {
+        method: 'accounts->urlEndpoints->update',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponse = $client->accounts->urlEndpoints->update(\n  'id',\n  description: 'My custom URL endpoint',\n  origins: ['origin-id-1'],\n  urlPrefix: 'product-images',\n  urlRewriter: ['type' => 'CLOUDINARY', 'preserveAssetDeliveryTypes' => true],\n);\n\nvar_dump($urlEndpointResponse);",
       },
       python: {
         method: 'accounts.url_endpoints.update',
@@ -2386,6 +2836,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit accounts:url-endpoints delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
       },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.Delete',
+        example:
+          'UrlEndpointDeleteParams parameters = new() { ID = "id" };\n\nawait client.Accounts.UrlEndpoints.Delete(parameters);',
+      },
       go: {
         method: 'client.Accounts.URLEndpoints.Delete',
         example:
@@ -2399,6 +2854,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts().urlEndpoints().delete',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        client.accounts().urlEndpoints().delete("id");\n    }\n}',
+      },
+      php: {
+        method: 'accounts->urlEndpoints->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->accounts->urlEndpoints->delete('id');\n\nvar_dump($result);",
       },
       python: {
         method: 'accounts.url_endpoints.delete',
@@ -2458,6 +2918,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit beta:v2:files upload \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file 'Example data' \\\n  --file-name fileName",
       },
+      csharp: {
+        method: 'Beta.V2.Files.Upload',
+        example:
+          'FileUploadParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("Example data"),\n    FileName = "fileName",\n};\n\nvar response = await client.Beta.V2.Files.Upload(parameters);\n\nConsole.WriteLine(response);',
+      },
       go: {
         method: 'client.Beta.V2.Files.Upload',
         example:
@@ -2471,6 +2936,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().v2().files().upload',
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.beta.v2.files.FileUploadParams;\nimport com.imagekit.api.models.beta.v2.files.FileUploadResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        FileUploadParams params = FileUploadParams.builder()\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .fileName("fileName")\n            .build();\n        FileUploadResponse response = client.beta().v2().files().upload(params);\n    }\n}',
+      },
+      php: {
+        method: 'beta->v2->files->upload',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->beta->v2->files->upload(\n  file: 'file',\n  fileName: 'fileName',\n  token: 'token',\n  checks: \"\\\"request.folder\\\" : \\\"marketing/\\\"\\n\",\n  customCoordinates: 'customCoordinates',\n  customMetadata: ['brand' => 'bar', 'color' => 'bar'],\n  description: 'Running shoes',\n  extensions: [\n    [\n      'name' => 'remove-bg',\n      'options' => [\n        'addShadow' => true,\n        'bgColor' => 'bg_color',\n        'bgImageURL' => 'bg_image_url',\n        'semitransparency' => true,\n      ],\n    ],\n    ['maxTags' => 5, 'minConfidence' => 95, 'name' => 'google-auto-tagging'],\n    ['name' => 'ai-auto-description'],\n    [\n      'name' => 'ai-tasks',\n      'tasks' => [\n        [\n          'instruction' => 'What types of clothing items are visible in this image?',\n          'type' => 'select_tags',\n          'maxSelections' => 1,\n          'minSelections' => 0,\n          'vocabulary' => ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],\n        ],\n        [\n          'instruction' => 'Is this a luxury or high-end fashion item?',\n          'type' => 'yes_no',\n          'onNo' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onUnknown' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onYes' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n        ],\n      ],\n    ],\n    ['id' => 'ext_abc123', 'name' => 'saved-extension'],\n  ],\n  folder: 'folder',\n  isPrivateFile: true,\n  isPublished: true,\n  overwriteAITags: true,\n  overwriteCustomMetadata: true,\n  overwriteFile: true,\n  overwriteTags: true,\n  responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],\n  tags: ['t-shirt', 'round-neck', 'men'],\n  transformation: [\n    'post' => [\n      ['type' => 'thumbnail', 'value' => 'w-150,h-150'],\n      [\n        'protocol' => 'dash',\n        'type' => 'abs',\n        'value' => 'sr-240_360_480_720_1080',\n      ],\n    ],\n    'pre' => 'w-300,h-300,q-80',\n  ],\n  useUniqueFileName: true,\n  webhookURL: 'https://example.com',\n);\n\nvar_dump($response);",
       },
       python: {
         method: 'beta.v2.files.upload',
@@ -2502,6 +2972,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit webhooks unwrap \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
       },
+      csharp: {
+        example: 'WebhookUnwrapParams parameters = new();\n\nawait client.Webhooks.Unwrap(parameters);',
+      },
       go: {
         method: 'client.Webhooks.Unwrap',
         example:
@@ -2510,6 +2983,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       java: {
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.webhooks.WebhookUnwrapParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        client.webhooks().unwrap();\n    }\n}',
+      },
+      php: {
+        method: 'webhooks->unwrap',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->webhooks->unwrap();\n\nvar_dump($result);",
       },
       python: {
         method: 'webhooks.unwrap',
@@ -2541,6 +3019,10 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "imagekit webhooks unsafe-unwrap \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
       },
+      csharp: {
+        example:
+          'WebhookUnsafeUnwrapParams parameters = new();\n\nawait client.Webhooks.UnsafeUnwrap(parameters);',
+      },
       go: {
         method: 'client.Webhooks.UnsafeUnwrap',
         example:
@@ -2549,6 +3031,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       java: {
         example:
           'package com.imagekit.api.example;\n\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.webhooks.WebhookUnsafeUnwrapParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        client.webhooks().unsafeUnwrap();\n    }\n}',
+      },
+      php: {
+        method: 'webhooks->unsafeUnwrap',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->webhooks->unsafeUnwrap();\n\nvar_dump($result);",
       },
       python: {
         method: 'webhooks.unsafe_unwrap',
@@ -2601,9 +3088,19 @@ const EMBEDDED_READMES: { language: string; content: string }[] = [
       '# Image Kit Java API Library\n\n\n[![Maven Central](https://img.shields.io/maven-central/v/com.imagekit.api/image-kit-java)](https://central.sonatype.com/artifact/com.imagekit.api/image-kit-java/0.0.1)\n[![javadoc](https://javadoc.io/badge2/com.imagekit.api/image-kit-java/0.0.1/javadoc.svg)](https://javadoc.io/doc/com.imagekit.api/image-kit-java/0.0.1)\n\n\nThe Image Kit Java SDK provides convenient access to the [Image Kit REST API](https://imagekit.io/docs/api-reference)   from applications written in Java.\n\n\n\n\n\n## MCP Server\n\nUse the Image Kit MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40imagekit%2Fapi-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBpbWFnZWtpdC9hcGktbWNwIl0sImVudiI6eyJJTUFHRUtJVF9QUklWQVRFX0tFWSI6Ik15IFByaXZhdGUgS2V5IiwiT1BUSU9OQUxfSU1BR0VLSVRfSUdOT1JFU19USElTIjoiTXkgUGFzc3dvcmQiLCJJTUFHRUtJVF9XRUJIT09LX1NFQ1JFVCI6Ik15IFdlYmhvb2sgU2VjcmV0In19)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40imagekit%2Fapi-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40imagekit%2Fapi-mcp%22%5D%2C%22env%22%3A%7B%22IMAGEKIT_PRIVATE_KEY%22%3A%22My%20Private%20Key%22%2C%22OPTIONAL_IMAGEKIT_IGNORES_THIS%22%3A%22My%20Password%22%2C%22IMAGEKIT_WEBHOOK_SECRET%22%3A%22My%20Webhook%20Secret%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\nThe REST API documentation can be found on [imagekit.io](https://imagekit.io/docs/api-reference). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.imagekit.api/image-kit-java/0.0.1).\n\n## Installation\n\n### Gradle\n\n~~~kotlin\nimplementation("com.imagekit.api:image-kit-java:0.0.1")\n~~~\n\n### Maven\n\n~~~xml\n<dependency>\n  <groupId>com.imagekit.api</groupId>\n  <artifactId>image-kit-java</artifactId>\n  <version>0.0.1</version>\n</dependency>\n~~~\n\n## Requirements\n\nThis library requires Java 8 or later.\n\n## Usage\n\n```java\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.FileUploadParams;\nimport com.imagekit.api.models.files.FileUploadResponse;\nimport java.io.ByteArrayInputStream;\n\n// Configures using the `imagekit.imagekitPrivateKey`, `imagekit.optionalImagekitIgnoresThis`, `imagekit.imagekitWebhookSecret` and `imagekit.baseUrl` system properties\n// Or configures using the `IMAGEKIT_PRIVATE_KEY`, `OPTIONAL_IMAGEKIT_IGNORES_THIS`, `IMAGEKIT_WEBHOOK_SECRET` and `IMAGE_KIT_BASE_URL` environment variables\nImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\nFileUploadParams params = FileUploadParams.builder()\n    .file(new ByteArrayInputStream("https://www.example.com/public-url.jpg".getBytes()))\n    .fileName("file-name.jpg")\n    .build();\nFileUploadResponse response = client.files().upload(params);\n```\n\n## Client configuration\n\nConfigure the client using system properties or environment variables:\n\n```java\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\n\n// Configures using the `imagekit.imagekitPrivateKey`, `imagekit.optionalImagekitIgnoresThis`, `imagekit.imagekitWebhookSecret` and `imagekit.baseUrl` system properties\n// Or configures using the `IMAGEKIT_PRIVATE_KEY`, `OPTIONAL_IMAGEKIT_IGNORES_THIS`, `IMAGEKIT_WEBHOOK_SECRET` and `IMAGE_KIT_BASE_URL` environment variables\nImageKitClient client = ImageKitOkHttpClient.fromEnv();\n```\n\nOr manually:\n\n```java\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\n\nImageKitClient client = ImageKitOkHttpClient.builder()\n    .privateKey("My Private Key")\n    .password("My Password")\n    .build();\n```\n\nOr using a combination of the two approaches:\n\n```java\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\n\nImageKitClient client = ImageKitOkHttpClient.builder()\n    // Configures using the `imagekit.imagekitPrivateKey`, `imagekit.optionalImagekitIgnoresThis`, `imagekit.imagekitWebhookSecret` and `imagekit.baseUrl` system properties\n    // Or configures using the `IMAGEKIT_PRIVATE_KEY`, `OPTIONAL_IMAGEKIT_IGNORES_THIS`, `IMAGEKIT_WEBHOOK_SECRET` and `IMAGE_KIT_BASE_URL` environment variables\n    .fromEnv()\n    .privateKey("My Private Key")\n    .build();\n```\n\nSee this table for the available options:\n\n| Setter          | System property                        | Environment variable             | Required | Default value               |\n| --------------- | -------------------------------------- | -------------------------------- | -------- | --------------------------- |\n| `privateKey`    | `imagekit.imagekitPrivateKey`          | `IMAGEKIT_PRIVATE_KEY`           | true     | -                           |\n| `password`      | `imagekit.optionalImagekitIgnoresThis` | `OPTIONAL_IMAGEKIT_IGNORES_THIS` | false    | `"do_not_set"`              |\n| `webhookSecret` | `imagekit.imagekitWebhookSecret`       | `IMAGEKIT_WEBHOOK_SECRET`        | false    | -                           |\n| `baseUrl`       | `imagekit.baseUrl`                     | `IMAGE_KIT_BASE_URL`             | true     | `"https://api.imagekit.io"` |\n\nSystem properties take precedence over environment variables.\n\n> [!TIP]\n> Don\'t create more than one client in the same application. Each client has a connection pool and\n> thread pools, which are more efficient to share between requests.\n\n### Modifying configuration\n\nTo temporarily use a modified client configuration, while reusing the same connection and thread       pools, call `withOptions()` on any client or service:\n\n```java\nimport com.imagekit.api.client.ImageKitClient;\n\nImageKitClient clientWithOptions = client.withOptions(optionsBuilder -> {\n    optionsBuilder.baseUrl("https://example.com");\n    optionsBuilder.maxRetries(42);\n});\n```\n\nThe `withOptions()` method does not affect the original client or service.\n\n## Requests and responses\n\nTo send a request to the Image Kit API, build an instance of some `Params` class and pass it to the     corresponding client method. When the response is received, it will be deserialized into an instance of     a Java class.\n\nFor example, `client.files().upload(...)` should be called with an instance of `FileUploadParams`, and it     will return an instance of `FileUploadResponse`.\n\n## Immutability\n\nEach class in the SDK has an associated   [builder](https://blogs.oracle.com/javamagazine/post/exploring-joshua-blochs-builder-design-pattern-in-java)   or factory method for constructing it.\n\nEach class is [immutable](https://docs.oracle.com/javase/tutorial/essential/concurrency/immutable.html)   once constructed. If the class has an associated builder, then it has a `toBuilder()` method, which can   be used to convert it back to a builder for making a modified copy.\n\nBecause each class is immutable, builder modification will _never_ affect already built class instances.\n\n## Asynchronous execution\n\nThe default client is synchronous. To switch to asynchronous execution, call the `async()` method:\n\n```java\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport com.imagekit.api.models.files.FileUploadParams;\nimport com.imagekit.api.models.files.FileUploadResponse;\nimport java.io.ByteArrayInputStream;\nimport java.util.concurrent.CompletableFuture;\n\n// Configures using the `imagekit.imagekitPrivateKey`, `imagekit.optionalImagekitIgnoresThis`, `imagekit.imagekitWebhookSecret` and `imagekit.baseUrl` system properties\n// Or configures using the `IMAGEKIT_PRIVATE_KEY`, `OPTIONAL_IMAGEKIT_IGNORES_THIS`, `IMAGEKIT_WEBHOOK_SECRET` and `IMAGE_KIT_BASE_URL` environment variables\nImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\nFileUploadParams params = FileUploadParams.builder()\n    .file(new ByteArrayInputStream("https://www.example.com/public-url.jpg".getBytes()))\n    .fileName("file-name.jpg")\n    .build();\nCompletableFuture<FileUploadResponse> response = client.async().files().upload(params);\n```\n\nOr create an asynchronous client from the beginning:\n\n```java\nimport com.imagekit.api.client.ImageKitClientAsync;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClientAsync;\nimport com.imagekit.api.models.files.FileUploadParams;\nimport com.imagekit.api.models.files.FileUploadResponse;\nimport java.io.ByteArrayInputStream;\nimport java.util.concurrent.CompletableFuture;\n\n// Configures using the `imagekit.imagekitPrivateKey`, `imagekit.optionalImagekitIgnoresThis`, `imagekit.imagekitWebhookSecret` and `imagekit.baseUrl` system properties\n// Or configures using the `IMAGEKIT_PRIVATE_KEY`, `OPTIONAL_IMAGEKIT_IGNORES_THIS`, `IMAGEKIT_WEBHOOK_SECRET` and `IMAGE_KIT_BASE_URL` environment variables\nImageKitClientAsync client = ImageKitOkHttpClientAsync.fromEnv();\n\nFileUploadParams params = FileUploadParams.builder()\n    .file(new ByteArrayInputStream("https://www.example.com/public-url.jpg".getBytes()))\n    .fileName("file-name.jpg")\n    .build();\nCompletableFuture<FileUploadResponse> response = client.files().upload(params);\n```\n\nThe asynchronous client supports the same options as the synchronous one, except most methods return `CompletableFuture`s.\n\n\n\n## File uploads\n\nThe SDK defines methods that accept files.\n\nTo upload a file, pass a [`Path`](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html):\n\n```java\nimport com.imagekit.api.models.files.FileUploadParams;\nimport com.imagekit.api.models.files.FileUploadResponse;\nimport java.nio.file.Paths;\n\nFileUploadParams params = FileUploadParams.builder()\n    .fileName("fileName")\n    .file(Paths.get("/path/to/file"))\n    .build();\nFileUploadResponse response = client.files().upload(params);\n```\n\nOr an arbitrary [`InputStream`](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html):\n\n```java\nimport com.imagekit.api.models.files.FileUploadParams;\nimport com.imagekit.api.models.files.FileUploadResponse;\nimport java.net.URL;\n\nFileUploadParams params = FileUploadParams.builder()\n    .fileName("fileName")\n    .file(new URL("https://example.com//path/to/file").openStream())\n    .build();\nFileUploadResponse response = client.files().upload(params);\n```\n\nOr a `byte[]` array:\n\n```java\nimport com.imagekit.api.models.files.FileUploadParams;\nimport com.imagekit.api.models.files.FileUploadResponse;\n\nFileUploadParams params = FileUploadParams.builder()\n    .fileName("fileName")\n    .file("content".getBytes())\n    .build();\nFileUploadResponse response = client.files().upload(params);\n```\n\nNote that when passing a non-`Path` its filename is unknown so it will not be included in the request.     To manually set a filename, pass a [`MultipartField`](image-kit-java-core/src/main/kotlin/com/imagekit/api/core/Values.kt):\n\n```java\nimport com.imagekit.api.core.MultipartField;\nimport com.imagekit.api.models.files.FileUploadParams;\nimport com.imagekit.api.models.files.FileUploadResponse;\nimport java.io.InputStream;\nimport java.net.URL;\n\nFileUploadParams params = FileUploadParams.builder()\n    .fileName("fileName")\n    .file(MultipartField.<InputStream>builder()\n        .value(new URL("https://example.com//path/to/file").openStream())\n        .filename("/path/to/file")\n        .build())\n    .build();\nFileUploadResponse response = client.files().upload(params);\n```\n\n\n\n## Raw responses\n\nThe SDK defines methods that deserialize responses into instances of Java classes.       However, these methods don\'t provide access to the response headers, status code, or the raw response       body.\n\nTo access this data, prefix any HTTP method call on a client or service with `withRawResponse()`:\n\n```java\nimport com.imagekit.api.core.http.Headers;\nimport com.imagekit.api.core.http.HttpResponseFor;\nimport com.imagekit.api.models.files.FileUploadParams;\nimport com.imagekit.api.models.files.FileUploadResponse;\nimport java.io.ByteArrayInputStream;\n\nFileUploadParams params = FileUploadParams.builder()\n    .file(new ByteArrayInputStream("https://www.example.com/public-url.jpg".getBytes()))\n    .fileName("file-name.jpg")\n    .build();\nHttpResponseFor<FileUploadResponse> response = client.files().withRawResponse().upload(params);\n\nint statusCode = response.statusCode();\nHeaders headers = response.headers();\n```\n\nYou can still deserialize the response into an instance of a Java class if needed:\n\n```java\nimport com.imagekit.api.models.files.FileUploadResponse;\n\nFileUploadResponse parsedResponse = response.parse();\n```\n\n## Error handling\n\nThe SDK throws custom unchecked exception types:\n\n- [`ImageKitServiceException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/ImageKitServiceException.kt): Base class for HTTP errors. See this table for which exception       subclass is thrown for each HTTP status code:\n\n  | Status | Exception                                          |\n  | ------ | -------------------------------------------------- |\n  | 400    | [`BadRequestException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/BadRequestException.kt)           |\n  | 401    | [`UnauthorizedException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/UnauthorizedException.kt)         |\n  | 403    | [`PermissionDeniedException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/PermissionDeniedException.kt)     |\n  | 404    | [`NotFoundException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/NotFoundException.kt)             |\n  | 422    | [`UnprocessableEntityException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/UnprocessableEntityException.kt)  |\n  | 429    | [`RateLimitException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/RateLimitException.kt)            |\n  | 5xx    | [`InternalServerException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/InternalServerException.kt)       |\n  | others | [`UnexpectedStatusCodeException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/UnexpectedStatusCodeException.kt) |\n\n- [`ImageKitIoException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/ImageKitIoException.kt): I/O networking errors.\n\n- [`ImageKitRetryableException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/ImageKitRetryableException.kt): Generic error indicating a failure that could be retried by the client.\n\n- [`ImageKitInvalidDataException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/ImageKitInvalidDataException.kt): Failure to interpret successfully parsed data. For example,       when accessing a property that\'s supposed to be required, but the API unexpectedly omitted it from the       response.\n\n- [`ImageKitException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/ImageKitException.kt): Base class for all exceptions. Most errors will result in one of the       previously mentioned ones, but completely generic errors may be thrown using the base class.\n\n\n\n## Logging\n\nThe SDK uses the standard   [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).\n\nEnable logging by setting the `IMAGE_KIT_LOG` environment variable to   `info`:\n\n```sh\nexport IMAGE_KIT_LOG=info\n```\n\nOr to `debug` for more verbose logging:\n\n```sh\nexport IMAGE_KIT_LOG=debug\n```\n\n## ProGuard and R8\n\nAlthough the SDK uses reflection, it is still usable with     [ProGuard](https://github.com/Guardsquare/proguard) and     [R8](https://developer.android.com/topic/performance/app-optimization/enable-app-optimization) because     `image-kit-java-core` is published with a     [configuration file](image-kit-java-core/src/main/resources/META-INF/proguard/image-kit-java-core.pro) containing     [keep rules](https://www.guardsquare.com/manual/configuration/usage).\n\nProGuard and R8 should automatically detect and use the published rules, but you can also manually copy     the keep rules if necessary.\n\n\n\n\n\n## Jackson\n\nThe SDK depends on [Jackson](https://github.com/FasterXML/jackson) for JSON     serialization/deserialization. It is compatible with version 2.13.4 or higher,     but depends on version 2.18.2 by default.\n\nThe SDK throws an exception if it detects an incompatible Jackson version at runtime (e.g. if the     default version was overridden in your Maven or Gradle config).\n\nIf the SDK threw an exception, but you\'re _certain_ the version is compatible, then disable the version     check using the `checkJacksonVersionCompatibility` on [`ImageKitOkHttpClient`](image-kit-java-client-okhttp/src/main/kotlin/com/imagekit/api/client/okhttp/ImageKitOkHttpClient.kt) or     [`ImageKitOkHttpClientAsync`](image-kit-java-client-okhttp/src/main/kotlin/com/imagekit/api/client/okhttp/ImageKitOkHttpClientAsync.kt).\n\n> [!CAUTION]\n> We make no guarantee that the SDK works correctly when the Jackson version check is disabled.\n\nAlso note that there are bugs in older Jackson versions that can affect the SDK. We don\'t work around all     Jackson bugs ([example](https://github.com/FasterXML/jackson-databind/issues/3240)) and expect users to     upgrade Jackson for those instead.\n\n## Network options\n\n### Retries\n\nThe SDK automatically retries 2 times by default, with a short exponential backoff between requests.\n\nOnly the following error types are retried:\n- Connection errors (for example, due to a network connectivity problem)\n- 408 Request Timeout\n- 409 Conflict\n- 429 Rate Limit\n- 5xx Internal\n\nThe API may also explicitly instruct the SDK to retry or not retry a request.\n\nTo set a custom number of retries, configure the client using the `maxRetries` method:\n\n```java\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\n\nImageKitClient client = ImageKitOkHttpClient.builder()\n    .fromEnv()\n    .maxRetries(4)\n    .build();\n```\n\n### Timeouts\n\nRequests time out after 1 minute by default.\n\nTo set a custom timeout, configure the method call using the `timeout` method:\n\n```java\nimport com.imagekit.api.models.files.FileUploadResponse;\n\nFileUploadResponse response = client.files().upload(\n  params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()\n);\n```\n\nOr configure the default for all method calls at the client level:\n\n```java\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport java.time.Duration;\n\nImageKitClient client = ImageKitOkHttpClient.builder()\n    .fromEnv()\n    .timeout(Duration.ofSeconds(30))\n    .build();\n```\n\n### Proxies\n\nTo route requests through a proxy, configure the client using the `proxy` method:\n\n```java\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport java.net.InetSocketAddress;\nimport java.net.Proxy;\n\nImageKitClient client = ImageKitOkHttpClient.builder()\n    .fromEnv()\n    .proxy(new Proxy(\n      Proxy.Type.HTTP, new InetSocketAddress(\n        "https://example.com", 8080\n      )\n    ))\n    .build();\n```\n\n### Connection pooling\n\nTo customize the underlying OkHttp connection pool, configure the client using the   `maxIdleConnections` and `keepAliveDuration` methods:\n\n```java\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\nimport java.time.Duration;\n\nImageKitClient client = ImageKitOkHttpClient.builder()\n    .fromEnv()\n    // If `maxIdleConnections` is set, then `keepAliveDuration` must be set, and vice versa.\n    .maxIdleConnections(10)\n    .keepAliveDuration(Duration.ofMinutes(2))\n    .build();\n```\n\nIf both options are unset, OkHttp\'s default connection pool settings are used.\n\n### HTTPS\n\n> [!NOTE]\n> Most applications should not call these methods, and instead use the system defaults. The defaults include\n> special optimizations that can be lost if the implementations are modified.\n\nTo configure how HTTPS connections are secured, configure the client using the `sslSocketFactory`,   `trustManager`, and `hostnameVerifier` methods:\n\n```java\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\n\nImageKitClient client = ImageKitOkHttpClient.builder()\n    .fromEnv()\n    // If `sslSocketFactory` is set, then `trustManager` must be set, and vice versa.\n    .sslSocketFactory(yourSSLSocketFactory)\n    .trustManager(yourTrustManager)\n    .hostnameVerifier(yourHostnameVerifier)\n    .build();\n```\n\n\n\n### Custom HTTP client\n\nThe SDK consists of three artifacts:\n- `image-kit-java-core`\n  - Contains core SDK logic\n  - Does not depend on [OkHttp](https://square.github.io/okhttp)\n  - Exposes [`ImageKitClient`](image-kit-java-core/src/main/kotlin/com/imagekit/api/client/ImageKitClient.kt), [`ImageKitClientAsync`](image-kit-java-core/src/main/kotlin/com/imagekit/api/client/ImageKitClientAsync.kt),             [`ImageKitClientImpl`](image-kit-java-core/src/main/kotlin/com/imagekit/api/client/ImageKitClientImpl.kt), and [`ImageKitClientAsyncImpl`](image-kit-java-core/src/main/kotlin/com/imagekit/api/client/ImageKitClientAsyncImpl.kt), all of which can             work with any HTTP client\n- `image-kit-java-client-okhttp`\n  - Depends on [OkHttp](https://square.github.io/okhttp)\n  - Exposes [`ImageKitOkHttpClient`](image-kit-java-client-okhttp/src/main/kotlin/com/imagekit/api/client/okhttp/ImageKitOkHttpClient.kt) and [`ImageKitOkHttpClientAsync`](image-kit-java-client-okhttp/src/main/kotlin/com/imagekit/api/client/okhttp/ImageKitOkHttpClientAsync.kt), which             provide a way to construct [`ImageKitClientImpl`](image-kit-java-core/src/main/kotlin/com/imagekit/api/client/ImageKitClientImpl.kt) and             [`ImageKitClientAsyncImpl`](image-kit-java-core/src/main/kotlin/com/imagekit/api/client/ImageKitClientAsyncImpl.kt), respectively, using OkHttp\n- `image-kit-java`\n  - Depends on and exposes the APIs of both `image-kit-java-core` and `image-kit-java-client-okhttp`\n  - Does not have its own logic\n\nThis structure allows replacing the SDK\'s default HTTP client without pulling in unnecessary dependencies.\n\n#### Customized [`OkHttpClient`](https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.html)\n\n> [!TIP]\n> Try the available [network options](#network-options) before replacing the default client.\n\nTo use a customized `OkHttpClient`:\n\n1. Replace your [`image-kit-java` dependency](#installation) with `image-kit-java-core`\n2. Copy `image-kit-java-client-okhttp`\'s [`OkHttpClient`](image-kit-java-client-okhttp/src/main/kotlin/com/imagekit/api/client/okhttp/OkHttpClient.kt) class into your code and        customize it\n3. Construct [`ImageKitClientImpl`](image-kit-java-core/src/main/kotlin/com/imagekit/api/client/ImageKitClientImpl.kt) or [`ImageKitClientAsyncImpl`](image-kit-java-core/src/main/kotlin/com/imagekit/api/client/ImageKitClientAsyncImpl.kt), similarly to        [`ImageKitOkHttpClient`](image-kit-java-client-okhttp/src/main/kotlin/com/imagekit/api/client/okhttp/ImageKitOkHttpClient.kt) or [`ImageKitOkHttpClientAsync`](image-kit-java-client-okhttp/src/main/kotlin/com/imagekit/api/client/okhttp/ImageKitOkHttpClientAsync.kt), using your        customized client\n\n### Completely custom HTTP client\n\nTo use a completely custom HTTP client:\n\n1. Replace your [`image-kit-java` dependency](#installation) with `image-kit-java-core`\n2. Write a class that implements the [`HttpClient`](image-kit-java-core/src/main/kotlin/com/imagekit/api/core/http/HttpClient.kt) interface\n3. Construct [`ImageKitClientImpl`](image-kit-java-core/src/main/kotlin/com/imagekit/api/client/ImageKitClientImpl.kt) or [`ImageKitClientAsyncImpl`](image-kit-java-core/src/main/kotlin/com/imagekit/api/client/ImageKitClientAsyncImpl.kt), similarly to        [`ImageKitOkHttpClient`](image-kit-java-client-okhttp/src/main/kotlin/com/imagekit/api/client/okhttp/ImageKitOkHttpClient.kt) or [`ImageKitOkHttpClientAsync`](image-kit-java-client-okhttp/src/main/kotlin/com/imagekit/api/client/okhttp/ImageKitOkHttpClientAsync.kt), using your new        client class\n\n## Undocumented API functionality\n\nThe SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.\n\n### Parameters\n\nTo set undocumented parameters, call the `putAdditionalHeader`, `putAdditionalQueryParam`, or       `putAdditionalBodyProperty` methods on any `Params` class:\n\n```java\nimport com.imagekit.api.core.JsonValue;\nimport com.imagekit.api.models.files.FileUploadParams;\n\nFileUploadParams params = FileUploadParams.builder()\n    .putAdditionalHeader("Secret-Header", "42")\n    .putAdditionalQueryParam("secret_query_param", "42")\n    .putAdditionalBodyProperty("secretProperty", JsonValue.from("42"))\n    .build();\n```\n\nThese can be accessed on the built object later using the `_additionalHeaders()`,       `_additionalQueryParams()`, and `_additionalBodyProperties()` methods.\n\nTo set undocumented parameters on _nested_ headers, query params, or body classes, call the         `putAdditionalProperty` method on the nested class:\n\n```java\nimport com.imagekit.api.core.JsonValue;\nimport com.imagekit.api.models.files.FileUploadParams;\n\nFileUploadParams params = FileUploadParams.builder()\n    .transformation(FileUploadParams.Transformation.builder()\n        .putAdditionalProperty("secretProperty", JsonValue.from("42"))\n        .build())\n    .build();\n```\n\nThese properties can be accessed on the nested built object later using the         `_additionalProperties()` method.\n\nTo set a documented parameter or property to an undocumented or not yet supported _value_, pass a       [`JsonValue`](image-kit-java-core/src/main/kotlin/com/imagekit/api/core/Values.kt) object to its setter:\n\n```java\nimport com.imagekit.api.core.JsonValue;\nimport com.imagekit.api.models.files.FileUploadParams;\n\nFileUploadParams params = FileUploadParams.builder()\n    .file(JsonValue.from(42))\n    .fileName("file-name.jpg")\n    .build();\n```\n\nThe most straightforward way to create a [`JsonValue`](image-kit-java-core/src/main/kotlin/com/imagekit/api/core/Values.kt) is using its       `from(...)` method:\n\n```java\nimport com.imagekit.api.core.JsonValue;\nimport java.util.List;\nimport java.util.Map;\n\n// Create primitive JSON values\nJsonValue nullValue = JsonValue.from(null);\nJsonValue booleanValue = JsonValue.from(true);\nJsonValue numberValue = JsonValue.from(42);\nJsonValue stringValue = JsonValue.from("Hello World!");\n\n// Create a JSON array value equivalent to `["Hello", "World"]`\nJsonValue arrayValue = JsonValue.from(List.of(\n  "Hello", "World"\n));\n\n// Create a JSON object value equivalent to `{ "a": 1, "b": 2 }`\nJsonValue objectValue = JsonValue.from(Map.of(\n  "a", 1,\n  "b", 2\n));\n\n// Create an arbitrarily nested JSON equivalent to:\n// {\n//   "a": [1, 2],\n//   "b": [3, 4]\n// }\nJsonValue complexValue = JsonValue.from(Map.of(\n  "a", List.of(\n    1, 2\n  ),\n  "b", List.of(\n    3, 4\n  )\n));\n```\n\nNormally a `Builder` class\'s `build` method will throw         [`IllegalStateException`](https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html)         if any required parameter or property is unset.\n\nTo forcibly omit a required parameter or property, pass [`JsonMissing`](image-kit-java-core/src/main/kotlin/com/imagekit/api/core/Values.kt):\n\n```java\nimport com.imagekit.api.core.JsonMissing;\nimport com.imagekit.api.models.files.FileUploadParams;\n\nFileUploadParams params = FileUploadParams.builder()\n    .fileName("fileName")\n    .file(JsonMissing.of())\n    .build();\n```\n\n### Response properties\n\nTo access undocumented response properties, call the `_additionalProperties()` method:\n\n```java\nimport com.imagekit.api.core.JsonValue;\nimport java.util.Map;\n\nMap<String, JsonValue> additionalProperties = client.files().upload(params)._additionalProperties();\nJsonValue secretPropertyValue = additionalProperties.get("secretProperty");\n\nString result = secretPropertyValue.accept(new JsonValue.Visitor<>() {\n    @Override\n    public String visitNull() {\n        return "It\'s null!";\n    }\n\n    @Override\n    public String visitBoolean(boolean value) {\n        return "It\'s a boolean!";\n    }\n\n    @Override\n    public String visitNumber(Number value) {\n        return "It\'s a number!";\n    }\n\n    // Other methods include `visitMissing`, `visitString`, `visitArray`, and `visitObject`\n    // The default implementation of each unimplemented method delegates to `visitDefault`, which throws by default, but can also be overridden\n});\n```\n\nTo access a property\'s raw JSON value, which may be undocumented, call its `_` prefixed method:\n\n```java\nimport com.imagekit.api.core.JsonField;\nimport java.io.InputStream;\nimport java.util.Optional;\n\nJsonField<InputStream> file = client.files().upload(params)._file();\n\nif (file.isMissing()) {\n  // The property is absent from the JSON response\n} else if (file.isNull()) {\n  // The property was set to literal null\n} else {\n  // Check if value was provided as a string\n  // Other methods include `asNumber()`, `asBoolean()`, etc.\n  Optional<String> jsonString = file.asString();\n\n  // Try to deserialize into a custom type\n  MyClass myObject = file.asUnknown().orElseThrow().convert(MyClass.class);\n}\n```\n\n### Response validation\n\nIn rare cases, the API may return a response that doesn\'t match the expected type. For example, the SDK     may expect a property to contain a `String`, but the API could return something else.\n\nBy default, the SDK will not throw an exception in this case. It will throw     [`ImageKitInvalidDataException`](image-kit-java-core/src/main/kotlin/com/imagekit/api/errors/ImageKitInvalidDataException.kt) only if you directly access the property.\n\nIf you would prefer to check that the response is completely well-typed upfront, then either call     `validate()`:\n\n```java\nimport com.imagekit.api.models.files.FileUploadResponse;\n\nFileUploadResponse response = client.files().upload(params).validate();\n```\n\nOr configure the method call to validate the response using the `responseValidation` method:\n\n```java\nimport com.imagekit.api.models.files.FileUploadResponse;\n\nFileUploadResponse response = client.files().upload(\n  params, RequestOptions.builder().responseValidation(true).build()\n);\n```\n\nOr configure the default for all method calls at the client level:\n\n```java\nimport com.imagekit.api.client.ImageKitClient;\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient;\n\nImageKitClient client = ImageKitOkHttpClient.builder()\n    .fromEnv()\n    .responseValidation(true)\n    .build();\n```\n\n## FAQ\n\n### Why don\'t you use plain `enum` classes?\n\nJava `enum` classes are not trivially   [forwards compatible](https://www.stainless.com/blog/making-java-enums-forwards-compatible). Using them in   the SDK could cause runtime exceptions if the API is updated to respond with a new enum value.\n\n### Why do you represent fields using `JsonField<T>` instead of just plain `T`?\n\nUsing `JsonField<T>` enables a few features:\n\n- Allowing usage of [undocumented API functionality](#undocumented-api-functionality)\n- Lazily [validating the API response against the expected shape](#response-validation)\n- Representing absent vs explicitly null values\n\n### Why don\'t you use [`data` classes](https://kotlinlang.org/docs/data-classes.html)?\n\nIt is not [backwards compatible to add new fields to a data class](https://kotlinlang.org/docs/api-guidelines-backward-compatibility.html#avoid-using-data-classes-in-your-api)   and we don\'t want to introduce a breaking change every time we add a field to a class.\n\n### Why don\'t you use checked exceptions?\n\nChecked exceptions are widely considered a mistake in the Java programming language. In fact, they were   omitted from Kotlin for this reason.\n\nChecked exceptions:\n\n- Are verbose to handle\n- Encourage error handling at the wrong level of abstraction, where nothing can be done about the error\n- Are tedious to propagate due to the [function coloring problem](https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function)\n- Don\'t play well with lambdas (also due to the function coloring problem)\n\n## Semantic versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n2. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/imagekit-java/issues) with questions, bugs, or suggestions.\n',
   },
   {
+    language: 'csharp',
+    content:
+      '# Image Kit C# API Library\n\nThe Image Kit C# SDK provides convenient access to the [Image Kit REST API](https://imagekit.io/docs/api-reference) from applications written in   C#.\n\n## Installation\n\n```bash\ngit clone git@github.com:stainless-sdks/imagekit-csharp.git\ndotnet add reference imagekit-csharp/src/ImageKit\n```\n\n## Requirements\n\nThis library requires .NET Standard 2.0 or later.\n\n## Usage\n\nSee the [`examples`](examples) directory for complete and runnable examples.\n\n```csharp\nImageKitClient client = new();\n\nFileUploadParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("https://www.example.com/public-url.jpg"),\n    FileName = "file-name.jpg",\n};\n\nvar response = await client.Files.Upload(parameters);\n\nConsole.WriteLine(response);\n```',
+  },
+  {
     language: 'cli',
     content:
       "# Image Kit CLI\n\nThe official CLI for the [Image Kit REST API](https://imagekit.io/docs/api-reference).\n\n## Installation\n\n### Installing with Go\n\nTo test or install the CLI locally, you need [Go](https://go.dev/doc/install) version 1.22 or later installed.\n\n~~~sh\ngo install 'github.com/stainless-sdks/imagekit-cli/cmd/imagekit@latest'\n~~~\n\nOnce you have run `go install`, the binary is placed in your Go bin directory:\n\n- **Default location**: `$HOME/go/bin` (or `$GOPATH/bin` if GOPATH is set)\n- **Check your path**: Run `go env GOPATH` to see the base directory\n\nIf commands aren't found after installation, add the Go bin directory to your PATH:\n\n~~~sh\n# Add to your shell profile (.zshrc, .bashrc, etc.)\nexport PATH=\"$PATH:$(go env GOPATH)/bin\"\n~~~\n\n### Running Locally\n\nAfter cloning the git repository for this project, you can use the\n`scripts/run` script to run the tool locally:\n\n~~~sh\n./scripts/run args...\n~~~\n\n## Usage\n\nThe CLI follows a resource-based command structure:\n\n~~~sh\nimagekit [resource] <command> [flags...]\n~~~\n\n~~~sh\nimagekit files upload \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file 'Example data' \\\n  --file-name file-name.jpg\n~~~\n\nFor details about specific commands, use the `--help` flag.\n\n### Environment variables\n\n| Environment variable             | Description                                                                                                                                                                                                                     | Required | Default value  |\n| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------------- |\n| `IMAGEKIT_PRIVATE_KEY`           | Your ImageKit private API key (starts with `private_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/api-keys).\n                                                                       | yes      |                |\n| `OPTIONAL_IMAGEKIT_IGNORES_THIS` | ImageKit uses your API key as username and ignores the password. \nThe SDK sets a dummy value. You can ignore this field.\n                                                                                                       | no       | `\"do_not_set\"` |\n| `IMAGEKIT_WEBHOOK_SECRET`        | Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you're using webhooks.\n | no       | `null`         |\n\n### Global flags\n\n- `--private-key` - Your ImageKit private API key (starts with `private_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/api-keys).\n (can also be set with `IMAGEKIT_PRIVATE_KEY` env var)\n- `--password` - ImageKit uses your API key as username and ignores the password. \nThe SDK sets a dummy value. You can ignore this field.\n (can also be set with `OPTIONAL_IMAGEKIT_IGNORES_THIS` env var)\n- `--webhook-secret` - Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you're using webhooks.\n (can also be set with `IMAGEKIT_WEBHOOK_SECRET` env var)\n- `--help` - Show command line usage\n- `--debug` - Enable debug logging (includes HTTP request/response details)\n- `--version`, `-v` - Show the CLI version\n- `--base-url` - Use a custom API backend URL\n- `--format` - Change the output format (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--format-error` - Change the output format for errors (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--transform` - Transform the data output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n- `--transform-error` - Transform the error output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n\n### Passing files as arguments\n\nTo pass files to your API, you can use the `@myfile.ext` syntax:\n\n~~~bash\nimagekit <command> --arg @abe.jpg\n~~~\n\nFiles can also be passed inside JSON or YAML blobs:\n\n~~~bash\nimagekit <command> --arg '{image: \"@abe.jpg\"}'\n# Equivalent:\nimagekit <command> <<YAML\narg:\n  image: \"@abe.jpg\"\nYAML\n~~~\n\nIf you need to pass a string literal that begins with an `@` sign, you can\nescape the `@` sign to avoid accidentally passing a file.\n\n~~~bash\nimagekit <command> --username '\\@abe'\n~~~\n\n#### Explicit encoding\n\nFor JSON endpoints, the CLI tool does filetype sniffing to determine whether the\nfile contents should be sent as a string literal (for plain text files) or as a\nbase64-encoded string literal (for binary files). If you need to explicitly send\nthe file as either plain text or base64-encoded data, you can use\n`@file://myfile.txt` (for string encoding) or `@data://myfile.dat` (for\nbase64-encoding). Note that absolute paths will begin with `@file://` or\n`@data://`, followed by a third `/` (for example, `@file:///tmp/file.txt`).\n\n~~~bash\nimagekit <command> --arg @data://file.txt\n~~~\n",
+  },
+  {
+    language: 'php',
+    content:
+      '# Image Kit PHP API Library\n\nThe Image Kit PHP library provides convenient access to the Image Kit REST API from any PHP 8.1.0+ application.\n\n## Installation\n\nTo use this package, install via Composer by adding the following to your application\'s `composer.json`:\n\n```json\n{\n  "repositories": [\n    {\n      "type": "vcs",\n      "url": "git@github.com:stainless-sdks/imagekit-php.git"\n    }\n  ],\n  "require": {\n    "imagekit/imagekit": "dev-main"\n  }\n}\n```\n\n## Usage\n\n```php\n<?php\n\n$client = new Client(\n  privateKey: getenv(\'IMAGEKIT_PRIVATE_KEY\') ?: \'My Private Key\',\n  password: getenv(\'OPTIONAL_IMAGEKIT_IGNORES_THIS\') ?: \'do_not_set\',\n);\n\n$response = $client->files->upload(file: \'file\', fileName: \'file-name.jpg\');\n\nvar_dump($response->videoCodec);\n```',
   },
 ];
 
