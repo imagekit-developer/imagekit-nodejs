@@ -1,5 +1,88 @@
 # Changelog
 
+## 7.4.0 (2026-04-06)
+
+Full Changelog: [v7.3.0...v7.4.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.3.0...v7.4.0)
+
+### Features
+
+* **api:** add xCenter, yCenter, and anchorPoint parameters for overlay positioning ([0fcec28](https://github.com/imagekit-developer/imagekit-nodejs/commit/0fcec286966e93396924f6153a873e6d0b2f389e))
+* **api:** dpr type update ([81ec737](https://github.com/imagekit-developer/imagekit-nodejs/commit/81ec737f908203323d163470fd3a86abbb79db27))
+* **api:** Introduce lxc, lyc, lap parameters in overlays. ([6853a32](https://github.com/imagekit-developer/imagekit-nodejs/commit/6853a328de263cb0eb016ce03176028e9f88d95b))
+* **api:** revert dpr breaking change ([2543278](https://github.com/imagekit-developer/imagekit-nodejs/commit/2543278ccc78081ffa4cbd82dd1061310c480529))
+* **mcp:** add an option to disable code tool ([af87a8b](https://github.com/imagekit-developer/imagekit-nodejs/commit/af87a8ba4f06ca786ec611177663e21f85e2f8d4))
+* **mcp:** add initial server instructions ([cdce131](https://github.com/imagekit-developer/imagekit-nodejs/commit/cdce131dc17fba5469393a285ac536acd74742b2))
+
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([c08f7c0](https://github.com/imagekit-developer/imagekit-nodejs/commit/c08f7c04267e000d51cfad22ec8337e456d20171))
+* **client:** avoid removing abort listener too early ([0738e88](https://github.com/imagekit-developer/imagekit-nodejs/commit/0738e8884a59ddac579fab6a65e0221fdff4247c))
+* **client:** preserve URL params already embedded in path ([9fed3c5](https://github.com/imagekit-developer/imagekit-nodejs/commit/9fed3c543ed9c115c50f56d22a52bff307cc6d08))
+* **docs/contributing:** correct pnpm link command ([743a112](https://github.com/imagekit-developer/imagekit-nodejs/commit/743a1126b13d90832ccac545474eda7a1094043f))
+* fix request delays for retrying to be more respectful of high requested delays ([8cc484f](https://github.com/imagekit-developer/imagekit-nodejs/commit/8cc484fda37d8a3188f10f3dfa1cd9ab291f10f6))
+* **mcp:** bump agents version in cloudflare worker MCP servers ([207aff5](https://github.com/imagekit-developer/imagekit-nodejs/commit/207aff5eb71b0a5d0aed71de3cb6fe6c3c965340))
+* **mcp:** initialize SDK lazily to avoid failing the connection on init errors ([66c5305](https://github.com/imagekit-developer/imagekit-nodejs/commit/66c53054ce63794350a9939b8f38ecea3ddec428))
+* **mcp:** update prompt ([db925be](https://github.com/imagekit-developer/imagekit-nodejs/commit/db925be3e3cae3ab8cb5e4f4b8f34909a21791e7))
+
+
+### Chores
+
+* **ci:** escape input path in publish-npm workflow ([cbb4d36](https://github.com/imagekit-developer/imagekit-nodejs/commit/cbb4d3670cf06302124293e1221f8fc09fc48b0c))
+* **ci:** skip lint on metadata-only changes ([a4ff868](https://github.com/imagekit-developer/imagekit-nodejs/commit/a4ff868b281bc52a19bccd7a129a47222a8aae79))
+* **ci:** skip uploading artifacts on stainless-internal branches ([7d86a36](https://github.com/imagekit-developer/imagekit-nodejs/commit/7d86a36233f5ea27342329f6545d2b46eddbd219))
+* **client:** do not parse responses with empty content-length ([4b5fcbf](https://github.com/imagekit-developer/imagekit-nodejs/commit/4b5fcbfd1188573ccd1cea40b8e4924a5e2051dc))
+* **client:** restructure abort controller binding ([46c04e1](https://github.com/imagekit-developer/imagekit-nodejs/commit/46c04e16c46bca7bc1b0383d151f027d7d918611))
+* **internal/client:** fix form-urlencoded requests ([d96f483](https://github.com/imagekit-developer/imagekit-nodejs/commit/d96f4832db9e8c16cbeae32f9a7eb46234bb64ed))
+* **internal:** add health check to MCP server when running in HTTP mode ([83d1174](https://github.com/imagekit-developer/imagekit-nodejs/commit/83d1174751241a66748b9d0f4b2b92f37715d4ad))
+* **internal:** allow basic filtering of methods allowed for MCP code mode ([4a86182](https://github.com/imagekit-developer/imagekit-nodejs/commit/4a861827d463d2b6e9812a4aa58d2df14cb356bf))
+* **internal:** allow setting x-stainless-api-key header on mcp server requests ([a72133c](https://github.com/imagekit-developer/imagekit-nodejs/commit/a72133c81d0f9ad9587793bb92c06963fce21e8e))
+* **internal:** always generate MCP server dockerfiles and upgrade associated dependencies ([90eae18](https://github.com/imagekit-developer/imagekit-nodejs/commit/90eae18e29708d7596a6e783cad196c9a4f75f39))
+* **internal:** avoid type checking errors with ts-reset ([7cd3980](https://github.com/imagekit-developer/imagekit-nodejs/commit/7cd398067ad0736b67bfb3d8ace58d15a94c1fd2))
+* **internal:** bump @modelcontextprotocol/sdk, @hono/node-server, and minimatch ([a0031e0](https://github.com/imagekit-developer/imagekit-nodejs/commit/a0031e0a7be090912d18950ae5acffcef7b416e5))
+* **internal:** cache fetch instruction calls in MCP server ([7738ab8](https://github.com/imagekit-developer/imagekit-nodejs/commit/7738ab86d47fbca9a3c05c2cd48910d43d557c43))
+* **internal:** codegen related update ([60e54a6](https://github.com/imagekit-developer/imagekit-nodejs/commit/60e54a6b9efef0dd8c9f2ffc900ea9a518188ec3))
+* **internal:** codegen related update ([5c368b8](https://github.com/imagekit-developer/imagekit-nodejs/commit/5c368b89c0531200671ba1899121c2bf8c1bb40f))
+* **internal:** codegen related update ([4178900](https://github.com/imagekit-developer/imagekit-nodejs/commit/41789006a0bdd72bf302bea9c493efcca5927f5d))
+* **internal:** fix MCP docker image builds in yarn projects ([5f10f73](https://github.com/imagekit-developer/imagekit-nodejs/commit/5f10f733842b162e6ae8837b7c22def0cd6eaa79))
+* **internal:** fix MCP Dockerfiles so they can be built without buildkit ([9dde351](https://github.com/imagekit-developer/imagekit-nodejs/commit/9dde351b748d8a2e2fe56321b477ae214e679431))
+* **internal:** fix MCP Dockerfiles so they can be built without buildkit ([62b9ad0](https://github.com/imagekit-developer/imagekit-nodejs/commit/62b9ad0590c40c17cfcd1e7a68f2d5b2b6171cd1))
+* **internal:** fix MCP server TS errors that occur with required client options ([14154e2](https://github.com/imagekit-developer/imagekit-nodejs/commit/14154e2c6d8bdd5f11705deb3709acca73bc0f26))
+* **internal:** improve layout of generated MCP server files ([b2e0a75](https://github.com/imagekit-developer/imagekit-nodejs/commit/b2e0a75d79757596569d0277467ccad531d49bdd))
+* **internal:** improve local docs search for MCP servers ([ad984eb](https://github.com/imagekit-developer/imagekit-nodejs/commit/ad984eb6639ce557bea1b552e4ce6d9f66f0c56c))
+* **internal:** improve local docs search for MCP servers ([d4db198](https://github.com/imagekit-developer/imagekit-nodejs/commit/d4db19830e537311a352ea8a68a4662745e35332))
+* **internal:** make generated MCP servers compatible with Cloudflare worker environments ([419e72f](https://github.com/imagekit-developer/imagekit-nodejs/commit/419e72f03c8854a3c6b6d4654ea474c3c926287c))
+* **internal:** make MCP code execution location configurable via a flag ([497c926](https://github.com/imagekit-developer/imagekit-nodejs/commit/497c9269a3438a872c1ddb7a213d34abe90d6f6b))
+* **internal:** move stringifyQuery implementation to internal function ([60f7ea6](https://github.com/imagekit-developer/imagekit-nodejs/commit/60f7ea6ff1946645f7e65ab93b0c77c4db250f83))
+* **internal:** refactor flag parsing for MCP servers and add debug flag ([ff4b97e](https://github.com/imagekit-developer/imagekit-nodejs/commit/ff4b97e40fb46ca0b4f3229074c3f614b045641c))
+* **internal:** remove mock server code ([f1deef8](https://github.com/imagekit-developer/imagekit-nodejs/commit/f1deef8b69950e5917919a9fc619b558a65fe5b7))
+* **internal:** support custom-instructions-path flag in MCP servers ([14dec19](https://github.com/imagekit-developer/imagekit-nodejs/commit/14dec19d001aa203525ce5e713d79243a431342e))
+* **internal:** support local docs search in MCP servers ([03eef26](https://github.com/imagekit-developer/imagekit-nodejs/commit/03eef26ad1910d0d5da0fbe12f9a6bb6979f9b3e))
+* **internal:** support oauth authorization code flow for MCP servers ([5f6c688](https://github.com/imagekit-developer/imagekit-nodejs/commit/5f6c688f4f41df60d88fce94bc10cfdce4e29d78))
+* **internal:** support type annotations when running MCP in local execution mode ([bd8528f](https://github.com/imagekit-developer/imagekit-nodejs/commit/bd8528f9e38452de11e5a3976a0c7134102edbec))
+* **internal:** support x-stainless-mcp-client-envs header in MCP servers ([6b2f378](https://github.com/imagekit-developer/imagekit-nodejs/commit/6b2f37811676e4d1fdc24a175c477959b7aacde1))
+* **internal:** support x-stainless-mcp-client-permissions headers in MCP servers ([6e75dad](https://github.com/imagekit-developer/imagekit-nodejs/commit/6e75dad258809bb73b8d4e05195eea89afa7edf8))
+* **internal:** switch MCP servers to use pino for logging ([f08d300](https://github.com/imagekit-developer/imagekit-nodejs/commit/f08d3006d05cc29718533591605500ff6edd12f7))
+* **internal:** tweak CI branches ([aae2960](https://github.com/imagekit-developer/imagekit-nodejs/commit/aae29609043cb7d6fc385cfa886e877437397357))
+* **internal:** update agents version ([e39e377](https://github.com/imagekit-developer/imagekit-nodejs/commit/e39e3777d9d0ccd225774c2a889aa6b6c81a6402))
+* **internal:** update dependencies to address dependabot vulnerabilities ([c6f8d11](https://github.com/imagekit-developer/imagekit-nodejs/commit/c6f8d113f12ef419981dfb5df68208c079f1970b))
+* **internal:** update gitignore ([d36a938](https://github.com/imagekit-developer/imagekit-nodejs/commit/d36a938ec305af370a93674ff846e9ea695f8d6c))
+* **internal:** upgrade @modelcontextprotocol/sdk and hono ([446fc85](https://github.com/imagekit-developer/imagekit-nodejs/commit/446fc85863574d74d94918ee09aff23f4ed373b4))
+* **internal:** upgrade hono ([61a5d88](https://github.com/imagekit-developer/imagekit-nodejs/commit/61a5d8863e4fcb692d187bb0a7b44e1788faf8ee))
+* **internal:** use link instead of file in MCP server package.json files ([4939cda](https://github.com/imagekit-developer/imagekit-nodejs/commit/4939cdab635c72a63f2570de3e41f77b81976478))
+* **internal:** use x-stainless-mcp-client-envs header for MCP remote code tool calls ([d128af7](https://github.com/imagekit-developer/imagekit-nodejs/commit/d128af71272254b0f6fbc52029e941e674b594cf))
+* **mcp-server:** add support for session id, forward client info ([36ec509](https://github.com/imagekit-developer/imagekit-nodejs/commit/36ec509701f79fb629d69346ab9075d935b05d4e))
+* **mcp-server:** improve instructions ([9afa574](https://github.com/imagekit-developer/imagekit-nodejs/commit/9afa574d4589f6229784ba766e604a0498f506a3))
+* **mcp-server:** log client info ([20299c3](https://github.com/imagekit-developer/imagekit-nodejs/commit/20299c30d17b963360b904b6b9c1c5ebe19f79d5))
+* **mcp-server:** return access instructions for 404 without API key ([568dd2a](https://github.com/imagekit-developer/imagekit-nodejs/commit/568dd2ae4a631c3b64812d1b13af5e6aaba6ebd1))
+* **mcp:** correctly update version in sync with sdk ([57fa966](https://github.com/imagekit-developer/imagekit-nodejs/commit/57fa966d57b1069c554658921a3d649a563e4e12))
+* **mcp:** forward STAINLESS_API_KEY to docs search endpoint ([bf91d73](https://github.com/imagekit-developer/imagekit-nodejs/commit/bf91d7300f134a716038b00bbdcf0cd5932176ea))
+* **tests:** remove unnecessary blank lines in overlay encoding test cases ([9a4f18d](https://github.com/imagekit-developer/imagekit-nodejs/commit/9a4f18d4d4374ac92ab20eae30b81a9222fcb522))
+* **tests:** update webhook tests ([f179fa9](https://github.com/imagekit-developer/imagekit-nodejs/commit/f179fa9536d097bcaed31310deeadbfc74457814))
+* update mock server docs ([8d9ad04](https://github.com/imagekit-developer/imagekit-nodejs/commit/8d9ad04f864ca543a065a99cc041a436dd53069a))
+* update placeholder string ([f8f62ae](https://github.com/imagekit-developer/imagekit-nodejs/commit/f8f62ae1890416cb5322c7d7b7ee2235b252983b))
+* use proper capitalization for WebSockets ([e6e8ed6](https://github.com/imagekit-developer/imagekit-nodejs/commit/e6e8ed66ee0b76db104b7112c1540fa021b005ea))
+
 ## 7.3.0 (2026-02-02)
 
 Full Changelog: [v7.2.2...v7.3.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.2.2...v7.3.0)
