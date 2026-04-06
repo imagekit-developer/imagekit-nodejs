@@ -744,5 +744,3 @@ describe('Overlay encoding test cases', function () {
     expect(url).toBe(`https://ik.imagekit.io/demo/sample.jpg?tr=l-text,i-Minimal%20Text,l-end`);
   });
 });
-
-
