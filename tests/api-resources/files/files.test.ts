@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource files', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.files.update('fileId', {});
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.files.delete('fileId');
     const rawResponse = await responsePromise.asResponse();
@@ -33,7 +33,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('copy: only required params', async () => {
     const responsePromise = client.files.copy({
       destinationPath: '/folder/to/copy/into/',
@@ -48,7 +48,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('copy: required and optional params', async () => {
     const response = await client.files.copy({
       destinationPath: '/folder/to/copy/into/',
@@ -57,7 +57,7 @@ describe('resource files', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.files.get('fileId');
     const rawResponse = await responsePromise.asResponse();
@@ -69,7 +69,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('move: only required params', async () => {
     const responsePromise = client.files.move({
       destinationPath: '/folder/to/move/into/',
@@ -84,7 +84,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('move: required and optional params', async () => {
     const response = await client.files.move({
       destinationPath: '/folder/to/move/into/',
@@ -92,7 +92,7 @@ describe('resource files', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('rename: only required params', async () => {
     const responsePromise = client.files.rename({
       filePath: '/path/to/file.jpg',
@@ -107,7 +107,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('rename: required and optional params', async () => {
     const response = await client.files.rename({
       filePath: '/path/to/file.jpg',
@@ -116,10 +116,10 @@ describe('resource files', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('upload: only required params', async () => {
     const responsePromise = client.files.upload({
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
       fileName: 'fileName',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -131,10 +131,10 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('upload: required and optional params', async () => {
     const response = await client.files.upload({
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
       fileName: 'fileName',
       token: 'token',
       checks: '"request.folder" : "marketing/"\n',

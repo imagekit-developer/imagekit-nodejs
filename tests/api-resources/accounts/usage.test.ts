@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource usage', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: only required params', async () => {
     const responsePromise = client.accounts.usage.get({ endDate: '2019-12-27', startDate: '2019-12-27' });
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource usage', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: required and optional params', async () => {
     const response = await client.accounts.usage.get({ endDate: '2019-12-27', startDate: '2019-12-27' });
   });

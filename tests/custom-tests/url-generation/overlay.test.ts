@@ -434,6 +434,30 @@ describe('Overlay Transformation Test Cases', function () {
       `https://ik.imagekit.io/test_url_endpoint/tr:l-image,i-displacement-map.png,lm-displace,lx-50,ly-50,l-end/base-image.jpg`,
     );
   });
+
+  it('should generate URL with xCenter, yCenter and anchorPoint top_left', function () {
+    const url = client.helper.buildSrc({
+      transformationPosition: 'path',
+      urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
+      src: '/base-image.jpg',
+      transformation: [
+        {
+          overlay: {
+            type: 'image',
+            input: 'logo.png',
+            position: {
+              xCenter: 100,
+              yCenter: 200,
+              anchorPoint: 'top_left',
+            },
+          },
+        },
+      ],
+    });
+    expect(url).toBe(
+      `https://ik.imagekit.io/test_url_endpoint/tr:l-image,i-logo.png,lxc-100,lyc-200,lap-top_left,l-end/base-image.jpg`,
+    );
+  });
 });
 
 describe('Overlay encoding test cases', function () {

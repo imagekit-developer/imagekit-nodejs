@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource metadata', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.files.metadata.get('fileId');
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource metadata', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getFromURL: only required params', async () => {
     const responsePromise = client.files.metadata.getFromURL({ url: 'https://example.com' });
     const rawResponse = await responsePromise.asResponse();
@@ -33,7 +33,7 @@ describe('resource metadata', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getFromURL: required and optional params', async () => {
     const response = await client.files.metadata.getFromURL({ url: 'https://example.com' });
   });

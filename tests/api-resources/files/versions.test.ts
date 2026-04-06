@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource versions', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.files.versions.list('fileId');
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.files.versions.delete('versionId', { fileId: 'fileId' });
     const rawResponse = await responsePromise.asResponse();
@@ -33,12 +33,12 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.files.versions.delete('versionId', { fileId: 'fileId' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: only required params', async () => {
     const responsePromise = client.files.versions.get('versionId', { fileId: 'fileId' });
     const rawResponse = await responsePromise.asResponse();
@@ -50,12 +50,12 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: required and optional params', async () => {
     const response = await client.files.versions.get('versionId', { fileId: 'fileId' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('restore: only required params', async () => {
     const responsePromise = client.files.versions.restore('versionId', { fileId: 'fileId' });
     const rawResponse = await responsePromise.asResponse();
@@ -67,7 +67,7 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('restore: required and optional params', async () => {
     const response = await client.files.versions.restore('versionId', { fileId: 'fileId' });
   });

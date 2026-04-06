@@ -9,7 +9,7 @@ const client = new ImageKit({
 });
 
 describe('resource customMetadataFields', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.customMetadataFields.create({
       label: 'price',
@@ -25,7 +25,7 @@ describe('resource customMetadataFields', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.customMetadataFields.create({
       label: 'price',
@@ -43,7 +43,7 @@ describe('resource customMetadataFields', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.customMetadataFields.update('id');
     const rawResponse = await responsePromise.asResponse();
@@ -55,7 +55,7 @@ describe('resource customMetadataFields', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -78,7 +78,7 @@ describe('resource customMetadataFields', () => {
     ).rejects.toThrow(ImageKit.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.customMetadataFields.list();
     const rawResponse = await responsePromise.asResponse();
@@ -90,7 +90,7 @@ describe('resource customMetadataFields', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -101,7 +101,7 @@ describe('resource customMetadataFields', () => {
     ).rejects.toThrow(ImageKit.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.customMetadataFields.delete('id');
     const rawResponse = await responsePromise.asResponse();
