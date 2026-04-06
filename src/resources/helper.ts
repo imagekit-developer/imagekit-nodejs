@@ -314,15 +314,24 @@ function processOverlay(overlay: Transformation['overlay']): string | undefined 
     entries.push(`lm-${overlay.layerMode}`);
   }
 
-  const { x, y, focus } = position;
+  const { x, y, xCenter, yCenter, focus, anchorPoint } = position;
   if (x) {
     entries.push(`lx-${x}`);
   }
   if (y) {
     entries.push(`ly-${y}`);
   }
+  if (xCenter) {
+    entries.push(`lxc-${xCenter}`);
+  }
+  if (yCenter) {
+    entries.push(`lyc-${yCenter}`);
+  }
   if (focus) {
     entries.push(`lfo-${focus}`);
+  }
+  if (anchorPoint) {
+    entries.push(`lap-${anchorPoint}`);
   }
 
   const { start, end, duration } = timing;
