@@ -229,6 +229,11 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/webhooks.ts">BaseWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">DamFileCreateEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">DamFileDeleteEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">DamFileUpdateEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">DamFileVersionCreateEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">DamFileVersionDeleteEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UploadPostTransformErrorEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UploadPostTransformSuccessEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UploadPreTransformErrorEvent</a></code>

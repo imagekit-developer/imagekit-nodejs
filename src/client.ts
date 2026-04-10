@@ -35,6 +35,11 @@ import {
 } from './resources/saved-extensions';
 import {
   BaseWebhookEvent,
+  DamFileCreateEvent,
+  DamFileDeleteEvent,
+  DamFileUpdateEvent,
+  DamFileVersionCreateEvent,
+  DamFileVersionDeleteEvent,
   UnsafeUnwrapWebhookEvent,
   UnwrapWebhookEvent,
   UploadPostTransformErrorEvent,
@@ -82,7 +87,6 @@ import {
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
-import { toBase64 } from './internal/utils/base64';
 import { readEnv } from './internal/utils/env';
 import {
   type LogLevel,
@@ -295,30 +299,7 @@ export class ImageKit {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    if (this.privateKey && this.password && values.get('authorization')) {
-      return;
-    }
-    if (nulls.has('authorization')) {
-      return;
-    }
-
-    throw new Error(
-      'Could not resolve authentication method. Expected the privateKey or password to be set. Or for the "Authorization" headers to be explicitly omitted',
-    );
-  }
-
-  protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    if (!this.privateKey) {
-      return undefined;
-    }
-
-    if (!this.password) {
-      return undefined;
-    }
-
-    const credentials = `${this.privateKey}:${this.password}`;
-    const Authorization = `Basic ${toBase64(credentials)}`;
-    return buildHeaders([{ Authorization }]);
+    return;
   }
 
   /**
@@ -747,7 +728,6 @@ export class ImageKit {
         ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
         ...getPlatformHeaders(),
       },
-      await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
       options.headers,
@@ -916,6 +896,11 @@ export declare namespace ImageKit {
   export {
     Webhooks as Webhooks,
     type BaseWebhookEvent as BaseWebhookEvent,
+    type DamFileCreateEvent as DamFileCreateEvent,
+    type DamFileDeleteEvent as DamFileDeleteEvent,
+    type DamFileUpdateEvent as DamFileUpdateEvent,
+    type DamFileVersionCreateEvent as DamFileVersionCreateEvent,
+    type DamFileVersionDeleteEvent as DamFileVersionDeleteEvent,
     type UploadPostTransformErrorEvent as UploadPostTransformErrorEvent,
     type UploadPostTransformSuccessEvent as UploadPostTransformSuccessEvent,
     type UploadPreTransformErrorEvent as UploadPreTransformErrorEvent,

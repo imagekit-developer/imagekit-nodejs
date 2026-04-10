@@ -29,10 +29,7 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import ImageKit from '@imagekit/nodejs';
 
-const client = new ImageKit({
-  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted
-  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted
-});
+const client = new ImageKit();
 
 const response = await client.files.upload({
   file: fs.createReadStream('path/to/file'),
@@ -50,10 +47,7 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import ImageKit from '@imagekit/nodejs';
 
-const client = new ImageKit({
-  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted
-  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted
-});
+const client = new ImageKit();
 
 const params: ImageKit.FileUploadParams = {
   file: fs.createReadStream('path/to/file'),
@@ -145,6 +139,7 @@ You can use the `maxRetries` option to configure or disable this:
 ```js
 // Configure the default for all requests:
 const client = new ImageKit({
+  privateKey: 'My Private Key',
   maxRetries: 0, // default is 2
 });
 
@@ -162,6 +157,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 ```ts
 // Configure the default for all requests:
 const client = new ImageKit({
+  privateKey: 'My Private Key',
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 

@@ -80,24 +80,13 @@ and repeatably.
 
 Launching the client with `--transport=http` launches the server as a remote server using Streamable HTTP transport. The `--port` setting can choose the port it will run on, and the `--socket` setting allows it to run on a Unix socket.
 
-Authorization can be provided via the `Authorization` header using the Basic scheme.
-
-Additionally, authorization can be provided via the following headers:
-| Header | Equivalent client option | Security scheme |
-| ---------------------------------- | ------------------------ | --------------- |
-| `x-imagekit-private-key` | `privateKey` | basicAuth |
-| `x-optional-imagekit-ignores-this` | `password` | basicAuth |
-
 A configuration JSON for this server might look like this, assuming the server is hosted at `http://localhost:3000`:
 
 ```json
 {
   "mcpServers": {
     "imagekit_nodejs_api": {
-      "url": "http://localhost:3000",
-      "headers": {
-        "Authorization": "Basic <auth value>"
-      }
+      "url": "http://localhost:3000"
     }
   }
 }
