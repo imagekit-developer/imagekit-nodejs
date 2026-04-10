@@ -337,7 +337,10 @@ Generate authentication parameters for secure client-side file uploads:
 
 ```ts
 // Generate authentication parameters for client-side uploads
-const authParams = client.helper.getAuthenticationParameters();
+const authParams = client.helper.getAuthenticationParameters({
+  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted
+  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted
+});
 console.log(authParams);
 // Result: { token: 'uuid-token', expire: timestamp, signature: 'hmac-signature' }
 
@@ -430,7 +433,6 @@ You can use the `maxRetries` option to configure or disable this:
 ```js
 // Configure the default for all requests:
 const client = new ImageKit({
-  privateKey: 'My Private Key',
   maxRetries: 0, // default is 2
 });
 
@@ -448,7 +450,6 @@ Requests time out after 1 minute by default. You can configure this with a `time
 ```ts
 // Configure the default for all requests:
 const client = new ImageKit({
-  privateKey: 'My Private Key',
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
