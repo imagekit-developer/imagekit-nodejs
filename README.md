@@ -337,10 +337,7 @@ Generate authentication parameters for secure client-side file uploads:
 
 ```ts
 // Generate authentication parameters for client-side uploads
-const authParams = client.helper.getAuthenticationParameters({
-  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted
-  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted
-});
+const authParams = client.helper.getAuthenticationParameters();
 console.log(authParams);
 // Result: { token: 'uuid-token', expire: timestamp, signature: 'hmac-signature' }
 
