@@ -111,7 +111,10 @@ export interface DamFileVersionCreateEvent extends BaseWebhookEvent {
    */
   created_at: string;
 
-  data: unknown;
+  /**
+   * Object containing details of a file or file version.
+   */
+  data: FilesAPI.File;
 
   /**
    * Type of the webhook event.
