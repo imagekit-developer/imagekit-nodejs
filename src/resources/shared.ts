@@ -147,8 +147,10 @@ export namespace ExtensionConfig {
       min_selections?: number;
 
       /**
-       * Array of possible tag values. Combined length of all strings must not exceed 500
-       * characters. Cannot contain the `%` character.
+       * Array of possible tag values. The combined length of all strings must not exceed
+       * 500 characters, and values cannot include the `%` character. When providing
+       * large vocabularies (more than 30 items), the AI may not follow the list
+       * strictly.
        */
       vocabulary?: Array<string>;
     }
@@ -181,7 +183,10 @@ export namespace ExtensionConfig {
       min_selections?: number;
 
       /**
-       * Array of possible values matching the custom metadata field type.
+       * An array of possible values matching the custom metadata field type. If not
+       * provided for SingleSelect or MultiSelect field types, all values from the custom
+       * metadata field definition will be used. When providing large vocabularies (above
+       * 30 items), the AI may not strictly adhere to the list.
        */
       vocabulary?: Array<string | number | boolean>;
     }
@@ -468,8 +473,10 @@ export namespace Extensions {
       min_selections?: number;
 
       /**
-       * Array of possible tag values. Combined length of all strings must not exceed 500
-       * characters. Cannot contain the `%` character.
+       * Array of possible tag values. The combined length of all strings must not exceed
+       * 500 characters, and values cannot include the `%` character. When providing
+       * large vocabularies (more than 30 items), the AI may not follow the list
+       * strictly.
        */
       vocabulary?: Array<string>;
     }
@@ -502,7 +509,10 @@ export namespace Extensions {
       min_selections?: number;
 
       /**
-       * Array of possible values matching the custom metadata field type.
+       * An array of possible values matching the custom metadata field type. If not
+       * provided for SingleSelect or MultiSelect field types, all values from the custom
+       * metadata field definition will be used. When providing large vocabularies (above
+       * 30 items), the AI may not strictly adhere to the list.
        */
       vocabulary?: Array<string | number | boolean>;
     }
@@ -782,8 +792,25 @@ export type Overlay = TextOverlay | ImageOverlay | VideoOverlay | SubtitleOverla
 
 export interface OverlayPosition {
   /**
-   * Specifies the position of the overlay relative to the parent image or video.
-   * Maps to `lfo` in the URL.
+   * Sets the anchor point on the base asset from which the overlay offset is
+   * calculated. The default value is `top_left`. Maps to `lap` in the URL. Can only
+   * be used with one or more of `x`, `y`, `xCenter`, or `yCenter`.
+   */
+  anchorPoint?:
+    | 'top'
+    | 'left'
+    | 'right'
+    | 'bottom'
+    | 'top_left'
+    | 'top_right'
+    | 'bottom_left'
+    | 'bottom_right'
+    | 'center';
+
+  /**
+   * Specifies the position of the overlay relative to the parent image or video. If
+   * one or more of `x`, `y`, `xCenter`, or `yCenter` parameters are specified, this
+   * parameter is ignored. Maps to `lfo` in the URL.
    */
   focus?:
     | 'center'
@@ -806,6 +833,15 @@ export interface OverlayPosition {
   x?: number | string;
 
   /**
+   * Specifies the x-coordinate on the base asset where the overlay's center will be
+   * positioned. It also accepts arithmetic expressions such as `bw_mul_0.4` or
+   * `bw_sub_cw`. Maps to `lxc` in the URL. Cannot be used together with `x`, but can
+   * be used with `y`. Learn about
+   * [Arithmetic expressions](https://imagekit.io/docs/arithmetic-expressions-in-transformations).
+   */
+  xCenter?: number | string;
+
+  /**
    * Specifies the y-coordinate of the top-left corner of the base asset where the
    * overlay's top-left corner will be positioned. It also accepts arithmetic
    * expressions such as `bh_mul_0.4` or `bh_sub_ch`. Maps to `ly` in the URL. Learn
@@ -813,6 +849,15 @@ export interface OverlayPosition {
    * [Arithmetic expressions](https://imagekit.io/docs/arithmetic-expressions-in-transformations).
    */
   y?: number | string;
+
+  /**
+   * Specifies the y-coordinate on the base asset where the overlay's center will be
+   * positioned. It also accepts arithmetic expressions such as `bh_mul_0.4` or
+   * `bh_sub_ch`. Maps to `lyc` in the URL. Cannot be used together with `y`, but can
+   * be used with `x`. Learn about
+   * [Arithmetic expressions](https://imagekit.io/docs/arithmetic-expressions-in-transformations).
+   */
+  yCenter?: number | string;
 }
 
 export interface OverlayTiming {
