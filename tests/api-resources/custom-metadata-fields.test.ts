@@ -32,7 +32,7 @@ describe('resource customMetadataFields', () => {
       name: 'price',
       schema: {
         type: 'Number',
-        defaultValue: 'string',
+        defaultValue: [true, 10, 'Hello'],
         isValueRequired: true,
         maxLength: 0,
         maxValue: 3000,
@@ -64,7 +64,7 @@ describe('resource customMetadataFields', () => {
         {
           label: 'price',
           schema: {
-            defaultValue: 'string',
+            defaultValue: [true, 10, 'Hello'],
             isValueRequired: true,
             maxLength: 0,
             maxValue: 3000,
