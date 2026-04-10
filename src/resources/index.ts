@@ -53,6 +53,11 @@ export {
 export {
   Webhooks,
   type BaseWebhookEvent,
+  type FileCreateEvent,
+  type FileDeleteEvent,
+  type FileUpdateEvent,
+  type FileVersionCreateEvent,
+  type FileVersionDeleteEvent,
   type UploadPostTransformErrorEvent,
   type UploadPostTransformSuccessEvent,
   type UploadPreTransformErrorEvent,
@@ -60,11 +65,6 @@ export {
   type VideoTransformationAcceptedEvent,
   type VideoTransformationErrorEvent,
   type VideoTransformationReadyEvent,
-  type FileCreatedWebhookEvent,
-  type FileUpdatedWebhookEvent,
-  type FileDeletedWebhookEvent,
-  type FileVersionCreatedWebhookEvent,
-  type FileVersionDeletedWebhookEvent,
   type UnsafeUnwrapWebhookEvent,
   type UnwrapWebhookEvent,
 } from './webhooks';
