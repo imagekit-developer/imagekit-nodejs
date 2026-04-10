@@ -229,11 +229,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/webhooks.ts">BaseWebhookEvent</a></code>
-- <code><a href="./src/resources/webhooks.ts">DamFileCreateEvent</a></code>
-- <code><a href="./src/resources/webhooks.ts">DamFileDeleteEvent</a></code>
-- <code><a href="./src/resources/webhooks.ts">DamFileUpdateEvent</a></code>
-- <code><a href="./src/resources/webhooks.ts">DamFileVersionCreateEvent</a></code>
-- <code><a href="./src/resources/webhooks.ts">DamFileVersionDeleteEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UploadPostTransformErrorEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UploadPostTransformSuccessEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UploadPreTransformErrorEvent</a></code>
@@ -241,6 +236,16 @@ Types:
 - <code><a href="./src/resources/webhooks.ts">VideoTransformationAcceptedEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">VideoTransformationErrorEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">VideoTransformationReadyEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FileCreatedWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FileUpdatedWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FileDeletedWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FileVersionCreatedWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FileVersionDeletedWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FileCreatedWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FileUpdatedWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FileDeletedWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FileVersionCreatedWebhookEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FileVersionDeletedWebhookEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UnsafeUnwrapWebhookEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UnwrapWebhookEvent</a></code>
 

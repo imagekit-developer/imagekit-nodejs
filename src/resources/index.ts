@@ -53,11 +53,6 @@ export {
 export {
   Webhooks,
   type BaseWebhookEvent,
-  type DamFileCreateEvent,
-  type DamFileDeleteEvent,
-  type DamFileUpdateEvent,
-  type DamFileVersionCreateEvent,
-  type DamFileVersionDeleteEvent,
   type UploadPostTransformErrorEvent,
   type UploadPostTransformSuccessEvent,
   type UploadPreTransformErrorEvent,
@@ -65,6 +60,11 @@ export {
   type VideoTransformationAcceptedEvent,
   type VideoTransformationErrorEvent,
   type VideoTransformationReadyEvent,
+  type FileCreatedWebhookEvent,
+  type FileUpdatedWebhookEvent,
+  type FileDeletedWebhookEvent,
+  type FileVersionCreatedWebhookEvent,
+  type FileVersionDeletedWebhookEvent,
   type UnsafeUnwrapWebhookEvent,
   type UnwrapWebhookEvent,
 } from './webhooks';
