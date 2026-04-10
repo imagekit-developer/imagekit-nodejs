@@ -5,7 +5,34 @@ import { ClientOptions } from '@imagekit/nodejs';
 import { McpOptions } from './options';
 
 export const parseClientAuthHeaders = (req: IncomingMessage, required?: boolean): Partial<ClientOptions> => {
-  return {};
+  if (req.headers.authorization) {
+    const scheme = req.headers.authorization.split(' ')[0]!;
+    const value = req.headers.authorization.slice(scheme.length + 1);
+    switch (scheme) {
+      case 'Basic':
+        const rawValue = Buffer.from(value, 'base64').toString();
+        return {
+          privateKey: rawValue.slice(0, rawValue.search(':')),
+          password: rawValue.slice(rawValue.search(':') + 1),
+        };
+      default:
+        throw new Error(
+          'Unsupported authorization scheme. Expected the "Authorization" header to be a supported scheme (Basic).',
+        );
+    }
+  } else if (required) {
+    throw new Error('Missing required Authorization header; see WWW-Authenticate header for details.');
+  }
+
+  const privateKey =
+    Array.isArray(req.headers['x-imagekit-private-key']) ?
+      req.headers['x-imagekit-private-key'][0]
+    : req.headers['x-imagekit-private-key'];
+  const password =
+    Array.isArray(req.headers['x-optional-imagekit-ignores-this']) ?
+      req.headers['x-optional-imagekit-ignores-this'][0]
+    : req.headers['x-optional-imagekit-ignores-this'];
+  return { privateKey, password };
 };
 
 export const getStainlessApiKey = (req: IncomingMessage, mcpOptions: McpOptions): string | undefined => {

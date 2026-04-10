@@ -25,7 +25,7 @@ const serverConfig: ServerConfig = {
       required: true,
       default: undefined,
       placeholder: 'My Private Key',
-      type: 'string',
+      type: 'password',
     },
     {
       key: 'password',
@@ -35,7 +35,7 @@ const serverConfig: ServerConfig = {
       required: false,
       default: 'do_not_set',
       placeholder: 'My Password',
-      type: 'string',
+      type: 'password',
     },
     {
       key: 'webhookSecret',
