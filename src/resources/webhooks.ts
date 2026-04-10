@@ -37,6 +37,120 @@ export interface BaseWebhookEvent {
 }
 
 /**
+ * Triggered when a file is created.
+ */
+export interface DamFileCreateEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  /**
+   * Object containing details of a file or file version.
+   */
+  data: FilesAPI.File;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'file.created';
+}
+
+/**
+ * Triggered when a file is deleted.
+ */
+export interface DamFileDeleteEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: DamFileDeleteEvent.Data;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'file.deleted';
+}
+
+export namespace DamFileDeleteEvent {
+  export interface Data {
+    /**
+     * The unique `fileId` of the deleted file.
+     */
+    fileId: string;
+  }
+}
+
+/**
+ * Triggered when a file is updated.
+ */
+export interface DamFileUpdateEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  /**
+   * Object containing details of a file or file version.
+   */
+  data: FilesAPI.File;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'file.updated';
+}
+
+/**
+ * Triggered when a file version is created.
+ */
+export interface DamFileVersionCreateEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: unknown;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'file-version.created';
+}
+
+/**
+ * Triggered when a file version is deleted.
+ */
+export interface DamFileVersionDeleteEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: DamFileVersionDeleteEvent.Data;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'file-version.deleted';
+}
+
+export namespace DamFileVersionDeleteEvent {
+  export interface Data {
+    /**
+     * The unique `fileId` of the deleted file.
+     */
+    fileId: string;
+
+    /**
+     * The unique `versionId` of the deleted file version.
+     */
+    versionId: string;
+  }
+}
+
+/**
  * Triggered when a post-transformation fails. The original file remains available,
  * but the requested transformation could not be generated.
  */
@@ -1040,7 +1154,12 @@ export type UnsafeUnwrapWebhookEvent =
   | UploadPreTransformSuccessEvent
   | UploadPreTransformErrorEvent
   | UploadPostTransformSuccessEvent
-  | UploadPostTransformErrorEvent;
+  | UploadPostTransformErrorEvent
+  | DamFileCreateEvent
+  | DamFileUpdateEvent
+  | DamFileDeleteEvent
+  | DamFileVersionCreateEvent
+  | DamFileVersionDeleteEvent;
 
 /**
  * Triggered when a new video transformation request is accepted for processing.
@@ -1054,11 +1173,21 @@ export type UnwrapWebhookEvent =
   | UploadPreTransformSuccessEvent
   | UploadPreTransformErrorEvent
   | UploadPostTransformSuccessEvent
-  | UploadPostTransformErrorEvent;
+  | UploadPostTransformErrorEvent
+  | DamFileCreateEvent
+  | DamFileUpdateEvent
+  | DamFileDeleteEvent
+  | DamFileVersionCreateEvent
+  | DamFileVersionDeleteEvent;
 
 export declare namespace Webhooks {
   export {
     type BaseWebhookEvent as BaseWebhookEvent,
+    type DamFileCreateEvent as DamFileCreateEvent,
+    type DamFileDeleteEvent as DamFileDeleteEvent,
+    type DamFileUpdateEvent as DamFileUpdateEvent,
+    type DamFileVersionCreateEvent as DamFileVersionCreateEvent,
+    type DamFileVersionDeleteEvent as DamFileVersionDeleteEvent,
     type UploadPostTransformErrorEvent as UploadPostTransformErrorEvent,
     type UploadPostTransformSuccessEvent as UploadPostTransformSuccessEvent,
     type UploadPreTransformErrorEvent as UploadPreTransformErrorEvent,

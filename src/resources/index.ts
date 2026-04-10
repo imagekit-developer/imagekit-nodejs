@@ -53,6 +53,11 @@ export {
 export {
   Webhooks,
   type BaseWebhookEvent,
+  type DamFileCreateEvent,
+  type DamFileDeleteEvent,
+  type DamFileUpdateEvent,
+  type DamFileVersionCreateEvent,
+  type DamFileVersionDeleteEvent,
   type UploadPostTransformErrorEvent,
   type UploadPostTransformSuccessEvent,
   type UploadPreTransformErrorEvent,
