@@ -27,7 +27,6 @@ If you are looking to integrate file uploads in browsers, use one of our [fronte
   - [Using Raw parameter for custom transformations](#using-raw-parameter-for-custom-transformations)
 - [Authentication parameters for client-side uploads](#authentication-parameters-for-client-side-uploads)
 - [Webhook verification](#webhook-verification)
-  - [Verifying webhook signatures](#verifying-webhook-signatures)
 - [Handling errors](#handling-errors)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -352,35 +351,6 @@ These authentication parameters can be used in client-side upload forms to secur
 ## Webhook verification
 
 The ImageKit SDK provides utilities to verify webhook signatures for secure event handling. This ensures that webhook requests are actually coming from ImageKit and haven't been tampered with.
-
-### Verifying webhook signatures
-
-```ts
-import ImageKit from '@imagekit/nodejs';
-
-const client = new ImageKit({
-  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'],
-  webhookSecret: process.env['IMAGEKIT_WEBHOOK_SECRET'], // Required for webhook verification
-});
-
-try {
-  // Verify and unwrap webhook payload
-  const event = client.webhooks.unwrap(
-    webhookBody, // Raw webhook payload (string)
-    {
-      headers: webhookHeaders, // Request headers containing signature
-    },
-  );
-
-  console.log('Webhook signature is valid');
-  console.log('Event type:', event.type);
-  console.log('Event data:', event.data);
-  // Process the webhook event
-} catch (error) {
-  console.log('Invalid webhook signature or malformed payload');
-  // Reject the request
-}
-```
 
 For detailed information about webhook setup, signature verification, and handling different webhook events, refer to the [ImageKit webhook documentation](https://imagekit.io/docs/webhooks#verify-webhook-signature).
 
