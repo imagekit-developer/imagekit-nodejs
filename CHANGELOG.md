@@ -1,5 +1,15 @@
 # Changelog
 
+## 7.5.1 (2026-04-13)
+
+Full Changelog: [v7.5.0...v7.5.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.5.0...v7.5.1)
+
+### Chores
+
+* fix example snippet imports ([c424b94](https://github.com/imagekit-developer/imagekit-nodejs/commit/c424b949a56ff4b4486cd694c073615e5293bcc3))
+* remove webhook signature verification example from README ([352ec15](https://github.com/imagekit-developer/imagekit-nodejs/commit/352ec15b82f69fa56005e12eb53af84e6397d12e))
+* update CLI documentation ([1967acf](https://github.com/imagekit-developer/imagekit-nodejs/commit/1967acf48ab8aae241680a623fc311da6c2cfd6a))
+
 ## 7.5.0 (2026-04-13)
 
 Full Changelog: [v7.4.0...v7.5.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.4.0...v7.5.0)
