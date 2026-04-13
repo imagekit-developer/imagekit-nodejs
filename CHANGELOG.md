@@ -1,5 +1,44 @@
 # Changelog
 
+## 7.5.0 (2026-04-13)
+
+Full Changelog: [v7.4.0...v7.5.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.4.0...v7.5.0)
+
+### Features
+
+* **api:** dam related webhook events ([d2bc9ce](https://github.com/imagekit-developer/imagekit-nodejs/commit/d2bc9ce8f62be8c4da65f655b8113a0bca685c37))
+* **api:** fix spec indentation ([79ae799](https://github.com/imagekit-developer/imagekit-nodejs/commit/79ae799823f2dcdde7eece7fc0588916e453537e))
+* **api:** indentation fix ([65c6eec](https://github.com/imagekit-developer/imagekit-nodejs/commit/65c6eec03f5907dedd73500eeba8f9aa0de1f66c))
+* **api:** merge with main to bring back missing parameters ([bd6474f](https://github.com/imagekit-developer/imagekit-nodejs/commit/bd6474f9af40cae66818a260f21087d4e19f76af))
+* **api:** update webhook event names and remove DAM prefix ([a86f04c](https://github.com/imagekit-developer/imagekit-nodejs/commit/a86f04c6c187b3bedced5146a5ca717eccc8492e))
+* **docs:** simplify authentication parameters example in README ([c14843b](https://github.com/imagekit-developer/imagekit-nodejs/commit/c14843b8e77bc24a871ed594962105fbfa7fa38a))
+
+
+### Bug Fixes
+
+* **api:** extract shared schemas to prevent Go webhook union breaking changes ([8296498](https://github.com/imagekit-developer/imagekit-nodejs/commit/829649869a6a8fae58433b3a6a4c33205b6eeb0d))
+* **api:** rename DamFile events to File for consistency ([24b7f4b](https://github.com/imagekit-developer/imagekit-nodejs/commit/24b7f4b33977691dadbed303fd10acd532dcd5c1))
+
+
+### Chores
+
+* **internal:** codegen related update ([fbffd21](https://github.com/imagekit-developer/imagekit-nodejs/commit/fbffd213dde7fc45ee6ba0f3e30747bf487c0b03))
+* **internal:** codegen related update ([eb9b6dc](https://github.com/imagekit-developer/imagekit-nodejs/commit/eb9b6dc079d3c174b37863892e3dbc5a6ca0a2d5))
+* **internal:** codegen related update ([e2cf4dc](https://github.com/imagekit-developer/imagekit-nodejs/commit/e2cf4dcd2be96f3d7d60244e40592aa94f393e8c))
+* **internal:** fix MCP server import ordering ([31100e2](https://github.com/imagekit-developer/imagekit-nodejs/commit/31100e2ee17426153efea46f8787d2cfb5e2a9ee))
+* **internal:** show error causes in MCP servers when running in local mode ([7f1ff53](https://github.com/imagekit-developer/imagekit-nodejs/commit/7f1ff53ef5fedeb78fd73571664789c858133351))
+* **mcp-server:** increase local docs search result count from 5 to 10 ([35dc080](https://github.com/imagekit-developer/imagekit-nodejs/commit/35dc080ca7ef76d09db5152fbc8e3af285581822))
+
+
+### Documentation
+
+* improve examples ([cbfbebc](https://github.com/imagekit-developer/imagekit-nodejs/commit/cbfbebc7d6ecb5e71207e9885f7b3195d1d1c316))
+
+
+### Refactors
+
+* AITags to singular AITag schema with array items pattern ([cfca6fd](https://github.com/imagekit-developer/imagekit-nodejs/commit/cfca6fd9f812d6f434e3682eb880d2351ccf6076))
+
 ## 7.4.0 (2026-04-06)
 
 Full Changelog: [v7.3.0...v7.4.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.3.0...v7.4.0)
