@@ -66,9 +66,7 @@ export class Files extends APIResource {
  */
 export interface FileUploadResponse {
   /**
-   * Array of `AITags` associated with the image. If no `AITags` are set, it will be
-   * null. These tags can be added using the `google-auto-tagging` or
-   * `aws-auto-tagging` extensions.
+   * An array of tags assigned to the uploaded file by auto tagging.
    */
   AITags?: Array<FileUploadResponse.AITag> | null;
 
@@ -227,6 +225,10 @@ export interface FileUploadResponse {
 }
 
 export namespace FileUploadResponse {
+  /**
+   * AI-generated tag associated with an image. These tags can be added using the
+   * `google-auto-tagging` or `aws-auto-tagging` extensions.
+   */
   export interface AITag {
     /**
      * Confidence score of the tag.

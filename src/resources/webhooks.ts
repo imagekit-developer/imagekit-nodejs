@@ -391,9 +391,7 @@ export namespace UploadPreTransformSuccessEvent {
    */
   export interface Data {
     /**
-     * Array of `AITags` associated with the image. If no `AITags` are set, it will be
-     * null. These tags can be added using the `google-auto-tagging` or
-     * `aws-auto-tagging` extensions.
+     * An array of tags assigned to the uploaded file by auto tagging.
      */
     AITags?: Array<Data.AITag> | null;
 
@@ -552,6 +550,10 @@ export namespace UploadPreTransformSuccessEvent {
   }
 
   export namespace Data {
+    /**
+     * AI-generated tag associated with an image. These tags can be added using the
+     * `google-auto-tagging` or `aws-auto-tagging` extensions.
+     */
     export interface AITag {
       /**
        * Confidence score of the tag.
