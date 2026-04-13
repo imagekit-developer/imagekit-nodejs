@@ -193,9 +193,8 @@ export class Files extends APIResource {
  */
 export interface File {
   /**
-   * Array of `AITags` associated with the image. If no `AITags` are set, it will be
-   * null. These tags can be added using the `google-auto-tagging` or
-   * `aws-auto-tagging` extensions.
+   * Array of AI-generated tags associated with the image. If no AITags are set, it
+   * will be null.
    */
   AITags?: Array<File.AITag> | null;
 
@@ -221,11 +220,7 @@ export interface File {
   customCoordinates?: string | null;
 
   /**
-   * A key-value data associated with the asset. Use `responseField` in API request
-   * to get `customMetadata` in the upload API response. Before setting any custom
-   * metadata on an asset, you have to create the field using custom metadata fields
-   * API. Send `customMetadata` in `responseFields` in API request to get the value
-   * of this field.
+   * An object with custom metadata for the file.
    */
   customMetadata?: { [key: string]: unknown };
 
@@ -242,8 +237,7 @@ export interface File {
 
   /**
    * Consolidated embedded metadata associated with the file. It includes exif, iptc,
-   * and xmp data. Send `embeddedMetadata` in `responseFields` in API request to get
-   * embeddedMetadata in the upload API response.
+   * and xmp data.
    */
   embeddedMetadata?: { [key: string]: unknown };
 
@@ -340,7 +334,7 @@ export interface File {
   url?: string;
 
   /**
-   * An object containing the file or file version's `id` (versionId) and `name`.
+   * An object with details of the file version.
    */
   versionInfo?: File.VersionInfo;
 
@@ -356,6 +350,10 @@ export interface File {
 }
 
 export namespace File {
+  /**
+   * AI-generated tag associated with an image. These tags can be added using the
+   * `google-auto-tagging` or `aws-auto-tagging` extensions.
+   */
   export interface AITag {
     /**
      * Confidence score of the tag.
@@ -839,9 +837,7 @@ export interface FileRenameResponse {
  */
 export interface FileUploadResponse {
   /**
-   * Array of `AITags` associated with the image. If no `AITags` are set, it will be
-   * null. These tags can be added using the `google-auto-tagging` or
-   * `aws-auto-tagging` extensions.
+   * An array of tags assigned to the uploaded file by auto tagging.
    */
   AITags?: Array<FileUploadResponse.AITag> | null;
 
@@ -1000,6 +996,10 @@ export interface FileUploadResponse {
 }
 
 export namespace FileUploadResponse {
+  /**
+   * AI-generated tag associated with an image. These tags can be added using the
+   * `google-auto-tagging` or `aws-auto-tagging` extensions.
+   */
   export interface AITag {
     /**
      * Confidence score of the tag.
