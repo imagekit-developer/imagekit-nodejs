@@ -381,7 +381,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       typescript: {
         method: 'client.files.upload',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.upload({\n  file: fs.createReadStream('path/to/file'),\n  fileName: 'fileName',\n});\n\nconsole.log(response.videoCodec);",
+          "import fs from 'fs';\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.upload({\n  file: fs.createReadStream('path/to/file'),\n  fileName: 'fileName',\n});\n\nconsole.log(response.videoCodec);",
       },
     },
   },
@@ -2955,7 +2955,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       typescript: {
         method: 'client.beta.v2.files.upload',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.v2.files.upload({\n  file: fs.createReadStream('path/to/file'),\n  fileName: 'fileName',\n});\n\nconsole.log(response.videoCodec);",
+          "import fs from 'fs';\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.v2.files.upload({\n  file: fs.createReadStream('path/to/file'),\n  fileName: 'fileName',\n});\n\nconsole.log(response.videoCodec);",
       },
     },
   },
