@@ -35,6 +35,11 @@ import {
 } from './resources/saved-extensions';
 import {
   BaseWebhookEvent,
+  FileCreateEvent,
+  FileDeleteEvent,
+  FileUpdateEvent,
+  FileVersionCreateEvent,
+  FileVersionDeleteEvent,
   UnsafeUnwrapWebhookEvent,
   UnwrapWebhookEvent,
   UploadPostTransformErrorEvent,
@@ -917,6 +922,11 @@ export declare namespace ImageKit {
   export {
     Webhooks as Webhooks,
     type BaseWebhookEvent as BaseWebhookEvent,
+    type FileCreateEvent as FileCreateEvent,
+    type FileDeleteEvent as FileDeleteEvent,
+    type FileUpdateEvent as FileUpdateEvent,
+    type FileVersionCreateEvent as FileVersionCreateEvent,
+    type FileVersionDeleteEvent as FileVersionDeleteEvent,
     type UploadPostTransformErrorEvent as UploadPostTransformErrorEvent,
     type UploadPostTransformSuccessEvent as UploadPostTransformSuccessEvent,
     type UploadPreTransformErrorEvent as UploadPreTransformErrorEvent,

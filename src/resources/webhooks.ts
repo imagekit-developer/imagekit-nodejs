@@ -37,6 +37,123 @@ export interface BaseWebhookEvent {
 }
 
 /**
+ * Triggered when a file is created.
+ */
+export interface FileCreateEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  /**
+   * Object containing details of a file or file version.
+   */
+  data: FilesAPI.File;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'file.created';
+}
+
+/**
+ * Triggered when a file is deleted.
+ */
+export interface FileDeleteEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: FileDeleteEvent.Data;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'file.deleted';
+}
+
+export namespace FileDeleteEvent {
+  export interface Data {
+    /**
+     * The unique `fileId` of the deleted file.
+     */
+    fileId: string;
+  }
+}
+
+/**
+ * Triggered when a file is updated.
+ */
+export interface FileUpdateEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  /**
+   * Object containing details of a file or file version.
+   */
+  data: FilesAPI.File;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'file.updated';
+}
+
+/**
+ * Triggered when a file version is created.
+ */
+export interface FileVersionCreateEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  /**
+   * Object containing details of a file or file version.
+   */
+  data: FilesAPI.File;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'file-version.created';
+}
+
+/**
+ * Triggered when a file version is deleted.
+ */
+export interface FileVersionDeleteEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: FileVersionDeleteEvent.Data;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'file-version.deleted';
+}
+
+export namespace FileVersionDeleteEvent {
+  export interface Data {
+    /**
+     * The unique `fileId` of the deleted file.
+     */
+    fileId: string;
+
+    /**
+     * The unique `versionId` of the deleted file version.
+     */
+    versionId: string;
+  }
+}
+
+/**
  * Triggered when a post-transformation fails. The original file remains available,
  * but the requested transformation could not be generated.
  */
@@ -433,6 +550,10 @@ export namespace UploadPreTransformSuccessEvent {
   }
 
   export namespace Data {
+    /**
+     * AI-generated tag associated with an image. These tags can be added using the
+     * `google-auto-tagging` or `aws-auto-tagging` extensions.
+     */
     export interface AITag {
       /**
        * Confidence score of the tag.
@@ -445,9 +566,8 @@ export namespace UploadPreTransformSuccessEvent {
       name?: string;
 
       /**
-       * Array of `AITags` associated with the image. If no `AITags` are set, it will be
-       * null. These tags can be added using the `google-auto-tagging` or
-       * `aws-auto-tagging` extensions.
+       * Source of the tag. Possible values are `google-auto-tagging` and
+       * `aws-auto-tagging`.
        */
       source?: string;
     }
@@ -1040,7 +1160,12 @@ export type UnsafeUnwrapWebhookEvent =
   | UploadPreTransformSuccessEvent
   | UploadPreTransformErrorEvent
   | UploadPostTransformSuccessEvent
-  | UploadPostTransformErrorEvent;
+  | UploadPostTransformErrorEvent
+  | FileCreateEvent
+  | FileUpdateEvent
+  | FileDeleteEvent
+  | FileVersionCreateEvent
+  | FileVersionDeleteEvent;
 
 /**
  * Triggered when a new video transformation request is accepted for processing.
@@ -1054,11 +1179,21 @@ export type UnwrapWebhookEvent =
   | UploadPreTransformSuccessEvent
   | UploadPreTransformErrorEvent
   | UploadPostTransformSuccessEvent
-  | UploadPostTransformErrorEvent;
+  | UploadPostTransformErrorEvent
+  | FileCreateEvent
+  | FileUpdateEvent
+  | FileDeleteEvent
+  | FileVersionCreateEvent
+  | FileVersionDeleteEvent;
 
 export declare namespace Webhooks {
   export {
     type BaseWebhookEvent as BaseWebhookEvent,
+    type FileCreateEvent as FileCreateEvent,
+    type FileDeleteEvent as FileDeleteEvent,
+    type FileUpdateEvent as FileUpdateEvent,
+    type FileVersionCreateEvent as FileVersionCreateEvent,
+    type FileVersionDeleteEvent as FileVersionDeleteEvent,
     type UploadPostTransformErrorEvent as UploadPostTransformErrorEvent,
     type UploadPostTransformSuccessEvent as UploadPostTransformSuccessEvent,
     type UploadPreTransformErrorEvent as UploadPreTransformErrorEvent,

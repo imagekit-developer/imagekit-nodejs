@@ -53,6 +53,11 @@ export {
 export {
   Webhooks,
   type BaseWebhookEvent,
+  type FileCreateEvent,
+  type FileDeleteEvent,
+  type FileUpdateEvent,
+  type FileVersionCreateEvent,
+  type FileVersionDeleteEvent,
   type UploadPostTransformErrorEvent,
   type UploadPostTransformSuccessEvent,
   type UploadPreTransformErrorEvent,

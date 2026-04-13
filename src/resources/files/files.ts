@@ -196,7 +196,8 @@ export class Files extends APIResource {
  */
 export interface File {
   /**
-   * An array of tags assigned to the file by auto tagging.
+   * Array of AI-generated tags associated with the image. If no AITags are set, it
+   * will be null.
    */
   AITags?: Array<File.AITag> | null;
 
@@ -352,6 +353,10 @@ export interface File {
 }
 
 export namespace File {
+  /**
+   * AI-generated tag associated with an image. These tags can be added using the
+   * `google-auto-tagging` or `aws-auto-tagging` extensions.
+   */
   export interface AITag {
     /**
      * Confidence score of the tag.
@@ -431,7 +436,7 @@ export namespace File {
   }
 
   /**
-   * An object with details of the file version.
+   * An object containing the file or file version's `id` (versionId) and `name`.
    */
   export interface VersionInfo {
     /**
@@ -994,6 +999,10 @@ export interface FileUploadResponse {
 }
 
 export namespace FileUploadResponse {
+  /**
+   * AI-generated tag associated with an image. These tags can be added using the
+   * `google-auto-tagging` or `aws-auto-tagging` extensions.
+   */
   export interface AITag {
     /**
      * Confidence score of the tag.
@@ -1006,9 +1015,8 @@ export namespace FileUploadResponse {
     name?: string;
 
     /**
-     * Array of `AITags` associated with the image. If no `AITags` are set, it will be
-     * null. These tags can be added using the `google-auto-tagging` or
-     * `aws-auto-tagging` extensions.
+     * Source of the tag. Possible values are `google-auto-tagging` and
+     * `aws-auto-tagging`.
      */
     source?: string;
   }

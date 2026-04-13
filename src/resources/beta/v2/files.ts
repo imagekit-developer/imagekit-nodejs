@@ -225,6 +225,10 @@ export interface FileUploadResponse {
 }
 
 export namespace FileUploadResponse {
+  /**
+   * AI-generated tag associated with an image. These tags can be added using the
+   * `google-auto-tagging` or `aws-auto-tagging` extensions.
+   */
   export interface AITag {
     /**
      * Confidence score of the tag.
@@ -237,9 +241,8 @@ export namespace FileUploadResponse {
     name?: string;
 
     /**
-     * Array of `AITags` associated with the image. If no `AITags` are set, it will be
-     * null. These tags can be added using the `google-auto-tagging` or
-     * `aws-auto-tagging` extensions.
+     * Source of the tag. Possible values are `google-auto-tagging` and
+     * `aws-auto-tagging`.
      */
     source?: string;
   }
