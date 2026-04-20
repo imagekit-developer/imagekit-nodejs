@@ -3,10 +3,10 @@
 # This Dockerfile builds a Docker image for the MCP Server.
 #
 # To build the image locally:
-#   docker build -f packages/mcp-server/Dockerfile -t @imagekit/api-mcp:local .
+#   docker build -f packages/mcp-server/Dockerfile -t @imagekit/nodejs-mcp:local .
 #
 # To run the image:
-#   docker run -i @imagekit/api-mcp:local [OPTIONS]
+#   docker run -i @imagekit/nodejs-mcp:local [OPTIONS]
 #
 # Common options:
 #   --tool=<name>              Include specific tools
@@ -16,7 +16,7 @@
 #   --transport=<type>         Set transport type (stdio or http)
 #
 # For a full list of options:
-#   docker run -i @imagekit/api-mcp:local --help
+#   docker run -i @imagekit/nodejs-mcp:local --help
 #
 # Note: The MCP server uses stdio transport by default. Docker's -i flag
 # enables interactive mode, allowing the container to communicate over stdin/stdout.

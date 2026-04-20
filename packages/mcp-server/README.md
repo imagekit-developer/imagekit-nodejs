@@ -10,7 +10,7 @@ You can run the MCP Server directly via `npx`:
 export IMAGEKIT_PRIVATE_KEY="My Private Key"
 export OPTIONAL_IMAGEKIT_IGNORES_THIS="My Password"
 export IMAGEKIT_WEBHOOK_SECRET="My Webhook Secret"
-npx -y @imagekit/api-mcp@latest
+npx -y @imagekit/nodejs-mcp@latest
 ```
 
 ### Via MCP Client
@@ -25,7 +25,7 @@ For clients with a configuration JSON, it might look something like this:
   "mcpServers": {
     "imagekit_nodejs_api": {
       "command": "npx",
-      "args": ["-y", "@imagekit/api-mcp"],
+      "args": ["-y", "@imagekit/nodejs-mcp"],
       "env": {
         "IMAGEKIT_PRIVATE_KEY": "My Private Key",
         "OPTIONAL_IMAGEKIT_IGNORES_THIS": "My Password",
@@ -41,14 +41,14 @@ For clients with a configuration JSON, it might look something like this:
 If you use Cursor, you can install the MCP server by using the button below. You will need to set your environment variables
 in Cursor's `mcp.json`, which can be found in Cursor Settings > Tools & MCP > New MCP Server.
 
-[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40imagekit%2Fapi-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBpbWFnZWtpdC9hcGktbWNwIl0sImVudiI6eyJJTUFHRUtJVF9QUklWQVRFX0tFWSI6Ik15IFByaXZhdGUgS2V5IiwiT1BUSU9OQUxfSU1BR0VLSVRfSUdOT1JFU19USElTIjoiTXkgUGFzc3dvcmQiLCJJTUFHRUtJVF9XRUJIT09LX1NFQ1JFVCI6Ik15IFdlYmhvb2sgU2VjcmV0In19)
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40imagekit%2Fnodejs-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBpbWFnZWtpdC9ub2RlanMtbWNwIl0sImVudiI6eyJJTUFHRUtJVF9QUklWQVRFX0tFWSI6Ik15IFByaXZhdGUgS2V5IiwiT1BUSU9OQUxfSU1BR0VLSVRfSUdOT1JFU19USElTIjoiTXkgUGFzc3dvcmQiLCJJTUFHRUtJVF9XRUJIT09LX1NFQ1JFVCI6Ik15IFdlYmhvb2sgU2VjcmV0In19)
 
 ### VS Code
 
 If you use MCP, you can install the MCP server by clicking the link below. You will need to set your environment variables
 in VS Code's `mcp.json`, which can be found via Command Palette > MCP: Open User Configuration.
 
-[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40imagekit%2Fapi-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40imagekit%2Fapi-mcp%22%5D%2C%22env%22%3A%7B%22IMAGEKIT_PRIVATE_KEY%22%3A%22My%20Private%20Key%22%2C%22OPTIONAL_IMAGEKIT_IGNORES_THIS%22%3A%22My%20Password%22%2C%22IMAGEKIT_WEBHOOK_SECRET%22%3A%22My%20Webhook%20Secret%22%7D%7D)
+[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40imagekit%2Fnodejs-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40imagekit%2Fnodejs-mcp%22%5D%2C%22env%22%3A%7B%22IMAGEKIT_PRIVATE_KEY%22%3A%22My%20Private%20Key%22%2C%22OPTIONAL_IMAGEKIT_IGNORES_THIS%22%3A%22My%20Password%22%2C%22IMAGEKIT_WEBHOOK_SECRET%22%3A%22My%20Webhook%20Secret%22%7D%7D)
 
 ### Claude Code
 
@@ -56,7 +56,7 @@ If you use Claude Code, you can install the MCP server by running the command be
 environment variables in Claude Code's `.claude.json`, which can be found in your home directory.
 
 ```
-claude mcp add imagekit_api_mcp_api --env IMAGEKIT_PRIVATE_KEY="My Private Key" OPTIONAL_IMAGEKIT_IGNORES_THIS="My Password" IMAGEKIT_WEBHOOK_SECRET="My Webhook Secret" -- npx -y @imagekit/api-mcp
+claude mcp add imagekit_nodejs_mcp_api --env IMAGEKIT_PRIVATE_KEY="My Private Key" OPTIONAL_IMAGEKIT_IGNORES_THIS="My Password" IMAGEKIT_WEBHOOK_SECRET="My Webhook Secret" -- npx -y @imagekit/nodejs-mcp
 ```
 
 ## Code Mode
