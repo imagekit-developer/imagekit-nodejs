@@ -21,7 +21,7 @@
     "@modelcontextprotocol/sdk": "^1.27.1",
     "agents": "^0.8.5",
     "hono": "^4.12.4",
-    "@imagekit/nodejs-mcp": "latest",
+    "@imagekit/api-mcp": "latest",
     "zod": "^3.24.4"
   }
 }
