@@ -69,24 +69,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.customMetadataFields.create(label: string, name: string, schema: { type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect'; defaultValue?: string | number | boolean | string | number | boolean[]; isValueRequired?: boolean; maxLength?: number; maxValue?: string | number; minLength?: number; minValue?: string | number; selectOptions?: string | number | boolean[]; }): { id: string; label: string; name: string; schema: object; }`\n\n**post** `/v1/customMetadataFields`\n\nThis API creates a new custom metadata field. Once a custom metadata field is created either through this API or using the dashboard UI, its value can be set on the assets. The value of a field for an asset can be set using the media library UI or programmatically through upload or update assets API.\n\n\n### Parameters\n\n- `label: string`\n  Human readable name of the custom metadata field. This should be unique across all non deleted custom metadata fields. This name is displayed as form field label to the users while setting field value on an asset in the media library UI.\n\n- `name: string`\n  API name of the custom metadata field. This should be unique across all (including deleted) custom metadata fields.\n\n- `schema: { type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect'; defaultValue?: string | number | boolean | string | number | boolean[]; isValueRequired?: boolean; maxLength?: number; maxValue?: string | number; minLength?: number; minValue?: string | number; selectOptions?: string | number | boolean[]; }`\n  - `type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect'`\n    Type of the custom metadata field.\n  - `defaultValue?: string | number | boolean | string | number | boolean[]`\n    The default value for this custom metadata field. This property is only required if `isValueRequired` property is set to `true`. The value should match the `type` of custom metadata field.\n\n  - `isValueRequired?: boolean`\n    Sets this custom metadata field as required. Setting custom metadata fields on an asset will throw error if the value for all required fields are not present in upload or update asset API request body.\n\n  - `maxLength?: number`\n    Maximum length of string. Only set this property if `type` is set to `Text` or `Textarea`.\n\n  - `maxValue?: string | number`\n    Maximum value of the field. Only set this property if field type is `Date` or `Number`. For `Date` type field, set the minimum date in ISO8601 string format. For `Number` type field, set the minimum numeric value.\n\n  - `minLength?: number`\n    Minimum length of string. Only set this property if `type` is set to `Text` or `Textarea`.\n\n  - `minValue?: string | number`\n    Minimum value of the field. Only set this property if field type is `Date` or `Number`. For `Date` type field, set the minimum date in ISO8601 string format. For `Number` type field, set the minimum numeric value.\n\n  - `selectOptions?: string | number | boolean[]`\n    An array of allowed values. This property is only required if `type` property is set to `SingleSelect` or `MultiSelect`.\n\n\n### Returns\n\n- `{ id: string; label: string; name: string; schema: { type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect'; defaultValue?: string | number | boolean | string | number | boolean[]; isValueRequired?: boolean; maxLength?: number; maxValue?: string | number; minLength?: number; minValue?: string | number; selectOptions?: string | number | boolean[]; }; }`\n  Object containing details of a custom metadata field.\n\n  - `id: string`\n  - `label: string`\n  - `name: string`\n  - `schema: { type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect'; defaultValue?: string | number | boolean | string | number | boolean[]; isValueRequired?: boolean; maxLength?: number; maxValue?: string | number; minLength?: number; minValue?: string | number; selectOptions?: string | number | boolean[]; }`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst customMetadataField = await client.customMetadataFields.create({\n  label: 'price',\n  name: 'price',\n  schema: { type: 'Number' },\n});\n\nconsole.log(customMetadataField);\n```",
     perLanguage: {
-      cli: {
-        method: 'customMetadataFields create',
+      typescript: {
+        method: 'client.customMetadataFields.create',
         example:
-          "imagekit custom-metadata-fields create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --label price \\\n  --name price \\\n  --schema '{type: Number}'",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst customMetadataField = await client.customMetadataFields.create({\n  label: 'price',\n  name: 'price',\n  schema: {\n    type: 'Number',\n    minValue: 1000,\n    maxValue: 3000,\n  },\n});\n\nconsole.log(customMetadataField.id);",
       },
-      csharp: {
-        method: 'CustomMetadataFields.Create',
+      python: {
+        method: 'custom_metadata_fields.create',
         example:
-          'CustomMetadataFieldCreateParams parameters = new()\n{\n    Label = "price",\n    Name = "price",\n    Schema = new()\n    {\n        Type = Type.Number,\n        DefaultValue = new(\n\n            [\n                new DefaultValueItem(true),\n                new DefaultValueItem(10),\n                new DefaultValueItem("Hello"),\n            ]\n        ),\n        IsValueRequired = true,\n        MaxLength = 0,\n        MaxValue = 3000,\n        MinLength = 0,\n        MinValue = 1000,\n        SelectOptions =\n        [\n            "small", "medium", "large", 30, 40, true\n        ],\n    },\n};\n\nvar customMetadataField = await client.CustomMetadataFields.Create(parameters);\n\nConsole.WriteLine(customMetadataField);',
-      },
-      go: {
-        method: 'client.CustomMetadataFields.New',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tcustomMetadataField, err := client.CustomMetadataFields.New(context.TODO(), imagekit.CustomMetadataFieldNewParams{\n\t\tLabel: "price",\n\t\tName:  "price",\n\t\tSchema: imagekit.CustomMetadataFieldNewParamsSchema{\n\t\t\tType: "Number",\n\t\t\tMinValue: imagekit.CustomMetadataFieldNewParamsSchemaMinValueUnion{\n\t\t\t\tOfFloat: imagekit.Float(1000),\n\t\t\t},\n\t\t\tMaxValue: imagekit.CustomMetadataFieldNewParamsSchemaMaxValueUnion{\n\t\t\t\tOfFloat: imagekit.Float(3000),\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", customMetadataField.ID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/customMetadataFields \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "label": "price",\n          "name": "price",\n          "schema": {\n            "type": "Number",\n            "maxValue": 3000,\n            "minValue": 1000\n          }\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\ncustom_metadata_field = client.custom_metadata_fields.create(\n    label="price",\n    name="price",\n    schema={\n        "type": "Number",\n        "min_value": 1000,\n        "max_value": 3000,\n    },\n)\nprint(custom_metadata_field.id)',
       },
       java: {
         method: 'customMetadataFields().create',
@@ -98,25 +89,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataField\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataFieldCreateParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: CustomMetadataFieldCreateParams = CustomMetadataFieldCreateParams.builder()\n        .label("price")\n        .name("price")\n        .schema(CustomMetadataFieldCreateParams.Schema.builder()\n            .type(CustomMetadataFieldCreateParams.Schema.Type.NUMBER)\n            .build())\n        .build()\n    val customMetadataField: CustomMetadataField = client.customMetadataFields().create(params)\n}',
       },
-      php: {
-        method: 'customMetadataFields->create',
+      go: {
+        method: 'client.CustomMetadataFields.New',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataField = $client->customMetadataFields->create(\n  label: 'price',\n  name: 'price',\n  schema: [\n    'type' => 'Number',\n    'defaultValue' => [true, 10, 'Hello'],\n    'isValueRequired' => true,\n    'maxLength' => 0,\n    'maxValue' => 3000,\n    'minLength' => 0,\n    'minValue' => 1000,\n    'selectOptions' => ['small', 'medium', 'large', 30, 40, true],\n  ],\n);\n\nvar_dump($customMetadataField);",
-      },
-      python: {
-        method: 'custom_metadata_fields.create',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\ncustom_metadata_field = client.custom_metadata_fields.create(\n    label="price",\n    name="price",\n    schema={\n        "type": "Number",\n        "min_value": 1000,\n        "max_value": 3000,\n    },\n)\nprint(custom_metadata_field.id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tcustomMetadataField, err := client.CustomMetadataFields.New(context.TODO(), imagekit.CustomMetadataFieldNewParams{\n\t\tLabel: "price",\n\t\tName:  "price",\n\t\tSchema: imagekit.CustomMetadataFieldNewParamsSchema{\n\t\t\tType: "Number",\n\t\t\tMinValue: imagekit.CustomMetadataFieldNewParamsSchemaMinValueUnion{\n\t\t\t\tOfFloat: imagekit.Float(1000),\n\t\t\t},\n\t\t\tMaxValue: imagekit.CustomMetadataFieldNewParamsSchemaMaxValueUnion{\n\t\t\t\tOfFloat: imagekit.Float(3000),\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", customMetadataField.ID)\n}\n',
       },
       ruby: {
         method: 'custom_metadata_fields.create',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\ncustom_metadata_field = image_kit.custom_metadata_fields.create(label: "price", name: "price", schema: {type: :Number})\n\nputs(custom_metadata_field)',
       },
-      typescript: {
-        method: 'client.customMetadataFields.create',
+      cli: {
+        method: 'customMetadataFields create',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst customMetadataField = await client.customMetadataFields.create({\n  label: 'price',\n  name: 'price',\n  schema: {\n    type: 'Number',\n    minValue: 1000,\n    maxValue: 3000,\n  },\n});\n\nconsole.log(customMetadataField.id);",
+          "imagekit custom-metadata-fields create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --label price \\\n  --name price \\\n  --schema '{type: Number}'",
+      },
+      php: {
+        method: 'customMetadataFields->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataField = $client->customMetadataFields->create(\n  label: 'price',\n  name: 'price',\n  schema: [\n    'type' => 'Number',\n    'defaultValue' => [true, 10, 'Hello'],\n    'isValueRequired' => true,\n    'maxLength' => 0,\n    'maxValue' => 3000,\n    'minLength' => 0,\n    'minValue' => 1000,\n    'selectOptions' => ['small', 'medium', 'large', 30, 40, true],\n  ],\n);\n\nvar_dump($customMetadataField);",
+      },
+      csharp: {
+        method: 'CustomMetadataFields.Create',
+        example:
+          'CustomMetadataFieldCreateParams parameters = new()\n{\n    Label = "price",\n    Name = "price",\n    Schema = new()\n    {\n        Type = Type.Number,\n        DefaultValue = new(\n\n            [\n                new DefaultValueItem(true),\n                new DefaultValueItem(10),\n                new DefaultValueItem("Hello"),\n            ]\n        ),\n        IsValueRequired = true,\n        MaxLength = 0,\n        MaxValue = 3000,\n        MinLength = 0,\n        MinValue = 1000,\n        SelectOptions =\n        [\n            "small", "medium", "large", 30, 40, true\n        ],\n    },\n};\n\nvar customMetadataField = await client.CustomMetadataFields.Create(parameters);\n\nConsole.WriteLine(customMetadataField);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/customMetadataFields \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "label": "price",\n          "name": "price",\n          "schema": {\n            "type": "Number",\n            "maxValue": 3000,\n            "minValue": 1000\n          }\n        }\'',
       },
     },
   },
@@ -135,24 +135,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.customMetadataFields.list(folderPath?: string, includeDeleted?: boolean): object[]`\n\n**get** `/v1/customMetadataFields`\n\nThis API returns the array of created custom metadata field objects. By default the API returns only non deleted field objects, but you can include deleted fields in the API response.\n\nYou can also filter results by a specific folder path to retrieve custom metadata fields applicable at that location. This path-specific filtering is useful when using the **Path policy** feature to determine which custom metadata fields are selected for a given path.\n\n\n### Parameters\n\n- `folderPath?: string`\n  The folder path (e.g., `/path/to/folder`) for which to retrieve applicable custom metadata fields. Useful for determining path-specific field selections when the [Path policy](https://imagekit.io/docs/dam/path-policy) feature is in use.\n\n\n- `includeDeleted?: boolean`\n  Set it to `true` to include deleted field objects in the API response.\n\n\n### Returns\n\n- `{ id: string; label: string; name: string; schema: { type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect'; defaultValue?: string | number | boolean | string | number | boolean[]; isValueRequired?: boolean; maxLength?: number; maxValue?: string | number; minLength?: number; minValue?: string | number; selectOptions?: string | number | boolean[]; }; }[]`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst customMetadataFields = await client.customMetadataFields.list();\n\nconsole.log(customMetadataFields);\n```",
     perLanguage: {
-      cli: {
-        method: 'customMetadataFields list',
+      typescript: {
+        method: 'client.customMetadataFields.list',
         example:
-          "imagekit custom-metadata-fields list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst customMetadataFields = await client.customMetadataFields.list();\n\nconsole.log(customMetadataFields);",
       },
-      csharp: {
-        method: 'CustomMetadataFields.List',
+      python: {
+        method: 'custom_metadata_fields.list',
         example:
-          'CustomMetadataFieldListParams parameters = new();\n\nvar customMetadataFields = await client.CustomMetadataFields.List(parameters);\n\nConsole.WriteLine(customMetadataFields);',
-      },
-      go: {
-        method: 'client.CustomMetadataFields.List',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tcustomMetadataFields, err := client.CustomMetadataFields.List(context.TODO(), imagekit.CustomMetadataFieldListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", customMetadataFields)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/customMetadataFields \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\ncustom_metadata_fields = client.custom_metadata_fields.list()\nprint(custom_metadata_fields)',
       },
       java: {
         method: 'customMetadataFields().list',
@@ -164,25 +155,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataField\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataFieldListParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val customMetadataFields: List<CustomMetadataField> = client.customMetadataFields().list()\n}',
       },
-      php: {
-        method: 'customMetadataFields->list',
+      go: {
+        method: 'client.CustomMetadataFields.List',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataFields = $client->customMetadataFields->list(\n  folderPath: 'folderPath', includeDeleted: true\n);\n\nvar_dump($customMetadataFields);",
-      },
-      python: {
-        method: 'custom_metadata_fields.list',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\ncustom_metadata_fields = client.custom_metadata_fields.list()\nprint(custom_metadata_fields)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tcustomMetadataFields, err := client.CustomMetadataFields.List(context.TODO(), imagekit.CustomMetadataFieldListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", customMetadataFields)\n}\n',
       },
       ruby: {
         method: 'custom_metadata_fields.list',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\ncustom_metadata_fields = image_kit.custom_metadata_fields.list\n\nputs(custom_metadata_fields)',
       },
-      typescript: {
-        method: 'client.customMetadataFields.list',
+      cli: {
+        method: 'customMetadataFields list',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst customMetadataFields = await client.customMetadataFields.list();\n\nconsole.log(customMetadataFields);",
+          "imagekit custom-metadata-fields list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+      },
+      php: {
+        method: 'customMetadataFields->list',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataFields = $client->customMetadataFields->list(\n  folderPath: 'folderPath', includeDeleted: true\n);\n\nvar_dump($customMetadataFields);",
+      },
+      csharp: {
+        method: 'CustomMetadataFields.List',
+        example:
+          'CustomMetadataFieldListParams parameters = new();\n\nvar customMetadataFields = await client.CustomMetadataFields.List(parameters);\n\nConsole.WriteLine(customMetadataFields);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/customMetadataFields \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -204,24 +204,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## update\n\n`client.customMetadataFields.update(id: string, label?: string, schema?: { defaultValue?: string | number | boolean | string | number | boolean[]; isValueRequired?: boolean; maxLength?: number; maxValue?: string | number; minLength?: number; minValue?: string | number; selectOptions?: string | number | boolean[]; }): { id: string; label: string; name: string; schema: object; }`\n\n**patch** `/v1/customMetadataFields/{id}`\n\nThis API updates the label or schema of an existing custom metadata field.\n\n\n### Parameters\n\n- `id: string`\n\n- `label?: string`\n  Human readable name of the custom metadata field. This should be unique across all non deleted custom metadata fields. This name is displayed as form field label to the users while setting field value on an asset in the media library UI. This parameter is required if `schema` is not provided.\n\n- `schema?: { defaultValue?: string | number | boolean | string | number | boolean[]; isValueRequired?: boolean; maxLength?: number; maxValue?: string | number; minLength?: number; minValue?: string | number; selectOptions?: string | number | boolean[]; }`\n  An object that describes the rules for the custom metadata key. This parameter is required if `label` is not provided. Note: `type` cannot be updated and will be ignored if sent with the `schema`. The schema will be validated as per the existing `type`.\n\n  - `defaultValue?: string | number | boolean | string | number | boolean[]`\n    The default value for this custom metadata field. This property is only required if `isValueRequired` property is set to `true`. The value should match the `type` of custom metadata field.\n\n  - `isValueRequired?: boolean`\n    Sets this custom metadata field as required. Setting custom metadata fields on an asset will throw error if the value for all required fields are not present in upload or update asset API request body.\n\n  - `maxLength?: number`\n    Maximum length of string. Only set this property if `type` is set to `Text` or `Textarea`.\n\n  - `maxValue?: string | number`\n    Maximum value of the field. Only set this property if field type is `Date` or `Number`. For `Date` type field, set the minimum date in ISO8601 string format. For `Number` type field, set the minimum numeric value.\n\n  - `minLength?: number`\n    Minimum length of string. Only set this property if `type` is set to `Text` or `Textarea`.\n\n  - `minValue?: string | number`\n    Minimum value of the field. Only set this property if field type is `Date` or `Number`. For `Date` type field, set the minimum date in ISO8601 string format. For `Number` type field, set the minimum numeric value.\n\n  - `selectOptions?: string | number | boolean[]`\n    An array of allowed values. This property is only required if `type` property is set to `SingleSelect` or `MultiSelect`.\n\n\n### Returns\n\n- `{ id: string; label: string; name: string; schema: { type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect'; defaultValue?: string | number | boolean | string | number | boolean[]; isValueRequired?: boolean; maxLength?: number; maxValue?: string | number; minLength?: number; minValue?: string | number; selectOptions?: string | number | boolean[]; }; }`\n  Object containing details of a custom metadata field.\n\n  - `id: string`\n  - `label: string`\n  - `name: string`\n  - `schema: { type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect'; defaultValue?: string | number | boolean | string | number | boolean[]; isValueRequired?: boolean; maxLength?: number; maxValue?: string | number; minLength?: number; minValue?: string | number; selectOptions?: string | number | boolean[]; }`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst customMetadataField = await client.customMetadataFields.update('id');\n\nconsole.log(customMetadataField);\n```",
     perLanguage: {
-      cli: {
-        method: 'customMetadataFields update',
+      typescript: {
+        method: 'client.customMetadataFields.update',
         example:
-          "imagekit custom-metadata-fields update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst customMetadataField = await client.customMetadataFields.update('id', {\n  label: 'price',\n  schema: { minValue: 1000, maxValue: 3000 },\n});\n\nconsole.log(customMetadataField.id);",
       },
-      csharp: {
-        method: 'CustomMetadataFields.Update',
+      python: {
+        method: 'custom_metadata_fields.update',
         example:
-          'CustomMetadataFieldUpdateParams parameters = new() { ID = "id" };\n\nvar customMetadataField = await client.CustomMetadataFields.Update(parameters);\n\nConsole.WriteLine(customMetadataField);',
-      },
-      go: {
-        method: 'client.CustomMetadataFields.Update',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tcustomMetadataField, err := client.CustomMetadataFields.Update(\n\t\tcontext.TODO(),\n\t\t"id",\n\t\timagekit.CustomMetadataFieldUpdateParams{\n\t\t\tLabel: imagekit.String("price"),\n\t\t\tSchema: imagekit.CustomMetadataFieldUpdateParamsSchema{\n\t\t\t\tMinValue: imagekit.CustomMetadataFieldUpdateParamsSchemaMinValueUnion{\n\t\t\t\t\tOfFloat: imagekit.Float(1000),\n\t\t\t\t},\n\t\t\t\tMaxValue: imagekit.CustomMetadataFieldUpdateParamsSchemaMaxValueUnion{\n\t\t\t\t\tOfFloat: imagekit.Float(3000),\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", customMetadataField.ID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/customMetadataFields/$ID \\\n    -X PATCH \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\ncustom_metadata_field = client.custom_metadata_fields.update(\n    id="id",\n    label="price",\n    schema={\n        "min_value": 1000,\n        "max_value": 3000,\n    },\n)\nprint(custom_metadata_field.id)',
       },
       java: {
         method: 'customMetadataFields().update',
@@ -233,25 +224,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataField\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataFieldUpdateParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val customMetadataField: CustomMetadataField = client.customMetadataFields().update("id")\n}',
       },
-      php: {
-        method: 'customMetadataFields->update',
+      go: {
+        method: 'client.CustomMetadataFields.Update',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataField = $client->customMetadataFields->update(\n  'id',\n  label: 'price',\n  schema: [\n    'defaultValue' => [true, 10, 'Hello'],\n    'isValueRequired' => true,\n    'maxLength' => 0,\n    'maxValue' => 3000,\n    'minLength' => 0,\n    'minValue' => 1000,\n    'selectOptions' => ['small', 'medium', 'large', 30, 40, true],\n  ],\n);\n\nvar_dump($customMetadataField);",
-      },
-      python: {
-        method: 'custom_metadata_fields.update',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\ncustom_metadata_field = client.custom_metadata_fields.update(\n    id="id",\n    label="price",\n    schema={\n        "min_value": 1000,\n        "max_value": 3000,\n    },\n)\nprint(custom_metadata_field.id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tcustomMetadataField, err := client.CustomMetadataFields.Update(\n\t\tcontext.TODO(),\n\t\t"id",\n\t\timagekit.CustomMetadataFieldUpdateParams{\n\t\t\tLabel: imagekit.String("price"),\n\t\t\tSchema: imagekit.CustomMetadataFieldUpdateParamsSchema{\n\t\t\t\tMinValue: imagekit.CustomMetadataFieldUpdateParamsSchemaMinValueUnion{\n\t\t\t\t\tOfFloat: imagekit.Float(1000),\n\t\t\t\t},\n\t\t\t\tMaxValue: imagekit.CustomMetadataFieldUpdateParamsSchemaMaxValueUnion{\n\t\t\t\t\tOfFloat: imagekit.Float(3000),\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", customMetadataField.ID)\n}\n',
       },
       ruby: {
         method: 'custom_metadata_fields.update',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\ncustom_metadata_field = image_kit.custom_metadata_fields.update("id")\n\nputs(custom_metadata_field)',
       },
-      typescript: {
-        method: 'client.customMetadataFields.update',
+      cli: {
+        method: 'customMetadataFields update',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst customMetadataField = await client.customMetadataFields.update('id', {\n  label: 'price',\n  schema: { minValue: 1000, maxValue: 3000 },\n});\n\nconsole.log(customMetadataField.id);",
+          "imagekit custom-metadata-fields update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+      },
+      php: {
+        method: 'customMetadataFields->update',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataField = $client->customMetadataFields->update(\n  'id',\n  label: 'price',\n  schema: [\n    'defaultValue' => [true, 10, 'Hello'],\n    'isValueRequired' => true,\n    'maxLength' => 0,\n    'maxValue' => 3000,\n    'minLength' => 0,\n    'minValue' => 1000,\n    'selectOptions' => ['small', 'medium', 'large', 30, 40, true],\n  ],\n);\n\nvar_dump($customMetadataField);",
+      },
+      csharp: {
+        method: 'CustomMetadataFields.Update',
+        example:
+          'CustomMetadataFieldUpdateParams parameters = new() { ID = "id" };\n\nvar customMetadataField = await client.CustomMetadataFields.Update(parameters);\n\nConsole.WriteLine(customMetadataField);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/customMetadataFields/$ID \\\n    -X PATCH \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -269,24 +269,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.customMetadataFields.delete(id: string): {  }`\n\n**delete** `/v1/customMetadataFields/{id}`\n\nThis API deletes a custom metadata field. Even after deleting a custom metadata field, you cannot create any new custom metadata field with the same name.\n\n\n### Parameters\n\n- `id: string`\n\n### Returns\n\n- `{  }`\n\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst customMetadataField = await client.customMetadataFields.delete('id');\n\nconsole.log(customMetadataField);\n```",
     perLanguage: {
-      cli: {
-        method: 'customMetadataFields delete',
+      typescript: {
+        method: 'client.customMetadataFields.delete',
         example:
-          "imagekit custom-metadata-fields delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst customMetadataField = await client.customMetadataFields.delete('id');\n\nconsole.log(customMetadataField);",
       },
-      csharp: {
-        method: 'CustomMetadataFields.Delete',
+      python: {
+        method: 'custom_metadata_fields.delete',
         example:
-          'CustomMetadataFieldDeleteParams parameters = new() { ID = "id" };\n\nvar customMetadataField = await client.CustomMetadataFields.Delete(parameters);\n\nConsole.WriteLine(customMetadataField);',
-      },
-      go: {
-        method: 'client.CustomMetadataFields.Delete',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tcustomMetadataField, err := client.CustomMetadataFields.Delete(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", customMetadataField)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/customMetadataFields/$ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\ncustom_metadata_field = client.custom_metadata_fields.delete(\n    "id",\n)\nprint(custom_metadata_field)',
       },
       java: {
         method: 'customMetadataFields().delete',
@@ -298,25 +289,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataFieldDeleteParams\nimport com.imagekit.api.models.custommetadatafields.CustomMetadataFieldDeleteResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val customMetadataField: CustomMetadataFieldDeleteResponse = client.customMetadataFields().delete("id")\n}',
       },
-      php: {
-        method: 'customMetadataFields->delete',
+      go: {
+        method: 'client.CustomMetadataFields.Delete',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataField = $client->customMetadataFields->delete('id');\n\nvar_dump($customMetadataField);",
-      },
-      python: {
-        method: 'custom_metadata_fields.delete',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\ncustom_metadata_field = client.custom_metadata_fields.delete(\n    "id",\n)\nprint(custom_metadata_field)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tcustomMetadataField, err := client.CustomMetadataFields.Delete(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", customMetadataField)\n}\n',
       },
       ruby: {
         method: 'custom_metadata_fields.delete',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\ncustom_metadata_field = image_kit.custom_metadata_fields.delete("id")\n\nputs(custom_metadata_field)',
       },
-      typescript: {
-        method: 'client.customMetadataFields.delete',
+      cli: {
+        method: 'customMetadataFields delete',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst customMetadataField = await client.customMetadataFields.delete('id');\n\nconsole.log(customMetadataField);",
+          "imagekit custom-metadata-fields delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+      },
+      php: {
+        method: 'customMetadataFields->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataField = $client->customMetadataFields->delete('id');\n\nvar_dump($customMetadataField);",
+      },
+      csharp: {
+        method: 'CustomMetadataFields.Delete',
+        example:
+          'CustomMetadataFieldDeleteParams parameters = new() { ID = "id" };\n\nvar customMetadataField = await client.CustomMetadataFields.Delete(parameters);\n\nConsole.WriteLine(customMetadataField);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/customMetadataFields/$ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -359,24 +359,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## upload\n\n`client.files.upload(file: string, fileName: string, token?: string, checks?: string, customCoordinates?: string, customMetadata?: object, description?: string, expire?: number, extensions?: { name: 'remove-bg'; options?: object; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: object | object | object[]; } | { id: string; name: 'saved-extension'; }[], folder?: string, isPrivateFile?: boolean, isPublished?: boolean, overwriteAITags?: boolean, overwriteCustomMetadata?: boolean, overwriteFile?: boolean, overwriteTags?: boolean, publicKey?: string, responseFields?: string[], signature?: string, tags?: string[], transformation?: { post?: { type: 'transformation'; value: string; } | { type: 'gif-to-video'; value?: string; } | { type: 'thumbnail'; value?: string; } | { protocol: 'hls' | 'dash'; type: 'abs'; value: string; }[]; pre?: string; }, useUniqueFileName?: boolean, webhookUrl?: string): { AITags?: object[]; audioCodec?: string; bitRate?: number; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; extensionStatus?: object; fileId?: string; filePath?: string; fileType?: string; height?: number; isPrivateFile?: boolean; isPublished?: boolean; metadata?: metadata; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnailUrl?: string; url?: string; versionInfo?: object; videoCodec?: string; width?: number; }`\n\n**post** `/api/v1/files/upload`\n\nImageKit.io allows you to upload files directly from both the server and client sides. For server-side uploads, private API key authentication is used. For client-side uploads, generate a one-time `token`, `signature`, and `expire` from your secure backend using private API. [Learn more](/docs/api-reference/upload-file/upload-file#how-to-implement-client-side-file-upload) about how to implement client-side file upload.\n\nThe [V2 API](/docs/api-reference/upload-file/upload-file-v2) enhances security by verifying the entire payload using JWT.\n\n**File size limit** \\\nOn the free plan, the maximum upload file sizes are 25MB for images, audio, and raw files and 100MB for videos. On the Lite paid plan, these limits increase to 40MB for images, audio, and raw files and 300MB for videos, whereas on the Pro paid plan, these limits increase to 50MB for images, audio, and raw files and 2GB for videos. These limits can be further increased with enterprise plans.\n\n**Version limit** \\\nA file can have a maximum of 100 versions.\n\n**Demo applications**\n\n- A full-fledged [upload widget using Uppy](https://github.com/imagekit-samples/uppy-uploader), supporting file selections from local storage, URL, Dropbox, Google Drive, Instagram, and more.\n- [Quick start guides](/docs/quick-start-guides) for various frameworks and technologies.\n\n\n### Parameters\n\n- `file: string`\n  The API accepts any of the following:\n\n- **Binary data** – send the raw bytes as `multipart/form-data`.\n- **HTTP / HTTPS URL** – a publicly reachable URL that ImageKit’s servers can fetch.\n- **Base64 string** – the file encoded as a Base64 data URI or plain Base64.\n\nWhen supplying a URL, the server must receive the response headers within 8 seconds; otherwise the request fails with 400 Bad Request.\n\n\n- `fileName: string`\n  The name with which the file has to be uploaded.\nThe file name can contain:\n\n  - Alphanumeric Characters: `a-z`, `A-Z`, `0-9`.\n  - Special Characters: `.`, `-`\n\nAny other character including space will be replaced by `_`\n\n\n- `token?: string`\n  A unique value that the ImageKit.io server will use to recognize and prevent subsequent retries for the same request. We suggest using V4 UUIDs, or another random string with enough entropy to avoid collisions. This field is only required for authentication when uploading a file from the client side.\n\n**Note**: Sending a value that has been used in the past will result in a validation error. Even if your previous request resulted in an error, you should always send a new value for this field.\n\n\n- `checks?: string`\n  Server-side checks to run on the asset.\nRead more about [Upload API checks](/docs/api-reference/upload-file/upload-file#upload-api-checks).\n\n\n- `customCoordinates?: string`\n  Define an important area in the image. This is only relevant for image type files.\n\n  - To be passed as a string with the x and y coordinates of the top-left corner, and width and height of the area of interest in the format `x,y,width,height`. For example - `10,10,100,100`\n  - Can be used with fo-customtransformation.\n  - If this field is not specified and the file is overwritten, then customCoordinates will be removed.\n\n\n- `customMetadata?: object`\n  JSON key-value pairs to associate with the asset. Create the custom metadata fields before setting these values.\n\n\n- `description?: string`\n  Optional text to describe the contents of the file.\n\n\n- `expire?: number`\n  The time until your signature is valid. It must be a [Unix time](https://en.wikipedia.org/wiki/Unix_time) in less than 1 hour into the future. It should be in seconds. This field is only required for authentication when uploading a file from the client side.\n\n\n- `extensions?: { name: 'remove-bg'; options?: { add_shadow?: boolean; bg_color?: string; bg_image_url?: string; semitransparency?: boolean; }; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: { instruction: string; type: 'select_tags'; max_selections?: number; min_selections?: number; vocabulary?: string[]; } | { field: string; instruction: string; type: 'select_metadata'; max_selections?: number; min_selections?: number; vocabulary?: string | number | boolean[]; } | { instruction: string; type: 'yes_no'; on_no?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_unknown?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_yes?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; }[]; } | { id: string; name: 'saved-extension'; }[]`\n  Array of extensions to be applied to the asset. Each extension can be configured with specific parameters based on the extension type.\n\n\n- `folder?: string`\n  The folder path in which the image has to be uploaded. If the folder(s) didn't exist before, a new folder(s) is created.\n\nThe folder name can contain:\n\n  - Alphanumeric Characters: `a-z` , `A-Z` , `0-9`\n  - Special Characters: `/` , `_` , `-`\n\nUsing multiple `/` creates a nested folder.\n\n\n- `isPrivateFile?: boolean`\n  Whether to mark the file as private or not.\n\nIf `true`, the file is marked as private and is accessible only using named transformation or signed URL.\n\n\n- `isPublished?: boolean`\n  Whether to upload file as published or not.\n\nIf `false`, the file is marked as unpublished, which restricts access to the file only via the media library. Files in draft or unpublished state can only be publicly accessed after being published.\n\nThe option to upload in draft state is only available in custom enterprise pricing plans.\n\n\n- `overwriteAITags?: boolean`\n  If set to `true` and a file already exists at the exact location, its AITags will be removed. Set `overwriteAITags` to `false` to preserve AITags.\n\n\n- `overwriteCustomMetadata?: boolean`\n  If the request does not have `customMetadata`, and a file already exists at the exact location, existing customMetadata will be removed.\n\n\n- `overwriteFile?: boolean`\n  If `false` and `useUniqueFileName` is also `false`, and a file already exists at the exact location, upload API will return an error immediately.\n\n\n- `overwriteTags?: boolean`\n  If the request does not have `tags`, and a file already exists at the exact location, existing tags will be removed.\n\n\n- `publicKey?: string`\n  Your ImageKit.io public key. This field is only required for authentication when uploading a file from the client side.\n\n\n- `responseFields?: string[]`\n  Array of response field keys to include in the API response body.\n\n\n- `signature?: string`\n  HMAC-SHA1 digest of the token+expire using your ImageKit.io private API key as a key. Learn how to create a signature on the page below. This should be in lowercase.\n\nSignature must be calculated on the server-side. This field is only required for authentication when uploading a file from the client side.\n\n\n- `tags?: string[]`\n  Set the tags while uploading the file.\nProvide an array of tag strings (e.g. `[\"tag1\", \"tag2\", \"tag3\"]`). The combined length of all tag characters must not exceed 500, and the `%` character is not allowed.\nIf this field is not specified and the file is overwritten, the existing tags will be removed.\n\n\n- `transformation?: { post?: { type: 'transformation'; value: string; } | { type: 'gif-to-video'; value?: string; } | { type: 'thumbnail'; value?: string; } | { protocol: 'hls' | 'dash'; type: 'abs'; value: string; }[]; pre?: string; }`\n  Configure pre-processing (`pre`) and post-processing (`post`) transformations.\n\n- `pre` — applied before the file is uploaded to the Media Library.  \n  Useful for reducing file size or applying basic optimizations upfront (e.g., resize, compress).\n\n- `post` — applied immediately after upload.  \n  Ideal for generating transformed versions (like video encodes or thumbnails) in advance, so they're ready for delivery without delay.\n\nYou can mix and match any combination of post-processing types.\n\n  - `post?: { type: 'transformation'; value: string; } | { type: 'gif-to-video'; value?: string; } | { type: 'thumbnail'; value?: string; } | { protocol: 'hls' | 'dash'; type: 'abs'; value: string; }[]`\n    List of transformations to apply *after* the file is uploaded.  \nEach item must match one of the following types:\n`transformation`, `gif-to-video`, `thumbnail`, `abs`.\n\n  - `pre?: string`\n    Transformation string to apply before uploading the file to the Media Library. Useful for optimizing files at ingestion.\n\n\n- `useUniqueFileName?: boolean`\n  Whether to use a unique filename for this file or not.\n\nIf `true`, ImageKit.io will add a unique suffix to the filename parameter to get a unique filename.\n\nIf `false`, then the image is uploaded with the provided filename parameter, and any existing file with the same name is replaced.\n\n\n- `webhookUrl?: string`\n  The final status of extensions after they have completed execution will be delivered to this endpoint as a POST request. [Learn more](/docs/api-reference/digital-asset-management-dam/managing-assets/update-file-details#webhook-payload-structure) about the webhook payload structure.\n\n\n### Returns\n\n- `{ AITags?: { confidence?: number; name?: string; source?: string; }[]; audioCodec?: string; bitRate?: number; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; extensionStatus?: { ai-auto-description?: 'success' | 'pending' | 'failed'; ai-tasks?: 'success' | 'pending' | 'failed'; aws-auto-tagging?: 'success' | 'pending' | 'failed'; google-auto-tagging?: 'success' | 'pending' | 'failed'; remove-bg?: 'success' | 'pending' | 'failed'; }; fileId?: string; filePath?: string; fileType?: string; height?: number; isPrivateFile?: boolean; isPublished?: boolean; metadata?: { audioCodec?: string; bitRate?: number; density?: number; duration?: number; exif?: object; format?: string; hasColorProfile?: boolean; hasTransparency?: boolean; height?: number; pHash?: string; quality?: number; size?: number; videoCodec?: string; width?: number; }; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnailUrl?: string; url?: string; versionInfo?: { id?: string; name?: string; }; videoCodec?: string; width?: number; }`\n  Object containing details of a successful upload.\n\n  - `AITags?: { confidence?: number; name?: string; source?: string; }[]`\n  - `audioCodec?: string`\n  - `bitRate?: number`\n  - `customCoordinates?: string`\n  - `customMetadata?: object`\n  - `description?: string`\n  - `duration?: number`\n  - `embeddedMetadata?: object`\n  - `extensionStatus?: { ai-auto-description?: 'success' | 'pending' | 'failed'; ai-tasks?: 'success' | 'pending' | 'failed'; aws-auto-tagging?: 'success' | 'pending' | 'failed'; google-auto-tagging?: 'success' | 'pending' | 'failed'; remove-bg?: 'success' | 'pending' | 'failed'; }`\n  - `fileId?: string`\n  - `filePath?: string`\n  - `fileType?: string`\n  - `height?: number`\n  - `isPrivateFile?: boolean`\n  - `isPublished?: boolean`\n  - `metadata?: { audioCodec?: string; bitRate?: number; density?: number; duration?: number; exif?: { exif?: { ApertureValue?: number; ColorSpace?: number; CreateDate?: string; CustomRendered?: number; DateTimeOriginal?: string; ExifImageHeight?: number; ExifImageWidth?: number; ExifVersion?: string; ExposureCompensation?: number; ExposureMode?: number; ExposureProgram?: number; ExposureTime?: number; Flash?: number; FlashpixVersion?: string; FNumber?: number; FocalLength?: number; FocalPlaneResolutionUnit?: number; FocalPlaneXResolution?: number; FocalPlaneYResolution?: number; InteropOffset?: number; ISO?: number; MeteringMode?: number; SceneCaptureType?: number; ShutterSpeedValue?: number; SubSecTime?: string; WhiteBalance?: number; }; gps?: { GPSVersionID?: number[]; }; image?: { ExifOffset?: number; GPSInfo?: number; Make?: string; Model?: string; ModifyDate?: string; Orientation?: number; ResolutionUnit?: number; Software?: string; XResolution?: number; YCbCrPositioning?: number; YResolution?: number; }; interoperability?: { InteropIndex?: string; InteropVersion?: string; }; makernote?: object; thumbnail?: { Compression?: number; ResolutionUnit?: number; ThumbnailLength?: number; ThumbnailOffset?: number; XResolution?: number; YResolution?: number; }; }; format?: string; hasColorProfile?: boolean; hasTransparency?: boolean; height?: number; pHash?: string; quality?: number; size?: number; videoCodec?: string; width?: number; }`\n  - `name?: string`\n  - `selectedFieldsSchema?: object`\n  - `size?: number`\n  - `tags?: string[]`\n  - `thumbnailUrl?: string`\n  - `url?: string`\n  - `versionInfo?: { id?: string; name?: string; }`\n  - `videoCodec?: string`\n  - `width?: number`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst response = await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'fileName' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'files upload',
+      typescript: {
+        method: 'client.files.upload',
         example:
-          "imagekit files upload \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file 'Example data' \\\n  --file-name fileName",
+          "import fs from 'fs';\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.upload({\n  file: fs.createReadStream('path/to/file'),\n  fileName: 'fileName',\n});\n\nconsole.log(response.videoCodec);",
       },
-      csharp: {
-        method: 'Files.Upload',
+      python: {
+        method: 'files.upload',
         example:
-          'FileUploadParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("Example data"),\n    FileName = "fileName",\n};\n\nvar response = await client.Files.Upload(parameters);\n\nConsole.WriteLine(response);',
-      },
-      go: {
-        method: 'client.Files.Upload',
-        example:
-          'package main\n\nimport (\n\t"bytes"\n\t"context"\n\t"fmt"\n\t"io"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Upload(context.TODO(), imagekit.FileUploadParams{\n\t\tFile:     io.Reader(bytes.NewBuffer([]byte("Example data"))),\n\t\tFileName: "fileName",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.VideoCodec)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://upload.imagekit.io/api/v1/files/upload \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -F \'file=@/path/to/file\' \\\n    -F fileName=fileName \\\n    -F checks=\'"request.folder" : "marketing/"\n    \' \\\n    -F customMetadata=\'{"brand":"bar","color":"bar"}\' \\\n    -F description=\'Running shoes\' \\\n    -F extensions=\'[{"name":"remove-bg","options":{"add_shadow":true}},{"maxTags":5,"minConfidence":95,"name":"google-auto-tagging"},{"name":"ai-auto-description"},{"name":"ai-tasks","tasks":[{"instruction":"What types of clothing items are visible in this image?","type":"select_tags","vocabulary":["shirt","tshirt","dress","trousers","jacket"]},{"instruction":"Is this a luxury or high-end fashion item?","type":"yes_no","on_yes":{"add_tags":["luxury","premium"]}}]},{"id":"ext_abc123","name":"saved-extension"}]\' \\\n    -F responseFields=\'["tags","customCoordinates","isPrivateFile"]\' \\\n    -F tags=\'["t-shirt","round-neck","men"]\' \\\n    -F transformation=\'{"post":[{"type":"thumbnail","value":"w-150,h-150"},{"protocol":"dash","type":"abs","value":"sr-240_360_480_720_1080"}]}\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.upload(\n    file=b"Example data",\n    file_name="fileName",\n)\nprint(response.video_codec)',
       },
       java: {
         method: 'files().upload',
@@ -388,25 +379,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.FileUploadParams\nimport com.imagekit.api.models.files.FileUploadResponse\nimport java.io.ByteArrayInputStream\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: FileUploadParams = FileUploadParams.builder()\n        .file("Example data".byteInputStream())\n        .fileName("fileName")\n        .build()\n    val response: FileUploadResponse = client.files().upload(params)\n}',
       },
-      php: {
-        method: 'files->upload',
+      go: {
+        method: 'client.Files.Upload',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->upload(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n  fileName: 'fileName',\n  token: 'token',\n  checks: \"\\\"request.folder\\\" : \\\"marketing/\\\"\\n\",\n  customCoordinates: 'customCoordinates',\n  customMetadata: ['brand' => 'bar', 'color' => 'bar'],\n  description: 'Running shoes',\n  expire: 0,\n  extensions: [\n    [\n      'name' => 'remove-bg',\n      'options' => [\n        'addShadow' => true,\n        'bgColor' => 'bg_color',\n        'bgImageURL' => 'bg_image_url',\n        'semitransparency' => true,\n      ],\n    ],\n    ['maxTags' => 5, 'minConfidence' => 95, 'name' => 'google-auto-tagging'],\n    ['name' => 'ai-auto-description'],\n    [\n      'name' => 'ai-tasks',\n      'tasks' => [\n        [\n          'instruction' => 'What types of clothing items are visible in this image?',\n          'type' => 'select_tags',\n          'maxSelections' => 1,\n          'minSelections' => 0,\n          'vocabulary' => ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],\n        ],\n        [\n          'instruction' => 'Is this a luxury or high-end fashion item?',\n          'type' => 'yes_no',\n          'onNo' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onUnknown' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onYes' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n        ],\n      ],\n    ],\n    ['id' => 'ext_abc123', 'name' => 'saved-extension'],\n  ],\n  folder: 'folder',\n  isPrivateFile: true,\n  isPublished: true,\n  overwriteAITags: true,\n  overwriteCustomMetadata: true,\n  overwriteFile: true,\n  overwriteTags: true,\n  publicKey: 'publicKey',\n  responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],\n  signature: 'signature',\n  tags: ['t-shirt', 'round-neck', 'men'],\n  transformation: [\n    'post' => [\n      ['type' => 'thumbnail', 'value' => 'w-150,h-150'],\n      [\n        'protocol' => 'dash',\n        'type' => 'abs',\n        'value' => 'sr-240_360_480_720_1080',\n      ],\n    ],\n    'pre' => 'w-300,h-300,q-80',\n  ],\n  useUniqueFileName: true,\n  webhookURL: 'https://example.com',\n);\n\nvar_dump($response);",
-      },
-      python: {
-        method: 'files.upload',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.upload(\n    file=b"Example data",\n    file_name="fileName",\n)\nprint(response.video_codec)',
+          'package main\n\nimport (\n\t"bytes"\n\t"context"\n\t"fmt"\n\t"io"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Upload(context.TODO(), imagekit.FileUploadParams{\n\t\tFile:     io.Reader(bytes.NewBuffer([]byte("Example data"))),\n\t\tFileName: "fileName",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.VideoCodec)\n}\n',
       },
       ruby: {
         method: 'files.upload',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresponse = image_kit.files.upload(file: StringIO.new("Example data"), file_name: "fileName")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.files.upload',
+      cli: {
+        method: 'files upload',
         example:
-          "import fs from 'fs';\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.upload({\n  file: fs.createReadStream('path/to/file'),\n  fileName: 'fileName',\n});\n\nconsole.log(response.videoCodec);",
+          "imagekit files upload \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file 'Example data' \\\n  --file-name fileName",
+      },
+      php: {
+        method: 'files->upload',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->upload(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n  fileName: 'fileName',\n  token: 'token',\n  checks: \"\\\"request.folder\\\" : \\\"marketing/\\\"\\n\",\n  customCoordinates: 'customCoordinates',\n  customMetadata: ['brand' => 'bar', 'color' => 'bar'],\n  description: 'Running shoes',\n  expire: 0,\n  extensions: [\n    [\n      'name' => 'remove-bg',\n      'options' => [\n        'addShadow' => true,\n        'bgColor' => 'bg_color',\n        'bgImageURL' => 'bg_image_url',\n        'semitransparency' => true,\n      ],\n    ],\n    ['maxTags' => 5, 'minConfidence' => 95, 'name' => 'google-auto-tagging'],\n    ['name' => 'ai-auto-description'],\n    [\n      'name' => 'ai-tasks',\n      'tasks' => [\n        [\n          'instruction' => 'What types of clothing items are visible in this image?',\n          'type' => 'select_tags',\n          'maxSelections' => 1,\n          'minSelections' => 0,\n          'vocabulary' => ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],\n        ],\n        [\n          'instruction' => 'Is this a luxury or high-end fashion item?',\n          'type' => 'yes_no',\n          'onNo' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onUnknown' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onYes' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n        ],\n      ],\n    ],\n    ['id' => 'ext_abc123', 'name' => 'saved-extension'],\n  ],\n  folder: 'folder',\n  isPrivateFile: true,\n  isPublished: true,\n  overwriteAITags: true,\n  overwriteCustomMetadata: true,\n  overwriteFile: true,\n  overwriteTags: true,\n  publicKey: 'publicKey',\n  responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],\n  signature: 'signature',\n  tags: ['t-shirt', 'round-neck', 'men'],\n  transformation: [\n    'post' => [\n      ['type' => 'thumbnail', 'value' => 'w-150,h-150'],\n      [\n        'protocol' => 'dash',\n        'type' => 'abs',\n        'value' => 'sr-240_360_480_720_1080',\n      ],\n    ],\n    'pre' => 'w-300,h-300,q-80',\n  ],\n  useUniqueFileName: true,\n  webhookURL: 'https://example.com',\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Files.Upload',
+        example:
+          'FileUploadParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("Example data"),\n    FileName = "fileName",\n};\n\nvar response = await client.Files.Upload(parameters);\n\nConsole.WriteLine(response);',
+      },
+      http: {
+        example:
+          'curl https://upload.imagekit.io/api/v1/files/upload \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -F \'file=@/path/to/file\' \\\n    -F fileName=fileName \\\n    -F checks=\'"request.folder" : "marketing/"\n    \' \\\n    -F customMetadata=\'{"brand":"bar","color":"bar"}\' \\\n    -F description=\'Running shoes\' \\\n    -F extensions=\'[{"name":"remove-bg","options":{"add_shadow":true}},{"maxTags":5,"minConfidence":95,"name":"google-auto-tagging"},{"name":"ai-auto-description"},{"name":"ai-tasks","tasks":[{"instruction":"What types of clothing items are visible in this image?","type":"select_tags","vocabulary":["shirt","tshirt","dress","trousers","jacket"]},{"instruction":"Is this a luxury or high-end fashion item?","type":"yes_no","on_yes":{"add_tags":["luxury","premium"]}}]},{"id":"ext_abc123","name":"saved-extension"}]\' \\\n    -F responseFields=\'["tags","customCoordinates","isPrivateFile"]\' \\\n    -F tags=\'["t-shirt","round-neck","men"]\' \\\n    -F transformation=\'{"post":[{"type":"thumbnail","value":"w-150,h-150"},{"protocol":"dash","type":"abs","value":"sr-240_360_480_720_1080"}]}\'',
       },
     },
   },
@@ -425,24 +425,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get\n\n`client.files.get(fileId: string): { AITags?: object[]; audioCodec?: string; bitRate?: number; createdAt?: string; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; fileId?: string; filePath?: string; fileType?: string; hasAlpha?: boolean; height?: number; isPrivateFile?: boolean; isPublished?: boolean; mime?: string; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnail?: string; type?: 'file' | 'file-version'; updatedAt?: string; url?: string; versionInfo?: object; videoCodec?: string; width?: number; }`\n\n**get** `/v1/files/{fileId}/details`\n\nThis API returns an object with details or attributes about the current version of the file.\n\n### Parameters\n\n- `fileId: string`\n\n### Returns\n\n- `{ AITags?: { confidence?: number; name?: string; source?: string; }[]; audioCodec?: string; bitRate?: number; createdAt?: string; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; fileId?: string; filePath?: string; fileType?: string; hasAlpha?: boolean; height?: number; isPrivateFile?: boolean; isPublished?: boolean; mime?: string; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnail?: string; type?: 'file' | 'file-version'; updatedAt?: string; url?: string; versionInfo?: { id?: string; name?: string; }; videoCodec?: string; width?: number; }`\n  Object containing details of a file or file version.\n\n  - `AITags?: { confidence?: number; name?: string; source?: string; }[]`\n  - `audioCodec?: string`\n  - `bitRate?: number`\n  - `createdAt?: string`\n  - `customCoordinates?: string`\n  - `customMetadata?: object`\n  - `description?: string`\n  - `duration?: number`\n  - `embeddedMetadata?: object`\n  - `fileId?: string`\n  - `filePath?: string`\n  - `fileType?: string`\n  - `hasAlpha?: boolean`\n  - `height?: number`\n  - `isPrivateFile?: boolean`\n  - `isPublished?: boolean`\n  - `mime?: string`\n  - `name?: string`\n  - `selectedFieldsSchema?: object`\n  - `size?: number`\n  - `tags?: string[]`\n  - `thumbnail?: string`\n  - `type?: 'file' | 'file-version'`\n  - `updatedAt?: string`\n  - `url?: string`\n  - `versionInfo?: { id?: string; name?: string; }`\n  - `videoCodec?: string`\n  - `width?: number`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst file = await client.files.get('fileId');\n\nconsole.log(file);\n```",
     perLanguage: {
-      cli: {
-        method: 'files get',
+      typescript: {
+        method: 'client.files.get',
         example:
-          "imagekit files get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst file = await client.files.get('fileId');\n\nconsole.log(file.videoCodec);",
       },
-      csharp: {
-        method: 'Files.Get',
+      python: {
+        method: 'files.get',
         example:
-          'FileGetParams parameters = new() { FileID = "fileId" };\n\nvar file = await client.Files.Get(parameters);\n\nConsole.WriteLine(file);',
-      },
-      go: {
-        method: 'client.Files.Get',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfile, err := client.Files.Get(context.TODO(), "fileId")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.VideoCodec)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/$FILE_ID/details \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfile = client.files.get(\n    "fileId",\n)\nprint(file.video_codec)',
       },
       java: {
         method: 'files().get',
@@ -454,25 +445,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.File\nimport com.imagekit.api.models.files.FileGetParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val file: File = client.files().get("fileId")\n}',
       },
-      php: {
-        method: 'files->get',
+      go: {
+        method: 'client.Files.Get',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->get('fileId');\n\nvar_dump($file);",
-      },
-      python: {
-        method: 'files.get',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfile = client.files.get(\n    "fileId",\n)\nprint(file.video_codec)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfile, err := client.Files.Get(context.TODO(), "fileId")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.VideoCodec)\n}\n',
       },
       ruby: {
         method: 'files.get',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nfile = image_kit.files.get("fileId")\n\nputs(file)',
       },
-      typescript: {
-        method: 'client.files.get',
+      cli: {
+        method: 'files get',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst file = await client.files.get('fileId');\n\nconsole.log(file.videoCodec);",
+          "imagekit files get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
+      },
+      php: {
+        method: 'files->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->get('fileId');\n\nvar_dump($file);",
+      },
+      csharp: {
+        method: 'Files.Get',
+        example:
+          'FileGetParams parameters = new() { FileID = "fileId" };\n\nvar file = await client.Files.Get(parameters);\n\nConsole.WriteLine(file);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/$FILE_ID/details \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -492,24 +492,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     response:
       "{ AITags?: { confidence?: number; name?: string; source?: string; }[]; audioCodec?: string; bitRate?: number; createdAt?: string; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; fileId?: string; filePath?: string; fileType?: string; hasAlpha?: boolean; height?: number; isPrivateFile?: boolean; isPublished?: boolean; mime?: string; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnail?: string; type?: 'file' | 'file-version'; updatedAt?: string; url?: string; versionInfo?: { id?: string; name?: string; }; videoCodec?: string; width?: number; }",
     perLanguage: {
-      cli: {
-        method: 'files update',
+      typescript: {
+        method: 'client.files.update',
         example:
-          "imagekit files update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst file = await client.files.update('fileId');\n\nconsole.log(file);",
       },
-      csharp: {
-        method: 'Files.Update',
+      python: {
+        method: 'files.update',
         example:
-          'FileUpdateParams parameters = new()\n{\n    FileID = "fileId",\n    UpdateFileRequest = new UpdateFileDetails()\n    {\n        CustomCoordinates = "10,10,100,100",\n        CustomMetadata = new Dictionary<string, JsonElement>()\n        {\n            { "brand", JsonSerializer.SerializeToElement("bar") },\n            { "color", JsonSerializer.SerializeToElement("bar") },\n        },\n        Description = "description",\n        Extensions =\n        [\n            new RemoveBg()\n            {\n                Options = new()\n                {\n                    AddShadow = true,\n                    BgColor = "bg_color",\n                    BgImageUrl = "bg_image_url",\n                    Semitransparency = true,\n                },\n            },\n            new AutoTaggingExtension()\n            {\n                MaxTags = 10,\n                MinConfidence = 80,\n                Name = Name.GoogleAutoTagging,\n            },\n            new AutoTaggingExtension()\n            {\n                MaxTags = 10,\n                MinConfidence = 80,\n                Name = Name.AwsAutoTagging,\n            },\n            new AIAutoDescription(),\n            new AITasks(\n\n                [\n                    new SelectTags()\n                    {\n                        Instruction = "What types of clothing items are visible?",\n                        MaxSelections = 1,\n                        MinSelections = 0,\n                        Vocabulary =\n                        [\n                            "shirt", "dress", "jacket"\n                        ],\n                    },\n                ]\n            ),\n            new SavedExtension("ext_abc123"),\n        ],\n        RemoveAITags = new(\n\n            [\n                "car", "vehicle", "motorsports"\n            ]\n        ),\n        Tags =\n        [\n            "tag1", "tag2"\n        ],\n        WebhookUrl = "https://webhook.site/0d6b6c7a-8e5a-4b3a-8b7c-0d6b6c7a8e5a",\n    },\n};\n\nvar file = await client.Files.Update(parameters);\n\nConsole.WriteLine(file);',
-      },
-      go: {
-        method: 'client.Files.Update',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfile, err := client.Files.Update(\n\t\tcontext.TODO(),\n\t\t"fileId",\n\t\timagekit.FileUpdateParams{\n\t\t\tUpdateFileRequest: imagekit.UpdateFileRequestUnionParam{\n\t\t\t\tOfUpdateFileDetails: &imagekit.UpdateFileRequestUpdateFileDetailsParam{},\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/$FILE_ID/details \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "extensions": [\n            {\n              "name": "remove-bg",\n              "options": {\n                "add_shadow": true\n              }\n            },\n            {\n              "maxTags": 5,\n              "minConfidence": 95,\n              "name": "google-auto-tagging"\n            },\n            {\n              "name": "ai-auto-description"\n            },\n            {\n              "name": "ai-tasks",\n              "tasks": [\n                {\n                  "instruction": "What types of clothing items are visible in this image?",\n                  "type": "select_tags",\n                  "vocabulary": [\n                    "shirt",\n                    "tshirt",\n                    "dress",\n                    "trousers",\n                    "jacket"\n                  ]\n                },\n                {\n                  "instruction": "Is this a luxury or high-end fashion item?",\n                  "type": "yes_no",\n                  "on_yes": {\n                    "add_tags": [\n                      "luxury",\n                      "premium"\n                    ]\n                  }\n                }\n              ]\n            },\n            {\n              "id": "ext_abc123",\n              "name": "saved-extension"\n            }\n          ],\n          "tags": [\n            "tag1",\n            "tag2"\n          ]\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfile = client.files.update(\n    file_id="fileId",\n)\nprint(file)',
       },
       java: {
         method: 'files().update',
@@ -521,25 +512,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.FileUpdateParams\nimport com.imagekit.api.models.files.FileUpdateResponse\nimport com.imagekit.api.models.files.UpdateFileRequest\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: FileUpdateParams = FileUpdateParams.builder()\n        .fileId("fileId")\n        .updateFileRequest(UpdateFileRequest.UpdateFileDetails.builder().build())\n        .build()\n    val file: FileUpdateResponse = client.files().update(params)\n}',
       },
-      php: {
-        method: 'files->update',
+      go: {
+        method: 'client.Files.Update',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->update(\n  'fileId',\n  customCoordinates: 'customCoordinates',\n  customMetadata: ['foo' => 'bar'],\n  description: 'description',\n  extensions: [\n    [\n      'name' => 'remove-bg',\n      'options' => [\n        'addShadow' => true,\n        'bgColor' => 'bg_color',\n        'bgImageURL' => 'bg_image_url',\n        'semitransparency' => true,\n      ],\n    ],\n    ['maxTags' => 5, 'minConfidence' => 95, 'name' => 'google-auto-tagging'],\n    ['name' => 'ai-auto-description'],\n    [\n      'name' => 'ai-tasks',\n      'tasks' => [\n        [\n          'instruction' => 'What types of clothing items are visible in this image?',\n          'type' => 'select_tags',\n          'maxSelections' => 1,\n          'minSelections' => 0,\n          'vocabulary' => ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],\n        ],\n        [\n          'instruction' => 'Is this a luxury or high-end fashion item?',\n          'type' => 'yes_no',\n          'onNo' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onUnknown' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onYes' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n        ],\n      ],\n    ],\n    ['id' => 'ext_abc123', 'name' => 'saved-extension'],\n  ],\n  removeAITags: 'all',\n  tags: ['tag1', 'tag2'],\n  webhookURL: 'https://example.com',\n  publish: ['isPublished' => true, 'includeFileVersions' => true],\n);\n\nvar_dump($file);",
-      },
-      python: {
-        method: 'files.update',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfile = client.files.update(\n    file_id="fileId",\n)\nprint(file)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfile, err := client.Files.Update(\n\t\tcontext.TODO(),\n\t\t"fileId",\n\t\timagekit.FileUpdateParams{\n\t\t\tUpdateFileRequest: imagekit.UpdateFileRequestUnionParam{\n\t\t\t\tOfUpdateFileDetails: &imagekit.UpdateFileRequestUpdateFileDetailsParam{},\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file)\n}\n',
       },
       ruby: {
         method: 'files.update',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nfile = image_kit.files.update("fileId", update_file_request: {})\n\nputs(file)',
       },
-      typescript: {
-        method: 'client.files.update',
+      cli: {
+        method: 'files update',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst file = await client.files.update('fileId');\n\nconsole.log(file);",
+          "imagekit files update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
+      },
+      php: {
+        method: 'files->update',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->update(\n  'fileId',\n  customCoordinates: 'customCoordinates',\n  customMetadata: ['foo' => 'bar'],\n  description: 'description',\n  extensions: [\n    [\n      'name' => 'remove-bg',\n      'options' => [\n        'addShadow' => true,\n        'bgColor' => 'bg_color',\n        'bgImageURL' => 'bg_image_url',\n        'semitransparency' => true,\n      ],\n    ],\n    ['maxTags' => 5, 'minConfidence' => 95, 'name' => 'google-auto-tagging'],\n    ['name' => 'ai-auto-description'],\n    [\n      'name' => 'ai-tasks',\n      'tasks' => [\n        [\n          'instruction' => 'What types of clothing items are visible in this image?',\n          'type' => 'select_tags',\n          'maxSelections' => 1,\n          'minSelections' => 0,\n          'vocabulary' => ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],\n        ],\n        [\n          'instruction' => 'Is this a luxury or high-end fashion item?',\n          'type' => 'yes_no',\n          'onNo' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onUnknown' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onYes' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n        ],\n      ],\n    ],\n    ['id' => 'ext_abc123', 'name' => 'saved-extension'],\n  ],\n  removeAITags: 'all',\n  tags: ['tag1', 'tag2'],\n  webhookURL: 'https://example.com',\n  publish: ['isPublished' => true, 'includeFileVersions' => true],\n);\n\nvar_dump($file);",
+      },
+      csharp: {
+        method: 'Files.Update',
+        example:
+          'FileUpdateParams parameters = new()\n{\n    FileID = "fileId",\n    UpdateFileRequest = new UpdateFileDetails()\n    {\n        CustomCoordinates = "10,10,100,100",\n        CustomMetadata = new Dictionary<string, JsonElement>()\n        {\n            { "brand", JsonSerializer.SerializeToElement("bar") },\n            { "color", JsonSerializer.SerializeToElement("bar") },\n        },\n        Description = "description",\n        Extensions =\n        [\n            new RemoveBg()\n            {\n                Options = new()\n                {\n                    AddShadow = true,\n                    BgColor = "bg_color",\n                    BgImageUrl = "bg_image_url",\n                    Semitransparency = true,\n                },\n            },\n            new AutoTaggingExtension()\n            {\n                MaxTags = 10,\n                MinConfidence = 80,\n                Name = Name.GoogleAutoTagging,\n            },\n            new AutoTaggingExtension()\n            {\n                MaxTags = 10,\n                MinConfidence = 80,\n                Name = Name.AwsAutoTagging,\n            },\n            new AIAutoDescription(),\n            new AITasks(\n\n                [\n                    new SelectTags()\n                    {\n                        Instruction = "What types of clothing items are visible?",\n                        MaxSelections = 1,\n                        MinSelections = 0,\n                        Vocabulary =\n                        [\n                            "shirt", "dress", "jacket"\n                        ],\n                    },\n                ]\n            ),\n            new SavedExtension("ext_abc123"),\n        ],\n        RemoveAITags = new(\n\n            [\n                "car", "vehicle", "motorsports"\n            ]\n        ),\n        Tags =\n        [\n            "tag1", "tag2"\n        ],\n        WebhookUrl = "https://webhook.site/0d6b6c7a-8e5a-4b3a-8b7c-0d6b6c7a8e5a",\n    },\n};\n\nvar file = await client.Files.Update(parameters);\n\nConsole.WriteLine(file);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/$FILE_ID/details \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "extensions": [\n            {\n              "name": "remove-bg",\n              "options": {\n                "add_shadow": true\n              }\n            },\n            {\n              "maxTags": 5,\n              "minConfidence": 95,\n              "name": "google-auto-tagging"\n            },\n            {\n              "name": "ai-auto-description"\n            },\n            {\n              "name": "ai-tasks",\n              "tasks": [\n                {\n                  "instruction": "What types of clothing items are visible in this image?",\n                  "type": "select_tags",\n                  "vocabulary": [\n                    "shirt",\n                    "tshirt",\n                    "dress",\n                    "trousers",\n                    "jacket"\n                  ]\n                },\n                {\n                  "instruction": "Is this a luxury or high-end fashion item?",\n                  "type": "yes_no",\n                  "on_yes": {\n                    "add_tags": [\n                      "luxury",\n                      "premium"\n                    ]\n                  }\n                }\n              ]\n            },\n            {\n              "id": "ext_abc123",\n              "name": "saved-extension"\n            }\n          ],\n          "tags": [\n            "tag1",\n            "tag2"\n          ]\n        }\'',
       },
     },
   },
@@ -556,24 +556,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.files.delete(fileId: string): void`\n\n**delete** `/v1/files/{fileId}`\n\nThis API deletes the file and all its file versions permanently.\n\nNote: If a file or specific transformation has been requested in the past, then the response is cached. Deleting a file does not purge the cache. You can purge the cache using purge cache API.\n\n\n### Parameters\n\n- `fileId: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nawait client.files.delete('fileId')\n```",
     perLanguage: {
-      cli: {
-        method: 'files delete',
+      typescript: {
+        method: 'client.files.delete',
         example:
-          "imagekit files delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.files.delete('fileId');",
       },
-      csharp: {
-        method: 'Files.Delete',
+      python: {
+        method: 'files.delete',
         example:
-          'FileDeleteParams parameters = new() { FileID = "fileId" };\n\nawait client.Files.Delete(parameters);',
-      },
-      go: {
-        method: 'client.Files.Delete',
-        example:
-          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.Files.Delete(context.TODO(), "fileId")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/$FILE_ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.files.delete(\n    "fileId",\n)',
       },
       java: {
         method: 'files().delete',
@@ -585,25 +576,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.FileDeleteParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    client.files().delete("fileId")\n}',
       },
-      php: {
-        method: 'files->delete',
+      go: {
+        method: 'client.Files.Delete',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->files->delete('fileId');\n\nvar_dump($result);",
-      },
-      python: {
-        method: 'files.delete',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.files.delete(\n    "fileId",\n)',
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.Files.Delete(context.TODO(), "fileId")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
       },
       ruby: {
         method: 'files.delete',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresult = image_kit.files.delete("fileId")\n\nputs(result)',
       },
-      typescript: {
-        method: 'client.files.delete',
+      cli: {
+        method: 'files delete',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.files.delete('fileId');",
+          "imagekit files delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
+      },
+      php: {
+        method: 'files->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->files->delete('fileId');\n\nvar_dump($result);",
+      },
+      csharp: {
+        method: 'Files.Delete',
+        example:
+          'FileDeleteParams parameters = new() { FileID = "fileId" };\n\nawait client.Files.Delete(parameters);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/$FILE_ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -621,24 +621,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## copy\n\n`client.files.copy(destinationPath: string, sourceFilePath: string, includeFileVersions?: boolean): {  }`\n\n**post** `/v1/files/copy`\n\nThis will copy a file from one folder to another. \n\nNote: If any file at the destination has the same name as the source file, then the source file and its versions (if `includeFileVersions` is set to true) will be appended to the destination file version history.\n\n\n### Parameters\n\n- `destinationPath: string`\n  Full path to the folder you want to copy the above file into.\n\n\n- `sourceFilePath: string`\n  The full path of the file you want to copy.\n\n\n- `includeFileVersions?: boolean`\n  Option to copy all versions of a file. By default, only the current version of the file is copied. When set to true, all versions of the file will be copied. Default value - `false`.\n\n\n### Returns\n\n- `{  }`\n\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst response = await client.files.copy({ destinationPath: '/folder/to/copy/into/', sourceFilePath: '/path/to/file.jpg' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'files copy',
+      typescript: {
+        method: 'client.files.copy',
         example:
-          "imagekit files copy \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --destination-path /folder/to/copy/into/ \\\n  --source-file-path /path/to/file.jpg",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.copy({\n  destinationPath: '/folder/to/copy/into/',\n  sourceFilePath: '/path/to/file.jpg',\n});\n\nconsole.log(response);",
       },
-      csharp: {
-        method: 'Files.Copy',
+      python: {
+        method: 'files.copy',
         example:
-          'FileCopyParams parameters = new()\n{\n    DestinationPath = "/folder/to/copy/into/",\n    SourceFilePath = "/path/to/file.jpg",\n};\n\nvar response = await client.Files.Copy(parameters);\n\nConsole.WriteLine(response);',
-      },
-      go: {
-        method: 'client.Files.Copy',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Copy(context.TODO(), imagekit.FileCopyParams{\n\t\tDestinationPath: "/folder/to/copy/into/",\n\t\tSourceFilePath:  "/path/to/file.jpg",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/copy \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "destinationPath": "/folder/to/copy/into/",\n          "sourceFilePath": "/path/to/file.jpg"\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.copy(\n    destination_path="/folder/to/copy/into/",\n    source_file_path="/path/to/file.jpg",\n)\nprint(response)',
       },
       java: {
         method: 'files().copy',
@@ -650,25 +641,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.FileCopyParams\nimport com.imagekit.api.models.files.FileCopyResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: FileCopyParams = FileCopyParams.builder()\n        .destinationPath("/folder/to/copy/into/")\n        .sourceFilePath("/path/to/file.jpg")\n        .build()\n    val response: FileCopyResponse = client.files().copy(params)\n}',
       },
-      php: {
-        method: 'files->copy',
+      go: {
+        method: 'client.Files.Copy',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->copy(\n  destinationPath: '/folder/to/copy/into/',\n  sourceFilePath: '/path/to/file.jpg',\n  includeFileVersions: false,\n);\n\nvar_dump($response);",
-      },
-      python: {
-        method: 'files.copy',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.copy(\n    destination_path="/folder/to/copy/into/",\n    source_file_path="/path/to/file.jpg",\n)\nprint(response)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Copy(context.TODO(), imagekit.FileCopyParams{\n\t\tDestinationPath: "/folder/to/copy/into/",\n\t\tSourceFilePath:  "/path/to/file.jpg",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
       },
       ruby: {
         method: 'files.copy',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresponse = image_kit.files.copy(destination_path: "/folder/to/copy/into/", source_file_path: "/path/to/file.jpg")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.files.copy',
+      cli: {
+        method: 'files copy',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.copy({\n  destinationPath: '/folder/to/copy/into/',\n  sourceFilePath: '/path/to/file.jpg',\n});\n\nconsole.log(response);",
+          "imagekit files copy \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --destination-path /folder/to/copy/into/ \\\n  --source-file-path /path/to/file.jpg",
+      },
+      php: {
+        method: 'files->copy',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->copy(\n  destinationPath: '/folder/to/copy/into/',\n  sourceFilePath: '/path/to/file.jpg',\n  includeFileVersions: false,\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Files.Copy',
+        example:
+          'FileCopyParams parameters = new()\n{\n    DestinationPath = "/folder/to/copy/into/",\n    SourceFilePath = "/path/to/file.jpg",\n};\n\nvar response = await client.Files.Copy(parameters);\n\nConsole.WriteLine(response);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/copy \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "destinationPath": "/folder/to/copy/into/",\n          "sourceFilePath": "/path/to/file.jpg"\n        }\'',
       },
     },
   },
@@ -686,24 +686,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## move\n\n`client.files.move(destinationPath: string, sourceFilePath: string): {  }`\n\n**post** `/v1/files/move`\n\nThis will move a file and all its versions from one folder to another. \n\nNote: If any file at the destination has the same name as the source file, then the source file and its versions will be appended to the destination file.\n\n\n### Parameters\n\n- `destinationPath: string`\n  Full path to the folder you want to move the above file into.\n\n\n- `sourceFilePath: string`\n  The full path of the file you want to move.\n\n\n### Returns\n\n- `{  }`\n\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst response = await client.files.move({ destinationPath: '/folder/to/move/into/', sourceFilePath: '/path/to/file.jpg' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'files move',
+      typescript: {
+        method: 'client.files.move',
         example:
-          "imagekit files move \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --destination-path /folder/to/move/into/ \\\n  --source-file-path /path/to/file.jpg",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.move({\n  destinationPath: '/folder/to/move/into/',\n  sourceFilePath: '/path/to/file.jpg',\n});\n\nconsole.log(response);",
       },
-      csharp: {
-        method: 'Files.Move',
+      python: {
+        method: 'files.move',
         example:
-          'FileMoveParams parameters = new()\n{\n    DestinationPath = "/folder/to/move/into/",\n    SourceFilePath = "/path/to/file.jpg",\n};\n\nvar response = await client.Files.Move(parameters);\n\nConsole.WriteLine(response);',
-      },
-      go: {
-        method: 'client.Files.Move',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Move(context.TODO(), imagekit.FileMoveParams{\n\t\tDestinationPath: "/folder/to/move/into/",\n\t\tSourceFilePath:  "/path/to/file.jpg",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/move \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "destinationPath": "/folder/to/move/into/",\n          "sourceFilePath": "/path/to/file.jpg"\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.move(\n    destination_path="/folder/to/move/into/",\n    source_file_path="/path/to/file.jpg",\n)\nprint(response)',
       },
       java: {
         method: 'files().move',
@@ -715,25 +706,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.FileMoveParams\nimport com.imagekit.api.models.files.FileMoveResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: FileMoveParams = FileMoveParams.builder()\n        .destinationPath("/folder/to/move/into/")\n        .sourceFilePath("/path/to/file.jpg")\n        .build()\n    val response: FileMoveResponse = client.files().move(params)\n}',
       },
-      php: {
-        method: 'files->move',
+      go: {
+        method: 'client.Files.Move',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->move(\n  destinationPath: '/folder/to/move/into/', sourceFilePath: '/path/to/file.jpg'\n);\n\nvar_dump($response);",
-      },
-      python: {
-        method: 'files.move',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.move(\n    destination_path="/folder/to/move/into/",\n    source_file_path="/path/to/file.jpg",\n)\nprint(response)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Move(context.TODO(), imagekit.FileMoveParams{\n\t\tDestinationPath: "/folder/to/move/into/",\n\t\tSourceFilePath:  "/path/to/file.jpg",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
       },
       ruby: {
         method: 'files.move',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresponse = image_kit.files.move(destination_path: "/folder/to/move/into/", source_file_path: "/path/to/file.jpg")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.files.move',
+      cli: {
+        method: 'files move',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.move({\n  destinationPath: '/folder/to/move/into/',\n  sourceFilePath: '/path/to/file.jpg',\n});\n\nconsole.log(response);",
+          "imagekit files move \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --destination-path /folder/to/move/into/ \\\n  --source-file-path /path/to/file.jpg",
+      },
+      php: {
+        method: 'files->move',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->move(\n  destinationPath: '/folder/to/move/into/', sourceFilePath: '/path/to/file.jpg'\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Files.Move',
+        example:
+          'FileMoveParams parameters = new()\n{\n    DestinationPath = "/folder/to/move/into/",\n    SourceFilePath = "/path/to/file.jpg",\n};\n\nvar response = await client.Files.Move(parameters);\n\nConsole.WriteLine(response);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/move \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "destinationPath": "/folder/to/move/into/",\n          "sourceFilePath": "/path/to/file.jpg"\n        }\'',
       },
     },
   },
@@ -751,24 +751,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## rename\n\n`client.files.rename(filePath: string, newFileName: string, purgeCache?: boolean): { purgeRequestId?: string; }`\n\n**put** `/v1/files/rename`\n\nYou can rename an already existing file in the media library using rename file API. This operation would rename all file versions of the file. \n\nNote: The old URLs will stop working. The file/file version URLs cached on CDN will continue to work unless a purge is requested.\n\n\n### Parameters\n\n- `filePath: string`\n  The full path of the file you want to rename.\n\n\n- `newFileName: string`\n  The new name of the file. A filename can contain:\n\nAlphanumeric Characters: `a-z`, `A-Z`, `0-9` (including Unicode letters, marks, and numerals in other languages).\nSpecial Characters: `.`, `_`, and `-`.\n\nAny other character, including space, will be replaced by `_`.\n\n\n- `purgeCache?: boolean`\n  Option to purge cache for the old file and its versions' URLs.\n\nWhen set to true, it will internally issue a purge cache request on CDN to remove cached content of old file and its versions. This purge request is counted against your monthly purge quota.\n\nNote: If the old file were accessible at `https://ik.imagekit.io/demo/old-filename.jpg`, a purge cache request would be issued against `https://ik.imagekit.io/demo/old-filename.jpg*` (with a wildcard at the end). It will remove the file and its versions' URLs and any transformations made using query parameters on this file or its versions. However, the cache for file transformations made using path parameters will persist. You can purge them using the purge API. For more details, refer to the purge API documentation.\n\n\n\nDefault value - `false`\n\n\n### Returns\n\n- `{ purgeRequestId?: string; }`\n\n  - `purgeRequestId?: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst response = await client.files.rename({ filePath: '/path/to/file.jpg', newFileName: 'newFileName.jpg' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'files rename',
+      typescript: {
+        method: 'client.files.rename',
         example:
-          "imagekit files rename \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-path /path/to/file.jpg \\\n  --new-file-name newFileName.jpg",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.rename({\n  filePath: '/path/to/file.jpg',\n  newFileName: 'newFileName.jpg',\n});\n\nconsole.log(response.purgeRequestId);",
       },
-      csharp: {
-        method: 'Files.Rename',
+      python: {
+        method: 'files.rename',
         example:
-          'FileRenameParams parameters = new()\n{\n    FilePath = "/path/to/file.jpg",\n    NewFileName = "newFileName.jpg",\n};\n\nvar response = await client.Files.Rename(parameters);\n\nConsole.WriteLine(response);',
-      },
-      go: {
-        method: 'client.Files.Rename',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Rename(context.TODO(), imagekit.FileRenameParams{\n\t\tFilePath:    "/path/to/file.jpg",\n\t\tNewFileName: "newFileName.jpg",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.PurgeRequestID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/rename \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "filePath": "/path/to/file.jpg",\n          "newFileName": "newFileName.jpg",\n          "purgeCache": true\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.rename(\n    file_path="/path/to/file.jpg",\n    new_file_name="newFileName.jpg",\n)\nprint(response.purge_request_id)',
       },
       java: {
         method: 'files().rename',
@@ -780,25 +771,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.FileRenameParams\nimport com.imagekit.api.models.files.FileRenameResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: FileRenameParams = FileRenameParams.builder()\n        .filePath("/path/to/file.jpg")\n        .newFileName("newFileName.jpg")\n        .build()\n    val response: FileRenameResponse = client.files().rename(params)\n}',
       },
-      php: {
-        method: 'files->rename',
+      go: {
+        method: 'client.Files.Rename',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->rename(\n  filePath: '/path/to/file.jpg',\n  newFileName: 'newFileName.jpg',\n  purgeCache: true,\n);\n\nvar_dump($response);",
-      },
-      python: {
-        method: 'files.rename',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.rename(\n    file_path="/path/to/file.jpg",\n    new_file_name="newFileName.jpg",\n)\nprint(response.purge_request_id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Rename(context.TODO(), imagekit.FileRenameParams{\n\t\tFilePath:    "/path/to/file.jpg",\n\t\tNewFileName: "newFileName.jpg",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.PurgeRequestID)\n}\n',
       },
       ruby: {
         method: 'files.rename',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresponse = image_kit.files.rename(file_path: "/path/to/file.jpg", new_file_name: "newFileName.jpg")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.files.rename',
+      cli: {
+        method: 'files rename',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.rename({\n  filePath: '/path/to/file.jpg',\n  newFileName: 'newFileName.jpg',\n});\n\nconsole.log(response.purgeRequestId);",
+          "imagekit files rename \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-path /path/to/file.jpg \\\n  --new-file-name newFileName.jpg",
+      },
+      php: {
+        method: 'files->rename',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->rename(\n  filePath: '/path/to/file.jpg',\n  newFileName: 'newFileName.jpg',\n  purgeCache: true,\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Files.Rename',
+        example:
+          'FileRenameParams parameters = new()\n{\n    FilePath = "/path/to/file.jpg",\n    NewFileName = "newFileName.jpg",\n};\n\nvar response = await client.Files.Rename(parameters);\n\nConsole.WriteLine(response);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/rename \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "filePath": "/path/to/file.jpg",\n          "newFileName": "newFileName.jpg",\n          "purgeCache": true\n        }\'',
       },
     },
   },
@@ -816,24 +816,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.files.bulk.delete(fileIds: string[]): { successfullyDeletedFileIds?: string[]; }`\n\n**post** `/v1/files/batch/deleteByFileIds`\n\nThis API deletes multiple files and all their file versions permanently.\n\nNote: If a file or specific transformation has been requested in the past, then the response is cached. Deleting a file does not purge the cache. You can purge the cache using purge cache API.\n\nA maximum of 100 files can be deleted at a time.\n\n\n### Parameters\n\n- `fileIds: string[]`\n  An array of fileIds which you want to delete.\n\n\n### Returns\n\n- `{ successfullyDeletedFileIds?: string[]; }`\n\n  - `successfullyDeletedFileIds?: string[]`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst bulk = await client.files.bulk.delete({ fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'] });\n\nconsole.log(bulk);\n```",
     perLanguage: {
-      cli: {
-        method: 'bulk delete',
+      typescript: {
+        method: 'client.files.bulk.delete',
         example:
-          "imagekit files:bulk delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id 598821f949c0a938d57563bd \\\n  --file-id 598821f949c0a938d57563be",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst bulk = await client.files.bulk.delete({\n  fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n});\n\nconsole.log(bulk.successfullyDeletedFileIds);",
       },
-      csharp: {
-        method: 'Files.Bulk.Delete',
+      python: {
+        method: 'files.bulk.delete',
         example:
-          'BulkDeleteParams parameters = new()\n{\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n};\n\nvar bulk = await client.Files.Bulk.Delete(parameters);\n\nConsole.WriteLine(bulk);',
-      },
-      go: {
-        method: 'client.Files.Bulk.Delete',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tbulk, err := client.Files.Bulk.Delete(context.TODO(), imagekit.FileBulkDeleteParams{\n\t\tFileIDs: []string{"598821f949c0a938d57563bd", "598821f949c0a938d57563be"},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", bulk.SuccessfullyDeletedFileIDs)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/batch/deleteByFileIds \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "fileIds": [\n            "598821f949c0a938d57563bd",\n            "598821f949c0a938d57563be"\n          ]\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nbulk = client.files.bulk.delete(\n    file_ids=["598821f949c0a938d57563bd", "598821f949c0a938d57563be"],\n)\nprint(bulk.successfully_deleted_file_ids)',
       },
       java: {
         method: 'files().bulk().delete',
@@ -845,25 +836,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.bulk.BulkDeleteParams\nimport com.imagekit.api.models.files.bulk.BulkDeleteResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: BulkDeleteParams = BulkDeleteParams.builder()\n        .addFileId("598821f949c0a938d57563bd")\n        .addFileId("598821f949c0a938d57563be")\n        .build()\n    val bulk: BulkDeleteResponse = client.files().bulk().delete(params)\n}',
       },
-      php: {
-        method: 'files->bulk->delete',
+      go: {
+        method: 'client.Files.Bulk.Delete',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$bulk = $client->files->bulk->delete(\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be']\n);\n\nvar_dump($bulk);",
-      },
-      python: {
-        method: 'files.bulk.delete',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nbulk = client.files.bulk.delete(\n    file_ids=["598821f949c0a938d57563bd", "598821f949c0a938d57563be"],\n)\nprint(bulk.successfully_deleted_file_ids)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tbulk, err := client.Files.Bulk.Delete(context.TODO(), imagekit.FileBulkDeleteParams{\n\t\tFileIDs: []string{"598821f949c0a938d57563bd", "598821f949c0a938d57563be"},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", bulk.SuccessfullyDeletedFileIDs)\n}\n',
       },
       ruby: {
         method: 'files.bulk.delete',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nbulk = image_kit.files.bulk.delete(file_ids: ["598821f949c0a938d57563bd", "598821f949c0a938d57563be"])\n\nputs(bulk)',
       },
-      typescript: {
-        method: 'client.files.bulk.delete',
+      cli: {
+        method: 'bulk delete',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst bulk = await client.files.bulk.delete({\n  fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n});\n\nconsole.log(bulk.successfullyDeletedFileIds);",
+          "imagekit files:bulk delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id 598821f949c0a938d57563bd \\\n  --file-id 598821f949c0a938d57563be",
+      },
+      php: {
+        method: 'files->bulk->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$bulk = $client->files->bulk->delete(\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be']\n);\n\nvar_dump($bulk);",
+      },
+      csharp: {
+        method: 'Files.Bulk.Delete',
+        example:
+          'BulkDeleteParams parameters = new()\n{\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n};\n\nvar bulk = await client.Files.Bulk.Delete(parameters);\n\nConsole.WriteLine(bulk);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/batch/deleteByFileIds \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "fileIds": [\n            "598821f949c0a938d57563bd",\n            "598821f949c0a938d57563be"\n          ]\n        }\'',
       },
     },
   },
@@ -881,24 +881,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## addTags\n\n`client.files.bulk.addTags(fileIds: string[], tags: string[]): { successfullyUpdatedFileIds?: string[]; }`\n\n**post** `/v1/files/addTags`\n\nThis API adds tags to multiple files in bulk. A maximum of 50 files can be specified at a time.\n\n\n### Parameters\n\n- `fileIds: string[]`\n  An array of fileIds to which you want to add tags.\n\n\n- `tags: string[]`\n  An array of tags that you want to add to the files.\n\n\n### Returns\n\n- `{ successfullyUpdatedFileIds?: string[]; }`\n\n  - `successfullyUpdatedFileIds?: string[]`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst response = await client.files.bulk.addTags({ fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'], tags: ['t-shirt', 'round-neck', 'sale2019'] });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'bulk addTags',
+      typescript: {
+        method: 'client.files.bulk.addTags',
         example:
-          "imagekit files:bulk add-tags \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id 598821f949c0a938d57563bd \\\n  --file-id 598821f949c0a938d57563be \\\n  --tag t-shirt \\\n  --tag round-neck \\\n  --tag sale2019",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.bulk.addTags({\n  fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n  tags: ['t-shirt', 'round-neck', 'sale2019'],\n});\n\nconsole.log(response.successfullyUpdatedFileIds);",
       },
-      csharp: {
-        method: 'Files.Bulk.AddTags',
+      python: {
+        method: 'files.bulk.add_tags',
         example:
-          'BulkAddTagsParams parameters = new()\n{\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n    Tags =\n    [\n        "t-shirt", "round-neck", "sale2019"\n    ],\n};\n\nvar response = await client.Files.Bulk.AddTags(parameters);\n\nConsole.WriteLine(response);',
-      },
-      go: {
-        method: 'client.Files.Bulk.AddTags',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Bulk.AddTags(context.TODO(), imagekit.FileBulkAddTagsParams{\n\t\tFileIDs: []string{"598821f949c0a938d57563bd", "598821f949c0a938d57563be"},\n\t\tTags:    []string{"t-shirt", "round-neck", "sale2019"},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.SuccessfullyUpdatedFileIDs)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/addTags \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "fileIds": [\n            "598821f949c0a938d57563bd",\n            "598821f949c0a938d57563be"\n          ],\n          "tags": [\n            "t-shirt",\n            "round-neck",\n            "sale2019"\n          ]\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.bulk.add_tags(\n    file_ids=["598821f949c0a938d57563bd", "598821f949c0a938d57563be"],\n    tags=["t-shirt", "round-neck", "sale2019"],\n)\nprint(response.successfully_updated_file_ids)',
       },
       java: {
         method: 'files().bulk().addTags',
@@ -910,25 +901,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.bulk.BulkAddTagsParams\nimport com.imagekit.api.models.files.bulk.BulkAddTagsResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: BulkAddTagsParams = BulkAddTagsParams.builder()\n        .addFileId("598821f949c0a938d57563bd")\n        .addFileId("598821f949c0a938d57563be")\n        .tags(listOf(\n          "t-shirt",\n          "round-neck",\n          "sale2019",\n        ))\n        .build()\n    val response: BulkAddTagsResponse = client.files().bulk().addTags(params)\n}',
       },
-      php: {
-        method: 'files->bulk->addTags',
+      go: {
+        method: 'client.Files.Bulk.AddTags',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->bulk->addTags(\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n  tags: ['t-shirt', 'round-neck', 'sale2019'],\n);\n\nvar_dump($response);",
-      },
-      python: {
-        method: 'files.bulk.add_tags',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.bulk.add_tags(\n    file_ids=["598821f949c0a938d57563bd", "598821f949c0a938d57563be"],\n    tags=["t-shirt", "round-neck", "sale2019"],\n)\nprint(response.successfully_updated_file_ids)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Bulk.AddTags(context.TODO(), imagekit.FileBulkAddTagsParams{\n\t\tFileIDs: []string{"598821f949c0a938d57563bd", "598821f949c0a938d57563be"},\n\t\tTags:    []string{"t-shirt", "round-neck", "sale2019"},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.SuccessfullyUpdatedFileIDs)\n}\n',
       },
       ruby: {
         method: 'files.bulk.add_tags',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresponse = image_kit.files.bulk.add_tags(\n  file_ids: ["598821f949c0a938d57563bd", "598821f949c0a938d57563be"],\n  tags: ["t-shirt", "round-neck", "sale2019"]\n)\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.files.bulk.addTags',
+      cli: {
+        method: 'bulk addTags',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.bulk.addTags({\n  fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n  tags: ['t-shirt', 'round-neck', 'sale2019'],\n});\n\nconsole.log(response.successfullyUpdatedFileIds);",
+          "imagekit files:bulk add-tags \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id 598821f949c0a938d57563bd \\\n  --file-id 598821f949c0a938d57563be \\\n  --tag t-shirt \\\n  --tag round-neck \\\n  --tag sale2019",
+      },
+      php: {
+        method: 'files->bulk->addTags',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->bulk->addTags(\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n  tags: ['t-shirt', 'round-neck', 'sale2019'],\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Files.Bulk.AddTags',
+        example:
+          'BulkAddTagsParams parameters = new()\n{\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n    Tags =\n    [\n        "t-shirt", "round-neck", "sale2019"\n    ],\n};\n\nvar response = await client.Files.Bulk.AddTags(parameters);\n\nConsole.WriteLine(response);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/addTags \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "fileIds": [\n            "598821f949c0a938d57563bd",\n            "598821f949c0a938d57563be"\n          ],\n          "tags": [\n            "t-shirt",\n            "round-neck",\n            "sale2019"\n          ]\n        }\'',
       },
     },
   },
@@ -946,24 +946,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## removeTags\n\n`client.files.bulk.removeTags(fileIds: string[], tags: string[]): { successfullyUpdatedFileIds?: string[]; }`\n\n**post** `/v1/files/removeTags`\n\nThis API removes tags from multiple files in bulk. A maximum of 50 files can be specified at a time.\n\n\n### Parameters\n\n- `fileIds: string[]`\n  An array of fileIds from which you want to remove tags.\n\n\n- `tags: string[]`\n  An array of tags that you want to remove from the files.\n\n\n### Returns\n\n- `{ successfullyUpdatedFileIds?: string[]; }`\n\n  - `successfullyUpdatedFileIds?: string[]`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst response = await client.files.bulk.removeTags({ fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'], tags: ['t-shirt', 'round-neck', 'sale2019'] });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'bulk removeTags',
+      typescript: {
+        method: 'client.files.bulk.removeTags',
         example:
-          "imagekit files:bulk remove-tags \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id 598821f949c0a938d57563bd \\\n  --file-id 598821f949c0a938d57563be \\\n  --tag t-shirt \\\n  --tag round-neck \\\n  --tag sale2019",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.bulk.removeTags({\n  fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n  tags: ['t-shirt', 'round-neck', 'sale2019'],\n});\n\nconsole.log(response.successfullyUpdatedFileIds);",
       },
-      csharp: {
-        method: 'Files.Bulk.RemoveTags',
+      python: {
+        method: 'files.bulk.remove_tags',
         example:
-          'BulkRemoveTagsParams parameters = new()\n{\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n    Tags =\n    [\n        "t-shirt", "round-neck", "sale2019"\n    ],\n};\n\nvar response = await client.Files.Bulk.RemoveTags(parameters);\n\nConsole.WriteLine(response);',
-      },
-      go: {
-        method: 'client.Files.Bulk.RemoveTags',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Bulk.RemoveTags(context.TODO(), imagekit.FileBulkRemoveTagsParams{\n\t\tFileIDs: []string{"598821f949c0a938d57563bd", "598821f949c0a938d57563be"},\n\t\tTags:    []string{"t-shirt", "round-neck", "sale2019"},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.SuccessfullyUpdatedFileIDs)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/removeTags \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "fileIds": [\n            "598821f949c0a938d57563bd",\n            "598821f949c0a938d57563be"\n          ],\n          "tags": [\n            "t-shirt",\n            "round-neck",\n            "sale2019"\n          ]\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.bulk.remove_tags(\n    file_ids=["598821f949c0a938d57563bd", "598821f949c0a938d57563be"],\n    tags=["t-shirt", "round-neck", "sale2019"],\n)\nprint(response.successfully_updated_file_ids)',
       },
       java: {
         method: 'files().bulk().removeTags',
@@ -975,25 +966,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.bulk.BulkRemoveTagsParams\nimport com.imagekit.api.models.files.bulk.BulkRemoveTagsResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: BulkRemoveTagsParams = BulkRemoveTagsParams.builder()\n        .addFileId("598821f949c0a938d57563bd")\n        .addFileId("598821f949c0a938d57563be")\n        .tags(listOf(\n          "t-shirt",\n          "round-neck",\n          "sale2019",\n        ))\n        .build()\n    val response: BulkRemoveTagsResponse = client.files().bulk().removeTags(params)\n}',
       },
-      php: {
-        method: 'files->bulk->removeTags',
+      go: {
+        method: 'client.Files.Bulk.RemoveTags',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->bulk->removeTags(\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n  tags: ['t-shirt', 'round-neck', 'sale2019'],\n);\n\nvar_dump($response);",
-      },
-      python: {
-        method: 'files.bulk.remove_tags',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.bulk.remove_tags(\n    file_ids=["598821f949c0a938d57563bd", "598821f949c0a938d57563be"],\n    tags=["t-shirt", "round-neck", "sale2019"],\n)\nprint(response.successfully_updated_file_ids)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Bulk.RemoveTags(context.TODO(), imagekit.FileBulkRemoveTagsParams{\n\t\tFileIDs: []string{"598821f949c0a938d57563bd", "598821f949c0a938d57563be"},\n\t\tTags:    []string{"t-shirt", "round-neck", "sale2019"},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.SuccessfullyUpdatedFileIDs)\n}\n',
       },
       ruby: {
         method: 'files.bulk.remove_tags',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresponse = image_kit.files.bulk.remove_tags(\n  file_ids: ["598821f949c0a938d57563bd", "598821f949c0a938d57563be"],\n  tags: ["t-shirt", "round-neck", "sale2019"]\n)\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.files.bulk.removeTags',
+      cli: {
+        method: 'bulk removeTags',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.bulk.removeTags({\n  fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n  tags: ['t-shirt', 'round-neck', 'sale2019'],\n});\n\nconsole.log(response.successfullyUpdatedFileIds);",
+          "imagekit files:bulk remove-tags \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id 598821f949c0a938d57563bd \\\n  --file-id 598821f949c0a938d57563be \\\n  --tag t-shirt \\\n  --tag round-neck \\\n  --tag sale2019",
+      },
+      php: {
+        method: 'files->bulk->removeTags',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->bulk->removeTags(\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n  tags: ['t-shirt', 'round-neck', 'sale2019'],\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Files.Bulk.RemoveTags',
+        example:
+          'BulkRemoveTagsParams parameters = new()\n{\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n    Tags =\n    [\n        "t-shirt", "round-neck", "sale2019"\n    ],\n};\n\nvar response = await client.Files.Bulk.RemoveTags(parameters);\n\nConsole.WriteLine(response);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/removeTags \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "fileIds": [\n            "598821f949c0a938d57563bd",\n            "598821f949c0a938d57563be"\n          ],\n          "tags": [\n            "t-shirt",\n            "round-neck",\n            "sale2019"\n          ]\n        }\'',
       },
     },
   },
@@ -1011,24 +1011,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## removeAiTags\n\n`client.files.bulk.removeAITags(AITags: string[], fileIds: string[]): { successfullyUpdatedFileIds?: string[]; }`\n\n**post** `/v1/files/removeAITags`\n\nThis API removes AITags from multiple files in bulk. A maximum of 50 files can be specified at a time.\n\n\n### Parameters\n\n- `AITags: string[]`\n  An array of AITags that you want to remove from the files.\n\n\n- `fileIds: string[]`\n  An array of fileIds from which you want to remove AITags.\n\n\n### Returns\n\n- `{ successfullyUpdatedFileIds?: string[]; }`\n\n  - `successfullyUpdatedFileIds?: string[]`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst response = await client.files.bulk.removeAITags({ AITags: ['t-shirt', 'round-neck', 'sale2019'], fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'] });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'bulk removeAiTags',
+      typescript: {
+        method: 'client.files.bulk.removeAITags',
         example:
-          "imagekit files:bulk remove-ai-tags \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --ai-tag t-shirt \\\n  --ai-tag round-neck \\\n  --ai-tag sale2019 \\\n  --file-id 598821f949c0a938d57563bd \\\n  --file-id 598821f949c0a938d57563be",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.bulk.removeAITags({\n  AITags: ['t-shirt', 'round-neck', 'sale2019'],\n  fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n});\n\nconsole.log(response.successfullyUpdatedFileIds);",
       },
-      csharp: {
-        method: 'Files.Bulk.RemoveAITags',
+      python: {
+        method: 'files.bulk.remove_ai_tags',
         example:
-          'BulkRemoveAITagsParams parameters = new()\n{\n    AITags =\n    [\n        "t-shirt", "round-neck", "sale2019"\n    ],\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n};\n\nvar response = await client.Files.Bulk.RemoveAITags(parameters);\n\nConsole.WriteLine(response);',
-      },
-      go: {
-        method: 'client.Files.Bulk.RemoveAITags',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Bulk.RemoveAITags(context.TODO(), imagekit.FileBulkRemoveAITagsParams{\n\t\tAITags:  []string{"t-shirt", "round-neck", "sale2019"},\n\t\tFileIDs: []string{"598821f949c0a938d57563bd", "598821f949c0a938d57563be"},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.SuccessfullyUpdatedFileIDs)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/removeAITags \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "AITags": [\n            "t-shirt",\n            "round-neck",\n            "sale2019"\n          ],\n          "fileIds": [\n            "598821f949c0a938d57563bd",\n            "598821f949c0a938d57563be"\n          ]\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.bulk.remove_ai_tags(\n    ai_tags=["t-shirt", "round-neck", "sale2019"],\n    file_ids=["598821f949c0a938d57563bd", "598821f949c0a938d57563be"],\n)\nprint(response.successfully_updated_file_ids)',
       },
       java: {
         method: 'files().bulk().removeAiTags',
@@ -1040,25 +1031,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.bulk.BulkRemoveAiTagsParams\nimport com.imagekit.api.models.files.bulk.BulkRemoveAiTagsResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: BulkRemoveAiTagsParams = BulkRemoveAiTagsParams.builder()\n        .aiTags(listOf(\n          "t-shirt",\n          "round-neck",\n          "sale2019",\n        ))\n        .addFileId("598821f949c0a938d57563bd")\n        .addFileId("598821f949c0a938d57563be")\n        .build()\n    val response: BulkRemoveAiTagsResponse = client.files().bulk().removeAiTags(params)\n}',
       },
-      php: {
-        method: 'files->bulk->removeAITags',
+      go: {
+        method: 'client.Files.Bulk.RemoveAITags',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->bulk->removeAITags(\n  aiTags: ['t-shirt', 'round-neck', 'sale2019'],\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n);\n\nvar_dump($response);",
-      },
-      python: {
-        method: 'files.bulk.remove_ai_tags',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.files.bulk.remove_ai_tags(\n    ai_tags=["t-shirt", "round-neck", "sale2019"],\n    file_ids=["598821f949c0a938d57563bd", "598821f949c0a938d57563be"],\n)\nprint(response.successfully_updated_file_ids)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Files.Bulk.RemoveAITags(context.TODO(), imagekit.FileBulkRemoveAITagsParams{\n\t\tAITags:  []string{"t-shirt", "round-neck", "sale2019"},\n\t\tFileIDs: []string{"598821f949c0a938d57563bd", "598821f949c0a938d57563be"},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.SuccessfullyUpdatedFileIDs)\n}\n',
       },
       ruby: {
         method: 'files.bulk.remove_ai_tags',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresponse = image_kit.files.bulk.remove_ai_tags(\n  ai_tags: ["t-shirt", "round-neck", "sale2019"],\n  file_ids: ["598821f949c0a938d57563bd", "598821f949c0a938d57563be"]\n)\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.files.bulk.removeAITags',
+      cli: {
+        method: 'bulk removeAiTags',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.files.bulk.removeAITags({\n  AITags: ['t-shirt', 'round-neck', 'sale2019'],\n  fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n});\n\nconsole.log(response.successfullyUpdatedFileIds);",
+          "imagekit files:bulk remove-ai-tags \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --ai-tag t-shirt \\\n  --ai-tag round-neck \\\n  --ai-tag sale2019 \\\n  --file-id 598821f949c0a938d57563bd \\\n  --file-id 598821f949c0a938d57563be",
+      },
+      php: {
+        method: 'files->bulk->removeAITags',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->bulk->removeAITags(\n  aiTags: ['t-shirt', 'round-neck', 'sale2019'],\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Files.Bulk.RemoveAITags',
+        example:
+          'BulkRemoveAITagsParams parameters = new()\n{\n    AITags =\n    [\n        "t-shirt", "round-neck", "sale2019"\n    ],\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n};\n\nvar response = await client.Files.Bulk.RemoveAITags(parameters);\n\nConsole.WriteLine(response);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/removeAITags \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "AITags": [\n            "t-shirt",\n            "round-neck",\n            "sale2019"\n          ],\n          "fileIds": [\n            "598821f949c0a938d57563bd",\n            "598821f949c0a938d57563be"\n          ]\n        }\'',
       },
     },
   },
@@ -1076,24 +1076,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.files.versions.list(fileId: string): object[]`\n\n**get** `/v1/files/{fileId}/versions`\n\nThis API returns details of all versions of a file.\n\n\n### Parameters\n\n- `fileId: string`\n\n### Returns\n\n- `{ AITags?: { confidence?: number; name?: string; source?: string; }[]; audioCodec?: string; bitRate?: number; createdAt?: string; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; fileId?: string; filePath?: string; fileType?: string; hasAlpha?: boolean; height?: number; isPrivateFile?: boolean; isPublished?: boolean; mime?: string; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnail?: string; type?: 'file' | 'file-version'; updatedAt?: string; url?: string; versionInfo?: { id?: string; name?: string; }; videoCodec?: string; width?: number; }[]`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst files = await client.files.versions.list('fileId');\n\nconsole.log(files);\n```",
     perLanguage: {
-      cli: {
-        method: 'versions list',
+      typescript: {
+        method: 'client.files.versions.list',
         example:
-          "imagekit files:versions list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst files = await client.files.versions.list('fileId');\n\nconsole.log(files);",
       },
-      csharp: {
-        method: 'Files.Versions.List',
+      python: {
+        method: 'files.versions.list',
         example:
-          'VersionListParams parameters = new() { FileID = "fileId" };\n\nvar files = await client.Files.Versions.List(parameters);\n\nConsole.WriteLine(files);',
-      },
-      go: {
-        method: 'client.Files.Versions.List',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfiles, err := client.Files.Versions.List(context.TODO(), "fileId")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", files)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/$FILE_ID/versions \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfiles = client.files.versions.list(\n    "fileId",\n)\nprint(files)',
       },
       java: {
         method: 'files().versions().list',
@@ -1105,25 +1096,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.File\nimport com.imagekit.api.models.files.versions.VersionListParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val files: List<File> = client.files().versions().list("fileId")\n}',
       },
-      php: {
-        method: 'files->versions->list',
+      go: {
+        method: 'client.Files.Versions.List',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$files = $client->files->versions->list('fileId');\n\nvar_dump($files);",
-      },
-      python: {
-        method: 'files.versions.list',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfiles = client.files.versions.list(\n    "fileId",\n)\nprint(files)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfiles, err := client.Files.Versions.List(context.TODO(), "fileId")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", files)\n}\n',
       },
       ruby: {
         method: 'files.versions.list',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nfiles = image_kit.files.versions.list("fileId")\n\nputs(files)',
       },
-      typescript: {
-        method: 'client.files.versions.list',
+      cli: {
+        method: 'versions list',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst files = await client.files.versions.list('fileId');\n\nconsole.log(files);",
+          "imagekit files:versions list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
+      },
+      php: {
+        method: 'files->versions->list',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$files = $client->files->versions->list('fileId');\n\nvar_dump($files);",
+      },
+      csharp: {
+        method: 'Files.Versions.List',
+        example:
+          'VersionListParams parameters = new() { FileID = "fileId" };\n\nvar files = await client.Files.Versions.List(parameters);\n\nConsole.WriteLine(files);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/$FILE_ID/versions \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -1141,24 +1141,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get\n\n`client.files.versions.get(fileId: string, versionId: string): { AITags?: object[]; audioCodec?: string; bitRate?: number; createdAt?: string; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; fileId?: string; filePath?: string; fileType?: string; hasAlpha?: boolean; height?: number; isPrivateFile?: boolean; isPublished?: boolean; mime?: string; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnail?: string; type?: 'file' | 'file-version'; updatedAt?: string; url?: string; versionInfo?: object; videoCodec?: string; width?: number; }`\n\n**get** `/v1/files/{fileId}/versions/{versionId}`\n\nThis API returns an object with details or attributes of a file version.\n\n### Parameters\n\n- `fileId: string`\n\n- `versionId: string`\n\n### Returns\n\n- `{ AITags?: { confidence?: number; name?: string; source?: string; }[]; audioCodec?: string; bitRate?: number; createdAt?: string; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; fileId?: string; filePath?: string; fileType?: string; hasAlpha?: boolean; height?: number; isPrivateFile?: boolean; isPublished?: boolean; mime?: string; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnail?: string; type?: 'file' | 'file-version'; updatedAt?: string; url?: string; versionInfo?: { id?: string; name?: string; }; videoCodec?: string; width?: number; }`\n  Object containing details of a file or file version.\n\n  - `AITags?: { confidence?: number; name?: string; source?: string; }[]`\n  - `audioCodec?: string`\n  - `bitRate?: number`\n  - `createdAt?: string`\n  - `customCoordinates?: string`\n  - `customMetadata?: object`\n  - `description?: string`\n  - `duration?: number`\n  - `embeddedMetadata?: object`\n  - `fileId?: string`\n  - `filePath?: string`\n  - `fileType?: string`\n  - `hasAlpha?: boolean`\n  - `height?: number`\n  - `isPrivateFile?: boolean`\n  - `isPublished?: boolean`\n  - `mime?: string`\n  - `name?: string`\n  - `selectedFieldsSchema?: object`\n  - `size?: number`\n  - `tags?: string[]`\n  - `thumbnail?: string`\n  - `type?: 'file' | 'file-version'`\n  - `updatedAt?: string`\n  - `url?: string`\n  - `versionInfo?: { id?: string; name?: string; }`\n  - `videoCodec?: string`\n  - `width?: number`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst file = await client.files.versions.get('versionId', { fileId: 'fileId' });\n\nconsole.log(file);\n```",
     perLanguage: {
-      cli: {
-        method: 'versions get',
+      typescript: {
+        method: 'client.files.versions.get',
         example:
-          "imagekit files:versions get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId \\\n  --version-id versionId",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst file = await client.files.versions.get('versionId', { fileId: 'fileId' });\n\nconsole.log(file.videoCodec);",
       },
-      csharp: {
-        method: 'Files.Versions.Get',
+      python: {
+        method: 'files.versions.get',
         example:
-          'VersionGetParams parameters = new()\n{\n    FileID = "fileId",\n    VersionID = "versionId",\n};\n\nvar file = await client.Files.Versions.Get(parameters);\n\nConsole.WriteLine(file);',
-      },
-      go: {
-        method: 'client.Files.Versions.Get',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfile, err := client.Files.Versions.Get(\n\t\tcontext.TODO(),\n\t\t"versionId",\n\t\timagekit.FileVersionGetParams{\n\t\t\tFileID: "fileId",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.VideoCodec)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/$FILE_ID/versions/$VERSION_ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfile = client.files.versions.get(\n    version_id="versionId",\n    file_id="fileId",\n)\nprint(file.video_codec)',
       },
       java: {
         method: 'files().versions().get',
@@ -1170,25 +1161,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.File\nimport com.imagekit.api.models.files.versions.VersionGetParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: VersionGetParams = VersionGetParams.builder()\n        .fileId("fileId")\n        .versionId("versionId")\n        .build()\n    val file: File = client.files().versions().get(params)\n}',
       },
-      php: {
-        method: 'files->versions->get',
+      go: {
+        method: 'client.Files.Versions.Get',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->versions->get('versionId', fileID: 'fileId');\n\nvar_dump($file);",
-      },
-      python: {
-        method: 'files.versions.get',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfile = client.files.versions.get(\n    version_id="versionId",\n    file_id="fileId",\n)\nprint(file.video_codec)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfile, err := client.Files.Versions.Get(\n\t\tcontext.TODO(),\n\t\t"versionId",\n\t\timagekit.FileVersionGetParams{\n\t\t\tFileID: "fileId",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.VideoCodec)\n}\n',
       },
       ruby: {
         method: 'files.versions.get',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nfile = image_kit.files.versions.get("versionId", file_id: "fileId")\n\nputs(file)',
       },
-      typescript: {
-        method: 'client.files.versions.get',
+      cli: {
+        method: 'versions get',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst file = await client.files.versions.get('versionId', { fileId: 'fileId' });\n\nconsole.log(file.videoCodec);",
+          "imagekit files:versions get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId \\\n  --version-id versionId",
+      },
+      php: {
+        method: 'files->versions->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->versions->get('versionId', fileID: 'fileId');\n\nvar_dump($file);",
+      },
+      csharp: {
+        method: 'Files.Versions.Get',
+        example:
+          'VersionGetParams parameters = new()\n{\n    FileID = "fileId",\n    VersionID = "versionId",\n};\n\nvar file = await client.Files.Versions.Get(parameters);\n\nConsole.WriteLine(file);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/$FILE_ID/versions/$VERSION_ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -1206,24 +1206,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.files.versions.delete(fileId: string, versionId: string): {  }`\n\n**delete** `/v1/files/{fileId}/versions/{versionId}`\n\nThis API deletes a non-current file version permanently. The API returns an empty response.\n\nNote: If you want to delete all versions of a file, use the delete file API.\n\n\n### Parameters\n\n- `fileId: string`\n\n- `versionId: string`\n\n### Returns\n\n- `{  }`\n\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst version = await client.files.versions.delete('versionId', { fileId: 'fileId' });\n\nconsole.log(version);\n```",
     perLanguage: {
-      cli: {
-        method: 'versions delete',
+      typescript: {
+        method: 'client.files.versions.delete',
         example:
-          "imagekit files:versions delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId \\\n  --version-id versionId",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst version = await client.files.versions.delete('versionId', { fileId: 'fileId' });\n\nconsole.log(version);",
       },
-      csharp: {
-        method: 'Files.Versions.Delete',
+      python: {
+        method: 'files.versions.delete',
         example:
-          'VersionDeleteParams parameters = new()\n{\n    FileID = "fileId",\n    VersionID = "versionId",\n};\n\nvar version = await client.Files.Versions.Delete(parameters);\n\nConsole.WriteLine(version);',
-      },
-      go: {
-        method: 'client.Files.Versions.Delete',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tversion, err := client.Files.Versions.Delete(\n\t\tcontext.TODO(),\n\t\t"versionId",\n\t\timagekit.FileVersionDeleteParams{\n\t\t\tFileID: "fileId",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", version)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/$FILE_ID/versions/$VERSION_ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nversion = client.files.versions.delete(\n    version_id="versionId",\n    file_id="fileId",\n)\nprint(version)',
       },
       java: {
         method: 'files().versions().delete',
@@ -1235,25 +1226,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.versions.VersionDeleteParams\nimport com.imagekit.api.models.files.versions.VersionDeleteResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: VersionDeleteParams = VersionDeleteParams.builder()\n        .fileId("fileId")\n        .versionId("versionId")\n        .build()\n    val version: VersionDeleteResponse = client.files().versions().delete(params)\n}',
       },
-      php: {
-        method: 'files->versions->delete',
+      go: {
+        method: 'client.Files.Versions.Delete',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$version = $client->files->versions->delete('versionId', fileID: 'fileId');\n\nvar_dump($version);",
-      },
-      python: {
-        method: 'files.versions.delete',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nversion = client.files.versions.delete(\n    version_id="versionId",\n    file_id="fileId",\n)\nprint(version)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tversion, err := client.Files.Versions.Delete(\n\t\tcontext.TODO(),\n\t\t"versionId",\n\t\timagekit.FileVersionDeleteParams{\n\t\t\tFileID: "fileId",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", version)\n}\n',
       },
       ruby: {
         method: 'files.versions.delete',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nversion = image_kit.files.versions.delete("versionId", file_id: "fileId")\n\nputs(version)',
       },
-      typescript: {
-        method: 'client.files.versions.delete',
+      cli: {
+        method: 'versions delete',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst version = await client.files.versions.delete('versionId', { fileId: 'fileId' });\n\nconsole.log(version);",
+          "imagekit files:versions delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId \\\n  --version-id versionId",
+      },
+      php: {
+        method: 'files->versions->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$version = $client->files->versions->delete('versionId', fileID: 'fileId');\n\nvar_dump($version);",
+      },
+      csharp: {
+        method: 'Files.Versions.Delete',
+        example:
+          'VersionDeleteParams parameters = new()\n{\n    FileID = "fileId",\n    VersionID = "versionId",\n};\n\nvar version = await client.Files.Versions.Delete(parameters);\n\nConsole.WriteLine(version);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/$FILE_ID/versions/$VERSION_ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -1271,24 +1271,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## restore\n\n`client.files.versions.restore(fileId: string, versionId: string): { AITags?: object[]; audioCodec?: string; bitRate?: number; createdAt?: string; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; fileId?: string; filePath?: string; fileType?: string; hasAlpha?: boolean; height?: number; isPrivateFile?: boolean; isPublished?: boolean; mime?: string; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnail?: string; type?: 'file' | 'file-version'; updatedAt?: string; url?: string; versionInfo?: object; videoCodec?: string; width?: number; }`\n\n**put** `/v1/files/{fileId}/versions/{versionId}/restore`\n\nThis API restores a file version as the current file version.\n\n\n### Parameters\n\n- `fileId: string`\n\n- `versionId: string`\n\n### Returns\n\n- `{ AITags?: { confidence?: number; name?: string; source?: string; }[]; audioCodec?: string; bitRate?: number; createdAt?: string; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; fileId?: string; filePath?: string; fileType?: string; hasAlpha?: boolean; height?: number; isPrivateFile?: boolean; isPublished?: boolean; mime?: string; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnail?: string; type?: 'file' | 'file-version'; updatedAt?: string; url?: string; versionInfo?: { id?: string; name?: string; }; videoCodec?: string; width?: number; }`\n  Object containing details of a file or file version.\n\n  - `AITags?: { confidence?: number; name?: string; source?: string; }[]`\n  - `audioCodec?: string`\n  - `bitRate?: number`\n  - `createdAt?: string`\n  - `customCoordinates?: string`\n  - `customMetadata?: object`\n  - `description?: string`\n  - `duration?: number`\n  - `embeddedMetadata?: object`\n  - `fileId?: string`\n  - `filePath?: string`\n  - `fileType?: string`\n  - `hasAlpha?: boolean`\n  - `height?: number`\n  - `isPrivateFile?: boolean`\n  - `isPublished?: boolean`\n  - `mime?: string`\n  - `name?: string`\n  - `selectedFieldsSchema?: object`\n  - `size?: number`\n  - `tags?: string[]`\n  - `thumbnail?: string`\n  - `type?: 'file' | 'file-version'`\n  - `updatedAt?: string`\n  - `url?: string`\n  - `versionInfo?: { id?: string; name?: string; }`\n  - `videoCodec?: string`\n  - `width?: number`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst file = await client.files.versions.restore('versionId', { fileId: 'fileId' });\n\nconsole.log(file);\n```",
     perLanguage: {
-      cli: {
-        method: 'versions restore',
+      typescript: {
+        method: 'client.files.versions.restore',
         example:
-          "imagekit files:versions restore \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId \\\n  --version-id versionId",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst file = await client.files.versions.restore('versionId', { fileId: 'fileId' });\n\nconsole.log(file.videoCodec);",
       },
-      csharp: {
-        method: 'Files.Versions.Restore',
+      python: {
+        method: 'files.versions.restore',
         example:
-          'VersionRestoreParams parameters = new()\n{\n    FileID = "fileId",\n    VersionID = "versionId",\n};\n\nvar file = await client.Files.Versions.Restore(parameters);\n\nConsole.WriteLine(file);',
-      },
-      go: {
-        method: 'client.Files.Versions.Restore',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfile, err := client.Files.Versions.Restore(\n\t\tcontext.TODO(),\n\t\t"versionId",\n\t\timagekit.FileVersionRestoreParams{\n\t\t\tFileID: "fileId",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.VideoCodec)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/$FILE_ID/versions/$VERSION_ID/restore \\\n    -X PUT \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfile = client.files.versions.restore(\n    version_id="versionId",\n    file_id="fileId",\n)\nprint(file.video_codec)',
       },
       java: {
         method: 'files().versions().restore',
@@ -1300,25 +1291,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.File\nimport com.imagekit.api.models.files.versions.VersionRestoreParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: VersionRestoreParams = VersionRestoreParams.builder()\n        .fileId("fileId")\n        .versionId("versionId")\n        .build()\n    val file: File = client.files().versions().restore(params)\n}',
       },
-      php: {
-        method: 'files->versions->restore',
+      go: {
+        method: 'client.Files.Versions.Restore',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->versions->restore('versionId', fileID: 'fileId');\n\nvar_dump($file);",
-      },
-      python: {
-        method: 'files.versions.restore',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfile = client.files.versions.restore(\n    version_id="versionId",\n    file_id="fileId",\n)\nprint(file.video_codec)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfile, err := client.Files.Versions.Restore(\n\t\tcontext.TODO(),\n\t\t"versionId",\n\t\timagekit.FileVersionRestoreParams{\n\t\t\tFileID: "fileId",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.VideoCodec)\n}\n',
       },
       ruby: {
         method: 'files.versions.restore',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nfile = image_kit.files.versions.restore("versionId", file_id: "fileId")\n\nputs(file)',
       },
-      typescript: {
-        method: 'client.files.versions.restore',
+      cli: {
+        method: 'versions restore',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst file = await client.files.versions.restore('versionId', { fileId: 'fileId' });\n\nconsole.log(file.videoCodec);",
+          "imagekit files:versions restore \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId \\\n  --version-id versionId",
+      },
+      php: {
+        method: 'files->versions->restore',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->versions->restore('versionId', fileID: 'fileId');\n\nvar_dump($file);",
+      },
+      csharp: {
+        method: 'Files.Versions.Restore',
+        example:
+          'VersionRestoreParams parameters = new()\n{\n    FileID = "fileId",\n    VersionID = "versionId",\n};\n\nvar file = await client.Files.Versions.Restore(parameters);\n\nConsole.WriteLine(file);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/$FILE_ID/versions/$VERSION_ID/restore \\\n    -X PUT \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -1337,24 +1337,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get\n\n`client.files.metadata.get(fileId: string): { audioCodec?: string; bitRate?: number; density?: number; duration?: number; exif?: object; format?: string; hasColorProfile?: boolean; hasTransparency?: boolean; height?: number; pHash?: string; quality?: number; size?: number; videoCodec?: string; width?: number; }`\n\n**get** `/v1/files/{fileId}/metadata`\n\nYou can programmatically get image EXIF, pHash, and other metadata for uploaded files in the ImageKit.io media library using this API.\n\nYou can also get the metadata in upload API response by passing `metadata` in `responseFields` parameter.\n\n\n### Parameters\n\n- `fileId: string`\n\n### Returns\n\n- `{ audioCodec?: string; bitRate?: number; density?: number; duration?: number; exif?: { exif?: { ApertureValue?: number; ColorSpace?: number; CreateDate?: string; CustomRendered?: number; DateTimeOriginal?: string; ExifImageHeight?: number; ExifImageWidth?: number; ExifVersion?: string; ExposureCompensation?: number; ExposureMode?: number; ExposureProgram?: number; ExposureTime?: number; Flash?: number; FlashpixVersion?: string; FNumber?: number; FocalLength?: number; FocalPlaneResolutionUnit?: number; FocalPlaneXResolution?: number; FocalPlaneYResolution?: number; InteropOffset?: number; ISO?: number; MeteringMode?: number; SceneCaptureType?: number; ShutterSpeedValue?: number; SubSecTime?: string; WhiteBalance?: number; }; gps?: { GPSVersionID?: number[]; }; image?: { ExifOffset?: number; GPSInfo?: number; Make?: string; Model?: string; ModifyDate?: string; Orientation?: number; ResolutionUnit?: number; Software?: string; XResolution?: number; YCbCrPositioning?: number; YResolution?: number; }; interoperability?: { InteropIndex?: string; InteropVersion?: string; }; makernote?: object; thumbnail?: { Compression?: number; ResolutionUnit?: number; ThumbnailLength?: number; ThumbnailOffset?: number; XResolution?: number; YResolution?: number; }; }; format?: string; hasColorProfile?: boolean; hasTransparency?: boolean; height?: number; pHash?: string; quality?: number; size?: number; videoCodec?: string; width?: number; }`\n  JSON object containing metadata.\n\n  - `audioCodec?: string`\n  - `bitRate?: number`\n  - `density?: number`\n  - `duration?: number`\n  - `exif?: { exif?: { ApertureValue?: number; ColorSpace?: number; CreateDate?: string; CustomRendered?: number; DateTimeOriginal?: string; ExifImageHeight?: number; ExifImageWidth?: number; ExifVersion?: string; ExposureCompensation?: number; ExposureMode?: number; ExposureProgram?: number; ExposureTime?: number; Flash?: number; FlashpixVersion?: string; FNumber?: number; FocalLength?: number; FocalPlaneResolutionUnit?: number; FocalPlaneXResolution?: number; FocalPlaneYResolution?: number; InteropOffset?: number; ISO?: number; MeteringMode?: number; SceneCaptureType?: number; ShutterSpeedValue?: number; SubSecTime?: string; WhiteBalance?: number; }; gps?: { GPSVersionID?: number[]; }; image?: { ExifOffset?: number; GPSInfo?: number; Make?: string; Model?: string; ModifyDate?: string; Orientation?: number; ResolutionUnit?: number; Software?: string; XResolution?: number; YCbCrPositioning?: number; YResolution?: number; }; interoperability?: { InteropIndex?: string; InteropVersion?: string; }; makernote?: object; thumbnail?: { Compression?: number; ResolutionUnit?: number; ThumbnailLength?: number; ThumbnailOffset?: number; XResolution?: number; YResolution?: number; }; }`\n  - `format?: string`\n  - `hasColorProfile?: boolean`\n  - `hasTransparency?: boolean`\n  - `height?: number`\n  - `pHash?: string`\n  - `quality?: number`\n  - `size?: number`\n  - `videoCodec?: string`\n  - `width?: number`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst metadata = await client.files.metadata.get('fileId');\n\nconsole.log(metadata);\n```",
     perLanguage: {
-      cli: {
-        method: 'metadata get',
+      typescript: {
+        method: 'client.files.metadata.get',
         example:
-          "imagekit files:metadata get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst metadata = await client.files.metadata.get('fileId');\n\nconsole.log(metadata.videoCodec);",
       },
-      csharp: {
-        method: 'Files.Metadata.Get',
+      python: {
+        method: 'files.metadata.get',
         example:
-          'MetadataGetParams parameters = new() { FileID = "fileId" };\n\nvar metadata = await client.Files.Metadata.Get(parameters);\n\nConsole.WriteLine(metadata);',
-      },
-      go: {
-        method: 'client.Files.Metadata.Get',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tmetadata, err := client.Files.Metadata.Get(context.TODO(), "fileId")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", metadata.VideoCodec)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/$FILE_ID/metadata \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nmetadata = client.files.metadata.get(\n    "fileId",\n)\nprint(metadata.video_codec)',
       },
       java: {
         method: 'files().metadata().get',
@@ -1366,25 +1357,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.Metadata\nimport com.imagekit.api.models.files.metadata.MetadataGetParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val metadata: Metadata = client.files().metadata().get("fileId")\n}',
       },
-      php: {
-        method: 'files->metadata->get',
+      go: {
+        method: 'client.Files.Metadata.Get',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$metadata = $client->files->metadata->get('fileId');\n\nvar_dump($metadata);",
-      },
-      python: {
-        method: 'files.metadata.get',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nmetadata = client.files.metadata.get(\n    "fileId",\n)\nprint(metadata.video_codec)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tmetadata, err := client.Files.Metadata.Get(context.TODO(), "fileId")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", metadata.VideoCodec)\n}\n',
       },
       ruby: {
         method: 'files.metadata.get',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nmetadata = image_kit.files.metadata.get("fileId")\n\nputs(metadata)',
       },
-      typescript: {
-        method: 'client.files.metadata.get',
+      cli: {
+        method: 'metadata get',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst metadata = await client.files.metadata.get('fileId');\n\nconsole.log(metadata.videoCodec);",
+          "imagekit files:metadata get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file-id fileId",
+      },
+      php: {
+        method: 'files->metadata->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$metadata = $client->files->metadata->get('fileId');\n\nvar_dump($metadata);",
+      },
+      csharp: {
+        method: 'Files.Metadata.Get',
+        example:
+          'MetadataGetParams parameters = new() { FileID = "fileId" };\n\nvar metadata = await client.Files.Metadata.Get(parameters);\n\nConsole.WriteLine(metadata);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/$FILE_ID/metadata \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -1403,24 +1403,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## getFromURL\n\n`client.files.metadata.getFromURL(url: string): { audioCodec?: string; bitRate?: number; density?: number; duration?: number; exif?: object; format?: string; hasColorProfile?: boolean; hasTransparency?: boolean; height?: number; pHash?: string; quality?: number; size?: number; videoCodec?: string; width?: number; }`\n\n**get** `/v1/metadata`\n\nGet image EXIF, pHash, and other metadata from ImageKit.io powered remote URL using this API.\n\n\n### Parameters\n\n- `url: string`\n  Should be a valid file URL. It should be accessible using your ImageKit.io account.\n\n\n### Returns\n\n- `{ audioCodec?: string; bitRate?: number; density?: number; duration?: number; exif?: { exif?: { ApertureValue?: number; ColorSpace?: number; CreateDate?: string; CustomRendered?: number; DateTimeOriginal?: string; ExifImageHeight?: number; ExifImageWidth?: number; ExifVersion?: string; ExposureCompensation?: number; ExposureMode?: number; ExposureProgram?: number; ExposureTime?: number; Flash?: number; FlashpixVersion?: string; FNumber?: number; FocalLength?: number; FocalPlaneResolutionUnit?: number; FocalPlaneXResolution?: number; FocalPlaneYResolution?: number; InteropOffset?: number; ISO?: number; MeteringMode?: number; SceneCaptureType?: number; ShutterSpeedValue?: number; SubSecTime?: string; WhiteBalance?: number; }; gps?: { GPSVersionID?: number[]; }; image?: { ExifOffset?: number; GPSInfo?: number; Make?: string; Model?: string; ModifyDate?: string; Orientation?: number; ResolutionUnit?: number; Software?: string; XResolution?: number; YCbCrPositioning?: number; YResolution?: number; }; interoperability?: { InteropIndex?: string; InteropVersion?: string; }; makernote?: object; thumbnail?: { Compression?: number; ResolutionUnit?: number; ThumbnailLength?: number; ThumbnailOffset?: number; XResolution?: number; YResolution?: number; }; }; format?: string; hasColorProfile?: boolean; hasTransparency?: boolean; height?: number; pHash?: string; quality?: number; size?: number; videoCodec?: string; width?: number; }`\n  JSON object containing metadata.\n\n  - `audioCodec?: string`\n  - `bitRate?: number`\n  - `density?: number`\n  - `duration?: number`\n  - `exif?: { exif?: { ApertureValue?: number; ColorSpace?: number; CreateDate?: string; CustomRendered?: number; DateTimeOriginal?: string; ExifImageHeight?: number; ExifImageWidth?: number; ExifVersion?: string; ExposureCompensation?: number; ExposureMode?: number; ExposureProgram?: number; ExposureTime?: number; Flash?: number; FlashpixVersion?: string; FNumber?: number; FocalLength?: number; FocalPlaneResolutionUnit?: number; FocalPlaneXResolution?: number; FocalPlaneYResolution?: number; InteropOffset?: number; ISO?: number; MeteringMode?: number; SceneCaptureType?: number; ShutterSpeedValue?: number; SubSecTime?: string; WhiteBalance?: number; }; gps?: { GPSVersionID?: number[]; }; image?: { ExifOffset?: number; GPSInfo?: number; Make?: string; Model?: string; ModifyDate?: string; Orientation?: number; ResolutionUnit?: number; Software?: string; XResolution?: number; YCbCrPositioning?: number; YResolution?: number; }; interoperability?: { InteropIndex?: string; InteropVersion?: string; }; makernote?: object; thumbnail?: { Compression?: number; ResolutionUnit?: number; ThumbnailLength?: number; ThumbnailOffset?: number; XResolution?: number; YResolution?: number; }; }`\n  - `format?: string`\n  - `hasColorProfile?: boolean`\n  - `hasTransparency?: boolean`\n  - `height?: number`\n  - `pHash?: string`\n  - `quality?: number`\n  - `size?: number`\n  - `videoCodec?: string`\n  - `width?: number`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst metadata = await client.files.metadata.getFromURL({ url: 'https://example.com' });\n\nconsole.log(metadata);\n```",
     perLanguage: {
-      cli: {
-        method: 'metadata getFromURL',
+      typescript: {
+        method: 'client.files.metadata.getFromURL',
         example:
-          "imagekit files:metadata get-from-url \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --url https://example.com",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst metadata = await client.files.metadata.getFromURL({ url: 'https://example.com' });\n\nconsole.log(metadata.videoCodec);",
       },
-      csharp: {
-        method: 'Files.Metadata.GetFromUrl',
+      python: {
+        method: 'files.metadata.get_from_url',
         example:
-          'MetadataGetFromUrlParams parameters = new() { Url = "https://example.com" };\n\nvar metadata = await client.Files.Metadata.GetFromUrl(parameters);\n\nConsole.WriteLine(metadata);',
-      },
-      go: {
-        method: 'client.Files.Metadata.GetFromURL',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tmetadata, err := client.Files.Metadata.GetFromURL(context.TODO(), imagekit.FileMetadataGetFromURLParams{\n\t\tURL: "https://example.com",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", metadata.VideoCodec)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/metadata \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nmetadata = client.files.metadata.get_from_url(\n    url="https://example.com",\n)\nprint(metadata.video_codec)',
       },
       java: {
         method: 'files().metadata().getFromUrl',
@@ -1432,25 +1423,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.files.Metadata\nimport com.imagekit.api.models.files.metadata.MetadataGetFromUrlParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: MetadataGetFromUrlParams = MetadataGetFromUrlParams.builder()\n        .url("https://example.com")\n        .build()\n    val metadata: Metadata = client.files().metadata().getFromUrl(params)\n}',
       },
-      php: {
-        method: 'files->metadata->getFromURL',
+      go: {
+        method: 'client.Files.Metadata.GetFromURL',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$metadata = $client->files->metadata->getFromURL(url: 'https://example.com');\n\nvar_dump($metadata);",
-      },
-      python: {
-        method: 'files.metadata.get_from_url',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nmetadata = client.files.metadata.get_from_url(\n    url="https://example.com",\n)\nprint(metadata.video_codec)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tmetadata, err := client.Files.Metadata.GetFromURL(context.TODO(), imagekit.FileMetadataGetFromURLParams{\n\t\tURL: "https://example.com",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", metadata.VideoCodec)\n}\n',
       },
       ruby: {
         method: 'files.metadata.get_from_url',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nmetadata = image_kit.files.metadata.get_from_url(url: "https://example.com")\n\nputs(metadata)',
       },
-      typescript: {
-        method: 'client.files.metadata.getFromURL',
+      cli: {
+        method: 'metadata getFromURL',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst metadata = await client.files.metadata.getFromURL({ url: 'https://example.com' });\n\nconsole.log(metadata.videoCodec);",
+          "imagekit files:metadata get-from-url \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --url https://example.com",
+      },
+      php: {
+        method: 'files->metadata->getFromURL',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$metadata = $client->files->metadata->getFromURL(url: 'https://example.com');\n\nvar_dump($metadata);",
+      },
+      csharp: {
+        method: 'Files.Metadata.GetFromUrl',
+        example:
+          'MetadataGetFromUrlParams parameters = new() { Url = "https://example.com" };\n\nvar metadata = await client.Files.Metadata.GetFromUrl(parameters);\n\nConsole.WriteLine(metadata);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/metadata \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -1468,24 +1468,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.savedExtensions.list(): object[]`\n\n**get** `/v1/saved-extensions`\n\nThis API returns an array of all saved extensions for your account. Saved extensions allow you to save complex extension configurations and reuse them by referencing them by ID in upload or update file APIs.\n\n\n### Returns\n\n- `{ id?: string; config?: object | object | object | object; createdAt?: string; description?: string; name?: string; updatedAt?: string; }[]`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst savedExtensions = await client.savedExtensions.list();\n\nconsole.log(savedExtensions);\n```",
     perLanguage: {
-      cli: {
-        method: 'savedExtensions list',
+      typescript: {
+        method: 'client.savedExtensions.list',
         example:
-          "imagekit saved-extensions list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst savedExtensions = await client.savedExtensions.list();\n\nconsole.log(savedExtensions);",
       },
-      csharp: {
-        method: 'SavedExtensions.List',
+      python: {
+        method: 'saved_extensions.list',
         example:
-          'SavedExtensionListParams parameters = new();\n\nvar savedExtensions = await client.SavedExtensions.List(parameters);\n\nConsole.WriteLine(savedExtensions);',
-      },
-      go: {
-        method: 'client.SavedExtensions.List',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tsavedExtensions, err := client.SavedExtensions.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", savedExtensions)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/saved-extensions \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nsaved_extensions = client.saved_extensions.list()\nprint(saved_extensions)',
       },
       java: {
         method: 'savedExtensions().list',
@@ -1497,25 +1488,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.SavedExtension\nimport com.imagekit.api.models.savedextensions.SavedExtensionListParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val savedExtensions: List<SavedExtension> = client.savedExtensions().list()\n}',
       },
-      php: {
-        method: 'savedExtensions->list',
+      go: {
+        method: 'client.SavedExtensions.List',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtensions = $client->savedExtensions->list();\n\nvar_dump($savedExtensions);",
-      },
-      python: {
-        method: 'saved_extensions.list',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nsaved_extensions = client.saved_extensions.list()\nprint(saved_extensions)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tsavedExtensions, err := client.SavedExtensions.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", savedExtensions)\n}\n',
       },
       ruby: {
         method: 'saved_extensions.list',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nsaved_extensions = image_kit.saved_extensions.list\n\nputs(saved_extensions)',
       },
-      typescript: {
-        method: 'client.savedExtensions.list',
+      cli: {
+        method: 'savedExtensions list',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst savedExtensions = await client.savedExtensions.list();\n\nconsole.log(savedExtensions);",
+          "imagekit saved-extensions list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+      },
+      php: {
+        method: 'savedExtensions->list',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtensions = $client->savedExtensions->list();\n\nvar_dump($savedExtensions);",
+      },
+      csharp: {
+        method: 'SavedExtensions.List',
+        example:
+          'SavedExtensionListParams parameters = new();\n\nvar savedExtensions = await client.SavedExtensions.List(parameters);\n\nConsole.WriteLine(savedExtensions);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/saved-extensions \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -1538,24 +1538,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.savedExtensions.create(config: { name: 'remove-bg'; options?: object; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: object | object | object[]; }, description: string, name: string): { id?: string; config?: extension_config; createdAt?: string; description?: string; name?: string; updatedAt?: string; }`\n\n**post** `/v1/saved-extensions`\n\nThis API creates a new saved extension. Saved extensions allow you to save complex extension configurations (like AI tasks) and reuse them by referencing the ID in upload or update file APIs.\n\n**Saved extension limit** \\\nYou can create a maximum of 100 saved extensions per account.\n\n\n### Parameters\n\n- `config: { name: 'remove-bg'; options?: { add_shadow?: boolean; bg_color?: string; bg_image_url?: string; semitransparency?: boolean; }; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: { instruction: string; type: 'select_tags'; max_selections?: number; min_selections?: number; vocabulary?: string[]; } | { field: string; instruction: string; type: 'select_metadata'; max_selections?: number; min_selections?: number; vocabulary?: string | number | boolean[]; } | { instruction: string; type: 'yes_no'; on_no?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_unknown?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_yes?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; }[]; }`\n  Configuration object for an extension (base extensions only, not saved extension references).\n\n- `description: string`\n  Description of what the saved extension does.\n\n- `name: string`\n  Name of the saved extension.\n\n### Returns\n\n- `{ id?: string; config?: { name: 'remove-bg'; options?: object; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: object | object | object[]; }; createdAt?: string; description?: string; name?: string; updatedAt?: string; }`\n  Saved extension object containing extension configuration.\n\n  - `id?: string`\n  - `config?: { name: 'remove-bg'; options?: { add_shadow?: boolean; bg_color?: string; bg_image_url?: string; semitransparency?: boolean; }; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: { instruction: string; type: 'select_tags'; max_selections?: number; min_selections?: number; vocabulary?: string[]; } | { field: string; instruction: string; type: 'select_metadata'; max_selections?: number; min_selections?: number; vocabulary?: string | number | boolean[]; } | { instruction: string; type: 'yes_no'; on_no?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_unknown?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_yes?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; }[]; }`\n  - `createdAt?: string`\n  - `description?: string`\n  - `name?: string`\n  - `updatedAt?: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst savedExtension = await client.savedExtensions.create({\n  config: { name: 'remove-bg' },\n  description: 'Analyzes vehicle images for type, condition, and quality assessment',\n  name: 'Car Quality Analysis',\n});\n\nconsole.log(savedExtension);\n```",
     perLanguage: {
-      cli: {
-        method: 'savedExtensions create',
+      typescript: {
+        method: 'client.savedExtensions.create',
         example:
-          "imagekit saved-extensions create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --config '{name: remove-bg}' \\\n  --description 'Analyzes vehicle images for type, condition, and quality assessment' \\\n  --name 'Car Quality Analysis'",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst savedExtension = await client.savedExtensions.create({\n  config: { name: 'remove-bg' },\n  description: 'Analyzes vehicle images for type, condition, and quality assessment',\n  name: 'Car Quality Analysis',\n});\n\nconsole.log(savedExtension.id);",
       },
-      csharp: {
-        method: 'SavedExtensions.Create',
+      python: {
+        method: 'saved_extensions.create',
         example:
-          'SavedExtensionCreateParams parameters = new()\n{\n    Config = new RemoveBg()\n    {\n        Options = new()\n        {\n            AddShadow = true,\n            BgColor = "bg_color",\n            BgImageUrl = "bg_image_url",\n            Semitransparency = true,\n        },\n    },\n    Description = "Analyzes vehicle images for type, condition, and quality assessment",\n    Name = "Car Quality Analysis",\n};\n\nvar savedExtension = await client.SavedExtensions.Create(parameters);\n\nConsole.WriteLine(savedExtension);',
-      },
-      go: {
-        method: 'client.SavedExtensions.New',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n\t"github.com/imagekit-developer/imagekit-go/shared"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tsavedExtension, err := client.SavedExtensions.New(context.TODO(), imagekit.SavedExtensionNewParams{\n\t\tConfig: shared.ExtensionConfigUnionParam{\n\t\t\tOfRemoveBg: &shared.ExtensionConfigRemoveBgParam{},\n\t\t},\n\t\tDescription: "Analyzes vehicle images for type, condition, and quality assessment",\n\t\tName:        "Car Quality Analysis",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", savedExtension.ID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/saved-extensions \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "config": {\n            "name": "remove-bg"\n          },\n          "description": "Analyzes vehicle images for type, condition, and quality assessment",\n          "name": "Car Quality Analysis"\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nsaved_extension = client.saved_extensions.create(\n    config={\n        "name": "remove-bg"\n    },\n    description="Analyzes vehicle images for type, condition, and quality assessment",\n    name="Car Quality Analysis",\n)\nprint(saved_extension.id)',
       },
       java: {
         method: 'savedExtensions().create',
@@ -1567,25 +1558,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.ExtensionConfig\nimport com.imagekit.api.models.SavedExtension\nimport com.imagekit.api.models.savedextensions.SavedExtensionCreateParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: SavedExtensionCreateParams = SavedExtensionCreateParams.builder()\n        .config(ExtensionConfig.RemoveBg.builder().build())\n        .description("Analyzes vehicle images for type, condition, and quality assessment")\n        .name("Car Quality Analysis")\n        .build()\n    val savedExtension: SavedExtension = client.savedExtensions().create(params)\n}',
       },
-      php: {
-        method: 'savedExtensions->create',
+      go: {
+        method: 'client.SavedExtensions.New',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtension = $client->savedExtensions->create(\n  config: [\n    'name' => 'remove-bg',\n    'options' => [\n      'addShadow' => true,\n      'bgColor' => 'bg_color',\n      'bgImageURL' => 'bg_image_url',\n      'semitransparency' => true,\n    ],\n  ],\n  description: 'Analyzes vehicle images for type, condition, and quality assessment',\n  name: 'Car Quality Analysis',\n);\n\nvar_dump($savedExtension);",
-      },
-      python: {
-        method: 'saved_extensions.create',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nsaved_extension = client.saved_extensions.create(\n    config={\n        "name": "remove-bg"\n    },\n    description="Analyzes vehicle images for type, condition, and quality assessment",\n    name="Car Quality Analysis",\n)\nprint(saved_extension.id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n\t"github.com/imagekit-developer/imagekit-go/shared"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tsavedExtension, err := client.SavedExtensions.New(context.TODO(), imagekit.SavedExtensionNewParams{\n\t\tConfig: shared.ExtensionConfigUnionParam{\n\t\t\tOfRemoveBg: &shared.ExtensionConfigRemoveBgParam{},\n\t\t},\n\t\tDescription: "Analyzes vehicle images for type, condition, and quality assessment",\n\t\tName:        "Car Quality Analysis",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", savedExtension.ID)\n}\n',
       },
       ruby: {
         method: 'saved_extensions.create',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nsaved_extension = image_kit.saved_extensions.create(\n  config: {name: :"remove-bg"},\n  description: "Analyzes vehicle images for type, condition, and quality assessment",\n  name: "Car Quality Analysis"\n)\n\nputs(saved_extension)',
       },
-      typescript: {
-        method: 'client.savedExtensions.create',
+      cli: {
+        method: 'savedExtensions create',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst savedExtension = await client.savedExtensions.create({\n  config: { name: 'remove-bg' },\n  description: 'Analyzes vehicle images for type, condition, and quality assessment',\n  name: 'Car Quality Analysis',\n});\n\nconsole.log(savedExtension.id);",
+          "imagekit saved-extensions create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --config '{name: remove-bg}' \\\n  --description 'Analyzes vehicle images for type, condition, and quality assessment' \\\n  --name 'Car Quality Analysis'",
+      },
+      php: {
+        method: 'savedExtensions->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtension = $client->savedExtensions->create(\n  config: [\n    'name' => 'remove-bg',\n    'options' => [\n      'addShadow' => true,\n      'bgColor' => 'bg_color',\n      'bgImageURL' => 'bg_image_url',\n      'semitransparency' => true,\n    ],\n  ],\n  description: 'Analyzes vehicle images for type, condition, and quality assessment',\n  name: 'Car Quality Analysis',\n);\n\nvar_dump($savedExtension);",
+      },
+      csharp: {
+        method: 'SavedExtensions.Create',
+        example:
+          'SavedExtensionCreateParams parameters = new()\n{\n    Config = new RemoveBg()\n    {\n        Options = new()\n        {\n            AddShadow = true,\n            BgColor = "bg_color",\n            BgImageUrl = "bg_image_url",\n            Semitransparency = true,\n        },\n    },\n    Description = "Analyzes vehicle images for type, condition, and quality assessment",\n    Name = "Car Quality Analysis",\n};\n\nvar savedExtension = await client.SavedExtensions.Create(parameters);\n\nConsole.WriteLine(savedExtension);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/saved-extensions \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "config": {\n            "name": "remove-bg"\n          },\n          "description": "Analyzes vehicle images for type, condition, and quality assessment",\n          "name": "Car Quality Analysis"\n        }\'',
       },
     },
   },
@@ -1603,24 +1603,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get\n\n`client.savedExtensions.get(id: string): { id?: string; config?: extension_config; createdAt?: string; description?: string; name?: string; updatedAt?: string; }`\n\n**get** `/v1/saved-extensions/{id}`\n\nThis API returns details of a specific saved extension by ID.\n\n\n### Parameters\n\n- `id: string`\n\n### Returns\n\n- `{ id?: string; config?: { name: 'remove-bg'; options?: object; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: object | object | object[]; }; createdAt?: string; description?: string; name?: string; updatedAt?: string; }`\n  Saved extension object containing extension configuration.\n\n  - `id?: string`\n  - `config?: { name: 'remove-bg'; options?: { add_shadow?: boolean; bg_color?: string; bg_image_url?: string; semitransparency?: boolean; }; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: { instruction: string; type: 'select_tags'; max_selections?: number; min_selections?: number; vocabulary?: string[]; } | { field: string; instruction: string; type: 'select_metadata'; max_selections?: number; min_selections?: number; vocabulary?: string | number | boolean[]; } | { instruction: string; type: 'yes_no'; on_no?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_unknown?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_yes?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; }[]; }`\n  - `createdAt?: string`\n  - `description?: string`\n  - `name?: string`\n  - `updatedAt?: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst savedExtension = await client.savedExtensions.get('id');\n\nconsole.log(savedExtension);\n```",
     perLanguage: {
-      cli: {
-        method: 'savedExtensions get',
+      typescript: {
+        method: 'client.savedExtensions.get',
         example:
-          "imagekit saved-extensions get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst savedExtension = await client.savedExtensions.get('id');\n\nconsole.log(savedExtension.id);",
       },
-      csharp: {
-        method: 'SavedExtensions.Get',
+      python: {
+        method: 'saved_extensions.get',
         example:
-          'SavedExtensionGetParams parameters = new() { ID = "id" };\n\nvar savedExtension = await client.SavedExtensions.Get(parameters);\n\nConsole.WriteLine(savedExtension);',
-      },
-      go: {
-        method: 'client.SavedExtensions.Get',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tsavedExtension, err := client.SavedExtensions.Get(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", savedExtension.ID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/saved-extensions/$ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nsaved_extension = client.saved_extensions.get(\n    "id",\n)\nprint(saved_extension.id)',
       },
       java: {
         method: 'savedExtensions().get',
@@ -1632,25 +1623,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.SavedExtension\nimport com.imagekit.api.models.savedextensions.SavedExtensionGetParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val savedExtension: SavedExtension = client.savedExtensions().get("id")\n}',
       },
-      php: {
-        method: 'savedExtensions->get',
+      go: {
+        method: 'client.SavedExtensions.Get',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtension = $client->savedExtensions->get('id');\n\nvar_dump($savedExtension);",
-      },
-      python: {
-        method: 'saved_extensions.get',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nsaved_extension = client.saved_extensions.get(\n    "id",\n)\nprint(saved_extension.id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tsavedExtension, err := client.SavedExtensions.Get(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", savedExtension.ID)\n}\n',
       },
       ruby: {
         method: 'saved_extensions.get',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nsaved_extension = image_kit.saved_extensions.get("id")\n\nputs(saved_extension)',
       },
-      typescript: {
-        method: 'client.savedExtensions.get',
+      cli: {
+        method: 'savedExtensions get',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst savedExtension = await client.savedExtensions.get('id');\n\nconsole.log(savedExtension.id);",
+          "imagekit saved-extensions get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+      },
+      php: {
+        method: 'savedExtensions->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtension = $client->savedExtensions->get('id');\n\nvar_dump($savedExtension);",
+      },
+      csharp: {
+        method: 'SavedExtensions.Get',
+        example:
+          'SavedExtensionGetParams parameters = new() { ID = "id" };\n\nvar savedExtension = await client.SavedExtensions.Get(parameters);\n\nConsole.WriteLine(savedExtension);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/saved-extensions/$ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -1674,24 +1674,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## update\n\n`client.savedExtensions.update(id: string, config?: { name: 'remove-bg'; options?: object; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: object | object | object[]; }, description?: string, name?: string): { id?: string; config?: extension_config; createdAt?: string; description?: string; name?: string; updatedAt?: string; }`\n\n**patch** `/v1/saved-extensions/{id}`\n\nThis API updates an existing saved extension. You can update the name, description, or config.\n\n\n### Parameters\n\n- `id: string`\n\n- `config?: { name: 'remove-bg'; options?: { add_shadow?: boolean; bg_color?: string; bg_image_url?: string; semitransparency?: boolean; }; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: { instruction: string; type: 'select_tags'; max_selections?: number; min_selections?: number; vocabulary?: string[]; } | { field: string; instruction: string; type: 'select_metadata'; max_selections?: number; min_selections?: number; vocabulary?: string | number | boolean[]; } | { instruction: string; type: 'yes_no'; on_no?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_unknown?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_yes?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; }[]; }`\n  Configuration object for an extension (base extensions only, not saved extension references).\n\n- `description?: string`\n  Updated description of the saved extension.\n\n- `name?: string`\n  Updated name of the saved extension.\n\n### Returns\n\n- `{ id?: string; config?: { name: 'remove-bg'; options?: object; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: object | object | object[]; }; createdAt?: string; description?: string; name?: string; updatedAt?: string; }`\n  Saved extension object containing extension configuration.\n\n  - `id?: string`\n  - `config?: { name: 'remove-bg'; options?: { add_shadow?: boolean; bg_color?: string; bg_image_url?: string; semitransparency?: boolean; }; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: { instruction: string; type: 'select_tags'; max_selections?: number; min_selections?: number; vocabulary?: string[]; } | { field: string; instruction: string; type: 'select_metadata'; max_selections?: number; min_selections?: number; vocabulary?: string | number | boolean[]; } | { instruction: string; type: 'yes_no'; on_no?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_unknown?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_yes?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; }[]; }`\n  - `createdAt?: string`\n  - `description?: string`\n  - `name?: string`\n  - `updatedAt?: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst savedExtension = await client.savedExtensions.update('id');\n\nconsole.log(savedExtension);\n```",
     perLanguage: {
-      cli: {
-        method: 'savedExtensions update',
+      typescript: {
+        method: 'client.savedExtensions.update',
         example:
-          "imagekit saved-extensions update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst savedExtension = await client.savedExtensions.update('id');\n\nconsole.log(savedExtension.id);",
       },
-      csharp: {
-        method: 'SavedExtensions.Update',
+      python: {
+        method: 'saved_extensions.update',
         example:
-          'SavedExtensionUpdateParams parameters = new() { ID = "id" };\n\nvar savedExtension = await client.SavedExtensions.Update(parameters);\n\nConsole.WriteLine(savedExtension);',
-      },
-      go: {
-        method: 'client.SavedExtensions.Update',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tsavedExtension, err := client.SavedExtensions.Update(\n\t\tcontext.TODO(),\n\t\t"id",\n\t\timagekit.SavedExtensionUpdateParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", savedExtension.ID)\n}\n',
-      },
-      http: {
-        example:
-          "curl https://api.imagekit.io/v1/saved-extensions/$ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -u \"$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS\" \\\n    -d '{}'",
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nsaved_extension = client.saved_extensions.update(\n    id="id",\n)\nprint(saved_extension.id)',
       },
       java: {
         method: 'savedExtensions().update',
@@ -1703,25 +1694,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.SavedExtension\nimport com.imagekit.api.models.savedextensions.SavedExtensionUpdateParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val savedExtension: SavedExtension = client.savedExtensions().update("id")\n}',
       },
-      php: {
-        method: 'savedExtensions->update',
+      go: {
+        method: 'client.SavedExtensions.Update',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtension = $client->savedExtensions->update(\n  'id',\n  config: [\n    'name' => 'remove-bg',\n    'options' => [\n      'addShadow' => true,\n      'bgColor' => 'bg_color',\n      'bgImageURL' => 'bg_image_url',\n      'semitransparency' => true,\n    ],\n  ],\n  description: 'x',\n  name: 'x',\n);\n\nvar_dump($savedExtension);",
-      },
-      python: {
-        method: 'saved_extensions.update',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nsaved_extension = client.saved_extensions.update(\n    id="id",\n)\nprint(saved_extension.id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tsavedExtension, err := client.SavedExtensions.Update(\n\t\tcontext.TODO(),\n\t\t"id",\n\t\timagekit.SavedExtensionUpdateParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", savedExtension.ID)\n}\n',
       },
       ruby: {
         method: 'saved_extensions.update',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nsaved_extension = image_kit.saved_extensions.update("id")\n\nputs(saved_extension)',
       },
-      typescript: {
-        method: 'client.savedExtensions.update',
+      cli: {
+        method: 'savedExtensions update',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst savedExtension = await client.savedExtensions.update('id');\n\nconsole.log(savedExtension.id);",
+          "imagekit saved-extensions update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+      },
+      php: {
+        method: 'savedExtensions->update',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtension = $client->savedExtensions->update(\n  'id',\n  config: [\n    'name' => 'remove-bg',\n    'options' => [\n      'addShadow' => true,\n      'bgColor' => 'bg_color',\n      'bgImageURL' => 'bg_image_url',\n      'semitransparency' => true,\n    ],\n  ],\n  description: 'x',\n  name: 'x',\n);\n\nvar_dump($savedExtension);",
+      },
+      csharp: {
+        method: 'SavedExtensions.Update',
+        example:
+          'SavedExtensionUpdateParams parameters = new() { ID = "id" };\n\nvar savedExtension = await client.SavedExtensions.Update(parameters);\n\nConsole.WriteLine(savedExtension);',
+      },
+      http: {
+        example:
+          "curl https://api.imagekit.io/v1/saved-extensions/$ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -u \"$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS\" \\\n    -d '{}'",
       },
     },
   },
@@ -1737,24 +1737,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.savedExtensions.delete(id: string): void`\n\n**delete** `/v1/saved-extensions/{id}`\n\nThis API deletes a saved extension permanently.\n\n\n### Parameters\n\n- `id: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nawait client.savedExtensions.delete('id')\n```",
     perLanguage: {
-      cli: {
-        method: 'savedExtensions delete',
+      typescript: {
+        method: 'client.savedExtensions.delete',
         example:
-          "imagekit saved-extensions delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.savedExtensions.delete('id');",
       },
-      csharp: {
-        method: 'SavedExtensions.Delete',
+      python: {
+        method: 'saved_extensions.delete',
         example:
-          'SavedExtensionDeleteParams parameters = new() { ID = "id" };\n\nawait client.SavedExtensions.Delete(parameters);',
-      },
-      go: {
-        method: 'client.SavedExtensions.Delete',
-        example:
-          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.SavedExtensions.Delete(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/saved-extensions/$ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.saved_extensions.delete(\n    "id",\n)',
       },
       java: {
         method: 'savedExtensions().delete',
@@ -1766,25 +1757,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.savedextensions.SavedExtensionDeleteParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    client.savedExtensions().delete("id")\n}',
       },
-      php: {
-        method: 'savedExtensions->delete',
+      go: {
+        method: 'client.SavedExtensions.Delete',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->savedExtensions->delete('id');\n\nvar_dump($result);",
-      },
-      python: {
-        method: 'saved_extensions.delete',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.saved_extensions.delete(\n    "id",\n)',
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.SavedExtensions.Delete(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
       },
       ruby: {
         method: 'saved_extensions.delete',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresult = image_kit.saved_extensions.delete("id")\n\nputs(result)',
       },
-      typescript: {
-        method: 'client.savedExtensions.delete',
+      cli: {
+        method: 'savedExtensions delete',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.savedExtensions.delete('id');",
+          "imagekit saved-extensions delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+      },
+      php: {
+        method: 'savedExtensions->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->savedExtensions->delete('id');\n\nvar_dump($result);",
+      },
+      csharp: {
+        method: 'SavedExtensions.Delete',
+        example:
+          'SavedExtensionDeleteParams parameters = new() { ID = "id" };\n\nawait client.SavedExtensions.Delete(parameters);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/saved-extensions/$ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -1811,23 +1811,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.assets.list(fileType?: 'all' | 'image' | 'non-image', limit?: number, path?: string, searchQuery?: string, skip?: number, sort?: string, type?: 'file' | 'file-version' | 'folder' | 'all'): object | object[]`\n\n**get** `/v1/files`\n\nThis API can list all the uploaded files and folders in your ImageKit.io media library. In addition, you can fine-tune your query by specifying various filters by generating a query string in a Lucene-like syntax and provide this generated string as the value of the `searchQuery`.\n\n\n### Parameters\n\n- `fileType?: 'all' | 'image' | 'non-image'`\n  Filter results by file type.\n\n- `all` — include all file types  \n- `image` — include only image files  \n- `non-image` — include only non-image files (e.g., JS, CSS, video)\n\n- `limit?: number`\n  The maximum number of results to return in response.\n\n\n- `path?: string`\n  Folder path if you want to limit the search within a specific folder. For example, `/sales-banner/` will only search in folder sales-banner.\n\nNote : If your use case involves searching within a folder as well as its subfolders, you can use `path` parameter in `searchQuery` with appropriate operator.\nCheckout [Supported parameters](/docs/api-reference/digital-asset-management-dam/list-and-search-assets#supported-parameters) for more information.\n\n\n- `searchQuery?: string`\n  Query string in a Lucene-like query language e.g. `createdAt > \"7d\"`.\n\nNote : When the searchQuery parameter is present, the following query parameters will have no effect on the result:\n\n1. `tags`\n2. `type`\n3. `name`\n\n[Learn more](/docs/api-reference/digital-asset-management-dam/list-and-search-assets#advanced-search-queries) from examples.\n\n\n- `skip?: number`\n  The number of results to skip before returning results.\n\n\n- `sort?: string`\n  Sort the results by one of the supported fields in ascending or descending order.\n\n- `type?: 'file' | 'file-version' | 'folder' | 'all'`\n  Filter results by asset type.\n\n- `file` — returns only files  \n- `file-version` — returns specific file versions  \n- `folder` — returns only folders  \n- `all` — returns both files and folders (excludes `file-version`)\n\n### Returns\n\n- `{ AITags?: { confidence?: number; name?: string; source?: string; }[]; audioCodec?: string; bitRate?: number; createdAt?: string; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; fileId?: string; filePath?: string; fileType?: string; hasAlpha?: boolean; height?: number; isPrivateFile?: boolean; isPublished?: boolean; mime?: string; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnail?: string; type?: 'file' | 'file-version'; updatedAt?: string; url?: string; versionInfo?: { id?: string; name?: string; }; videoCodec?: string; width?: number; } | { createdAt?: string; customMetadata?: object; folderId?: string; folderPath?: string; name?: string; type?: 'folder'; updatedAt?: string; }[]`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst assets = await client.assets.list();\n\nconsole.log(assets);\n```",
     perLanguage: {
-      cli: {
-        method: 'assets list',
-        example: "imagekit assets list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
-      },
-      csharp: {
-        method: 'Assets.List',
+      typescript: {
+        method: 'client.assets.list',
         example:
-          'AssetListParams parameters = new();\n\nvar assets = await client.Assets.List(parameters);\n\nConsole.WriteLine(assets);',
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst assets = await client.assets.list();\n\nconsole.log(assets);",
       },
-      go: {
-        method: 'client.Assets.List',
+      python: {
+        method: 'assets.list',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tassets, err := client.Assets.List(context.TODO(), imagekit.AssetListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", assets)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nassets = client.assets.list()\nprint(assets)',
       },
       java: {
         method: 'assets().list',
@@ -1839,25 +1831,33 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.assets.AssetListParams\nimport com.imagekit.api.models.assets.AssetListResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val assets: List<AssetListResponse> = client.assets().list()\n}',
       },
-      php: {
-        method: 'assets->list',
+      go: {
+        method: 'client.Assets.List',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$assets = $client->assets->list(\n  fileType: 'all',\n  limit: 1,\n  path: 'path',\n  searchQuery: 'searchQuery',\n  skip: 0,\n  sort: 'ASC_NAME',\n  type: 'file',\n);\n\nvar_dump($assets);",
-      },
-      python: {
-        method: 'assets.list',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nassets = client.assets.list()\nprint(assets)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tassets, err := client.Assets.List(context.TODO(), imagekit.AssetListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", assets)\n}\n',
       },
       ruby: {
         method: 'assets.list',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nassets = image_kit.assets.list\n\nputs(assets)',
       },
-      typescript: {
-        method: 'client.assets.list',
+      cli: {
+        method: 'assets list',
+        example: "imagekit assets list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+      },
+      php: {
+        method: 'assets->list',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst assets = await client.assets.list();\n\nconsole.log(assets);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$assets = $client->assets->list(\n  fileType: 'all',\n  limit: 1,\n  path: 'path',\n  searchQuery: 'searchQuery',\n  skip: 0,\n  sort: 'ASC_NAME',\n  type: 'file',\n);\n\nvar_dump($assets);",
+      },
+      csharp: {
+        method: 'Assets.List',
+        example:
+          'AssetListParams parameters = new();\n\nvar assets = await client.Assets.List(parameters);\n\nConsole.WriteLine(assets);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -1875,24 +1875,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.cache.invalidation.create(url: string): { requestId?: string; }`\n\n**post** `/v1/files/purge`\n\nThis API will purge CDN cache and ImageKit.io's internal cache for a file.  Note: Purge cache is an asynchronous process and it may take some time to reflect the changes.\n\n\n### Parameters\n\n- `url: string`\n  The full URL of the file to be purged.\n\n\n### Returns\n\n- `{ requestId?: string; }`\n\n  - `requestId?: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst invalidation = await client.cache.invalidation.create({ url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg' });\n\nconsole.log(invalidation);\n```",
     perLanguage: {
-      cli: {
-        method: 'invalidation create',
+      typescript: {
+        method: 'client.cache.invalidation.create',
         example:
-          "imagekit cache:invalidation create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --url https://ik.imagekit.io/your_imagekit_id/default-image.jpg",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst invalidation = await client.cache.invalidation.create({\n  url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg',\n});\n\nconsole.log(invalidation.requestId);",
       },
-      csharp: {
-        method: 'Cache.Invalidation.Create',
+      python: {
+        method: 'cache.invalidation.create',
         example:
-          'InvalidationCreateParams parameters = new()\n{\n    Url = "https://ik.imagekit.io/your_imagekit_id/default-image.jpg"\n};\n\nvar invalidation = await client.Cache.Invalidation.Create(parameters);\n\nConsole.WriteLine(invalidation);',
-      },
-      go: {
-        method: 'client.Cache.Invalidation.New',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tinvalidation, err := client.Cache.Invalidation.New(context.TODO(), imagekit.CacheInvalidationNewParams{\n\t\tURL: "https://ik.imagekit.io/your_imagekit_id/default-image.jpg",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", invalidation.RequestID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/purge \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "url": "https://ik.imagekit.io/your_imagekit_id/default-image.jpg"\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\ninvalidation = client.cache.invalidation.create(\n    url="https://ik.imagekit.io/your_imagekit_id/default-image.jpg",\n)\nprint(invalidation.request_id)',
       },
       java: {
         method: 'cache().invalidation().create',
@@ -1904,25 +1895,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.cache.invalidation.InvalidationCreateParams\nimport com.imagekit.api.models.cache.invalidation.InvalidationCreateResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: InvalidationCreateParams = InvalidationCreateParams.builder()\n        .url("https://ik.imagekit.io/your_imagekit_id/default-image.jpg")\n        .build()\n    val invalidation: InvalidationCreateResponse = client.cache().invalidation().create(params)\n}',
       },
-      php: {
-        method: 'cache->invalidation->create',
+      go: {
+        method: 'client.Cache.Invalidation.New',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$invalidation = $client->cache->invalidation->create(\n  url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg'\n);\n\nvar_dump($invalidation);",
-      },
-      python: {
-        method: 'cache.invalidation.create',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\ninvalidation = client.cache.invalidation.create(\n    url="https://ik.imagekit.io/your_imagekit_id/default-image.jpg",\n)\nprint(invalidation.request_id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tinvalidation, err := client.Cache.Invalidation.New(context.TODO(), imagekit.CacheInvalidationNewParams{\n\t\tURL: "https://ik.imagekit.io/your_imagekit_id/default-image.jpg",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", invalidation.RequestID)\n}\n',
       },
       ruby: {
         method: 'cache.invalidation.create',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\ninvalidation = image_kit.cache.invalidation.create(url: "https://ik.imagekit.io/your_imagekit_id/default-image.jpg")\n\nputs(invalidation)',
       },
-      typescript: {
-        method: 'client.cache.invalidation.create',
+      cli: {
+        method: 'invalidation create',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst invalidation = await client.cache.invalidation.create({\n  url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg',\n});\n\nconsole.log(invalidation.requestId);",
+          "imagekit cache:invalidation create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --url https://ik.imagekit.io/your_imagekit_id/default-image.jpg",
+      },
+      php: {
+        method: 'cache->invalidation->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$invalidation = $client->cache->invalidation->create(\n  url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg'\n);\n\nvar_dump($invalidation);",
+      },
+      csharp: {
+        method: 'Cache.Invalidation.Create',
+        example:
+          'InvalidationCreateParams parameters = new()\n{\n    Url = "https://ik.imagekit.io/your_imagekit_id/default-image.jpg"\n};\n\nvar invalidation = await client.Cache.Invalidation.Create(parameters);\n\nConsole.WriteLine(invalidation);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/purge \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "url": "https://ik.imagekit.io/your_imagekit_id/default-image.jpg"\n        }\'',
       },
     },
   },
@@ -1939,24 +1939,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get\n\n`client.cache.invalidation.get(requestId: string): { status?: 'Pending' | 'Completed'; }`\n\n**get** `/v1/files/purge/{requestId}`\n\nThis API returns the status of a purge cache request.\n\n\n### Parameters\n\n- `requestId: string`\n\n### Returns\n\n- `{ status?: 'Pending' | 'Completed'; }`\n\n  - `status?: 'Pending' | 'Completed'`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst invalidation = await client.cache.invalidation.get('requestId');\n\nconsole.log(invalidation);\n```",
     perLanguage: {
-      cli: {
-        method: 'invalidation get',
+      typescript: {
+        method: 'client.cache.invalidation.get',
         example:
-          "imagekit cache:invalidation get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --request-id requestId",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst invalidation = await client.cache.invalidation.get('requestId');\n\nconsole.log(invalidation.status);",
       },
-      csharp: {
-        method: 'Cache.Invalidation.Get',
+      python: {
+        method: 'cache.invalidation.get',
         example:
-          'InvalidationGetParams parameters = new() { RequestID = "requestId" };\n\nvar invalidation = await client.Cache.Invalidation.Get(parameters);\n\nConsole.WriteLine(invalidation);',
-      },
-      go: {
-        method: 'client.Cache.Invalidation.Get',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tinvalidation, err := client.Cache.Invalidation.Get(context.TODO(), "requestId")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", invalidation.Status)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/files/purge/$REQUEST_ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\ninvalidation = client.cache.invalidation.get(\n    "requestId",\n)\nprint(invalidation.status)',
       },
       java: {
         method: 'cache().invalidation().get',
@@ -1968,25 +1959,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.cache.invalidation.InvalidationGetParams\nimport com.imagekit.api.models.cache.invalidation.InvalidationGetResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val invalidation: InvalidationGetResponse = client.cache().invalidation().get("requestId")\n}',
       },
-      php: {
-        method: 'cache->invalidation->get',
+      go: {
+        method: 'client.Cache.Invalidation.Get',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$invalidation = $client->cache->invalidation->get('requestId');\n\nvar_dump($invalidation);",
-      },
-      python: {
-        method: 'cache.invalidation.get',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\ninvalidation = client.cache.invalidation.get(\n    "requestId",\n)\nprint(invalidation.status)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tinvalidation, err := client.Cache.Invalidation.Get(context.TODO(), "requestId")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", invalidation.Status)\n}\n',
       },
       ruby: {
         method: 'cache.invalidation.get',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\ninvalidation = image_kit.cache.invalidation.get("requestId")\n\nputs(invalidation)',
       },
-      typescript: {
-        method: 'client.cache.invalidation.get',
+      cli: {
+        method: 'invalidation get',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst invalidation = await client.cache.invalidation.get('requestId');\n\nconsole.log(invalidation.status);",
+          "imagekit cache:invalidation get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --request-id requestId",
+      },
+      php: {
+        method: 'cache->invalidation->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$invalidation = $client->cache->invalidation->get('requestId');\n\nvar_dump($invalidation);",
+      },
+      csharp: {
+        method: 'Cache.Invalidation.Get',
+        example:
+          'InvalidationGetParams parameters = new() { RequestID = "requestId" };\n\nvar invalidation = await client.Cache.Invalidation.Get(parameters);\n\nConsole.WriteLine(invalidation);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/files/purge/$REQUEST_ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -2004,24 +2004,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.folders.create(folderName: string, parentFolderPath: string): {  }`\n\n**post** `/v1/folder`\n\nThis will create a new folder. You can specify the folder name and location of the parent folder where this new folder should be created.\n\n\n### Parameters\n\n- `folderName: string`\n  The folder will be created with this name. \n\nAll characters except alphabets and numbers (inclusive of unicode letters, marks, and numerals in other languages) will be replaced by an underscore i.e. `_`.\n\n\n- `parentFolderPath: string`\n  The folder where the new folder should be created, for root use `/` else the path e.g. `containing/folder/`.\n\nNote: If any folder(s) is not present in the parentFolderPath parameter, it will be automatically created. For example, if you pass `/product/images/summer`, then `product`, `images`, and `summer` folders will be created if they don't already exist.\n\n\n### Returns\n\n- `{  }`\n\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst folder = await client.folders.create({ folderName: 'summer', parentFolderPath: '/product/images/' });\n\nconsole.log(folder);\n```",
     perLanguage: {
-      cli: {
-        method: 'folders create',
+      typescript: {
+        method: 'client.folders.create',
         example:
-          "imagekit folders create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --folder-name summer \\\n  --parent-folder-path /product/images/",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst folder = await client.folders.create({\n  folderName: 'summer',\n  parentFolderPath: '/product/images/',\n});\n\nconsole.log(folder);",
       },
-      csharp: {
-        method: 'Folders.Create',
+      python: {
+        method: 'folders.create',
         example:
-          'FolderCreateParams parameters = new()\n{\n    FolderName = "summer",\n    ParentFolderPath = "/product/images/",\n};\n\nvar folder = await client.Folders.Create(parameters);\n\nConsole.WriteLine(folder);',
-      },
-      go: {
-        method: 'client.Folders.New',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfolder, err := client.Folders.New(context.TODO(), imagekit.FolderNewParams{\n\t\tFolderName:       "summer",\n\t\tParentFolderPath: "/product/images/",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", folder)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/folder \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "folderName": "summer",\n          "parentFolderPath": "/product/images/"\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfolder = client.folders.create(\n    folder_name="summer",\n    parent_folder_path="/product/images/",\n)\nprint(folder)',
       },
       java: {
         method: 'folders().create',
@@ -2033,25 +2024,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.folders.FolderCreateParams\nimport com.imagekit.api.models.folders.FolderCreateResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: FolderCreateParams = FolderCreateParams.builder()\n        .folderName("summer")\n        .parentFolderPath("/product/images/")\n        .build()\n    val folder: FolderCreateResponse = client.folders().create(params)\n}',
       },
-      php: {
-        method: 'folders->create',
+      go: {
+        method: 'client.Folders.New',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$folder = $client->folders->create(\n  folderName: 'summer', parentFolderPath: '/product/images/'\n);\n\nvar_dump($folder);",
-      },
-      python: {
-        method: 'folders.create',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfolder = client.folders.create(\n    folder_name="summer",\n    parent_folder_path="/product/images/",\n)\nprint(folder)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfolder, err := client.Folders.New(context.TODO(), imagekit.FolderNewParams{\n\t\tFolderName:       "summer",\n\t\tParentFolderPath: "/product/images/",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", folder)\n}\n',
       },
       ruby: {
         method: 'folders.create',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nfolder = image_kit.folders.create(folder_name: "summer", parent_folder_path: "/product/images/")\n\nputs(folder)',
       },
-      typescript: {
-        method: 'client.folders.create',
+      cli: {
+        method: 'folders create',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst folder = await client.folders.create({\n  folderName: 'summer',\n  parentFolderPath: '/product/images/',\n});\n\nconsole.log(folder);",
+          "imagekit folders create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --folder-name summer \\\n  --parent-folder-path /product/images/",
+      },
+      php: {
+        method: 'folders->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$folder = $client->folders->create(\n  folderName: 'summer', parentFolderPath: '/product/images/'\n);\n\nvar_dump($folder);",
+      },
+      csharp: {
+        method: 'Folders.Create',
+        example:
+          'FolderCreateParams parameters = new()\n{\n    FolderName = "summer",\n    ParentFolderPath = "/product/images/",\n};\n\nvar folder = await client.Folders.Create(parameters);\n\nConsole.WriteLine(folder);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/folder \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "folderName": "summer",\n          "parentFolderPath": "/product/images/"\n        }\'',
       },
     },
   },
@@ -2069,24 +2069,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.folders.delete(folderPath: string): {  }`\n\n**delete** `/v1/folder`\n\nThis will delete a folder and all its contents permanently. The API returns an empty response.\n\n\n### Parameters\n\n- `folderPath: string`\n  Full path to the folder you want to delete. For example `/folder/to/delete/`.\n\n\n### Returns\n\n- `{  }`\n\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst folder = await client.folders.delete({ folderPath: '/folder/to/delete/' });\n\nconsole.log(folder);\n```",
     perLanguage: {
-      cli: {
-        method: 'folders delete',
+      typescript: {
+        method: 'client.folders.delete',
         example:
-          "imagekit folders delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --folder-path /folder/to/delete/",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst folder = await client.folders.delete({ folderPath: '/folder/to/delete/' });\n\nconsole.log(folder);",
       },
-      csharp: {
-        method: 'Folders.Delete',
+      python: {
+        method: 'folders.delete',
         example:
-          'FolderDeleteParams parameters = new() { FolderPath = "/folder/to/delete/" };\n\nvar folder = await client.Folders.Delete(parameters);\n\nConsole.WriteLine(folder);',
-      },
-      go: {
-        method: 'client.Folders.Delete',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfolder, err := client.Folders.Delete(context.TODO(), imagekit.FolderDeleteParams{\n\t\tFolderPath: "/folder/to/delete/",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", folder)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/folder \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfolder = client.folders.delete(\n    folder_path="/folder/to/delete/",\n)\nprint(folder)',
       },
       java: {
         method: 'folders().delete',
@@ -2098,25 +2089,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.folders.FolderDeleteParams\nimport com.imagekit.api.models.folders.FolderDeleteResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: FolderDeleteParams = FolderDeleteParams.builder()\n        .folderPath("/folder/to/delete/")\n        .build()\n    val folder: FolderDeleteResponse = client.folders().delete(params)\n}',
       },
-      php: {
-        method: 'folders->delete',
+      go: {
+        method: 'client.Folders.Delete',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$folder = $client->folders->delete(folderPath: '/folder/to/delete/');\n\nvar_dump($folder);",
-      },
-      python: {
-        method: 'folders.delete',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nfolder = client.folders.delete(\n    folder_path="/folder/to/delete/",\n)\nprint(folder)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tfolder, err := client.Folders.Delete(context.TODO(), imagekit.FolderDeleteParams{\n\t\tFolderPath: "/folder/to/delete/",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", folder)\n}\n',
       },
       ruby: {
         method: 'folders.delete',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nfolder = image_kit.folders.delete(folder_path: "/folder/to/delete/")\n\nputs(folder)',
       },
-      typescript: {
-        method: 'client.folders.delete',
+      cli: {
+        method: 'folders delete',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst folder = await client.folders.delete({ folderPath: '/folder/to/delete/' });\n\nconsole.log(folder);",
+          "imagekit folders delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --folder-path /folder/to/delete/",
+      },
+      php: {
+        method: 'folders->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$folder = $client->folders->delete(folderPath: '/folder/to/delete/');\n\nvar_dump($folder);",
+      },
+      csharp: {
+        method: 'Folders.Delete',
+        example:
+          'FolderDeleteParams parameters = new() { FolderPath = "/folder/to/delete/" };\n\nvar folder = await client.Folders.Delete(parameters);\n\nConsole.WriteLine(folder);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/folder \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -2134,24 +2134,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## copy\n\n`client.folders.copy(destinationPath: string, sourceFolderPath: string, includeVersions?: boolean): { jobId: string; }`\n\n**post** `/v1/bulkJobs/copyFolder`\n\nThis will copy one folder into another. The selected folder, its nested folders, files, and their versions (in `includeVersions` is set to true) are copied in this operation. Note: If any file at the destination has the same name as the source file, then the source file and its versions will be appended to the destination file version history.\n\n\n### Parameters\n\n- `destinationPath: string`\n  Full path to the destination folder where you want to copy the source folder into.\n\n\n- `sourceFolderPath: string`\n  The full path to the source folder you want to copy.\n\n\n- `includeVersions?: boolean`\n  Option to copy all versions of files that are nested inside the selected folder. By default, only the current version of each file will be copied. When set to true, all versions of each file will be copied. Default value - `false`.\n\n\n### Returns\n\n- `{ jobId: string; }`\n  Job submitted successfully. A `jobId` will be returned.\n\n  - `jobId: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst response = await client.folders.copy({ destinationPath: '/path/of/destination/folder', sourceFolderPath: '/path/of/source/folder' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'folders copy',
+      typescript: {
+        method: 'client.folders.copy',
         example:
-          "imagekit folders copy \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --destination-path /path/of/destination/folder \\\n  --source-folder-path /path/of/source/folder",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.folders.copy({\n  destinationPath: '/path/of/destination/folder',\n  sourceFolderPath: '/path/of/source/folder',\n});\n\nconsole.log(response.jobId);",
       },
-      csharp: {
-        method: 'Folders.Copy',
+      python: {
+        method: 'folders.copy',
         example:
-          'FolderCopyParams parameters = new()\n{\n    DestinationPath = "/path/of/destination/folder",\n    SourceFolderPath = "/path/of/source/folder",\n};\n\nvar response = await client.Folders.Copy(parameters);\n\nConsole.WriteLine(response);',
-      },
-      go: {
-        method: 'client.Folders.Copy',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Folders.Copy(context.TODO(), imagekit.FolderCopyParams{\n\t\tDestinationPath:  "/path/of/destination/folder",\n\t\tSourceFolderPath: "/path/of/source/folder",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.JobID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/bulkJobs/copyFolder \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "destinationPath": "/path/of/destination/folder",\n          "sourceFolderPath": "/path/of/source/folder",\n          "includeVersions": true\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.folders.copy(\n    destination_path="/path/of/destination/folder",\n    source_folder_path="/path/of/source/folder",\n)\nprint(response.job_id)',
       },
       java: {
         method: 'folders().copy',
@@ -2163,25 +2154,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.folders.FolderCopyParams\nimport com.imagekit.api.models.folders.FolderCopyResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: FolderCopyParams = FolderCopyParams.builder()\n        .destinationPath("/path/of/destination/folder")\n        .sourceFolderPath("/path/of/source/folder")\n        .build()\n    val response: FolderCopyResponse = client.folders().copy(params)\n}',
       },
-      php: {
-        method: 'folders->copy',
+      go: {
+        method: 'client.Folders.Copy',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->folders->copy(\n  destinationPath: '/path/of/destination/folder',\n  sourceFolderPath: '/path/of/source/folder',\n  includeVersions: true,\n);\n\nvar_dump($response);",
-      },
-      python: {
-        method: 'folders.copy',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.folders.copy(\n    destination_path="/path/of/destination/folder",\n    source_folder_path="/path/of/source/folder",\n)\nprint(response.job_id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Folders.Copy(context.TODO(), imagekit.FolderCopyParams{\n\t\tDestinationPath:  "/path/of/destination/folder",\n\t\tSourceFolderPath: "/path/of/source/folder",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.JobID)\n}\n',
       },
       ruby: {
         method: 'folders.copy',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresponse = image_kit.folders.copy(\n  destination_path: "/path/of/destination/folder",\n  source_folder_path: "/path/of/source/folder"\n)\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.folders.copy',
+      cli: {
+        method: 'folders copy',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.folders.copy({\n  destinationPath: '/path/of/destination/folder',\n  sourceFolderPath: '/path/of/source/folder',\n});\n\nconsole.log(response.jobId);",
+          "imagekit folders copy \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --destination-path /path/of/destination/folder \\\n  --source-folder-path /path/of/source/folder",
+      },
+      php: {
+        method: 'folders->copy',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->folders->copy(\n  destinationPath: '/path/of/destination/folder',\n  sourceFolderPath: '/path/of/source/folder',\n  includeVersions: true,\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Folders.Copy',
+        example:
+          'FolderCopyParams parameters = new()\n{\n    DestinationPath = "/path/of/destination/folder",\n    SourceFolderPath = "/path/of/source/folder",\n};\n\nvar response = await client.Folders.Copy(parameters);\n\nConsole.WriteLine(response);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/bulkJobs/copyFolder \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "destinationPath": "/path/of/destination/folder",\n          "sourceFolderPath": "/path/of/source/folder",\n          "includeVersions": true\n        }\'',
       },
     },
   },
@@ -2199,24 +2199,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## move\n\n`client.folders.move(destinationPath: string, sourceFolderPath: string): { jobId: string; }`\n\n**post** `/v1/bulkJobs/moveFolder`\n\nThis will move one folder into another. The selected folder, its nested folders, files, and their versions are moved in this operation. Note: If any file at the destination has the same name as the source file, then the source file and its versions will be appended to the destination file version history.\n\n\n### Parameters\n\n- `destinationPath: string`\n  Full path to the destination folder where you want to move the source folder into.\n\n\n- `sourceFolderPath: string`\n  The full path to the source folder you want to move.\n\n\n### Returns\n\n- `{ jobId: string; }`\n  Job submitted successfully. A `jobId` will be returned.\n\n  - `jobId: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst response = await client.folders.move({ destinationPath: '/path/of/destination/folder', sourceFolderPath: '/path/of/source/folder' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'folders move',
+      typescript: {
+        method: 'client.folders.move',
         example:
-          "imagekit folders move \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --destination-path /path/of/destination/folder \\\n  --source-folder-path /path/of/source/folder",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.folders.move({\n  destinationPath: '/path/of/destination/folder',\n  sourceFolderPath: '/path/of/source/folder',\n});\n\nconsole.log(response.jobId);",
       },
-      csharp: {
-        method: 'Folders.Move',
+      python: {
+        method: 'folders.move',
         example:
-          'FolderMoveParams parameters = new()\n{\n    DestinationPath = "/path/of/destination/folder",\n    SourceFolderPath = "/path/of/source/folder",\n};\n\nvar response = await client.Folders.Move(parameters);\n\nConsole.WriteLine(response);',
-      },
-      go: {
-        method: 'client.Folders.Move',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Folders.Move(context.TODO(), imagekit.FolderMoveParams{\n\t\tDestinationPath:  "/path/of/destination/folder",\n\t\tSourceFolderPath: "/path/of/source/folder",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.JobID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/bulkJobs/moveFolder \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "destinationPath": "/path/of/destination/folder",\n          "sourceFolderPath": "/path/of/source/folder"\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.folders.move(\n    destination_path="/path/of/destination/folder",\n    source_folder_path="/path/of/source/folder",\n)\nprint(response.job_id)',
       },
       java: {
         method: 'folders().move',
@@ -2228,25 +2219,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.folders.FolderMoveParams\nimport com.imagekit.api.models.folders.FolderMoveResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: FolderMoveParams = FolderMoveParams.builder()\n        .destinationPath("/path/of/destination/folder")\n        .sourceFolderPath("/path/of/source/folder")\n        .build()\n    val response: FolderMoveResponse = client.folders().move(params)\n}',
       },
-      php: {
-        method: 'folders->move',
+      go: {
+        method: 'client.Folders.Move',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->folders->move(\n  destinationPath: '/path/of/destination/folder',\n  sourceFolderPath: '/path/of/source/folder',\n);\n\nvar_dump($response);",
-      },
-      python: {
-        method: 'folders.move',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.folders.move(\n    destination_path="/path/of/destination/folder",\n    source_folder_path="/path/of/source/folder",\n)\nprint(response.job_id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Folders.Move(context.TODO(), imagekit.FolderMoveParams{\n\t\tDestinationPath:  "/path/of/destination/folder",\n\t\tSourceFolderPath: "/path/of/source/folder",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.JobID)\n}\n',
       },
       ruby: {
         method: 'folders.move',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresponse = image_kit.folders.move(\n  destination_path: "/path/of/destination/folder",\n  source_folder_path: "/path/of/source/folder"\n)\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.folders.move',
+      cli: {
+        method: 'folders move',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.folders.move({\n  destinationPath: '/path/of/destination/folder',\n  sourceFolderPath: '/path/of/source/folder',\n});\n\nconsole.log(response.jobId);",
+          "imagekit folders move \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --destination-path /path/of/destination/folder \\\n  --source-folder-path /path/of/source/folder",
+      },
+      php: {
+        method: 'folders->move',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->folders->move(\n  destinationPath: '/path/of/destination/folder',\n  sourceFolderPath: '/path/of/source/folder',\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Folders.Move',
+        example:
+          'FolderMoveParams parameters = new()\n{\n    DestinationPath = "/path/of/destination/folder",\n    SourceFolderPath = "/path/of/source/folder",\n};\n\nvar response = await client.Folders.Move(parameters);\n\nConsole.WriteLine(response);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/bulkJobs/moveFolder \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "destinationPath": "/path/of/destination/folder",\n          "sourceFolderPath": "/path/of/source/folder"\n        }\'',
       },
     },
   },
@@ -2264,24 +2264,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## rename\n\n`client.folders.rename(folderPath: string, newFolderName: string, purgeCache?: boolean): { jobId: string; }`\n\n**post** `/v1/bulkJobs/renameFolder`\n\nThis API allows you to rename an existing folder. The folder and all its nested assets and sub-folders will remain unchanged, but their paths will be updated to reflect the new folder name.\n\n\n### Parameters\n\n- `folderPath: string`\n  The full path to the folder you want to rename.\n\n\n- `newFolderName: string`\n  The new name for the folder.\n\nAll characters except alphabets and numbers (inclusive of unicode letters, marks, and numerals in other languages) and `-` will be replaced by an underscore i.e. `_`.\n\n\n- `purgeCache?: boolean`\n  Option to purge cache for the old nested files and their versions' URLs.\n\nWhen set to true, it will internally issue a purge cache request on CDN to remove the cached content of the old nested files and their versions. There will only be one purge request for all the nested files, which will be counted against your monthly purge quota.\n\nNote: A purge cache request will be issued against `https://ik.imagekit.io/old/folder/path*` (with a wildcard at the end). This will remove all nested files, their versions' URLs, and any transformations made using query parameters on these files or their versions. However, the cache for file transformations made using path parameters will persist. You can purge them using the purge API. For more details, refer to the purge API documentation.\n\nDefault value - `false`\n\n\n### Returns\n\n- `{ jobId: string; }`\n  Job submitted successfully. A `jobId` will be returned.\n\n  - `jobId: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst response = await client.folders.rename({ folderPath: '/path/of/folder', newFolderName: 'new-folder-name' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'folders rename',
+      typescript: {
+        method: 'client.folders.rename',
         example:
-          "imagekit folders rename \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --folder-path /path/of/folder \\\n  --new-folder-name new-folder-name",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.folders.rename({\n  folderPath: '/path/of/folder',\n  newFolderName: 'new-folder-name',\n});\n\nconsole.log(response.jobId);",
       },
-      csharp: {
-        method: 'Folders.Rename',
+      python: {
+        method: 'folders.rename',
         example:
-          'FolderRenameParams parameters = new()\n{\n    FolderPath = "/path/of/folder",\n    NewFolderName = "new-folder-name",\n};\n\nvar response = await client.Folders.Rename(parameters);\n\nConsole.WriteLine(response);',
-      },
-      go: {
-        method: 'client.Folders.Rename',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Folders.Rename(context.TODO(), imagekit.FolderRenameParams{\n\t\tFolderPath:    "/path/of/folder",\n\t\tNewFolderName: "new-folder-name",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.JobID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/bulkJobs/renameFolder \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "folderPath": "/path/of/folder",\n          "newFolderName": "new-folder-name",\n          "purgeCache": true\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.folders.rename(\n    folder_path="/path/of/folder",\n    new_folder_name="new-folder-name",\n)\nprint(response.job_id)',
       },
       java: {
         method: 'folders().rename',
@@ -2293,25 +2284,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.folders.FolderRenameParams\nimport com.imagekit.api.models.folders.FolderRenameResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: FolderRenameParams = FolderRenameParams.builder()\n        .folderPath("/path/of/folder")\n        .newFolderName("new-folder-name")\n        .build()\n    val response: FolderRenameResponse = client.folders().rename(params)\n}',
       },
-      php: {
-        method: 'folders->rename',
+      go: {
+        method: 'client.Folders.Rename',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->folders->rename(\n  folderPath: '/path/of/folder',\n  newFolderName: 'new-folder-name',\n  purgeCache: true,\n);\n\nvar_dump($response);",
-      },
-      python: {
-        method: 'folders.rename',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.folders.rename(\n    folder_path="/path/of/folder",\n    new_folder_name="new-folder-name",\n)\nprint(response.job_id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Folders.Rename(context.TODO(), imagekit.FolderRenameParams{\n\t\tFolderPath:    "/path/of/folder",\n\t\tNewFolderName: "new-folder-name",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.JobID)\n}\n',
       },
       ruby: {
         method: 'folders.rename',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresponse = image_kit.folders.rename(folder_path: "/path/of/folder", new_folder_name: "new-folder-name")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.folders.rename',
+      cli: {
+        method: 'folders rename',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.folders.rename({\n  folderPath: '/path/of/folder',\n  newFolderName: 'new-folder-name',\n});\n\nconsole.log(response.jobId);",
+          "imagekit folders rename \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --folder-path /path/of/folder \\\n  --new-folder-name new-folder-name",
+      },
+      php: {
+        method: 'folders->rename',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->folders->rename(\n  folderPath: '/path/of/folder',\n  newFolderName: 'new-folder-name',\n  purgeCache: true,\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Folders.Rename',
+        example:
+          'FolderRenameParams parameters = new()\n{\n    FolderPath = "/path/of/folder",\n    NewFolderName = "new-folder-name",\n};\n\nvar response = await client.Folders.Rename(parameters);\n\nConsole.WriteLine(response);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/bulkJobs/renameFolder \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "folderPath": "/path/of/folder",\n          "newFolderName": "new-folder-name",\n          "purgeCache": true\n        }\'',
       },
     },
   },
@@ -2329,24 +2329,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get\n\n`client.folders.job.get(jobId: string): { jobId?: string; purgeRequestId?: string; status?: 'Pending' | 'Completed'; type?: 'COPY_FOLDER' | 'MOVE_FOLDER' | 'RENAME_FOLDER'; }`\n\n**get** `/v1/bulkJobs/{jobId}`\n\nThis API returns the status of a bulk job like copy and move folder operations.\n\n\n### Parameters\n\n- `jobId: string`\n\n### Returns\n\n- `{ jobId?: string; purgeRequestId?: string; status?: 'Pending' | 'Completed'; type?: 'COPY_FOLDER' | 'MOVE_FOLDER' | 'RENAME_FOLDER'; }`\n\n  - `jobId?: string`\n  - `purgeRequestId?: string`\n  - `status?: 'Pending' | 'Completed'`\n  - `type?: 'COPY_FOLDER' | 'MOVE_FOLDER' | 'RENAME_FOLDER'`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst job = await client.folders.job.get('jobId');\n\nconsole.log(job);\n```",
     perLanguage: {
-      cli: {
-        method: 'job get',
+      typescript: {
+        method: 'client.folders.job.get',
         example:
-          "imagekit folders:job get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --job-id jobId",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst job = await client.folders.job.get('jobId');\n\nconsole.log(job.jobId);",
       },
-      csharp: {
-        method: 'Folders.Job.Get',
+      python: {
+        method: 'folders.job.get',
         example:
-          'JobGetParams parameters = new() { JobID = "jobId" };\n\nvar job = await client.Folders.Job.Get(parameters);\n\nConsole.WriteLine(job);',
-      },
-      go: {
-        method: 'client.Folders.Job.Get',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tjob, err := client.Folders.Job.Get(context.TODO(), "jobId")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", job.JobID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/bulkJobs/$JOB_ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\njob = client.folders.job.get(\n    "jobId",\n)\nprint(job.job_id)',
       },
       java: {
         method: 'folders().job().get',
@@ -2358,25 +2349,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.folders.job.JobGetParams\nimport com.imagekit.api.models.folders.job.JobGetResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val job: JobGetResponse = client.folders().job().get("jobId")\n}',
       },
-      php: {
-        method: 'folders->job->get',
+      go: {
+        method: 'client.Folders.Job.Get',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$job = $client->folders->job->get('jobId');\n\nvar_dump($job);",
-      },
-      python: {
-        method: 'folders.job.get',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\njob = client.folders.job.get(\n    "jobId",\n)\nprint(job.job_id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tjob, err := client.Folders.Job.Get(context.TODO(), "jobId")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", job.JobID)\n}\n',
       },
       ruby: {
         method: 'folders.job.get',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\njob = image_kit.folders.job.get("jobId")\n\nputs(job)',
       },
-      typescript: {
-        method: 'client.folders.job.get',
+      cli: {
+        method: 'job get',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst job = await client.folders.job.get('jobId');\n\nconsole.log(job.jobId);",
+          "imagekit folders:job get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --job-id jobId",
+      },
+      php: {
+        method: 'folders->job->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$job = $client->folders->job->get('jobId');\n\nvar_dump($job);",
+      },
+      csharp: {
+        method: 'Folders.Job.Get',
+        example:
+          'JobGetParams parameters = new() { JobID = "jobId" };\n\nvar job = await client.Folders.Job.Get(parameters);\n\nConsole.WriteLine(job);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/bulkJobs/$JOB_ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -2395,24 +2395,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get\n\n`client.accounts.usage.get(endDate: string, startDate: string): { bandwidthBytes?: number; extensionUnitsCount?: number; mediaLibraryStorageBytes?: number; originalCacheStorageBytes?: number; videoProcessingUnitsCount?: number; }`\n\n**get** `/v1/accounts/usage`\n\nGet the account usage information between two dates. Note that the API response includes data from the start date while excluding data from the end date. In other words, the data covers the period starting from the specified start date up to, but not including, the end date.\n\n\n### Parameters\n\n- `endDate: string`\n  Specify a `endDate` in `YYYY-MM-DD` format. It should be after the `startDate`. The difference between `startDate` and `endDate` should be less than 90 days.\n\n- `startDate: string`\n  Specify a `startDate` in `YYYY-MM-DD` format. It should be before the `endDate`. The difference between `startDate` and `endDate` should be less than 90 days.\n\n### Returns\n\n- `{ bandwidthBytes?: number; extensionUnitsCount?: number; mediaLibraryStorageBytes?: number; originalCacheStorageBytes?: number; videoProcessingUnitsCount?: number; }`\n\n  - `bandwidthBytes?: number`\n  - `extensionUnitsCount?: number`\n  - `mediaLibraryStorageBytes?: number`\n  - `originalCacheStorageBytes?: number`\n  - `videoProcessingUnitsCount?: number`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst usage = await client.accounts.usage.get({ endDate: '2019-12-27', startDate: '2019-12-27' });\n\nconsole.log(usage);\n```",
     perLanguage: {
-      cli: {
-        method: 'usage get',
+      typescript: {
+        method: 'client.accounts.usage.get',
         example:
-          "imagekit accounts:usage get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --end-date \"'2019-12-27'\" \\\n  --start-date \"'2019-12-27'\"",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst usage = await client.accounts.usage.get({ endDate: '2019-12-27', startDate: '2019-12-27' });\n\nconsole.log(usage.bandwidthBytes);",
       },
-      csharp: {
-        method: 'Accounts.Usage.Get',
+      python: {
+        method: 'accounts.usage.get',
         example:
-          'UsageGetParams parameters = new()\n{\n    EndDate = "2019-12-27",\n    StartDate = "2019-12-27",\n};\n\nvar usage = await client.Accounts.Usage.Get(parameters);\n\nConsole.WriteLine(usage);',
-      },
-      go: {
-        method: 'client.Accounts.Usage.Get',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\t"time"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tusage, err := client.Accounts.Usage.Get(context.TODO(), imagekit.AccountUsageGetParams{\n\t\tEndDate:   time.Now(),\n\t\tStartDate: time.Now(),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", usage.BandwidthBytes)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/accounts/usage \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom datetime import date\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nusage = client.accounts.usage.get(\n    end_date=date.fromisoformat("2019-12-27"),\n    start_date=date.fromisoformat("2019-12-27"),\n)\nprint(usage.bandwidth_bytes)',
       },
       java: {
         method: 'accounts().usage().get',
@@ -2424,25 +2415,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.accounts.usage.UsageGetParams\nimport com.imagekit.api.models.accounts.usage.UsageGetResponse\nimport java.time.LocalDate\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: UsageGetParams = UsageGetParams.builder()\n        .endDate(LocalDate.parse("2019-12-27"))\n        .startDate(LocalDate.parse("2019-12-27"))\n        .build()\n    val usage: UsageGetResponse = client.accounts().usage().get(params)\n}',
       },
-      php: {
-        method: 'accounts->usage->get',
+      go: {
+        method: 'client.Accounts.Usage.Get',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$usage = $client->accounts->usage->get(\n  endDate: '2019-12-27', startDate: '2019-12-27'\n);\n\nvar_dump($usage);",
-      },
-      python: {
-        method: 'accounts.usage.get',
-        example:
-          'import os\nfrom datetime import date\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nusage = client.accounts.usage.get(\n    end_date=date.fromisoformat("2019-12-27"),\n    start_date=date.fromisoformat("2019-12-27"),\n)\nprint(usage.bandwidth_bytes)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\t"time"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tusage, err := client.Accounts.Usage.Get(context.TODO(), imagekit.AccountUsageGetParams{\n\t\tEndDate:   time.Now(),\n\t\tStartDate: time.Now(),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", usage.BandwidthBytes)\n}\n',
       },
       ruby: {
         method: 'accounts.usage.get',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nusage = image_kit.accounts.usage.get(end_date: "2019-12-27", start_date: "2019-12-27")\n\nputs(usage)',
       },
-      typescript: {
-        method: 'client.accounts.usage.get',
+      cli: {
+        method: 'usage get',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst usage = await client.accounts.usage.get({ endDate: '2019-12-27', startDate: '2019-12-27' });\n\nconsole.log(usage.bandwidthBytes);",
+          "imagekit accounts:usage get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --end-date \"'2019-12-27'\" \\\n  --start-date \"'2019-12-27'\"",
+      },
+      php: {
+        method: 'accounts->usage->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$usage = $client->accounts->usage->get(\n  endDate: '2019-12-27', startDate: '2019-12-27'\n);\n\nvar_dump($usage);",
+      },
+      csharp: {
+        method: 'Accounts.Usage.Get',
+        example:
+          'UsageGetParams parameters = new()\n{\n    EndDate = "2019-12-27",\n    StartDate = "2019-12-27",\n};\n\nvar usage = await client.Accounts.Usage.Get(parameters);\n\nConsole.WriteLine(usage);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/accounts/usage \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -2459,24 +2459,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.accounts.origins.list(): object | object | object | object | object | object | object | object[]`\n\n**get** `/v1/accounts/origins`\n\n**Note:** This API is currently in beta.  \nReturns an array of all configured origins for the current account.\n\n\n### Returns\n\n- `{ id: string; bucket: string; includeCanonicalHeader: boolean; name: string; prefix: string; type: 'S3'; baseUrlForCanonicalHeader?: string; } | { id: string; bucket: string; endpoint: string; includeCanonicalHeader: boolean; name: string; prefix: string; s3ForcePathStyle: boolean; type: 'S3_COMPATIBLE'; baseUrlForCanonicalHeader?: string; } | { id: string; bucket: string; includeCanonicalHeader: boolean; name: string; prefix: string; type: 'CLOUDINARY_BACKUP'; baseUrlForCanonicalHeader?: string; } | { id: string; baseUrl: string; forwardHostHeaderToOrigin: boolean; includeCanonicalHeader: boolean; name: string; type: 'WEB_FOLDER'; baseUrlForCanonicalHeader?: string; } | { id: string; includeCanonicalHeader: boolean; name: string; type: 'WEB_PROXY'; baseUrlForCanonicalHeader?: string; } | { id: string; bucket: string; clientEmail: string; includeCanonicalHeader: boolean; name: string; prefix: string; type: 'GCS'; baseUrlForCanonicalHeader?: string; } | { id: string; accountName: string; container: string; includeCanonicalHeader: boolean; name: string; prefix: string; type: 'AZURE_BLOB'; baseUrlForCanonicalHeader?: string; } | { id: string; baseUrl: string; includeCanonicalHeader: boolean; name: string; type: 'AKENEO_PIM'; baseUrlForCanonicalHeader?: string; }[]`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst originResponses = await client.accounts.origins.list();\n\nconsole.log(originResponses);\n```",
     perLanguage: {
-      cli: {
-        method: 'origins list',
+      typescript: {
+        method: 'client.accounts.origins.list',
         example:
-          "imagekit accounts:origins list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst originResponses = await client.accounts.origins.list();\n\nconsole.log(originResponses);",
       },
-      csharp: {
-        method: 'Accounts.Origins.List',
+      python: {
+        method: 'accounts.origins.list',
         example:
-          'OriginListParams parameters = new();\n\nvar originResponses = await client.Accounts.Origins.List(parameters);\n\nConsole.WriteLine(originResponses);',
-      },
-      go: {
-        method: 'client.Accounts.Origins.List',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\toriginResponses, err := client.Accounts.Origins.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", originResponses)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/accounts/origins \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\norigin_responses = client.accounts.origins.list()\nprint(origin_responses)',
       },
       java: {
         method: 'accounts().origins().list',
@@ -2488,25 +2479,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.accounts.origins.OriginListParams\nimport com.imagekit.api.models.accounts.origins.OriginResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val originResponses: List<OriginResponse> = client.accounts().origins().list()\n}',
       },
-      php: {
-        method: 'accounts->origins->list',
+      go: {
+        method: 'client.Accounts.Origins.List',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponses = $client->accounts->origins->list();\n\nvar_dump($originResponses);",
-      },
-      python: {
-        method: 'accounts.origins.list',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\norigin_responses = client.accounts.origins.list()\nprint(origin_responses)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\toriginResponses, err := client.Accounts.Origins.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", originResponses)\n}\n',
       },
       ruby: {
         method: 'accounts.origins.list',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\norigin_responses = image_kit.accounts.origins.list\n\nputs(origin_responses)',
       },
-      typescript: {
-        method: 'client.accounts.origins.list',
+      cli: {
+        method: 'origins list',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst originResponses = await client.accounts.origins.list();\n\nconsole.log(originResponses);",
+          "imagekit accounts:origins list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+      },
+      php: {
+        method: 'accounts->origins->list',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponses = $client->accounts->origins->list();\n\nvar_dump($originResponses);",
+      },
+      csharp: {
+        method: 'Accounts.Origins.List',
+        example:
+          'OriginListParams parameters = new();\n\nvar originResponses = await client.Accounts.Origins.List(parameters);\n\nConsole.WriteLine(originResponses);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/accounts/origins \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -2524,24 +2524,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     ],
     response: 'object | object | object | object | object | object | object | object',
     perLanguage: {
-      cli: {
-        method: 'origins create',
+      typescript: {
+        method: 'client.accounts.origins.create',
         example:
-          "imagekit accounts:origins create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --access-key AKIAIOSFODNN7EXAMPLE \\\n  --bucket product-images \\\n  --name 'US S3 Storage' \\\n  --secret-key wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY \\\n  --type S3 \\\n  --endpoint https://s3.eu-central-1.wasabisys.com \\\n  --base-url https://images.example.com/assets \\\n  --client-email service-account@project.iam.gserviceaccount.com \\\n  --private-key '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...' \\\n  --account-name account123 \\\n  --container images \\\n  --sas-token '?sv=2023-01-03&sr=c&sig=abc123' \\\n  --client-id akeneo-client-id \\\n  --client-secret akeneo-client-secret \\\n  --password strongpassword123 \\\n  --username integration-user",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst originResponse = await client.accounts.origins.create({\n  accessKey: 'AKIAIOSFODNN7EXAMPLE',\n  bucket: 'product-images',\n  name: 'US S3 Storage',\n  secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n  type: 'S3',\n});\n\nconsole.log(originResponse);",
       },
-      csharp: {
-        method: 'Accounts.Origins.Create',
+      python: {
+        method: 'accounts.origins.create',
         example:
-          'OriginCreateParams parameters = new()\n{\n    OriginRequest = new S3()\n    {\n        AccessKey = "AKIATEST123",\n        Bucket = "test-bucket",\n        Name = "My S3 Origin",\n        SecretKey = "secrettest123",\n        BaseUrlForCanonicalHeader = "https://cdn.example.com",\n        IncludeCanonicalHeader = false,\n        Prefix = "images",\n    },\n};\n\nvar originResponse = await client.Accounts.Origins.Create(parameters);\n\nConsole.WriteLine(originResponse);',
-      },
-      go: {
-        method: 'client.Accounts.Origins.New',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\toriginResponse, err := client.Accounts.Origins.New(context.TODO(), imagekit.AccountOriginNewParams{\n\t\tOriginRequest: imagekit.OriginRequestUnionParam{\n\t\t\tOfS3: &imagekit.OriginRequestS3Param{\n\t\t\t\tAccessKey: "AKIATEST123",\n\t\t\t\tBucket:    "test-bucket",\n\t\t\t\tName:      "My S3 Origin",\n\t\t\t\tSecretKey: "secrettest123",\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", originResponse)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/accounts/origins \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "accessKey": "AKIAIOSFODNN7EXAMPLE",\n          "bucket": "product-images",\n          "name": "US S3 Storage",\n          "secretKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n          "type": "S3",\n          "baseUrlForCanonicalHeader": "https://cdn.example.com",\n          "prefix": "raw-assets"\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\norigin_response = client.accounts.origins.create(\n    access_key="AKIAIOSFODNN7EXAMPLE",\n    bucket="product-images",\n    name="US S3 Storage",\n    secret_key="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n    type="S3",\n)\nprint(origin_response)',
       },
       java: {
         method: 'accounts().origins().create',
@@ -2553,25 +2544,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.accounts.origins.OriginCreateParams\nimport com.imagekit.api.models.accounts.origins.OriginRequest\nimport com.imagekit.api.models.accounts.origins.OriginResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: OriginRequest.S3 = OriginRequest.S3.builder()\n        .accessKey("AKIATEST123")\n        .bucket("test-bucket")\n        .name("My S3 Origin")\n        .secretKey("secrettest123")\n        .build()\n    val originResponse: OriginResponse = client.accounts().origins().create(params)\n}',
       },
-      php: {
-        method: 'accounts->origins->create',
+      go: {
+        method: 'client.Accounts.Origins.New',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponse = $client->accounts->origins->create(\n  accessKey: 'AKIAIOSFODNN7EXAMPLE',\n  bucket: 'gcs-media',\n  name: 'US S3 Storage',\n  secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n  type: 'AKENEO_PIM',\n  baseURLForCanonicalHeader: 'https://cdn.example.com',\n  includeCanonicalHeader: false,\n  prefix: 'uploads',\n  endpoint: 'https://s3.eu-central-1.wasabisys.com',\n  s3ForcePathStyle: true,\n  baseURL: 'https://akeneo.company.com',\n  forwardHostHeaderToOrigin: false,\n  clientEmail: 'service-account@project.iam.gserviceaccount.com',\n  privateKey: '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...',\n  accountName: 'account123',\n  container: 'images',\n  sasToken: '?sv=2023-01-03&sr=c&sig=abc123',\n  clientID: 'akeneo-client-id',\n  clientSecret: 'akeneo-client-secret',\n  password: 'strongpassword123',\n  username: 'integration-user',\n);\n\nvar_dump($originResponse);",
-      },
-      python: {
-        method: 'accounts.origins.create',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\norigin_response = client.accounts.origins.create(\n    access_key="AKIAIOSFODNN7EXAMPLE",\n    bucket="product-images",\n    name="US S3 Storage",\n    secret_key="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n    type="S3",\n)\nprint(origin_response)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\toriginResponse, err := client.Accounts.Origins.New(context.TODO(), imagekit.AccountOriginNewParams{\n\t\tOriginRequest: imagekit.OriginRequestUnionParam{\n\t\t\tOfS3: &imagekit.OriginRequestS3Param{\n\t\t\t\tAccessKey: "AKIATEST123",\n\t\t\t\tBucket:    "test-bucket",\n\t\t\t\tName:      "My S3 Origin",\n\t\t\t\tSecretKey: "secrettest123",\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", originResponse)\n}\n',
       },
       ruby: {
         method: 'accounts.origins.create',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\norigin_response = image_kit.accounts.origins.create(\n  origin_request: {accessKey: "AKIATEST123", bucket: "test-bucket", name: "My S3 Origin", secretKey: "secrettest123", type: :S3}\n)\n\nputs(origin_response)',
       },
-      typescript: {
-        method: 'client.accounts.origins.create',
+      cli: {
+        method: 'origins create',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst originResponse = await client.accounts.origins.create({\n  accessKey: 'AKIAIOSFODNN7EXAMPLE',\n  bucket: 'product-images',\n  name: 'US S3 Storage',\n  secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n  type: 'S3',\n});\n\nconsole.log(originResponse);",
+          "imagekit accounts:origins create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --access-key AKIAIOSFODNN7EXAMPLE \\\n  --bucket product-images \\\n  --name 'US S3 Storage' \\\n  --secret-key wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY \\\n  --type S3 \\\n  --endpoint https://s3.eu-central-1.wasabisys.com \\\n  --base-url https://images.example.com/assets \\\n  --client-email service-account@project.iam.gserviceaccount.com \\\n  --private-key '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...' \\\n  --account-name account123 \\\n  --container images \\\n  --sas-token '?sv=2023-01-03&sr=c&sig=abc123' \\\n  --client-id akeneo-client-id \\\n  --client-secret akeneo-client-secret \\\n  --password strongpassword123 \\\n  --username integration-user",
+      },
+      php: {
+        method: 'accounts->origins->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponse = $client->accounts->origins->create(\n  accessKey: 'AKIAIOSFODNN7EXAMPLE',\n  bucket: 'gcs-media',\n  name: 'US S3 Storage',\n  secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n  type: 'AKENEO_PIM',\n  baseURLForCanonicalHeader: 'https://cdn.example.com',\n  includeCanonicalHeader: false,\n  prefix: 'uploads',\n  endpoint: 'https://s3.eu-central-1.wasabisys.com',\n  s3ForcePathStyle: true,\n  baseURL: 'https://akeneo.company.com',\n  forwardHostHeaderToOrigin: false,\n  clientEmail: 'service-account@project.iam.gserviceaccount.com',\n  privateKey: '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...',\n  accountName: 'account123',\n  container: 'images',\n  sasToken: '?sv=2023-01-03&sr=c&sig=abc123',\n  clientID: 'akeneo-client-id',\n  clientSecret: 'akeneo-client-secret',\n  password: 'strongpassword123',\n  username: 'integration-user',\n);\n\nvar_dump($originResponse);",
+      },
+      csharp: {
+        method: 'Accounts.Origins.Create',
+        example:
+          'OriginCreateParams parameters = new()\n{\n    OriginRequest = new S3()\n    {\n        AccessKey = "AKIATEST123",\n        Bucket = "test-bucket",\n        Name = "My S3 Origin",\n        SecretKey = "secrettest123",\n        BaseUrlForCanonicalHeader = "https://cdn.example.com",\n        IncludeCanonicalHeader = false,\n        Prefix = "images",\n    },\n};\n\nvar originResponse = await client.Accounts.Origins.Create(parameters);\n\nConsole.WriteLine(originResponse);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/accounts/origins \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "accessKey": "AKIAIOSFODNN7EXAMPLE",\n          "bucket": "product-images",\n          "name": "US S3 Storage",\n          "secretKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n          "type": "S3",\n          "baseUrlForCanonicalHeader": "https://cdn.example.com",\n          "prefix": "raw-assets"\n        }\'',
       },
     },
   },
@@ -2588,24 +2588,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get\n\n`client.accounts.origins.get(id: string): { id: string; bucket: string; includeCanonicalHeader: boolean; name: string; prefix: string; type: 'S3'; baseUrlForCanonicalHeader?: string; } | { id: string; bucket: string; endpoint: string; includeCanonicalHeader: boolean; name: string; prefix: string; s3ForcePathStyle: boolean; type: 'S3_COMPATIBLE'; baseUrlForCanonicalHeader?: string; } | { id: string; bucket: string; includeCanonicalHeader: boolean; name: string; prefix: string; type: 'CLOUDINARY_BACKUP'; baseUrlForCanonicalHeader?: string; } | { id: string; baseUrl: string; forwardHostHeaderToOrigin: boolean; includeCanonicalHeader: boolean; name: string; type: 'WEB_FOLDER'; baseUrlForCanonicalHeader?: string; } | { id: string; includeCanonicalHeader: boolean; name: string; type: 'WEB_PROXY'; baseUrlForCanonicalHeader?: string; } | { id: string; bucket: string; clientEmail: string; includeCanonicalHeader: boolean; name: string; prefix: string; type: 'GCS'; baseUrlForCanonicalHeader?: string; } | { id: string; accountName: string; container: string; includeCanonicalHeader: boolean; name: string; prefix: string; type: 'AZURE_BLOB'; baseUrlForCanonicalHeader?: string; } | { id: string; baseUrl: string; includeCanonicalHeader: boolean; name: string; type: 'AKENEO_PIM'; baseUrlForCanonicalHeader?: string; }`\n\n**get** `/v1/accounts/origins/{id}`\n\n**Note:** This API is currently in beta.  \nRetrieves the origin identified by `id`.\n\n\n### Parameters\n\n- `id: string`\n  Unique identifier for the origin. This is generated by ImageKit when you create a new origin.\n\n### Returns\n\n- `{ id: string; bucket: string; includeCanonicalHeader: boolean; name: string; prefix: string; type: 'S3'; baseUrlForCanonicalHeader?: string; } | { id: string; bucket: string; endpoint: string; includeCanonicalHeader: boolean; name: string; prefix: string; s3ForcePathStyle: boolean; type: 'S3_COMPATIBLE'; baseUrlForCanonicalHeader?: string; } | { id: string; bucket: string; includeCanonicalHeader: boolean; name: string; prefix: string; type: 'CLOUDINARY_BACKUP'; baseUrlForCanonicalHeader?: string; } | { id: string; baseUrl: string; forwardHostHeaderToOrigin: boolean; includeCanonicalHeader: boolean; name: string; type: 'WEB_FOLDER'; baseUrlForCanonicalHeader?: string; } | { id: string; includeCanonicalHeader: boolean; name: string; type: 'WEB_PROXY'; baseUrlForCanonicalHeader?: string; } | { id: string; bucket: string; clientEmail: string; includeCanonicalHeader: boolean; name: string; prefix: string; type: 'GCS'; baseUrlForCanonicalHeader?: string; } | { id: string; accountName: string; container: string; includeCanonicalHeader: boolean; name: string; prefix: string; type: 'AZURE_BLOB'; baseUrlForCanonicalHeader?: string; } | { id: string; baseUrl: string; includeCanonicalHeader: boolean; name: string; type: 'AKENEO_PIM'; baseUrlForCanonicalHeader?: string; }`\n  Origin object as returned by the API (sensitive fields removed).\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst originResponse = await client.accounts.origins.get('id');\n\nconsole.log(originResponse);\n```",
     perLanguage: {
-      cli: {
-        method: 'origins get',
+      typescript: {
+        method: 'client.accounts.origins.get',
         example:
-          "imagekit accounts:origins get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst originResponse = await client.accounts.origins.get('id');\n\nconsole.log(originResponse);",
       },
-      csharp: {
-        method: 'Accounts.Origins.Get',
+      python: {
+        method: 'accounts.origins.get',
         example:
-          'OriginGetParams parameters = new() { ID = "id" };\n\nvar originResponse = await client.Accounts.Origins.Get(parameters);\n\nConsole.WriteLine(originResponse);',
-      },
-      go: {
-        method: 'client.Accounts.Origins.Get',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\toriginResponse, err := client.Accounts.Origins.Get(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", originResponse)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/accounts/origins/$ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\norigin_response = client.accounts.origins.get(\n    "id",\n)\nprint(origin_response)',
       },
       java: {
         method: 'accounts().origins().get',
@@ -2617,25 +2608,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.accounts.origins.OriginGetParams\nimport com.imagekit.api.models.accounts.origins.OriginResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val originResponse: OriginResponse = client.accounts().origins().get("id")\n}',
       },
-      php: {
-        method: 'accounts->origins->get',
+      go: {
+        method: 'client.Accounts.Origins.Get',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponse = $client->accounts->origins->get('id');\n\nvar_dump($originResponse);",
-      },
-      python: {
-        method: 'accounts.origins.get',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\norigin_response = client.accounts.origins.get(\n    "id",\n)\nprint(origin_response)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\toriginResponse, err := client.Accounts.Origins.Get(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", originResponse)\n}\n',
       },
       ruby: {
         method: 'accounts.origins.get',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\norigin_response = image_kit.accounts.origins.get("id")\n\nputs(origin_response)',
       },
-      typescript: {
-        method: 'client.accounts.origins.get',
+      cli: {
+        method: 'origins get',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst originResponse = await client.accounts.origins.get('id');\n\nconsole.log(originResponse);",
+          "imagekit accounts:origins get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+      },
+      php: {
+        method: 'accounts->origins->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponse = $client->accounts->origins->get('id');\n\nvar_dump($originResponse);",
+      },
+      csharp: {
+        method: 'Accounts.Origins.Get',
+        example:
+          'OriginGetParams parameters = new() { ID = "id" };\n\nvar originResponse = await client.Accounts.Origins.Get(parameters);\n\nConsole.WriteLine(originResponse);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/accounts/origins/$ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -2654,24 +2654,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     ],
     response: 'object | object | object | object | object | object | object | object',
     perLanguage: {
-      cli: {
-        method: 'origins update',
+      typescript: {
+        method: 'client.accounts.origins.update',
         example:
-          "imagekit accounts:origins update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id \\\n  --access-key AKIAIOSFODNN7EXAMPLE \\\n  --bucket product-images \\\n  --name 'US S3 Storage' \\\n  --secret-key wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY \\\n  --type S3 \\\n  --endpoint https://s3.eu-central-1.wasabisys.com \\\n  --base-url https://images.example.com/assets \\\n  --client-email service-account@project.iam.gserviceaccount.com \\\n  --private-key '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...' \\\n  --account-name account123 \\\n  --container images \\\n  --sas-token '?sv=2023-01-03&sr=c&sig=abc123' \\\n  --client-id akeneo-client-id \\\n  --client-secret akeneo-client-secret \\\n  --password strongpassword123 \\\n  --username integration-user",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst originResponse = await client.accounts.origins.update('id', {\n  accessKey: 'AKIAIOSFODNN7EXAMPLE',\n  bucket: 'product-images',\n  name: 'US S3 Storage',\n  secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n  type: 'S3',\n});\n\nconsole.log(originResponse);",
       },
-      csharp: {
-        method: 'Accounts.Origins.Update',
+      python: {
+        method: 'accounts.origins.update',
         example:
-          'OriginUpdateParams parameters = new()\n{\n    ID = "id",\n    OriginRequest = new S3()\n    {\n        AccessKey = "AKIATEST123",\n        Bucket = "test-bucket",\n        Name = "My S3 Origin",\n        SecretKey = "secrettest123",\n        BaseUrlForCanonicalHeader = "https://cdn.example.com",\n        IncludeCanonicalHeader = false,\n        Prefix = "images",\n    },\n};\n\nvar originResponse = await client.Accounts.Origins.Update(parameters);\n\nConsole.WriteLine(originResponse);',
-      },
-      go: {
-        method: 'client.Accounts.Origins.Update',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\toriginResponse, err := client.Accounts.Origins.Update(\n\t\tcontext.TODO(),\n\t\t"id",\n\t\timagekit.AccountOriginUpdateParams{\n\t\t\tOriginRequest: imagekit.OriginRequestUnionParam{\n\t\t\t\tOfS3: &imagekit.OriginRequestS3Param{\n\t\t\t\t\tAccessKey: "AKIATEST123",\n\t\t\t\t\tBucket:    "test-bucket",\n\t\t\t\t\tName:      "My S3 Origin",\n\t\t\t\t\tSecretKey: "secrettest123",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", originResponse)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/accounts/origins/$ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "accessKey": "AKIAIOSFODNN7EXAMPLE",\n          "bucket": "product-images",\n          "name": "US S3 Storage",\n          "secretKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n          "type": "S3",\n          "baseUrlForCanonicalHeader": "https://cdn.example.com",\n          "prefix": "raw-assets"\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\norigin_response = client.accounts.origins.update(\n    id="id",\n    access_key="AKIAIOSFODNN7EXAMPLE",\n    bucket="product-images",\n    name="US S3 Storage",\n    secret_key="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n    type="S3",\n)\nprint(origin_response)',
       },
       java: {
         method: 'accounts().origins().update',
@@ -2683,25 +2674,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.accounts.origins.OriginRequest\nimport com.imagekit.api.models.accounts.origins.OriginResponse\nimport com.imagekit.api.models.accounts.origins.OriginUpdateParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: OriginUpdateParams = OriginUpdateParams.builder()\n        .id("id")\n        .originRequest(OriginRequest.S3.builder()\n            .accessKey("AKIATEST123")\n            .bucket("test-bucket")\n            .name("My S3 Origin")\n            .secretKey("secrettest123")\n            .build())\n        .build()\n    val originResponse: OriginResponse = client.accounts().origins().update(params)\n}',
       },
-      php: {
-        method: 'accounts->origins->update',
+      go: {
+        method: 'client.Accounts.Origins.Update',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponse = $client->accounts->origins->update(\n  'id',\n  accessKey: 'AKIAIOSFODNN7EXAMPLE',\n  bucket: 'gcs-media',\n  name: 'US S3 Storage',\n  secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n  type: 'AKENEO_PIM',\n  baseURLForCanonicalHeader: 'https://cdn.example.com',\n  includeCanonicalHeader: false,\n  prefix: 'uploads',\n  endpoint: 'https://s3.eu-central-1.wasabisys.com',\n  s3ForcePathStyle: true,\n  baseURL: 'https://akeneo.company.com',\n  forwardHostHeaderToOrigin: false,\n  clientEmail: 'service-account@project.iam.gserviceaccount.com',\n  privateKey: '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...',\n  accountName: 'account123',\n  container: 'images',\n  sasToken: '?sv=2023-01-03&sr=c&sig=abc123',\n  clientID: 'akeneo-client-id',\n  clientSecret: 'akeneo-client-secret',\n  password: 'strongpassword123',\n  username: 'integration-user',\n);\n\nvar_dump($originResponse);",
-      },
-      python: {
-        method: 'accounts.origins.update',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\norigin_response = client.accounts.origins.update(\n    id="id",\n    access_key="AKIAIOSFODNN7EXAMPLE",\n    bucket="product-images",\n    name="US S3 Storage",\n    secret_key="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n    type="S3",\n)\nprint(origin_response)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\toriginResponse, err := client.Accounts.Origins.Update(\n\t\tcontext.TODO(),\n\t\t"id",\n\t\timagekit.AccountOriginUpdateParams{\n\t\t\tOriginRequest: imagekit.OriginRequestUnionParam{\n\t\t\t\tOfS3: &imagekit.OriginRequestS3Param{\n\t\t\t\t\tAccessKey: "AKIATEST123",\n\t\t\t\t\tBucket:    "test-bucket",\n\t\t\t\t\tName:      "My S3 Origin",\n\t\t\t\t\tSecretKey: "secrettest123",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", originResponse)\n}\n',
       },
       ruby: {
         method: 'accounts.origins.update',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\norigin_response = image_kit.accounts.origins.update(\n  "id",\n  origin_request: {accessKey: "AKIATEST123", bucket: "test-bucket", name: "My S3 Origin", secretKey: "secrettest123", type: :S3}\n)\n\nputs(origin_response)',
       },
-      typescript: {
-        method: 'client.accounts.origins.update',
+      cli: {
+        method: 'origins update',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst originResponse = await client.accounts.origins.update('id', {\n  accessKey: 'AKIAIOSFODNN7EXAMPLE',\n  bucket: 'product-images',\n  name: 'US S3 Storage',\n  secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n  type: 'S3',\n});\n\nconsole.log(originResponse);",
+          "imagekit accounts:origins update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id \\\n  --access-key AKIAIOSFODNN7EXAMPLE \\\n  --bucket product-images \\\n  --name 'US S3 Storage' \\\n  --secret-key wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY \\\n  --type S3 \\\n  --endpoint https://s3.eu-central-1.wasabisys.com \\\n  --base-url https://images.example.com/assets \\\n  --client-email service-account@project.iam.gserviceaccount.com \\\n  --private-key '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...' \\\n  --account-name account123 \\\n  --container images \\\n  --sas-token '?sv=2023-01-03&sr=c&sig=abc123' \\\n  --client-id akeneo-client-id \\\n  --client-secret akeneo-client-secret \\\n  --password strongpassword123 \\\n  --username integration-user",
+      },
+      php: {
+        method: 'accounts->origins->update',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponse = $client->accounts->origins->update(\n  'id',\n  accessKey: 'AKIAIOSFODNN7EXAMPLE',\n  bucket: 'gcs-media',\n  name: 'US S3 Storage',\n  secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n  type: 'AKENEO_PIM',\n  baseURLForCanonicalHeader: 'https://cdn.example.com',\n  includeCanonicalHeader: false,\n  prefix: 'uploads',\n  endpoint: 'https://s3.eu-central-1.wasabisys.com',\n  s3ForcePathStyle: true,\n  baseURL: 'https://akeneo.company.com',\n  forwardHostHeaderToOrigin: false,\n  clientEmail: 'service-account@project.iam.gserviceaccount.com',\n  privateKey: '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...',\n  accountName: 'account123',\n  container: 'images',\n  sasToken: '?sv=2023-01-03&sr=c&sig=abc123',\n  clientID: 'akeneo-client-id',\n  clientSecret: 'akeneo-client-secret',\n  password: 'strongpassword123',\n  username: 'integration-user',\n);\n\nvar_dump($originResponse);",
+      },
+      csharp: {
+        method: 'Accounts.Origins.Update',
+        example:
+          'OriginUpdateParams parameters = new()\n{\n    ID = "id",\n    OriginRequest = new S3()\n    {\n        AccessKey = "AKIATEST123",\n        Bucket = "test-bucket",\n        Name = "My S3 Origin",\n        SecretKey = "secrettest123",\n        BaseUrlForCanonicalHeader = "https://cdn.example.com",\n        IncludeCanonicalHeader = false,\n        Prefix = "images",\n    },\n};\n\nvar originResponse = await client.Accounts.Origins.Update(parameters);\n\nConsole.WriteLine(originResponse);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/accounts/origins/$ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "accessKey": "AKIAIOSFODNN7EXAMPLE",\n          "bucket": "product-images",\n          "name": "US S3 Storage",\n          "secretKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n          "type": "S3",\n          "baseUrlForCanonicalHeader": "https://cdn.example.com",\n          "prefix": "raw-assets"\n        }\'',
       },
     },
   },
@@ -2718,24 +2718,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.accounts.origins.delete(id: string): void`\n\n**delete** `/v1/accounts/origins/{id}`\n\n**Note:** This API is currently in beta.  \nPermanently removes the origin identified by `id`. If the origin is in use by any URL‑endpoints, the API will return an error.\n\n\n### Parameters\n\n- `id: string`\n  Unique identifier for the origin. This is generated by ImageKit when you create a new origin.\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nawait client.accounts.origins.delete('id')\n```",
     perLanguage: {
-      cli: {
-        method: 'origins delete',
+      typescript: {
+        method: 'client.accounts.origins.delete',
         example:
-          "imagekit accounts:origins delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.accounts.origins.delete('id');",
       },
-      csharp: {
-        method: 'Accounts.Origins.Delete',
+      python: {
+        method: 'accounts.origins.delete',
         example:
-          'OriginDeleteParams parameters = new() { ID = "id" };\n\nawait client.Accounts.Origins.Delete(parameters);',
-      },
-      go: {
-        method: 'client.Accounts.Origins.Delete',
-        example:
-          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.Accounts.Origins.Delete(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/accounts/origins/$ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.accounts.origins.delete(\n    "id",\n)',
       },
       java: {
         method: 'accounts().origins().delete',
@@ -2747,25 +2738,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.accounts.origins.OriginDeleteParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    client.accounts().origins().delete("id")\n}',
       },
-      php: {
-        method: 'accounts->origins->delete',
+      go: {
+        method: 'client.Accounts.Origins.Delete',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->accounts->origins->delete('id');\n\nvar_dump($result);",
-      },
-      python: {
-        method: 'accounts.origins.delete',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.accounts.origins.delete(\n    "id",\n)',
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.Accounts.Origins.Delete(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
       },
       ruby: {
         method: 'accounts.origins.delete',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresult = image_kit.accounts.origins.delete("id")\n\nputs(result)',
       },
-      typescript: {
-        method: 'client.accounts.origins.delete',
+      cli: {
+        method: 'origins delete',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.accounts.origins.delete('id');",
+          "imagekit accounts:origins delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+      },
+      php: {
+        method: 'accounts->origins->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->accounts->origins->delete('id');\n\nvar_dump($result);",
+      },
+      csharp: {
+        method: 'Accounts.Origins.Delete',
+        example:
+          'OriginDeleteParams parameters = new() { ID = "id" };\n\nawait client.Accounts.Origins.Delete(parameters);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/accounts/origins/$ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -2783,24 +2783,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.accounts.urlEndpoints.list(): object[]`\n\n**get** `/v1/accounts/url-endpoints`\n\n**Note:** This API is currently in beta.  \nReturns an array of all URL‑endpoints configured including the default URL-endpoint generated by ImageKit during account creation.\n\n\n### Returns\n\n- `{ id: string; description: string; origins: string[]; urlPrefix: string; urlRewriter?: { preserveAssetDeliveryTypes: boolean; type: 'CLOUDINARY'; } | { type: 'IMGIX'; } | { type: 'AKAMAI'; }; }[]`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst urlEndpointResponses = await client.accounts.urlEndpoints.list();\n\nconsole.log(urlEndpointResponses);\n```",
     perLanguage: {
-      cli: {
-        method: 'urlEndpoints list',
+      typescript: {
+        method: 'client.accounts.urlEndpoints.list',
         example:
-          "imagekit accounts:url-endpoints list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst urlEndpointResponses = await client.accounts.urlEndpoints.list();\n\nconsole.log(urlEndpointResponses);",
       },
-      csharp: {
-        method: 'Accounts.UrlEndpoints.List',
+      python: {
+        method: 'accounts.url_endpoints.list',
         example:
-          'UrlEndpointListParams parameters = new();\n\nvar urlEndpointResponses = await client.Accounts.UrlEndpoints.List(parameters);\n\nConsole.WriteLine(urlEndpointResponses);',
-      },
-      go: {
-        method: 'client.Accounts.URLEndpoints.List',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\turlEndpointResponses, err := client.Accounts.URLEndpoints.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", urlEndpointResponses)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/accounts/url-endpoints \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nurl_endpoint_responses = client.accounts.url_endpoints.list()\nprint(url_endpoint_responses)',
       },
       java: {
         method: 'accounts().urlEndpoints().list',
@@ -2812,25 +2803,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointListParams\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val urlEndpointResponses: List<UrlEndpointResponse> = client.accounts().urlEndpoints().list()\n}',
       },
-      php: {
-        method: 'accounts->urlEndpoints->list',
+      go: {
+        method: 'client.Accounts.URLEndpoints.List',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponses = $client->accounts->urlEndpoints->list();\n\nvar_dump($urlEndpointResponses);",
-      },
-      python: {
-        method: 'accounts.url_endpoints.list',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nurl_endpoint_responses = client.accounts.url_endpoints.list()\nprint(url_endpoint_responses)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\turlEndpointResponses, err := client.Accounts.URLEndpoints.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", urlEndpointResponses)\n}\n',
       },
       ruby: {
         method: 'accounts.url_endpoints.list',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nurl_endpoint_responses = image_kit.accounts.url_endpoints.list\n\nputs(url_endpoint_responses)',
       },
-      typescript: {
-        method: 'client.accounts.urlEndpoints.list',
+      cli: {
+        method: 'urlEndpoints list',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst urlEndpointResponses = await client.accounts.urlEndpoints.list();\n\nconsole.log(urlEndpointResponses);",
+          "imagekit accounts:url-endpoints list \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+      },
+      php: {
+        method: 'accounts->urlEndpoints->list',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponses = $client->accounts->urlEndpoints->list();\n\nvar_dump($urlEndpointResponses);",
+      },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.List',
+        example:
+          'UrlEndpointListParams parameters = new();\n\nvar urlEndpointResponses = await client.Accounts.UrlEndpoints.List(parameters);\n\nConsole.WriteLine(urlEndpointResponses);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/accounts/url-endpoints \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -2854,24 +2854,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.accounts.urlEndpoints.create(description: string, origins?: string[], urlPrefix?: string, urlRewriter?: { type: 'CLOUDINARY'; preserveAssetDeliveryTypes?: boolean; } | { type: 'IMGIX'; } | { type: 'AKAMAI'; }): { id: string; description: string; origins: string[]; urlPrefix: string; urlRewriter?: object | object | object; }`\n\n**post** `/v1/accounts/url-endpoints`\n\n**Note:** This API is currently in beta.  \nCreates a new URL‑endpoint and returns the resulting object.\n\n\n### Parameters\n\n- `description: string`\n  Description of the URL endpoint.\n\n- `origins?: string[]`\n  Ordered list of origin IDs to try when the file isn’t in the Media Library; ImageKit checks them in the sequence provided. Origin must be created before it can be used in a URL endpoint.\n\n- `urlPrefix?: string`\n  Path segment appended to your base URL to form the endpoint (letters, digits, and hyphens only — or empty for the default endpoint).\n\n- `urlRewriter?: { type: 'CLOUDINARY'; preserveAssetDeliveryTypes?: boolean; } | { type: 'IMGIX'; } | { type: 'AKAMAI'; }`\n  Configuration for third-party URL rewriting.\n\n### Returns\n\n- `{ id: string; description: string; origins: string[]; urlPrefix: string; urlRewriter?: { preserveAssetDeliveryTypes: boolean; type: 'CLOUDINARY'; } | { type: 'IMGIX'; } | { type: 'AKAMAI'; }; }`\n  URL‑endpoint object as returned by the API.\n\n  - `id: string`\n  - `description: string`\n  - `origins: string[]`\n  - `urlPrefix: string`\n  - `urlRewriter?: { preserveAssetDeliveryTypes: boolean; type: 'CLOUDINARY'; } | { type: 'IMGIX'; } | { type: 'AKAMAI'; }`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst urlEndpointResponse = await client.accounts.urlEndpoints.create({ description: 'My custom URL endpoint' });\n\nconsole.log(urlEndpointResponse);\n```",
     perLanguage: {
-      cli: {
-        method: 'urlEndpoints create',
+      typescript: {
+        method: 'client.accounts.urlEndpoints.create',
         example:
-          "imagekit accounts:url-endpoints create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --description 'My custom URL endpoint'",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst urlEndpointResponse = await client.accounts.urlEndpoints.create({\n  description: 'My custom URL endpoint',\n});\n\nconsole.log(urlEndpointResponse.id);",
       },
-      csharp: {
-        method: 'Accounts.UrlEndpoints.Create',
+      python: {
+        method: 'accounts.url_endpoints.create',
         example:
-          'UrlEndpointCreateParams parameters = new()\n{\n    Description = "My custom URL endpoint"\n};\n\nvar urlEndpointResponse = await client.Accounts.UrlEndpoints.Create(parameters);\n\nConsole.WriteLine(urlEndpointResponse);',
-      },
-      go: {
-        method: 'client.Accounts.URLEndpoints.New',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\turlEndpointResponse, err := client.Accounts.URLEndpoints.New(context.TODO(), imagekit.AccountURLEndpointNewParams{\n\t\tURLEndpointRequest: imagekit.URLEndpointRequestParam{\n\t\t\tDescription: "My custom URL endpoint",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", urlEndpointResponse.ID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/accounts/url-endpoints \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "description": "My custom URL endpoint",\n          "origins": [\n            "origin-id-1"\n          ],\n          "urlPrefix": "product-images"\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nurl_endpoint_response = client.accounts.url_endpoints.create(\n    description="My custom URL endpoint",\n)\nprint(url_endpoint_response.id)',
       },
       java: {
         method: 'accounts().urlEndpoints().create',
@@ -2883,25 +2874,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointCreateParams\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointRequest\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: UrlEndpointRequest = UrlEndpointRequest.builder()\n        .description("My custom URL endpoint")\n        .build()\n    val urlEndpointResponse: UrlEndpointResponse = client.accounts().urlEndpoints().create(params)\n}',
       },
-      php: {
-        method: 'accounts->urlEndpoints->create',
+      go: {
+        method: 'client.Accounts.URLEndpoints.New',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponse = $client->accounts->urlEndpoints->create(\n  description: 'My custom URL endpoint',\n  origins: ['origin-id-1'],\n  urlPrefix: 'product-images',\n  urlRewriter: ['type' => 'CLOUDINARY', 'preserveAssetDeliveryTypes' => true],\n);\n\nvar_dump($urlEndpointResponse);",
-      },
-      python: {
-        method: 'accounts.url_endpoints.create',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nurl_endpoint_response = client.accounts.url_endpoints.create(\n    description="My custom URL endpoint",\n)\nprint(url_endpoint_response.id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\turlEndpointResponse, err := client.Accounts.URLEndpoints.New(context.TODO(), imagekit.AccountURLEndpointNewParams{\n\t\tURLEndpointRequest: imagekit.URLEndpointRequestParam{\n\t\t\tDescription: "My custom URL endpoint",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", urlEndpointResponse.ID)\n}\n',
       },
       ruby: {
         method: 'accounts.url_endpoints.create',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nurl_endpoint_response = image_kit.accounts.url_endpoints.create(description: "My custom URL endpoint")\n\nputs(url_endpoint_response)',
       },
-      typescript: {
-        method: 'client.accounts.urlEndpoints.create',
+      cli: {
+        method: 'urlEndpoints create',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst urlEndpointResponse = await client.accounts.urlEndpoints.create({\n  description: 'My custom URL endpoint',\n});\n\nconsole.log(urlEndpointResponse.id);",
+          "imagekit accounts:url-endpoints create \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --description 'My custom URL endpoint'",
+      },
+      php: {
+        method: 'accounts->urlEndpoints->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponse = $client->accounts->urlEndpoints->create(\n  description: 'My custom URL endpoint',\n  origins: ['origin-id-1'],\n  urlPrefix: 'product-images',\n  urlRewriter: ['type' => 'CLOUDINARY', 'preserveAssetDeliveryTypes' => true],\n);\n\nvar_dump($urlEndpointResponse);",
+      },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.Create',
+        example:
+          'UrlEndpointCreateParams parameters = new()\n{\n    Description = "My custom URL endpoint"\n};\n\nvar urlEndpointResponse = await client.Accounts.UrlEndpoints.Create(parameters);\n\nConsole.WriteLine(urlEndpointResponse);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/accounts/url-endpoints \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "description": "My custom URL endpoint",\n          "origins": [\n            "origin-id-1"\n          ],\n          "urlPrefix": "product-images"\n        }\'',
       },
     },
   },
@@ -2920,24 +2920,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get\n\n`client.accounts.urlEndpoints.get(id: string): { id: string; description: string; origins: string[]; urlPrefix: string; urlRewriter?: object | object | object; }`\n\n**get** `/v1/accounts/url-endpoints/{id}`\n\n**Note:** This API is currently in beta.  \nRetrieves the URL‑endpoint identified by `id`.\n\n\n### Parameters\n\n- `id: string`\n  Unique identifier for the URL-endpoint. This is generated by ImageKit when you create a new URL-endpoint. For the default URL-endpoint, this is always `default`.\n\n### Returns\n\n- `{ id: string; description: string; origins: string[]; urlPrefix: string; urlRewriter?: { preserveAssetDeliveryTypes: boolean; type: 'CLOUDINARY'; } | { type: 'IMGIX'; } | { type: 'AKAMAI'; }; }`\n  URL‑endpoint object as returned by the API.\n\n  - `id: string`\n  - `description: string`\n  - `origins: string[]`\n  - `urlPrefix: string`\n  - `urlRewriter?: { preserveAssetDeliveryTypes: boolean; type: 'CLOUDINARY'; } | { type: 'IMGIX'; } | { type: 'AKAMAI'; }`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst urlEndpointResponse = await client.accounts.urlEndpoints.get('id');\n\nconsole.log(urlEndpointResponse);\n```",
     perLanguage: {
-      cli: {
-        method: 'urlEndpoints get',
+      typescript: {
+        method: 'client.accounts.urlEndpoints.get',
         example:
-          "imagekit accounts:url-endpoints get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst urlEndpointResponse = await client.accounts.urlEndpoints.get('id');\n\nconsole.log(urlEndpointResponse.id);",
       },
-      csharp: {
-        method: 'Accounts.UrlEndpoints.Get',
+      python: {
+        method: 'accounts.url_endpoints.get',
         example:
-          'UrlEndpointGetParams parameters = new() { ID = "id" };\n\nvar urlEndpointResponse = await client.Accounts.UrlEndpoints.Get(parameters);\n\nConsole.WriteLine(urlEndpointResponse);',
-      },
-      go: {
-        method: 'client.Accounts.URLEndpoints.Get',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\turlEndpointResponse, err := client.Accounts.URLEndpoints.Get(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", urlEndpointResponse.ID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/accounts/url-endpoints/$ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nurl_endpoint_response = client.accounts.url_endpoints.get(\n    "id",\n)\nprint(url_endpoint_response.id)',
       },
       java: {
         method: 'accounts().urlEndpoints().get',
@@ -2949,25 +2940,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointGetParams\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointResponse\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val urlEndpointResponse: UrlEndpointResponse = client.accounts().urlEndpoints().get("id")\n}',
       },
-      php: {
-        method: 'accounts->urlEndpoints->get',
+      go: {
+        method: 'client.Accounts.URLEndpoints.Get',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponse = $client->accounts->urlEndpoints->get('id');\n\nvar_dump($urlEndpointResponse);",
-      },
-      python: {
-        method: 'accounts.url_endpoints.get',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nurl_endpoint_response = client.accounts.url_endpoints.get(\n    "id",\n)\nprint(url_endpoint_response.id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\turlEndpointResponse, err := client.Accounts.URLEndpoints.Get(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", urlEndpointResponse.ID)\n}\n',
       },
       ruby: {
         method: 'accounts.url_endpoints.get',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nurl_endpoint_response = image_kit.accounts.url_endpoints.get("id")\n\nputs(url_endpoint_response)',
       },
-      typescript: {
-        method: 'client.accounts.urlEndpoints.get',
+      cli: {
+        method: 'urlEndpoints get',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst urlEndpointResponse = await client.accounts.urlEndpoints.get('id');\n\nconsole.log(urlEndpointResponse.id);",
+          "imagekit accounts:url-endpoints get \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+      },
+      php: {
+        method: 'accounts->urlEndpoints->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponse = $client->accounts->urlEndpoints->get('id');\n\nvar_dump($urlEndpointResponse);",
+      },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.Get',
+        example:
+          'UrlEndpointGetParams parameters = new() { ID = "id" };\n\nvar urlEndpointResponse = await client.Accounts.UrlEndpoints.Get(parameters);\n\nConsole.WriteLine(urlEndpointResponse);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/accounts/url-endpoints/$ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -2992,24 +2992,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## update\n\n`client.accounts.urlEndpoints.update(id: string, description: string, origins?: string[], urlPrefix?: string, urlRewriter?: { type: 'CLOUDINARY'; preserveAssetDeliveryTypes?: boolean; } | { type: 'IMGIX'; } | { type: 'AKAMAI'; }): { id: string; description: string; origins: string[]; urlPrefix: string; urlRewriter?: object | object | object; }`\n\n**put** `/v1/accounts/url-endpoints/{id}`\n\n**Note:** This API is currently in beta.  \nUpdates the URL‑endpoint identified by `id` and returns the updated object.\n\n\n### Parameters\n\n- `id: string`\n  Unique identifier for the URL-endpoint. This is generated by ImageKit when you create a new URL-endpoint. For the default URL-endpoint, this is always `default`.\n\n- `description: string`\n  Description of the URL endpoint.\n\n- `origins?: string[]`\n  Ordered list of origin IDs to try when the file isn’t in the Media Library; ImageKit checks them in the sequence provided. Origin must be created before it can be used in a URL endpoint.\n\n- `urlPrefix?: string`\n  Path segment appended to your base URL to form the endpoint (letters, digits, and hyphens only — or empty for the default endpoint).\n\n- `urlRewriter?: { type: 'CLOUDINARY'; preserveAssetDeliveryTypes?: boolean; } | { type: 'IMGIX'; } | { type: 'AKAMAI'; }`\n  Configuration for third-party URL rewriting.\n\n### Returns\n\n- `{ id: string; description: string; origins: string[]; urlPrefix: string; urlRewriter?: { preserveAssetDeliveryTypes: boolean; type: 'CLOUDINARY'; } | { type: 'IMGIX'; } | { type: 'AKAMAI'; }; }`\n  URL‑endpoint object as returned by the API.\n\n  - `id: string`\n  - `description: string`\n  - `origins: string[]`\n  - `urlPrefix: string`\n  - `urlRewriter?: { preserveAssetDeliveryTypes: boolean; type: 'CLOUDINARY'; } | { type: 'IMGIX'; } | { type: 'AKAMAI'; }`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst urlEndpointResponse = await client.accounts.urlEndpoints.update('id', { description: 'My custom URL endpoint' });\n\nconsole.log(urlEndpointResponse);\n```",
     perLanguage: {
-      cli: {
-        method: 'urlEndpoints update',
+      typescript: {
+        method: 'client.accounts.urlEndpoints.update',
         example:
-          "imagekit accounts:url-endpoints update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id \\\n  --description 'My custom URL endpoint'",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst urlEndpointResponse = await client.accounts.urlEndpoints.update('id', {\n  description: 'My custom URL endpoint',\n});\n\nconsole.log(urlEndpointResponse.id);",
       },
-      csharp: {
-        method: 'Accounts.UrlEndpoints.Update',
+      python: {
+        method: 'accounts.url_endpoints.update',
         example:
-          'UrlEndpointUpdateParams parameters = new()\n{\n    ID = "id",\n    Description = "My custom URL endpoint",\n};\n\nvar urlEndpointResponse = await client.Accounts.UrlEndpoints.Update(parameters);\n\nConsole.WriteLine(urlEndpointResponse);',
-      },
-      go: {
-        method: 'client.Accounts.URLEndpoints.Update',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\turlEndpointResponse, err := client.Accounts.URLEndpoints.Update(\n\t\tcontext.TODO(),\n\t\t"id",\n\t\timagekit.AccountURLEndpointUpdateParams{\n\t\t\tURLEndpointRequest: imagekit.URLEndpointRequestParam{\n\t\t\t\tDescription: "My custom URL endpoint",\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", urlEndpointResponse.ID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/accounts/url-endpoints/$ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "description": "My custom URL endpoint",\n          "origins": [\n            "origin-id-1"\n          ],\n          "urlPrefix": "product-images"\n        }\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nurl_endpoint_response = client.accounts.url_endpoints.update(\n    id="id",\n    description="My custom URL endpoint",\n)\nprint(url_endpoint_response.id)',
       },
       java: {
         method: 'accounts().urlEndpoints().update',
@@ -3021,25 +3012,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointRequest\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointResponse\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointUpdateParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: UrlEndpointUpdateParams = UrlEndpointUpdateParams.builder()\n        .id("id")\n        .urlEndpointRequest(UrlEndpointRequest.builder()\n            .description("My custom URL endpoint")\n            .build())\n        .build()\n    val urlEndpointResponse: UrlEndpointResponse = client.accounts().urlEndpoints().update(params)\n}',
       },
-      php: {
-        method: 'accounts->urlEndpoints->update',
+      go: {
+        method: 'client.Accounts.URLEndpoints.Update',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponse = $client->accounts->urlEndpoints->update(\n  'id',\n  description: 'My custom URL endpoint',\n  origins: ['origin-id-1'],\n  urlPrefix: 'product-images',\n  urlRewriter: ['type' => 'CLOUDINARY', 'preserveAssetDeliveryTypes' => true],\n);\n\nvar_dump($urlEndpointResponse);",
-      },
-      python: {
-        method: 'accounts.url_endpoints.update',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nurl_endpoint_response = client.accounts.url_endpoints.update(\n    id="id",\n    description="My custom URL endpoint",\n)\nprint(url_endpoint_response.id)',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\turlEndpointResponse, err := client.Accounts.URLEndpoints.Update(\n\t\tcontext.TODO(),\n\t\t"id",\n\t\timagekit.AccountURLEndpointUpdateParams{\n\t\t\tURLEndpointRequest: imagekit.URLEndpointRequestParam{\n\t\t\t\tDescription: "My custom URL endpoint",\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", urlEndpointResponse.ID)\n}\n',
       },
       ruby: {
         method: 'accounts.url_endpoints.update',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nurl_endpoint_response = image_kit.accounts.url_endpoints.update("id", description: "My custom URL endpoint")\n\nputs(url_endpoint_response)',
       },
-      typescript: {
-        method: 'client.accounts.urlEndpoints.update',
+      cli: {
+        method: 'urlEndpoints update',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst urlEndpointResponse = await client.accounts.urlEndpoints.update('id', {\n  description: 'My custom URL endpoint',\n});\n\nconsole.log(urlEndpointResponse.id);",
+          "imagekit accounts:url-endpoints update \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id \\\n  --description 'My custom URL endpoint'",
+      },
+      php: {
+        method: 'accounts->urlEndpoints->update',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponse = $client->accounts->urlEndpoints->update(\n  'id',\n  description: 'My custom URL endpoint',\n  origins: ['origin-id-1'],\n  urlPrefix: 'product-images',\n  urlRewriter: ['type' => 'CLOUDINARY', 'preserveAssetDeliveryTypes' => true],\n);\n\nvar_dump($urlEndpointResponse);",
+      },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.Update',
+        example:
+          'UrlEndpointUpdateParams parameters = new()\n{\n    ID = "id",\n    Description = "My custom URL endpoint",\n};\n\nvar urlEndpointResponse = await client.Accounts.UrlEndpoints.Update(parameters);\n\nConsole.WriteLine(urlEndpointResponse);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/accounts/url-endpoints/$ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "description": "My custom URL endpoint",\n          "origins": [\n            "origin-id-1"\n          ],\n          "urlPrefix": "product-images"\n        }\'',
       },
     },
   },
@@ -3056,24 +3056,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.accounts.urlEndpoints.delete(id: string): void`\n\n**delete** `/v1/accounts/url-endpoints/{id}`\n\n**Note:** This API is currently in beta.  \nDeletes the URL‑endpoint identified by `id`. You cannot delete the default URL‑endpoint created by ImageKit during account creation.\n\n\n### Parameters\n\n- `id: string`\n  Unique identifier for the URL-endpoint. This is generated by ImageKit when you create a new URL-endpoint. For the default URL-endpoint, this is always `default`.\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nawait client.accounts.urlEndpoints.delete('id')\n```",
     perLanguage: {
-      cli: {
-        method: 'urlEndpoints delete',
+      typescript: {
+        method: 'client.accounts.urlEndpoints.delete',
         example:
-          "imagekit accounts:url-endpoints delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.accounts.urlEndpoints.delete('id');",
       },
-      csharp: {
-        method: 'Accounts.UrlEndpoints.Delete',
+      python: {
+        method: 'accounts.url_endpoints.delete',
         example:
-          'UrlEndpointDeleteParams parameters = new() { ID = "id" };\n\nawait client.Accounts.UrlEndpoints.Delete(parameters);',
-      },
-      go: {
-        method: 'client.Accounts.URLEndpoints.Delete',
-        example:
-          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.Accounts.URLEndpoints.Delete(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.imagekit.io/v1/accounts/url-endpoints/$ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.accounts.url_endpoints.delete(\n    "id",\n)',
       },
       java: {
         method: 'accounts().urlEndpoints().delete',
@@ -3085,25 +3076,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.accounts.urlendpoints.UrlEndpointDeleteParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    client.accounts().urlEndpoints().delete("id")\n}',
       },
-      php: {
-        method: 'accounts->urlEndpoints->delete',
+      go: {
+        method: 'client.Accounts.URLEndpoints.Delete',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->accounts->urlEndpoints->delete('id');\n\nvar_dump($result);",
-      },
-      python: {
-        method: 'accounts.url_endpoints.delete',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.accounts.url_endpoints.delete(\n    "id",\n)',
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.Accounts.URLEndpoints.Delete(context.TODO(), "id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
       },
       ruby: {
         method: 'accounts.url_endpoints.delete',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresult = image_kit.accounts.url_endpoints.delete("id")\n\nputs(result)',
       },
-      typescript: {
-        method: 'client.accounts.urlEndpoints.delete',
+      cli: {
+        method: 'urlEndpoints delete',
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.accounts.urlEndpoints.delete('id');",
+          "imagekit accounts:url-endpoints delete \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --id id",
+      },
+      php: {
+        method: 'accounts->urlEndpoints->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->accounts->urlEndpoints->delete('id');\n\nvar_dump($result);",
+      },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.Delete',
+        example:
+          'UrlEndpointDeleteParams parameters = new() { ID = "id" };\n\nawait client.Accounts.UrlEndpoints.Delete(parameters);',
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/accounts/url-endpoints/$ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
       },
     },
   },
@@ -3143,24 +3143,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## upload\n\n`client.beta.v2.files.upload(file: string, fileName: string, token?: string, checks?: string, customCoordinates?: string, customMetadata?: object, description?: string, extensions?: { name: 'remove-bg'; options?: object; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: object | object | object[]; } | { id: string; name: 'saved-extension'; }[], folder?: string, isPrivateFile?: boolean, isPublished?: boolean, overwriteAITags?: boolean, overwriteCustomMetadata?: boolean, overwriteFile?: boolean, overwriteTags?: boolean, responseFields?: string[], tags?: string[], transformation?: { post?: { type: 'transformation'; value: string; } | { type: 'gif-to-video'; value?: string; } | { type: 'thumbnail'; value?: string; } | { protocol: 'hls' | 'dash'; type: 'abs'; value: string; }[]; pre?: string; }, useUniqueFileName?: boolean, webhookUrl?: string): { AITags?: object[]; audioCodec?: string; bitRate?: number; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; extensionStatus?: object; fileId?: string; filePath?: string; fileType?: string; height?: number; isPrivateFile?: boolean; isPublished?: boolean; metadata?: metadata; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnailUrl?: string; url?: string; versionInfo?: object; videoCodec?: string; width?: number; }`\n\n**post** `/api/v2/files/upload`\n\nThe V2 API enhances security by verifying the entire payload using JWT. This API is in beta.\n\nImageKit.io allows you to upload files directly from both the server and client sides. For server-side uploads, private API key authentication is used. For client-side uploads, generate a one-time `token` from your secure backend using private API. [Learn more](/docs/api-reference/upload-file/upload-file-v2#how-to-implement-secure-client-side-file-upload) about how to implement secure client-side file upload.\n\n**File size limit** \\\nOn the free plan, the maximum upload file sizes are 25MB for images, audio, and raw files, and 100MB for videos. On the Lite paid plan, these limits increase to 40MB for images, audio, and raw files and 300MB for videos, whereas on the Pro paid plan, these limits increase to 50MB for images, audio, and raw files and 2GB for videos. These limits can be further increased with enterprise plans.\n\n**Version limit** \\\nA file can have a maximum of 100 versions.\n\n**Demo applications**\n\n- A full-fledged [upload widget using Uppy](https://github.com/imagekit-samples/uppy-uploader), supporting file selections from local storage, URL, Dropbox, Google Drive, Instagram, and more.\n- [Quick start guides](/docs/quick-start-guides) for various frameworks and technologies.\n\n\n### Parameters\n\n- `file: string`\n  The API accepts any of the following:\n\n- **Binary data** – send the raw bytes as `multipart/form-data`.\n- **HTTP / HTTPS URL** – a publicly reachable URL that ImageKit’s servers can fetch.\n- **Base64 string** – the file encoded as a Base64 data URI or plain Base64.\n\nWhen supplying a URL, the server must receive the response headers within 8 seconds; otherwise the request fails with 400 Bad Request.\n\n\n- `fileName: string`\n  The name with which the file has to be uploaded.\n\n\n- `token?: string`\n  This is the client-generated JSON Web Token (JWT). The ImageKit.io server uses it to authenticate and check that the upload request parameters have not been tampered with after the token has been generated. Learn how to create the token on the page below. This field is only required for authentication when uploading a file from the client side.\n\n\n**Note**: Sending a JWT that has been used in the past will result in a validation error. Even if your previous request resulted in an error, you should always send a new token.\n\n\n**⚠️Warning**: JWT must be generated on the server-side because it is generated using your account's private API key. This field is required for authentication when uploading a file from the client-side.\n\n\n- `checks?: string`\n  Server-side checks to run on the asset.\nRead more about [Upload API checks](/docs/api-reference/upload-file/upload-file-v2#upload-api-checks).\n\n\n- `customCoordinates?: string`\n  Define an important area in the image. This is only relevant for image type files.\n\n  - To be passed as a string with the x and y coordinates of the top-left corner, and width and height of the area of interest in the format `x,y,width,height`. For example - `10,10,100,100`\n  - Can be used with fo-customtransformation.\n  - If this field is not specified and the file is overwritten, then customCoordinates will be removed.\n\n\n- `customMetadata?: object`\n  JSON key-value pairs to associate with the asset. Create the custom metadata fields before setting these values.\n\n\n- `description?: string`\n  Optional text to describe the contents of the file.\n\n\n- `extensions?: { name: 'remove-bg'; options?: { add_shadow?: boolean; bg_color?: string; bg_image_url?: string; semitransparency?: boolean; }; } | { maxTags: number; minConfidence: number; name: 'google-auto-tagging' | 'aws-auto-tagging'; } | { name: 'ai-auto-description'; } | { name: 'ai-tasks'; tasks: { instruction: string; type: 'select_tags'; max_selections?: number; min_selections?: number; vocabulary?: string[]; } | { field: string; instruction: string; type: 'select_metadata'; max_selections?: number; min_selections?: number; vocabulary?: string | number | boolean[]; } | { instruction: string; type: 'yes_no'; on_no?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_unknown?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; on_yes?: { add_tags?: string[]; remove_tags?: string[]; set_metadata?: object[]; unset_metadata?: object[]; }; }[]; } | { id: string; name: 'saved-extension'; }[]`\n  Array of extensions to be applied to the asset. Each extension can be configured with specific parameters based on the extension type.\n\n\n- `folder?: string`\n  The folder path in which the image has to be uploaded. If the folder(s) didn't exist before, a new folder(s) is created. Using multiple `/` creates a nested folder.\n\n\n- `isPrivateFile?: boolean`\n  Whether to mark the file as private or not.\n\nIf `true`, the file is marked as private and is accessible only using named transformation or signed URL.\n\n\n- `isPublished?: boolean`\n  Whether to upload file as published or not.\n\nIf `false`, the file is marked as unpublished, which restricts access to the file only via the media library. Files in draft or unpublished state can only be publicly accessed after being published.\n\nThe option to upload in draft state is only available in custom enterprise pricing plans.\n\n\n- `overwriteAITags?: boolean`\n  If set to `true` and a file already exists at the exact location, its AITags will be removed. Set `overwriteAITags` to `false` to preserve AITags.\n\n\n- `overwriteCustomMetadata?: boolean`\n  If the request does not have `customMetadata`, and a file already exists at the exact location, existing customMetadata will be removed.\n\n\n- `overwriteFile?: boolean`\n  If `false` and `useUniqueFileName` is also `false`, and a file already exists at the exact location, upload API will return an error immediately.\n\n\n- `overwriteTags?: boolean`\n  If the request does not have `tags`, and a file already exists at the exact location, existing tags will be removed.\n\n\n- `responseFields?: string[]`\n  Array of response field keys to include in the API response body.\n\n\n- `tags?: string[]`\n  Set the tags while uploading the file.\nProvide an array of tag strings (e.g. `[\"tag1\", \"tag2\", \"tag3\"]`). The combined length of all tag characters must not exceed 500, and the `%` character is not allowed.\nIf this field is not specified and the file is overwritten, the existing tags will be removed.\n\n\n- `transformation?: { post?: { type: 'transformation'; value: string; } | { type: 'gif-to-video'; value?: string; } | { type: 'thumbnail'; value?: string; } | { protocol: 'hls' | 'dash'; type: 'abs'; value: string; }[]; pre?: string; }`\n  Configure pre-processing (`pre`) and post-processing (`post`) transformations.\n\n- `pre` — applied before the file is uploaded to the Media Library.  \n  Useful for reducing file size or applying basic optimizations upfront (e.g., resize, compress).\n\n- `post` — applied immediately after upload.  \n  Ideal for generating transformed versions (like video encodes or thumbnails) in advance, so they're ready for delivery without delay.\n\nYou can mix and match any combination of post-processing types.\n\n  - `post?: { type: 'transformation'; value: string; } | { type: 'gif-to-video'; value?: string; } | { type: 'thumbnail'; value?: string; } | { protocol: 'hls' | 'dash'; type: 'abs'; value: string; }[]`\n    List of transformations to apply *after* the file is uploaded.  \nEach item must match one of the following types:\n`transformation`, `gif-to-video`, `thumbnail`, `abs`.\n\n  - `pre?: string`\n    Transformation string to apply before uploading the file to the Media Library. Useful for optimizing files at ingestion.\n\n\n- `useUniqueFileName?: boolean`\n  Whether to use a unique filename for this file or not.\n\nIf `true`, ImageKit.io will add a unique suffix to the filename parameter to get a unique filename.\n\nIf `false`, then the image is uploaded with the provided filename parameter, and any existing file with the same name is replaced.\n\n\n- `webhookUrl?: string`\n  The final status of extensions after they have completed execution will be delivered to this endpoint as a POST request. [Learn more](/docs/api-reference/digital-asset-management-dam/managing-assets/update-file-details#webhook-payload-structure) about the webhook payload structure.\n\n\n### Returns\n\n- `{ AITags?: { confidence?: number; name?: string; source?: string; }[]; audioCodec?: string; bitRate?: number; customCoordinates?: string; customMetadata?: object; description?: string; duration?: number; embeddedMetadata?: object; extensionStatus?: { ai-auto-description?: 'success' | 'pending' | 'failed'; ai-tasks?: 'success' | 'pending' | 'failed'; aws-auto-tagging?: 'success' | 'pending' | 'failed'; google-auto-tagging?: 'success' | 'pending' | 'failed'; remove-bg?: 'success' | 'pending' | 'failed'; }; fileId?: string; filePath?: string; fileType?: string; height?: number; isPrivateFile?: boolean; isPublished?: boolean; metadata?: { audioCodec?: string; bitRate?: number; density?: number; duration?: number; exif?: object; format?: string; hasColorProfile?: boolean; hasTransparency?: boolean; height?: number; pHash?: string; quality?: number; size?: number; videoCodec?: string; width?: number; }; name?: string; selectedFieldsSchema?: object; size?: number; tags?: string[]; thumbnailUrl?: string; url?: string; versionInfo?: { id?: string; name?: string; }; videoCodec?: string; width?: number; }`\n  Object containing details of a successful upload.\n\n  - `AITags?: { confidence?: number; name?: string; source?: string; }[]`\n  - `audioCodec?: string`\n  - `bitRate?: number`\n  - `customCoordinates?: string`\n  - `customMetadata?: object`\n  - `description?: string`\n  - `duration?: number`\n  - `embeddedMetadata?: object`\n  - `extensionStatus?: { ai-auto-description?: 'success' | 'pending' | 'failed'; ai-tasks?: 'success' | 'pending' | 'failed'; aws-auto-tagging?: 'success' | 'pending' | 'failed'; google-auto-tagging?: 'success' | 'pending' | 'failed'; remove-bg?: 'success' | 'pending' | 'failed'; }`\n  - `fileId?: string`\n  - `filePath?: string`\n  - `fileType?: string`\n  - `height?: number`\n  - `isPrivateFile?: boolean`\n  - `isPublished?: boolean`\n  - `metadata?: { audioCodec?: string; bitRate?: number; density?: number; duration?: number; exif?: { exif?: { ApertureValue?: number; ColorSpace?: number; CreateDate?: string; CustomRendered?: number; DateTimeOriginal?: string; ExifImageHeight?: number; ExifImageWidth?: number; ExifVersion?: string; ExposureCompensation?: number; ExposureMode?: number; ExposureProgram?: number; ExposureTime?: number; Flash?: number; FlashpixVersion?: string; FNumber?: number; FocalLength?: number; FocalPlaneResolutionUnit?: number; FocalPlaneXResolution?: number; FocalPlaneYResolution?: number; InteropOffset?: number; ISO?: number; MeteringMode?: number; SceneCaptureType?: number; ShutterSpeedValue?: number; SubSecTime?: string; WhiteBalance?: number; }; gps?: { GPSVersionID?: number[]; }; image?: { ExifOffset?: number; GPSInfo?: number; Make?: string; Model?: string; ModifyDate?: string; Orientation?: number; ResolutionUnit?: number; Software?: string; XResolution?: number; YCbCrPositioning?: number; YResolution?: number; }; interoperability?: { InteropIndex?: string; InteropVersion?: string; }; makernote?: object; thumbnail?: { Compression?: number; ResolutionUnit?: number; ThumbnailLength?: number; ThumbnailOffset?: number; XResolution?: number; YResolution?: number; }; }; format?: string; hasColorProfile?: boolean; hasTransparency?: boolean; height?: number; pHash?: string; quality?: number; size?: number; videoCodec?: string; width?: number; }`\n  - `name?: string`\n  - `selectedFieldsSchema?: object`\n  - `size?: number`\n  - `tags?: string[]`\n  - `thumbnailUrl?: string`\n  - `url?: string`\n  - `versionInfo?: { id?: string; name?: string; }`\n  - `videoCodec?: string`\n  - `width?: number`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst response = await client.beta.v2.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'fileName' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'files upload',
+      typescript: {
+        method: 'client.beta.v2.files.upload',
         example:
-          "imagekit beta:v2:files upload \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file 'Example data' \\\n  --file-name fileName",
+          "import fs from 'fs';\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.v2.files.upload({\n  file: fs.createReadStream('path/to/file'),\n  fileName: 'fileName',\n});\n\nconsole.log(response.videoCodec);",
       },
-      csharp: {
-        method: 'Beta.V2.Files.Upload',
+      python: {
+        method: 'beta.v2.files.upload',
         example:
-          'FileUploadParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("Example data"),\n    FileName = "fileName",\n};\n\nvar response = await client.Beta.V2.Files.Upload(parameters);\n\nConsole.WriteLine(response);',
-      },
-      go: {
-        method: 'client.Beta.V2.Files.Upload',
-        example:
-          'package main\n\nimport (\n\t"bytes"\n\t"context"\n\t"fmt"\n\t"io"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Beta.V2.Files.Upload(context.TODO(), imagekit.BetaV2FileUploadParams{\n\t\tFile:     io.Reader(bytes.NewBuffer([]byte("Example data"))),\n\t\tFileName: "fileName",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.VideoCodec)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://upload.imagekit.io/api/v2/files/upload \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -F \'file=@/path/to/file\' \\\n    -F fileName=fileName \\\n    -F checks=\'"request.folder" : "marketing/"\n    \' \\\n    -F customMetadata=\'{"brand":"bar","color":"bar"}\' \\\n    -F description=\'Running shoes\' \\\n    -F extensions=\'[{"name":"remove-bg","options":{"add_shadow":true}},{"maxTags":5,"minConfidence":95,"name":"google-auto-tagging"},{"name":"ai-auto-description"},{"name":"ai-tasks","tasks":[{"instruction":"What types of clothing items are visible in this image?","type":"select_tags","vocabulary":["shirt","tshirt","dress","trousers","jacket"]},{"instruction":"Is this a luxury or high-end fashion item?","type":"yes_no","on_yes":{"add_tags":["luxury","premium"]}}]},{"id":"ext_abc123","name":"saved-extension"}]\' \\\n    -F responseFields=\'["tags","customCoordinates","isPrivateFile"]\' \\\n    -F tags=\'["t-shirt","round-neck","men"]\' \\\n    -F transformation=\'{"post":[{"type":"thumbnail","value":"w-150,h-150"},{"protocol":"dash","type":"abs","value":"sr-240_360_480_720_1080"}]}\'',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.beta.v2.files.upload(\n    file=b"Example data",\n    file_name="fileName",\n)\nprint(response.video_codec)',
       },
       java: {
         method: 'beta().v2().files().upload',
@@ -3172,25 +3163,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.beta.v2.files.FileUploadParams\nimport com.imagekit.api.models.beta.v2.files.FileUploadResponse\nimport java.io.ByteArrayInputStream\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    val params: FileUploadParams = FileUploadParams.builder()\n        .file("Example data".byteInputStream())\n        .fileName("fileName")\n        .build()\n    val response: FileUploadResponse = client.beta().v2().files().upload(params)\n}',
       },
-      php: {
-        method: 'beta->v2->files->upload',
+      go: {
+        method: 'client.Beta.V2.Files.Upload',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->beta->v2->files->upload(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n  fileName: 'fileName',\n  token: 'token',\n  checks: \"\\\"request.folder\\\" : \\\"marketing/\\\"\\n\",\n  customCoordinates: 'customCoordinates',\n  customMetadata: ['brand' => 'bar', 'color' => 'bar'],\n  description: 'Running shoes',\n  extensions: [\n    [\n      'name' => 'remove-bg',\n      'options' => [\n        'addShadow' => true,\n        'bgColor' => 'bg_color',\n        'bgImageURL' => 'bg_image_url',\n        'semitransparency' => true,\n      ],\n    ],\n    ['maxTags' => 5, 'minConfidence' => 95, 'name' => 'google-auto-tagging'],\n    ['name' => 'ai-auto-description'],\n    [\n      'name' => 'ai-tasks',\n      'tasks' => [\n        [\n          'instruction' => 'What types of clothing items are visible in this image?',\n          'type' => 'select_tags',\n          'maxSelections' => 1,\n          'minSelections' => 0,\n          'vocabulary' => ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],\n        ],\n        [\n          'instruction' => 'Is this a luxury or high-end fashion item?',\n          'type' => 'yes_no',\n          'onNo' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onUnknown' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onYes' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n        ],\n      ],\n    ],\n    ['id' => 'ext_abc123', 'name' => 'saved-extension'],\n  ],\n  folder: 'folder',\n  isPrivateFile: true,\n  isPublished: true,\n  overwriteAITags: true,\n  overwriteCustomMetadata: true,\n  overwriteFile: true,\n  overwriteTags: true,\n  responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],\n  tags: ['t-shirt', 'round-neck', 'men'],\n  transformation: [\n    'post' => [\n      ['type' => 'thumbnail', 'value' => 'w-150,h-150'],\n      [\n        'protocol' => 'dash',\n        'type' => 'abs',\n        'value' => 'sr-240_360_480_720_1080',\n      ],\n    ],\n    'pre' => 'w-300,h-300,q-80',\n  ],\n  useUniqueFileName: true,\n  webhookURL: 'https://example.com',\n);\n\nvar_dump($response);",
-      },
-      python: {
-        method: 'beta.v2.files.upload',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nresponse = client.beta.v2.files.upload(\n    file=b"Example data",\n    file_name="fileName",\n)\nprint(response.video_codec)',
+          'package main\n\nimport (\n\t"bytes"\n\t"context"\n\t"fmt"\n\t"io"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tresponse, err := client.Beta.V2.Files.Upload(context.TODO(), imagekit.BetaV2FileUploadParams{\n\t\tFile:     io.Reader(bytes.NewBuffer([]byte("Example data"))),\n\t\tFileName: "fileName",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.VideoCodec)\n}\n',
       },
       ruby: {
         method: 'beta.v2.files.upload',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresponse = image_kit.beta.v2.files.upload(file: StringIO.new("Example data"), file_name: "fileName")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.beta.v2.files.upload',
+      cli: {
+        method: 'files upload',
         example:
-          "import fs from 'fs';\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.v2.files.upload({\n  file: fs.createReadStream('path/to/file'),\n  fileName: 'fileName',\n});\n\nconsole.log(response.videoCodec);",
+          "imagekit beta:v2:files upload \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file 'Example data' \\\n  --file-name fileName",
+      },
+      php: {
+        method: 'beta->v2->files->upload',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->beta->v2->files->upload(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n  fileName: 'fileName',\n  token: 'token',\n  checks: \"\\\"request.folder\\\" : \\\"marketing/\\\"\\n\",\n  customCoordinates: 'customCoordinates',\n  customMetadata: ['brand' => 'bar', 'color' => 'bar'],\n  description: 'Running shoes',\n  extensions: [\n    [\n      'name' => 'remove-bg',\n      'options' => [\n        'addShadow' => true,\n        'bgColor' => 'bg_color',\n        'bgImageURL' => 'bg_image_url',\n        'semitransparency' => true,\n      ],\n    ],\n    ['maxTags' => 5, 'minConfidence' => 95, 'name' => 'google-auto-tagging'],\n    ['name' => 'ai-auto-description'],\n    [\n      'name' => 'ai-tasks',\n      'tasks' => [\n        [\n          'instruction' => 'What types of clothing items are visible in this image?',\n          'type' => 'select_tags',\n          'maxSelections' => 1,\n          'minSelections' => 0,\n          'vocabulary' => ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],\n        ],\n        [\n          'instruction' => 'Is this a luxury or high-end fashion item?',\n          'type' => 'yes_no',\n          'onNo' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onUnknown' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onYes' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n        ],\n      ],\n    ],\n    ['id' => 'ext_abc123', 'name' => 'saved-extension'],\n  ],\n  folder: 'folder',\n  isPrivateFile: true,\n  isPublished: true,\n  overwriteAITags: true,\n  overwriteCustomMetadata: true,\n  overwriteFile: true,\n  overwriteTags: true,\n  responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],\n  tags: ['t-shirt', 'round-neck', 'men'],\n  transformation: [\n    'post' => [\n      ['type' => 'thumbnail', 'value' => 'w-150,h-150'],\n      [\n        'protocol' => 'dash',\n        'type' => 'abs',\n        'value' => 'sr-240_360_480_720_1080',\n      ],\n    ],\n    'pre' => 'w-300,h-300,q-80',\n  ],\n  useUniqueFileName: true,\n  webhookURL: 'https://example.com',\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Beta.V2.Files.Upload',
+        example:
+          'FileUploadParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("Example data"),\n    FileName = "fileName",\n};\n\nvar response = await client.Beta.V2.Files.Upload(parameters);\n\nConsole.WriteLine(response);',
+      },
+      http: {
+        example:
+          'curl https://upload.imagekit.io/api/v2/files/upload \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -F \'file=@/path/to/file\' \\\n    -F fileName=fileName \\\n    -F checks=\'"request.folder" : "marketing/"\n    \' \\\n    -F customMetadata=\'{"brand":"bar","color":"bar"}\' \\\n    -F description=\'Running shoes\' \\\n    -F extensions=\'[{"name":"remove-bg","options":{"add_shadow":true}},{"maxTags":5,"minConfidence":95,"name":"google-auto-tagging"},{"name":"ai-auto-description"},{"name":"ai-tasks","tasks":[{"instruction":"What types of clothing items are visible in this image?","type":"select_tags","vocabulary":["shirt","tshirt","dress","trousers","jacket"]},{"instruction":"Is this a luxury or high-end fashion item?","type":"yes_no","on_yes":{"add_tags":["luxury","premium"]}}]},{"id":"ext_abc123","name":"saved-extension"}]\' \\\n    -F responseFields=\'["tags","customCoordinates","isPrivateFile"]\' \\\n    -F tags=\'["t-shirt","round-neck","men"]\' \\\n    -F transformation=\'{"post":[{"type":"thumbnail","value":"w-150,h-150"},{"protocol":"dash","type":"abs","value":"sr-240_360_480_720_1080"}]}\'',
       },
     },
   },
@@ -3203,17 +3203,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     stainlessPath: '(resource) webhooks > (method) unwrap',
     qualified: 'client.webhooks.unwrap',
     perLanguage: {
-      cli: {
+      typescript: {
+        method: 'client.webhooks.unwrap',
         example:
-          "imagekit webhooks unwrap \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.webhooks.unwrap();",
       },
-      csharp: {
-        example: 'WebhookUnwrapParams parameters = new();\n\nawait client.Webhooks.Unwrap(parameters);',
-      },
-      go: {
-        method: 'client.Webhooks.Unwrap',
+      python: {
+        method: 'webhooks.unwrap',
         example:
-          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.Webhooks.Unwrap(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.webhooks.unwrap()',
       },
       java: {
         example:
@@ -3223,25 +3221,27 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.webhooks.WebhookUnwrapParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    client.webhooks().unwrap()\n}',
       },
-      php: {
-        method: 'webhooks->unwrap',
+      go: {
+        method: 'client.Webhooks.Unwrap',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->webhooks->unwrap();\n\nvar_dump($result);",
-      },
-      python: {
-        method: 'webhooks.unwrap',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.webhooks.unwrap()',
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.Webhooks.Unwrap(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
       },
       ruby: {
         method: 'webhooks.unwrap',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresult = image_kit.webhooks.unwrap\n\nputs(result)',
       },
-      typescript: {
-        method: 'client.webhooks.unwrap',
+      cli: {
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.webhooks.unwrap();",
+          "imagekit webhooks unwrap \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+      },
+      php: {
+        method: 'webhooks->unwrap',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->webhooks->unwrap();\n\nvar_dump($result);",
+      },
+      csharp: {
+        example: 'WebhookUnwrapParams parameters = new();\n\nawait client.Webhooks.Unwrap(parameters);',
       },
     },
   },
@@ -3254,18 +3254,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     stainlessPath: '(resource) webhooks > (method) unsafe_unwrap',
     qualified: 'client.webhooks.unsafeUnwrap',
     perLanguage: {
-      cli: {
+      typescript: {
+        method: 'client.webhooks.unsafeUnwrap',
         example:
-          "imagekit webhooks unsafe-unwrap \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.webhooks.unsafeUnwrap();",
       },
-      csharp: {
+      python: {
+        method: 'webhooks.unsafe_unwrap',
         example:
-          'WebhookUnsafeUnwrapParams parameters = new();\n\nawait client.Webhooks.UnsafeUnwrap(parameters);',
-      },
-      go: {
-        method: 'client.Webhooks.UnsafeUnwrap',
-        example:
-          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.Webhooks.UnsafeUnwrap(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.webhooks.unsafe_unwrap()',
       },
       java: {
         example:
@@ -3275,25 +3272,28 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package com.imagekit.api.example\n\nimport com.imagekit.api.client.ImageKitClient\nimport com.imagekit.api.client.okhttp.ImageKitOkHttpClient\nimport com.imagekit.api.models.webhooks.WebhookUnsafeUnwrapParams\n\nfun main() {\n    val client: ImageKitClient = ImageKitOkHttpClient.fromEnv()\n\n    client.webhooks().unsafeUnwrap()\n}',
       },
-      php: {
-        method: 'webhooks->unsafeUnwrap',
+      go: {
+        method: 'client.Webhooks.UnsafeUnwrap',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->webhooks->unsafeUnwrap();\n\nvar_dump($result);",
-      },
-      python: {
-        method: 'webhooks.unsafe_unwrap',
-        example:
-          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.webhooks.unsafe_unwrap()',
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go"\n\t"github.com/imagekit-developer/imagekit-go/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.Webhooks.UnsafeUnwrap(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
       },
       ruby: {
         method: 'webhooks.unsafe_unwrap',
         example:
           'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresult = image_kit.webhooks.unsafe_unwrap\n\nputs(result)',
       },
-      typescript: {
-        method: 'client.webhooks.unsafeUnwrap',
+      cli: {
         example:
-          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.webhooks.unsafeUnwrap();",
+          "imagekit webhooks unsafe-unwrap \\\n  --private-key 'My Private Key' \\\n  --password 'My Password'",
+      },
+      php: {
+        method: 'webhooks->unsafeUnwrap',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->webhooks->unsafeUnwrap();\n\nvar_dump($result);",
+      },
+      csharp: {
+        example:
+          'WebhookUnsafeUnwrapParams parameters = new();\n\nawait client.Webhooks.UnsafeUnwrap(parameters);',
       },
     },
   },
