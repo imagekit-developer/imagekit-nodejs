@@ -18,84 +18,20 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { AssetListParams, AssetListResponse, Assets } from './resources/assets';
-import {
-  CustomMetadataField,
-  CustomMetadataFieldCreateParams,
-  CustomMetadataFieldDeleteResponse,
-  CustomMetadataFieldListParams,
-  CustomMetadataFieldListResponse,
-  CustomMetadataFieldUpdateParams,
-  CustomMetadataFields,
-} from './resources/custom-metadata-fields';
-import {
-  SavedExtensionCreateParams,
-  SavedExtensionListResponse,
-  SavedExtensionUpdateParams,
-  SavedExtensions,
-} from './resources/saved-extensions';
-import {
-  BaseWebhookEvent,
-  FileCreateEvent,
-  FileDeleteEvent,
-  FileUpdateEvent,
-  FileVersionCreateEvent,
-  FileVersionDeleteEvent,
-  UnsafeUnwrapWebhookEvent,
-  UnwrapWebhookEvent,
-  UploadPostTransformErrorEvent,
-  UploadPostTransformSuccessEvent,
-  UploadPreTransformErrorEvent,
-  UploadPreTransformSuccessEvent,
-  VideoTransformationAcceptedEvent,
-  VideoTransformationErrorEvent,
-  VideoTransformationReadyEvent,
-  Webhooks,
-} from './resources/webhooks';
+import { CustomMetadataField, CustomMetadataFieldCreateParams, CustomMetadataFieldDeleteResponse, CustomMetadataFieldListParams, CustomMetadataFieldListResponse, CustomMetadataFieldUpdateParams, CustomMetadataFields } from './resources/custom-metadata-fields';
+import { SavedExtensionCreateParams, SavedExtensionListResponse, SavedExtensionUpdateParams, SavedExtensions } from './resources/saved-extensions';
+import { BaseWebhookEvent, FileCreateEvent, FileDeleteEvent, FileUpdateEvent, FileVersionCreateEvent, FileVersionDeleteEvent, UnsafeUnwrapWebhookEvent, UnwrapWebhookEvent, UploadPostTransformErrorEvent, UploadPostTransformSuccessEvent, UploadPreTransformErrorEvent, UploadPreTransformSuccessEvent, VideoTransformationAcceptedEvent, VideoTransformationErrorEvent, VideoTransformationReadyEvent, Webhooks } from './resources/webhooks';
 import { Accounts } from './resources/accounts/accounts';
 import { Beta } from './resources/beta/beta';
 import { Cache } from './resources/cache/cache';
-import {
-  File,
-  FileCopyParams,
-  FileCopyResponse,
-  FileMoveParams,
-  FileMoveResponse,
-  FileRenameParams,
-  FileRenameResponse,
-  FileUpdateParams,
-  FileUpdateResponse,
-  FileUploadParams,
-  FileUploadResponse,
-  Files,
-  Folder,
-  Metadata,
-  UpdateFileRequest,
-} from './resources/files/files';
-import {
-  FolderCopyParams,
-  FolderCopyResponse,
-  FolderCreateParams,
-  FolderCreateResponse,
-  FolderDeleteParams,
-  FolderDeleteResponse,
-  FolderMoveParams,
-  FolderMoveResponse,
-  FolderRenameParams,
-  FolderRenameResponse,
-  Folders,
-} from './resources/folders/folders';
+import { File, FileCopyParams, FileCopyResponse, FileMoveParams, FileMoveResponse, FileRenameParams, FileRenameResponse, FileUpdateParams, FileUpdateResponse, FileUploadParams, FileUploadResponse, Files, Folder, Metadata, UpdateFileRequest } from './resources/files/files';
+import { FolderCopyParams, FolderCopyResponse, FolderCreateParams, FolderCreateResponse, FolderDeleteParams, FolderDeleteResponse, FolderMoveParams, FolderMoveResponse, FolderRenameParams, FolderRenameResponse, Folders } from './resources/folders/folders';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import { toBase64 } from './internal/utils/base64';
 import { readEnv } from './internal/utils/env';
-import {
-  type LogLevel,
-  type Logger,
-  formatRequestDetails,
-  loggerFor,
-  parseLogLevel,
-} from './internal/utils/log';
+import { type LogLevel, type Logger, formatRequestDetails, loggerFor, parseLogLevel } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
@@ -107,7 +43,7 @@ export interface ClientOptions {
   privateKey?: string | undefined;
 
   /**
-   * ImageKit uses your API key as username and ignores the password.
+   * ImageKit uses your API key as username and ignores the password. 
    * The SDK sets a dummy value. You can ignore this field.
    *
    */
@@ -191,7 +127,7 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Image Kit API.
+ * API Client for interfacing with the Image Kit API. 
  */
 export class ImageKit {
   privateKey: string;
@@ -233,7 +169,7 @@ export class ImageKit {
   }: ClientOptions = {}) {
     if (privateKey === undefined) {
       throw new Errors.ImageKitError(
-        "The IMAGEKIT_PRIVATE_KEY environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an privateKey option, like new ImageKit({ privateKey: 'My Private Key' }).",
+        'The IMAGEKIT_PRIVATE_KEY environment variable is missing or empty; either provide it, or instantiate the ImageKit client with an privateKey option, like new ImageKit({ privateKey: \'My Private Key\' }).'
       );
     }
 
@@ -251,10 +187,7 @@ export class ImageKit {
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
-    this.logLevel =
-      parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('IMAGE_KIT_LOG'), "process.env['IMAGE_KIT_LOG']", this) ??
-      defaultLogLevel;
+    this.logLevel = parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ?? parseLogLevel(readEnv('IMAGE_KIT_LOG'), 'process.env[\'IMAGE_KIT_LOG\']', this) ?? defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
@@ -283,7 +216,7 @@ export class ImageKit {
       privateKey: this.privateKey,
       password: this.password,
       webhookSecret: this.webhookSecret,
-      ...options,
+      ...options
     });
     return client;
   }
@@ -296,7 +229,7 @@ export class ImageKit {
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
-    return this._options.defaultQuery;
+    return this._options.defaultQuery
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
@@ -307,9 +240,7 @@ export class ImageKit {
       return;
     }
 
-    throw new Error(
-      'Could not resolve authentication method. Expected the privateKey or password to be set. Or for the "Authorization" headers to be explicitly omitted',
-    );
+    throw new Error('Could not resolve authentication method. Expected the privateKey or password to be set. Or for the "Authorization" headers to be explicitly omitted')
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
@@ -321,9 +252,9 @@ export class ImageKit {
       return undefined;
     }
 
-    const credentials = `${this.privateKey}:${this.password}`;
-    const Authorization = `Basic ${toBase64(credentials)}`;
-    return buildHeaders([{ Authorization }]);
+    const credentials = `${this.privateKey}:${this.password}`
+    const Authorization = `Basic ${toBase64(credentials)}`
+    return buildHeaders([{ Authorization }])
   }
 
   /**
@@ -350,11 +281,7 @@ export class ImageKit {
     return Errors.APIError.generate(status, error, message, headers);
   }
 
-  buildURL(
-    path: string,
-    query: Record<string, unknown> | null | undefined,
-    defaultBaseURL?: string | undefined,
-  ): string {
+  buildURL(path: string, query: Record<string, unknown> | null | undefined, defaultBaseURL?: string | undefined): string {
     const baseURL = (!this.#baseURLOverridden() && defaultBaseURL) || this.baseURL;
     const url =
       isAbsoluteURL(path) ?
@@ -442,9 +369,7 @@ export class ImageKit {
 
     await this.prepareOptions(options);
 
-    const { req, url, timeout } = await this.buildRequest(options, {
-      retryCount: maxRetries - retriesRemaining,
-    });
+    const { req, url, timeout } = await this.buildRequest(options, { retryCount: maxRetries - retriesRemaining });
 
     await this.prepareRequest(req, { url, options });
 
@@ -453,16 +378,7 @@ export class ImageKit {
     const retryLogStr = retryOfRequestLogID === undefined ? '' : `, retryOf: ${retryOfRequestLogID}`;
     const startTime = Date.now();
 
-    loggerFor(this).debug(
-      `[${requestLogID}] sending request`,
-      formatRequestDetails({
-        retryOfRequestLogID,
-        method: options.method,
-        url,
-        options,
-        headers: req.headers,
-      }),
-    );
+    loggerFor(this).debug(`[${requestLogID}] sending request`, formatRequestDetails({ retryOfRequestLogID, method: options.method, url, options, headers: req.headers }));
 
     if (options.signal?.aborted) {
       throw new Errors.APIUserAbortError();
@@ -481,45 +397,21 @@ export class ImageKit {
       // deno throws "TypeError: error sending request for url (https://example/): client error (Connect): tcp connect error: Operation timed out (os error 60): Operation timed out (os error 60)"
       // undici throws "TypeError: fetch failed" with cause "ConnectTimeoutError: Connect Timeout Error (attempted address: example:443, timeout: 1ms)"
       // others do not provide enough information to distinguish timeouts from other connection errors
-      const isTimeout =
-        isAbortError(response) ||
-        /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''));
+      const isTimeout = isAbortError(response) || /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''))
       if (retriesRemaining) {
-        loggerFor(this).info(
-          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`,
-        );
-        loggerFor(this).debug(
-          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`,
-          formatRequestDetails({
-            retryOfRequestLogID,
-            url,
-            durationMs: headersTime - startTime,
-            message: response.message,
-          }),
-        );
+        loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`)
+        loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
         return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID);
       }
-      loggerFor(this).info(
-        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`,
-      );
-      loggerFor(this).debug(
-        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`,
-        formatRequestDetails({
-          retryOfRequestLogID,
-          url,
-          durationMs: headersTime - startTime,
-          message: response.message,
-        }),
-      );
+      loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`)
+      loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
       if (isTimeout) {
         throw new Errors.APIConnectionTimeoutError();
       }
       throw new Errors.APIConnectionError({ cause: response });
     }
 
-    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${
-      response.ok ? 'succeeded' : 'failed'
-    } with status ${response.status} in ${headersTime - startTime}ms`;
+    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${response.ok ? 'succeeded' : 'failed'} with status ${response.status} in ${headersTime - startTime}ms`;
 
     if (!response.ok) {
       const shouldRetry = await this.shouldRetry(response);
@@ -528,60 +420,27 @@ export class ImageKit {
 
         // We don't need the body of this response.
         await Shims.CancelReadableStream(response.body);
-        loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
-        loggerFor(this).debug(
-          `[${requestLogID}] response error (${retryMessage})`,
-          formatRequestDetails({
-            retryOfRequestLogID,
-            url: response.url,
-            status: response.status,
-            headers: response.headers,
-            durationMs: headersTime - startTime,
-          }),
-        );
-        return this.retryRequest(
-          options,
-          retriesRemaining,
-          retryOfRequestLogID ?? requestLogID,
-          response.headers,
-        );
+        loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
+        loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
+        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID, response.headers);
       }
 
       const retryMessage = shouldRetry ? `error; no more retries left` : `error; not retryable`;
 
-      loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
+      loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
       const errJSON = safeJSON(errText) as any;
       const errMessage = errJSON ? undefined : errText;
 
-      loggerFor(this).debug(
-        `[${requestLogID}] response error (${retryMessage})`,
-        formatRequestDetails({
-          retryOfRequestLogID,
-          url: response.url,
-          status: response.status,
-          headers: response.headers,
-          message: errMessage,
-          durationMs: Date.now() - startTime,
-        }),
-      );
+      loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, message: errMessage, durationMs: Date.now() - startTime }));
 
       const err = this.makeStatusError(response.status, errJSON, errMessage, response.headers);
       throw err;
     }
 
-    loggerFor(this).info(responseInfo);
-    loggerFor(this).debug(
-      `[${requestLogID}] response start`,
-      formatRequestDetails({
-        retryOfRequestLogID,
-        url: response.url,
-        status: response.status,
-        headers: response.headers,
-        durationMs: headersTime - startTime,
-      }),
-    );
+    loggerFor(this).info(responseInfo)
+    loggerFor(this).debug(`[${requestLogID}] response start`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
 
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
@@ -598,9 +457,7 @@ export class ImageKit {
 
     const timeout = setTimeout(abort, ms);
 
-    const isReadableBody =
-      ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
-      (typeof options.body === 'object' && options.body !== null && Symbol.asyncIterator in options.body);
+    const isReadableBody = ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) || (typeof options.body === "object" && options.body !== null && Symbol.asyncIterator in options.body);
 
     const fetchOptions: RequestInit = {
       signal: controller.signal as any,
@@ -615,6 +472,7 @@ export class ImageKit {
     }
 
     try {
+
       // use undefined this binding; fetch errors if bound to something else in browser/cloudflare
       return await this.fetch.call(undefined, url, fetchOptions);
     } finally {
@@ -715,12 +573,11 @@ export class ImageKit {
     const req: FinalizedRequestInit = {
       method,
       headers: reqHeaders,
-      ...(options.signal && { signal: options.signal }),
-      ...((globalThis as any).ReadableStream &&
-        body instanceof (globalThis as any).ReadableStream && { duplex: 'half' }),
+      ...(options.signal && { signal: options.signal}),
+      ...((globalThis as any).ReadableStream && body instanceof (globalThis as any).ReadableStream && { duplex: "half" }),
       ...(body && { body }),
-      ...((this.fetchOptions as any) ?? {}),
-      ...((options.fetchOptions as any) ?? {}),
+      ...(this.fetchOptions as any ?? {}),
+      ...(options.fetchOptions as any ?? {}),
     };
 
     return { req, url, timeout: options.timeout };
@@ -745,17 +602,15 @@ export class ImageKit {
 
     const headers = buildHeaders([
       idempotencyHeaders,
-      {
-        Accept: 'application/json',
-        'User-Agent': this.getUserAgent(),
-        'X-Stainless-Retry-Count': String(retryCount),
-        ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
-        ...getPlatformHeaders(),
-      },
+      {Accept: 'application/json',
+      'User-Agent': this.getUserAgent(),
+      'X-Stainless-Retry-Count': String(retryCount),
+      ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
+      ...getPlatformHeaders()},
       await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
-      options.headers,
+      options.headers
     ]);
 
     this.validateHeaders(headers);
@@ -782,9 +637,11 @@ export class ImageKit {
       ArrayBuffer.isView(body) ||
       body instanceof ArrayBuffer ||
       body instanceof DataView ||
-      (typeof body === 'string' &&
+      (
+        typeof body === 'string' &&
         // Preserve legacy string encoding behavior for now
-        headers.values.has('content-type')) ||
+        headers.values.has('content-type')
+      ) ||
       // `Blob` is superset of `File`
       ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
       // `FormData` -> `multipart/form-data`
@@ -815,7 +672,7 @@ export class ImageKit {
   }
 
   static ImageKit = this;
-  static DEFAULT_TIMEOUT = 60000; // 1 minute
+  static DEFAULT_TIMEOUT = 60000 // 1 minute
 
   static ImageKitError = Errors.ImageKitError;
   static APIError = Errors.APIError;
@@ -855,107 +712,113 @@ ImageKit.Beta = Beta;
 ImageKit.Webhooks = Webhooks;
 
 export declare namespace ImageKit {
-  export type RequestOptions = Opts.RequestOptions;
+      export type RequestOptions = Opts.RequestOptions;
 
-  export {
-    CustomMetadataFields as CustomMetadataFields,
-    type CustomMetadataField as CustomMetadataField,
-    type CustomMetadataFieldListResponse as CustomMetadataFieldListResponse,
-    type CustomMetadataFieldDeleteResponse as CustomMetadataFieldDeleteResponse,
-    type CustomMetadataFieldCreateParams as CustomMetadataFieldCreateParams,
-    type CustomMetadataFieldUpdateParams as CustomMetadataFieldUpdateParams,
-    type CustomMetadataFieldListParams as CustomMetadataFieldListParams,
-  };
+      export {
+  CustomMetadataFields as CustomMetadataFields,
+  type CustomMetadataField as CustomMetadataField,
+  type CustomMetadataFieldListResponse as CustomMetadataFieldListResponse,
+  type CustomMetadataFieldDeleteResponse as CustomMetadataFieldDeleteResponse,
+  type CustomMetadataFieldCreateParams as CustomMetadataFieldCreateParams,
+  type CustomMetadataFieldUpdateParams as CustomMetadataFieldUpdateParams,
+  type CustomMetadataFieldListParams as CustomMetadataFieldListParams
+};
 
-  export {
-    Files as Files,
-    type File as File,
-    type Folder as Folder,
-    type Metadata as Metadata,
-    type UpdateFileRequest as UpdateFileRequest,
-    type FileUpdateResponse as FileUpdateResponse,
-    type FileCopyResponse as FileCopyResponse,
-    type FileMoveResponse as FileMoveResponse,
-    type FileRenameResponse as FileRenameResponse,
-    type FileUploadResponse as FileUploadResponse,
-    type FileUpdateParams as FileUpdateParams,
-    type FileCopyParams as FileCopyParams,
-    type FileMoveParams as FileMoveParams,
-    type FileRenameParams as FileRenameParams,
-    type FileUploadParams as FileUploadParams,
-  };
+export {
+  Files as Files,
+  type File as File,
+  type Folder as Folder,
+  type Metadata as Metadata,
+  type UpdateFileRequest as UpdateFileRequest,
+  type FileUpdateResponse as FileUpdateResponse,
+  type FileCopyResponse as FileCopyResponse,
+  type FileMoveResponse as FileMoveResponse,
+  type FileRenameResponse as FileRenameResponse,
+  type FileUploadResponse as FileUploadResponse,
+  type FileUpdateParams as FileUpdateParams,
+  type FileCopyParams as FileCopyParams,
+  type FileMoveParams as FileMoveParams,
+  type FileRenameParams as FileRenameParams,
+  type FileUploadParams as FileUploadParams
+};
 
-  export {
-    SavedExtensions as SavedExtensions,
-    type SavedExtensionListResponse as SavedExtensionListResponse,
-    type SavedExtensionCreateParams as SavedExtensionCreateParams,
-    type SavedExtensionUpdateParams as SavedExtensionUpdateParams,
-  };
+export {
+  SavedExtensions as SavedExtensions,
+  type SavedExtensionListResponse as SavedExtensionListResponse,
+  type SavedExtensionCreateParams as SavedExtensionCreateParams,
+  type SavedExtensionUpdateParams as SavedExtensionUpdateParams
+};
 
-  export {
-    Assets as Assets,
-    type AssetListResponse as AssetListResponse,
-    type AssetListParams as AssetListParams,
-  };
+export {
+  Assets as Assets,
+  type AssetListResponse as AssetListResponse,
+  type AssetListParams as AssetListParams
+};
 
-  export { Cache as Cache };
+export {
+  Cache as Cache
+};
 
-  export {
-    Folders as Folders,
-    type FolderCreateResponse as FolderCreateResponse,
-    type FolderDeleteResponse as FolderDeleteResponse,
-    type FolderCopyResponse as FolderCopyResponse,
-    type FolderMoveResponse as FolderMoveResponse,
-    type FolderRenameResponse as FolderRenameResponse,
-    type FolderCreateParams as FolderCreateParams,
-    type FolderDeleteParams as FolderDeleteParams,
-    type FolderCopyParams as FolderCopyParams,
-    type FolderMoveParams as FolderMoveParams,
-    type FolderRenameParams as FolderRenameParams,
-  };
+export {
+  Folders as Folders,
+  type FolderCreateResponse as FolderCreateResponse,
+  type FolderDeleteResponse as FolderDeleteResponse,
+  type FolderCopyResponse as FolderCopyResponse,
+  type FolderMoveResponse as FolderMoveResponse,
+  type FolderRenameResponse as FolderRenameResponse,
+  type FolderCreateParams as FolderCreateParams,
+  type FolderDeleteParams as FolderDeleteParams,
+  type FolderCopyParams as FolderCopyParams,
+  type FolderMoveParams as FolderMoveParams,
+  type FolderRenameParams as FolderRenameParams
+};
 
-  export { Accounts as Accounts };
+export {
+  Accounts as Accounts
+};
 
-  export { Beta as Beta };
+export {
+  Beta as Beta
+};
 
-  export {
-    Webhooks as Webhooks,
-    type BaseWebhookEvent as BaseWebhookEvent,
-    type FileCreateEvent as FileCreateEvent,
-    type FileDeleteEvent as FileDeleteEvent,
-    type FileUpdateEvent as FileUpdateEvent,
-    type FileVersionCreateEvent as FileVersionCreateEvent,
-    type FileVersionDeleteEvent as FileVersionDeleteEvent,
-    type UploadPostTransformErrorEvent as UploadPostTransformErrorEvent,
-    type UploadPostTransformSuccessEvent as UploadPostTransformSuccessEvent,
-    type UploadPreTransformErrorEvent as UploadPreTransformErrorEvent,
-    type UploadPreTransformSuccessEvent as UploadPreTransformSuccessEvent,
-    type VideoTransformationAcceptedEvent as VideoTransformationAcceptedEvent,
-    type VideoTransformationErrorEvent as VideoTransformationErrorEvent,
-    type VideoTransformationReadyEvent as VideoTransformationReadyEvent,
-    type UnsafeUnwrapWebhookEvent as UnsafeUnwrapWebhookEvent,
-    type UnwrapWebhookEvent as UnwrapWebhookEvent,
-  };
+export {
+  Webhooks as Webhooks,
+  type BaseWebhookEvent as BaseWebhookEvent,
+  type FileCreateEvent as FileCreateEvent,
+  type FileDeleteEvent as FileDeleteEvent,
+  type FileUpdateEvent as FileUpdateEvent,
+  type FileVersionCreateEvent as FileVersionCreateEvent,
+  type FileVersionDeleteEvent as FileVersionDeleteEvent,
+  type UploadPostTransformErrorEvent as UploadPostTransformErrorEvent,
+  type UploadPostTransformSuccessEvent as UploadPostTransformSuccessEvent,
+  type UploadPreTransformErrorEvent as UploadPreTransformErrorEvent,
+  type UploadPreTransformSuccessEvent as UploadPreTransformSuccessEvent,
+  type VideoTransformationAcceptedEvent as VideoTransformationAcceptedEvent,
+  type VideoTransformationErrorEvent as VideoTransformationErrorEvent,
+  type VideoTransformationReadyEvent as VideoTransformationReadyEvent,
+  type UnsafeUnwrapWebhookEvent as UnsafeUnwrapWebhookEvent,
+  type UnwrapWebhookEvent as UnwrapWebhookEvent
+};
 
-  export type BaseOverlay = API.BaseOverlay;
-  export type ExtensionConfig = API.ExtensionConfig;
-  export type Extensions = API.Extensions;
-  export type GetImageAttributesOptions = API.GetImageAttributesOptions;
-  export type ImageOverlay = API.ImageOverlay;
-  export type Overlay = API.Overlay;
-  export type OverlayPosition = API.OverlayPosition;
-  export type OverlayTiming = API.OverlayTiming;
-  export type ResponsiveImageAttributes = API.ResponsiveImageAttributes;
-  export type SavedExtension = API.SavedExtension;
-  export type SolidColorOverlay = API.SolidColorOverlay;
-  export type SolidColorOverlayTransformation = API.SolidColorOverlayTransformation;
-  export type SrcOptions = API.SrcOptions;
-  export type StreamingResolution = API.StreamingResolution;
-  export type SubtitleOverlay = API.SubtitleOverlay;
-  export type SubtitleOverlayTransformation = API.SubtitleOverlayTransformation;
-  export type TextOverlay = API.TextOverlay;
-  export type TextOverlayTransformation = API.TextOverlayTransformation;
-  export type Transformation = API.Transformation;
-  export type TransformationPosition = API.TransformationPosition;
-  export type VideoOverlay = API.VideoOverlay;
-}
+export type BaseOverlay = API.BaseOverlay;
+export type ExtensionConfig = API.ExtensionConfig;
+export type Extensions = API.Extensions;
+export type GetImageAttributesOptions = API.GetImageAttributesOptions;
+export type ImageOverlay = API.ImageOverlay;
+export type Overlay = API.Overlay;
+export type OverlayPosition = API.OverlayPosition;
+export type OverlayTiming = API.OverlayTiming;
+export type ResponsiveImageAttributes = API.ResponsiveImageAttributes;
+export type SavedExtension = API.SavedExtension;
+export type SolidColorOverlay = API.SolidColorOverlay;
+export type SolidColorOverlayTransformation = API.SolidColorOverlayTransformation;
+export type SrcOptions = API.SrcOptions;
+export type StreamingResolution = API.StreamingResolution;
+export type SubtitleOverlay = API.SubtitleOverlay;
+export type SubtitleOverlayTransformation = API.SubtitleOverlayTransformation;
+export type TextOverlay = API.TextOverlay;
+export type TextOverlayTransformation = API.TextOverlayTransformation;
+export type Transformation = API.Transformation;
+export type TransformationPosition = API.TransformationPosition;
+export type VideoOverlay = API.VideoOverlay;
+    }

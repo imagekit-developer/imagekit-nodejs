@@ -9,10 +9,7 @@ export class Webhooks extends APIResource {
     return JSON.parse(body) as UnsafeUnwrapWebhookEvent;
   }
 
-  unwrap(
-    body: string,
-    { headers, key }: { headers: Record<string, string>; key?: string },
-  ): UnwrapWebhookEvent {
+  unwrap(body: string, { headers, key }: { headers: Record<string, string>; key?: string }): UnwrapWebhookEvent {
     if (headers !== undefined) {
       const keyStr: string | null = key === undefined ? this._client.webhookSecret : key;
       if (keyStr === null) throw new Error('Webhook key must not be null in order to unwrap');
@@ -1152,38 +1149,14 @@ export namespace VideoTransformationReadyEvent {
  * This event confirms that ImageKit has received and queued your transformation
  * request. Use this for debugging and tracking transformation lifecycle.
  */
-export type UnsafeUnwrapWebhookEvent =
-  | VideoTransformationAcceptedEvent
-  | VideoTransformationReadyEvent
-  | VideoTransformationErrorEvent
-  | UploadPreTransformSuccessEvent
-  | UploadPreTransformErrorEvent
-  | UploadPostTransformSuccessEvent
-  | UploadPostTransformErrorEvent
-  | FileCreateEvent
-  | FileUpdateEvent
-  | FileDeleteEvent
-  | FileVersionCreateEvent
-  | FileVersionDeleteEvent;
+export type UnsafeUnwrapWebhookEvent = VideoTransformationAcceptedEvent | VideoTransformationReadyEvent | VideoTransformationErrorEvent | UploadPreTransformSuccessEvent | UploadPreTransformErrorEvent | UploadPostTransformSuccessEvent | UploadPostTransformErrorEvent | FileCreateEvent | FileUpdateEvent | FileDeleteEvent | FileVersionCreateEvent | FileVersionDeleteEvent
 
 /**
  * Triggered when a new video transformation request is accepted for processing.
  * This event confirms that ImageKit has received and queued your transformation
  * request. Use this for debugging and tracking transformation lifecycle.
  */
-export type UnwrapWebhookEvent =
-  | VideoTransformationAcceptedEvent
-  | VideoTransformationReadyEvent
-  | VideoTransformationErrorEvent
-  | UploadPreTransformSuccessEvent
-  | UploadPreTransformErrorEvent
-  | UploadPostTransformSuccessEvent
-  | UploadPostTransformErrorEvent
-  | FileCreateEvent
-  | FileUpdateEvent
-  | FileDeleteEvent
-  | FileVersionCreateEvent
-  | FileVersionDeleteEvent;
+export type UnwrapWebhookEvent = VideoTransformationAcceptedEvent | VideoTransformationReadyEvent | VideoTransformationErrorEvent | UploadPreTransformSuccessEvent | UploadPreTransformErrorEvent | UploadPostTransformSuccessEvent | UploadPostTransformErrorEvent | FileCreateEvent | FileUpdateEvent | FileDeleteEvent | FileVersionCreateEvent | FileVersionDeleteEvent
 
 export declare namespace Webhooks {
   export {
@@ -1201,6 +1174,6 @@ export declare namespace Webhooks {
     type VideoTransformationErrorEvent as VideoTransformationErrorEvent,
     type VideoTransformationReadyEvent as VideoTransformationReadyEvent,
     type UnsafeUnwrapWebhookEvent as UnsafeUnwrapWebhookEvent,
-    type UnwrapWebhookEvent as UnwrapWebhookEvent,
+    type UnwrapWebhookEvent as UnwrapWebhookEvent
   };
 }

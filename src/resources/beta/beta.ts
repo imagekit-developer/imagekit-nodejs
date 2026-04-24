@@ -11,5 +11,7 @@ export class Beta extends APIResource {
 Beta.V2 = V2;
 
 export declare namespace Beta {
-  export { V2 as V2 };
+  export {
+    V2 as V2
+  };
 }

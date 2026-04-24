@@ -10,7 +10,9 @@ const config: JestConfigWithTsJest = {
     '^@imagekit/api-mcp$': '<rootDir>/src/index.ts',
     '^@imagekit/api-mcp/(.*)$': '<rootDir>/src/$1',
   },
-  modulePathIgnorePatterns: ['<rootDir>/dist/'],
+  modulePathIgnorePatterns: [
+    '<rootDir>/dist/',
+  ],
   testPathIgnorePatterns: ['scripts'],
 };
 

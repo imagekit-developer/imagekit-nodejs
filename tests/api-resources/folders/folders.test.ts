@@ -5,16 +5,13 @@ import ImageKit from '@imagekit/nodejs';
 const client = new ImageKit({
   privateKey: 'My Private Key',
   password: 'My Password',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource folders', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.folders.create({
-      folderName: 'summer',
-      parentFolderPath: '/product/images/',
-    });
+    const responsePromise = client.folders.create({ folderName: 'summer', parentFolderPath: '/product/images/' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,10 +23,7 @@ describe('resource folders', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.folders.create({
-      folderName: 'summer',
-      parentFolderPath: '/product/images/',
-    });
+    const response = await client.folders.create({ folderName: 'summer', parentFolderPath: '/product/images/' });
   });
 
   // Mock server tests are disabled
@@ -51,10 +45,7 @@ describe('resource folders', () => {
 
   // Mock server tests are disabled
   test.skip('copy: only required params', async () => {
-    const responsePromise = client.folders.copy({
-      destinationPath: '/path/of/destination/folder',
-      sourceFolderPath: '/path/of/source/folder',
-    });
+    const responsePromise = client.folders.copy({ destinationPath: '/path/of/destination/folder', sourceFolderPath: '/path/of/source/folder' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -67,18 +58,15 @@ describe('resource folders', () => {
   // Mock server tests are disabled
   test.skip('copy: required and optional params', async () => {
     const response = await client.folders.copy({
-      destinationPath: '/path/of/destination/folder',
-      sourceFolderPath: '/path/of/source/folder',
-      includeVersions: true,
-    });
+    destinationPath: '/path/of/destination/folder',
+    sourceFolderPath: '/path/of/source/folder',
+    includeVersions: true,
+  });
   });
 
   // Mock server tests are disabled
   test.skip('move: only required params', async () => {
-    const responsePromise = client.folders.move({
-      destinationPath: '/path/of/destination/folder',
-      sourceFolderPath: '/path/of/source/folder',
-    });
+    const responsePromise = client.folders.move({ destinationPath: '/path/of/destination/folder', sourceFolderPath: '/path/of/source/folder' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -90,18 +78,12 @@ describe('resource folders', () => {
 
   // Mock server tests are disabled
   test.skip('move: required and optional params', async () => {
-    const response = await client.folders.move({
-      destinationPath: '/path/of/destination/folder',
-      sourceFolderPath: '/path/of/source/folder',
-    });
+    const response = await client.folders.move({ destinationPath: '/path/of/destination/folder', sourceFolderPath: '/path/of/source/folder' });
   });
 
   // Mock server tests are disabled
   test.skip('rename: only required params', async () => {
-    const responsePromise = client.folders.rename({
-      folderPath: '/path/of/folder',
-      newFolderName: 'new-folder-name',
-    });
+    const responsePromise = client.folders.rename({ folderPath: '/path/of/folder', newFolderName: 'new-folder-name' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -114,9 +96,9 @@ describe('resource folders', () => {
   // Mock server tests are disabled
   test.skip('rename: required and optional params', async () => {
     const response = await client.folders.rename({
-      folderPath: '/path/of/folder',
-      newFolderName: 'new-folder-name',
-      purgeCache: true,
-    });
+    folderPath: '/path/of/folder',
+    newFolderName: 'new-folder-name',
+    purgeCache: true,
+  });
   });
 });

@@ -48,5 +48,7 @@ export interface MetadataGetFromURLParams {
 }
 
 export declare namespace Metadata {
-  export { type MetadataGetFromURLParams as MetadataGetFromURLParams };
+  export {
+    type MetadataGetFromURLParams as MetadataGetFromURLParams
+  };
 }
