@@ -50,11 +50,7 @@ export class SavedExtensions extends APIResource {
    * );
    * ```
    */
-  update(
-    id: string,
-    body: SavedExtensionUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<Shared.SavedExtension> {
+  update(id: string, body: SavedExtensionUpdateParams, options?: RequestOptions): APIPromise<Shared.SavedExtension> {
     return this._client.patch(path`/v1/saved-extensions/${id}`, { body, ...options });
   }
 
@@ -81,10 +77,7 @@ export class SavedExtensions extends APIResource {
    * ```
    */
   delete(id: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/v1/saved-extensions/${id}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/v1/saved-extensions/${id}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
@@ -102,7 +95,7 @@ export class SavedExtensions extends APIResource {
   }
 }
 
-export type SavedExtensionListResponse = Array<Shared.SavedExtension>;
+export type SavedExtensionListResponse = Array<Shared.SavedExtension>
 
 export interface SavedExtensionCreateParams {
   /**
@@ -144,6 +137,6 @@ export declare namespace SavedExtensions {
   export {
     type SavedExtensionListResponse as SavedExtensionListResponse,
     type SavedExtensionCreateParams as SavedExtensionCreateParams,
-    type SavedExtensionUpdateParams as SavedExtensionUpdateParams,
+    type SavedExtensionUpdateParams as SavedExtensionUpdateParams
   };
 }

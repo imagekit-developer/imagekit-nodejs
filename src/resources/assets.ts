@@ -12,15 +12,12 @@ export class Assets extends APIResource {
    * by generating a query string in a Lucene-like syntax and provide this generated
    * string as the value of the `searchQuery`.
    */
-  list(
-    query: AssetListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AssetListResponse> {
+  list(query: AssetListParams | null | undefined = {}, options?: RequestOptions): APIPromise<AssetListResponse> {
     return this._client.get('/v1/files', { query, ...options });
   }
 }
 
-export type AssetListResponse = Array<FilesAPI.File | FilesAPI.Folder>;
+export type AssetListResponse = Array<FilesAPI.File | FilesAPI.Folder>
 
 export interface AssetListParams {
   /**
@@ -73,21 +70,7 @@ export interface AssetListParams {
    * Sort the results by one of the supported fields in ascending or descending
    * order.
    */
-  sort?:
-    | 'ASC_NAME'
-    | 'DESC_NAME'
-    | 'ASC_CREATED'
-    | 'DESC_CREATED'
-    | 'ASC_UPDATED'
-    | 'DESC_UPDATED'
-    | 'ASC_HEIGHT'
-    | 'DESC_HEIGHT'
-    | 'ASC_WIDTH'
-    | 'DESC_WIDTH'
-    | 'ASC_SIZE'
-    | 'DESC_SIZE'
-    | 'ASC_RELEVANCE'
-    | 'DESC_RELEVANCE';
+  sort?: 'ASC_NAME' | 'DESC_NAME' | 'ASC_CREATED' | 'DESC_CREATED' | 'ASC_UPDATED' | 'DESC_UPDATED' | 'ASC_HEIGHT' | 'DESC_HEIGHT' | 'ASC_WIDTH' | 'DESC_WIDTH' | 'ASC_SIZE' | 'DESC_SIZE' | 'ASC_RELEVANCE' | 'DESC_RELEVANCE';
 
   /**
    * Filter results by asset type.
@@ -101,5 +84,8 @@ export interface AssetListParams {
 }
 
 export declare namespace Assets {
-  export { type AssetListResponse as AssetListResponse, type AssetListParams as AssetListParams };
+  export {
+    type AssetListResponse as AssetListResponse,
+    type AssetListParams as AssetListParams
+  };
 }

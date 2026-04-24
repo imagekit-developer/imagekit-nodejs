@@ -5,17 +5,17 @@ import ImageKit from '@imagekit/nodejs';
 const client = new ImageKit({
   privateKey: 'My Private Key',
   password: 'My Password',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource customMetadataFields', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.customMetadataFields.create({
-      label: 'price',
-      name: 'price',
-      schema: { type: 'Number' },
-    });
+    label: 'price',
+    name: 'price',
+    schema: { type: 'Number' },
+  });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -28,19 +28,19 @@ describe('resource customMetadataFields', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.customMetadataFields.create({
-      label: 'price',
-      name: 'price',
-      schema: {
-        type: 'Number',
-        defaultValue: [true, 10, 'Hello'],
-        isValueRequired: true,
-        maxLength: 0,
-        maxValue: 3000,
-        minLength: 0,
-        minValue: 1000,
-        selectOptions: ['small', 'medium', 'large', 30, 40, true],
-      },
-    });
+    label: 'price',
+    name: 'price',
+    schema: {
+    type: 'Number',
+    defaultValue: [true, 10, 'Hello'],
+    isValueRequired: true,
+    maxLength: 0,
+    maxValue: 3000,
+    minLength: 0,
+    minValue: 1000,
+    selectOptions: ['small', 'medium', 'large', 30, 40, true],
+  },
+  });
   });
 
   // Mock server tests are disabled
@@ -58,24 +58,20 @@ describe('resource customMetadataFields', () => {
   // Mock server tests are disabled
   test.skip('update: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.customMetadataFields.update(
-        'id',
-        {
-          label: 'price',
-          schema: {
-            defaultValue: [true, 10, 'Hello'],
-            isValueRequired: true,
-            maxLength: 0,
-            maxValue: 3000,
-            minLength: 0,
-            minValue: 1000,
-            selectOptions: ['small', 'medium', 'large', 30, 40, true],
-          },
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(ImageKit.NotFoundError);
+    await expect(client.customMetadataFields.update('id', {
+    label: 'price',
+    schema: {
+    defaultValue: [true, 10, 'Hello'],
+    isValueRequired: true,
+    maxLength: 0,
+    maxValue: 3000,
+    minLength: 0,
+    minValue: 1000,
+    selectOptions: ['small', 'medium', 'large', 30, 40, true],
+  },
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(ImageKit.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -93,12 +89,9 @@ describe('resource customMetadataFields', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.customMetadataFields.list(
-        { folderPath: 'folderPath', includeDeleted: true },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(ImageKit.NotFoundError);
+    await expect(client.customMetadataFields.list({ folderPath: 'folderPath', includeDeleted: true }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(ImageKit.NotFoundError);
   });
 
   // Mock server tests are disabled

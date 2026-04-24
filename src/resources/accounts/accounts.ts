@@ -2,23 +2,9 @@
 
 import { APIResource } from '../../core/resource';
 import * as OriginsAPI from './origins';
-import {
-  OriginCreateParams,
-  OriginListResponse,
-  OriginRequest,
-  OriginResponse,
-  OriginUpdateParams,
-  Origins,
-} from './origins';
+import { OriginCreateParams, OriginListResponse, OriginRequest, OriginResponse, OriginUpdateParams, Origins } from './origins';
 import * as URLEndpointsAPI from './url-endpoints';
-import {
-  URLEndpointCreateParams,
-  URLEndpointListResponse,
-  URLEndpointRequest,
-  URLEndpointResponse,
-  URLEndpointUpdateParams,
-  URLEndpoints,
-} from './url-endpoints';
+import { URLEndpointCreateParams, URLEndpointListResponse, URLEndpointRequest, URLEndpointResponse, URLEndpointUpdateParams, URLEndpoints } from './url-endpoints';
 import * as UsageAPI from './usage';
 import { Usage, UsageGetParams, UsageGetResponse } from './usage';
 
@@ -33,7 +19,11 @@ Accounts.Origins = Origins;
 Accounts.URLEndpoints = URLEndpoints;
 
 export declare namespace Accounts {
-  export { Usage as Usage, type UsageGetResponse as UsageGetResponse, type UsageGetParams as UsageGetParams };
+  export {
+    Usage as Usage,
+    type UsageGetResponse as UsageGetResponse,
+    type UsageGetParams as UsageGetParams
+  };
 
   export {
     Origins as Origins,
@@ -41,7 +31,7 @@ export declare namespace Accounts {
     type OriginResponse as OriginResponse,
     type OriginListResponse as OriginListResponse,
     type OriginCreateParams as OriginCreateParams,
-    type OriginUpdateParams as OriginUpdateParams,
+    type OriginUpdateParams as OriginUpdateParams
   };
 
   export {
@@ -50,6 +40,6 @@ export declare namespace Accounts {
     type URLEndpointResponse as URLEndpointResponse,
     type URLEndpointListResponse as URLEndpointListResponse,
     type URLEndpointCreateParams as URLEndpointCreateParams,
-    type URLEndpointUpdateParams as URLEndpointUpdateParams,
+    type URLEndpointUpdateParams as URLEndpointUpdateParams
   };
 }

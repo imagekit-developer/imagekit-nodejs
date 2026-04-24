@@ -5,15 +5,13 @@ import ImageKit from '@imagekit/nodejs';
 const client = new ImageKit({
   privateKey: 'My Private Key',
   password: 'My Password',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource invalidation', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.cache.invalidation.create({
-      url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg',
-    });
+    const responsePromise = client.cache.invalidation.create({ url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -25,9 +23,7 @@ describe('resource invalidation', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.cache.invalidation.create({
-      url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg',
-    });
+    const response = await client.cache.invalidation.create({ url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg' });
   });
 
   // Mock server tests are disabled

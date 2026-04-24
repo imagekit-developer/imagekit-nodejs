@@ -65,6 +65,6 @@ export declare namespace Invalidation {
   export {
     type InvalidationCreateResponse as InvalidationCreateResponse,
     type InvalidationGetResponse as InvalidationGetResponse,
-    type InvalidationCreateParams as InvalidationCreateParams,
+    type InvalidationCreateParams as InvalidationCreateParams
   };
 }

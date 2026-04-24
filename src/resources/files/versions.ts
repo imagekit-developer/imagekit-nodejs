@@ -33,12 +33,8 @@ export class Versions extends APIResource {
    * );
    * ```
    */
-  delete(
-    versionID: string,
-    params: VersionDeleteParams,
-    options?: RequestOptions,
-  ): APIPromise<VersionDeleteResponse> {
-    const { fileId } = params;
+  delete(versionID: string, params: VersionDeleteParams, options?: RequestOptions): APIPromise<VersionDeleteResponse> {
+    const { fileId } = params
     return this._client.delete(path`/v1/files/${fileId}/versions/${versionID}`, options);
   }
 
@@ -53,7 +49,7 @@ export class Versions extends APIResource {
    * ```
    */
   get(versionID: string, params: VersionGetParams, options?: RequestOptions): APIPromise<FilesAPI.File> {
-    const { fileId } = params;
+    const { fileId } = params
     return this._client.get(path`/v1/files/${fileId}/versions/${versionID}`, options);
   }
 
@@ -68,19 +64,16 @@ export class Versions extends APIResource {
    * );
    * ```
    */
-  restore(
-    versionID: string,
-    params: VersionRestoreParams,
-    options?: RequestOptions,
-  ): APIPromise<FilesAPI.File> {
-    const { fileId } = params;
+  restore(versionID: string, params: VersionRestoreParams, options?: RequestOptions): APIPromise<FilesAPI.File> {
+    const { fileId } = params
     return this._client.put(path`/v1/files/${fileId}/versions/${versionID}/restore`, options);
   }
 }
 
-export type VersionListResponse = Array<FilesAPI.File>;
+export type VersionListResponse = Array<FilesAPI.File>
 
-export interface VersionDeleteResponse {}
+export interface VersionDeleteResponse {
+}
 
 export interface VersionDeleteParams {
   /**
@@ -112,6 +105,6 @@ export declare namespace Versions {
     type VersionDeleteResponse as VersionDeleteResponse,
     type VersionDeleteParams as VersionDeleteParams,
     type VersionGetParams as VersionGetParams,
-    type VersionRestoreParams as VersionRestoreParams,
+    type VersionRestoreParams as VersionRestoreParams
   };
 }

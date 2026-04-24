@@ -42,11 +42,7 @@ export class CustomMetadataFields extends APIResource {
    *   });
    * ```
    */
-  update(
-    id: string,
-    body: CustomMetadataFieldUpdateParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<CustomMetadataField> {
+  update(id: string, body: CustomMetadataFieldUpdateParams | null | undefined = {}, options?: RequestOptions): APIPromise<CustomMetadataField> {
     return this._client.patch(path`/v1/customMetadataFields/${id}`, { body, ...options });
   }
 
@@ -66,10 +62,7 @@ export class CustomMetadataFields extends APIResource {
    *   await client.customMetadataFields.list();
    * ```
    */
-  list(
-    query: CustomMetadataFieldListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<CustomMetadataFieldListResponse> {
+  list(query: CustomMetadataFieldListParams | null | undefined = {}, options?: RequestOptions): APIPromise<CustomMetadataFieldListResponse> {
     return this._client.get('/v1/customMetadataFields', { query, ...options });
   }
 
@@ -168,9 +161,10 @@ export namespace CustomMetadataField {
   }
 }
 
-export type CustomMetadataFieldListResponse = Array<CustomMetadataField>;
+export type CustomMetadataFieldListResponse = Array<CustomMetadataField>
 
-export interface CustomMetadataFieldDeleteResponse {}
+export interface CustomMetadataFieldDeleteResponse {
+}
 
 export interface CustomMetadataFieldCreateParams {
   /**
@@ -341,6 +335,6 @@ export declare namespace CustomMetadataFields {
     type CustomMetadataFieldDeleteResponse as CustomMetadataFieldDeleteResponse,
     type CustomMetadataFieldCreateParams as CustomMetadataFieldCreateParams,
     type CustomMetadataFieldUpdateParams as CustomMetadataFieldUpdateParams,
-    type CustomMetadataFieldListParams as CustomMetadataFieldListParams,
+    type CustomMetadataFieldListParams as CustomMetadataFieldListParams
   };
 }

@@ -95,9 +95,11 @@ export class Folders extends APIResource {
   }
 }
 
-export interface FolderCreateResponse {}
+export interface FolderCreateResponse {
+}
 
-export interface FolderDeleteResponse {}
+export interface FolderDeleteResponse {
+}
 
 /**
  * Job submitted successfully. A `jobId` will be returned.
@@ -242,8 +244,11 @@ export declare namespace Folders {
     type FolderDeleteParams as FolderDeleteParams,
     type FolderCopyParams as FolderCopyParams,
     type FolderMoveParams as FolderMoveParams,
-    type FolderRenameParams as FolderRenameParams,
+    type FolderRenameParams as FolderRenameParams
   };
 
-  export { Job as Job, type JobGetResponse as JobGetResponse };
+  export {
+    Job as Job,
+    type JobGetResponse as JobGetResponse
+  };
 }
