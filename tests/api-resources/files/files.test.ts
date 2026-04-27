@@ -5,7 +5,7 @@ import ImageKit, { toFile } from '@imagekit/nodejs';
 const client = new ImageKit({
   privateKey: 'My Private Key',
   password: 'My Password',
-  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource files', () => {
@@ -35,7 +35,10 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('copy: only required params', async () => {
-    const responsePromise = client.files.copy({ destinationPath: '/folder/to/copy/into/', sourceFilePath: '/path/to/file.jpg' });
+    const responsePromise = client.files.copy({
+      destinationPath: '/folder/to/copy/into/',
+      sourceFilePath: '/path/to/file.jpg',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -48,10 +51,10 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('copy: required and optional params', async () => {
     const response = await client.files.copy({
-    destinationPath: '/folder/to/copy/into/',
-    sourceFilePath: '/path/to/file.jpg',
-    includeFileVersions: false,
-  });
+      destinationPath: '/folder/to/copy/into/',
+      sourceFilePath: '/path/to/file.jpg',
+      includeFileVersions: false,
+    });
   });
 
   // Mock server tests are disabled
@@ -68,7 +71,10 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('move: only required params', async () => {
-    const responsePromise = client.files.move({ destinationPath: '/folder/to/move/into/', sourceFilePath: '/path/to/file.jpg' });
+    const responsePromise = client.files.move({
+      destinationPath: '/folder/to/move/into/',
+      sourceFilePath: '/path/to/file.jpg',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -80,12 +86,18 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('move: required and optional params', async () => {
-    const response = await client.files.move({ destinationPath: '/folder/to/move/into/', sourceFilePath: '/path/to/file.jpg' });
+    const response = await client.files.move({
+      destinationPath: '/folder/to/move/into/',
+      sourceFilePath: '/path/to/file.jpg',
+    });
   });
 
   // Mock server tests are disabled
   test.skip('rename: only required params', async () => {
-    const responsePromise = client.files.rename({ filePath: '/path/to/file.jpg', newFileName: 'newFileName.jpg' });
+    const responsePromise = client.files.rename({
+      filePath: '/path/to/file.jpg',
+      newFileName: 'newFileName.jpg',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -98,15 +110,18 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('rename: required and optional params', async () => {
     const response = await client.files.rename({
-    filePath: '/path/to/file.jpg',
-    newFileName: 'newFileName.jpg',
-    purgeCache: true,
-  });
+      filePath: '/path/to/file.jpg',
+      newFileName: 'newFileName.jpg',
+      purgeCache: true,
+    });
   });
 
   // Mock server tests are disabled
   test.skip('upload: only required params', async () => {
-    const responsePromise = client.files.upload({ file: await toFile(Buffer.from('Example data'), 'README.md'), fileName: 'fileName' });
+    const responsePromise = client.files.upload({
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
+      fileName: 'fileName',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -119,72 +134,90 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('upload: required and optional params', async () => {
     const response = await client.files.upload({
-    file: await toFile(Buffer.from('Example data'), 'README.md'),
-    fileName: 'fileName',
-    token: 'token',
-    checks: '"request.folder" : "marketing/"\n',
-    customCoordinates: 'customCoordinates',
-    customMetadata: { brand: 'bar', color: 'bar' },
-    description: 'Running shoes',
-    expire: 0,
-    extensions: [{
-    name: 'remove-bg',
-    options: {
-    add_shadow: true,
-    bg_color: 'bg_color',
-    bg_image_url: 'bg_image_url',
-    semitransparency: true,
-  },
-  }, {
-    maxTags: 5,
-    minConfidence: 95,
-    name: 'google-auto-tagging',
-  }, { name: 'ai-auto-description' }, { name: 'ai-tasks', tasks: [{
-    instruction: 'What types of clothing items are visible in this image?',
-    type: 'select_tags',
-    max_selections: 1,
-    min_selections: 0,
-    vocabulary: ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],
-  }, {
-    instruction: 'Is this a luxury or high-end fashion item?',
-    type: 'yes_no',
-    on_no: {
-    add_tags: ['luxury', 'premium'],
-    remove_tags: ['budget', 'affordable'],
-    set_metadata: [{ field: 'price_range', value: 'premium' }],
-    unset_metadata: [{ field: 'price_range' }],
-  },
-    on_unknown: {
-    add_tags: ['luxury', 'premium'],
-    remove_tags: ['budget', 'affordable'],
-    set_metadata: [{ field: 'price_range', value: 'premium' }],
-    unset_metadata: [{ field: 'price_range' }],
-  },
-    on_yes: {
-    add_tags: ['luxury', 'premium'],
-    remove_tags: ['budget', 'affordable'],
-    set_metadata: [{ field: 'price_range', value: 'premium' }],
-    unset_metadata: [{ field: 'price_range' }],
-  },
-  }] }, { id: 'ext_abc123', name: 'saved-extension' }],
-    folder: 'folder',
-    isPrivateFile: true,
-    isPublished: true,
-    overwriteAITags: true,
-    overwriteCustomMetadata: true,
-    overwriteFile: true,
-    overwriteTags: true,
-    publicKey: 'publicKey',
-    responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],
-    signature: 'signature',
-    tags: ['t-shirt', 'round-neck', 'men'],
-    transformation: { post: [{ type: 'thumbnail', value: 'w-150,h-150' }, {
-    protocol: 'dash',
-    type: 'abs',
-    value: 'sr-240_360_480_720_1080',
-  }], pre: 'w-300,h-300,q-80' },
-    useUniqueFileName: true,
-    webhookUrl: 'https://example.com',
-  });
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
+      fileName: 'fileName',
+      token: 'token',
+      checks: '"request.folder" : "marketing/"\n',
+      customCoordinates: 'customCoordinates',
+      customMetadata: { brand: 'bar', color: 'bar' },
+      description: 'Running shoes',
+      expire: 0,
+      extensions: [
+        {
+          name: 'remove-bg',
+          options: {
+            add_shadow: true,
+            bg_color: 'bg_color',
+            bg_image_url: 'bg_image_url',
+            semitransparency: true,
+          },
+        },
+        {
+          maxTags: 5,
+          minConfidence: 95,
+          name: 'google-auto-tagging',
+        },
+        { name: 'ai-auto-description' },
+        {
+          name: 'ai-tasks',
+          tasks: [
+            {
+              instruction: 'What types of clothing items are visible in this image?',
+              type: 'select_tags',
+              max_selections: 1,
+              min_selections: 0,
+              vocabulary: ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],
+            },
+            {
+              instruction: 'Is this a luxury or high-end fashion item?',
+              type: 'yes_no',
+              on_no: {
+                add_tags: ['luxury', 'premium'],
+                remove_tags: ['budget', 'affordable'],
+                set_metadata: [{ field: 'price_range', value: 'premium' }],
+                unset_metadata: [{ field: 'price_range' }],
+              },
+              on_unknown: {
+                add_tags: ['luxury', 'premium'],
+                remove_tags: ['budget', 'affordable'],
+                set_metadata: [{ field: 'price_range', value: 'premium' }],
+                unset_metadata: [{ field: 'price_range' }],
+              },
+              on_yes: {
+                add_tags: ['luxury', 'premium'],
+                remove_tags: ['budget', 'affordable'],
+                set_metadata: [{ field: 'price_range', value: 'premium' }],
+                unset_metadata: [{ field: 'price_range' }],
+              },
+            },
+          ],
+        },
+        { id: 'ext_abc123', name: 'saved-extension' },
+      ],
+      folder: 'folder',
+      isPrivateFile: true,
+      isPublished: true,
+      overwriteAITags: true,
+      overwriteCustomMetadata: true,
+      overwriteFile: true,
+      overwriteTags: true,
+      publicKey: 'publicKey',
+      responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],
+      signature: 'signature',
+      tags: ['t-shirt', 'round-neck', 'men'],
+      transformation: {
+        post: [
+          { type: 'thumbnail', value: 'w-150,h-150' },
+          {
+            protocol: 'dash',
+            type: 'abs',
+            value: 'sr-240_360_480_720_1080',
+          },
+        ],
+        pre: 'w-300,h-300,q-80',
+      },
+      useUniqueFileName: true,
+      webhookUrl: 'https://example.com',
+    });
   });
 });

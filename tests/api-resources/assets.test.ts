@@ -5,7 +5,7 @@ import ImageKit from '@imagekit/nodejs';
 const client = new ImageKit({
   privateKey: 'My Private Key',
   password: 'My Password',
-  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource assets', () => {
@@ -24,16 +24,19 @@ describe('resource assets', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.assets.list({
-    fileType: 'all',
-    limit: 1,
-    path: 'path',
-    searchQuery: 'searchQuery',
-    skip: 0,
-    sort: 'ASC_NAME',
-    type: 'file',
-  }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(ImageKit.NotFoundError);
+    await expect(
+      client.assets.list(
+        {
+          fileType: 'all',
+          limit: 1,
+          path: 'path',
+          searchQuery: 'searchQuery',
+          skip: 0,
+          sort: 'ASC_NAME',
+          type: 'file',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(ImageKit.NotFoundError);
   });
 });

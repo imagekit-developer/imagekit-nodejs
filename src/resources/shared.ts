@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-
 export interface BaseOverlay {
   /**
    * Controls how the layer blends with the base image or underlying content. Maps to
@@ -44,7 +43,11 @@ export interface BaseOverlay {
  * Configuration object for an extension (base extensions only, not saved extension
  * references).
  */
-export type ExtensionConfig = ExtensionConfig.RemoveBg | ExtensionConfig.AutoTaggingExtension | ExtensionConfig.AIAutoDescription | ExtensionConfig.AITasks
+export type ExtensionConfig =
+  | ExtensionConfig.RemoveBg
+  | ExtensionConfig.AutoTaggingExtension
+  | ExtensionConfig.AIAutoDescription
+  | ExtensionConfig.AITasks;
 
 export namespace ExtensionConfig {
   export interface RemoveBg {
@@ -364,7 +367,13 @@ export namespace ExtensionConfig {
  * Array of extensions to be applied to the asset. Each extension can be configured
  * with specific parameters based on the extension type.
  */
-export type Extensions = Array<Extensions.RemoveBg | Extensions.AutoTaggingExtension | Extensions.AIAutoDescription | Extensions.AITasks | Extensions.SavedExtension>
+export type Extensions = Array<
+  | Extensions.RemoveBg
+  | Extensions.AutoTaggingExtension
+  | Extensions.AIAutoDescription
+  | Extensions.AITasks
+  | Extensions.SavedExtension
+>;
 
 export namespace Extensions {
   export interface RemoveBg {
@@ -779,7 +788,7 @@ export interface ImageOverlay extends BaseOverlay {
  * See
  * [Overlay using layers](https://imagekit.io/docs/transformations#overlay-using-layers).
  */
-export type Overlay = TextOverlay | ImageOverlay | VideoOverlay | SubtitleOverlay | SolidColorOverlay
+export type Overlay = TextOverlay | ImageOverlay | VideoOverlay | SubtitleOverlay | SolidColorOverlay;
 
 export interface OverlayPosition {
   /**
@@ -787,14 +796,32 @@ export interface OverlayPosition {
    * calculated. The default value is `top_left`. Maps to `lap` in the URL. Can only
    * be used with one or more of `x`, `y`, `xCenter`, or `yCenter`.
    */
-  anchorPoint?: 'top' | 'left' | 'right' | 'bottom' | 'top_left' | 'top_right' | 'bottom_left' | 'bottom_right' | 'center';
+  anchorPoint?:
+    | 'top'
+    | 'left'
+    | 'right'
+    | 'bottom'
+    | 'top_left'
+    | 'top_right'
+    | 'bottom_left'
+    | 'bottom_right'
+    | 'center';
 
   /**
    * Specifies the position of the overlay relative to the parent image or video. If
    * one or more of `x`, `y`, `xCenter`, or `yCenter` parameters are specified, this
    * parameter is ignored. Maps to `lfo` in the URL.
    */
-  focus?: 'center' | 'top' | 'left' | 'bottom' | 'right' | 'top_left' | 'top_right' | 'bottom_left' | 'bottom_right';
+  focus?:
+    | 'center'
+    | 'top'
+    | 'left'
+    | 'bottom'
+    | 'right'
+    | 'top_left'
+    | 'top_right'
+    | 'bottom_left'
+    | 'bottom_right';
 
   /**
    * Specifies the x-coordinate of the top-left corner of the base asset where the
@@ -1062,7 +1089,7 @@ export interface SrcOptions {
  * Available streaming resolutions for
  * [adaptive bitrate streaming](https://imagekit.io/docs/adaptive-bitrate-streaming)
  */
-export type StreamingResolution = '240' | '360' | '480' | '720' | '1080' | '1440' | '2160'
+export type StreamingResolution = '240' | '360' | '480' | '720' | '1080' | '1440' | '2160';
 
 export interface SubtitleOverlay extends BaseOverlay {
   /**
@@ -1317,7 +1344,7 @@ export interface Transformation {
   /**
    * Uses AI to edit images based on a text prompt. Provide a text prompt or a
    * base64-encoded prompt, e.g., `prompt-snow road` or
-   * `prompte-[urlencoded_base64_encoded_text]`. Not supported inside overlay.  
+   * `prompte-[urlencoded_base64_encoded_text]`. Not supported inside overlay.
    * See [AI Edit](https://imagekit.io/docs/ai-transformations#edit-image-e-edit).
    */
   aiEdit?: string;
@@ -1732,7 +1759,7 @@ export interface Transformation {
  * path of the URL, set this to `path`. Learn more in the
  * [Transformations guide](https://imagekit.io/docs/transformations).
  */
-export type TransformationPosition = 'path' | 'query'
+export type TransformationPosition = 'path' | 'query';
 
 export interface VideoOverlay extends BaseOverlay {
   /**

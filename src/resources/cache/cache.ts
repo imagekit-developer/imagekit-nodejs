@@ -2,7 +2,12 @@
 
 import { APIResource } from '../../core/resource';
 import * as InvalidationAPI from './invalidation';
-import { Invalidation, InvalidationCreateParams, InvalidationCreateResponse, InvalidationGetResponse } from './invalidation';
+import {
+  Invalidation,
+  InvalidationCreateParams,
+  InvalidationCreateResponse,
+  InvalidationGetResponse,
+} from './invalidation';
 
 export class Cache extends APIResource {
   invalidation: InvalidationAPI.Invalidation = new InvalidationAPI.Invalidation(this._client);
@@ -15,6 +20,6 @@ export declare namespace Cache {
     Invalidation as Invalidation,
     type InvalidationCreateResponse as InvalidationCreateResponse,
     type InvalidationGetResponse as InvalidationGetResponse,
-    type InvalidationCreateParams as InvalidationCreateParams
+    type InvalidationCreateParams as InvalidationCreateParams,
   };
 }

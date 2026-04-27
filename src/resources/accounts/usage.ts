@@ -66,8 +66,5 @@ export interface UsageGetParams {
 }
 
 export declare namespace Usage {
-  export {
-    type UsageGetResponse as UsageGetResponse,
-    type UsageGetParams as UsageGetParams
-  };
+  export { type UsageGetResponse as UsageGetResponse, type UsageGetParams as UsageGetParams };
 }

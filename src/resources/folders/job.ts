@@ -43,7 +43,5 @@ export interface JobGetResponse {
 }
 
 export declare namespace Job {
-  export {
-    type JobGetResponse as JobGetResponse
-  };
+  export { type JobGetResponse as JobGetResponse };
 }

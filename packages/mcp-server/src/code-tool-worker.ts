@@ -59,8 +59,8 @@ function getTSDiagnostics(code: string): string[] {
   const codeWithImport = [
     'import { ImageKit } from "@imagekit/nodejs";',
     functionSource.type === 'declaration' ?
-      `async function run(${functionSource.client}: ImageKit)` :
-      `const run: (${functionSource.client}: ImageKit) => Promise<unknown> =`,
+      `async function run(${functionSource.client}: ImageKit)`
+    : `const run: (${functionSource.client}: ImageKit) => Promise<unknown> =`,
     functionSource.code,
   ].join('\n');
   const sourcePath = path.resolve('code.ts');
@@ -108,55 +108,55 @@ function getTSDiagnostics(code: string): string[] {
 
 const fuse = new Fuse(
   [
-    "client.customMetadataFields.create",
-    "client.customMetadataFields.delete",
-    "client.customMetadataFields.list",
-    "client.customMetadataFields.update",
-    "client.files.copy",
-    "client.files.delete",
-    "client.files.get",
-    "client.files.move",
-    "client.files.rename",
-    "client.files.update",
-    "client.files.upload",
-    "client.files.bulk.addTags",
-    "client.files.bulk.delete",
-    "client.files.bulk.removeAITags",
-    "client.files.bulk.removeTags",
-    "client.files.versions.delete",
-    "client.files.versions.get",
-    "client.files.versions.list",
-    "client.files.versions.restore",
-    "client.files.metadata.get",
-    "client.files.metadata.getFromURL",
-    "client.savedExtensions.create",
-    "client.savedExtensions.delete",
-    "client.savedExtensions.get",
-    "client.savedExtensions.list",
-    "client.savedExtensions.update",
-    "client.assets.list",
-    "client.cache.invalidation.create",
-    "client.cache.invalidation.get",
-    "client.folders.copy",
-    "client.folders.create",
-    "client.folders.delete",
-    "client.folders.move",
-    "client.folders.rename",
-    "client.folders.job.get",
-    "client.accounts.usage.get",
-    "client.accounts.origins.create",
-    "client.accounts.origins.delete",
-    "client.accounts.origins.get",
-    "client.accounts.origins.list",
-    "client.accounts.origins.update",
-    "client.accounts.urlEndpoints.create",
-    "client.accounts.urlEndpoints.delete",
-    "client.accounts.urlEndpoints.get",
-    "client.accounts.urlEndpoints.list",
-    "client.accounts.urlEndpoints.update",
-    "client.beta.v2.files.upload",
-    "client.webhooks.unsafeUnwrap",
-    "client.webhooks.unwrap"
+    'client.customMetadataFields.create',
+    'client.customMetadataFields.delete',
+    'client.customMetadataFields.list',
+    'client.customMetadataFields.update',
+    'client.files.copy',
+    'client.files.delete',
+    'client.files.get',
+    'client.files.move',
+    'client.files.rename',
+    'client.files.update',
+    'client.files.upload',
+    'client.files.bulk.addTags',
+    'client.files.bulk.delete',
+    'client.files.bulk.removeAITags',
+    'client.files.bulk.removeTags',
+    'client.files.versions.delete',
+    'client.files.versions.get',
+    'client.files.versions.list',
+    'client.files.versions.restore',
+    'client.files.metadata.get',
+    'client.files.metadata.getFromURL',
+    'client.savedExtensions.create',
+    'client.savedExtensions.delete',
+    'client.savedExtensions.get',
+    'client.savedExtensions.list',
+    'client.savedExtensions.update',
+    'client.assets.list',
+    'client.cache.invalidation.create',
+    'client.cache.invalidation.get',
+    'client.folders.copy',
+    'client.folders.create',
+    'client.folders.delete',
+    'client.folders.move',
+    'client.folders.rename',
+    'client.folders.job.get',
+    'client.accounts.usage.get',
+    'client.accounts.origins.create',
+    'client.accounts.origins.delete',
+    'client.accounts.origins.get',
+    'client.accounts.origins.list',
+    'client.accounts.origins.update',
+    'client.accounts.urlEndpoints.create',
+    'client.accounts.urlEndpoints.delete',
+    'client.accounts.urlEndpoints.get',
+    'client.accounts.urlEndpoints.list',
+    'client.accounts.urlEndpoints.update',
+    'client.beta.v2.files.upload',
+    'client.webhooks.unsafeUnwrap',
+    'client.webhooks.unwrap',
   ],
   { threshold: 1, shouldSort: true },
 );
@@ -239,7 +239,12 @@ function parseError(code: string, error: unknown): string | undefined {
     // Deno uses V8; the first "<anonymous>:LINE:COLUMN" is the top of stack.
     const lineNumber = error.stack?.match(/<anonymous>:([0-9]+):[0-9]+/)?.[1];
     // -1 for the zero-based indexing
-    const line = lineNumber && code.split('\n').at(parseInt(lineNumber, 10) - 1)?.trim();
+    const line =
+      lineNumber &&
+      code
+        .split('\n')
+        .at(parseInt(lineNumber, 10) - 1)
+        ?.trim();
     return line ? `${message}\n  at line ${lineNumber}\n    ${line}` : message;
   } catch {
     return message;
@@ -251,8 +256,9 @@ const fetch = async (req: Request): Promise<Response> => {
 
   const runFunctionSource = code ? getRunFunctionSource(code) : null;
   if (!runFunctionSource) {
-    const message = code
-      ? 'The code is missing a top-level `run` function.'
+    const message =
+      code ?
+        'The code is missing a top-level `run` function.'
       : 'The code argument is missing. Provide one containing a top-level `run` function.';
     return Response.json(
       {
@@ -297,7 +303,7 @@ const fetch = async (req: Request): Promise<Response> => {
   try {
     let run_ = async (client: any) => {};
     run_ = (await tseval(`${code}\nexport default run;`)).default;
-    const result = await run_(makeSdkProxy(client, { path: ["client"] }));
+    const result = await run_(makeSdkProxy(client, { path: ['client'] }));
     return Response.json({
       is_error: false,
       result,
