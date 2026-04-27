@@ -5,19 +5,19 @@ import ImageKit from '@imagekit/nodejs';
 const client = new ImageKit({
   privateKey: 'My Private Key',
   password: 'My Password',
-  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource origins', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.accounts.origins.create({
-    accessKey: 'AKIAIOSFODNN7EXAMPLE',
-    bucket: 'product-images',
-    name: 'US S3 Storage',
-    secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
-    type: 'S3',
-  });
+      accessKey: 'AKIAIOSFODNN7EXAMPLE',
+      bucket: 'product-images',
+      name: 'US S3 Storage',
+      secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      type: 'S3',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -30,26 +30,26 @@ describe('resource origins', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.accounts.origins.create({
-    accessKey: 'AKIAIOSFODNN7EXAMPLE',
-    bucket: 'product-images',
-    name: 'US S3 Storage',
-    secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
-    type: 'S3',
-    baseUrlForCanonicalHeader: 'https://cdn.example.com',
-    includeCanonicalHeader: false,
-    prefix: 'raw-assets',
-  });
+      accessKey: 'AKIAIOSFODNN7EXAMPLE',
+      bucket: 'product-images',
+      name: 'US S3 Storage',
+      secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      type: 'S3',
+      baseUrlForCanonicalHeader: 'https://cdn.example.com',
+      includeCanonicalHeader: false,
+      prefix: 'raw-assets',
+    });
   });
 
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.accounts.origins.update('id', {
-    accessKey: 'AKIAIOSFODNN7EXAMPLE',
-    bucket: 'product-images',
-    name: 'US S3 Storage',
-    secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
-    type: 'S3',
-  });
+      accessKey: 'AKIAIOSFODNN7EXAMPLE',
+      bucket: 'product-images',
+      name: 'US S3 Storage',
+      secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      type: 'S3',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -62,15 +62,15 @@ describe('resource origins', () => {
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.accounts.origins.update('id', {
-    accessKey: 'AKIAIOSFODNN7EXAMPLE',
-    bucket: 'product-images',
-    name: 'US S3 Storage',
-    secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
-    type: 'S3',
-    baseUrlForCanonicalHeader: 'https://cdn.example.com',
-    includeCanonicalHeader: false,
-    prefix: 'raw-assets',
-  });
+      accessKey: 'AKIAIOSFODNN7EXAMPLE',
+      bucket: 'product-images',
+      name: 'US S3 Storage',
+      secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      type: 'S3',
+      baseUrlForCanonicalHeader: 'https://cdn.example.com',
+      includeCanonicalHeader: false,
+      prefix: 'raw-assets',
+    });
   });
 
   // Mock server tests are disabled

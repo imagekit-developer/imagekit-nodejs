@@ -51,7 +51,13 @@ export class Files extends APIResource {
   upload(body: FileUploadParams, options?: RequestOptions): APIPromise<FileUploadResponse> {
     const serializedBody = serializeUploadOptions(body);
 
-    return this._client.post('/api/v2/files/upload', multipartFormRequestOptions({ body: serializedBody, defaultBaseURL: 'https://upload.imagekit.io', ...options }, this._client));
+    return this._client.post(
+      '/api/v2/files/upload',
+      multipartFormRequestOptions(
+        { body: serializedBody, defaultBaseURL: 'https://upload.imagekit.io', ...options },
+        this._client,
+      ),
+    );
   }
 }
 
@@ -466,7 +472,16 @@ export interface FileUploadParams {
   /**
    * Array of response field keys to include in the API response body.
    */
-  responseFields?: Array<'tags' | 'customCoordinates' | 'isPrivateFile' | 'embeddedMetadata' | 'isPublished' | 'customMetadata' | 'metadata' | 'selectedFieldsSchema'>;
+  responseFields?: Array<
+    | 'tags'
+    | 'customCoordinates'
+    | 'isPrivateFile'
+    | 'embeddedMetadata'
+    | 'isPublished'
+    | 'customMetadata'
+    | 'metadata'
+    | 'selectedFieldsSchema'
+  >;
 
   /**
    * Set the tags while uploading the file. Provide an array of tag strings (e.g.
@@ -479,11 +494,11 @@ export interface FileUploadParams {
   /**
    * Configure pre-processing (`pre`) and post-processing (`post`) transformations.
    *
-   * - `pre` — applied before the file is uploaded to the Media Library.  
+   * - `pre` — applied before the file is uploaded to the Media Library.
    *   Useful for reducing file size or applying basic optimizations upfront (e.g.,
    *   resize, compress).
    *
-   * - `post` — applied immediately after upload.  
+   * - `post` — applied immediately after upload.
    *   Ideal for generating transformed versions (like video encodes or thumbnails)
    *   in advance, so they're ready for delivery without delay.
    *
@@ -515,11 +530,11 @@ export namespace FileUploadParams {
   /**
    * Configure pre-processing (`pre`) and post-processing (`post`) transformations.
    *
-   * - `pre` — applied before the file is uploaded to the Media Library.  
+   * - `pre` — applied before the file is uploaded to the Media Library.
    *   Useful for reducing file size or applying basic optimizations upfront (e.g.,
    *   resize, compress).
    *
-   * - `post` — applied immediately after upload.  
+   * - `post` — applied immediately after upload.
    *   Ideal for generating transformed versions (like video encodes or thumbnails)
    *   in advance, so they're ready for delivery without delay.
    *
@@ -527,11 +542,16 @@ export namespace FileUploadParams {
    */
   export interface Transformation {
     /**
-     * List of transformations to apply _after_ the file is uploaded.  
+     * List of transformations to apply _after_ the file is uploaded.
      * Each item must match one of the following types: `transformation`,
      * `gif-to-video`, `thumbnail`, `abs`.
      */
-    post?: Array<Transformation.Transformation | Transformation.GifToVideo | Transformation.Thumbnail | Transformation.Abs>;
+    post?: Array<
+      | Transformation.Transformation
+      | Transformation.GifToVideo
+      | Transformation.Thumbnail
+      | Transformation.Abs
+    >;
 
     /**
      * Transformation string to apply before uploading the file to the Media Library.
@@ -548,7 +568,7 @@ export namespace FileUploadParams {
       type: 'transformation';
 
       /**
-       * Transformation string (e.g. `w-200,h-200`).  
+       * Transformation string (e.g. `w-200,h-200`).
        * Same syntax as ImageKit URL-based transformations.
        */
       value: string;
@@ -561,7 +581,7 @@ export namespace FileUploadParams {
       type: 'gif-to-video';
 
       /**
-       * Optional transformation string to apply to the output video.  
+       * Optional transformation string to apply to the output video.
        * **Example**: `q-80`
        */
       value?: string;
@@ -574,7 +594,7 @@ export namespace FileUploadParams {
       type: 'thumbnail';
 
       /**
-       * Optional transformation string.  
+       * Optional transformation string.
        * **Example**: `w-150,h-150`
        */
       value?: string;
@@ -600,8 +620,5 @@ export namespace FileUploadParams {
 }
 
 export declare namespace Files {
-  export {
-    type FileUploadResponse as FileUploadResponse,
-    type FileUploadParams as FileUploadParams
-  };
+  export { type FileUploadResponse as FileUploadResponse, type FileUploadParams as FileUploadParams };
 }

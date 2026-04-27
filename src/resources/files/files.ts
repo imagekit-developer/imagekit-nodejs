@@ -3,11 +3,28 @@
 import { APIResource } from '../../core/resource';
 import * as Shared from '../shared';
 import * as BulkAPI from './bulk';
-import { Bulk, BulkAddTagsParams, BulkAddTagsResponse, BulkDeleteParams, BulkDeleteResponse, BulkRemoveAITagsParams, BulkRemoveAITagsResponse, BulkRemoveTagsParams, BulkRemoveTagsResponse } from './bulk';
+import {
+  Bulk,
+  BulkAddTagsParams,
+  BulkAddTagsResponse,
+  BulkDeleteParams,
+  BulkDeleteResponse,
+  BulkRemoveAITagsParams,
+  BulkRemoveAITagsResponse,
+  BulkRemoveTagsParams,
+  BulkRemoveTagsResponse,
+} from './bulk';
 import * as MetadataAPI from './metadata';
 import { MetadataGetFromURLParams } from './metadata';
 import * as VersionsAPI from './versions';
-import { VersionDeleteParams, VersionDeleteResponse, VersionGetParams, VersionListResponse, VersionRestoreParams, Versions } from './versions';
+import {
+  VersionDeleteParams,
+  VersionDeleteResponse,
+  VersionGetParams,
+  VersionListResponse,
+  VersionRestoreParams,
+  Versions,
+} from './versions';
 import { APIPromise } from '../../core/api-promise';
 import { type Uploadable } from '../../core/uploads';
 import { buildHeaders } from '../../internal/headers';
@@ -48,7 +65,10 @@ export class Files extends APIResource {
    * ```
    */
   delete(fileID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/v1/files/${fileID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/v1/files/${fileID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -161,7 +181,13 @@ export class Files extends APIResource {
   upload(body: FileUploadParams, options?: RequestOptions): APIPromise<FileUploadResponse> {
     const serializedBody = serializeUploadOptions(body);
 
-    return this._client.post('/api/v1/files/upload', multipartFormRequestOptions({ body: serializedBody, defaultBaseURL: 'https://upload.imagekit.io', ...options }, this._client));
+    return this._client.post(
+      '/api/v1/files/upload',
+      multipartFormRequestOptions(
+        { body: serializedBody, defaultBaseURL: 'https://upload.imagekit.io', ...options },
+        this._client,
+      ),
+    );
   }
 }
 
@@ -693,7 +719,9 @@ export namespace Metadata {
 /**
  * Schema for update file update request.
  */
-export type UpdateFileRequest = UpdateFileRequest.UpdateFileDetails | UpdateFileRequest.ChangePublicationStatus
+export type UpdateFileRequest =
+  | UpdateFileRequest.UpdateFileDetails
+  | UpdateFileRequest.ChangePublicationStatus;
 
 export namespace UpdateFileRequest {
   export interface UpdateFileDetails {
@@ -795,11 +823,9 @@ export namespace FileUpdateResponse {
   }
 }
 
-export interface FileCopyResponse {
-}
+export interface FileCopyResponse {}
 
-export interface FileMoveResponse {
-}
+export interface FileMoveResponse {}
 
 export interface FileRenameResponse {
   /**
@@ -1094,7 +1120,7 @@ export namespace FileUploadResponse {
   }
 }
 
-export type FileUpdateParams = FileUpdateParams.UpdateFileDetails | FileUpdateParams.ChangePublicationStatus
+export type FileUpdateParams = FileUpdateParams.UpdateFileDetails | FileUpdateParams.ChangePublicationStatus;
 
 export declare namespace FileUpdateParams {
   export interface UpdateFileDetails {
@@ -1389,7 +1415,16 @@ export interface FileUploadParams {
   /**
    * Array of response field keys to include in the API response body.
    */
-  responseFields?: Array<'tags' | 'customCoordinates' | 'isPrivateFile' | 'embeddedMetadata' | 'isPublished' | 'customMetadata' | 'metadata' | 'selectedFieldsSchema'>;
+  responseFields?: Array<
+    | 'tags'
+    | 'customCoordinates'
+    | 'isPrivateFile'
+    | 'embeddedMetadata'
+    | 'isPublished'
+    | 'customMetadata'
+    | 'metadata'
+    | 'selectedFieldsSchema'
+  >;
 
   /**
    * HMAC-SHA1 digest of the token+expire using your ImageKit.io private API key as a
@@ -1412,11 +1447,11 @@ export interface FileUploadParams {
   /**
    * Configure pre-processing (`pre`) and post-processing (`post`) transformations.
    *
-   * - `pre` — applied before the file is uploaded to the Media Library.  
+   * - `pre` — applied before the file is uploaded to the Media Library.
    *   Useful for reducing file size or applying basic optimizations upfront (e.g.,
    *   resize, compress).
    *
-   * - `post` — applied immediately after upload.  
+   * - `post` — applied immediately after upload.
    *   Ideal for generating transformed versions (like video encodes or thumbnails)
    *   in advance, so they're ready for delivery without delay.
    *
@@ -1448,11 +1483,11 @@ export namespace FileUploadParams {
   /**
    * Configure pre-processing (`pre`) and post-processing (`post`) transformations.
    *
-   * - `pre` — applied before the file is uploaded to the Media Library.  
+   * - `pre` — applied before the file is uploaded to the Media Library.
    *   Useful for reducing file size or applying basic optimizations upfront (e.g.,
    *   resize, compress).
    *
-   * - `post` — applied immediately after upload.  
+   * - `post` — applied immediately after upload.
    *   Ideal for generating transformed versions (like video encodes or thumbnails)
    *   in advance, so they're ready for delivery without delay.
    *
@@ -1460,11 +1495,16 @@ export namespace FileUploadParams {
    */
   export interface Transformation {
     /**
-     * List of transformations to apply _after_ the file is uploaded.  
+     * List of transformations to apply _after_ the file is uploaded.
      * Each item must match one of the following types: `transformation`,
      * `gif-to-video`, `thumbnail`, `abs`.
      */
-    post?: Array<Transformation.Transformation | Transformation.GifToVideo | Transformation.Thumbnail | Transformation.Abs>;
+    post?: Array<
+      | Transformation.Transformation
+      | Transformation.GifToVideo
+      | Transformation.Thumbnail
+      | Transformation.Abs
+    >;
 
     /**
      * Transformation string to apply before uploading the file to the Media Library.
@@ -1481,7 +1521,7 @@ export namespace FileUploadParams {
       type: 'transformation';
 
       /**
-       * Transformation string (e.g. `w-200,h-200`).  
+       * Transformation string (e.g. `w-200,h-200`).
        * Same syntax as ImageKit URL-based transformations.
        */
       value: string;
@@ -1494,7 +1534,7 @@ export namespace FileUploadParams {
       type: 'gif-to-video';
 
       /**
-       * Optional transformation string to apply to the output video.  
+       * Optional transformation string to apply to the output video.
        * **Example**: `q-80`
        */
       value?: string;
@@ -1507,7 +1547,7 @@ export namespace FileUploadParams {
       type: 'thumbnail';
 
       /**
-       * Optional transformation string.  
+       * Optional transformation string.
        * **Example**: `w-150,h-150`
        */
       value?: string;
@@ -1550,7 +1590,7 @@ export declare namespace Files {
     type FileCopyParams as FileCopyParams,
     type FileMoveParams as FileMoveParams,
     type FileRenameParams as FileRenameParams,
-    type FileUploadParams as FileUploadParams
+    type FileUploadParams as FileUploadParams,
   };
 
   export {
@@ -1562,7 +1602,7 @@ export declare namespace Files {
     type BulkDeleteParams as BulkDeleteParams,
     type BulkAddTagsParams as BulkAddTagsParams,
     type BulkRemoveAITagsParams as BulkRemoveAITagsParams,
-    type BulkRemoveTagsParams as BulkRemoveTagsParams
+    type BulkRemoveTagsParams as BulkRemoveTagsParams,
   };
 
   export {
@@ -1571,10 +1611,8 @@ export declare namespace Files {
     type VersionDeleteResponse as VersionDeleteResponse,
     type VersionDeleteParams as VersionDeleteParams,
     type VersionGetParams as VersionGetParams,
-    type VersionRestoreParams as VersionRestoreParams
+    type VersionRestoreParams as VersionRestoreParams,
   };
 
-  export {
-    type MetadataGetFromURLParams as MetadataGetFromURLParams
-  };
+  export { type MetadataGetFromURLParams as MetadataGetFromURLParams };
 }

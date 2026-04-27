@@ -8,7 +8,7 @@ import { path } from '../../internal/utils/path';
 
 export class Origins extends APIResource {
   /**
-   * **Note:** This API is currently in beta.  
+   * **Note:** This API is currently in beta.
    * Creates a new origin and returns the origin object.
    *
    * @example
@@ -29,7 +29,7 @@ export class Origins extends APIResource {
   }
 
   /**
-   * **Note:** This API is currently in beta.  
+   * **Note:** This API is currently in beta.
    * Updates the origin identified by `id` and returns the updated origin object.
    *
    * @example
@@ -51,7 +51,7 @@ export class Origins extends APIResource {
   }
 
   /**
-   * **Note:** This API is currently in beta.  
+   * **Note:** This API is currently in beta.
    * Returns an array of all configured origins for the current account.
    *
    * @example
@@ -65,7 +65,7 @@ export class Origins extends APIResource {
   }
 
   /**
-   * **Note:** This API is currently in beta.  
+   * **Note:** This API is currently in beta.
    * Permanently removes the origin identified by `id`. If the origin is in use by
    * any URL‑endpoints, the API will return an error.
    *
@@ -75,11 +75,14 @@ export class Origins extends APIResource {
    * ```
    */
   delete(id: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/v1/accounts/origins/${id}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/v1/accounts/origins/${id}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
-   * **Note:** This API is currently in beta.  
+   * **Note:** This API is currently in beta.
    * Retrieves the origin identified by `id`.
    *
    * @example
@@ -97,7 +100,15 @@ export class Origins extends APIResource {
 /**
  * Schema for origin request resources.
  */
-export type OriginRequest = OriginRequest.S3 | OriginRequest.S3Compatible | OriginRequest.CloudinaryBackup | OriginRequest.WebFolder | OriginRequest.WebProxy | OriginRequest.Gcs | OriginRequest.AzureBlob | OriginRequest.AkeneoPim
+export type OriginRequest =
+  | OriginRequest.S3
+  | OriginRequest.S3Compatible
+  | OriginRequest.CloudinaryBackup
+  | OriginRequest.WebFolder
+  | OriginRequest.WebProxy
+  | OriginRequest.Gcs
+  | OriginRequest.AzureBlob
+  | OriginRequest.AkeneoPim;
 
 export namespace OriginRequest {
   export interface S3 {
@@ -377,7 +388,15 @@ export namespace OriginRequest {
 /**
  * Origin object as returned by the API (sensitive fields removed).
  */
-export type OriginResponse = OriginResponse.S3 | OriginResponse.S3Compatible | OriginResponse.CloudinaryBackup | OriginResponse.WebFolder | OriginResponse.WebProxy | OriginResponse.Gcs | OriginResponse.AzureBlob | OriginResponse.AkeneoPim
+export type OriginResponse =
+  | OriginResponse.S3
+  | OriginResponse.S3Compatible
+  | OriginResponse.CloudinaryBackup
+  | OriginResponse.WebFolder
+  | OriginResponse.WebProxy
+  | OriginResponse.Gcs
+  | OriginResponse.AzureBlob
+  | OriginResponse.AkeneoPim;
 
 export namespace OriginResponse {
   export interface S3 {
@@ -648,9 +667,17 @@ export namespace OriginResponse {
   }
 }
 
-export type OriginListResponse = Array<OriginResponse>
+export type OriginListResponse = Array<OriginResponse>;
 
-export type OriginCreateParams = OriginCreateParams.S3 | OriginCreateParams.S3Compatible | OriginCreateParams.CloudinaryBackup | OriginCreateParams.WebFolder | OriginCreateParams.WebProxy | OriginCreateParams.GoogleCloudStorageGcs | OriginCreateParams.AzureBlobStorage | OriginCreateParams.AkeneoPim
+export type OriginCreateParams =
+  | OriginCreateParams.S3
+  | OriginCreateParams.S3Compatible
+  | OriginCreateParams.CloudinaryBackup
+  | OriginCreateParams.WebFolder
+  | OriginCreateParams.WebProxy
+  | OriginCreateParams.GoogleCloudStorageGcs
+  | OriginCreateParams.AzureBlobStorage
+  | OriginCreateParams.AkeneoPim;
 
 export declare namespace OriginCreateParams {
   export interface S3 {
@@ -927,7 +954,15 @@ export declare namespace OriginCreateParams {
   }
 }
 
-export type OriginUpdateParams = OriginUpdateParams.S3 | OriginUpdateParams.S3Compatible | OriginUpdateParams.CloudinaryBackup | OriginUpdateParams.WebFolder | OriginUpdateParams.WebProxy | OriginUpdateParams.GoogleCloudStorageGcs | OriginUpdateParams.AzureBlobStorage | OriginUpdateParams.AkeneoPim
+export type OriginUpdateParams =
+  | OriginUpdateParams.S3
+  | OriginUpdateParams.S3Compatible
+  | OriginUpdateParams.CloudinaryBackup
+  | OriginUpdateParams.WebFolder
+  | OriginUpdateParams.WebProxy
+  | OriginUpdateParams.GoogleCloudStorageGcs
+  | OriginUpdateParams.AzureBlobStorage
+  | OriginUpdateParams.AkeneoPim;
 
 export declare namespace OriginUpdateParams {
   export interface S3 {
@@ -1210,6 +1245,6 @@ export declare namespace Origins {
     type OriginResponse as OriginResponse,
     type OriginListResponse as OriginListResponse,
     type OriginCreateParams as OriginCreateParams,
-    type OriginUpdateParams as OriginUpdateParams
+    type OriginUpdateParams as OriginUpdateParams,
   };
 }

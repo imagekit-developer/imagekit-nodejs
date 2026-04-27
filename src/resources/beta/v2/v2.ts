@@ -14,6 +14,6 @@ export declare namespace V2 {
   export {
     Files as Files,
     type FileUploadResponse as FileUploadResponse,
-    type FileUploadParams as FileUploadParams
+    type FileUploadParams as FileUploadParams,
   };
 }

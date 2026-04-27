@@ -5,17 +5,17 @@ import ImageKit from '@imagekit/nodejs';
 const client = new ImageKit({
   privateKey: 'My Private Key',
   password: 'My Password',
-  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource savedExtensions', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.savedExtensions.create({
-    config: { name: 'remove-bg' },
-    description: 'Analyzes vehicle images for type, condition, and quality assessment',
-    name: 'Car Quality Analysis',
-  });
+      config: { name: 'remove-bg' },
+      description: 'Analyzes vehicle images for type, condition, and quality assessment',
+      name: 'Car Quality Analysis',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -28,18 +28,18 @@ describe('resource savedExtensions', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.savedExtensions.create({
-    config: {
-    name: 'remove-bg',
-    options: {
-    add_shadow: true,
-    bg_color: 'bg_color',
-    bg_image_url: 'bg_image_url',
-    semitransparency: true,
-  },
-  },
-    description: 'Analyzes vehicle images for type, condition, and quality assessment',
-    name: 'Car Quality Analysis',
-  });
+      config: {
+        name: 'remove-bg',
+        options: {
+          add_shadow: true,
+          bg_color: 'bg_color',
+          bg_image_url: 'bg_image_url',
+          semitransparency: true,
+        },
+      },
+      description: 'Analyzes vehicle images for type, condition, and quality assessment',
+      name: 'Car Quality Analysis',
+    });
   });
 
   // Mock server tests are disabled

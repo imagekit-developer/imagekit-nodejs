@@ -166,6 +166,6 @@ export declare namespace Bulk {
     type BulkDeleteParams as BulkDeleteParams,
     type BulkAddTagsParams as BulkAddTagsParams,
     type BulkRemoveAITagsParams as BulkRemoveAITagsParams,
-    type BulkRemoveTagsParams as BulkRemoveTagsParams
+    type BulkRemoveTagsParams as BulkRemoveTagsParams,
   };
 }
