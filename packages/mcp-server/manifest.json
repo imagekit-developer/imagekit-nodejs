@@ -43,7 +43,7 @@
     },
     "IMAGEKIT_WEBHOOK_SECRET": {
       "title": "webhook_secret",
-      "description": "Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you're using webhooks.\n",
+      "description": "Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you\'re using webhooks.\n",
       "required": false,
       "type": "string"
     }
