@@ -668,7 +668,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.imagekit.io/v1/files/copy \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "destinationPath": "/folder/to/copy/into/",\n          "sourceFilePath": "/path/to/file.jpg"\n        }\'',
+          'curl https://api.imagekit.io/v1/files/copy \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "destinationPath": "/folder/to/copy/into/",\n          "sourceFilePath": "/path/to/file.jpg",\n          "includeFileVersions": false\n        }\'',
       },
     },
   },
@@ -2571,7 +2571,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.imagekit.io/v1/accounts/origins \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "accessKey": "AKIAIOSFODNN7EXAMPLE",\n          "bucket": "product-images",\n          "name": "US S3 Storage",\n          "secretKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n          "type": "S3",\n          "baseUrlForCanonicalHeader": "https://cdn.example.com",\n          "prefix": "raw-assets"\n        }\'',
+          'curl https://api.imagekit.io/v1/accounts/origins \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "accessKey": "AKIAIOSFODNN7EXAMPLE",\n          "bucket": "product-images",\n          "name": "US S3 Storage",\n          "secretKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n          "type": "S3",\n          "baseUrlForCanonicalHeader": "https://cdn.example.com",\n          "includeCanonicalHeader": false,\n          "prefix": "raw-assets"\n        }\'',
       },
     },
   },
@@ -2701,7 +2701,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.imagekit.io/v1/accounts/origins/$ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "accessKey": "AKIAIOSFODNN7EXAMPLE",\n          "bucket": "product-images",\n          "name": "US S3 Storage",\n          "secretKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n          "type": "S3",\n          "baseUrlForCanonicalHeader": "https://cdn.example.com",\n          "prefix": "raw-assets"\n        }\'',
+          'curl https://api.imagekit.io/v1/accounts/origins/$ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "accessKey": "AKIAIOSFODNN7EXAMPLE",\n          "bucket": "product-images",\n          "name": "US S3 Storage",\n          "secretKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n          "type": "S3",\n          "baseUrlForCanonicalHeader": "https://cdn.example.com",\n          "includeCanonicalHeader": false,\n          "prefix": "raw-assets"\n        }\'',
       },
     },
   },
