@@ -1438,6 +1438,17 @@ export interface Transformation {
   border?: string;
 
   /**
+   * Applies a color tint to the image. Accepts color and intensity as optional
+   * parameters.
+   *
+   * - `co-color` - Color to apply (e.g., `red`, `blue`, `FF0022`). Default is gray
+   *   color.
+   * - `in-intensity` - Intensity of the color (0-100). Default is 35. See
+   *   [Colorize](https://imagekit.io/docs/effects-and-enhancements#colorize---e-colorize).
+   */
+  colorize?: string;
+
+  /**
    * Indicates whether the output image should retain the original color profile. See
    * [Color profile](https://imagekit.io/docs/image-optimization#color-profile---cp).
    */
@@ -1465,13 +1476,13 @@ export interface Transformation {
    * Crop modes for image resizing. See
    * [Crop modes & focus](https://imagekit.io/docs/image-resize-and-crop#crop-crop-modes--focus).
    */
-  crop?: 'force' | 'at_max' | 'at_max_enlarge' | 'at_least' | 'maintain_ratio';
+  crop?: 'force' | 'at_max' | 'at_max_enlarge' | 'at_least' | 'maintain_ratio' | 'maintain_ratio_no_enlarge';
 
   /**
    * Additional crop modes for image resizing. See
    * [Crop modes & focus](https://imagekit.io/docs/image-resize-and-crop#crop-crop-modes--focus).
    */
-  cropMode?: 'pad_resize' | 'extract' | 'pad_extract';
+  cropMode?: 'pad_resize' | 'extract' | 'pad_extract' | 'pad_resize_no_enlarge' | 'pad_extract_no_shrink';
 
   /**
    * Specifies a fallback image if the resource is not found, e.g., a URL or file
