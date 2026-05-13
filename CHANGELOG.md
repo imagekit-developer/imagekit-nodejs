@@ -1,5 +1,53 @@
 # Changelog
 
+## 7.6.0 (2026-05-13)
+
+Full Changelog: [v7.5.0...v7.6.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.5.0...v7.6.0)
+
+### Features
+
+* **api:** add no-enlarge crop modes and colorize transformation ([f673e9b](https://github.com/imagekit-developer/imagekit-nodejs/commit/f673e9b18023ad4897bffebdddbd8d9e7a93f49e))
+* **api:** manual updates ([7c35871](https://github.com/imagekit-developer/imagekit-nodejs/commit/7c35871232cfa418c30c6145fe0da2ec8937bca2))
+* **api:** manual updates ([e6c68dd](https://github.com/imagekit-developer/imagekit-nodejs/commit/e6c68dd1183dc12376ac54ef11da3a0f20487893))
+* **api:** manual updates ([03a3952](https://github.com/imagekit-developer/imagekit-nodejs/commit/03a3952e171bec93bc9efcd6897f33b5af3e2243))
+* **api:** manual updates ([f4b748a](https://github.com/imagekit-developer/imagekit-nodejs/commit/f4b748aab3a25fed6f0a29c30ca9c6f49f992c94))
+* **api:** manual updates ([8ad5efd](https://github.com/imagekit-developer/imagekit-nodejs/commit/8ad5efdd55d6d24310c7d8155de4ae85071d9540))
+* support setting headers via env ([79b7da8](https://github.com/imagekit-developer/imagekit-nodejs/commit/79b7da8857f2f0e32de93d15b613721d69c59a5d))
+* **transformation:** add colorize transformation support in URL generation ([7390f2e](https://github.com/imagekit-developer/imagekit-nodejs/commit/7390f2ee4fdf3caae56709a6308e08c2d7a58a73))
+
+
+### Bug Fixes
+
+* correct typo in webhook_secret description ([f6a558e](https://github.com/imagekit-developer/imagekit-nodejs/commit/f6a558ea1f426d5a1c6f9121d33afbe330595c4f))
+
+
+### Chores
+
+* avoid formatting file that gets changed during releases ([8bdfaae](https://github.com/imagekit-developer/imagekit-nodejs/commit/8bdfaaec37bdf7c465880d999cee790d852efc1f))
+* configure new SDK language ([a3427fe](https://github.com/imagekit-developer/imagekit-nodejs/commit/a3427fef3d71bbe5e1717e362d4654d4942d8df9))
+* fix example snippet imports ([c424b94](https://github.com/imagekit-developer/imagekit-nodejs/commit/c424b949a56ff4b4486cd694c073615e5293bcc3))
+* **format:** run eslint and prettier separately ([c753924](https://github.com/imagekit-developer/imagekit-nodejs/commit/c75392491c141b2fc635481b75007bfb47101741))
+* **formatter:** run prettier and eslint separately ([d7c26d7](https://github.com/imagekit-developer/imagekit-nodejs/commit/d7c26d76741fb611fc131806719aad0ee3696c4e))
+* **internal:** codegen related update ([48e7a85](https://github.com/imagekit-developer/imagekit-nodejs/commit/48e7a85f9464d937a11967ed6255c1249ecd683b))
+* **internal:** codegen related update ([21fe6ee](https://github.com/imagekit-developer/imagekit-nodejs/commit/21fe6eeadfc0376dffb409f78dadc3c3b32194da))
+* **internal:** fix MCP cloudflare worker builds ([d7fcbd6](https://github.com/imagekit-developer/imagekit-nodejs/commit/d7fcbd65da4658fd1d55f97d20997cfca03ee64c))
+* **internal:** fix MCP cloudflare worker initialization ([d93bb2d](https://github.com/imagekit-developer/imagekit-nodejs/commit/d93bb2d88e29d44460cc453fcf21fb9dc28c8fdc))
+* **internal:** more robust bootstrap script ([853429c](https://github.com/imagekit-developer/imagekit-nodejs/commit/853429c552a32b3e46246bf9849dbebcc6e41e50))
+* **internal:** update docs ordering ([885c2ad](https://github.com/imagekit-developer/imagekit-nodejs/commit/885c2ad3123fb0be7f58a12576402a31eda9743d))
+* redact api-key headers in debug logs ([67dc9fd](https://github.com/imagekit-developer/imagekit-nodejs/commit/67dc9fd0584b80870b9428f7153ef937c78135bc))
+* remove webhook signature verification example from README ([352ec15](https://github.com/imagekit-developer/imagekit-nodejs/commit/352ec15b82f69fa56005e12eb53af84e6397d12e))
+* restructure docs search code ([8b9992f](https://github.com/imagekit-developer/imagekit-nodejs/commit/8b9992f6465052eb1b215bf3ed230dbfef5ad4f6))
+* update CLI documentation ([1967acf](https://github.com/imagekit-developer/imagekit-nodejs/commit/1967acf48ab8aae241680a623fc311da6c2cfd6a))
+* update SDK settings ([fab0b1e](https://github.com/imagekit-developer/imagekit-nodejs/commit/fab0b1e4659e232c59df2a1e1ebec09d0f8639da))
+
+
+### Documentation
+
+* clarify forwards compat behavior ([1c4774d](https://github.com/imagekit-developer/imagekit-nodejs/commit/1c4774d5845ecc0839de1b259cc6e291ce5e543a))
+* update http mcp docs ([cb0cf04](https://github.com/imagekit-developer/imagekit-nodejs/commit/cb0cf049ff0138a42bce6c264f6a97f593093e52))
+* update logging docs ([e006926](https://github.com/imagekit-developer/imagekit-nodejs/commit/e006926de887ad3daa88692a91fe1b588946760a))
+* update with proxy auth info ([c7668e7](https://github.com/imagekit-developer/imagekit-nodejs/commit/c7668e7e446fcd2d5de84e76d4f14505d0314895))
+
 ## 7.5.0 (2026-04-13)
 
 Full Changelog: [v7.4.0...v7.5.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.4.0...v7.5.0)
