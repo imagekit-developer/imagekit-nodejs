@@ -61,6 +61,7 @@ export const supportedTransforms: { [key: string]: string } = {
   unsharpMask: 'e-usm',
   gradient: 'e-gradient',
   colorReplace: 'cr',
+  colorize: 'e-colorize',
   distort: 'e-distort',
 
   // Other flags & finishing
