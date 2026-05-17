@@ -53,6 +53,7 @@ This repository also includes a separate **Model Context Protocol (MCP) server**
 > **Important Note on Versioning:** The MCP server package (`@imagekit/api-mcp`) is maintained within this monorepo and shares the same version number as the main Node.js SDK. **However, semantic versioning for this repository is determined solely based on changes to the Node.js SDK (`@imagekit/nodejs`).** This means the MCP server package may contain breaking changes in minor or patch releases, as its versioning does not follow independent semantic versioning conventions. If you use the MCP server package, always review the [CHANGELOG](CHANGELOG.md) to understand what has changed before upgrading.
 
 For detailed installation instructions, usage examples, and documentation about the MCP server, please visit:
+
 - **MCP Server Documentation:** [https://imagekit.io/docs/mcp-server](https://imagekit.io/docs/mcp-server)
 - **Package README:** [packages/mcp-server/README.md](packages/mcp-server/README.md)
 

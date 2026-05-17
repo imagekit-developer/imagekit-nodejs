@@ -1,5 +1,23 @@
 # Changelog
 
+## 7.6.1 (2026-05-17)
+
+Full Changelog: [v7.6.0...v7.6.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.6.0...v7.6.1)
+
+### Chores
+
+* update SDK settings ([7f44903](https://github.com/imagekit-developer/imagekit-nodejs/commit/7f44903b3a01531d17dcf8d4b9270ecd9de070a8))
+
+
+### Documentation
+
+* make linter happy ([7d0db8a](https://github.com/imagekit-developer/imagekit-nodejs/commit/7d0db8a88389830f06bbea11aab561f074a45683))
+
+
+### Build System
+
+* change dotnet package name ([9161f99](https://github.com/imagekit-developer/imagekit-nodejs/commit/9161f99f561250b11b4535a328469bb5737cb4b8))
+
 ## 7.6.0 (2026-05-13)
 
 Full Changelog: [v7.5.0...v7.6.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.5.0...v7.6.0)
