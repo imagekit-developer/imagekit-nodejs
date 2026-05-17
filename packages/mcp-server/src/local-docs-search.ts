@@ -109,6 +109,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataField = $client->customMetadataFields->create(\n  label: 'price',\n  name: 'price',\n  schema: [\n    'type' => 'Number',\n    'defaultValue' => [true, 10, 'Hello'],\n    'isValueRequired' => true,\n    'maxLength' => 0,\n    'maxValue' => 3000,\n    'minLength' => 0,\n    'minValue' => 1000,\n    'selectOptions' => ['small', 'medium', 'large', 30, 40, true],\n  ],\n);\n\nvar_dump($customMetadataField);",
       },
+      csharp: {
+        method: 'CustomMetadataFields.Create',
+        example:
+          'CustomMetadataFieldCreateParams parameters = new()\n{\n    Label = "price",\n    Name = "price",\n    Schema = new()\n    {\n        Type = Type.Number,\n        DefaultValue = new(\n\n            [\n                new DefaultValueItem(true),\n                new DefaultValueItem(10),\n                new DefaultValueItem("Hello"),\n            ]\n        ),\n        IsValueRequired = true,\n        MaxLength = 0,\n        MaxValue = 3000,\n        MinLength = 0,\n        MinValue = 1000,\n        SelectOptions =\n        [\n            "small", "medium", "large", 30, 40, true\n        ],\n    },\n};\n\nvar customMetadataField = await client.CustomMetadataFields.Create(parameters);\n\nConsole.WriteLine(customMetadataField);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/customMetadataFields \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "label": "price",\n          "name": "price",\n          "schema": {\n            "type": "Number",\n            "maxValue": 3000,\n            "minValue": 1000\n          }\n        }\'',
@@ -169,6 +174,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'customMetadataFields->list',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataFields = $client->customMetadataFields->list(\n  folderPath: 'folderPath', includeDeleted: true\n);\n\nvar_dump($customMetadataFields);",
+      },
+      csharp: {
+        method: 'CustomMetadataFields.List',
+        example:
+          'CustomMetadataFieldListParams parameters = new();\n\nvar customMetadataFields = await client.CustomMetadataFields.List(parameters);\n\nConsole.WriteLine(customMetadataFields);',
       },
       http: {
         example:
@@ -234,6 +244,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataField = $client->customMetadataFields->update(\n  'id',\n  label: 'price',\n  schema: [\n    'defaultValue' => [true, 10, 'Hello'],\n    'isValueRequired' => true,\n    'maxLength' => 0,\n    'maxValue' => 3000,\n    'minLength' => 0,\n    'minValue' => 1000,\n    'selectOptions' => ['small', 'medium', 'large', 30, 40, true],\n  ],\n);\n\nvar_dump($customMetadataField);",
       },
+      csharp: {
+        method: 'CustomMetadataFields.Update',
+        example:
+          'CustomMetadataFieldUpdateParams parameters = new() { ID = "id" };\n\nvar customMetadataField = await client.CustomMetadataFields.Update(parameters);\n\nConsole.WriteLine(customMetadataField);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/customMetadataFields/$ID \\\n    -X PATCH \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
@@ -293,6 +308,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'customMetadataFields->delete',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$customMetadataField = $client->customMetadataFields->delete('id');\n\nvar_dump($customMetadataField);",
+      },
+      csharp: {
+        method: 'CustomMetadataFields.Delete',
+        example:
+          'CustomMetadataFieldDeleteParams parameters = new() { ID = "id" };\n\nvar customMetadataField = await client.CustomMetadataFields.Delete(parameters);\n\nConsole.WriteLine(customMetadataField);',
       },
       http: {
         example:
@@ -379,6 +399,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->upload(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n  fileName: 'fileName',\n  token: 'token',\n  checks: \"\\\"request.folder\\\" : \\\"marketing/\\\"\\n\",\n  customCoordinates: 'customCoordinates',\n  customMetadata: ['brand' => 'bar', 'color' => 'bar'],\n  description: 'Running shoes',\n  expire: 0,\n  extensions: [\n    [\n      'name' => 'remove-bg',\n      'options' => [\n        'addShadow' => true,\n        'bgColor' => 'bg_color',\n        'bgImageURL' => 'bg_image_url',\n        'semitransparency' => true,\n      ],\n    ],\n    ['maxTags' => 5, 'minConfidence' => 95, 'name' => 'google-auto-tagging'],\n    ['name' => 'ai-auto-description'],\n    [\n      'name' => 'ai-tasks',\n      'tasks' => [\n        [\n          'instruction' => 'What types of clothing items are visible in this image?',\n          'type' => 'select_tags',\n          'maxSelections' => 1,\n          'minSelections' => 0,\n          'vocabulary' => ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],\n        ],\n        [\n          'instruction' => 'Is this a luxury or high-end fashion item?',\n          'type' => 'yes_no',\n          'onNo' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onUnknown' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onYes' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n        ],\n      ],\n    ],\n    ['id' => 'ext_abc123', 'name' => 'saved-extension'],\n  ],\n  folder: 'folder',\n  isPrivateFile: true,\n  isPublished: true,\n  overwriteAITags: true,\n  overwriteCustomMetadata: true,\n  overwriteFile: true,\n  overwriteTags: true,\n  publicKey: 'publicKey',\n  responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],\n  signature: 'signature',\n  tags: ['t-shirt', 'round-neck', 'men'],\n  transformation: [\n    'post' => [\n      ['type' => 'thumbnail', 'value' => 'w-150,h-150'],\n      [\n        'protocol' => 'dash',\n        'type' => 'abs',\n        'value' => 'sr-240_360_480_720_1080',\n      ],\n    ],\n    'pre' => 'w-300,h-300,q-80',\n  ],\n  useUniqueFileName: true,\n  webhookURL: 'https://example.com',\n);\n\nvar_dump($response);",
       },
+      csharp: {
+        method: 'Files.Upload',
+        example:
+          'FileUploadParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("Example data"),\n    FileName = "fileName",\n};\n\nvar response = await client.Files.Upload(parameters);\n\nConsole.WriteLine(response);',
+      },
       http: {
         example:
           'curl https://upload.imagekit.io/api/v1/files/upload \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -F \'file=@/path/to/file\' \\\n    -F fileName=fileName \\\n    -F checks=\'"request.folder" : "marketing/"\n    \' \\\n    -F customMetadata=\'{"brand":"bar","color":"bar"}\' \\\n    -F description=\'Running shoes\' \\\n    -F extensions=\'[{"name":"remove-bg","options":{"add_shadow":true}},{"maxTags":5,"minConfidence":95,"name":"google-auto-tagging"},{"name":"ai-auto-description"},{"name":"ai-tasks","tasks":[{"instruction":"What types of clothing items are visible in this image?","type":"select_tags","vocabulary":["shirt","tshirt","dress","trousers","jacket"]},{"instruction":"Is this a luxury or high-end fashion item?","type":"yes_no","on_yes":{"add_tags":["luxury","premium"]}}]},{"id":"ext_abc123","name":"saved-extension"}]\' \\\n    -F responseFields=\'["tags","customCoordinates","isPrivateFile"]\' \\\n    -F tags=\'["t-shirt","round-neck","men"]\' \\\n    -F transformation=\'{"post":[{"type":"thumbnail","value":"w-150,h-150"},{"protocol":"dash","type":"abs","value":"sr-240_360_480_720_1080"}]}\'',
@@ -439,6 +464,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files->get',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->get('fileId');\n\nvar_dump($file);",
+      },
+      csharp: {
+        method: 'Files.Get',
+        example:
+          'FileGetParams parameters = new() { FileID = "fileId" };\n\nvar file = await client.Files.Get(parameters);\n\nConsole.WriteLine(file);',
       },
       http: {
         example:
@@ -502,6 +532,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->update(\n  'fileId',\n  customCoordinates: 'customCoordinates',\n  customMetadata: ['foo' => 'bar'],\n  description: 'description',\n  extensions: [\n    [\n      'name' => 'remove-bg',\n      'options' => [\n        'addShadow' => true,\n        'bgColor' => 'bg_color',\n        'bgImageURL' => 'bg_image_url',\n        'semitransparency' => true,\n      ],\n    ],\n    ['maxTags' => 5, 'minConfidence' => 95, 'name' => 'google-auto-tagging'],\n    ['name' => 'ai-auto-description'],\n    [\n      'name' => 'ai-tasks',\n      'tasks' => [\n        [\n          'instruction' => 'What types of clothing items are visible in this image?',\n          'type' => 'select_tags',\n          'maxSelections' => 1,\n          'minSelections' => 0,\n          'vocabulary' => ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],\n        ],\n        [\n          'instruction' => 'Is this a luxury or high-end fashion item?',\n          'type' => 'yes_no',\n          'onNo' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onUnknown' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onYes' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n        ],\n      ],\n    ],\n    ['id' => 'ext_abc123', 'name' => 'saved-extension'],\n  ],\n  removeAITags: 'all',\n  tags: ['tag1', 'tag2'],\n  webhookURL: 'https://example.com',\n  publish: ['isPublished' => true, 'includeFileVersions' => true],\n);\n\nvar_dump($file);",
       },
+      csharp: {
+        method: 'Files.Update',
+        example:
+          'FileUpdateParams parameters = new()\n{\n    FileID = "fileId",\n    UpdateFileRequest = new UpdateFileDetails()\n    {\n        CustomCoordinates = "10,10,100,100",\n        CustomMetadata = new Dictionary<string, JsonElement>()\n        {\n            { "brand", JsonSerializer.SerializeToElement("bar") },\n            { "color", JsonSerializer.SerializeToElement("bar") },\n        },\n        Description = "description",\n        Extensions =\n        [\n            new RemoveBg()\n            {\n                Options = new()\n                {\n                    AddShadow = true,\n                    BgColor = "bg_color",\n                    BgImageUrl = "bg_image_url",\n                    Semitransparency = true,\n                },\n            },\n            new AutoTaggingExtension()\n            {\n                MaxTags = 10,\n                MinConfidence = 80,\n                Name = Name.GoogleAutoTagging,\n            },\n            new AutoTaggingExtension()\n            {\n                MaxTags = 10,\n                MinConfidence = 80,\n                Name = Name.AwsAutoTagging,\n            },\n            new AIAutoDescription(),\n            new AITasks(\n\n                [\n                    new SelectTags()\n                    {\n                        Instruction = "What types of clothing items are visible?",\n                        MaxSelections = 1,\n                        MinSelections = 0,\n                        Vocabulary =\n                        [\n                            "shirt", "dress", "jacket"\n                        ],\n                    },\n                ]\n            ),\n            new SavedExtension("ext_abc123"),\n        ],\n        RemoveAITags = new(\n\n            [\n                "car", "vehicle", "motorsports"\n            ]\n        ),\n        Tags =\n        [\n            "tag1", "tag2"\n        ],\n        WebhookUrl = "https://webhook.site/0d6b6c7a-8e5a-4b3a-8b7c-0d6b6c7a8e5a",\n    },\n};\n\nvar file = await client.Files.Update(parameters);\n\nConsole.WriteLine(file);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/files/$FILE_ID/details \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "extensions": [\n            {\n              "name": "remove-bg",\n              "options": {\n                "add_shadow": true\n              }\n            },\n            {\n              "maxTags": 5,\n              "minConfidence": 95,\n              "name": "google-auto-tagging"\n            },\n            {\n              "name": "ai-auto-description"\n            },\n            {\n              "name": "ai-tasks",\n              "tasks": [\n                {\n                  "instruction": "What types of clothing items are visible in this image?",\n                  "type": "select_tags",\n                  "vocabulary": [\n                    "shirt",\n                    "tshirt",\n                    "dress",\n                    "trousers",\n                    "jacket"\n                  ]\n                },\n                {\n                  "instruction": "Is this a luxury or high-end fashion item?",\n                  "type": "yes_no",\n                  "on_yes": {\n                    "add_tags": [\n                      "luxury",\n                      "premium"\n                    ]\n                  }\n                }\n              ]\n            },\n            {\n              "id": "ext_abc123",\n              "name": "saved-extension"\n            }\n          ],\n          "tags": [\n            "tag1",\n            "tag2"\n          ]\n        }\'',
@@ -560,6 +595,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files->delete',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->files->delete('fileId');\n\nvar_dump($result);",
+      },
+      csharp: {
+        method: 'Files.Delete',
+        example:
+          'FileDeleteParams parameters = new() { FileID = "fileId" };\n\nawait client.Files.Delete(parameters);',
       },
       http: {
         example:
@@ -621,6 +661,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->copy(\n  destinationPath: '/folder/to/copy/into/',\n  sourceFilePath: '/path/to/file.jpg',\n  includeFileVersions: false,\n);\n\nvar_dump($response);",
       },
+      csharp: {
+        method: 'Files.Copy',
+        example:
+          'FileCopyParams parameters = new()\n{\n    DestinationPath = "/folder/to/copy/into/",\n    SourceFilePath = "/path/to/file.jpg",\n};\n\nvar response = await client.Files.Copy(parameters);\n\nConsole.WriteLine(response);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/files/copy \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "destinationPath": "/folder/to/copy/into/",\n          "sourceFilePath": "/path/to/file.jpg",\n          "includeFileVersions": false\n        }\'',
@@ -680,6 +725,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files->move',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->move(\n  destinationPath: '/folder/to/move/into/', sourceFilePath: '/path/to/file.jpg'\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Files.Move',
+        example:
+          'FileMoveParams parameters = new()\n{\n    DestinationPath = "/folder/to/move/into/",\n    SourceFilePath = "/path/to/file.jpg",\n};\n\nvar response = await client.Files.Move(parameters);\n\nConsole.WriteLine(response);',
       },
       http: {
         example:
@@ -741,6 +791,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->rename(\n  filePath: '/path/to/file.jpg',\n  newFileName: 'newFileName.jpg',\n  purgeCache: true,\n);\n\nvar_dump($response);",
       },
+      csharp: {
+        method: 'Files.Rename',
+        example:
+          'FileRenameParams parameters = new()\n{\n    FilePath = "/path/to/file.jpg",\n    NewFileName = "newFileName.jpg",\n};\n\nvar response = await client.Files.Rename(parameters);\n\nConsole.WriteLine(response);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/files/rename \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "filePath": "/path/to/file.jpg",\n          "newFileName": "newFileName.jpg",\n          "purgeCache": true\n        }\'',
@@ -800,6 +855,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files->bulk->delete',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$bulk = $client->files->bulk->delete(\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be']\n);\n\nvar_dump($bulk);",
+      },
+      csharp: {
+        method: 'Files.Bulk.Delete',
+        example:
+          'BulkDeleteParams parameters = new()\n{\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n};\n\nvar bulk = await client.Files.Bulk.Delete(parameters);\n\nConsole.WriteLine(bulk);',
       },
       http: {
         example:
@@ -861,6 +921,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->bulk->addTags(\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n  tags: ['t-shirt', 'round-neck', 'sale2019'],\n);\n\nvar_dump($response);",
       },
+      csharp: {
+        method: 'Files.Bulk.AddTags',
+        example:
+          'BulkAddTagsParams parameters = new()\n{\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n    Tags =\n    [\n        "t-shirt", "round-neck", "sale2019"\n    ],\n};\n\nvar response = await client.Files.Bulk.AddTags(parameters);\n\nConsole.WriteLine(response);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/files/addTags \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "fileIds": [\n            "598821f949c0a938d57563bd",\n            "598821f949c0a938d57563be"\n          ],\n          "tags": [\n            "t-shirt",\n            "round-neck",\n            "sale2019"\n          ]\n        }\'',
@@ -920,6 +985,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files->bulk->removeTags',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->bulk->removeTags(\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n  tags: ['t-shirt', 'round-neck', 'sale2019'],\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Files.Bulk.RemoveTags',
+        example:
+          'BulkRemoveTagsParams parameters = new()\n{\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n    Tags =\n    [\n        "t-shirt", "round-neck", "sale2019"\n    ],\n};\n\nvar response = await client.Files.Bulk.RemoveTags(parameters);\n\nConsole.WriteLine(response);',
       },
       http: {
         example:
@@ -981,6 +1051,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->files->bulk->removeAITags(\n  aiTags: ['t-shirt', 'round-neck', 'sale2019'],\n  fileIDs: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],\n);\n\nvar_dump($response);",
       },
+      csharp: {
+        method: 'Files.Bulk.RemoveAITags',
+        example:
+          'BulkRemoveAITagsParams parameters = new()\n{\n    AITags =\n    [\n        "t-shirt", "round-neck", "sale2019"\n    ],\n    FileIds =\n    [\n        "598821f949c0a938d57563bd", "598821f949c0a938d57563be"\n    ],\n};\n\nvar response = await client.Files.Bulk.RemoveAITags(parameters);\n\nConsole.WriteLine(response);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/files/removeAITags \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "AITags": [\n            "t-shirt",\n            "round-neck",\n            "sale2019"\n          ],\n          "fileIds": [\n            "598821f949c0a938d57563bd",\n            "598821f949c0a938d57563be"\n          ]\n        }\'',
@@ -1040,6 +1115,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files->versions->list',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$files = $client->files->versions->list('fileId');\n\nvar_dump($files);",
+      },
+      csharp: {
+        method: 'Files.Versions.List',
+        example:
+          'VersionListParams parameters = new() { FileID = "fileId" };\n\nvar files = await client.Files.Versions.List(parameters);\n\nConsole.WriteLine(files);',
       },
       http: {
         example:
@@ -1101,6 +1181,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->versions->get('versionId', fileID: 'fileId');\n\nvar_dump($file);",
       },
+      csharp: {
+        method: 'Files.Versions.Get',
+        example:
+          'VersionGetParams parameters = new()\n{\n    FileID = "fileId",\n    VersionID = "versionId",\n};\n\nvar file = await client.Files.Versions.Get(parameters);\n\nConsole.WriteLine(file);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/files/$FILE_ID/versions/$VERSION_ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
@@ -1161,6 +1246,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$version = $client->files->versions->delete('versionId', fileID: 'fileId');\n\nvar_dump($version);",
       },
+      csharp: {
+        method: 'Files.Versions.Delete',
+        example:
+          'VersionDeleteParams parameters = new()\n{\n    FileID = "fileId",\n    VersionID = "versionId",\n};\n\nvar version = await client.Files.Versions.Delete(parameters);\n\nConsole.WriteLine(version);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/files/$FILE_ID/versions/$VERSION_ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
@@ -1220,6 +1310,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files->versions->restore',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$file = $client->files->versions->restore('versionId', fileID: 'fileId');\n\nvar_dump($file);",
+      },
+      csharp: {
+        method: 'Files.Versions.Restore',
+        example:
+          'VersionRestoreParams parameters = new()\n{\n    FileID = "fileId",\n    VersionID = "versionId",\n};\n\nvar file = await client.Files.Versions.Restore(parameters);\n\nConsole.WriteLine(file);',
       },
       http: {
         example:
@@ -1282,6 +1377,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$metadata = $client->files->metadata->get('fileId');\n\nvar_dump($metadata);",
       },
+      csharp: {
+        method: 'Files.Metadata.Get',
+        example:
+          'MetadataGetParams parameters = new() { FileID = "fileId" };\n\nvar metadata = await client.Files.Metadata.Get(parameters);\n\nConsole.WriteLine(metadata);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/files/$FILE_ID/metadata \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
@@ -1343,6 +1443,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$metadata = $client->files->metadata->getFromURL(url: 'https://example.com');\n\nvar_dump($metadata);",
       },
+      csharp: {
+        method: 'Files.Metadata.GetFromUrl',
+        example:
+          'MetadataGetFromUrlParams parameters = new() { Url = "https://example.com" };\n\nvar metadata = await client.Files.Metadata.GetFromUrl(parameters);\n\nConsole.WriteLine(metadata);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/metadata \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
@@ -1402,6 +1507,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'savedExtensions->list',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtensions = $client->savedExtensions->list();\n\nvar_dump($savedExtensions);",
+      },
+      csharp: {
+        method: 'SavedExtensions.List',
+        example:
+          'SavedExtensionListParams parameters = new();\n\nvar savedExtensions = await client.SavedExtensions.List(parameters);\n\nConsole.WriteLine(savedExtensions);',
       },
       http: {
         example:
@@ -1468,6 +1578,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtension = $client->savedExtensions->create(\n  config: [\n    'name' => 'remove-bg',\n    'options' => [\n      'addShadow' => true,\n      'bgColor' => 'bg_color',\n      'bgImageURL' => 'bg_image_url',\n      'semitransparency' => true,\n    ],\n  ],\n  description: 'Analyzes vehicle images for type, condition, and quality assessment',\n  name: 'Car Quality Analysis',\n);\n\nvar_dump($savedExtension);",
       },
+      csharp: {
+        method: 'SavedExtensions.Create',
+        example:
+          'SavedExtensionCreateParams parameters = new()\n{\n    Config = new RemoveBg()\n    {\n        Options = new()\n        {\n            AddShadow = true,\n            BgColor = "bg_color",\n            BgImageUrl = "bg_image_url",\n            Semitransparency = true,\n        },\n    },\n    Description = "Analyzes vehicle images for type, condition, and quality assessment",\n    Name = "Car Quality Analysis",\n};\n\nvar savedExtension = await client.SavedExtensions.Create(parameters);\n\nConsole.WriteLine(savedExtension);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/saved-extensions \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "config": {\n            "name": "remove-bg"\n          },\n          "description": "Analyzes vehicle images for type, condition, and quality assessment",\n          "name": "Car Quality Analysis"\n        }\'',
@@ -1527,6 +1642,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'savedExtensions->get',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtension = $client->savedExtensions->get('id');\n\nvar_dump($savedExtension);",
+      },
+      csharp: {
+        method: 'SavedExtensions.Get',
+        example:
+          'SavedExtensionGetParams parameters = new() { ID = "id" };\n\nvar savedExtension = await client.SavedExtensions.Get(parameters);\n\nConsole.WriteLine(savedExtension);',
       },
       http: {
         example:
@@ -1594,6 +1714,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$savedExtension = $client->savedExtensions->update(\n  'id',\n  config: [\n    'name' => 'remove-bg',\n    'options' => [\n      'addShadow' => true,\n      'bgColor' => 'bg_color',\n      'bgImageURL' => 'bg_image_url',\n      'semitransparency' => true,\n    ],\n  ],\n  description: 'x',\n  name: 'x',\n);\n\nvar_dump($savedExtension);",
       },
+      csharp: {
+        method: 'SavedExtensions.Update',
+        example:
+          'SavedExtensionUpdateParams parameters = new() { ID = "id" };\n\nvar savedExtension = await client.SavedExtensions.Update(parameters);\n\nConsole.WriteLine(savedExtension);',
+      },
       http: {
         example:
           "curl https://api.imagekit.io/v1/saved-extensions/$ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -u \"$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS\" \\\n    -d '{}'",
@@ -1651,6 +1776,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'savedExtensions->delete',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->savedExtensions->delete('id');\n\nvar_dump($result);",
+      },
+      csharp: {
+        method: 'SavedExtensions.Delete',
+        example:
+          'SavedExtensionDeleteParams parameters = new() { ID = "id" };\n\nawait client.SavedExtensions.Delete(parameters);',
       },
       http: {
         example:
@@ -1720,6 +1850,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$assets = $client->assets->list(\n  fileType: 'all',\n  limit: 1,\n  path: 'path',\n  searchQuery: 'searchQuery',\n  skip: 0,\n  sort: 'ASC_NAME',\n  type: 'file',\n);\n\nvar_dump($assets);",
       },
+      csharp: {
+        method: 'Assets.List',
+        example:
+          'AssetListParams parameters = new();\n\nvar assets = await client.Assets.List(parameters);\n\nConsole.WriteLine(assets);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/files \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
@@ -1780,6 +1915,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$invalidation = $client->cache->invalidation->create(\n  url: 'https://ik.imagekit.io/your_imagekit_id/default-image.jpg'\n);\n\nvar_dump($invalidation);",
       },
+      csharp: {
+        method: 'Cache.Invalidation.Create',
+        example:
+          'InvalidationCreateParams parameters = new()\n{\n    Url = "https://ik.imagekit.io/your_imagekit_id/default-image.jpg"\n};\n\nvar invalidation = await client.Cache.Invalidation.Create(parameters);\n\nConsole.WriteLine(invalidation);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/files/purge \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "url": "https://ik.imagekit.io/your_imagekit_id/default-image.jpg"\n        }\'',
@@ -1838,6 +1978,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'cache->invalidation->get',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$invalidation = $client->cache->invalidation->get('requestId');\n\nvar_dump($invalidation);",
+      },
+      csharp: {
+        method: 'Cache.Invalidation.Get',
+        example:
+          'InvalidationGetParams parameters = new() { RequestID = "requestId" };\n\nvar invalidation = await client.Cache.Invalidation.Get(parameters);\n\nConsole.WriteLine(invalidation);',
       },
       http: {
         example:
@@ -1899,6 +2044,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$folder = $client->folders->create(\n  folderName: 'summer', parentFolderPath: '/product/images/'\n);\n\nvar_dump($folder);",
       },
+      csharp: {
+        method: 'Folders.Create',
+        example:
+          'FolderCreateParams parameters = new()\n{\n    FolderName = "summer",\n    ParentFolderPath = "/product/images/",\n};\n\nvar folder = await client.Folders.Create(parameters);\n\nConsole.WriteLine(folder);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/folder \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "folderName": "summer",\n          "parentFolderPath": "/product/images/"\n        }\'',
@@ -1958,6 +2108,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'folders->delete',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$folder = $client->folders->delete(folderPath: '/folder/to/delete/');\n\nvar_dump($folder);",
+      },
+      csharp: {
+        method: 'Folders.Delete',
+        example:
+          'FolderDeleteParams parameters = new() { FolderPath = "/folder/to/delete/" };\n\nvar folder = await client.Folders.Delete(parameters);\n\nConsole.WriteLine(folder);',
       },
       http: {
         example:
@@ -2019,6 +2174,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->folders->copy(\n  destinationPath: '/path/of/destination/folder',\n  sourceFolderPath: '/path/of/source/folder',\n  includeVersions: true,\n);\n\nvar_dump($response);",
       },
+      csharp: {
+        method: 'Folders.Copy',
+        example:
+          'FolderCopyParams parameters = new()\n{\n    DestinationPath = "/path/of/destination/folder",\n    SourceFolderPath = "/path/of/source/folder",\n};\n\nvar response = await client.Folders.Copy(parameters);\n\nConsole.WriteLine(response);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/bulkJobs/copyFolder \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "destinationPath": "/path/of/destination/folder",\n          "sourceFolderPath": "/path/of/source/folder",\n          "includeVersions": true\n        }\'',
@@ -2078,6 +2238,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'folders->move',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->folders->move(\n  destinationPath: '/path/of/destination/folder',\n  sourceFolderPath: '/path/of/source/folder',\n);\n\nvar_dump($response);",
+      },
+      csharp: {
+        method: 'Folders.Move',
+        example:
+          'FolderMoveParams parameters = new()\n{\n    DestinationPath = "/path/of/destination/folder",\n    SourceFolderPath = "/path/of/source/folder",\n};\n\nvar response = await client.Folders.Move(parameters);\n\nConsole.WriteLine(response);',
       },
       http: {
         example:
@@ -2139,6 +2304,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->folders->rename(\n  folderPath: '/path/of/folder',\n  newFolderName: 'new-folder-name',\n  purgeCache: true,\n);\n\nvar_dump($response);",
       },
+      csharp: {
+        method: 'Folders.Rename',
+        example:
+          'FolderRenameParams parameters = new()\n{\n    FolderPath = "/path/of/folder",\n    NewFolderName = "new-folder-name",\n};\n\nvar response = await client.Folders.Rename(parameters);\n\nConsole.WriteLine(response);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/bulkJobs/renameFolder \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "folderPath": "/path/of/folder",\n          "newFolderName": "new-folder-name",\n          "purgeCache": true\n        }\'',
@@ -2198,6 +2368,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'folders->job->get',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$job = $client->folders->job->get('jobId');\n\nvar_dump($job);",
+      },
+      csharp: {
+        method: 'Folders.Job.Get',
+        example:
+          'JobGetParams parameters = new() { JobID = "jobId" };\n\nvar job = await client.Folders.Job.Get(parameters);\n\nConsole.WriteLine(job);',
       },
       http: {
         example:
@@ -2260,6 +2435,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$usage = $client->accounts->usage->get(\n  endDate: '2019-12-27', startDate: '2019-12-27'\n);\n\nvar_dump($usage);",
       },
+      csharp: {
+        method: 'Accounts.Usage.Get',
+        example:
+          'UsageGetParams parameters = new()\n{\n    EndDate = "2019-12-27",\n    StartDate = "2019-12-27",\n};\n\nvar usage = await client.Accounts.Usage.Get(parameters);\n\nConsole.WriteLine(usage);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/accounts/usage \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
@@ -2318,6 +2498,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts->origins->list',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponses = $client->accounts->origins->list();\n\nvar_dump($originResponses);",
+      },
+      csharp: {
+        method: 'Accounts.Origins.List',
+        example:
+          'OriginListParams parameters = new();\n\nvar originResponses = await client.Accounts.Origins.List(parameters);\n\nConsole.WriteLine(originResponses);',
       },
       http: {
         example:
@@ -2379,6 +2564,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponse = $client->accounts->origins->create(\n  accessKey: 'AKIAIOSFODNN7EXAMPLE',\n  bucket: 'gcs-media',\n  name: 'US S3 Storage',\n  secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n  type: 'AKENEO_PIM',\n  baseURLForCanonicalHeader: 'https://cdn.example.com',\n  includeCanonicalHeader: false,\n  prefix: 'uploads',\n  endpoint: 'https://s3.eu-central-1.wasabisys.com',\n  s3ForcePathStyle: true,\n  baseURL: 'https://akeneo.company.com',\n  forwardHostHeaderToOrigin: false,\n  clientEmail: 'service-account@project.iam.gserviceaccount.com',\n  privateKey: '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...',\n  accountName: 'account123',\n  container: 'images',\n  sasToken: '?sv=2023-01-03&sr=c&sig=abc123',\n  clientID: 'akeneo-client-id',\n  clientSecret: 'akeneo-client-secret',\n  password: 'strongpassword123',\n  username: 'integration-user',\n);\n\nvar_dump($originResponse);",
       },
+      csharp: {
+        method: 'Accounts.Origins.Create',
+        example:
+          'OriginCreateParams parameters = new()\n{\n    OriginRequest = new S3()\n    {\n        AccessKey = "AKIATEST123",\n        Bucket = "test-bucket",\n        Name = "My S3 Origin",\n        SecretKey = "secrettest123",\n        BaseUrlForCanonicalHeader = "https://cdn.example.com",\n        IncludeCanonicalHeader = false,\n        Prefix = "images",\n    },\n};\n\nvar originResponse = await client.Accounts.Origins.Create(parameters);\n\nConsole.WriteLine(originResponse);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/accounts/origins \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "accessKey": "AKIAIOSFODNN7EXAMPLE",\n          "bucket": "product-images",\n          "name": "US S3 Storage",\n          "secretKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n          "type": "S3",\n          "baseUrlForCanonicalHeader": "https://cdn.example.com",\n          "includeCanonicalHeader": false,\n          "prefix": "raw-assets"\n        }\'',
@@ -2437,6 +2627,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts->origins->get',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponse = $client->accounts->origins->get('id');\n\nvar_dump($originResponse);",
+      },
+      csharp: {
+        method: 'Accounts.Origins.Get',
+        example:
+          'OriginGetParams parameters = new() { ID = "id" };\n\nvar originResponse = await client.Accounts.Origins.Get(parameters);\n\nConsole.WriteLine(originResponse);',
       },
       http: {
         example:
@@ -2499,6 +2694,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$originResponse = $client->accounts->origins->update(\n  'id',\n  accessKey: 'AKIAIOSFODNN7EXAMPLE',\n  bucket: 'gcs-media',\n  name: 'US S3 Storage',\n  secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n  type: 'AKENEO_PIM',\n  baseURLForCanonicalHeader: 'https://cdn.example.com',\n  includeCanonicalHeader: false,\n  prefix: 'uploads',\n  endpoint: 'https://s3.eu-central-1.wasabisys.com',\n  s3ForcePathStyle: true,\n  baseURL: 'https://akeneo.company.com',\n  forwardHostHeaderToOrigin: false,\n  clientEmail: 'service-account@project.iam.gserviceaccount.com',\n  privateKey: '-----BEGIN PRIVATE KEY-----\\\\nMIIEv...',\n  accountName: 'account123',\n  container: 'images',\n  sasToken: '?sv=2023-01-03&sr=c&sig=abc123',\n  clientID: 'akeneo-client-id',\n  clientSecret: 'akeneo-client-secret',\n  password: 'strongpassword123',\n  username: 'integration-user',\n);\n\nvar_dump($originResponse);",
       },
+      csharp: {
+        method: 'Accounts.Origins.Update',
+        example:
+          'OriginUpdateParams parameters = new()\n{\n    ID = "id",\n    OriginRequest = new S3()\n    {\n        AccessKey = "AKIATEST123",\n        Bucket = "test-bucket",\n        Name = "My S3 Origin",\n        SecretKey = "secrettest123",\n        BaseUrlForCanonicalHeader = "https://cdn.example.com",\n        IncludeCanonicalHeader = false,\n        Prefix = "images",\n    },\n};\n\nvar originResponse = await client.Accounts.Origins.Update(parameters);\n\nConsole.WriteLine(originResponse);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/accounts/origins/$ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "accessKey": "AKIAIOSFODNN7EXAMPLE",\n          "bucket": "product-images",\n          "name": "US S3 Storage",\n          "secretKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",\n          "type": "S3",\n          "baseUrlForCanonicalHeader": "https://cdn.example.com",\n          "includeCanonicalHeader": false,\n          "prefix": "raw-assets"\n        }\'',
@@ -2557,6 +2757,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts->origins->delete',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->accounts->origins->delete('id');\n\nvar_dump($result);",
+      },
+      csharp: {
+        method: 'Accounts.Origins.Delete',
+        example:
+          'OriginDeleteParams parameters = new() { ID = "id" };\n\nawait client.Accounts.Origins.Delete(parameters);',
       },
       http: {
         example:
@@ -2617,6 +2822,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts->urlEndpoints->list',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponses = $client->accounts->urlEndpoints->list();\n\nvar_dump($urlEndpointResponses);",
+      },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.List',
+        example:
+          'UrlEndpointListParams parameters = new();\n\nvar urlEndpointResponses = await client.Accounts.UrlEndpoints.List(parameters);\n\nConsole.WriteLine(urlEndpointResponses);',
       },
       http: {
         example:
@@ -2684,6 +2894,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponse = $client->accounts->urlEndpoints->create(\n  description: 'My custom URL endpoint',\n  origins: ['origin-id-1'],\n  urlPrefix: 'product-images',\n  urlRewriter: ['type' => 'CLOUDINARY', 'preserveAssetDeliveryTypes' => true],\n);\n\nvar_dump($urlEndpointResponse);",
       },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.Create',
+        example:
+          'UrlEndpointCreateParams parameters = new()\n{\n    Description = "My custom URL endpoint"\n};\n\nvar urlEndpointResponse = await client.Accounts.UrlEndpoints.Create(parameters);\n\nConsole.WriteLine(urlEndpointResponse);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/accounts/url-endpoints \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "description": "My custom URL endpoint",\n          "origins": [\n            "origin-id-1"\n          ],\n          "urlPrefix": "product-images"\n        }\'',
@@ -2744,6 +2959,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts->urlEndpoints->get',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponse = $client->accounts->urlEndpoints->get('id');\n\nvar_dump($urlEndpointResponse);",
+      },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.Get',
+        example:
+          'UrlEndpointGetParams parameters = new() { ID = "id" };\n\nvar urlEndpointResponse = await client.Accounts.UrlEndpoints.Get(parameters);\n\nConsole.WriteLine(urlEndpointResponse);',
       },
       http: {
         example:
@@ -2812,6 +3032,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$urlEndpointResponse = $client->accounts->urlEndpoints->update(\n  'id',\n  description: 'My custom URL endpoint',\n  origins: ['origin-id-1'],\n  urlPrefix: 'product-images',\n  urlRewriter: ['type' => 'CLOUDINARY', 'preserveAssetDeliveryTypes' => true],\n);\n\nvar_dump($urlEndpointResponse);",
       },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.Update',
+        example:
+          'UrlEndpointUpdateParams parameters = new()\n{\n    ID = "id",\n    Description = "My custom URL endpoint",\n};\n\nvar urlEndpointResponse = await client.Accounts.UrlEndpoints.Update(parameters);\n\nConsole.WriteLine(urlEndpointResponse);',
+      },
       http: {
         example:
           'curl https://api.imagekit.io/v1/accounts/url-endpoints/$ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "description": "My custom URL endpoint",\n          "origins": [\n            "origin-id-1"\n          ],\n          "urlPrefix": "product-images"\n        }\'',
@@ -2870,6 +3095,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'accounts->urlEndpoints->delete',
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->accounts->urlEndpoints->delete('id');\n\nvar_dump($result);",
+      },
+      csharp: {
+        method: 'Accounts.UrlEndpoints.Delete',
+        example:
+          'UrlEndpointDeleteParams parameters = new() { ID = "id" };\n\nawait client.Accounts.UrlEndpoints.Delete(parameters);',
       },
       http: {
         example:
@@ -2953,6 +3183,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$response = $client->beta->v2->files->upload(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n  fileName: 'fileName',\n  token: 'token',\n  checks: \"\\\"request.folder\\\" : \\\"marketing/\\\"\\n\",\n  customCoordinates: 'customCoordinates',\n  customMetadata: ['brand' => 'bar', 'color' => 'bar'],\n  description: 'Running shoes',\n  extensions: [\n    [\n      'name' => 'remove-bg',\n      'options' => [\n        'addShadow' => true,\n        'bgColor' => 'bg_color',\n        'bgImageURL' => 'bg_image_url',\n        'semitransparency' => true,\n      ],\n    ],\n    ['maxTags' => 5, 'minConfidence' => 95, 'name' => 'google-auto-tagging'],\n    ['name' => 'ai-auto-description'],\n    [\n      'name' => 'ai-tasks',\n      'tasks' => [\n        [\n          'instruction' => 'What types of clothing items are visible in this image?',\n          'type' => 'select_tags',\n          'maxSelections' => 1,\n          'minSelections' => 0,\n          'vocabulary' => ['shirt', 'tshirt', 'dress', 'trousers', 'jacket'],\n        ],\n        [\n          'instruction' => 'Is this a luxury or high-end fashion item?',\n          'type' => 'yes_no',\n          'onNo' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onUnknown' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n          'onYes' => [\n            'addTags' => ['luxury', 'premium'],\n            'removeTags' => ['budget', 'affordable'],\n            'setMetadata' => [['field' => 'price_range', 'value' => 'premium']],\n            'unsetMetadata' => [['field' => 'price_range']],\n          ],\n        ],\n      ],\n    ],\n    ['id' => 'ext_abc123', 'name' => 'saved-extension'],\n  ],\n  folder: 'folder',\n  isPrivateFile: true,\n  isPublished: true,\n  overwriteAITags: true,\n  overwriteCustomMetadata: true,\n  overwriteFile: true,\n  overwriteTags: true,\n  responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],\n  tags: ['t-shirt', 'round-neck', 'men'],\n  transformation: [\n    'post' => [\n      ['type' => 'thumbnail', 'value' => 'w-150,h-150'],\n      [\n        'protocol' => 'dash',\n        'type' => 'abs',\n        'value' => 'sr-240_360_480_720_1080',\n      ],\n    ],\n    'pre' => 'w-300,h-300,q-80',\n  ],\n  useUniqueFileName: true,\n  webhookURL: 'https://example.com',\n);\n\nvar_dump($response);",
       },
+      csharp: {
+        method: 'Beta.V2.Files.Upload',
+        example:
+          'FileUploadParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("Example data"),\n    FileName = "fileName",\n};\n\nvar response = await client.Beta.V2.Files.Upload(parameters);\n\nConsole.WriteLine(response);',
+      },
       http: {
         example:
           'curl https://upload.imagekit.io/api/v2/files/upload \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -F \'file=@/path/to/file\' \\\n    -F fileName=fileName \\\n    -F checks=\'"request.folder" : "marketing/"\n    \' \\\n    -F customMetadata=\'{"brand":"bar","color":"bar"}\' \\\n    -F description=\'Running shoes\' \\\n    -F extensions=\'[{"name":"remove-bg","options":{"add_shadow":true}},{"maxTags":5,"minConfidence":95,"name":"google-auto-tagging"},{"name":"ai-auto-description"},{"name":"ai-tasks","tasks":[{"instruction":"What types of clothing items are visible in this image?","type":"select_tags","vocabulary":["shirt","tshirt","dress","trousers","jacket"]},{"instruction":"Is this a luxury or high-end fashion item?","type":"yes_no","on_yes":{"add_tags":["luxury","premium"]}}]},{"id":"ext_abc123","name":"saved-extension"}]\' \\\n    -F responseFields=\'["tags","customCoordinates","isPrivateFile"]\' \\\n    -F tags=\'["t-shirt","round-neck","men"]\' \\\n    -F transformation=\'{"post":[{"type":"thumbnail","value":"w-150,h-150"},{"protocol":"dash","type":"abs","value":"sr-240_360_480_720_1080"}]}\'',
@@ -3005,6 +3240,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->webhooks->unwrap();\n\nvar_dump($result);",
       },
+      csharp: {
+        example: 'WebhookUnwrapParams parameters = new();\n\nawait client.Webhooks.Unwrap(parameters);',
+      },
     },
   },
   {
@@ -3053,6 +3291,10 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->webhooks->unsafeUnwrap();\n\nvar_dump($result);",
       },
+      csharp: {
+        example:
+          'WebhookUnsafeUnwrapParams parameters = new();\n\nawait client.Webhooks.UnsafeUnwrap(parameters);',
+      },
     },
   },
 ];
@@ -3062,6 +3304,11 @@ const EMBEDDED_READMES: { language: string; content: string }[] = [
     language: 'cli',
     content:
       "# Image Kit CLI\n\nThe official CLI for the [Image Kit REST API](https://imagekit.io/docs/api-reference).\n\n## Installation\n\n### Installing with Go\n\nTo test or install the CLI locally, you need [Go](https://go.dev/doc/install) version 1.22 or later installed.\n\n~~~sh\ngo install 'github.com/stainless-sdks/imagekit-cli/cmd/imagekit@latest'\n~~~\n\nOnce you have run `go install`, the binary is placed in your Go bin directory:\n\n- **Default location**: `$HOME/go/bin` (or `$GOPATH/bin` if GOPATH is set)\n- **Check your path**: Run `go env GOPATH` to see the base directory\n\nIf commands aren't found after installation, add the Go bin directory to your PATH:\n\n~~~sh\n# Add to your shell profile (.zshrc, .bashrc, etc.)\nexport PATH=\"$PATH:$(go env GOPATH)/bin\"\n~~~\n\n### Running Locally\n\nAfter cloning the git repository for this project, you can use the\n`scripts/run` script to run the tool locally:\n\n~~~sh\n./scripts/run args...\n~~~\n\n## Usage\n\nThe CLI follows a resource-based command structure:\n\n~~~sh\nimagekit [resource] <command> [flags...]\n~~~\n\n~~~sh\nimagekit files upload \\\n  --private-key 'My Private Key' \\\n  --password 'My Password' \\\n  --file 'Example data' \\\n  --file-name file-name.jpg\n~~~\n\nFor details about specific commands, use the `--help` flag.\n\n### Environment variables\n\n| Environment variable             | Description                                                                                                                                                                                                                     | Required | Default value  |\n| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------------- |\n| `IMAGEKIT_PRIVATE_KEY`           | Your ImageKit private API key (starts with `private_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/api-keys).\n                                                                       | yes      |                |\n| `OPTIONAL_IMAGEKIT_IGNORES_THIS` | ImageKit uses your API key as username and ignores the password. \nThe SDK sets a dummy value. You can ignore this field.\n                                                                                                       | no       | `\"do_not_set\"` |\n| `IMAGEKIT_WEBHOOK_SECRET`        | Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you're using webhooks.\n | no       | `null`         |\n\n### Global flags\n\n- `--private-key` - Your ImageKit private API key (starts with `private_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/api-keys).\n (can also be set with `IMAGEKIT_PRIVATE_KEY` env var)\n- `--password` - ImageKit uses your API key as username and ignores the password. \nThe SDK sets a dummy value. You can ignore this field.\n (can also be set with `OPTIONAL_IMAGEKIT_IGNORES_THIS` env var)\n- `--webhook-secret` - Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you're using webhooks.\n (can also be set with `IMAGEKIT_WEBHOOK_SECRET` env var)\n- `--help` - Show command line usage\n- `--debug` - Enable debug logging (includes HTTP request/response details)\n- `--version`, `-v` - Show the CLI version\n- `--base-url` - Use a custom API backend URL\n- `--format` - Change the output format (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--format-error` - Change the output format for errors (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--transform` - Transform the data output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n- `--transform-error` - Transform the error output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n\n### Passing files as arguments\n\nTo pass files to your API, you can use the `@myfile.ext` syntax:\n\n~~~bash\nimagekit <command> --arg @abe.jpg\n~~~\n\nFiles can also be passed inside JSON or YAML blobs:\n\n~~~bash\nimagekit <command> --arg '{image: \"@abe.jpg\"}'\n# Equivalent:\nimagekit <command> <<YAML\narg:\n  image: \"@abe.jpg\"\nYAML\n~~~\n\nIf you need to pass a string literal that begins with an `@` sign, you can\nescape the `@` sign to avoid accidentally passing a file.\n\n~~~bash\nimagekit <command> --username '\\@abe'\n~~~\n\n#### Explicit encoding\n\nFor JSON endpoints, the CLI tool does filetype sniffing to determine whether the\nfile contents should be sent as a string literal (for plain text files) or as a\nbase64-encoded string literal (for binary files). If you need to explicitly send\nthe file as either plain text or base64-encoded data, you can use\n`@file://myfile.txt` (for string encoding) or `@data://myfile.dat` (for\nbase64-encoding). Note that absolute paths will begin with `@file://` or\n`@data://`, followed by a third `/` (for example, `@file:///tmp/file.txt`).\n\n~~~bash\nimagekit <command> --arg @data://file.txt\n~~~\n\n## Linking different Go SDK versions\n\nYou can link the CLI against a different version of the Image Kit Go SDK\nfor development purposes using the `./scripts/link` script.\n\nTo link to a specific version from a repository (version can be a branch,\ngit tag, or commit hash):\n\n~~~bash\n./scripts/link github.com/org/repo@version\n~~~\n\nTo link to a local copy of the SDK:\n\n~~~bash\n./scripts/link ../path/to/imagekit-go\n~~~\n\nIf you run the link script without any arguments, it will default to `../imagekit-go`.\n",
+  },
+  {
+    language: 'csharp',
+    content:
+      '# Image Kit C# API Library\n\nThe Image Kit C# SDK provides convenient access to the [Image Kit REST API](https://imagekit.io/docs/api-reference) from applications written in   C#.\n\n## Installation\n\n```bash\ngit clone git@github.com:stainless-sdks/imagekit-csharp.git\ndotnet add reference imagekit-csharp/src/Imagekit\n```\n\n## Requirements\n\nThis library requires .NET Standard 2.0 or later.\n\n## Usage\n\nSee the [`examples`](examples) directory for complete and runnable examples.\n\n```csharp\nImageKitClient client = new();\n\nFileUploadParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("https://www.example.com/public-url.jpg"),\n    FileName = "file-name.jpg",\n};\n\nvar response = await client.Files.Upload(parameters);\n\nConsole.WriteLine(response);\n```',
   },
   {
     language: 'go',
