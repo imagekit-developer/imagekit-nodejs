@@ -1,7 +1,6 @@
 import fs from 'fs';
 import type { ResponseLike } from '@imagekit/nodejs/internal/to-file';
 import { toFile } from '@imagekit/nodejs/core/uploads';
-import { File } from 'node:buffer';
 
 class MyClass {
   name: string = 'foo';
