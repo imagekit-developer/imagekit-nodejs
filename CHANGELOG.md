@@ -1,5 +1,24 @@
 # Changelog
 
+## 7.6.2 (2026-05-18)
+
+Full Changelog: [v7.6.1...v7.6.2](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.6.1...v7.6.2)
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([ad08a05](https://github.com/imagekit-developer/imagekit-nodejs/commit/ad08a05935850b2abcba7f8dae22b08e7a5345b9))
+
+
+### Chores
+
+* remove dotnet target ([303c15c](https://github.com/imagekit-developer/imagekit-nodejs/commit/303c15c8d4405c9c6f6b72117850fab073815722))
+* **tests:** remove redundant File import ([2fbb917](https://github.com/imagekit-developer/imagekit-nodejs/commit/2fbb917542459fd05072f2315635206c71fa7574))
+
+
+### Build System
+
+* revert dotnet specific changes ([49c716a](https://github.com/imagekit-developer/imagekit-nodejs/commit/49c716a47cf45bffbfc6a7cbde9aaa053887f4e8))
+
 ## 7.6.1 (2026-05-17)
 
 Full Changelog: [v7.6.0...v7.6.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.6.0...v7.6.1)

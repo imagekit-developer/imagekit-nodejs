@@ -3308,7 +3308,7 @@ const EMBEDDED_READMES: { language: string; content: string }[] = [
   {
     language: 'csharp',
     content:
-      '# Image Kit C# API Library\n\nThe Image Kit C# SDK provides convenient access to the [Image Kit REST API](https://imagekit.io/docs/api-reference) from applications written in   C#.\n\n## Installation\n\n```bash\ngit clone git@github.com:imagekit-developer/imagekit-dotnet.git\ndotnet add reference imagekit-dotnet/src/Imagekit\n```\n\n## Requirements\n\nThis library requires .NET Standard 2.0 or later.\n\n## Usage\n\nSee the [`examples`](examples) directory for complete and runnable examples.\n\n```csharp\nImageKitClient client = new();\n\nFileUploadParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("https://www.example.com/public-url.jpg"),\n    FileName = "file-name.jpg",\n};\n\nvar response = await client.Files.Upload(parameters);\n\nConsole.WriteLine(response);\n```',
+      '# Image Kit C# API Library\n\nThe Image Kit C# SDK provides convenient access to the [Image Kit REST API](https://imagekit.io/docs/api-reference) from applications written in   C#.\n\n## Installation\n\n```bash\ngit clone git@github.com:stainless-sdks/imagekit-csharp.git\ndotnet add reference imagekit-csharp/src/Imagekit\n```\n\n## Requirements\n\nThis library requires .NET Standard 2.0 or later.\n\n## Usage\n\nSee the [`examples`](examples) directory for complete and runnable examples.\n\n```csharp\nImageKitClient client = new();\n\nFileUploadParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("https://www.example.com/public-url.jpg"),\n    FileName = "file-name.jpg",\n};\n\nvar response = await client.Files.Upload(parameters);\n\nConsole.WriteLine(response);\n```',
   },
   {
     language: 'go',
