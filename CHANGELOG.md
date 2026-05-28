@@ -1,5 +1,23 @@
 # Changelog
 
+## 7.6.3 (2026-05-28)
+
+Full Changelog: [v7.6.2...v7.6.3](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.6.2...v7.6.3)
+
+### Bug Fixes
+
+* **mcp:** use `pure-lockfile` when building mcp server ([d8e291e](https://github.com/imagekit-developer/imagekit-nodejs/commit/d8e291e83e783ba62a8c10f8f235b2e335edc34f))
+
+
+### Chores
+
+* **internal:** codegen related update ([70457ff](https://github.com/imagekit-developer/imagekit-nodejs/commit/70457ff51a7922e89f71b08f4d6367c0b7eac1f9))
+
+
+### Build System
+
+* **php:** set production target ([37c4fbc](https://github.com/imagekit-developer/imagekit-nodejs/commit/37c4fbc9dca545182bd41f606652e9785a1dea1c))
+
 ## 7.6.2 (2026-05-18)
 
 Full Changelog: [v7.6.1...v7.6.2](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.6.1...v7.6.2)
