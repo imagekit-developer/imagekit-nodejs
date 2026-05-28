@@ -28,7 +28,7 @@ export const newMcpServer = async ({
   new McpServer(
     {
       name: 'imagekit_nodejs_api',
-      version: '7.6.2',
+      version: '7.6.3',
     },
     {
       instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),
