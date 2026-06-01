@@ -31,26 +31,6 @@ export class CustomMetadataFields extends APIResource {
   }
 
   /**
-   * This API updates the label or schema of an existing custom metadata field.
-   *
-   * @example
-   * ```ts
-   * const customMetadataField =
-   *   await client.customMetadataFields.update('id', {
-   *     label: 'price',
-   *     schema: { minValue: 1000, maxValue: 3000 },
-   *   });
-   * ```
-   */
-  update(
-    id: string,
-    body: CustomMetadataFieldUpdateParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<CustomMetadataField> {
-    return this._client.patch(path`/v1/customMetadataFields/${id}`, { body, ...options });
-  }
-
-  /**
    * This API returns the array of created custom metadata field objects. By default
    * the API returns only non deleted field objects, but you can include deleted
    * fields in the API response.
@@ -71,6 +51,26 @@ export class CustomMetadataFields extends APIResource {
     options?: RequestOptions,
   ): APIPromise<CustomMetadataFieldListResponse> {
     return this._client.get('/v1/customMetadataFields', { query, ...options });
+  }
+
+  /**
+   * This API updates the label or schema of an existing custom metadata field.
+   *
+   * @example
+   * ```ts
+   * const customMetadataField =
+   *   await client.customMetadataFields.update('id', {
+   *     label: 'price',
+   *     schema: { minValue: 1000, maxValue: 3000 },
+   *   });
+   * ```
+   */
+  update(
+    id: string,
+    body: CustomMetadataFieldUpdateParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CustomMetadataField> {
+    return this._client.patch(path`/v1/customMetadataFields/${id}`, { body, ...options });
   }
 
   /**
@@ -245,6 +245,21 @@ export namespace CustomMetadataFieldCreateParams {
   }
 }
 
+export interface CustomMetadataFieldListParams {
+  /**
+   * The folder path (e.g., `/path/to/folder`) for which to retrieve applicable
+   * custom metadata fields. Useful for determining path-specific field selections
+   * when the [Path policy](https://imagekit.io/docs/dam/path-policy) feature is in
+   * use.
+   */
+  folderPath?: string;
+
+  /**
+   * Set it to `true` to include deleted field objects in the API response.
+   */
+  includeDeleted?: boolean;
+}
+
 export interface CustomMetadataFieldUpdateParams {
   /**
    * Human readable name of the custom metadata field. This should be unique across
@@ -319,28 +334,13 @@ export namespace CustomMetadataFieldUpdateParams {
   }
 }
 
-export interface CustomMetadataFieldListParams {
-  /**
-   * The folder path (e.g., `/path/to/folder`) for which to retrieve applicable
-   * custom metadata fields. Useful for determining path-specific field selections
-   * when the [Path policy](https://imagekit.io/docs/dam/path-policy) feature is in
-   * use.
-   */
-  folderPath?: string;
-
-  /**
-   * Set it to `true` to include deleted field objects in the API response.
-   */
-  includeDeleted?: boolean;
-}
-
 export declare namespace CustomMetadataFields {
   export {
     type CustomMetadataField as CustomMetadataField,
     type CustomMetadataFieldListResponse as CustomMetadataFieldListResponse,
     type CustomMetadataFieldDeleteResponse as CustomMetadataFieldDeleteResponse,
     type CustomMetadataFieldCreateParams as CustomMetadataFieldCreateParams,
-    type CustomMetadataFieldUpdateParams as CustomMetadataFieldUpdateParams,
     type CustomMetadataFieldListParams as CustomMetadataFieldListParams,
+    type CustomMetadataFieldUpdateParams as CustomMetadataFieldUpdateParams,
   };
 }

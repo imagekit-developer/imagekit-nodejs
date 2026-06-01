@@ -39,6 +39,69 @@ export class Files extends APIResource {
   metadata: MetadataAPI.Metadata = new MetadataAPI.Metadata(this._client);
 
   /**
+   * ImageKit.io allows you to upload files directly from both the server and client
+   * sides. For server-side uploads, private API key authentication is used. For
+   * client-side uploads, generate a one-time `token`, `signature`, and `expire` from
+   * your secure backend using private API.
+   * [Learn more](/docs/api-reference/upload-file/upload-file#how-to-implement-client-side-file-upload)
+   * about how to implement client-side file upload.
+   *
+   * The [V2 API](/docs/api-reference/upload-file/upload-file-v2) enhances security
+   * by verifying the entire payload using JWT.
+   *
+   * **File size limit** \
+   * On the free plan, the maximum upload file sizes are 25MB for images, audio, and raw
+   * files and 100MB for videos. On the Lite paid plan, these limits increase to 40MB
+   * for images, audio, and raw files and 300MB for videos, whereas on the Pro paid plan,
+   * these limits increase to 50MB for images, audio, and raw files and 2GB for videos.
+   * These limits can be further increased with enterprise plans.
+   *
+   * **Version limit** \
+   * A file can have a maximum of 100 versions.
+   *
+   * **Demo applications**
+   *
+   * - A full-fledged
+   *   [upload widget using Uppy](https://github.com/imagekit-samples/uppy-uploader),
+   *   supporting file selections from local storage, URL, Dropbox, Google Drive,
+   *   Instagram, and more.
+   * - [Quick start guides](/docs/quick-start-guides) for various frameworks and
+   *   technologies.
+   *
+   * @example
+   * ```ts
+   * const response = await client.files.upload({
+   *   file: fs.createReadStream('path/to/file'),
+   *   fileName: 'fileName',
+   * });
+   * ```
+   */
+  upload(body: FileUploadParams, options?: RequestOptions): APIPromise<FileUploadResponse> {
+    const serializedBody = serializeUploadOptions(body);
+
+    return this._client.post(
+      '/api/v1/files/upload',
+      multipartFormRequestOptions(
+        { body: serializedBody, defaultBaseURL: 'https://upload.imagekit.io', ...options },
+        this._client,
+      ),
+    );
+  }
+
+  /**
+   * This API returns an object with details or attributes about the current version
+   * of the file.
+   *
+   * @example
+   * ```ts
+   * const file = await client.files.get('fileId');
+   * ```
+   */
+  get(fileID: string, options?: RequestOptions): APIPromise<File> {
+    return this._client.get(path`/v1/files/${fileID}/details`, options);
+  }
+
+  /**
    * This API updates the details or attributes of the current version of the file.
    * You can update `tags`, `customCoordinates`, `customMetadata`, publication
    * status, remove existing `AITags` and apply extensions using this API.
@@ -91,19 +154,6 @@ export class Files extends APIResource {
   }
 
   /**
-   * This API returns an object with details or attributes about the current version
-   * of the file.
-   *
-   * @example
-   * ```ts
-   * const file = await client.files.get('fileId');
-   * ```
-   */
-  get(fileID: string, options?: RequestOptions): APIPromise<File> {
-    return this._client.get(path`/v1/files/${fileID}/details`, options);
-  }
-
-  /**
    * This will move a file and all its versions from one folder to another.
    *
    * Note: If any file at the destination has the same name as the source file, then
@@ -138,56 +188,6 @@ export class Files extends APIResource {
    */
   rename(body: FileRenameParams, options?: RequestOptions): APIPromise<FileRenameResponse> {
     return this._client.put('/v1/files/rename', { body, ...options });
-  }
-
-  /**
-   * ImageKit.io allows you to upload files directly from both the server and client
-   * sides. For server-side uploads, private API key authentication is used. For
-   * client-side uploads, generate a one-time `token`, `signature`, and `expire` from
-   * your secure backend using private API.
-   * [Learn more](/docs/api-reference/upload-file/upload-file#how-to-implement-client-side-file-upload)
-   * about how to implement client-side file upload.
-   *
-   * The [V2 API](/docs/api-reference/upload-file/upload-file-v2) enhances security
-   * by verifying the entire payload using JWT.
-   *
-   * **File size limit** \
-   * On the free plan, the maximum upload file sizes are 25MB for images, audio, and raw
-   * files and 100MB for videos. On the Lite paid plan, these limits increase to 40MB
-   * for images, audio, and raw files and 300MB for videos, whereas on the Pro paid plan,
-   * these limits increase to 50MB for images, audio, and raw files and 2GB for videos.
-   * These limits can be further increased with enterprise plans.
-   *
-   * **Version limit** \
-   * A file can have a maximum of 100 versions.
-   *
-   * **Demo applications**
-   *
-   * - A full-fledged
-   *   [upload widget using Uppy](https://github.com/imagekit-samples/uppy-uploader),
-   *   supporting file selections from local storage, URL, Dropbox, Google Drive,
-   *   Instagram, and more.
-   * - [Quick start guides](/docs/quick-start-guides) for various frameworks and
-   *   technologies.
-   *
-   * @example
-   * ```ts
-   * const response = await client.files.upload({
-   *   file: fs.createReadStream('path/to/file'),
-   *   fileName: 'fileName',
-   * });
-   * ```
-   */
-  upload(body: FileUploadParams, options?: RequestOptions): APIPromise<FileUploadResponse> {
-    const serializedBody = serializeUploadOptions(body);
-
-    return this._client.post(
-      '/api/v1/files/upload',
-      multipartFormRequestOptions(
-        { body: serializedBody, defaultBaseURL: 'https://upload.imagekit.io', ...options },
-        this._client,
-      ),
-    );
   }
 }
 
@@ -1120,155 +1120,6 @@ export namespace FileUploadResponse {
   }
 }
 
-export type FileUpdateParams = FileUpdateParams.UpdateFileDetails | FileUpdateParams.ChangePublicationStatus;
-
-export declare namespace FileUpdateParams {
-  export interface UpdateFileDetails {
-    /**
-     * Define an important area in the image in the format `x,y,width,height` e.g.
-     * `10,10,100,100`. Send `null` to unset this value.
-     */
-    customCoordinates?: string | null;
-
-    /**
-     * A key-value data to be associated with the asset. To unset a key, send `null`
-     * value for that key. Before setting any custom metadata on an asset you have to
-     * create the field using custom metadata fields API.
-     */
-    customMetadata?: { [key: string]: unknown };
-
-    /**
-     * Optional text to describe the contents of the file.
-     */
-    description?: string;
-
-    /**
-     * Array of extensions to be applied to the asset. Each extension can be configured
-     * with specific parameters based on the extension type.
-     */
-    extensions?: Shared.Extensions;
-
-    /**
-     * An array of AITags associated with the file that you want to remove, e.g.
-     * `["car", "vehicle", "motorsports"]`.
-     *
-     * If you want to remove all AITags associated with the file, send a string -
-     * "all".
-     *
-     * Note: The remove operation for `AITags` executes before any of the `extensions`
-     * are processed.
-     */
-    removeAITags?: Array<string> | 'all';
-
-    /**
-     * An array of tags associated with the file, such as `["tag1", "tag2"]`. Send
-     * `null` to unset all tags associated with the file.
-     */
-    tags?: Array<string> | null;
-
-    /**
-     * The final status of extensions after they have completed execution will be
-     * delivered to this endpoint as a POST request.
-     * [Learn more](/docs/api-reference/digital-asset-management-dam/managing-assets/update-file-details#webhook-payload-structure)
-     * about the webhook payload structure.
-     */
-    webhookUrl?: string;
-  }
-
-  export interface ChangePublicationStatus {
-    /**
-     * Configure the publication status of a file and its versions.
-     */
-    publish?: ChangePublicationStatus.Publish;
-  }
-
-  export namespace ChangePublicationStatus {
-    /**
-     * Configure the publication status of a file and its versions.
-     */
-    export interface Publish {
-      /**
-       * Set to `true` to publish the file. Set to `false` to unpublish the file.
-       */
-      isPublished: boolean;
-
-      /**
-       * Set to `true` to publish/unpublish all versions of the file. Set to `false` to
-       * publish/unpublish only the current version of the file.
-       */
-      includeFileVersions?: boolean;
-    }
-  }
-}
-
-export interface FileCopyParams {
-  /**
-   * Full path to the folder you want to copy the above file into.
-   */
-  destinationPath: string;
-
-  /**
-   * The full path of the file you want to copy.
-   */
-  sourceFilePath: string;
-
-  /**
-   * Option to copy all versions of a file. By default, only the current version of
-   * the file is copied. When set to true, all versions of the file will be copied.
-   * Default value - `false`.
-   */
-  includeFileVersions?: boolean;
-}
-
-export interface FileMoveParams {
-  /**
-   * Full path to the folder you want to move the above file into.
-   */
-  destinationPath: string;
-
-  /**
-   * The full path of the file you want to move.
-   */
-  sourceFilePath: string;
-}
-
-export interface FileRenameParams {
-  /**
-   * The full path of the file you want to rename.
-   */
-  filePath: string;
-
-  /**
-   * The new name of the file. A filename can contain:
-   *
-   * Alphanumeric Characters: `a-z`, `A-Z`, `0-9` (including Unicode letters, marks,
-   * and numerals in other languages). Special Characters: `.`, `_`, and `-`.
-   *
-   * Any other character, including space, will be replaced by `_`.
-   */
-  newFileName: string;
-
-  /**
-   * Option to purge cache for the old file and its versions' URLs.
-   *
-   * When set to true, it will internally issue a purge cache request on CDN to
-   * remove cached content of old file and its versions. This purge request is
-   * counted against your monthly purge quota.
-   *
-   * Note: If the old file were accessible at
-   * `https://ik.imagekit.io/demo/old-filename.jpg`, a purge cache request would be
-   * issued against `https://ik.imagekit.io/demo/old-filename.jpg*` (with a wildcard
-   * at the end). It will remove the file and its versions' URLs and any
-   * transformations made using query parameters on this file or its versions.
-   * However, the cache for file transformations made using path parameters will
-   * persist. You can purge them using the purge API. For more details, refer to the
-   * purge API documentation.
-   *
-   * Default value - `false`
-   */
-  purgeCache?: boolean;
-}
-
 export interface FileUploadParams {
   /**
    * The API accepts any of the following:
@@ -1572,6 +1423,155 @@ export namespace FileUploadParams {
   }
 }
 
+export type FileUpdateParams = FileUpdateParams.UpdateFileDetails | FileUpdateParams.ChangePublicationStatus;
+
+export declare namespace FileUpdateParams {
+  export interface UpdateFileDetails {
+    /**
+     * Define an important area in the image in the format `x,y,width,height` e.g.
+     * `10,10,100,100`. Send `null` to unset this value.
+     */
+    customCoordinates?: string | null;
+
+    /**
+     * A key-value data to be associated with the asset. To unset a key, send `null`
+     * value for that key. Before setting any custom metadata on an asset you have to
+     * create the field using custom metadata fields API.
+     */
+    customMetadata?: { [key: string]: unknown };
+
+    /**
+     * Optional text to describe the contents of the file.
+     */
+    description?: string;
+
+    /**
+     * Array of extensions to be applied to the asset. Each extension can be configured
+     * with specific parameters based on the extension type.
+     */
+    extensions?: Shared.Extensions;
+
+    /**
+     * An array of AITags associated with the file that you want to remove, e.g.
+     * `["car", "vehicle", "motorsports"]`.
+     *
+     * If you want to remove all AITags associated with the file, send a string -
+     * "all".
+     *
+     * Note: The remove operation for `AITags` executes before any of the `extensions`
+     * are processed.
+     */
+    removeAITags?: Array<string> | 'all';
+
+    /**
+     * An array of tags associated with the file, such as `["tag1", "tag2"]`. Send
+     * `null` to unset all tags associated with the file.
+     */
+    tags?: Array<string> | null;
+
+    /**
+     * The final status of extensions after they have completed execution will be
+     * delivered to this endpoint as a POST request.
+     * [Learn more](/docs/api-reference/digital-asset-management-dam/managing-assets/update-file-details#webhook-payload-structure)
+     * about the webhook payload structure.
+     */
+    webhookUrl?: string;
+  }
+
+  export interface ChangePublicationStatus {
+    /**
+     * Configure the publication status of a file and its versions.
+     */
+    publish?: ChangePublicationStatus.Publish;
+  }
+
+  export namespace ChangePublicationStatus {
+    /**
+     * Configure the publication status of a file and its versions.
+     */
+    export interface Publish {
+      /**
+       * Set to `true` to publish the file. Set to `false` to unpublish the file.
+       */
+      isPublished: boolean;
+
+      /**
+       * Set to `true` to publish/unpublish all versions of the file. Set to `false` to
+       * publish/unpublish only the current version of the file.
+       */
+      includeFileVersions?: boolean;
+    }
+  }
+}
+
+export interface FileCopyParams {
+  /**
+   * Full path to the folder you want to copy the above file into.
+   */
+  destinationPath: string;
+
+  /**
+   * The full path of the file you want to copy.
+   */
+  sourceFilePath: string;
+
+  /**
+   * Option to copy all versions of a file. By default, only the current version of
+   * the file is copied. When set to true, all versions of the file will be copied.
+   * Default value - `false`.
+   */
+  includeFileVersions?: boolean;
+}
+
+export interface FileMoveParams {
+  /**
+   * Full path to the folder you want to move the above file into.
+   */
+  destinationPath: string;
+
+  /**
+   * The full path of the file you want to move.
+   */
+  sourceFilePath: string;
+}
+
+export interface FileRenameParams {
+  /**
+   * The full path of the file you want to rename.
+   */
+  filePath: string;
+
+  /**
+   * The new name of the file. A filename can contain:
+   *
+   * Alphanumeric Characters: `a-z`, `A-Z`, `0-9` (including Unicode letters, marks,
+   * and numerals in other languages). Special Characters: `.`, `_`, and `-`.
+   *
+   * Any other character, including space, will be replaced by `_`.
+   */
+  newFileName: string;
+
+  /**
+   * Option to purge cache for the old file and its versions' URLs.
+   *
+   * When set to true, it will internally issue a purge cache request on CDN to
+   * remove cached content of old file and its versions. This purge request is
+   * counted against your monthly purge quota.
+   *
+   * Note: If the old file were accessible at
+   * `https://ik.imagekit.io/demo/old-filename.jpg`, a purge cache request would be
+   * issued against `https://ik.imagekit.io/demo/old-filename.jpg*` (with a wildcard
+   * at the end). It will remove the file and its versions' URLs and any
+   * transformations made using query parameters on this file or its versions.
+   * However, the cache for file transformations made using path parameters will
+   * persist. You can purge them using the purge API. For more details, refer to the
+   * purge API documentation.
+   *
+   * Default value - `false`
+   */
+  purgeCache?: boolean;
+}
+
 Files.Bulk = Bulk;
 Files.Versions = Versions;
 
@@ -1586,11 +1586,11 @@ export declare namespace Files {
     type FileMoveResponse as FileMoveResponse,
     type FileRenameResponse as FileRenameResponse,
     type FileUploadResponse as FileUploadResponse,
+    type FileUploadParams as FileUploadParams,
     type FileUpdateParams as FileUpdateParams,
     type FileCopyParams as FileCopyParams,
     type FileMoveParams as FileMoveParams,
     type FileRenameParams as FileRenameParams,
-    type FileUploadParams as FileUploadParams,
   };
 
   export {
@@ -1601,16 +1601,16 @@ export declare namespace Files {
     type BulkRemoveTagsResponse as BulkRemoveTagsResponse,
     type BulkDeleteParams as BulkDeleteParams,
     type BulkAddTagsParams as BulkAddTagsParams,
-    type BulkRemoveAITagsParams as BulkRemoveAITagsParams,
     type BulkRemoveTagsParams as BulkRemoveTagsParams,
+    type BulkRemoveAITagsParams as BulkRemoveAITagsParams,
   };
 
   export {
     Versions as Versions,
     type VersionListResponse as VersionListResponse,
     type VersionDeleteResponse as VersionDeleteResponse,
-    type VersionDeleteParams as VersionDeleteParams,
     type VersionGetParams as VersionGetParams,
+    type VersionDeleteParams as VersionDeleteParams,
     type VersionRestoreParams as VersionRestoreParams,
   };
 

@@ -9,6 +9,20 @@ import { path } from '../internal/utils/path';
 
 export class SavedExtensions extends APIResource {
   /**
+   * This API returns an array of all saved extensions for your account. Saved
+   * extensions allow you to save complex extension configurations and reuse them by
+   * referencing them by ID in upload or update file APIs.
+   *
+   * @example
+   * ```ts
+   * const savedExtensions = await client.savedExtensions.list();
+   * ```
+   */
+  list(options?: RequestOptions): APIPromise<SavedExtensionListResponse> {
+    return this._client.get('/v1/saved-extensions', options);
+  }
+
+  /**
    * This API creates a new saved extension. Saved extensions allow you to save
    * complex extension configurations (like AI tasks) and reuse them by referencing
    * the ID in upload or update file APIs.
@@ -40,6 +54,20 @@ export class SavedExtensions extends APIResource {
   }
 
   /**
+   * This API returns details of a specific saved extension by ID.
+   *
+   * @example
+   * ```ts
+   * const savedExtension = await client.savedExtensions.get(
+   *   'id',
+   * );
+   * ```
+   */
+  get(id: string, options?: RequestOptions): APIPromise<Shared.SavedExtension> {
+    return this._client.get(path`/v1/saved-extensions/${id}`, options);
+  }
+
+  /**
    * This API updates an existing saved extension. You can update the name,
    * description, or config.
    *
@@ -59,20 +87,6 @@ export class SavedExtensions extends APIResource {
   }
 
   /**
-   * This API returns an array of all saved extensions for your account. Saved
-   * extensions allow you to save complex extension configurations and reuse them by
-   * referencing them by ID in upload or update file APIs.
-   *
-   * @example
-   * ```ts
-   * const savedExtensions = await client.savedExtensions.list();
-   * ```
-   */
-  list(options?: RequestOptions): APIPromise<SavedExtensionListResponse> {
-    return this._client.get('/v1/saved-extensions', options);
-  }
-
-  /**
    * This API deletes a saved extension permanently.
    *
    * @example
@@ -85,20 +99,6 @@ export class SavedExtensions extends APIResource {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
-  }
-
-  /**
-   * This API returns details of a specific saved extension by ID.
-   *
-   * @example
-   * ```ts
-   * const savedExtension = await client.savedExtensions.get(
-   *   'id',
-   * );
-   * ```
-   */
-  get(id: string, options?: RequestOptions): APIPromise<Shared.SavedExtension> {
-    return this._client.get(path`/v1/saved-extensions/${id}`, options);
   }
 }
 

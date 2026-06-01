@@ -48,25 +48,6 @@ export class Bulk extends APIResource {
   }
 
   /**
-   * This API removes AITags from multiple files in bulk. A maximum of 50 files can
-   * be specified at a time.
-   *
-   * @example
-   * ```ts
-   * const response = await client.files.bulk.removeAITags({
-   *   AITags: ['t-shirt', 'round-neck', 'sale2019'],
-   *   fileIds: [
-   *     '598821f949c0a938d57563bd',
-   *     '598821f949c0a938d57563be',
-   *   ],
-   * });
-   * ```
-   */
-  removeAITags(body: BulkRemoveAITagsParams, options?: RequestOptions): APIPromise<BulkRemoveAITagsResponse> {
-    return this._client.post('/v1/files/removeAITags', { body, ...options });
-  }
-
-  /**
    * This API removes tags from multiple files in bulk. A maximum of 50 files can be
    * specified at a time.
    *
@@ -83,6 +64,25 @@ export class Bulk extends APIResource {
    */
   removeTags(body: BulkRemoveTagsParams, options?: RequestOptions): APIPromise<BulkRemoveTagsResponse> {
     return this._client.post('/v1/files/removeTags', { body, ...options });
+  }
+
+  /**
+   * This API removes AITags from multiple files in bulk. A maximum of 50 files can
+   * be specified at a time.
+   *
+   * @example
+   * ```ts
+   * const response = await client.files.bulk.removeAITags({
+   *   AITags: ['t-shirt', 'round-neck', 'sale2019'],
+   *   fileIds: [
+   *     '598821f949c0a938d57563bd',
+   *     '598821f949c0a938d57563be',
+   *   ],
+   * });
+   * ```
+   */
+  removeAITags(body: BulkRemoveAITagsParams, options?: RequestOptions): APIPromise<BulkRemoveAITagsResponse> {
+    return this._client.post('/v1/files/removeAITags', { body, ...options });
   }
 }
 
@@ -133,18 +133,6 @@ export interface BulkAddTagsParams {
   tags: Array<string>;
 }
 
-export interface BulkRemoveAITagsParams {
-  /**
-   * An array of AITags that you want to remove from the files.
-   */
-  AITags: Array<string>;
-
-  /**
-   * An array of fileIds from which you want to remove AITags.
-   */
-  fileIds: Array<string>;
-}
-
 export interface BulkRemoveTagsParams {
   /**
    * An array of fileIds from which you want to remove tags.
@@ -157,6 +145,18 @@ export interface BulkRemoveTagsParams {
   tags: Array<string>;
 }
 
+export interface BulkRemoveAITagsParams {
+  /**
+   * An array of AITags that you want to remove from the files.
+   */
+  AITags: Array<string>;
+
+  /**
+   * An array of fileIds from which you want to remove AITags.
+   */
+  fileIds: Array<string>;
+}
+
 export declare namespace Bulk {
   export {
     type BulkDeleteResponse as BulkDeleteResponse,
@@ -165,7 +165,7 @@ export declare namespace Bulk {
     type BulkRemoveTagsResponse as BulkRemoveTagsResponse,
     type BulkDeleteParams as BulkDeleteParams,
     type BulkAddTagsParams as BulkAddTagsParams,
-    type BulkRemoveAITagsParams as BulkRemoveAITagsParams,
     type BulkRemoveTagsParams as BulkRemoveTagsParams,
+    type BulkRemoveAITagsParams as BulkRemoveAITagsParams,
   };
 }

@@ -6,10 +6,6 @@ import * as FilesAPI from './files/files';
 import { Webhook } from 'standardwebhooks';
 
 export class Webhooks extends APIResource {
-  unsafeUnwrap(body: string): UnsafeUnwrapWebhookEvent {
-    return JSON.parse(body) as UnsafeUnwrapWebhookEvent;
-  }
-
   unwrap(
     body: string,
     { headers, key }: { headers: Record<string, string>; key?: string },
@@ -21,6 +17,10 @@ export class Webhooks extends APIResource {
       wh.verify(body, headers);
     }
     return JSON.parse(body) as UnwrapWebhookEvent;
+  }
+
+  unsafeUnwrap(body: string): UnsafeUnwrapWebhookEvent {
+    return JSON.parse(body) as UnsafeUnwrapWebhookEvent;
   }
 }
 

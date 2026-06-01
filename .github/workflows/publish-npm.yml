@@ -1,6 +1,5 @@
-# This workflow is triggered when a GitHub release is created.
-# It can also be run manually to re-publish to NPM in case it failed for some reason.
-# You can run this workflow by navigating to https://www.github.com/imagekit-developer/imagekit-nodejs/actions/workflows/publish-npm.yml
+# This workflow publishes the package to NPM.
+# You can run this workflow manually by navigating to https://www.github.com/imagekit-developer/imagekit-nodejs/actions/workflows/publish-npm.yml
 name: Publish NPM
 on:
   workflow_dispatch:
@@ -8,9 +7,6 @@ on:
       path:
         description: The path to run the release in, e.g. '.' or 'packages/mcp-server'
         required: true
-
-  release:
-    types: [published]
 
 jobs:
   publish:
