@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.6.3](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.6.2...v7.6.3) (2026-06-01)
+
+
+### Bug Fixes
+
+* lint error ([f2acf20](https://github.com/imagekit-developer/imagekit-nodejs/commit/f2acf2057f1b56ced72f820cc1bc05b53452bf75))
+
+
+### Chores
+
+* codegen update ([3218cab](https://github.com/imagekit-developer/imagekit-nodejs/commit/3218cab43ee23b1b9a15aef1d2be371be39cad37))
+
 ## 7.6.2 (2026-05-18)
 
 Full Changelog: [v7.6.1...v7.6.2](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.6.1...v7.6.2)
