@@ -11,8 +11,8 @@ export {
   type CustomMetadataFieldListResponse,
   type CustomMetadataFieldDeleteResponse,
   type CustomMetadataFieldCreateParams,
-  type CustomMetadataFieldUpdateParams,
   type CustomMetadataFieldListParams,
+  type CustomMetadataFieldUpdateParams,
 } from './custom-metadata-fields';
 export {
   Files,
@@ -25,11 +25,11 @@ export {
   type FileMoveResponse,
   type FileRenameResponse,
   type FileUploadResponse,
+  type FileUploadParams,
   type FileUpdateParams,
   type FileCopyParams,
   type FileMoveParams,
   type FileRenameParams,
-  type FileUploadParams,
 } from './files/files';
 export {
   Folders,

@@ -17,22 +17,34 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/customMetadataFields',
   },
   {
-    clientCallName: 'client.customMetadataFields.update',
-    fullyQualifiedName: 'customMetadataFields.update',
-    httpMethod: 'patch',
-    httpPath: '/v1/customMetadataFields/{id}',
-  },
-  {
     clientCallName: 'client.customMetadataFields.list',
     fullyQualifiedName: 'customMetadataFields.list',
     httpMethod: 'get',
     httpPath: '/v1/customMetadataFields',
   },
   {
+    clientCallName: 'client.customMetadataFields.update',
+    fullyQualifiedName: 'customMetadataFields.update',
+    httpMethod: 'patch',
+    httpPath: '/v1/customMetadataFields/{id}',
+  },
+  {
     clientCallName: 'client.customMetadataFields.delete',
     fullyQualifiedName: 'customMetadataFields.delete',
     httpMethod: 'delete',
     httpPath: '/v1/customMetadataFields/{id}',
+  },
+  {
+    clientCallName: 'client.files.upload',
+    fullyQualifiedName: 'files.upload',
+    httpMethod: 'post',
+    httpPath: '/api/v1/files/upload',
+  },
+  {
+    clientCallName: 'client.files.get',
+    fullyQualifiedName: 'files.get',
+    httpMethod: 'get',
+    httpPath: '/v1/files/{fileId}/details',
   },
   {
     clientCallName: 'client.files.update',
@@ -53,12 +65,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/files/copy',
   },
   {
-    clientCallName: 'client.files.get',
-    fullyQualifiedName: 'files.get',
-    httpMethod: 'get',
-    httpPath: '/v1/files/{fileId}/details',
-  },
-  {
     clientCallName: 'client.files.move',
     fullyQualifiedName: 'files.move',
     httpMethod: 'post',
@@ -69,12 +75,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'files.rename',
     httpMethod: 'put',
     httpPath: '/v1/files/rename',
-  },
-  {
-    clientCallName: 'client.files.upload',
-    fullyQualifiedName: 'files.upload',
-    httpMethod: 'post',
-    httpPath: '/api/v1/files/upload',
   },
   {
     clientCallName: 'client.files.bulk.delete',
@@ -89,16 +89,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/files/addTags',
   },
   {
-    clientCallName: 'client.files.bulk.removeAITags',
-    fullyQualifiedName: 'files.bulk.removeAITags',
-    httpMethod: 'post',
-    httpPath: '/v1/files/removeAITags',
-  },
-  {
     clientCallName: 'client.files.bulk.removeTags',
     fullyQualifiedName: 'files.bulk.removeTags',
     httpMethod: 'post',
     httpPath: '/v1/files/removeTags',
+  },
+  {
+    clientCallName: 'client.files.bulk.removeAITags',
+    fullyQualifiedName: 'files.bulk.removeAITags',
+    httpMethod: 'post',
+    httpPath: '/v1/files/removeAITags',
   },
   {
     clientCallName: 'client.files.versions.list',
@@ -107,15 +107,15 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/files/{fileId}/versions',
   },
   {
-    clientCallName: 'client.files.versions.delete',
-    fullyQualifiedName: 'files.versions.delete',
-    httpMethod: 'delete',
-    httpPath: '/v1/files/{fileId}/versions/{versionId}',
-  },
-  {
     clientCallName: 'client.files.versions.get',
     fullyQualifiedName: 'files.versions.get',
     httpMethod: 'get',
+    httpPath: '/v1/files/{fileId}/versions/{versionId}',
+  },
+  {
+    clientCallName: 'client.files.versions.delete',
+    fullyQualifiedName: 'files.versions.delete',
+    httpMethod: 'delete',
     httpPath: '/v1/files/{fileId}/versions/{versionId}',
   },
   {
@@ -137,10 +137,22 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/metadata',
   },
   {
+    clientCallName: 'client.savedExtensions.list',
+    fullyQualifiedName: 'savedExtensions.list',
+    httpMethod: 'get',
+    httpPath: '/v1/saved-extensions',
+  },
+  {
     clientCallName: 'client.savedExtensions.create',
     fullyQualifiedName: 'savedExtensions.create',
     httpMethod: 'post',
     httpPath: '/v1/saved-extensions',
+  },
+  {
+    clientCallName: 'client.savedExtensions.get',
+    fullyQualifiedName: 'savedExtensions.get',
+    httpMethod: 'get',
+    httpPath: '/v1/saved-extensions/{id}',
   },
   {
     clientCallName: 'client.savedExtensions.update',
@@ -149,21 +161,9 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/saved-extensions/{id}',
   },
   {
-    clientCallName: 'client.savedExtensions.list',
-    fullyQualifiedName: 'savedExtensions.list',
-    httpMethod: 'get',
-    httpPath: '/v1/saved-extensions',
-  },
-  {
     clientCallName: 'client.savedExtensions.delete',
     fullyQualifiedName: 'savedExtensions.delete',
     httpMethod: 'delete',
-    httpPath: '/v1/saved-extensions/{id}',
-  },
-  {
-    clientCallName: 'client.savedExtensions.get',
-    fullyQualifiedName: 'savedExtensions.get',
-    httpMethod: 'get',
     httpPath: '/v1/saved-extensions/{id}',
   },
   {
@@ -227,28 +227,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/accounts/usage',
   },
   {
-    clientCallName: 'client.accounts.origins.create',
-    fullyQualifiedName: 'accounts.origins.create',
-    httpMethod: 'post',
-    httpPath: '/v1/accounts/origins',
-  },
-  {
-    clientCallName: 'client.accounts.origins.update',
-    fullyQualifiedName: 'accounts.origins.update',
-    httpMethod: 'put',
-    httpPath: '/v1/accounts/origins/{id}',
-  },
-  {
     clientCallName: 'client.accounts.origins.list',
     fullyQualifiedName: 'accounts.origins.list',
     httpMethod: 'get',
     httpPath: '/v1/accounts/origins',
   },
   {
-    clientCallName: 'client.accounts.origins.delete',
-    fullyQualifiedName: 'accounts.origins.delete',
-    httpMethod: 'delete',
-    httpPath: '/v1/accounts/origins/{id}',
+    clientCallName: 'client.accounts.origins.create',
+    fullyQualifiedName: 'accounts.origins.create',
+    httpMethod: 'post',
+    httpPath: '/v1/accounts/origins',
   },
   {
     clientCallName: 'client.accounts.origins.get',
@@ -257,16 +245,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/accounts/origins/{id}',
   },
   {
-    clientCallName: 'client.accounts.urlEndpoints.create',
-    fullyQualifiedName: 'accounts.urlEndpoints.create',
-    httpMethod: 'post',
-    httpPath: '/v1/accounts/url-endpoints',
+    clientCallName: 'client.accounts.origins.update',
+    fullyQualifiedName: 'accounts.origins.update',
+    httpMethod: 'put',
+    httpPath: '/v1/accounts/origins/{id}',
   },
   {
-    clientCallName: 'client.accounts.urlEndpoints.update',
-    fullyQualifiedName: 'accounts.urlEndpoints.update',
-    httpMethod: 'put',
-    httpPath: '/v1/accounts/url-endpoints/{id}',
+    clientCallName: 'client.accounts.origins.delete',
+    fullyQualifiedName: 'accounts.origins.delete',
+    httpMethod: 'delete',
+    httpPath: '/v1/accounts/origins/{id}',
   },
   {
     clientCallName: 'client.accounts.urlEndpoints.list',
@@ -275,10 +263,10 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/accounts/url-endpoints',
   },
   {
-    clientCallName: 'client.accounts.urlEndpoints.delete',
-    fullyQualifiedName: 'accounts.urlEndpoints.delete',
-    httpMethod: 'delete',
-    httpPath: '/v1/accounts/url-endpoints/{id}',
+    clientCallName: 'client.accounts.urlEndpoints.create',
+    fullyQualifiedName: 'accounts.urlEndpoints.create',
+    httpMethod: 'post',
+    httpPath: '/v1/accounts/url-endpoints',
   },
   {
     clientCallName: 'client.accounts.urlEndpoints.get',
@@ -287,13 +275,25 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/accounts/url-endpoints/{id}',
   },
   {
+    clientCallName: 'client.accounts.urlEndpoints.update',
+    fullyQualifiedName: 'accounts.urlEndpoints.update',
+    httpMethod: 'put',
+    httpPath: '/v1/accounts/url-endpoints/{id}',
+  },
+  {
+    clientCallName: 'client.accounts.urlEndpoints.delete',
+    fullyQualifiedName: 'accounts.urlEndpoints.delete',
+    httpMethod: 'delete',
+    httpPath: '/v1/accounts/url-endpoints/{id}',
+  },
+  {
     clientCallName: 'client.beta.v2.files.upload',
     fullyQualifiedName: 'beta.v2.files.upload',
     httpMethod: 'post',
     httpPath: '/api/v2/files/upload',
   },
-  { clientCallName: 'client.webhooks.unsafeUnwrap', fullyQualifiedName: 'webhooks.unsafeUnwrap' },
   { clientCallName: 'client.webhooks.unwrap', fullyQualifiedName: 'webhooks.unwrap' },
+  { clientCallName: 'client.webhooks.unsafeUnwrap', fullyQualifiedName: 'webhooks.unsafeUnwrap' },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {

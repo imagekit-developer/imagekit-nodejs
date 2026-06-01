@@ -35,8 +35,8 @@ Types:
 Methods:
 
 - <code title="post /v1/customMetadataFields">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">create</a>({ ...params }) -> CustomMetadataField</code>
-- <code title="patch /v1/customMetadataFields/{id}">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">update</a>(id, { ...params }) -> CustomMetadataField</code>
 - <code title="get /v1/customMetadataFields">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">list</a>({ ...params }) -> CustomMetadataFieldListResponse</code>
+- <code title="patch /v1/customMetadataFields/{id}">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">update</a>(id, { ...params }) -> CustomMetadataField</code>
 - <code title="delete /v1/customMetadataFields/{id}">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">delete</a>(id) -> CustomMetadataFieldDeleteResponse</code>
 
 # Files
@@ -55,13 +55,13 @@ Types:
 
 Methods:
 
+- <code title="post /api/v1/files/upload">client.files.<a href="./src/resources/files/files.ts">upload</a>({ ...params }) -> FileUploadResponse</code>
+- <code title="get /v1/files/{fileId}/details">client.files.<a href="./src/resources/files/files.ts">get</a>(fileID) -> File</code>
 - <code title="patch /v1/files/{fileId}/details">client.files.<a href="./src/resources/files/files.ts">update</a>(fileID, { ...params }) -> FileUpdateResponse</code>
 - <code title="delete /v1/files/{fileId}">client.files.<a href="./src/resources/files/files.ts">delete</a>(fileID) -> void</code>
 - <code title="post /v1/files/copy">client.files.<a href="./src/resources/files/files.ts">copy</a>({ ...params }) -> FileCopyResponse</code>
-- <code title="get /v1/files/{fileId}/details">client.files.<a href="./src/resources/files/files.ts">get</a>(fileID) -> File</code>
 - <code title="post /v1/files/move">client.files.<a href="./src/resources/files/files.ts">move</a>({ ...params }) -> FileMoveResponse</code>
 - <code title="put /v1/files/rename">client.files.<a href="./src/resources/files/files.ts">rename</a>({ ...params }) -> FileRenameResponse</code>
-- <code title="post /api/v1/files/upload">client.files.<a href="./src/resources/files/files.ts">upload</a>({ ...params }) -> FileUploadResponse</code>
 
 ## Bulk
 
@@ -76,8 +76,8 @@ Methods:
 
 - <code title="post /v1/files/batch/deleteByFileIds">client.files.bulk.<a href="./src/resources/files/bulk.ts">delete</a>({ ...params }) -> BulkDeleteResponse</code>
 - <code title="post /v1/files/addTags">client.files.bulk.<a href="./src/resources/files/bulk.ts">addTags</a>({ ...params }) -> BulkAddTagsResponse</code>
-- <code title="post /v1/files/removeAITags">client.files.bulk.<a href="./src/resources/files/bulk.ts">removeAITags</a>({ ...params }) -> BulkRemoveAITagsResponse</code>
 - <code title="post /v1/files/removeTags">client.files.bulk.<a href="./src/resources/files/bulk.ts">removeTags</a>({ ...params }) -> BulkRemoveTagsResponse</code>
+- <code title="post /v1/files/removeAITags">client.files.bulk.<a href="./src/resources/files/bulk.ts">removeAITags</a>({ ...params }) -> BulkRemoveAITagsResponse</code>
 
 ## Versions
 
@@ -89,8 +89,8 @@ Types:
 Methods:
 
 - <code title="get /v1/files/{fileId}/versions">client.files.versions.<a href="./src/resources/files/versions.ts">list</a>(fileID) -> VersionListResponse</code>
-- <code title="delete /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">delete</a>(versionID, { ...params }) -> VersionDeleteResponse</code>
 - <code title="get /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">get</a>(versionID, { ...params }) -> File</code>
+- <code title="delete /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">delete</a>(versionID, { ...params }) -> VersionDeleteResponse</code>
 - <code title="put /v1/files/{fileId}/versions/{versionId}/restore">client.files.versions.<a href="./src/resources/files/versions.ts">restore</a>(versionID, { ...params }) -> File</code>
 
 ## Metadata
@@ -108,11 +108,11 @@ Types:
 
 Methods:
 
-- <code title="post /v1/saved-extensions">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">create</a>({ ...params }) -> SavedExtension</code>
-- <code title="patch /v1/saved-extensions/{id}">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">update</a>(id, { ...params }) -> SavedExtension</code>
 - <code title="get /v1/saved-extensions">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">list</a>() -> SavedExtensionListResponse</code>
-- <code title="delete /v1/saved-extensions/{id}">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">delete</a>(id) -> void</code>
+- <code title="post /v1/saved-extensions">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">create</a>({ ...params }) -> SavedExtension</code>
 - <code title="get /v1/saved-extensions/{id}">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">get</a>(id) -> SavedExtension</code>
+- <code title="patch /v1/saved-extensions/{id}">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">update</a>(id, { ...params }) -> SavedExtension</code>
+- <code title="delete /v1/saved-extensions/{id}">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">delete</a>(id) -> void</code>
 
 # Assets
 
@@ -188,11 +188,11 @@ Types:
 
 Methods:
 
-- <code title="post /v1/accounts/origins">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">create</a>({ ...params }) -> OriginResponse</code>
-- <code title="put /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">update</a>(id, { ...params }) -> OriginResponse</code>
 - <code title="get /v1/accounts/origins">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">list</a>() -> OriginListResponse</code>
-- <code title="delete /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">delete</a>(id) -> void</code>
+- <code title="post /v1/accounts/origins">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">create</a>({ ...params }) -> OriginResponse</code>
 - <code title="get /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">get</a>(id) -> OriginResponse</code>
+- <code title="put /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">update</a>(id, { ...params }) -> OriginResponse</code>
+- <code title="delete /v1/accounts/origins/{id}">client.accounts.origins.<a href="./src/resources/accounts/origins.ts">delete</a>(id) -> void</code>
 
 ## URLEndpoints
 
@@ -204,11 +204,11 @@ Types:
 
 Methods:
 
-- <code title="post /v1/accounts/url-endpoints">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">create</a>({ ...params }) -> URLEndpointResponse</code>
-- <code title="put /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">update</a>(id, { ...params }) -> URLEndpointResponse</code>
 - <code title="get /v1/accounts/url-endpoints">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">list</a>() -> URLEndpointListResponse</code>
-- <code title="delete /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">delete</a>(id) -> void</code>
+- <code title="post /v1/accounts/url-endpoints">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">create</a>({ ...params }) -> URLEndpointResponse</code>
 - <code title="get /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">get</a>(id) -> URLEndpointResponse</code>
+- <code title="put /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">update</a>(id, { ...params }) -> URLEndpointResponse</code>
+- <code title="delete /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">delete</a>(id) -> void</code>
 
 # Beta
 
@@ -246,5 +246,5 @@ Types:
 
 Methods:
 
-- <code>client.webhooks.<a href="./src/resources/webhooks.ts">unsafeUnwrap</a>(body) -> void</code>
 - <code>client.webhooks.<a href="./src/resources/webhooks.ts">unwrap</a>(body) -> void</code>
+- <code>client.webhooks.<a href="./src/resources/webhooks.ts">unsafeUnwrap</a>(body) -> void</code>

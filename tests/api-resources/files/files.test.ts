@@ -10,113 +10,6 @@ const client = new ImageKit({
 
 describe('resource files', () => {
   // Mock server tests are disabled
-  test.skip('update', async () => {
-    const responsePromise = client.files.update('fileId', {});
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('delete', async () => {
-    const responsePromise = client.files.delete('fileId');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('copy: only required params', async () => {
-    const responsePromise = client.files.copy({
-      destinationPath: '/folder/to/copy/into/',
-      sourceFilePath: '/path/to/file.jpg',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('copy: required and optional params', async () => {
-    const response = await client.files.copy({
-      destinationPath: '/folder/to/copy/into/',
-      sourceFilePath: '/path/to/file.jpg',
-      includeFileVersions: false,
-    });
-  });
-
-  // Mock server tests are disabled
-  test.skip('get', async () => {
-    const responsePromise = client.files.get('fileId');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('move: only required params', async () => {
-    const responsePromise = client.files.move({
-      destinationPath: '/folder/to/move/into/',
-      sourceFilePath: '/path/to/file.jpg',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('move: required and optional params', async () => {
-    const response = await client.files.move({
-      destinationPath: '/folder/to/move/into/',
-      sourceFilePath: '/path/to/file.jpg',
-    });
-  });
-
-  // Mock server tests are disabled
-  test.skip('rename: only required params', async () => {
-    const responsePromise = client.files.rename({
-      filePath: '/path/to/file.jpg',
-      newFileName: 'newFileName.jpg',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('rename: required and optional params', async () => {
-    const response = await client.files.rename({
-      filePath: '/path/to/file.jpg',
-      newFileName: 'newFileName.jpg',
-      purgeCache: true,
-    });
-  });
-
-  // Mock server tests are disabled
   test.skip('upload: only required params', async () => {
     const responsePromise = client.files.upload({
       file: await toFile(Buffer.from('Example data'), 'README.md'),
@@ -218,6 +111,113 @@ describe('resource files', () => {
       },
       useUniqueFileName: true,
       webhookUrl: 'https://example.com',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('get', async () => {
+    const responsePromise = client.files.get('fileId');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('update', async () => {
+    const responsePromise = client.files.update('fileId', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('delete', async () => {
+    const responsePromise = client.files.delete('fileId');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('copy: only required params', async () => {
+    const responsePromise = client.files.copy({
+      destinationPath: '/folder/to/copy/into/',
+      sourceFilePath: '/path/to/file.jpg',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('copy: required and optional params', async () => {
+    const response = await client.files.copy({
+      destinationPath: '/folder/to/copy/into/',
+      sourceFilePath: '/path/to/file.jpg',
+      includeFileVersions: false,
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('move: only required params', async () => {
+    const responsePromise = client.files.move({
+      destinationPath: '/folder/to/move/into/',
+      sourceFilePath: '/path/to/file.jpg',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('move: required and optional params', async () => {
+    const response = await client.files.move({
+      destinationPath: '/folder/to/move/into/',
+      sourceFilePath: '/path/to/file.jpg',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('rename: only required params', async () => {
+    const responsePromise = client.files.rename({
+      filePath: '/path/to/file.jpg',
+      newFileName: 'newFileName.jpg',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('rename: required and optional params', async () => {
+    const response = await client.files.rename({
+      filePath: '/path/to/file.jpg',
+      newFileName: 'newFileName.jpg',
+      purgeCache: true,
     });
   });
 });
