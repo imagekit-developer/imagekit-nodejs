@@ -51,7 +51,7 @@ const serverConfig: ServerConfig = {
     //   key: 'webhookSecret',
     //   label: 'Webhook Secret',
     //   description:
-    //     "Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you're using webhooks.\n",
+    //     'Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you are using webhooks.\n',
     //   required: false,
     //   default: null,
     //   placeholder: 'My Webhook Secret',

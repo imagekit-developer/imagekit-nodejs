@@ -8,8 +8,8 @@ export {
   type BulkRemoveTagsResponse,
   type BulkDeleteParams,
   type BulkAddTagsParams,
-  type BulkRemoveAITagsParams,
   type BulkRemoveTagsParams,
+  type BulkRemoveAITagsParams,
 } from './bulk';
 export {
   Files,
@@ -22,18 +22,18 @@ export {
   type FileMoveResponse,
   type FileRenameResponse,
   type FileUploadResponse,
+  type FileUploadParams,
   type FileUpdateParams,
   type FileCopyParams,
   type FileMoveParams,
   type FileRenameParams,
-  type FileUploadParams,
 } from './files';
 export {
   Versions,
   type VersionListResponse,
   type VersionDeleteResponse,
-  type VersionDeleteParams,
   type VersionGetParams,
+  type VersionDeleteParams,
   type VersionRestoreParams,
 } from './versions';
 export { type MetadataGetFromURLParams } from './metadata';
