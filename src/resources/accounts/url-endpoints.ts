@@ -19,7 +19,7 @@ export class URLEndpoints extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<URLEndpointListResponse> {
-    return this._client.get('/v1/accounts/url-endpoints', options);
+    return this._client.get('/v2/accounts/url-endpoints', options);
   }
 
   /**
@@ -35,7 +35,7 @@ export class URLEndpoints extends APIResource {
    * ```
    */
   create(body: URLEndpointCreateParams, options?: RequestOptions): APIPromise<URLEndpointResponse> {
-    return this._client.post('/v1/accounts/url-endpoints', { body, ...options });
+    return this._client.post('/v2/accounts/url-endpoints', { body, ...options });
   }
 
   /**
@@ -49,7 +49,7 @@ export class URLEndpoints extends APIResource {
    * ```
    */
   get(id: string, options?: RequestOptions): APIPromise<URLEndpointResponse> {
-    return this._client.get(path`/v1/accounts/url-endpoints/${id}`, options);
+    return this._client.get(path`/v2/accounts/url-endpoints/${id}`, options);
   }
 
   /**
@@ -69,7 +69,7 @@ export class URLEndpoints extends APIResource {
     body: URLEndpointUpdateParams,
     options?: RequestOptions,
   ): APIPromise<URLEndpointResponse> {
-    return this._client.put(path`/v1/accounts/url-endpoints/${id}`, { body, ...options });
+    return this._client.put(path`/v2/accounts/url-endpoints/${id}`, { body, ...options });
   }
 
   /**
@@ -83,7 +83,7 @@ export class URLEndpoints extends APIResource {
    * ```
    */
   delete(id: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/v1/accounts/url-endpoints/${id}`, {
+    return this._client.delete(path`/v2/accounts/url-endpoints/${id}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -164,12 +164,12 @@ export interface URLEndpointResponse {
    * Path segment appended to your base URL to form the endpoint (letters, digits,
    * and hyphens only — or empty for the default endpoint).
    */
-  urlPrefix: string;
+  url_prefix: string;
 
   /**
    * Configuration for third-party URL rewriting.
    */
-  urlRewriter?: URLEndpointResponse.Cloudinary | URLEndpointResponse.Imgix | URLEndpointResponse.Akamai;
+  url_rewriters?: URLEndpointResponse.Cloudinary | URLEndpointResponse.Imgix | URLEndpointResponse.Akamai;
 }
 
 export namespace URLEndpointResponse {

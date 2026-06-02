@@ -8,12 +8,12 @@ const client = new ImageKit({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource files', () => {
+describe('resource assets', () => {
   // Mock server tests are disabled
   test.skip('upload: only required params', async () => {
-    const responsePromise = client.files.upload({
+    const responsePromise = client.assets.upload({
       file: await toFile(Buffer.from('Example data'), 'README.md'),
-      fileName: 'fileName',
+      file_name: 'file_name',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -26,15 +26,14 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('upload: required and optional params', async () => {
-    const response = await client.files.upload({
+    const response = await client.assets.upload({
       file: await toFile(Buffer.from('Example data'), 'README.md'),
-      fileName: 'fileName',
+      file_name: 'file_name',
       token: 'token',
       checks: '"request.folder" : "marketing/"\n',
-      customCoordinates: 'customCoordinates',
-      customMetadata: { brand: 'bar', color: 'bar' },
+      custom_coordinates: 'custom_coordinates',
+      custom_metadata: { brand: 'bar', color: 'bar' },
       description: 'Running shoes',
-      expire: 0,
       extensions: [
         {
           name: 'remove-bg',
@@ -42,13 +41,17 @@ describe('resource files', () => {
             add_shadow: true,
             bg_color: 'bg_color',
             bg_image_url: 'bg_image_url',
-            semitransparency: true,
+            semi_transparency: true,
           },
         },
         {
-          maxTags: 5,
-          minConfidence: 95,
-          name: 'google-auto-tagging',
+          name: 'remove-bg',
+          options: {
+            add_shadow: true,
+            bg_color: 'bg_color',
+            bg_image_url: 'bg_image_url',
+            semi_transparency: true,
+          },
         },
         { name: 'ai-auto-description' },
         {
@@ -88,15 +91,14 @@ describe('resource files', () => {
         { id: 'ext_abc123', name: 'saved-extension' },
       ],
       folder: 'folder',
-      isPrivateFile: true,
-      isPublished: true,
-      overwriteAITags: true,
-      overwriteCustomMetadata: true,
-      overwriteFile: true,
-      overwriteTags: true,
-      publicKey: 'publicKey',
-      responseFields: ['tags', 'customCoordinates', 'isPrivateFile'],
-      signature: 'signature',
+      is_private_file: true,
+      is_published: true,
+      overwrite: {
+        ai_tags: true,
+        custom_metadata: true,
+        file: true,
+        tags: true,
+      },
       tags: ['t-shirt', 'round-neck', 'men'],
       transformation: {
         post: [
@@ -109,14 +111,41 @@ describe('resource files', () => {
         ],
         pre: 'w-300,h-300,q-80',
       },
-      useUniqueFileName: true,
-      webhookUrl: 'https://example.com',
+      use_unique_file_name: true,
     });
   });
 
   // Mock server tests are disabled
+  test.skip('list', async () => {
+    const responsePromise = client.assets.list();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.assets.list(
+        {
+          cursor: 'cursor',
+          limit: 1,
+          searchQuery: 'searchQuery',
+          sort: 'ASC_NAME',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(ImageKit.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('get', async () => {
-    const responsePromise = client.files.get('fileId');
+    const responsePromise = client.assets.get('asset_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -128,7 +157,7 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('update', async () => {
-    const responsePromise = client.files.update('fileId', {});
+    const responsePromise = client.assets.update('asset_id', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -140,7 +169,7 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('delete', async () => {
-    const responsePromise = client.files.delete('fileId');
+    const responsePromise = client.assets.delete('asset_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -152,9 +181,9 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('copy: only required params', async () => {
-    const responsePromise = client.files.copy({
-      destinationPath: '/folder/to/copy/into/',
-      sourceFilePath: '/path/to/file.jpg',
+    const responsePromise = client.assets.copy({
+      destination_path: '/folder/to/copy/into/',
+      source_path: '/path/to/file.jpg',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -167,18 +196,18 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('copy: required and optional params', async () => {
-    const response = await client.files.copy({
-      destinationPath: '/folder/to/copy/into/',
-      sourceFilePath: '/path/to/file.jpg',
-      includeFileVersions: false,
+    const response = await client.assets.copy({
+      destination_path: '/folder/to/copy/into/',
+      source_path: '/path/to/file.jpg',
+      include_versions: true,
     });
   });
 
   // Mock server tests are disabled
   test.skip('move: only required params', async () => {
-    const responsePromise = client.files.move({
-      destinationPath: '/folder/to/move/into/',
-      sourceFilePath: '/path/to/file.jpg',
+    const responsePromise = client.assets.move({
+      destination_path: '/folder/to/move/into/',
+      source_path: '/path/to/file.jpg',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -191,17 +220,17 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('move: required and optional params', async () => {
-    const response = await client.files.move({
-      destinationPath: '/folder/to/move/into/',
-      sourceFilePath: '/path/to/file.jpg',
+    const response = await client.assets.move({
+      destination_path: '/folder/to/move/into/',
+      source_path: '/path/to/file.jpg',
     });
   });
 
   // Mock server tests are disabled
   test.skip('rename: only required params', async () => {
-    const responsePromise = client.files.rename({
-      filePath: '/path/to/file.jpg',
-      newFileName: 'newFileName.jpg',
+    const responsePromise = client.assets.rename({
+      new_name: 'new_file_name.jpg',
+      path: '/path/to/file.jpg',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -214,10 +243,10 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('rename: required and optional params', async () => {
-    const response = await client.files.rename({
-      filePath: '/path/to/file.jpg',
-      newFileName: 'newFileName.jpg',
-      purgeCache: true,
+    const response = await client.assets.rename({
+      new_name: 'new_file_name.jpg',
+      path: '/path/to/file.jpg',
+      purge_cache: true,
     });
   });
 });

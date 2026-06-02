@@ -5,17 +5,18 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-export class Job extends APIResource {
+export class Jobs extends APIResource {
   /**
-   * This API returns the status of a bulk job like copy and move folder operations.
+   * Returns the status of a bulk job such as a copy, move, or rename folder
+   * operation.
    *
    * @example
    * ```ts
-   * const job = await client.folders.job.get('jobId');
+   * const job = await client.assets.jobs.get('job_id');
    * ```
    */
   get(jobID: string, options?: RequestOptions): APIPromise<JobGetResponse> {
-    return this._client.get(path`/v1/bulkJobs/${jobID}`, options);
+    return this._client.get(path`/v2/assets/jobs/${jobID}`, options);
   }
 }
 
@@ -23,25 +24,25 @@ export interface JobGetResponse {
   /**
    * Unique identifier of the bulk job.
    */
-  jobId?: string;
-
-  /**
-   * Unique identifier of the purge request. This will be present only if
-   * `purgeCache` is set to `true` in the rename folder API request.
-   */
-  purgeRequestId?: string;
+  job_id: string;
 
   /**
    * Status of the bulk job.
    */
-  status?: 'Pending' | 'Completed';
+  status: 'Pending' | 'Completed';
 
   /**
    * Type of the bulk job.
    */
-  type?: 'COPY_FOLDER' | 'MOVE_FOLDER' | 'RENAME_FOLDER';
+  type: 'COPY_FOLDER' | 'MOVE_FOLDER' | 'RENAME_FOLDER';
+
+  /**
+   * Unique identifier of the purge request. Present only if `purge_cache` was set to
+   * `true` in the rename folder API request.
+   */
+  purge_request_id?: string;
 }
 
-export declare namespace Job {
+export declare namespace Jobs {
   export { type JobGetResponse as JobGetResponse };
 }

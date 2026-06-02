@@ -24,10 +24,10 @@ describe('resource origins', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.accounts.origins.create({
-      accessKey: 'AKIAIOSFODNN7EXAMPLE',
+      access_key: 'AKIAIOSFODNN7EXAMPLE',
       bucket: 'product-images',
       name: 'US S3 Storage',
-      secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      secret_key: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
       type: 'S3',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -42,13 +42,13 @@ describe('resource origins', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.accounts.origins.create({
-      accessKey: 'AKIAIOSFODNN7EXAMPLE',
+      access_key: 'AKIAIOSFODNN7EXAMPLE',
       bucket: 'product-images',
       name: 'US S3 Storage',
-      secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      secret_key: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
       type: 'S3',
-      baseUrlForCanonicalHeader: 'https://cdn.example.com',
-      includeCanonicalHeader: false,
+      base_url_for_canonical_header: 'https://cdn.example.com',
+      include_canonical_header: false,
       prefix: 'raw-assets',
     });
   });
@@ -68,10 +68,10 @@ describe('resource origins', () => {
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.accounts.origins.update('id', {
-      accessKey: 'AKIAIOSFODNN7EXAMPLE',
+      access_key: 'AKIAIOSFODNN7EXAMPLE',
       bucket: 'product-images',
       name: 'US S3 Storage',
-      secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      secret_key: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
       type: 'S3',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -86,13 +86,13 @@ describe('resource origins', () => {
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.accounts.origins.update('id', {
-      accessKey: 'AKIAIOSFODNN7EXAMPLE',
+      access_key: 'AKIAIOSFODNN7EXAMPLE',
       bucket: 'product-images',
       name: 'US S3 Storage',
-      secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      secret_key: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
       type: 'S3',
-      baseUrlForCanonicalHeader: 'https://cdn.example.com',
-      includeCanonicalHeader: false,
+      base_url_for_canonical_header: 'https://cdn.example.com',
+      include_canonical_header: false,
       prefix: 'raw-assets',
     });
   });

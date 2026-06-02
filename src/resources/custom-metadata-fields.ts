@@ -2,34 +2,11 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
 export class CustomMetadataFields extends APIResource {
-  /**
-   * This API creates a new custom metadata field. Once a custom metadata field is
-   * created either through this API or using the dashboard UI, its value can be set
-   * on the assets. The value of a field for an asset can be set using the media
-   * library UI or programmatically through upload or update assets API.
-   *
-   * @example
-   * ```ts
-   * const customMetadataField =
-   *   await client.customMetadataFields.create({
-   *     label: 'price',
-   *     name: 'price',
-   *     schema: {
-   *       type: 'Number',
-   *       minValue: 1000,
-   *       maxValue: 3000,
-   *     },
-   *   });
-   * ```
-   */
-  create(body: CustomMetadataFieldCreateParams, options?: RequestOptions): APIPromise<CustomMetadataField> {
-    return this._client.post('/v1/customMetadataFields', { body, ...options });
-  }
-
   /**
    * This API returns the array of created custom metadata field objects. By default
    * the API returns only non deleted field objects, but you can include deleted
@@ -50,7 +27,31 @@ export class CustomMetadataFields extends APIResource {
     query: CustomMetadataFieldListParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<CustomMetadataFieldListResponse> {
-    return this._client.get('/v1/customMetadataFields', { query, ...options });
+    return this._client.get('/v2/custom-metadata-fields', { query, ...options });
+  }
+
+  /**
+   * This API creates a new custom metadata field. Once a custom metadata field is
+   * created either through this API or using the dashboard UI, its value can be set
+   * on the assets. The value of a field for an asset can be set using the media
+   * library UI or programmatically through upload or update assets API.
+   *
+   * @example
+   * ```ts
+   * const customMetadataField =
+   *   await client.customMetadataFields.create({
+   *     label: 'price',
+   *     name: 'price',
+   *     schema: {
+   *       type: 'Number',
+   *       min_value: 1000,
+   *       max_value: 3000,
+   *     },
+   *   });
+   * ```
+   */
+  create(body: CustomMetadataFieldCreateParams, options?: RequestOptions): APIPromise<CustomMetadataField> {
+    return this._client.post('/v2/custom-metadata-fields', { body, ...options });
   }
 
   /**
@@ -61,7 +62,7 @@ export class CustomMetadataFields extends APIResource {
    * const customMetadataField =
    *   await client.customMetadataFields.update('id', {
    *     label: 'price',
-   *     schema: { minValue: 1000, maxValue: 3000 },
+   *     schema: { min_value: 1000, max_value: 3000 },
    *   });
    * ```
    */
@@ -70,7 +71,7 @@ export class CustomMetadataFields extends APIResource {
     body: CustomMetadataFieldUpdateParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<CustomMetadataField> {
-    return this._client.patch(path`/v1/customMetadataFields/${id}`, { body, ...options });
+    return this._client.patch(path`/v2/custom-metadata-fields/${id}`, { body, ...options });
   }
 
   /**
@@ -79,12 +80,14 @@ export class CustomMetadataFields extends APIResource {
    *
    * @example
    * ```ts
-   * const customMetadataField =
-   *   await client.customMetadataFields.delete('id');
+   * await client.customMetadataFields.delete('id');
    * ```
    */
-  delete(id: string, options?: RequestOptions): APIPromise<CustomMetadataFieldDeleteResponse> {
-    return this._client.delete(path`/v1/customMetadataFields/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/v2/custom-metadata-fields/${id}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -111,66 +114,77 @@ export interface CustomMetadataField {
   name: string;
 
   /**
-   * An object that describes the rules for the custom metadata field value.
+   * Schema rules for a custom metadata field value.
    */
-  schema: CustomMetadataField.Schema;
+  schema: CustomMetadataFieldSchema;
 }
 
-export namespace CustomMetadataField {
+/**
+ * Schema rules for a custom metadata field value.
+ */
+export interface CustomMetadataFieldSchema {
   /**
-   * An object that describes the rules for the custom metadata field value.
+   * Type of the custom metadata field.
    */
-  export interface Schema {
-    /**
-     * Type of the custom metadata field.
-     */
-    type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
+  type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
 
-    /**
-     * The default value for this custom metadata field. Data type of default value
-     * depends on the field type.
-     */
-    defaultValue?: string | number | boolean | Array<string | number | boolean>;
+  /**
+   * The default value for this custom metadata field. Data type of default value
+   * depends on the field type.
+   */
+  default_value?: string | number | boolean | Array<string | number | boolean>;
 
-    /**
-     * Specifies if the this custom metadata field is required or not.
-     */
-    isValueRequired?: boolean;
+  /**
+   * Specifies if the custom metadata field is required or not.
+   */
+  is_value_required?: boolean;
 
-    /**
-     * Maximum length of string. Only set if `type` is set to `Text` or `Textarea`.
-     */
-    maxLength?: number;
+  /**
+   * Maximum length of string. Only set if `type` is set to `Text` or `Textarea`.
+   */
+  max_length?: number;
 
-    /**
-     * Maximum value of the field. Only set if field type is `Date` or `Number`. For
-     * `Date` type field, the value will be in ISO8601 string format. For `Number` type
-     * field, it will be a numeric value.
-     */
-    maxValue?: string | number;
+  /**
+   * Maximum value of the field. Only set if field type is `Date` or `Number`. For
+   * `Date` type field, the value will be in ISO8601 string format. For `Number` type
+   * field, it will be a numeric value.
+   */
+  max_value?: string | number;
 
-    /**
-     * Minimum length of string. Only set if `type` is set to `Text` or `Textarea`.
-     */
-    minLength?: number;
+  /**
+   * Minimum length of string. Only set if `type` is set to `Text` or `Textarea`.
+   */
+  min_length?: number;
 
-    /**
-     * Minimum value of the field. Only set if field type is `Date` or `Number`. For
-     * `Date` type field, the value will be in ISO8601 string format. For `Number` type
-     * field, it will be a numeric value.
-     */
-    minValue?: string | number;
+  /**
+   * Minimum value of the field. Only set if field type is `Date` or `Number`. For
+   * `Date` type field, the value will be in ISO8601 string format. For `Number` type
+   * field, it will be a numeric value.
+   */
+  min_value?: string | number;
 
-    /**
-     * An array of allowed values when field type is `SingleSelect` or `MultiSelect`.
-     */
-    selectOptions?: Array<string | number | boolean>;
-  }
+  /**
+   * An array of allowed values when field type is `SingleSelect` or `MultiSelect`.
+   */
+  select_options?: Array<string | number | boolean>;
 }
 
 export type CustomMetadataFieldListResponse = Array<CustomMetadataField>;
 
-export interface CustomMetadataFieldDeleteResponse {}
+export interface CustomMetadataFieldListParams {
+  /**
+   * The folder path (e.g., `/path/to/folder`) for which to retrieve applicable
+   * custom metadata fields. Useful for determining path-specific field selections
+   * when the [Path policy](https://imagekit.io/docs/dam/path-policy) feature is in
+   * use.
+   */
+  folder_path?: string;
+
+  /**
+   * Set it to `true` to include deleted field objects in the API response.
+   */
+  include_deleted?: boolean;
+}
 
 export interface CustomMetadataFieldCreateParams {
   /**
@@ -199,65 +213,50 @@ export namespace CustomMetadataFieldCreateParams {
 
     /**
      * The default value for this custom metadata field. This property is only required
-     * if `isValueRequired` property is set to `true`. The value should match the
+     * if `is_value_required` property is set to `true`. The value should match the
      * `type` of custom metadata field.
      */
-    defaultValue?: string | number | boolean | Array<string | number | boolean>;
+    default_value?: string | number | boolean | Array<string | number | boolean>;
 
     /**
      * Sets this custom metadata field as required. Setting custom metadata fields on
      * an asset will throw error if the value for all required fields are not present
      * in upload or update asset API request body.
      */
-    isValueRequired?: boolean;
+    is_value_required?: boolean;
 
     /**
      * Maximum length of string. Only set this property if `type` is set to `Text` or
      * `Textarea`.
      */
-    maxLength?: number;
+    max_length?: number;
 
     /**
      * Maximum value of the field. Only set this property if field type is `Date` or
      * `Number`. For `Date` type field, set the minimum date in ISO8601 string format.
      * For `Number` type field, set the minimum numeric value.
      */
-    maxValue?: string | number;
+    max_value?: string | number;
 
     /**
      * Minimum length of string. Only set this property if `type` is set to `Text` or
      * `Textarea`.
      */
-    minLength?: number;
+    min_length?: number;
 
     /**
      * Minimum value of the field. Only set this property if field type is `Date` or
      * `Number`. For `Date` type field, set the minimum date in ISO8601 string format.
      * For `Number` type field, set the minimum numeric value.
      */
-    minValue?: string | number;
+    min_value?: string | number;
 
     /**
      * An array of allowed values. This property is only required if `type` property is
      * set to `SingleSelect` or `MultiSelect`.
      */
-    selectOptions?: Array<string | number | boolean>;
+    select_options?: Array<string | number | boolean>;
   }
-}
-
-export interface CustomMetadataFieldListParams {
-  /**
-   * The folder path (e.g., `/path/to/folder`) for which to retrieve applicable
-   * custom metadata fields. Useful for determining path-specific field selections
-   * when the [Path policy](https://imagekit.io/docs/dam/path-policy) feature is in
-   * use.
-   */
-  folderPath?: string;
-
-  /**
-   * Set it to `true` to include deleted field objects in the API response.
-   */
-  includeDeleted?: boolean;
 }
 
 export interface CustomMetadataFieldUpdateParams {
@@ -288,59 +287,59 @@ export namespace CustomMetadataFieldUpdateParams {
   export interface Schema {
     /**
      * The default value for this custom metadata field. This property is only required
-     * if `isValueRequired` property is set to `true`. The value should match the
+     * if `is_value_required` property is set to `true`. The value should match the
      * `type` of custom metadata field.
      */
-    defaultValue?: string | number | boolean | Array<string | number | boolean>;
+    default_value?: string | number | boolean | Array<string | number | boolean>;
 
     /**
      * Sets this custom metadata field as required. Setting custom metadata fields on
      * an asset will throw error if the value for all required fields are not present
      * in upload or update asset API request body.
      */
-    isValueRequired?: boolean;
+    is_value_required?: boolean;
 
     /**
      * Maximum length of string. Only set this property if `type` is set to `Text` or
      * `Textarea`.
      */
-    maxLength?: number;
+    max_length?: number;
 
     /**
      * Maximum value of the field. Only set this property if field type is `Date` or
      * `Number`. For `Date` type field, set the minimum date in ISO8601 string format.
      * For `Number` type field, set the minimum numeric value.
      */
-    maxValue?: string | number;
+    max_value?: string | number;
 
     /**
      * Minimum length of string. Only set this property if `type` is set to `Text` or
      * `Textarea`.
      */
-    minLength?: number;
+    min_length?: number;
 
     /**
      * Minimum value of the field. Only set this property if field type is `Date` or
      * `Number`. For `Date` type field, set the minimum date in ISO8601 string format.
      * For `Number` type field, set the minimum numeric value.
      */
-    minValue?: string | number;
+    min_value?: string | number;
 
     /**
      * An array of allowed values. This property is only required if `type` property is
      * set to `SingleSelect` or `MultiSelect`.
      */
-    selectOptions?: Array<string | number | boolean>;
+    select_options?: Array<string | number | boolean>;
   }
 }
 
 export declare namespace CustomMetadataFields {
   export {
     type CustomMetadataField as CustomMetadataField,
+    type CustomMetadataFieldSchema as CustomMetadataFieldSchema,
     type CustomMetadataFieldListResponse as CustomMetadataFieldListResponse,
-    type CustomMetadataFieldDeleteResponse as CustomMetadataFieldDeleteResponse,
-    type CustomMetadataFieldCreateParams as CustomMetadataFieldCreateParams,
     type CustomMetadataFieldListParams as CustomMetadataFieldListParams,
+    type CustomMetadataFieldCreateParams as CustomMetadataFieldCreateParams,
     type CustomMetadataFieldUpdateParams as CustomMetadataFieldUpdateParams,
   };
 }

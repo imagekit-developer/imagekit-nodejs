@@ -7,9 +7,9 @@ import { path } from '../../internal/utils/path';
 
 export class Invalidation extends APIResource {
   /**
-   * This API will purge CDN cache and ImageKit.io's internal cache for a file. Note:
-   * Purge cache is an asynchronous process and it may take some time to reflect the
-   * changes.
+   * This API will invalidate CDN cache and ImageKit.io's internal cache for an
+   * asset. Note: Purge cache is an asynchronous process and it may take some time to
+   * reflect the changes.
    *
    * @example
    * ```ts
@@ -21,21 +21,21 @@ export class Invalidation extends APIResource {
    * ```
    */
   create(body: InvalidationCreateParams, options?: RequestOptions): APIPromise<InvalidationCreateResponse> {
-    return this._client.post('/v1/files/purge', { body, ...options });
+    return this._client.post('/v2/cache/invalidations', { body, ...options });
   }
 
   /**
-   * This API returns the status of a purge cache request.
+   * This API returns the status of a cache invalidation request.
    *
    * @example
    * ```ts
    * const invalidation = await client.cache.invalidation.get(
-   *   'requestId',
+   *   'request_id',
    * );
    * ```
    */
   get(requestID: string, options?: RequestOptions): APIPromise<InvalidationGetResponse> {
-    return this._client.get(path`/v1/files/purge/${requestID}`, options);
+    return this._client.get(path`/v2/cache/invalidations/${requestID}`, options);
   }
 }
 
@@ -44,7 +44,7 @@ export interface InvalidationCreateResponse {
    * Unique identifier of the purge request. This can be used to check the status of
    * the purge request.
    */
-  requestId?: string;
+  request_id?: string;
 }
 
 export interface InvalidationGetResponse {

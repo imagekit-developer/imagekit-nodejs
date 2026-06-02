@@ -32,7 +32,7 @@ describe('resource invalidation', () => {
 
   // Mock server tests are disabled
   test.skip('get', async () => {
-    const responsePromise = client.cache.invalidation.get('requestId');
+    const responsePromise = client.cache.invalidation.get('request_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

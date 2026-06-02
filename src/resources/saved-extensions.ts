@@ -19,7 +19,7 @@ export class SavedExtensions extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<SavedExtensionListResponse> {
-    return this._client.get('/v1/saved-extensions', options);
+    return this._client.get('/v2/saved-extensions', options);
   }
 
   /**
@@ -33,24 +33,15 @@ export class SavedExtensions extends APIResource {
    * @example
    * ```ts
    * const savedExtension = await client.savedExtensions.create({
-   *   config: {
-   *     name: 'ai-tasks',
-   *     tasks: [
-   *       {
-   *         instruction: 'What types of clothing items are visible in this image?',
-   *         type: 'select_tags',
-   *         vocabulary: ['shirt', 'dress', 'pants', 'jacket', 'shoes'],
-   *         max_selections: 3,
-   *       },
-   *     ],
-   *   },
-   *   description: 'Automatically categorizes clothing items in fashion images',
-   *   name: 'Fashion Item Categorization',
+   *   config: { name: 'remove-bg' },
+   *   description:
+   *     'Analyzes vehicle images for type, condition, and quality assessment',
+   *   name: 'Car Quality Analysis',
    * });
    * ```
    */
   create(body: SavedExtensionCreateParams, options?: RequestOptions): APIPromise<Shared.SavedExtension> {
-    return this._client.post('/v1/saved-extensions', { body, ...options });
+    return this._client.post('/v2/saved-extensions', { body, ...options });
   }
 
   /**
@@ -64,7 +55,7 @@ export class SavedExtensions extends APIResource {
    * ```
    */
   get(id: string, options?: RequestOptions): APIPromise<Shared.SavedExtension> {
-    return this._client.get(path`/v1/saved-extensions/${id}`, options);
+    return this._client.get(path`/v2/saved-extensions/${id}`, options);
   }
 
   /**
@@ -83,7 +74,7 @@ export class SavedExtensions extends APIResource {
     body: SavedExtensionUpdateParams,
     options?: RequestOptions,
   ): APIPromise<Shared.SavedExtension> {
-    return this._client.patch(path`/v1/saved-extensions/${id}`, { body, ...options });
+    return this._client.patch(path`/v2/saved-extensions/${id}`, { body, ...options });
   }
 
   /**
@@ -95,11 +86,77 @@ export class SavedExtensions extends APIResource {
    * ```
    */
   delete(id: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/v1/saved-extensions/${id}`, {
+    return this._client.delete(path`/v2/saved-extensions/${id}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+}
+
+export interface CreateSavedExtension {
+  /**
+   * Configuration object for an extension (base extensions only, not saved extension
+   * references).
+   */
+  config: Shared.ExtensionConfig;
+
+  /**
+   * Description of the saved extension.
+   */
+  description: string;
+
+  /**
+   * Name of the saved extension.
+   */
+  name: string;
+}
+
+export interface SavedExtensionBase {
+  /**
+   * Configuration object for an extension (base extensions only, not saved extension
+   * references).
+   */
+  config?: Shared.ExtensionConfig;
+
+  /**
+   * Description of the saved extension.
+   */
+  description?: string;
+
+  /**
+   * Name of the saved extension.
+   */
+  name?: string;
+}
+
+export interface SavedExtensionReference {
+  /**
+   * The unique ID of the saved extension to apply.
+   */
+  id: string;
+
+  /**
+   * Indicates this is a reference to a saved extension.
+   */
+  name: 'saved-extension';
+}
+
+export interface UpdateSavedExtension {
+  /**
+   * Configuration object for an extension (base extensions only, not saved extension
+   * references).
+   */
+  config?: Shared.ExtensionConfig;
+
+  /**
+   * Description of the saved extension.
+   */
+  description?: string;
+
+  /**
+   * Name of the saved extension.
+   */
+  name?: string;
 }
 
 export type SavedExtensionListResponse = Array<Shared.SavedExtension>;
@@ -112,7 +169,7 @@ export interface SavedExtensionCreateParams {
   config: Shared.ExtensionConfig;
 
   /**
-   * Description of what the saved extension does.
+   * Description of the saved extension.
    */
   description: string;
 
@@ -130,18 +187,22 @@ export interface SavedExtensionUpdateParams {
   config?: Shared.ExtensionConfig;
 
   /**
-   * Updated description of the saved extension.
+   * Description of the saved extension.
    */
   description?: string;
 
   /**
-   * Updated name of the saved extension.
+   * Name of the saved extension.
    */
   name?: string;
 }
 
 export declare namespace SavedExtensions {
   export {
+    type CreateSavedExtension as CreateSavedExtension,
+    type SavedExtensionBase as SavedExtensionBase,
+    type SavedExtensionReference as SavedExtensionReference,
+    type UpdateSavedExtension as UpdateSavedExtension,
     type SavedExtensionListResponse as SavedExtensionListResponse,
     type SavedExtensionCreateParams as SavedExtensionCreateParams,
     type SavedExtensionUpdateParams as SavedExtensionUpdateParams,

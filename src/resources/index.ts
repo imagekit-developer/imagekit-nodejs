@@ -2,50 +2,51 @@
 
 export * from './shared';
 export { Accounts } from './accounts/accounts';
-export { Assets, type AssetListResponse, type AssetListParams } from './assets';
-export { Beta } from './beta/beta';
+export {
+  Assets,
+  type BulkAssetsNotFoundError,
+  type BulkTagUpdatePartialResult,
+  type BulkTagUpdateResult,
+  type FileAsset,
+  type FileDetails,
+  type FileVersionDetails,
+  type FolderDetails,
+  type Metadata,
+  type UpdateAssetRequest,
+  type UploadRequest,
+  type UploadResponse,
+  type VideoAsset,
+  type AssetUpdateResponse,
+  type AssetListResponse,
+  type AssetCopyResponse,
+  type AssetGetResponse,
+  type AssetMoveResponse,
+  type AssetRenameResponse,
+  type AssetUploadParams,
+  type AssetListParams,
+  type AssetUpdateParams,
+  type AssetCopyParams,
+  type AssetMoveParams,
+  type AssetRenameParams,
+  type FileVersionDetailsCursor,
+  type AssetListResponsesCursor,
+} from './assets/assets';
 export { Cache } from './cache/cache';
 export {
   CustomMetadataFields,
   type CustomMetadataField,
+  type CustomMetadataFieldSchema,
   type CustomMetadataFieldListResponse,
-  type CustomMetadataFieldDeleteResponse,
-  type CustomMetadataFieldCreateParams,
   type CustomMetadataFieldListParams,
+  type CustomMetadataFieldCreateParams,
   type CustomMetadataFieldUpdateParams,
 } from './custom-metadata-fields';
 export {
-  Files,
-  type File,
-  type Folder,
-  type Metadata,
-  type UpdateFileRequest,
-  type FileUpdateResponse,
-  type FileCopyResponse,
-  type FileMoveResponse,
-  type FileRenameResponse,
-  type FileUploadResponse,
-  type FileUploadParams,
-  type FileUpdateParams,
-  type FileCopyParams,
-  type FileMoveParams,
-  type FileRenameParams,
-} from './files/files';
-export {
-  Folders,
-  type FolderCreateResponse,
-  type FolderDeleteResponse,
-  type FolderCopyResponse,
-  type FolderMoveResponse,
-  type FolderRenameResponse,
-  type FolderCreateParams,
-  type FolderDeleteParams,
-  type FolderCopyParams,
-  type FolderMoveParams,
-  type FolderRenameParams,
-} from './folders/folders';
-export {
   SavedExtensions,
+  type CreateSavedExtension,
+  type SavedExtensionBase,
+  type SavedExtensionReference,
+  type UpdateSavedExtension,
   type SavedExtensionListResponse,
   type SavedExtensionCreateParams,
   type SavedExtensionUpdateParams,
@@ -68,4 +69,3 @@ export {
   type UnsafeUnwrapWebhookEvent,
   type UnwrapWebhookEvent,
 } from './webhooks';
-export { Helper } from './helper';

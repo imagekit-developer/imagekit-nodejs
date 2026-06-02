@@ -16,9 +16,7 @@ For example:
 
 \`\`\`
 async function run(client) {
-  const response = await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' });
-
-  console.log(response.videoCodec);
+  const uploadResponse = await client.assets.upload({ file: fs.createReadStream('path/to/file'), file_name: 'file-name.jpg' });
 }
 \`\`\`
 

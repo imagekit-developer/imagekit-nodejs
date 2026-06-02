@@ -8,10 +8,13 @@ const client = new ImageKit({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource assets', () => {
+describe('resource folders', () => {
   // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.assets.list();
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.assets.folders.create({
+      folder_name: 'summer',
+      parent_folder_path: '/product/images/',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,21 +25,10 @@ describe('resource assets', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.assets.list(
-        {
-          fileType: 'all',
-          limit: 1,
-          path: 'path',
-          searchQuery: 'searchQuery',
-          skip: 0,
-          sort: 'ASC_NAME',
-          type: 'file',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(ImageKit.NotFoundError);
+  test.skip('create: required and optional params', async () => {
+    const response = await client.assets.folders.create({
+      folder_name: 'summer',
+      parent_folder_path: '/product/images/',
+    });
   });
 });

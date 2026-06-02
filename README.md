@@ -1,61 +1,25 @@
-# ImageKit.io Node.js SDK
+# Image Kit TypeScript API Library
 
 [![NPM version](<https://img.shields.io/npm/v/@imagekit/nodejs.svg?label=npm%20(stable)>)](https://npmjs.org/package/@imagekit/nodejs) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@imagekit/nodejs)
 
-The ImageKit Node.js SDK is a comprehensive library designed to simplify the integration of ImageKit into your server-side applications. It provides powerful tools for working with the ImageKit REST API, including building and transforming URLs, generating signed URLs for secure content delivery, verifying webhooks, and handling file uploads. With robust TypeScript support, this SDK ensures excellent type safety and a seamless developer experience.
+This library provides convenient access to the Image Kit REST API from server-side TypeScript or JavaScript.
 
-The full API of this library is documented in [api.md](api.md). All request parameters and response types are fully typed and importable, offering unparalleled TypeScript support. This ensures that you can rely on accurate type definitions and enjoy a smooth development workflow with modern editors.
+The REST API documentation can be found on [imagekit.io](https://imagekit.io/docs/api-reference). The full API of this library can be found in [api.md](api.md).
 
-For additional details, refer to the [ImageKit REST API documentation](https://imagekit.io/docs/api-reference).
+## MCP Server
 
-If you are looking to integrate file uploads in browsers, use one of our [frontend SDKs](https://imagekit.io/docs/quick-start-guides#front-end).
+Use the Image Kit MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.
 
-## Table of Contents
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40imagekit%2Fapi-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBpbWFnZWtpdC9hcGktbWNwIl0sImVudiI6eyJJTUFHRUtJVF9QUklWQVRFX0tFWSI6Ik15IFByaXZhdGUgS2V5IiwiT1BUSU9OQUxfSU1BR0VLSVRfSUdOT1JFU19USElTIjoiTXkgUGFzc3dvcmQiLCJJTUFHRUtJVF9XRUJIT09LX1NFQ1JFVCI6Ik15IFdlYmhvb2sgU2VjcmV0In19)
+[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40imagekit%2Fapi-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40imagekit%2Fapi-mcp%22%5D%2C%22env%22%3A%7B%22IMAGEKIT_PRIVATE_KEY%22%3A%22My%20Private%20Key%22%2C%22OPTIONAL_IMAGEKIT_IGNORES_THIS%22%3A%22My%20Password%22%2C%22IMAGEKIT_WEBHOOK_SECRET%22%3A%22My%20Webhook%20Secret%22%7D%7D)
 
-- [Installation](#installation)
-- [MCP Server Package](#mcp-server-package)
-- [Usage](#usage)
-  - [Request & Response types](#request--response-types)
-- [File uploads](#file-uploads)
-- [URL generation](#url-generation)
-  - [Basic URL generation](#basic-url-generation)
-  - [URL generation with transformations](#url-generation-with-transformations)
-  - [URL generation with image overlay](#url-generation-with-image-overlay)
-  - [URL generation with text overlay](#url-generation-with-text-overlay)
-  - [URL generation with multiple overlays](#url-generation-with-multiple-overlays)
-  - [Signed URLs for secure delivery](#signed-urls-for-secure-delivery)
-  - [Using Raw parameter for custom transformations](#using-raw-parameter-for-custom-transformations)
-- [Authentication parameters for client-side uploads](#authentication-parameters-for-client-side-uploads)
-- [Webhook verification](#webhook-verification)
-- [Handling errors](#handling-errors)
-  - [Retries](#retries)
-  - [Timeouts](#timeouts)
-- [Advanced Usage](#advanced-usage)
-  - [Accessing raw Response data (e.g., headers)](#accessing-raw-response-data-eg-headers)
-  - [Logging](#logging)
-  - [Making custom/undocumented requests](#making-customundocumented-requests)
-  - [Customizing the fetch client](#customizing-the-fetch-client)
-  - [Fetch options](#fetch-options)
-- [Semantic versioning](#semantic-versioning)
-- [Requirements](#requirements)
-- [Contributing](#contributing)
+> Note: You may need to set environment variables in your MCP client.
 
 ## Installation
 
 ```sh
 npm install @imagekit/nodejs
 ```
-
-## MCP Server Package
-
-This repository also includes a separate **Model Context Protocol (MCP) server** package published as [`@imagekit/api-mcp`](https://www.npmjs.com/package/@imagekit/api-mcp). This MCP server enables AI assistants and agents to interact with the ImageKit API directly.
-
-> **Important Note on Versioning:** The MCP server package (`@imagekit/api-mcp`) is maintained within this monorepo and shares the same version number as the main Node.js SDK. **However, semantic versioning for this repository is determined solely based on changes to the Node.js SDK (`@imagekit/nodejs`).** This means the MCP server package may contain breaking changes in minor or patch releases, as its versioning does not follow independent semantic versioning conventions. If you use the MCP server package, always review the [CHANGELOG](CHANGELOG.md) to understand what has changed before upgrading.
-
-For detailed installation instructions, usage examples, and documentation about the MCP server, please visit:
-
-- **MCP Server Documentation:** [https://imagekit.io/docs/mcp-server](https://imagekit.io/docs/mcp-server)
-- **Package README:** [packages/mcp-server/README.md](packages/mcp-server/README.md)
 
 ## Usage
 
@@ -67,14 +31,13 @@ import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
   privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted
+  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted
 });
 
-const response = await client.files.upload({
+const uploadResponse = await client.assets.upload({
   file: fs.createReadStream('path/to/file'),
-  fileName: 'file-name.jpg',
+  file_name: 'file-name.jpg',
 });
-
-console.log(response);
 ```
 
 ### Request & Response types
@@ -87,13 +50,14 @@ import ImageKit from '@imagekit/nodejs';
 
 const client = new ImageKit({
   privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted
+  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted
 });
 
-const params: ImageKit.FileUploadParams = {
+const params: ImageKit.AssetUploadParams = {
   file: fs.createReadStream('path/to/file'),
-  fileName: 'file-name.jpg',
+  file_name: 'file-name.jpg',
 };
-const response: ImageKit.FileUploadResponse = await client.files.upload(params);
+const uploadResponse: ImageKit.UploadResponse = await client.assets.upload(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -114,246 +78,24 @@ import ImageKit, { toFile } from '@imagekit/nodejs';
 const client = new ImageKit();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.files.upload({ file: fs.createReadStream('/path/to/file'), fileName: 'fileName' });
+await client.assets.upload({ file: fs.createReadStream('/path/to/file'), file_name: 'file_name' });
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.files.upload({ file: new File(['my bytes'], 'file'), fileName: 'fileName' });
+await client.assets.upload({ file: new File(['my bytes'], 'file'), file_name: 'file_name' });
 
 // You can also pass a `fetch` `Response`:
-await client.files.upload({ file: await fetch('https://somesite/file'), fileName: 'fileName' });
+await client.assets.upload({ file: await fetch('https://somesite/file'), file_name: 'file_name' });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.files.upload({
+await client.assets.upload({
   file: await toFile(Buffer.from('my bytes'), 'file'),
-  fileName: 'fileName',
+  file_name: 'file_name',
 });
-await client.files.upload({
+await client.assets.upload({
   file: await toFile(new Uint8Array([0, 1, 2]), 'file'),
-  fileName: 'fileName',
+  file_name: 'file_name',
 });
 ```
-
-## URL generation
-
-The ImageKit SDK provides a powerful `helper.buildSrc()` method for generating optimized image and video URLs with transformations. Here are examples ranging from simple URLs to complex transformations with overlays and signed URLs.
-
-### Basic URL generation
-
-Generate a simple URL without any transformations:
-
-```ts
-import ImageKit from '@imagekit/nodejs';
-
-const client = new ImageKit({
-  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'],
-});
-
-// Basic URL without transformations
-const url = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/path/to/image.jpg',
-});
-// Result: https://ik.imagekit.io/your_imagekit_id/path/to/image.jpg
-```
-
-### URL generation with transformations
-
-Apply common transformations like resizing, cropping, and format conversion:
-
-```ts
-// URL with basic transformations
-const transformedUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/path/to/image.jpg',
-  transformation: [
-    {
-      width: 400,
-      height: 300,
-      crop: 'maintain_ratio',
-      quality: 80,
-      format: 'webp',
-    },
-  ],
-});
-// Result: https://ik.imagekit.io/your_imagekit_id/path/to/image.jpg?tr=w-400,h-300,c-maintain_ratio,q-80,f-webp
-```
-
-### URL generation with image overlay
-
-Add image overlays to your base image:
-
-```ts
-// URL with image overlay
-const imageOverlayUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/path/to/base-image.jpg',
-  transformation: [
-    {
-      width: 500,
-      height: 400,
-      overlay: {
-        type: 'image',
-        input: '/path/to/overlay-logo.png',
-        position: {
-          x: 10,
-          y: 10,
-        },
-        transformation: [
-          {
-            width: 100,
-            height: 50,
-          },
-        ],
-      },
-    },
-  ],
-});
-// Result: URL with image overlay positioned at x:10, y:10
-```
-
-### URL generation with text overlay
-
-Add customized text overlays:
-
-```ts
-// URL with text overlay
-const textOverlayUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/path/to/base-image.jpg',
-  transformation: [
-    {
-      width: 600,
-      height: 400,
-      overlay: {
-        type: 'text',
-        text: 'Sample Text Overlay',
-        position: {
-          x: 50,
-          y: 50,
-          focus: 'center',
-        },
-        transformation: [
-          {
-            fontSize: 40,
-            fontFamily: 'Arial',
-            fontColor: 'FFFFFF',
-            typography: 'b', // bold
-          },
-        ],
-      },
-    },
-  ],
-});
-// Result: URL with bold white Arial text overlay at center position
-```
-
-### URL generation with multiple overlays
-
-Combine multiple overlays for complex compositions:
-
-```ts
-// URL with multiple overlays (text + image)
-const multipleOverlaysUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/path/to/base-image.jpg',
-  transformation: [
-    {
-      width: 800,
-      height: 600,
-      overlay: {
-        type: 'text',
-        text: 'Header Text',
-        position: { x: 20, y: 20 },
-        transformation: [{ fontSize: 30, fontColor: '000000' }],
-      },
-    },
-    {
-      overlay: {
-        type: 'image',
-        input: '/watermark.png',
-        position: { focus: 'bottom_right' },
-        transformation: [{ width: 100, opacity: 70 }],
-      },
-    },
-  ],
-});
-// Result: URL with text overlay at top-left and semi-transparent watermark at bottom-right
-```
-
-### Signed URLs for secure delivery
-
-Generate signed URLs that expire after a specified time for secure content delivery:
-
-```ts
-// Generate a signed URL that expires in 1 hour (3600 seconds)
-const signedUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/private/secure-image.jpg',
-  transformation: [
-    {
-      width: 400,
-      height: 300,
-      quality: 90,
-    },
-  ],
-  signed: true,
-  expiresIn: 3600, // URL expires in 1 hour
-});
-// Result: URL with signature parameters (?ik-t=timestamp&ik-s=signature)
-
-// Generate a signed URL that doesn't expire
-const permanentSignedUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/private/secure-image.jpg',
-  signed: true,
-  // No expiresIn means the URL won't expire
-});
-// Result: URL with signature parameter (?ik-s=signature)
-```
-
-### Using Raw parameter for custom transformations
-
-ImageKit frequently adds new transformation parameters that might not yet be documented in the SDK. You can use the `raw` parameter to access these features or create custom transformation strings:
-
-```ts
-// Using raw parameter for custom transformations
-const customTransformUrl = client.helper.buildSrc({
-  urlEndpoint: 'https://ik.imagekit.io/your_imagekit_id',
-  src: '/path/to/image.jpg',
-  transformation: [
-    {
-      width: 400,
-      height: 300,
-      raw: 'something-new',
-    },
-  ],
-});
-// Result: https://ik.imagekit.io/your_imagekit_id/path/to/image.jpg?tr=w-400,h-300,something-new
-```
-
-## Authentication parameters for client-side uploads
-
-Generate authentication parameters for secure client-side file uploads:
-
-```ts
-// Generate authentication parameters for client-side uploads
-const authParams = client.helper.getAuthenticationParameters();
-console.log(authParams);
-// Result: { token: 'uuid-token', expire: timestamp, signature: 'hmac-signature' }
-
-// Generate with custom token and expiry
-const customAuthParams = client.helper.getAuthenticationParameters('my-custom-token', 1800);
-console.log(customAuthParams);
-// Result: { token: 'my-custom-token', expire: 1800, signature: 'hmac-signature' }
-```
-
-These authentication parameters can be used in client-side upload forms to securely upload files without exposing your private API key.
-
-## Webhook verification
-
-The ImageKit SDK provides utilities to verify webhook signatures for secure event handling. This ensures that webhook requests are actually coming from ImageKit and haven't been tampered with.
-
-For detailed information about webhook setup, signature verification, and handling different webhook events, refer to the [ImageKit webhook documentation](https://imagekit.io/docs/webhooks#verify-webhook-signature).
 
 ## Handling errors
 
@@ -363,8 +105,8 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.files
-  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' })
+const uploadResponse = await client.assets
+  .upload({ file: fs.createReadStream('path/to/file'), file_name: 'file-name.jpg' })
   .catch(async (err) => {
     if (err instanceof ImageKit.APIError) {
       console.log(err.status); // 400
@@ -405,7 +147,7 @@ const client = new ImageKit({
 });
 
 // Or, configure per-request:
-await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' }, {
+await client.assets.upload({ file: fs.createReadStream('path/to/file'), file_name: 'file-name.jpg' }, {
   maxRetries: 5,
 });
 ```
@@ -422,7 +164,7 @@ const client = new ImageKit({
 });
 
 // Override per-request:
-await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' }, {
+await client.assets.upload({ file: fs.createReadStream('path/to/file'), file_name: 'file-name.jpg' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -430,6 +172,37 @@ await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName:
 On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
+
+## Auto-pagination
+
+List methods in the ImageKit API are paginated.
+You can use the `for await … of` syntax to iterate through items across all pages:
+
+```ts
+async function fetchAllAssetListResponses(params) {
+  const allAssetListResponses = [];
+  // Automatically fetches more pages as needed.
+  for await (const assetListResponse of client.assets.list()) {
+    allAssetListResponses.push(assetListResponse);
+  }
+  return allAssetListResponses;
+}
+```
+
+Alternatively, you can request a single page at a time:
+
+```ts
+let page = await client.assets.list();
+for (const assetListResponse of page.items) {
+  console.log(assetListResponse);
+}
+
+// Convenience methods are provided for manually paginating:
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+  // ...
+}
+```
 
 ## Advanced Usage
 
@@ -445,17 +218,17 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new ImageKit();
 
-const response = await client.files
-  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' })
+const response = await client.assets
+  .upload({ file: fs.createReadStream('path/to/file'), file_name: 'file-name.jpg' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.files
-  .upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' })
+const { data: uploadResponse, response: raw } = await client.assets
+  .upload({ file: fs.createReadStream('path/to/file'), file_name: 'file-name.jpg' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response.videoCodec);
+console.log(uploadResponse);
 ```
 
 ### Logging
@@ -535,7 +308,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.files.upload({
+client.assets.upload({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
@@ -632,6 +405,8 @@ const client = new ImageKit({
   },
 });
 ```
+
+## Frequently Asked Questions
 
 ## Semantic versioning
 

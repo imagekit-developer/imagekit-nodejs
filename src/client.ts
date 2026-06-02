@@ -14,24 +14,29 @@ import * as Opts from './internal/request-options';
 import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import { AbstractPage, type CursorParams, CursorResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { AssetListParams, AssetListResponse, Assets } from './resources/assets';
 import {
   CustomMetadataField,
   CustomMetadataFieldCreateParams,
-  CustomMetadataFieldDeleteResponse,
   CustomMetadataFieldListParams,
   CustomMetadataFieldListResponse,
+  CustomMetadataFieldSchema,
   CustomMetadataFieldUpdateParams,
   CustomMetadataFields,
 } from './resources/custom-metadata-fields';
 import {
+  CreateSavedExtension,
+  SavedExtensionBase,
   SavedExtensionCreateParams,
   SavedExtensionListResponse,
+  SavedExtensionReference,
   SavedExtensionUpdateParams,
   SavedExtensions,
+  UpdateSavedExtension,
 } from './resources/saved-extensions';
 import {
   BaseWebhookEvent,
@@ -52,38 +57,35 @@ import {
   Webhooks,
 } from './resources/webhooks';
 import { Accounts } from './resources/accounts/accounts';
-import { Beta } from './resources/beta/beta';
-import { Cache } from './resources/cache/cache';
 import {
-  File,
-  FileCopyParams,
-  FileCopyResponse,
-  FileMoveParams,
-  FileMoveResponse,
-  FileRenameParams,
-  FileRenameResponse,
-  FileUpdateParams,
-  FileUpdateResponse,
-  FileUploadParams,
-  FileUploadResponse,
-  Files,
-  Folder,
+  AssetCopyParams,
+  AssetCopyResponse,
+  AssetGetResponse,
+  AssetListParams,
+  AssetListResponse,
+  AssetListResponsesCursor,
+  AssetMoveParams,
+  AssetMoveResponse,
+  AssetRenameParams,
+  AssetRenameResponse,
+  AssetUpdateParams,
+  AssetUpdateResponse,
+  AssetUploadParams,
+  Assets,
+  BulkAssetsNotFoundError,
+  BulkTagUpdatePartialResult,
+  BulkTagUpdateResult,
+  FileAsset,
+  FileDetails,
+  FileVersionDetails,
+  FolderDetails,
   Metadata,
-  UpdateFileRequest,
-} from './resources/files/files';
-import {
-  FolderCopyParams,
-  FolderCopyResponse,
-  FolderCreateParams,
-  FolderCreateResponse,
-  FolderDeleteParams,
-  FolderDeleteResponse,
-  FolderMoveParams,
-  FolderMoveResponse,
-  FolderRenameParams,
-  FolderRenameResponse,
-  Folders,
-} from './resources/folders/folders';
+  UpdateAssetRequest,
+  UploadRequest,
+  UploadResponse,
+  VideoAsset,
+} from './resources/assets/assets';
+import { Cache } from './resources/cache/cache';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -598,6 +600,30 @@ export class ImageKit {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: PromiseOrValue<RequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(
+      Page,
+      opts && 'then' in opts ?
+        opts.then((opts) => ({ method: 'get', path, ...opts }))
+      : { method: 'get', path, ...opts },
+    );
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: PromiseOrValue<FinalRequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as ImageKit, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -846,90 +872,79 @@ export class ImageKit {
   static toFile = Uploads.toFile;
 
   customMetadataFields: API.CustomMetadataFields = new API.CustomMetadataFields(this);
-  files: API.Files = new API.Files(this);
-  savedExtensions: API.SavedExtensions = new API.SavedExtensions(this);
   assets: API.Assets = new API.Assets(this);
+  savedExtensions: API.SavedExtensions = new API.SavedExtensions(this);
   cache: API.Cache = new API.Cache(this);
-  folders: API.Folders = new API.Folders(this);
   accounts: API.Accounts = new API.Accounts(this);
-  beta: API.Beta = new API.Beta(this);
   webhooks: API.Webhooks = new API.Webhooks(this);
-  helper: API.Helper = new API.Helper(this);
 }
 
 ImageKit.CustomMetadataFields = CustomMetadataFields;
-ImageKit.Files = Files;
-ImageKit.SavedExtensions = SavedExtensions;
 ImageKit.Assets = Assets;
+ImageKit.SavedExtensions = SavedExtensions;
 ImageKit.Cache = Cache;
-ImageKit.Folders = Folders;
 ImageKit.Accounts = Accounts;
-ImageKit.Beta = Beta;
 ImageKit.Webhooks = Webhooks;
 
 export declare namespace ImageKit {
   export type RequestOptions = Opts.RequestOptions;
 
+  export import Cursor = Pagination.Cursor;
+  export { type CursorParams as CursorParams, type CursorResponse as CursorResponse };
+
   export {
     CustomMetadataFields as CustomMetadataFields,
     type CustomMetadataField as CustomMetadataField,
+    type CustomMetadataFieldSchema as CustomMetadataFieldSchema,
     type CustomMetadataFieldListResponse as CustomMetadataFieldListResponse,
-    type CustomMetadataFieldDeleteResponse as CustomMetadataFieldDeleteResponse,
-    type CustomMetadataFieldCreateParams as CustomMetadataFieldCreateParams,
     type CustomMetadataFieldListParams as CustomMetadataFieldListParams,
+    type CustomMetadataFieldCreateParams as CustomMetadataFieldCreateParams,
     type CustomMetadataFieldUpdateParams as CustomMetadataFieldUpdateParams,
   };
 
   export {
-    Files as Files,
-    type File as File,
-    type Folder as Folder,
+    Assets as Assets,
+    type BulkAssetsNotFoundError as BulkAssetsNotFoundError,
+    type BulkTagUpdatePartialResult as BulkTagUpdatePartialResult,
+    type BulkTagUpdateResult as BulkTagUpdateResult,
+    type FileAsset as FileAsset,
+    type FileDetails as FileDetails,
+    type FileVersionDetails as FileVersionDetails,
+    type FolderDetails as FolderDetails,
     type Metadata as Metadata,
-    type UpdateFileRequest as UpdateFileRequest,
-    type FileUpdateResponse as FileUpdateResponse,
-    type FileCopyResponse as FileCopyResponse,
-    type FileMoveResponse as FileMoveResponse,
-    type FileRenameResponse as FileRenameResponse,
-    type FileUploadResponse as FileUploadResponse,
-    type FileUploadParams as FileUploadParams,
-    type FileUpdateParams as FileUpdateParams,
-    type FileCopyParams as FileCopyParams,
-    type FileMoveParams as FileMoveParams,
-    type FileRenameParams as FileRenameParams,
+    type UpdateAssetRequest as UpdateAssetRequest,
+    type UploadRequest as UploadRequest,
+    type UploadResponse as UploadResponse,
+    type VideoAsset as VideoAsset,
+    type AssetUpdateResponse as AssetUpdateResponse,
+    type AssetListResponse as AssetListResponse,
+    type AssetCopyResponse as AssetCopyResponse,
+    type AssetGetResponse as AssetGetResponse,
+    type AssetMoveResponse as AssetMoveResponse,
+    type AssetRenameResponse as AssetRenameResponse,
+    type AssetListResponsesCursor as AssetListResponsesCursor,
+    type AssetUploadParams as AssetUploadParams,
+    type AssetListParams as AssetListParams,
+    type AssetUpdateParams as AssetUpdateParams,
+    type AssetCopyParams as AssetCopyParams,
+    type AssetMoveParams as AssetMoveParams,
+    type AssetRenameParams as AssetRenameParams,
   };
 
   export {
     SavedExtensions as SavedExtensions,
+    type CreateSavedExtension as CreateSavedExtension,
+    type SavedExtensionBase as SavedExtensionBase,
+    type SavedExtensionReference as SavedExtensionReference,
+    type UpdateSavedExtension as UpdateSavedExtension,
     type SavedExtensionListResponse as SavedExtensionListResponse,
     type SavedExtensionCreateParams as SavedExtensionCreateParams,
     type SavedExtensionUpdateParams as SavedExtensionUpdateParams,
   };
 
-  export {
-    Assets as Assets,
-    type AssetListResponse as AssetListResponse,
-    type AssetListParams as AssetListParams,
-  };
-
   export { Cache as Cache };
 
-  export {
-    Folders as Folders,
-    type FolderCreateResponse as FolderCreateResponse,
-    type FolderDeleteResponse as FolderDeleteResponse,
-    type FolderCopyResponse as FolderCopyResponse,
-    type FolderMoveResponse as FolderMoveResponse,
-    type FolderRenameResponse as FolderRenameResponse,
-    type FolderCreateParams as FolderCreateParams,
-    type FolderDeleteParams as FolderDeleteParams,
-    type FolderCopyParams as FolderCopyParams,
-    type FolderMoveParams as FolderMoveParams,
-    type FolderRenameParams as FolderRenameParams,
-  };
-
   export { Accounts as Accounts };
-
-  export { Beta as Beta };
 
   export {
     Webhooks as Webhooks,
@@ -950,6 +965,13 @@ export declare namespace ImageKit {
     type UnwrapWebhookEvent as UnwrapWebhookEvent,
   };
 
+  export type AITaskAction = API.AITaskAction;
+  export type AITaskSelectMetadata = API.AITaskSelectMetadata;
+  export type AITaskSelectTags = API.AITaskSelectTags;
+  export type AITasksExtension = API.AITasksExtension;
+  export type AITaskYesNo = API.AITaskYesNo;
+  export type AutoDescriptionExtension = API.AutoDescriptionExtension;
+  export type AutoTaggingExtension = API.AutoTaggingExtension;
   export type BaseOverlay = API.BaseOverlay;
   export type ExtensionConfig = API.ExtensionConfig;
   export type Extensions = API.Extensions;
@@ -958,6 +980,7 @@ export declare namespace ImageKit {
   export type Overlay = API.Overlay;
   export type OverlayPosition = API.OverlayPosition;
   export type OverlayTiming = API.OverlayTiming;
+  export type RemovedotBgExtension = API.RemovedotBgExtension;
   export type ResponsiveImageAttributes = API.ResponsiveImageAttributes;
   export type SavedExtension = API.SavedExtension;
   export type SolidColorOverlay = API.SolidColorOverlay;

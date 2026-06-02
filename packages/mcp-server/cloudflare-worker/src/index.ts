@@ -24,39 +24,39 @@ type MCPProps = {
  */
 const serverConfig: ServerConfig = {
   orgName: 'ImageKit',
-  instructionsUrl: 'https://imagekit.io/docs/mcp-server', // Set a url for where you show users how to get an API key
-  logoUrl: 'https://ik.imagekit.io/ikmedia/logo/light_T4buIzohVH.svg', // Set a custom logo url to appear during the OAuth flow
+  instructionsUrl: undefined, // Set a url for where you show users how to get an API key
+  logoUrl: undefined, // Set a custom logo url to appear during the OAuth flow
   clientProperties: [
     {
       key: 'privateKey',
-      label: 'ImageKit Private Key',
+      label: 'Private Key',
       description:
         'Your ImageKit private API key (starts with `private_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/api-keys).\n',
       required: true,
       default: undefined,
-      placeholder: 'ImageKit Private Key',
+      placeholder: 'My Private Key',
       type: 'password',
     },
-    // {
-    //   key: 'password',
-    //   label: 'Password',
-    //   description:
-    //     'ImageKit uses your API key as username and ignores the password. \nThe SDK sets a dummy value. You can ignore this field.\n',
-    //   required: false,
-    //   default: 'do_not_set',
-    //   placeholder: 'My Password',
-    //   type: 'password',
-    // },
-    // {
-    //   key: 'webhookSecret',
-    //   label: 'Webhook Secret',
-    //   description:
-    //     'Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you are using webhooks.\n',
-    //   required: false,
-    //   default: null,
-    //   placeholder: 'My Webhook Secret',
-    //   type: 'string',
-    // },
+    {
+      key: 'password',
+      label: 'Password',
+      description:
+        'ImageKit uses your API key as username and ignores the password. \nThe SDK sets a dummy value. You can ignore this field.\n',
+      required: false,
+      default: 'do_not_set',
+      placeholder: 'My Password',
+      type: 'password',
+    },
+    {
+      key: 'webhookSecret',
+      label: 'Webhook Secret',
+      description:
+        'Your ImageKit webhook secret for verifying webhook signatures (starts with `whsec_`).\nYou can find this in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/webhooks).\nOnly required if you are using webhooks.\n',
+      required: false,
+      default: null,
+      placeholder: 'My Webhook Secret',
+      type: 'string',
+    },
   ],
 };
 
@@ -70,7 +70,7 @@ const INSTRUCTIONS_FETCH_TIMEOUT_MS = 5000;
 
 function fallbackMcpServer(): McpServer {
   return new McpServer(
-    { name: 'imagekit_nodejs_api', version: '7.5.0' },
+    { name: 'imagekit_nodejs_api', version: '7.6.2' },
     { capabilities: { tools: {}, logging: {} } },
   );
 }

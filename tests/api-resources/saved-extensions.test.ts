@@ -46,7 +46,7 @@ describe('resource savedExtensions', () => {
           add_shadow: true,
           bg_color: 'bg_color',
           bg_image_url: 'bg_image_url',
-          semitransparency: true,
+          semi_transparency: true,
         },
       },
       description: 'Analyzes vehicle images for type, condition, and quality assessment',

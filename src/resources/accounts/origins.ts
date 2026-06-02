@@ -18,28 +18,28 @@ export class Origins extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<OriginListResponse> {
-    return this._client.get('/v1/accounts/origins', options);
+    return this._client.get('/v2/accounts/origins', options);
   }
 
   /**
-   * **Note:** This API is currently in beta.
-   * Creates a new origin and returns the origin object.
+   * **Note:** This API is currently in beta. Creates a new origin and returns the
+   * origin object.
    *
    * @example
    * ```ts
    * const originResponse = await client.accounts.origins.create(
    *   {
-   *     accessKey: 'AKIAIOSFODNN7EXAMPLE',
+   *     access_key: 'AKIAIOSFODNN7EXAMPLE',
    *     bucket: 'product-images',
    *     name: 'US S3 Storage',
-   *     secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+   *     secret_key: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
    *     type: 'S3',
    *   },
    * );
    * ```
    */
   create(body: OriginCreateParams, options?: RequestOptions): APIPromise<OriginResponse> {
-    return this._client.post('/v1/accounts/origins', { body, ...options });
+    return this._client.post('/v2/accounts/origins', { body, ...options });
   }
 
   /**
@@ -54,7 +54,7 @@ export class Origins extends APIResource {
    * ```
    */
   get(id: string, options?: RequestOptions): APIPromise<OriginResponse> {
-    return this._client.get(path`/v1/accounts/origins/${id}`, options);
+    return this._client.get(path`/v2/accounts/origins/${id}`, options);
   }
 
   /**
@@ -66,17 +66,17 @@ export class Origins extends APIResource {
    * const originResponse = await client.accounts.origins.update(
    *   'id',
    *   {
-   *     accessKey: 'AKIAIOSFODNN7EXAMPLE',
+   *     access_key: 'AKIAIOSFODNN7EXAMPLE',
    *     bucket: 'product-images',
    *     name: 'US S3 Storage',
-   *     secretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+   *     secret_key: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
    *     type: 'S3',
    *   },
    * );
    * ```
    */
   update(id: string, body: OriginUpdateParams, options?: RequestOptions): APIPromise<OriginResponse> {
-    return this._client.put(path`/v1/accounts/origins/${id}`, { body, ...options });
+    return this._client.patch(path`/v2/accounts/origins/${id}`, { body, ...options });
   }
 
   /**
@@ -90,7 +90,7 @@ export class Origins extends APIResource {
    * ```
    */
   delete(id: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/v1/accounts/origins/${id}`, {
+    return this._client.delete(path`/v2/accounts/origins/${id}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -115,7 +115,7 @@ export namespace OriginRequest {
     /**
      * Access key for the bucket.
      */
-    accessKey: string;
+    access_key: string;
 
     /**
      * S3 bucket name.
@@ -130,19 +130,19 @@ export namespace OriginRequest {
     /**
      * Secret key for the bucket.
      */
-    secretKey: string;
+    secret_key: string;
 
     type: 'S3';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     /**
      * Path prefix inside the bucket.
@@ -154,7 +154,7 @@ export namespace OriginRequest {
     /**
      * Access key for the bucket.
      */
-    accessKey: string;
+    access_key: string;
 
     /**
      * S3 bucket name.
@@ -174,19 +174,19 @@ export namespace OriginRequest {
     /**
      * Secret key for the bucket.
      */
-    secretKey: string;
+    secret_key: string;
 
     type: 'S3_COMPATIBLE';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     /**
      * Path prefix inside the bucket.
@@ -196,14 +196,14 @@ export namespace OriginRequest {
     /**
      * Use path-style S3 URLs?
      */
-    s3ForcePathStyle?: boolean;
+    s3_force_path_style?: boolean;
   }
 
   export interface CloudinaryBackup {
     /**
      * Access key for the bucket.
      */
-    accessKey: string;
+    access_key: string;
 
     /**
      * S3 bucket name.
@@ -218,19 +218,19 @@ export namespace OriginRequest {
     /**
      * Secret key for the bucket.
      */
-    secretKey: string;
+    secret_key: string;
 
     type: 'CLOUDINARY_BACKUP';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     /**
      * Path prefix inside the bucket.
@@ -242,7 +242,7 @@ export namespace OriginRequest {
     /**
      * Root URL for the web folder origin.
      */
-    baseUrl: string;
+    base_url: string;
 
     /**
      * Display name of the origin.
@@ -254,17 +254,17 @@ export namespace OriginRequest {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Forward the Host header to origin?
      */
-    forwardHostHeaderToOrigin?: boolean;
+    forward_host_header_to_origin?: boolean;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
   }
 
   export interface WebProxy {
@@ -278,43 +278,43 @@ export namespace OriginRequest {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
   }
 
   export interface Gcs {
     bucket: string;
 
-    clientEmail: string;
+    client_email: string;
 
     /**
      * Display name of the origin.
      */
     name: string;
 
-    privateKey: string;
+    private_key: string;
 
     type: 'GCS';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     prefix?: string;
   }
 
   export interface AzureBlob {
-    accountName: string;
+    account_name: string;
 
     container: string;
 
@@ -323,19 +323,19 @@ export namespace OriginRequest {
      */
     name: string;
 
-    sasToken: string;
+    sas_token: string;
 
     type: 'AZURE_BLOB';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     prefix?: string;
   }
@@ -344,17 +344,17 @@ export namespace OriginRequest {
     /**
      * Akeneo instance base URL.
      */
-    baseUrl: string;
+    base_url: string;
 
     /**
      * Akeneo API client ID.
      */
-    clientId: string;
+    client_id: string;
 
     /**
      * Akeneo API client secret.
      */
-    clientSecret: string;
+    client_secret: string;
 
     /**
      * Display name of the origin.
@@ -376,12 +376,12 @@ export namespace OriginRequest {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
   }
 }
 
@@ -414,7 +414,7 @@ export namespace OriginResponse {
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader: boolean;
+    include_canonical_header: boolean;
 
     /**
      * Display name of the origin.
@@ -431,7 +431,7 @@ export namespace OriginResponse {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
   }
 
   export interface S3Compatible {
@@ -454,7 +454,7 @@ export namespace OriginResponse {
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader: boolean;
+    include_canonical_header: boolean;
 
     /**
      * Display name of the origin.
@@ -469,14 +469,14 @@ export namespace OriginResponse {
     /**
      * Use path-style S3 URLs?
      */
-    s3ForcePathStyle: boolean;
+    s3_force_path_style: boolean;
 
     type: 'S3_COMPATIBLE';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
   }
 
   export interface CloudinaryBackup {
@@ -494,7 +494,7 @@ export namespace OriginResponse {
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader: boolean;
+    include_canonical_header: boolean;
 
     /**
      * Display name of the origin.
@@ -511,7 +511,7 @@ export namespace OriginResponse {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
   }
 
   export interface WebFolder {
@@ -524,17 +524,17 @@ export namespace OriginResponse {
     /**
      * Root URL for the web folder origin.
      */
-    baseUrl: string;
+    base_url: string;
 
     /**
      * Forward the Host header to origin?
      */
-    forwardHostHeaderToOrigin: boolean;
+    forward_host_header_to_origin: boolean;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader: boolean;
+    include_canonical_header: boolean;
 
     /**
      * Display name of the origin.
@@ -546,7 +546,7 @@ export namespace OriginResponse {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
   }
 
   export interface WebProxy {
@@ -559,7 +559,7 @@ export namespace OriginResponse {
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader: boolean;
+    include_canonical_header: boolean;
 
     /**
      * Display name of the origin.
@@ -571,7 +571,7 @@ export namespace OriginResponse {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
   }
 
   export interface Gcs {
@@ -583,12 +583,12 @@ export namespace OriginResponse {
 
     bucket: string;
 
-    clientEmail: string;
+    client_email: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader: boolean;
+    include_canonical_header: boolean;
 
     /**
      * Display name of the origin.
@@ -602,7 +602,7 @@ export namespace OriginResponse {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
   }
 
   export interface AzureBlob {
@@ -612,14 +612,14 @@ export namespace OriginResponse {
      */
     id: string;
 
-    accountName: string;
+    account_name: string;
 
     container: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader: boolean;
+    include_canonical_header: boolean;
 
     /**
      * Display name of the origin.
@@ -633,7 +633,7 @@ export namespace OriginResponse {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
   }
 
   export interface AkeneoPim {
@@ -646,12 +646,12 @@ export namespace OriginResponse {
     /**
      * Akeneo instance base URL.
      */
-    baseUrl: string;
+    base_url: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader: boolean;
+    include_canonical_header: boolean;
 
     /**
      * Display name of the origin.
@@ -663,7 +663,7 @@ export namespace OriginResponse {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
   }
 }
 
@@ -684,7 +684,7 @@ export declare namespace OriginCreateParams {
     /**
      * Access key for the bucket.
      */
-    accessKey: string;
+    access_key: string;
 
     /**
      * S3 bucket name.
@@ -699,19 +699,19 @@ export declare namespace OriginCreateParams {
     /**
      * Secret key for the bucket.
      */
-    secretKey: string;
+    secret_key: string;
 
     type: 'S3';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     /**
      * Path prefix inside the bucket.
@@ -723,7 +723,7 @@ export declare namespace OriginCreateParams {
     /**
      * Access key for the bucket.
      */
-    accessKey: string;
+    access_key: string;
 
     /**
      * S3 bucket name.
@@ -743,19 +743,19 @@ export declare namespace OriginCreateParams {
     /**
      * Secret key for the bucket.
      */
-    secretKey: string;
+    secret_key: string;
 
     type: 'S3_COMPATIBLE';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     /**
      * Path prefix inside the bucket.
@@ -765,14 +765,14 @@ export declare namespace OriginCreateParams {
     /**
      * Use path-style S3 URLs?
      */
-    s3ForcePathStyle?: boolean;
+    s3_force_path_style?: boolean;
   }
 
   export interface CloudinaryBackup {
     /**
      * Access key for the bucket.
      */
-    accessKey: string;
+    access_key: string;
 
     /**
      * S3 bucket name.
@@ -787,19 +787,19 @@ export declare namespace OriginCreateParams {
     /**
      * Secret key for the bucket.
      */
-    secretKey: string;
+    secret_key: string;
 
     type: 'CLOUDINARY_BACKUP';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     /**
      * Path prefix inside the bucket.
@@ -811,7 +811,7 @@ export declare namespace OriginCreateParams {
     /**
      * Root URL for the web folder origin.
      */
-    baseUrl: string;
+    base_url: string;
 
     /**
      * Display name of the origin.
@@ -823,17 +823,17 @@ export declare namespace OriginCreateParams {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Forward the Host header to origin?
      */
-    forwardHostHeaderToOrigin?: boolean;
+    forward_host_header_to_origin?: boolean;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
   }
 
   export interface WebProxy {
@@ -847,43 +847,43 @@ export declare namespace OriginCreateParams {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
   }
 
   export interface GoogleCloudStorageGcs {
     bucket: string;
 
-    clientEmail: string;
+    client_email: string;
 
     /**
      * Display name of the origin.
      */
     name: string;
 
-    privateKey: string;
+    private_key: string;
 
     type: 'GCS';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     prefix?: string;
   }
 
   export interface AzureBlobStorage {
-    accountName: string;
+    account_name: string;
 
     container: string;
 
@@ -892,19 +892,19 @@ export declare namespace OriginCreateParams {
      */
     name: string;
 
-    sasToken: string;
+    sas_token: string;
 
     type: 'AZURE_BLOB';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     prefix?: string;
   }
@@ -913,17 +913,17 @@ export declare namespace OriginCreateParams {
     /**
      * Akeneo instance base URL.
      */
-    baseUrl: string;
+    base_url: string;
 
     /**
      * Akeneo API client ID.
      */
-    clientId: string;
+    client_id: string;
 
     /**
      * Akeneo API client secret.
      */
-    clientSecret: string;
+    client_secret: string;
 
     /**
      * Display name of the origin.
@@ -945,12 +945,12 @@ export declare namespace OriginCreateParams {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
   }
 }
 
@@ -969,7 +969,7 @@ export declare namespace OriginUpdateParams {
     /**
      * Access key for the bucket.
      */
-    accessKey: string;
+    access_key: string;
 
     /**
      * S3 bucket name.
@@ -984,19 +984,19 @@ export declare namespace OriginUpdateParams {
     /**
      * Secret key for the bucket.
      */
-    secretKey: string;
+    secret_key: string;
 
     type: 'S3';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     /**
      * Path prefix inside the bucket.
@@ -1008,7 +1008,7 @@ export declare namespace OriginUpdateParams {
     /**
      * Access key for the bucket.
      */
-    accessKey: string;
+    access_key: string;
 
     /**
      * S3 bucket name.
@@ -1028,19 +1028,19 @@ export declare namespace OriginUpdateParams {
     /**
      * Secret key for the bucket.
      */
-    secretKey: string;
+    secret_key: string;
 
     type: 'S3_COMPATIBLE';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     /**
      * Path prefix inside the bucket.
@@ -1050,14 +1050,14 @@ export declare namespace OriginUpdateParams {
     /**
      * Use path-style S3 URLs?
      */
-    s3ForcePathStyle?: boolean;
+    s3_force_path_style?: boolean;
   }
 
   export interface CloudinaryBackup {
     /**
      * Access key for the bucket.
      */
-    accessKey: string;
+    access_key: string;
 
     /**
      * S3 bucket name.
@@ -1072,19 +1072,19 @@ export declare namespace OriginUpdateParams {
     /**
      * Secret key for the bucket.
      */
-    secretKey: string;
+    secret_key: string;
 
     type: 'CLOUDINARY_BACKUP';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     /**
      * Path prefix inside the bucket.
@@ -1096,7 +1096,7 @@ export declare namespace OriginUpdateParams {
     /**
      * Root URL for the web folder origin.
      */
-    baseUrl: string;
+    base_url: string;
 
     /**
      * Display name of the origin.
@@ -1108,17 +1108,17 @@ export declare namespace OriginUpdateParams {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Forward the Host header to origin?
      */
-    forwardHostHeaderToOrigin?: boolean;
+    forward_host_header_to_origin?: boolean;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
   }
 
   export interface WebProxy {
@@ -1132,43 +1132,43 @@ export declare namespace OriginUpdateParams {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
   }
 
   export interface GoogleCloudStorageGcs {
     bucket: string;
 
-    clientEmail: string;
+    client_email: string;
 
     /**
      * Display name of the origin.
      */
     name: string;
 
-    privateKey: string;
+    private_key: string;
 
     type: 'GCS';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     prefix?: string;
   }
 
   export interface AzureBlobStorage {
-    accountName: string;
+    account_name: string;
 
     container: string;
 
@@ -1177,19 +1177,19 @@ export declare namespace OriginUpdateParams {
      */
     name: string;
 
-    sasToken: string;
+    sas_token: string;
 
     type: 'AZURE_BLOB';
 
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
 
     prefix?: string;
   }
@@ -1198,17 +1198,17 @@ export declare namespace OriginUpdateParams {
     /**
      * Akeneo instance base URL.
      */
-    baseUrl: string;
+    base_url: string;
 
     /**
      * Akeneo API client ID.
      */
-    clientId: string;
+    client_id: string;
 
     /**
      * Akeneo API client secret.
      */
-    clientSecret: string;
+    client_secret: string;
 
     /**
      * Display name of the origin.
@@ -1230,12 +1230,12 @@ export declare namespace OriginUpdateParams {
     /**
      * URL used in the Canonical header (if enabled).
      */
-    baseUrlForCanonicalHeader?: string;
+    base_url_for_canonical_header?: string;
 
     /**
      * Whether to send a Canonical header.
      */
-    includeCanonicalHeader?: boolean;
+    include_canonical_header?: boolean;
   }
 }
 

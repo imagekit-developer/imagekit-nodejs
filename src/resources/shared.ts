@@ -1,5 +1,183 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import * as SavedExtensionsAPI from './saved-extensions';
+
+/**
+ * Defines actions to perform based on AI task results.
+ */
+export interface AITaskAction {
+  /**
+   * Array of tag strings to add to the asset.
+   */
+  add_tags?: Array<string>;
+
+  /**
+   * Array of tag strings to remove from the asset.
+   */
+  remove_tags?: Array<string>;
+
+  /**
+   * Array of custom metadata field updates.
+   */
+  set_metadata?: Array<AITaskAction.SetMetadata>;
+
+  /**
+   * Array of custom metadata fields to remove.
+   */
+  unset_metadata?: Array<AITaskAction.UnsetMetadata>;
+}
+
+export namespace AITaskAction {
+  export interface SetMetadata {
+    /**
+     * Name of the custom metadata field to set.
+     */
+    field: string;
+
+    /**
+     * Value to set for the custom metadata field. The value type should match the
+     * custom metadata field type.
+     */
+    value: string | number | boolean | Array<string | number | boolean>;
+  }
+
+  export interface UnsetMetadata {
+    /**
+     * Name of the custom metadata field to remove.
+     */
+    field: string;
+  }
+}
+
+export interface AITaskSelectMetadata {
+  /**
+   * Name of the custom metadata field to set. The field must exist in your account.
+   */
+  field: string;
+
+  /**
+   * The question or instruction for the AI to analyze the image.
+   */
+  instruction: string;
+
+  /**
+   * Task type that analyzes the image and sets a custom metadata field value from a
+   * vocabulary.
+   */
+  type: 'select_metadata';
+
+  /**
+   * Maximum number of values to select from the vocabulary.
+   */
+  max_selections?: number;
+
+  /**
+   * Minimum number of values to select from the vocabulary.
+   */
+  min_selections?: number;
+
+  /**
+   * An array of possible values matching the custom metadata field type. If not
+   * provided for SingleSelect or MultiSelect field types, all values from the custom
+   * metadata field definition will be used. When providing large vocabularies (above
+   * 30 items), the AI may not strictly adhere to the list.
+   */
+  vocabulary?: Array<string | number | boolean>;
+}
+
+export interface AITaskSelectTags {
+  /**
+   * The question or instruction for the AI to analyze the image.
+   */
+  instruction: string;
+
+  /**
+   * Task type that analyzes the image and adds matching tags from a vocabulary.
+   */
+  type: 'select_tags';
+
+  /**
+   * Maximum number of tags to select from the vocabulary.
+   */
+  max_selections?: number;
+
+  /**
+   * Minimum number of tags to select from the vocabulary.
+   */
+  min_selections?: number;
+
+  /**
+   * Array of possible tag values. The combined length of all strings must not exceed
+   * 500 characters, and values cannot include the `%` character. When providing
+   * large vocabularies (more than 30 items), the AI may not follow the list
+   * strictly.
+   */
+  vocabulary?: Array<string>;
+}
+
+export interface AITasksExtension {
+  /**
+   * Specifies the AI tasks extension for automated image analysis using AI models.
+   */
+  name: 'ai-tasks';
+
+  /**
+   * Array of task objects defining AI operations to perform on the asset.
+   */
+  tasks: Array<AITaskSelectTags | AITaskSelectMetadata | AITaskYesNo>;
+}
+
+export interface AITaskYesNo {
+  /**
+   * The yes/no question for the AI to answer about the image.
+   */
+  instruction: string;
+
+  /**
+   * Task type that asks a yes/no question and executes actions based on the answer.
+   */
+  type: 'yes_no';
+
+  /**
+   * Actions to execute if the AI answers no.
+   */
+  on_no?: AITaskAction;
+
+  /**
+   * Actions to execute if the AI cannot determine the answer.
+   */
+  on_unknown?: AITaskAction;
+
+  /**
+   * Actions to execute if the AI answers yes.
+   */
+  on_yes?: AITaskAction;
+}
+
+export interface AutoDescriptionExtension {
+  /**
+   * Specifies the auto description extension.
+   */
+  name: 'ai-auto-description';
+}
+
+export interface AutoTaggingExtension {
+  /**
+   * Maximum number of tags to attach to the asset.
+   */
+  max_tags: number;
+
+  /**
+   * Minimum confidence level for tags to be considered valid.
+   */
+  min_confidence: number;
+
+  /**
+   * Specifies the auto-tagging extension used.
+   */
+  name: 'google-auto-tagging' | 'aws-auto-tagging';
+}
+
 export interface BaseOverlay {
   /**
    * Controls how the layer blends with the base image or underlying content. Maps to
@@ -44,662 +222,22 @@ export interface BaseOverlay {
  * references).
  */
 export type ExtensionConfig =
-  | ExtensionConfig.RemoveBg
-  | ExtensionConfig.AutoTaggingExtension
-  | ExtensionConfig.AIAutoDescription
-  | ExtensionConfig.AITasks;
-
-export namespace ExtensionConfig {
-  export interface RemoveBg {
-    /**
-     * Specifies the background removal extension.
-     */
-    name: 'remove-bg';
-
-    options?: RemoveBg.Options;
-  }
-
-  export namespace RemoveBg {
-    export interface Options {
-      /**
-       * Whether to add an artificial shadow to the result. Default is false. Note:
-       * Adding shadows is currently only supported for car photos.
-       */
-      add_shadow?: boolean;
-
-      /**
-       * Specifies a solid color background using hex code (e.g., "81d4fa", "fff") or
-       * color name (e.g., "green"). If this parameter is set, `bg_image_url` must be
-       * empty.
-       */
-      bg_color?: string;
-
-      /**
-       * Sets a background image from a URL. If this parameter is set, `bg_color` must be
-       * empty.
-       */
-      bg_image_url?: string;
-
-      /**
-       * Allows semi-transparent regions in the result. Default is true. Note:
-       * Semitransparency is currently only supported for car windows.
-       */
-      semitransparency?: boolean;
-    }
-  }
-
-  export interface AutoTaggingExtension {
-    /**
-     * Maximum number of tags to attach to the asset.
-     */
-    maxTags: number;
-
-    /**
-     * Minimum confidence level for tags to be considered valid.
-     */
-    minConfidence: number;
-
-    /**
-     * Specifies the auto-tagging extension used.
-     */
-    name: 'google-auto-tagging' | 'aws-auto-tagging';
-  }
-
-  export interface AIAutoDescription {
-    /**
-     * Specifies the auto description extension.
-     */
-    name: 'ai-auto-description';
-  }
-
-  export interface AITasks {
-    /**
-     * Specifies the AI tasks extension for automated image analysis using AI models.
-     */
-    name: 'ai-tasks';
-
-    /**
-     * Array of task objects defining AI operations to perform on the asset.
-     */
-    tasks: Array<AITasks.SelectTags | AITasks.SelectMetadata | AITasks.YesNo>;
-  }
-
-  export namespace AITasks {
-    export interface SelectTags {
-      /**
-       * The question or instruction for the AI to analyze the image.
-       */
-      instruction: string;
-
-      /**
-       * Task type that analyzes the image and adds matching tags from a vocabulary.
-       */
-      type: 'select_tags';
-
-      /**
-       * Maximum number of tags to select from the vocabulary.
-       */
-      max_selections?: number;
-
-      /**
-       * Minimum number of tags to select from the vocabulary.
-       */
-      min_selections?: number;
-
-      /**
-       * Array of possible tag values. The combined length of all strings must not exceed
-       * 500 characters, and values cannot include the `%` character. When providing
-       * large vocabularies (more than 30 items), the AI may not follow the list
-       * strictly.
-       */
-      vocabulary?: Array<string>;
-    }
-
-    export interface SelectMetadata {
-      /**
-       * Name of the custom metadata field to set. The field must exist in your account.
-       */
-      field: string;
-
-      /**
-       * The question or instruction for the AI to analyze the image.
-       */
-      instruction: string;
-
-      /**
-       * Task type that analyzes the image and sets a custom metadata field value from a
-       * vocabulary.
-       */
-      type: 'select_metadata';
-
-      /**
-       * Maximum number of values to select from the vocabulary.
-       */
-      max_selections?: number;
-
-      /**
-       * Minimum number of values to select from the vocabulary.
-       */
-      min_selections?: number;
-
-      /**
-       * An array of possible values matching the custom metadata field type. If not
-       * provided for SingleSelect or MultiSelect field types, all values from the custom
-       * metadata field definition will be used. When providing large vocabularies (above
-       * 30 items), the AI may not strictly adhere to the list.
-       */
-      vocabulary?: Array<string | number | boolean>;
-    }
-
-    export interface YesNo {
-      /**
-       * The yes/no question for the AI to answer about the image.
-       */
-      instruction: string;
-
-      /**
-       * Task type that asks a yes/no question and executes actions based on the answer.
-       */
-      type: 'yes_no';
-
-      /**
-       * Actions to execute if the AI answers no.
-       */
-      on_no?: YesNo.OnNo;
-
-      /**
-       * Actions to execute if the AI cannot determine the answer.
-       */
-      on_unknown?: YesNo.OnUnknown;
-
-      /**
-       * Actions to execute if the AI answers yes.
-       */
-      on_yes?: YesNo.OnYes;
-    }
-
-    export namespace YesNo {
-      /**
-       * Actions to execute if the AI answers no.
-       */
-      export interface OnNo {
-        /**
-         * Array of tag strings to add to the asset.
-         */
-        add_tags?: Array<string>;
-
-        /**
-         * Array of tag strings to remove from the asset.
-         */
-        remove_tags?: Array<string>;
-
-        /**
-         * Array of custom metadata field updates.
-         */
-        set_metadata?: Array<OnNo.SetMetadata>;
-
-        /**
-         * Array of custom metadata fields to remove.
-         */
-        unset_metadata?: Array<OnNo.UnsetMetadata>;
-      }
-
-      export namespace OnNo {
-        export interface SetMetadata {
-          /**
-           * Name of the custom metadata field to set.
-           */
-          field: string;
-
-          /**
-           * Value to set for the custom metadata field. The value type should match the
-           * custom metadata field type.
-           */
-          value: string | number | boolean | Array<string | number | boolean>;
-        }
-
-        export interface UnsetMetadata {
-          /**
-           * Name of the custom metadata field to remove.
-           */
-          field: string;
-        }
-      }
-
-      /**
-       * Actions to execute if the AI cannot determine the answer.
-       */
-      export interface OnUnknown {
-        /**
-         * Array of tag strings to add to the asset.
-         */
-        add_tags?: Array<string>;
-
-        /**
-         * Array of tag strings to remove from the asset.
-         */
-        remove_tags?: Array<string>;
-
-        /**
-         * Array of custom metadata field updates.
-         */
-        set_metadata?: Array<OnUnknown.SetMetadata>;
-
-        /**
-         * Array of custom metadata fields to remove.
-         */
-        unset_metadata?: Array<OnUnknown.UnsetMetadata>;
-      }
-
-      export namespace OnUnknown {
-        export interface SetMetadata {
-          /**
-           * Name of the custom metadata field to set.
-           */
-          field: string;
-
-          /**
-           * Value to set for the custom metadata field. The value type should match the
-           * custom metadata field type.
-           */
-          value: string | number | boolean | Array<string | number | boolean>;
-        }
-
-        export interface UnsetMetadata {
-          /**
-           * Name of the custom metadata field to remove.
-           */
-          field: string;
-        }
-      }
-
-      /**
-       * Actions to execute if the AI answers yes.
-       */
-      export interface OnYes {
-        /**
-         * Array of tag strings to add to the asset.
-         */
-        add_tags?: Array<string>;
-
-        /**
-         * Array of tag strings to remove from the asset.
-         */
-        remove_tags?: Array<string>;
-
-        /**
-         * Array of custom metadata field updates.
-         */
-        set_metadata?: Array<OnYes.SetMetadata>;
-
-        /**
-         * Array of custom metadata fields to remove.
-         */
-        unset_metadata?: Array<OnYes.UnsetMetadata>;
-      }
-
-      export namespace OnYes {
-        export interface SetMetadata {
-          /**
-           * Name of the custom metadata field to set.
-           */
-          field: string;
-
-          /**
-           * Value to set for the custom metadata field. The value type should match the
-           * custom metadata field type.
-           */
-          value: string | number | boolean | Array<string | number | boolean>;
-        }
-
-        export interface UnsetMetadata {
-          /**
-           * Name of the custom metadata field to remove.
-           */
-          field: string;
-        }
-      }
-    }
-  }
-}
+  | RemovedotBgExtension
+  | AutoTaggingExtension
+  | AutoDescriptionExtension
+  | AITasksExtension;
 
 /**
  * Array of extensions to be applied to the asset. Each extension can be configured
  * with specific parameters based on the extension type.
  */
 export type Extensions = Array<
-  | Extensions.RemoveBg
-  | Extensions.AutoTaggingExtension
-  | Extensions.AIAutoDescription
-  | Extensions.AITasks
-  | Extensions.SavedExtension
+  | RemovedotBgExtension
+  | AutoTaggingExtension
+  | AutoDescriptionExtension
+  | AITasksExtension
+  | SavedExtensionsAPI.SavedExtensionReference
 >;
-
-export namespace Extensions {
-  export interface RemoveBg {
-    /**
-     * Specifies the background removal extension.
-     */
-    name: 'remove-bg';
-
-    options?: RemoveBg.Options;
-  }
-
-  export namespace RemoveBg {
-    export interface Options {
-      /**
-       * Whether to add an artificial shadow to the result. Default is false. Note:
-       * Adding shadows is currently only supported for car photos.
-       */
-      add_shadow?: boolean;
-
-      /**
-       * Specifies a solid color background using hex code (e.g., "81d4fa", "fff") or
-       * color name (e.g., "green"). If this parameter is set, `bg_image_url` must be
-       * empty.
-       */
-      bg_color?: string;
-
-      /**
-       * Sets a background image from a URL. If this parameter is set, `bg_color` must be
-       * empty.
-       */
-      bg_image_url?: string;
-
-      /**
-       * Allows semi-transparent regions in the result. Default is true. Note:
-       * Semitransparency is currently only supported for car windows.
-       */
-      semitransparency?: boolean;
-    }
-  }
-
-  export interface AutoTaggingExtension {
-    /**
-     * Maximum number of tags to attach to the asset.
-     */
-    maxTags: number;
-
-    /**
-     * Minimum confidence level for tags to be considered valid.
-     */
-    minConfidence: number;
-
-    /**
-     * Specifies the auto-tagging extension used.
-     */
-    name: 'google-auto-tagging' | 'aws-auto-tagging';
-  }
-
-  export interface AIAutoDescription {
-    /**
-     * Specifies the auto description extension.
-     */
-    name: 'ai-auto-description';
-  }
-
-  export interface AITasks {
-    /**
-     * Specifies the AI tasks extension for automated image analysis using AI models.
-     */
-    name: 'ai-tasks';
-
-    /**
-     * Array of task objects defining AI operations to perform on the asset.
-     */
-    tasks: Array<AITasks.SelectTags | AITasks.SelectMetadata | AITasks.YesNo>;
-  }
-
-  export namespace AITasks {
-    export interface SelectTags {
-      /**
-       * The question or instruction for the AI to analyze the image.
-       */
-      instruction: string;
-
-      /**
-       * Task type that analyzes the image and adds matching tags from a vocabulary.
-       */
-      type: 'select_tags';
-
-      /**
-       * Maximum number of tags to select from the vocabulary.
-       */
-      max_selections?: number;
-
-      /**
-       * Minimum number of tags to select from the vocabulary.
-       */
-      min_selections?: number;
-
-      /**
-       * Array of possible tag values. The combined length of all strings must not exceed
-       * 500 characters, and values cannot include the `%` character. When providing
-       * large vocabularies (more than 30 items), the AI may not follow the list
-       * strictly.
-       */
-      vocabulary?: Array<string>;
-    }
-
-    export interface SelectMetadata {
-      /**
-       * Name of the custom metadata field to set. The field must exist in your account.
-       */
-      field: string;
-
-      /**
-       * The question or instruction for the AI to analyze the image.
-       */
-      instruction: string;
-
-      /**
-       * Task type that analyzes the image and sets a custom metadata field value from a
-       * vocabulary.
-       */
-      type: 'select_metadata';
-
-      /**
-       * Maximum number of values to select from the vocabulary.
-       */
-      max_selections?: number;
-
-      /**
-       * Minimum number of values to select from the vocabulary.
-       */
-      min_selections?: number;
-
-      /**
-       * An array of possible values matching the custom metadata field type. If not
-       * provided for SingleSelect or MultiSelect field types, all values from the custom
-       * metadata field definition will be used. When providing large vocabularies (above
-       * 30 items), the AI may not strictly adhere to the list.
-       */
-      vocabulary?: Array<string | number | boolean>;
-    }
-
-    export interface YesNo {
-      /**
-       * The yes/no question for the AI to answer about the image.
-       */
-      instruction: string;
-
-      /**
-       * Task type that asks a yes/no question and executes actions based on the answer.
-       */
-      type: 'yes_no';
-
-      /**
-       * Actions to execute if the AI answers no.
-       */
-      on_no?: YesNo.OnNo;
-
-      /**
-       * Actions to execute if the AI cannot determine the answer.
-       */
-      on_unknown?: YesNo.OnUnknown;
-
-      /**
-       * Actions to execute if the AI answers yes.
-       */
-      on_yes?: YesNo.OnYes;
-    }
-
-    export namespace YesNo {
-      /**
-       * Actions to execute if the AI answers no.
-       */
-      export interface OnNo {
-        /**
-         * Array of tag strings to add to the asset.
-         */
-        add_tags?: Array<string>;
-
-        /**
-         * Array of tag strings to remove from the asset.
-         */
-        remove_tags?: Array<string>;
-
-        /**
-         * Array of custom metadata field updates.
-         */
-        set_metadata?: Array<OnNo.SetMetadata>;
-
-        /**
-         * Array of custom metadata fields to remove.
-         */
-        unset_metadata?: Array<OnNo.UnsetMetadata>;
-      }
-
-      export namespace OnNo {
-        export interface SetMetadata {
-          /**
-           * Name of the custom metadata field to set.
-           */
-          field: string;
-
-          /**
-           * Value to set for the custom metadata field. The value type should match the
-           * custom metadata field type.
-           */
-          value: string | number | boolean | Array<string | number | boolean>;
-        }
-
-        export interface UnsetMetadata {
-          /**
-           * Name of the custom metadata field to remove.
-           */
-          field: string;
-        }
-      }
-
-      /**
-       * Actions to execute if the AI cannot determine the answer.
-       */
-      export interface OnUnknown {
-        /**
-         * Array of tag strings to add to the asset.
-         */
-        add_tags?: Array<string>;
-
-        /**
-         * Array of tag strings to remove from the asset.
-         */
-        remove_tags?: Array<string>;
-
-        /**
-         * Array of custom metadata field updates.
-         */
-        set_metadata?: Array<OnUnknown.SetMetadata>;
-
-        /**
-         * Array of custom metadata fields to remove.
-         */
-        unset_metadata?: Array<OnUnknown.UnsetMetadata>;
-      }
-
-      export namespace OnUnknown {
-        export interface SetMetadata {
-          /**
-           * Name of the custom metadata field to set.
-           */
-          field: string;
-
-          /**
-           * Value to set for the custom metadata field. The value type should match the
-           * custom metadata field type.
-           */
-          value: string | number | boolean | Array<string | number | boolean>;
-        }
-
-        export interface UnsetMetadata {
-          /**
-           * Name of the custom metadata field to remove.
-           */
-          field: string;
-        }
-      }
-
-      /**
-       * Actions to execute if the AI answers yes.
-       */
-      export interface OnYes {
-        /**
-         * Array of tag strings to add to the asset.
-         */
-        add_tags?: Array<string>;
-
-        /**
-         * Array of tag strings to remove from the asset.
-         */
-        remove_tags?: Array<string>;
-
-        /**
-         * Array of custom metadata field updates.
-         */
-        set_metadata?: Array<OnYes.SetMetadata>;
-
-        /**
-         * Array of custom metadata fields to remove.
-         */
-        unset_metadata?: Array<OnYes.UnsetMetadata>;
-      }
-
-      export namespace OnYes {
-        export interface SetMetadata {
-          /**
-           * Name of the custom metadata field to set.
-           */
-          field: string;
-
-          /**
-           * Value to set for the custom metadata field. The value type should match the
-           * custom metadata field type.
-           */
-          value: string | number | boolean | Array<string | number | boolean>;
-        }
-
-        export interface UnsetMetadata {
-          /**
-           * Name of the custom metadata field to remove.
-           */
-          field: string;
-        }
-      }
-    }
-  }
-
-  export interface SavedExtension {
-    /**
-     * The unique ID of the saved extension to apply.
-     */
-    id: string;
-
-    /**
-     * Indicates this is a reference to a saved extension.
-     */
-    name: 'saved-extension';
-  }
-}
 
 /**
  * Options for generating responsive image attributes including `src`, `srcSet`,
@@ -887,6 +425,44 @@ export interface OverlayTiming {
   start?: number | string;
 }
 
+export interface RemovedotBgExtension {
+  /**
+   * Specifies the background removal extension.
+   */
+  name: 'remove-bg';
+
+  options?: RemovedotBgExtension.Options;
+}
+
+export namespace RemovedotBgExtension {
+  export interface Options {
+    /**
+     * Whether to add an artificial shadow to the result. Default is false. Note:
+     * Adding shadows is currently only supported for car photos.
+     */
+    add_shadow?: boolean;
+
+    /**
+     * Specifies a solid color background using hex code (e.g., "81d4fa", "fff") or
+     * color name (e.g., "green"). If this parameter is set, `bg_image_url` must be
+     * empty.
+     */
+    bg_color?: string;
+
+    /**
+     * Sets a background image from a URL. If this parameter is set, `bg_color` must be
+     * empty.
+     */
+    bg_image_url?: string;
+
+    /**
+     * Allows semi-transparent regions in the result. Default is true. Note:
+     * Semitransparency is currently only supported for car windows.
+     */
+    semi_transparency?: boolean;
+  }
+}
+
 /**
  * Resulting set of attributes suitable for an HTML `<img>` element. Useful for
  * enabling responsive image loading with `srcSet` and `sizes`.
@@ -918,37 +494,21 @@ export interface ResponsiveImageAttributes {
 /**
  * Saved extension object containing extension configuration.
  */
-export interface SavedExtension {
+export interface SavedExtension extends SavedExtensionsAPI.SavedExtensionBase {
   /**
    * Unique identifier of the saved extension.
    */
   id?: string;
 
   /**
-   * Configuration object for an extension (base extensions only, not saved extension
-   * references).
-   */
-  config?: ExtensionConfig;
-
-  /**
    * Timestamp when the saved extension was created.
    */
-  createdAt?: string;
-
-  /**
-   * Description of the saved extension.
-   */
-  description?: string;
-
-  /**
-   * Name of the saved extension.
-   */
-  name?: string;
+  created_at?: string;
 
   /**
    * Timestamp when the saved extension was last updated.
    */
-  updatedAt?: string;
+  updated_at?: string;
 }
 
 export interface SolidColorOverlay extends BaseOverlay {
@@ -991,7 +551,7 @@ export interface SolidColorOverlayTransformation {
    * image. See
    * [gradient](https://imagekit.io/docs/effects-and-enhancements#gradient---e-gradient).
    */
-  gradient?: true | string;
+  gradient?: 'boolean' | (string & {});
 
   /**
    * Controls the height of the solid color overlay. Accepts a numeric value or an

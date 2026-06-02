@@ -8,12 +8,51 @@ const client = new ImageKit({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource bulk', () => {
+describe('resource versions', () => {
+  // Mock server tests are disabled
+  test.skip('list', async () => {
+    const responsePromise = client.assets.versions.list('asset_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.assets.versions.list(
+        'asset_id',
+        { cursor: 'cursor', limit: 1 },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(ImageKit.NotFoundError);
+  });
+
+  // Mock server tests are disabled
+  test.skip('get: only required params', async () => {
+    const responsePromise = client.assets.versions.get('version_id', { asset_id: 'asset_id' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('get: required and optional params', async () => {
+    const response = await client.assets.versions.get('version_id', { asset_id: 'asset_id' });
+  });
+
   // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
-    const responsePromise = client.files.bulk.delete({
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-    });
+    const responsePromise = client.assets.versions.delete('version_id', { asset_id: 'asset_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -25,17 +64,12 @@ describe('resource bulk', () => {
 
   // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
-    const response = await client.files.bulk.delete({
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-    });
+    const response = await client.assets.versions.delete('version_id', { asset_id: 'asset_id' });
   });
 
   // Mock server tests are disabled
-  test.skip('addTags: only required params', async () => {
-    const responsePromise = client.files.bulk.addTags({
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-      tags: ['t-shirt', 'round-neck', 'sale2019'],
-    });
+  test.skip('restore: only required params', async () => {
+    const responsePromise = client.assets.versions.restore('version_id', { asset_id: 'asset_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -46,56 +80,7 @@ describe('resource bulk', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('addTags: required and optional params', async () => {
-    const response = await client.files.bulk.addTags({
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-      tags: ['t-shirt', 'round-neck', 'sale2019'],
-    });
-  });
-
-  // Mock server tests are disabled
-  test.skip('removeTags: only required params', async () => {
-    const responsePromise = client.files.bulk.removeTags({
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-      tags: ['t-shirt', 'round-neck', 'sale2019'],
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('removeTags: required and optional params', async () => {
-    const response = await client.files.bulk.removeTags({
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-      tags: ['t-shirt', 'round-neck', 'sale2019'],
-    });
-  });
-
-  // Mock server tests are disabled
-  test.skip('removeAITags: only required params', async () => {
-    const responsePromise = client.files.bulk.removeAITags({
-      AITags: ['t-shirt', 'round-neck', 'sale2019'],
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('removeAITags: required and optional params', async () => {
-    const response = await client.files.bulk.removeAITags({
-      AITags: ['t-shirt', 'round-neck', 'sale2019'],
-      fileIds: ['598821f949c0a938d57563bd', '598821f949c0a938d57563be'],
-    });
+  test.skip('restore: required and optional params', async () => {
+    const response = await client.assets.versions.restore('version_id', { asset_id: 'asset_id' });
   });
 });

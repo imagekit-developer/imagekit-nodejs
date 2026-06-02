@@ -1,8 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import { toBase64 } from '../internal/utils';
-import * as FilesAPI from './files/files';
+import * as AssetsAPI from './assets/assets';
 import { Webhook } from 'standardwebhooks';
 
 export class Webhooks extends APIResource {
@@ -13,7 +12,7 @@ export class Webhooks extends APIResource {
     if (headers !== undefined) {
       const keyStr: string | null = key === undefined ? this._client.webhookSecret : key;
       if (keyStr === null) throw new Error('Webhook key must not be null in order to unwrap');
-      const wh = new Webhook(toBase64(keyStr));
+      const wh = new Webhook(keyStr);
       wh.verify(body, headers);
     }
     return JSON.parse(body) as UnwrapWebhookEvent;
@@ -46,9 +45,9 @@ export interface FileCreateEvent extends BaseWebhookEvent {
   created_at: string;
 
   /**
-   * Object containing details of a file or file version.
+   * Object containing details of a file.
    */
-  data: FilesAPI.File;
+  data: AssetsAPI.FileDetails;
 
   /**
    * Type of the webhook event.
@@ -92,9 +91,9 @@ export interface FileUpdateEvent extends BaseWebhookEvent {
   created_at: string;
 
   /**
-   * Object containing details of a file or file version.
+   * Object containing details of a file.
    */
-  data: FilesAPI.File;
+  data: AssetsAPI.FileDetails;
 
   /**
    * Type of the webhook event.
@@ -112,9 +111,9 @@ export interface FileVersionCreateEvent extends BaseWebhookEvent {
   created_at: string;
 
   /**
-   * Object containing details of a file or file version.
+   * Object containing details of a file.
    */
-  data: FilesAPI.File;
+  data: AssetsAPI.FileDetails;
 
   /**
    * Type of the webhook event.
@@ -493,7 +492,7 @@ export namespace UploadPreTransformSuccessEvent {
      * Legacy metadata. Send `metadata` in `responseFields` in API request to get
      * metadata in the upload API response.
      */
-    metadata?: FilesAPI.Metadata;
+    metadata?: AssetsAPI.Metadata;
 
     /**
      * Name of the asset.
@@ -710,7 +709,7 @@ export namespace VideoTransformationAcceptedEvent {
     /**
      * Information about the source video asset being transformed.
      */
-    asset: Data.Asset;
+    asset: AssetsAPI.VideoAsset;
 
     /**
      * Base information about a video transformation request.
@@ -719,16 +718,6 @@ export namespace VideoTransformationAcceptedEvent {
   }
 
   export namespace Data {
-    /**
-     * Information about the source video asset being transformed.
-     */
-    export interface Asset {
-      /**
-       * URL to download or access the source video file.
-       */
-      url: string;
-    }
-
     /**
      * Base information about a video transformation request.
      */
@@ -840,22 +829,12 @@ export namespace VideoTransformationErrorEvent {
     /**
      * Information about the source video asset being transformed.
      */
-    asset: Data.Asset;
+    asset: AssetsAPI.VideoAsset;
 
     transformation: Data.Transformation;
   }
 
   export namespace Data {
-    /**
-     * Information about the source video asset being transformed.
-     */
-    export interface Asset {
-      /**
-       * URL to download or access the source video file.
-       */
-      url: string;
-    }
-
     export interface Transformation {
       /**
        * Type of video transformation:
@@ -988,22 +967,12 @@ export namespace VideoTransformationReadyEvent {
     /**
      * Information about the source video asset being transformed.
      */
-    asset: Data.Asset;
+    asset: AssetsAPI.VideoAsset;
 
     transformation: Data.Transformation;
   }
 
   export namespace Data {
-    /**
-     * Information about the source video asset being transformed.
-     */
-    export interface Asset {
-      /**
-       * URL to download or access the source video file.
-       */
-      url: string;
-    }
-
     export interface Transformation {
       /**
        * Type of video transformation:

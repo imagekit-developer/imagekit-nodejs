@@ -8,10 +8,10 @@ const client = new ImageKit({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource job', () => {
+describe('resource jobs', () => {
   // Mock server tests are disabled
   test.skip('get', async () => {
-    const responsePromise = client.folders.job.get('jobId');
+    const responsePromise = client.assets.jobs.get('job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

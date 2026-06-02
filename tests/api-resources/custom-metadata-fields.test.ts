@@ -10,6 +10,29 @@ const client = new ImageKit({
 
 describe('resource customMetadataFields', () => {
   // Mock server tests are disabled
+  test.skip('list', async () => {
+    const responsePromise = client.customMetadataFields.list();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.customMetadataFields.list(
+        { folder_path: 'folder_path', include_deleted: true },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(ImageKit.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.customMetadataFields.create({
       label: 'price',
@@ -32,38 +55,15 @@ describe('resource customMetadataFields', () => {
       name: 'price',
       schema: {
         type: 'Number',
-        defaultValue: [true, 10, 'Hello'],
-        isValueRequired: true,
-        maxLength: 0,
-        maxValue: 3000,
-        minLength: 0,
-        minValue: 1000,
-        selectOptions: ['small', 'medium', 'large', 30, 40, true],
+        default_value: [true, 10, 'Hello'],
+        is_value_required: true,
+        max_length: 0,
+        max_value: 3000,
+        min_length: 0,
+        min_value: 1000,
+        select_options: ['small', 'medium', 'large', 30, 40, true],
       },
     });
-  });
-
-  // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.customMetadataFields.list();
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.customMetadataFields.list(
-        { folderPath: 'folderPath', includeDeleted: true },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(ImageKit.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -87,13 +87,13 @@ describe('resource customMetadataFields', () => {
         {
           label: 'price',
           schema: {
-            defaultValue: [true, 10, 'Hello'],
-            isValueRequired: true,
-            maxLength: 0,
-            maxValue: 3000,
-            minLength: 0,
-            minValue: 1000,
-            selectOptions: ['small', 'medium', 'large', 30, 40, true],
+            default_value: [true, 10, 'Hello'],
+            is_value_required: true,
+            max_length: 0,
+            max_value: 3000,
+            min_length: 0,
+            min_value: 1000,
+            select_options: ['small', 'medium', 'large', 30, 40, true],
           },
         },
         { path: '/_stainless_unknown_path' },

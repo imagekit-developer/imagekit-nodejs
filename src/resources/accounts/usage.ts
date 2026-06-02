@@ -20,7 +20,7 @@ export class Usage extends APIResource {
    * ```
    */
   get(query: UsageGetParams, options?: RequestOptions): APIPromise<UsageGetResponse> {
-    return this._client.get('/v1/accounts/usage', { query, ...options });
+    return this._client.get('/v2/accounts/usage', { query, ...options });
   }
 }
 
