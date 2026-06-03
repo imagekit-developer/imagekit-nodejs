@@ -1,7 +1,7 @@
 {
   "dxt_version": "0.2",
   "name": "@imagekit/api-mcp",
-  "version": "7.6.3",
+  "version": "7.6.4",
   "description": "The official MCP Server for the Image Kit API",
   "author": {
     "name": "Image Kit",
