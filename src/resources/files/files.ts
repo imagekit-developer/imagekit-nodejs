@@ -564,6 +564,8 @@ export interface Metadata {
    * The width of the image or video in pixels.
    */
   width?: number;
+
+  [k: string]: unknown;
 }
 
 export namespace Metadata {
@@ -594,6 +596,8 @@ export namespace Metadata {
      * Object containing Thumbnail information.
      */
     thumbnail?: Exif.Thumbnail;
+
+    [k: string]: unknown;
   }
 
   export namespace Exif {
@@ -602,6 +606,8 @@ export namespace Metadata {
      */
     export interface Exif {
       ApertureValue?: number;
+
+      BrightnessValue?: number;
 
       ColorSpace?: number;
 
@@ -633,6 +639,8 @@ export namespace Metadata {
 
       FocalLength?: number;
 
+      FocalLengthIn35mmFormat?: number;
+
       FocalPlaneResolutionUnit?: number;
 
       FocalPlaneXResolution?: number;
@@ -643,31 +651,73 @@ export namespace Metadata {
 
       ISO?: number;
 
+      LensModel?: string;
+
+      LightSource?: number;
+
+      MaxApertureValue?: number;
+
       MeteringMode?: number;
 
       SceneCaptureType?: number;
+
+      SceneType?: string;
+
+      SensingMethod?: number;
 
       ShutterSpeedValue?: number;
 
       SubSecTime?: string;
 
+      UserComment?: string;
+
       WhiteBalance?: number;
+
+      [k: string]: unknown;
     }
 
     /**
      * Object containing GPS information.
      */
     export interface Gps {
+      GPSAltitude?: number;
+
+      GPSAltitudeRef?: number;
+
+      GPSDateStamp?: string;
+
+      GPSImgDirection?: number;
+
+      GPSImgDirectionRef?: string;
+
+      GPSLatitude?: Array<number>;
+
+      GPSLatitudeRef?: string;
+
+      GPSLongitude?: Array<number>;
+
+      GPSLongitudeRef?: string;
+
+      GPSTimeStamp?: Array<number>;
+
       GPSVersionID?: Array<number>;
+
+      [k: string]: unknown;
     }
 
     /**
      * Object containing EXIF image information.
      */
     export interface Image {
+      Artist?: string;
+
+      Copyright?: string;
+
       ExifOffset?: number;
 
       GPSInfo?: number;
+
+      ImageDescription?: string;
 
       Make?: string;
 
@@ -686,6 +736,8 @@ export namespace Metadata {
       YCbCrPositioning?: number;
 
       YResolution?: number;
+
+      [k: string]: unknown;
     }
 
     /**
@@ -695,6 +747,8 @@ export namespace Metadata {
       InteropIndex?: string;
 
       InteropVersion?: string;
+
+      [k: string]: unknown;
     }
 
     /**
@@ -712,6 +766,8 @@ export namespace Metadata {
       XResolution?: number;
 
       YResolution?: number;
+
+      [k: string]: unknown;
     }
   }
 }
