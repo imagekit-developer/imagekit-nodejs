@@ -13,7 +13,7 @@
   },
   "homepage": "https://github.com/imagekit-developer/imagekit-nodejs/tree/main/packages/mcp-server#readme",
   "license": "Apache-2.0",
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "pnpm@10.30.1",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -21,16 +21,15 @@
   "scripts": {
     "test": "jest",
     "build": "bash ./build",
-    "prepack": "echo 'to pack, run yarn build && (cd dist; yarn pack)' && exit 1",
-    "prepublishOnly": "echo 'to publish, run yarn build && (cd dist; yarn publish)' && exit 1",
+    "prepack": "echo 'to pack, run pnpm build && (cd dist; pnpm pack)' && exit 1",
+    "prepublishOnly": "echo 'to publish, run pnpm build && (cd dist; pnpm publish)' && exit 1",
     "format": "prettier --write --cache --cache-strategy metadata . !dist",
-    "prepare": "npm run build",
     "tsn": "ts-node -r tsconfig-paths/register",
     "lint": "eslint .",
     "fix": "eslint --fix ."
   },
   "dependencies": {
-    "@imagekit/nodejs": "link:../../dist/",
+    "@imagekit/nodejs": "workspace:*",
     "ajv": "^8.18.0",
     "@cloudflare/cabidela": "^0.2.4",
     "@hono/node-server": "^1.19.10",

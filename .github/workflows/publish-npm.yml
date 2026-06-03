@@ -27,9 +27,12 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
+
       - name: Install dependencies
         run: |
-          yarn install
+          pnpm install
 
       - name: Publish to NPM
         run: |
@@ -38,7 +41,7 @@ jobs:
           else
             PATHS_RELEASED='[\".\", \"packages/mcp-server\"]'
           fi
-          yarn tsn scripts/publish-packages.ts "{ \"paths_released\": \"$PATHS_RELEASED\" }"
+          pnpm tsn scripts/publish-packages.ts "{ \"paths_released\": \"$PATHS_RELEASED\" }"
         env:
           INPUT_PATH: ${{ github.event.inputs.path }}
           NPM_TOKEN: ${{ secrets.IMAGE_KIT_NPM_TOKEN || secrets.NPM_TOKEN }}
