@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.7.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.6.3...v7.7.0) (2026-06-03)
+
+
+### Bug Fixes
+
+* metadata response shape ([62ad4d3](https://github.com/imagekit-developer/imagekit-nodejs/commit/62ad4d30e469ecc4fb1238c4160359f681ad6713))
+
+
+### Chores
+
+* codegen update ([ee324b8](https://github.com/imagekit-developer/imagekit-nodejs/commit/ee324b89dc2f9b6f2195c0ae019da52f3cb9dd5b))
+* pin next release ([50790ae](https://github.com/imagekit-developer/imagekit-nodejs/commit/50790aedf53ca9912dd5d5e273e8d93bb0ae85b8))
+
 ## [7.6.3](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.6.2...v7.6.3) (2026-06-01)
 
 
