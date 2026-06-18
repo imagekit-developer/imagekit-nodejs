@@ -113,7 +113,7 @@ export type OriginRequest =
 export namespace OriginRequest {
   export interface S3 {
     /**
-     * Access key for the bucket.
+     * Access key for the bucket. When `useIAMRole` is `true`, send an empty string.
      */
     accessKey: string;
 
@@ -128,7 +128,7 @@ export namespace OriginRequest {
     name: string;
 
     /**
-     * Secret key for the bucket.
+     * Secret key for the bucket. When `useIAMRole` is `true`, send an empty string.
      */
     secretKey: string;
 
@@ -148,6 +148,12 @@ export namespace OriginRequest {
      * Path prefix inside the bucket.
      */
     prefix?: string;
+
+    /**
+     * Use IAM role for authentication instead of access/secret keys. When set to
+     * `true`, send an empty string for both `accessKey` and `secretKey`.
+     */
+    useIAMRole?: boolean;
   }
 
   export interface S3Compatible {
@@ -201,7 +207,7 @@ export namespace OriginRequest {
 
   export interface CloudinaryBackup {
     /**
-     * Access key for the bucket.
+     * Access key for the bucket. When `useIAMRole` is `true`, send an empty string.
      */
     accessKey: string;
 
@@ -216,7 +222,7 @@ export namespace OriginRequest {
     name: string;
 
     /**
-     * Secret key for the bucket.
+     * Secret key for the bucket. When `useIAMRole` is `true`, send an empty string.
      */
     secretKey: string;
 
@@ -236,6 +242,12 @@ export namespace OriginRequest {
      * Path prefix inside the bucket.
      */
     prefix?: string;
+
+    /**
+     * Use IAM role for authentication instead of access/secret keys. When set to
+     * `true`, send an empty string for both `accessKey` and `secretKey`.
+     */
+    useIAMRole?: boolean;
   }
 
   export interface WebFolder {
@@ -432,6 +444,12 @@ export namespace OriginResponse {
      * URL used in the Canonical header (if enabled).
      */
     baseUrlForCanonicalHeader?: string;
+
+    /**
+     * Whether the origin authenticates using an IAM role instead of access/secret
+     * keys.
+     */
+    useIAMRole?: boolean;
   }
 
   export interface S3Compatible {
@@ -512,6 +530,12 @@ export namespace OriginResponse {
      * URL used in the Canonical header (if enabled).
      */
     baseUrlForCanonicalHeader?: string;
+
+    /**
+     * Whether the origin authenticates using an IAM role instead of access/secret
+     * keys.
+     */
+    useIAMRole?: boolean;
   }
 
   export interface WebFolder {
@@ -682,7 +706,7 @@ export type OriginCreateParams =
 export declare namespace OriginCreateParams {
   export interface S3 {
     /**
-     * Access key for the bucket.
+     * Access key for the bucket. When `useIAMRole` is `true`, send an empty string.
      */
     accessKey: string;
 
@@ -697,7 +721,7 @@ export declare namespace OriginCreateParams {
     name: string;
 
     /**
-     * Secret key for the bucket.
+     * Secret key for the bucket. When `useIAMRole` is `true`, send an empty string.
      */
     secretKey: string;
 
@@ -717,6 +741,12 @@ export declare namespace OriginCreateParams {
      * Path prefix inside the bucket.
      */
     prefix?: string;
+
+    /**
+     * Use IAM role for authentication instead of access/secret keys. When set to
+     * `true`, send an empty string for both `accessKey` and `secretKey`.
+     */
+    useIAMRole?: boolean;
   }
 
   export interface S3Compatible {
@@ -770,7 +800,7 @@ export declare namespace OriginCreateParams {
 
   export interface CloudinaryBackup {
     /**
-     * Access key for the bucket.
+     * Access key for the bucket. When `useIAMRole` is `true`, send an empty string.
      */
     accessKey: string;
 
@@ -785,7 +815,7 @@ export declare namespace OriginCreateParams {
     name: string;
 
     /**
-     * Secret key for the bucket.
+     * Secret key for the bucket. When `useIAMRole` is `true`, send an empty string.
      */
     secretKey: string;
 
@@ -805,6 +835,12 @@ export declare namespace OriginCreateParams {
      * Path prefix inside the bucket.
      */
     prefix?: string;
+
+    /**
+     * Use IAM role for authentication instead of access/secret keys. When set to
+     * `true`, send an empty string for both `accessKey` and `secretKey`.
+     */
+    useIAMRole?: boolean;
   }
 
   export interface WebFolder {
@@ -967,7 +1003,7 @@ export type OriginUpdateParams =
 export declare namespace OriginUpdateParams {
   export interface S3 {
     /**
-     * Access key for the bucket.
+     * Access key for the bucket. When `useIAMRole` is `true`, send an empty string.
      */
     accessKey: string;
 
@@ -982,7 +1018,7 @@ export declare namespace OriginUpdateParams {
     name: string;
 
     /**
-     * Secret key for the bucket.
+     * Secret key for the bucket. When `useIAMRole` is `true`, send an empty string.
      */
     secretKey: string;
 
@@ -1002,6 +1038,12 @@ export declare namespace OriginUpdateParams {
      * Path prefix inside the bucket.
      */
     prefix?: string;
+
+    /**
+     * Use IAM role for authentication instead of access/secret keys. When set to
+     * `true`, send an empty string for both `accessKey` and `secretKey`.
+     */
+    useIAMRole?: boolean;
   }
 
   export interface S3Compatible {
@@ -1055,7 +1097,7 @@ export declare namespace OriginUpdateParams {
 
   export interface CloudinaryBackup {
     /**
-     * Access key for the bucket.
+     * Access key for the bucket. When `useIAMRole` is `true`, send an empty string.
      */
     accessKey: string;
 
@@ -1070,7 +1112,7 @@ export declare namespace OriginUpdateParams {
     name: string;
 
     /**
-     * Secret key for the bucket.
+     * Secret key for the bucket. When `useIAMRole` is `true`, send an empty string.
      */
     secretKey: string;
 
@@ -1090,6 +1132,12 @@ export declare namespace OriginUpdateParams {
      * Path prefix inside the bucket.
      */
     prefix?: string;
+
+    /**
+     * Use IAM role for authentication instead of access/secret keys. When set to
+     * `true`, send an empty string for both `accessKey` and `secretKey`.
+     */
+    useIAMRole?: boolean;
   }
 
   export interface WebFolder {
