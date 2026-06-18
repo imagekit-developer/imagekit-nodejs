@@ -70,7 +70,7 @@ const INSTRUCTIONS_FETCH_TIMEOUT_MS = 5000;
 
 function fallbackMcpServer(): McpServer {
   return new McpServer(
-    { name: 'imagekit_nodejs_api', version: '7.7.0' },
+    { name: 'imagekit_nodejs_api', version: '7.8.0' },
     { capabilities: { tools: {}, logging: {} } },
   );
 }
