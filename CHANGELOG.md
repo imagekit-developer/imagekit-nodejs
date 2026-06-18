@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.8.1 (2026-06-18)
+
+Full Changelog: [v7.8.0...v7.8.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.8.0...v7.8.1)
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([5447363](https://github.com/imagekit-developer/imagekit-nodejs/commit/54473631ba6ac92cef3e6feee5cf651423defb2a))
+
 ## [7.8.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.7.0...v7.8.0) (2026-06-18)
 
 
