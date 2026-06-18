@@ -1,5 +1,23 @@
 # Changelog
 
+## 7.8.0 (2026-06-18)
+
+Full Changelog: [v7.7.0...v7.8.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.7.0...v7.8.0)
+
+### Features
+
+* **origins:** add useIAMRole for IAM role authentication ([2681929](https://github.com/imagekit-developer/imagekit-nodejs/commit/2681929114b0e59f5a71c9bc7b57bbcb1a462e1a))
+
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([4d86646](https://github.com/imagekit-developer/imagekit-nodejs/commit/4d866468f962504282b12cd18356708dfe1d52c0))
+
+
+### Documentation
+
+* update default value in description for intensity in colorize transformation ([f4f38da](https://github.com/imagekit-developer/imagekit-nodejs/commit/f4f38dacd0a29ba7aa42562b8394e8cd4e2d0f64))
+
 ## 7.7.0 (2026-06-03)
 
 Full Changelog: [v7.6.3...v7.7.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.6.3...v7.7.0)
