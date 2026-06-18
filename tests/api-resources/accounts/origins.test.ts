@@ -50,6 +50,7 @@ describe('resource origins', () => {
       baseUrlForCanonicalHeader: 'https://cdn.example.com',
       includeCanonicalHeader: false,
       prefix: 'raw-assets',
+      useIAMRole: true,
     });
   });
 
@@ -94,6 +95,7 @@ describe('resource origins', () => {
       baseUrlForCanonicalHeader: 'https://cdn.example.com',
       includeCanonicalHeader: false,
       prefix: 'raw-assets',
+      useIAMRole: true,
     });
   });
 
