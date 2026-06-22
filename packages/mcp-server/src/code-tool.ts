@@ -179,6 +179,28 @@ const localDenoHandler = async ({
 
   const allowRead = allowReadPaths.join(',');
 
+  // Never forward the host process.env into the sandbox: on a deployed server it holds
+  // secrets (OAuth client secret, Redis URL, API keys) and executed code can read its own
+  // environment. The worker receives SDK credentials explicitly via the request body, so the
+  // subprocess only needs a minimal set of system vars plus the per-request upstream envs.
+  const SUBPROCESS_ENV_ALLOWLIST = [
+    'PATH',
+    'HOME',
+    'TMPDIR',
+    'TMP',
+    'TEMP',
+    'LANG',
+    'LC_ALL',
+    'DENO_DIR',
+    'DENO_INSTALL_ROOT',
+  ];
+  const subprocessEnv: Record<string, string> = {};
+  for (const key of SUBPROCESS_ENV_ALLOWLIST) {
+    const value = process.env[key];
+    if (value !== undefined) subprocessEnv[key] = value;
+  }
+  Object.assign(subprocessEnv, reqContext.upstreamClientEnvs);
+
   const worker = await newDenoHTTPWorker(url.pathToFileURL(workerPath), {
     denoExecutable: denoPath,
     runFlags: [
@@ -186,15 +208,14 @@ const localDenoHandler = async ({
       `--allow-read=${allowRead}`,
       `--allow-net=${baseURLHostname}`,
       // Allow environment variables because instantiating the client will try to read from them,
-      // even though they are not set.
+      // even though they are not set. The subprocess env is curated above, so no host secrets
+      // are exposed even though read access is granted.
       '--allow-env',
     ],
     printOutput: true,
     spawnOptions: {
       cwd: path.dirname(workerPath),
-      // Merge any upstream client envs into the Deno subprocess environment,
-      // with the upstream env vars taking precedence.
-      env: { ...process.env, ...reqContext.upstreamClientEnvs },
+      env: subprocessEnv,
     },
   });
 
