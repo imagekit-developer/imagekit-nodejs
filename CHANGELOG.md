@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.8.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.8.0...v7.8.1) (2026-06-22)
+
+
+### Bug Fixes
+
+* **mcp-server:** avoid leaking host env secrets into Deno sandbox ([2792bd9](https://github.com/imagekit-developer/imagekit-nodejs/commit/2792bd91a8b2c31a4108df6f1f9e6aa6a8874540))
+
+
+### Chores
+
+* codegen update ([ce721e6](https://github.com/imagekit-developer/imagekit-nodejs/commit/ce721e6bfdf9d04907c890a4bc1e94fe79bed1f6))
+
 ## [7.8.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.7.0...v7.8.0) (2026-06-18)
 
 
