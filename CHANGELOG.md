@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.9.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.8.1...v7.9.0) (2026-06-30)
+
+
+### Chores
+
+* release 7.9.0 ([4aebf7d](https://github.com/imagekit-developer/imagekit-nodejs/commit/4aebf7dfb02e070641e5ded8cbb9092fbc20f1cf))
+
 ## [7.8.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.8.0...v7.8.1) (2026-06-22)
 
 
