@@ -13,15 +13,6 @@ export class Assets extends APIResource {
    * string as the value of the `searchQuery`.
    */
   list(
-    query: AssetListParams & { type: 'file' | 'file-version'; searchQuery?: undefined },
-    options?: RequestOptions,
-  ): APIPromise<Array<FilesAPI.File>>;
-  list(
-    query: AssetListParams & { type: 'folder'; searchQuery?: undefined },
-    options?: RequestOptions,
-  ): APIPromise<Array<FilesAPI.Folder>>;
-  list(query?: AssetListParams | null, options?: RequestOptions): APIPromise<AssetListResponse>;
-  list(
     query: AssetListParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<AssetListResponse> {

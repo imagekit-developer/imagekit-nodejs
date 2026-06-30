@@ -8,7 +8,7 @@ import { SdkMethod } from './methods';
 import { McpCodeExecutionMode } from './options';
 import { ClientOptions } from '@imagekit/nodejs';
 
-const prompt = `Runs TypeScript code to interact with the ImageKit API.
+const prompt = `Runs JavaScript code to interact with the Image Kit API.
 
 You are a skilled TypeScript programmer writing code to interface with the service.
 Define an async function named "run" that takes a single parameter of an initialized SDK client and it will be run.
@@ -16,9 +16,9 @@ For example:
 
 \`\`\`
 async function run(client) {
-  const files = await client.assets.list({ type: 'file', limit: 10 });
+  const response = await client.files.upload({ file: fs.createReadStream('path/to/file'), fileName: 'file-name.jpg' });
 
-  return files.map((file) => ({ id: file.fileId, name: file.name }));
+  console.log(response.videoCodec);
 }
 \`\`\`
 
@@ -28,12 +28,6 @@ Do not add comments unless necessary for generating better code.
 Code will run in a container, and cannot interact with the network outside of the given SDK client.
 Variables will not persist between calls, so make sure to return or log any data you might need later.
 Remember that you are writing TypeScript code, so you need to be careful with your types.
-Use the search_docs tool to look up exact parameter names and response field types before writing code.
-The SDK client is already provided as the run() parameter. Do not import the SDK at runtime (e.g. "import ImageKit from '@imagekit/nodejs'") — it is not available in the sandbox and will throw at runtime. If you need its types, use "import type" only.
-Some methods return a union type. For client.assets.list(): without a searchQuery, pass { type: 'file' } (or { type: 'folder' }) to get a typed File[] (or Folder[]) with no narrowing needed. With a searchQuery the API ignores the type/tags/name params, so the result stays (File | Folder)[] — put the filter inside the query string (e.g. searchQuery: 'type = "file" AND createdAt > "7d"') and narrow each item with "if (item.type === 'file')" before reading file-only fields like fileId. searchQuery uses a Lucene-like syntax (operators =, :, <, >, IN, HAS, EXISTS, combined with AND/OR); call search_docs for the full field reference.
-List endpoints are offset-paginated with skip/limit (max 1000 per page); to fetch everything, loop and increase skip until a page returns fewer than limit items.
-Nullable fields such as tags and AITags can be null — guard them with optional chaining (e.g. item.tags?.length) before use.
-To filter by a custom-metadata attribute it must exist in your schema first: call client.customMetadataFields.list() to discover valid field names and types, then reference it quoted as "customMetadata.<field>" inside searchQuery.
 Always type dynamic key-value stores explicitly as Record<string, YourValueType> instead of {}.`;
 
 /**
