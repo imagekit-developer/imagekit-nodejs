@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.9.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.9.0...v7.9.1) (2026-07-02)
+
+
+### Bug Fixes
+
+* allow upload.imagekit.io in mcp server execute sandbox ([e02eb53](https://github.com/imagekit-developer/imagekit-nodejs/commit/e02eb53d9b6dab541b6441f65e4331e3e36c3b68))
+
 ## [7.9.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.8.1...v7.9.0) (2026-06-30)
 
 
