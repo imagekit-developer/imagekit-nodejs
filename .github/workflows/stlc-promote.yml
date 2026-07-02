@@ -1,0 +1,65 @@
+name: Promote SDKs
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    env:
+      PRODUCTION_REPO: imagekit-developer/imagekit-nodejs
+      PRODUCTION_BRANCH: master
+      GH_TOKEN: ${{ secrets.SDK_WRITE_TOKEN }}
+    steps:
+      - name: Check out staging
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Fetch production main
+        run: |
+          git remote add production \
+            "https://x-access-token:${GH_TOKEN}@github.com/${PRODUCTION_REPO}.git"
+          git fetch production "${PRODUCTION_BRANCH}"
+
+      - name: Check if production is already in sync
+        id: diff
+        run: |
+          STAGING_SHA=$(git rev-parse origin/main)
+          PRODUCTION_SHA=$(git rev-parse production/${PRODUCTION_BRANCH})
+          if [ "$STAGING_SHA" = "$PRODUCTION_SHA" ]; then
+            echo "Production is already at $STAGING_SHA. Nothing to release."
+            echo "synced=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "synced=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Push staging main to the release branch on production
+        if: steps.diff.outputs.synced == 'false'
+        run: |
+          git push production origin/main:refs/heads/stainless/release --force
+
+      - name: Open or update the release PR on production
+        if: steps.diff.outputs.synced == 'false'
+        run: |
+          EXISTING_PR=$(gh pr list \
+            --repo "${PRODUCTION_REPO}" \
+            --head stainless/release \
+            --state open \
+            --json number \
+            --jq '.[0].number')
+          if [ -z "${EXISTING_PR}" ]; then
+            gh pr create \
+              --repo "${PRODUCTION_REPO}" \
+              --base "${PRODUCTION_BRANCH}" \
+              --head stainless/release \
+              --title "Release SDK updates" \
+              --body "$(git log --oneline production/${PRODUCTION_BRANCH}..origin/main)"
+          else
+            echo "Release PR #${EXISTING_PR} already exists. Force-push has updated it."
+          fi
