@@ -139,6 +139,7 @@ const localDenoHandler = async ({
 
   const client = reqContext.client;
   const baseURLHostname = new URL(client.baseURL).hostname;
+  const allowNetHosts = [baseURLHostname, 'upload.imagekit.io'];
   const { code } = args as { code: string };
 
   let denoPath: string;
@@ -212,7 +213,7 @@ const localDenoHandler = async ({
     runFlags: [
       `--node-modules-dir=manual`,
       `--allow-read=${allowRead}`,
-      `--allow-net=${baseURLHostname}`,
+      `--allow-net=${allowNetHosts.join(',')}`,
       // Allow environment variables because instantiating the client will try to read from them,
       // even though they are not set. The subprocess env is curated above, so no host secrets
       // are exposed even though read access is granted.
