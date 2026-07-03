@@ -110,34 +110,21 @@ call `search_docs` to look up the right SDK methods and then `execute` to run th
 
 ### Example 1: Upload and organize
 
-```yaml
-1. "Upload https://example.com/photo.jpg to ImageKit into the folder /products as 'hero'"
-2. "Create a folder called /products/2026-spring"
-3. "Move the file 'hero' into /products/2026-spring"
-```
+1. Upload a photo https://ik.imagekit.io/demo/medium_cafe_B1iTdD0C.jpg as coffee.jpg to my Imagekit DAM
+2. Create a folder called /products/2026-spring" in Imagekit
+3. Move the file 'coffee.jpg' into /products/2026-spring" in Imagekit
 
 ### Example 2: Search and filter your library
 
-```yaml
-1. "Find all image files tagged 'banner' created in the last 7 days"
-2. "List the 20 most recent videos in the /marketing folder"
-3. "Show me the details and tags for file ID <fileId>"
-```
+1. Find all image files uploaded in last 7 days in Imagekit
+2. Find all files having Brand as Nike (custom metadata).
+3. Show me the details and tags for the above files
 
 ### Example 3: Tag and update metadata
 
-```yaml
-1. "Add the tags 'featured' and 'homepage' to file ID <fileId>"
-2. "List my custom metadata fields"
-3. "Set the custom metadata field 'campaign' to 'spring-2026' on file ID <fileId>"
-```
-
-### Example 4: Build a transformation URL
-
-```yaml
-1. "Generate a URL for 'hero.jpg' resized to 800x600 with auto format and quality"
-2. "Create a thumbnail URL for 'hero.jpg' at 200x200 cropped to a face"
-```
+1. Add the tags 'featured' and 'homepage' to file ID 690db96c5c7cd75eb8bfd61c in Imagekit
+2. List my custom metadata fields
+3. Set the custom metadata field 'Brand' to 'ADIDAS Originals' on file ID 6a4789ee5c7cd75eb8f8126c
 
 ## Privacy Policy
 
