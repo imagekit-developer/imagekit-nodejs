@@ -138,17 +138,15 @@ your requests. See ImageKit's privacy policy for full details:
   server) is used only to authenticate ImageKit API calls. Executed code runs in an
   isolated sandbox with network access restricted to the ImageKit API hosts; it cannot
   read the host process environment or other secrets.
-- **Usage & storage**: an optional `intent` string may be logged to improve the service.
-  ImageKit does not sell your data. Asset data is stored in your own ImageKit account.
 - **Third-party sharing**: none beyond the ImageKit API required to perform your request.
 - **Retention**: operational logs are retained per ImageKit's standard retention policy.
-- **Contact**: [developer@imagekit.io](mailto:developer@imagekit.io).
+- **Contact**: [support@imagekit.io](mailto:support@imagekit.io).
 
 ## Support
 
-- **Documentation**: [https://imagekit.io/docs/api-reference](https://imagekit.io/docs/api-reference)
+- **Documentation**: [https://imagekit.io/docs/](https://imagekit.io/docs/)
 - **Issues**: [https://github.com/imagekit-developer/imagekit-nodejs/issues](https://github.com/imagekit-developer/imagekit-nodejs/issues)
-- **Email**: [developer@imagekit.io](mailto:developer@imagekit.io)
+- **Email**: [imagekit-developer@imagekit.io](mailto:imagekit-developer@imagekit.io)
 
 ### Troubleshooting
 
@@ -157,5 +155,3 @@ your requests. See ImageKit's privacy policy for full details:
   runs your code in a Deno sandbox.
 - **Authentication errors** — verify `IMAGEKIT_PRIVATE_KEY` (starts with `private_`) is
   set and valid in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/api-keys).
-- **Tool times out** — individual API requests time out at 30s and total execution at
-  ~5 minutes; narrow your query with filters or paginate within a single `execute` call.

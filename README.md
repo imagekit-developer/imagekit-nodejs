@@ -6,7 +6,7 @@ The ImageKit Node.js SDK is a comprehensive library designed to simplify the int
 
 The full API of this library is documented in [api.md](api.md). All request parameters and response types are fully typed and importable, offering unparalleled TypeScript support. This ensures that you can rely on accurate type definitions and enjoy a smooth development workflow with modern editors.
 
-For additional details, refer to the [ImageKit REST API documentation](https://imagekit.io/docs/api-reference).
+For additional details, refer to the [ImageKit documentation](https://imagekit.io/docs/).
 
 If you are looking to integrate file uploads in browsers, use one of our [frontend SDKs](https://imagekit.io/docs/quick-start-guides#front-end).
 
