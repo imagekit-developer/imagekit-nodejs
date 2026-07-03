@@ -1,8 +1,9 @@
 {
-  "dxt_version": "0.2",
+  "manifest_version": "0.3",
   "name": "@imagekit/api-mcp",
   "version": "7.9.1",
   "description": "The official MCP Server for the Image Kit API",
+  "long_description": "The official MCP server for ImageKit. Upload, search, organize images, videos, and files in your ImageKit media library. Manage folders, tags, and custom metadata by writing code against the ImageKit TypeScript SDK, executed in an isolated sandbox with access limited to the ImageKit API.",
   "author": {
     "name": "Image Kit",
     "email": "developer@imagekit.io"
@@ -13,6 +14,10 @@
   },
   "homepage": "https://github.com/imagekit-developer/imagekit-nodejs/tree/main/packages/mcp-server#readme",
   "documentation": "https://imagekit.io/docs/api-reference",
+  "icon": "icon.png",
+  "privacy_policies": [
+    "https://imagekit.io/privacy-policy/"
+  ],
   "server": {
     "type": "node",
     "entry_point": "index.js",
@@ -56,6 +61,14 @@
     }
   },
   "keywords": [
-    "api"
+    "api",
+    "imagekit",
+    "media",
+    "images",
+    "videos",
+    "dam",
+    "cdn",
+    "transformation",
+    "asset-management"
   ]
 }

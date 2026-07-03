@@ -1,0 +1,41 @@
+{
+    "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+    "name": "io.github.imagekit-developer/api-mcp",
+    "title": "ImageKit",
+    "description": "Upload, search, organize, and transform images, videos, and files in your ImageKit media library.",
+    "repository": {
+        "url": "https://github.com/imagekit-developer/imagekit-nodejs",
+        "source": "github"
+    },
+    "version": "7.9.1",
+    "packages": [
+        {
+            "registryType": "npm",
+            "identifier": "@imagekit/api-mcp",
+            "version": "7.9.1",
+            "transport": {
+                "type": "stdio"
+            },
+            "environmentVariables": [
+                {
+                    "name": "IMAGEKIT_PRIVATE_KEY",
+                    "description": "Your ImageKit private API key (starts with `private_`). Found in the ImageKit dashboard under Developer > API Keys.",
+                    "isRequired": true,
+                    "isSecret": true
+                },
+                {
+                    "name": "IMAGEKIT_WEBHOOK_SECRET",
+                    "description": "Your ImageKit webhook secret (starts with `whsec_`). Only required if you verify webhook signatures.",
+                    "isRequired": false,
+                    "isSecret": true
+                }
+            ]
+        }
+    ],
+    "remotes": [
+        {
+            "type": "streamable-http",
+            "url": "https://api-mcp.imagekit.io/mcp"
+        }
+    ]
+}

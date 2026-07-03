@@ -37,7 +37,9 @@ export const tool: Tool = {
     required: ['query', 'language'],
   },
   annotations: {
+    title: 'Search ImageKit SDK docs',
     readOnlyHint: true,
+    openWorldHint: true,
   },
 };
 

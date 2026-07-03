@@ -47,6 +47,7 @@ cd ..
 
 # pack bundle
 cp manifest.json dist-bundle
+cp icon.png dist-bundle
 
 npx mcpb pack dist-bundle imagekit_nodejs_api.mcpb
 

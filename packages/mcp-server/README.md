@@ -102,3 +102,73 @@ A configuration JSON for this server might look like this, assuming the server i
   }
 }
 ```
+
+## Usage Examples
+
+Once connected, you can drive the server with natural-language prompts. The agent will
+call `search_docs` to look up the right SDK methods and then `execute` to run the code.
+
+### Example 1: Upload and organize
+
+```yaml
+1. "Upload https://example.com/photo.jpg to ImageKit into the folder /products as 'hero'"
+2. "Create a folder called /products/2026-spring"
+3. "Move the file 'hero' into /products/2026-spring"
+```
+
+### Example 2: Search and filter your library
+
+```yaml
+1. "Find all image files tagged 'banner' created in the last 7 days"
+2. "List the 20 most recent videos in the /marketing folder"
+3. "Show me the details and tags for file ID <fileId>"
+```
+
+### Example 3: Tag and update metadata
+
+```yaml
+1. "Add the tags 'featured' and 'homepage' to file ID <fileId>"
+2. "List my custom metadata fields"
+3. "Set the custom metadata field 'campaign' to 'spring-2026' on file ID <fileId>"
+```
+
+### Example 4: Build a transformation URL
+
+```yaml
+1. "Generate a URL for 'hero.jpg' resized to 800x600 with auto format and quality"
+2. "Create a thumbnail URL for 'hero.jpg' at 200x200 cropped to a face"
+```
+
+## Privacy Policy
+
+This connector processes your prompts and the ImageKit account data required to fulfill
+your requests. See ImageKit's privacy policy for full details:
+[https://imagekit.io/privacy-policy/](https://imagekit.io/privacy-policy/).
+
+- **Data collected**: the code/instructions you send to the `execute` tool and the
+  ImageKit API requests it makes on your behalf (e.g. file listings, uploads, metadata).
+- **Authentication**: your ImageKit private key (or an OAuth-issued token for the hosted
+  server) is used only to authenticate ImageKit API calls. Executed code runs in an
+  isolated sandbox with network access restricted to the ImageKit API hosts; it cannot
+  read the host process environment or other secrets.
+- **Usage & storage**: an optional `intent` string may be logged to improve the service.
+  ImageKit does not sell your data. Asset data is stored in your own ImageKit account.
+- **Third-party sharing**: none beyond the ImageKit API required to perform your request.
+- **Retention**: operational logs are retained per ImageKit's standard retention policy.
+- **Contact**: [developer@imagekit.io](mailto:developer@imagekit.io).
+
+## Support
+
+- **Documentation**: [https://imagekit.io/docs/api-reference](https://imagekit.io/docs/api-reference)
+- **Issues**: [https://github.com/imagekit-developer/imagekit-nodejs/issues](https://github.com/imagekit-developer/imagekit-nodejs/issues)
+- **Email**: [developer@imagekit.io](mailto:developer@imagekit.io)
+
+### Troubleshooting
+
+- **`Deno is required for code execution`** — install Deno from
+  [https://deno.land](https://deno.land) or run `npm install deno`; the `execute` tool
+  runs your code in a Deno sandbox.
+- **Authentication errors** — verify `IMAGEKIT_PRIVATE_KEY` (starts with `private_`) is
+  set and valid in the [ImageKit dashboard](https://imagekit.io/dashboard/developer/api-keys).
+- **Tool times out** — individual API requests time out at 30s and total execution at
+  ~5 minutes; narrow your query with filters or paginate within a single `execute` call.

@@ -69,10 +69,17 @@ export function codeTool({
         },
         intent: {
           type: 'string',
-          description: 'Task you are trying to perform. Used for improving the service.',
+          description: 'Task you are trying to perform.',
         },
       },
       required: ['code'],
+    },
+    annotations: {
+      title: 'Execute ImageKit API code',
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: false,
+      openWorldHint: true,
     },
   };
 
