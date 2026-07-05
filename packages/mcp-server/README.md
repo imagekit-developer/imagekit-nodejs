@@ -140,13 +140,13 @@ your requests. See ImageKit's privacy policy for full details:
   read the host process environment or other secrets.
 - **Third-party sharing**: none beyond the ImageKit API required to perform your request.
 - **Retention**: operational logs are retained per ImageKit's standard retention policy.
-- **Contact**: [support@imagekit.io](mailto:support@imagekit.io).
+- **Contact**: [admin@imagekit.io>](mailto:admin@imagekit.io>).
 
 ## Support
 
 - **Documentation**: [https://imagekit.io/docs/](https://imagekit.io/docs/)
 - **Issues**: [https://github.com/imagekit-developer/imagekit-nodejs/issues](https://github.com/imagekit-developer/imagekit-nodejs/issues)
-- **Email**: [imagekit-developer@imagekit.io](mailto:imagekit-developer@imagekit.io)
+- **Email**: [developer@imagekit.io>](mailto:developer@imagekit.io>)
 
 ### Troubleshooting
 

@@ -6,7 +6,7 @@
   "long_description": "The official MCP server for ImageKit. Upload, search, organize images, videos, and files in your ImageKit media library. Manage folders, tags, and custom metadata by writing code against the ImageKit TypeScript SDK, executed in an isolated sandbox with access limited to the ImageKit API.",
   "author": {
     "name": "Image Kit",
-    "email": "developer@imagekit.io"
+    "email": "developer@imagekit.io>"
   },
   "repository": {
     "type": "git",
