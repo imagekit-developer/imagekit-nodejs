@@ -111,8 +111,8 @@ call `search_docs` to look up the right SDK methods and then `execute` to run th
 ### Example 1: Upload and organize
 
 1. Upload a photo https://ik.imagekit.io/demo/medium_cafe_B1iTdD0C.jpg as coffee.jpg to my Imagekit DAM
-2. Create a folder called /products/2026-spring" in Imagekit
-3. Move the file 'coffee.jpg' into /products/2026-spring" in Imagekit
+2. Create a folder called "/products/2026-spring" in Imagekit
+3. Move the file 'coffee.jpg' into "/products/2026-spring" in Imagekit
 
 ### Example 2: Search and filter your library
 
