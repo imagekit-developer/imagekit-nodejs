@@ -227,6 +227,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/accounts/usage',
   },
   {
+    clientCallName: 'client.accounts.usageAnalytics.get',
+    fullyQualifiedName: 'accounts.usageAnalytics.get',
+    httpMethod: 'get',
+    httpPath: '/v1/accounts/usage-analytics',
+  },
+  {
     clientCallName: 'client.accounts.origins.list',
     fullyQualifiedName: 'accounts.origins.list',
     httpMethod: 'get',
