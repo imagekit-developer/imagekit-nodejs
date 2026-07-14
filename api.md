@@ -178,6 +178,17 @@ Methods:
 
 - <code title="get /v1/accounts/usage">client.accounts.usage.<a href="./src/resources/accounts/usage.ts">get</a>({ ...params }) -> UsageGetResponse</code>
 
+## UsageAnalytics
+
+Types:
+
+- <code><a href="./src/resources/accounts/usage-analytics.ts">RequestBandwidthEntry</a></code>
+- <code><a href="./src/resources/accounts/usage-analytics.ts">UsageAnalyticsResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/accounts/usage-analytics">client.accounts.usageAnalytics.<a href="./src/resources/accounts/usage-analytics.ts">get</a>({ ...params }) -> UsageAnalyticsResponse</code>
+
 ## Origins
 
 Types:
