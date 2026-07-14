@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.10.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.9.1...v7.10.0) (2026-07-14)
+
+
+### Features
+
+* **api:** add usage analytics breakdown endpoint ([1499fd6](https://github.com/imagekit-developer/imagekit-nodejs/commit/1499fd6ef7beb2591614bca13a6dd7b9a86c8691))
+
 ## [7.9.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.9.0...v7.9.1) (2026-07-02)
 
 
