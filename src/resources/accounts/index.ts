@@ -18,3 +18,9 @@ export {
   type URLEndpointUpdateParams,
 } from './url-endpoints';
 export { Usage, type UsageGetResponse, type UsageGetParams } from './usage';
+export {
+  UsageAnalytics,
+  type RequestBandwidthEntry,
+  type UsageAnalyticsResponse,
+  type UsageAnalyticsGetParams,
+} from './usage-analytics';

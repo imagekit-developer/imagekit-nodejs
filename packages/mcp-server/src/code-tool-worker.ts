@@ -144,6 +144,7 @@ const fuse = new Fuse(
     'client.folders.rename',
     'client.folders.job.get',
     'client.accounts.usage.get',
+    'client.accounts.usageAnalytics.get',
     'client.accounts.origins.create',
     'client.accounts.origins.delete',
     'client.accounts.origins.get',

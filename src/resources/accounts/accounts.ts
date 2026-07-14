@@ -21,19 +21,35 @@ import {
 } from './url-endpoints';
 import * as UsageAPI from './usage';
 import { Usage, UsageGetParams, UsageGetResponse } from './usage';
+import * as UsageAnalyticsAPI from './usage-analytics';
+import {
+  RequestBandwidthEntry,
+  UsageAnalytics,
+  UsageAnalyticsGetParams,
+  UsageAnalyticsResponse,
+} from './usage-analytics';
 
 export class Accounts extends APIResource {
   usage: UsageAPI.Usage = new UsageAPI.Usage(this._client);
+  usageAnalytics: UsageAnalyticsAPI.UsageAnalytics = new UsageAnalyticsAPI.UsageAnalytics(this._client);
   origins: OriginsAPI.Origins = new OriginsAPI.Origins(this._client);
   urlEndpoints: URLEndpointsAPI.URLEndpoints = new URLEndpointsAPI.URLEndpoints(this._client);
 }
 
 Accounts.Usage = Usage;
+Accounts.UsageAnalytics = UsageAnalytics;
 Accounts.Origins = Origins;
 Accounts.URLEndpoints = URLEndpoints;
 
 export declare namespace Accounts {
   export { Usage as Usage, type UsageGetResponse as UsageGetResponse, type UsageGetParams as UsageGetParams };
+
+  export {
+    UsageAnalytics as UsageAnalytics,
+    type RequestBandwidthEntry as RequestBandwidthEntry,
+    type UsageAnalyticsResponse as UsageAnalyticsResponse,
+    type UsageAnalyticsGetParams as UsageAnalyticsGetParams,
+  };
 
   export {
     Origins as Origins,
