@@ -10,7 +10,7 @@ permissions:
 jobs:
   sync:
     if: >-
-      github.event.pull_request.base.ref == 'master' &&
+      github.event.pull_request.base.ref == 'main' &&
       startsWith(github.event.pull_request.head.ref, 'release-please--') &&
       github.event.changes.title != null
     runs-on: ubuntu-latest
@@ -42,11 +42,11 @@ jobs:
           fi
           echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Check out master
+      - name: Check out main
         if: steps.parse.outputs.skip != 'true'
         uses: actions/checkout@v6
         with:
-          ref: master
+          ref: main
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
           fetch-depth: 1
 
@@ -60,4 +60,4 @@ jobs:
           git commit --allow-empty -m "chore: pin next release
 
           Release-As: ${VERSION}"
-          git push origin master
+          git push origin main

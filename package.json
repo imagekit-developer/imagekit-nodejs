@@ -30,7 +30,7 @@
     "standardwebhooks": "^1.0.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.17.0",
+    "@arethetypeswrong/cli": "^0.18.0",
     "@swc/core": "^1.3.102",
     "@swc/jest": "^0.2.29",
     "@types/jest": "^29.4.0",
