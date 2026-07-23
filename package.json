@@ -1,6 +1,6 @@
 {
   "name": "@imagekit/nodejs",
-  "version": "7.6.2",
+  "version": "7.10.0",
   "description": "The official TypeScript library for the Image Kit API",
   "author": "Image Kit <developer@imagekit.io>",
   "types": "dist/index.d.ts",
@@ -30,7 +30,7 @@
     "standardwebhooks": "^1.0.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.17.0",
+    "@arethetypeswrong/cli": "^0.18.0",
     "@swc/core": "^1.3.102",
     "@swc/jest": "^0.2.29",
     "@types/jest": "^29.4.0",
