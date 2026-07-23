@@ -193,11 +193,6 @@ export interface CustomMetadataFieldCreateParams {
 export namespace CustomMetadataFieldCreateParams {
   export interface Schema {
     /**
-     * Type of the custom metadata field.
-     */
-    type: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
-
-    /**
      * The default value for this custom metadata field. This property is only required
      * if `isValueRequired` property is set to `true`. The value should match the
      * `type` of custom metadata field.
@@ -242,6 +237,11 @@ export namespace CustomMetadataFieldCreateParams {
      * set to `SingleSelect` or `MultiSelect`.
      */
     selectOptions?: Array<string | number | boolean>;
+
+    /**
+     * Type of the custom metadata field.
+     */
+    type?: 'Text' | 'Textarea' | 'Number' | 'Date' | 'Boolean' | 'SingleSelect' | 'MultiSelect';
   }
 }
 

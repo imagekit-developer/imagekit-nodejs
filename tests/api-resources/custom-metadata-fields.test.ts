@@ -14,7 +14,7 @@ describe('resource customMetadataFields', () => {
     const responsePromise = client.customMetadataFields.create({
       label: 'price',
       name: 'price',
-      schema: { type: 'Number' },
+      schema: {},
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -31,7 +31,6 @@ describe('resource customMetadataFields', () => {
       label: 'price',
       name: 'price',
       schema: {
-        type: 'Number',
         defaultValue: [true, 10, 'Hello'],
         isValueRequired: true,
         maxLength: 0,
@@ -39,6 +38,7 @@ describe('resource customMetadataFields', () => {
         minLength: 0,
         minValue: 1000,
         selectOptions: ['small', 'medium', 'large', 30, 40, true],
+        type: 'Number',
       },
     });
   });
