@@ -40,6 +40,7 @@ describe('resource customMetadataFields', () => {
         minValue: 1000,
         selectOptions: ['small', 'medium', 'large', 30, 40, true],
       },
+      description: 'description',
     });
   });
 
@@ -85,6 +86,7 @@ describe('resource customMetadataFields', () => {
       client.customMetadataFields.update(
         'id',
         {
+          description: 'description',
           label: 'price',
           schema: {
             defaultValue: [true, 10, 'Hello'],

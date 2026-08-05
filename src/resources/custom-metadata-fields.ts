@@ -54,7 +54,8 @@ export class CustomMetadataFields extends APIResource {
   }
 
   /**
-   * This API updates the label or schema of an existing custom metadata field.
+   * This API updates the label, description, or schema of an existing custom
+   * metadata field.
    *
    * @example
    * ```ts
@@ -114,6 +115,13 @@ export interface CustomMetadataField {
    * An object that describes the rules for the custom metadata field value.
    */
   schema: CustomMetadataField.Schema;
+
+  /**
+   * Optional description of the custom metadata field. Only present when a
+   * description has been set. Shown as a hint to the users while setting the field's
+   * value on an asset in the media library UI.
+   */
+  description?: string;
 }
 
 export namespace CustomMetadataField {
@@ -188,6 +196,13 @@ export interface CustomMetadataFieldCreateParams {
   name: string;
 
   schema: CustomMetadataFieldCreateParams.Schema;
+
+  /**
+   * Optional description for the custom metadata field. Can be up to 500 characters.
+   * This is shown as a hint to the users while setting the field's value on an asset
+   * in the media library UI.
+   */
+  description?: string;
 }
 
 export namespace CustomMetadataFieldCreateParams {
@@ -261,6 +276,14 @@ export interface CustomMetadataFieldListParams {
 }
 
 export interface CustomMetadataFieldUpdateParams {
+  /**
+   * Optional description for the custom metadata field. Can be up to 500 characters.
+   * Send an empty string to clear an existing description. This is shown as a hint
+   * to the users while setting the field's value on an asset in the media library
+   * UI.
+   */
+  description?: string;
+
   /**
    * Human readable name of the custom metadata field. This should be unique across
    * all non deleted custom metadata fields. This name is displayed as form field
