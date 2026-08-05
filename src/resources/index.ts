@@ -45,6 +45,12 @@ export {
   type FolderRenameParams,
 } from './folders/folders';
 export {
+  NamedTransformations,
+  type NamedTransformationListResponse,
+  type NamedTransformationCreateParams,
+  type NamedTransformationUpdateParams,
+} from './named-transformations';
+export {
   SavedExtensions,
   type SavedExtensionListResponse,
   type SavedExtensionCreateParams,
