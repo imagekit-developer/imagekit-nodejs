@@ -796,14 +796,14 @@ export interface NamedTransformation {
   id?: string;
 
   /**
-   * Timestamp when the named transformation was created.
+   * Timestamp (ISO string) when the named transformation was created.
    */
   createdAt?: string;
 
   /**
-   * Whether this named transformation is currently disabled.
+   * Whether this named transformation is currently enabled.
    */
-  disabled?: boolean;
+  enabled?: boolean;
 
   /**
    * Name of the named transformation, used as `tr:n-<name>` in image and video URLs.
@@ -811,7 +811,9 @@ export interface NamedTransformation {
   name?: string;
 
   /**
-   * The transformation string this name refers to.
+   * The transformation this name refers to. Always returned with the `tr:` prefix
+   * included, regardless of whether you supplied it when creating or updating the
+   * named transformation.
    */
   transformation?: string;
 }
