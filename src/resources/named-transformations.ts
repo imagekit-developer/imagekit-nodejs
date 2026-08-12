@@ -66,11 +66,9 @@ export class NamedTransformations extends APIResource {
    * stay unchanged.
    *
    * Renaming or disabling a named transformation fails with a `409` error if it is
-   * still referenced (via the `n-<name>` token) by another enabled named
-   * transformation, or by an upload pre-transformation/post-transformation setting.
-   * References from disabled named transformations don't count. This check is
-   * best-effort and can't detect references in your own application code or in
-   * previously generated URLs.
+   * still referenced (via the `n-<name>` token) by an upload pre-transformation or
+   * post-transformation setting. This check is best-effort and can't detect
+   * references in your own application code or in previously generated URLs.
    *
    * @example
    * ```ts
@@ -93,10 +91,9 @@ export class NamedTransformations extends APIResource {
    * deleted object.
    *
    * Deletion fails with a `409` error if the named transformation is still
-   * referenced (via the `n-<name>` token) by another enabled named transformation,
-   * or by an upload pre-transformation/post-transformation setting. References from
-   * disabled named transformations don't count. This check is best-effort and can't
-   * detect references in your own application code or in previously generated URLs.
+   * referenced (via the `n-<name>` token) by an upload pre-transformation or
+   * post-transformation setting. This check is best-effort and can't detect
+   * references in your own application code or in previously generated URLs.
    *
    * @example
    * ```ts
@@ -122,7 +119,9 @@ export interface NamedTransformationCreateParams {
   /**
    * The transformation string this name refers to, for example
    * `w-150,h-150,fo-center,cm-resize`. The `tr:` prefix is optional — it's added
-   * automatically if missing, and validated if present. Learn more about the
+   * automatically if missing, and validated if present. The string must be a valid
+   * ImageKit transformation and cannot itself reference another named transformation
+   * (no nesting). Learn more about the
    * [transformation syntax](https://imagekit.io/docs/transformations).
    */
   transformation: string;
@@ -152,7 +151,9 @@ export interface NamedTransformationUpdateParams {
   /**
    * The transformation string this name refers to, for example
    * `w-150,h-150,fo-center,cm-resize`. The `tr:` prefix is optional — it's added
-   * automatically if missing, and validated if present. Learn more about the
+   * automatically if missing, and validated if present. The string must be a valid
+   * ImageKit transformation and cannot itself reference another named transformation
+   * (no nesting). Learn more about the
    * [transformation syntax](https://imagekit.io/docs/transformations).
    */
   transformation?: string;
