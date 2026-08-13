@@ -7,7 +7,6 @@ Types:
 - <code><a href="./src/resources/shared.ts">Extensions</a></code>
 - <code><a href="./src/resources/shared.ts">GetImageAttributesOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ImageOverlay</a></code>
-- <code><a href="./src/resources/shared.ts">NamedTransformation</a></code>
 - <code><a href="./src/resources/shared.ts">Overlay</a></code>
 - <code><a href="./src/resources/shared.ts">OverlayPosition</a></code>
 - <code><a href="./src/resources/shared.ts">OverlayTiming</a></code>
@@ -114,20 +113,6 @@ Methods:
 - <code title="get /v1/saved-extensions/{id}">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">get</a>(id) -> SavedExtension</code>
 - <code title="patch /v1/saved-extensions/{id}">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">update</a>(id, { ...params }) -> SavedExtension</code>
 - <code title="delete /v1/saved-extensions/{id}">client.savedExtensions.<a href="./src/resources/saved-extensions.ts">delete</a>(id) -> void</code>
-
-# NamedTransformations
-
-Types:
-
-- <code><a href="./src/resources/named-transformations.ts">NamedTransformationListResponse</a></code>
-
-Methods:
-
-- <code title="get /v1/named-transformations">client.namedTransformations.<a href="./src/resources/named-transformations.ts">list</a>() -> NamedTransformationListResponse</code>
-- <code title="post /v1/named-transformations">client.namedTransformations.<a href="./src/resources/named-transformations.ts">create</a>({ ...params }) -> NamedTransformation</code>
-- <code title="get /v1/named-transformations/{id}">client.namedTransformations.<a href="./src/resources/named-transformations.ts">get</a>(id) -> NamedTransformation</code>
-- <code title="patch /v1/named-transformations/{id}">client.namedTransformations.<a href="./src/resources/named-transformations.ts">update</a>(id, { ...params }) -> NamedTransformation</code>
-- <code title="delete /v1/named-transformations/{id}">client.namedTransformations.<a href="./src/resources/named-transformations.ts">delete</a>(id) -> NamedTransformation</code>
 
 # Assets
 
