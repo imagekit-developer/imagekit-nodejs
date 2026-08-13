@@ -167,6 +167,36 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/saved-extensions/{id}',
   },
   {
+    clientCallName: 'client.namedTransformations.list',
+    fullyQualifiedName: 'namedTransformations.list',
+    httpMethod: 'get',
+    httpPath: '/v1/named-transformations',
+  },
+  {
+    clientCallName: 'client.namedTransformations.create',
+    fullyQualifiedName: 'namedTransformations.create',
+    httpMethod: 'post',
+    httpPath: '/v1/named-transformations',
+  },
+  {
+    clientCallName: 'client.namedTransformations.get',
+    fullyQualifiedName: 'namedTransformations.get',
+    httpMethod: 'get',
+    httpPath: '/v1/named-transformations/{id}',
+  },
+  {
+    clientCallName: 'client.namedTransformations.update',
+    fullyQualifiedName: 'namedTransformations.update',
+    httpMethod: 'patch',
+    httpPath: '/v1/named-transformations/{id}',
+  },
+  {
+    clientCallName: 'client.namedTransformations.delete',
+    fullyQualifiedName: 'namedTransformations.delete',
+    httpMethod: 'delete',
+    httpPath: '/v1/named-transformations/{id}',
+  },
+  {
     clientCallName: 'client.assets.list',
     fullyQualifiedName: 'assets.list',
     httpMethod: 'get',
