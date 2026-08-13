@@ -120,7 +120,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/named-transformations.ts">NamedTransformationListResponse</a></code>
-- <code><a href="./src/resources/named-transformations.ts">NamedTransformationDeleteResponse</a></code>
 
 Methods:
 
@@ -128,7 +127,7 @@ Methods:
 - <code title="post /v1/named-transformations">client.namedTransformations.<a href="./src/resources/named-transformations.ts">create</a>({ ...params }) -> NamedTransformation</code>
 - <code title="get /v1/named-transformations/{id}">client.namedTransformations.<a href="./src/resources/named-transformations.ts">get</a>(id) -> NamedTransformation</code>
 - <code title="patch /v1/named-transformations/{id}">client.namedTransformations.<a href="./src/resources/named-transformations.ts">update</a>(id, { ...params }) -> NamedTransformation</code>
-- <code title="delete /v1/named-transformations/{id}">client.namedTransformations.<a href="./src/resources/named-transformations.ts">delete</a>(id) -> NamedTransformationDeleteResponse</code>
+- <code title="delete /v1/named-transformations/{id}">client.namedTransformations.<a href="./src/resources/named-transformations.ts">delete</a>(id) -> void</code>
 
 # Assets
 

@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -96,18 +97,18 @@ export class NamedTransformations extends APIResource {
    *
    * @example
    * ```ts
-   * const namedTransformation =
-   *   await client.namedTransformations.delete('6bZ9x2ZUx');
+   * await client.namedTransformations.delete('6bZ9x2ZUx');
    * ```
    */
-  delete(id: string, options?: RequestOptions): APIPromise<NamedTransformationDeleteResponse> {
-    return this._client.delete(path`/v1/named-transformations/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/v1/named-transformations/${id}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
 export type NamedTransformationListResponse = Array<Shared.NamedTransformation>;
-
-export interface NamedTransformationDeleteResponse {}
 
 export interface NamedTransformationCreateParams {
   /**
@@ -154,7 +155,6 @@ export interface NamedTransformationUpdateParams {
 export declare namespace NamedTransformations {
   export {
     type NamedTransformationListResponse as NamedTransformationListResponse,
-    type NamedTransformationDeleteResponse as NamedTransformationDeleteResponse,
     type NamedTransformationCreateParams as NamedTransformationCreateParams,
     type NamedTransformationUpdateParams as NamedTransformationUpdateParams,
   };

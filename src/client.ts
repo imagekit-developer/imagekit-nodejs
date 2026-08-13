@@ -29,7 +29,6 @@ import {
 } from './resources/custom-metadata-fields';
 import {
   NamedTransformationCreateParams,
-  NamedTransformationDeleteResponse,
   NamedTransformationListResponse,
   NamedTransformationUpdateParams,
   NamedTransformations,
@@ -925,7 +924,6 @@ export declare namespace ImageKit {
   export {
     NamedTransformations as NamedTransformations,
     type NamedTransformationListResponse as NamedTransformationListResponse,
-    type NamedTransformationDeleteResponse as NamedTransformationDeleteResponse,
     type NamedTransformationCreateParams as NamedTransformationCreateParams,
     type NamedTransformationUpdateParams as NamedTransformationUpdateParams,
   };
