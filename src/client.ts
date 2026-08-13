@@ -28,6 +28,13 @@ import {
   CustomMetadataFields,
 } from './resources/custom-metadata-fields';
 import {
+  NamedTransformationCreateParams,
+  NamedTransformationDeleteResponse,
+  NamedTransformationListResponse,
+  NamedTransformationUpdateParams,
+  NamedTransformations,
+} from './resources/named-transformations';
+import {
   SavedExtensionCreateParams,
   SavedExtensionListResponse,
   SavedExtensionUpdateParams,
@@ -856,6 +863,7 @@ export class ImageKit {
   customMetadataFields: API.CustomMetadataFields = new API.CustomMetadataFields(this);
   files: API.Files = new API.Files(this);
   savedExtensions: API.SavedExtensions = new API.SavedExtensions(this);
+  namedTransformations: API.NamedTransformations = new API.NamedTransformations(this);
   assets: API.Assets = new API.Assets(this);
   cache: API.Cache = new API.Cache(this);
   folders: API.Folders = new API.Folders(this);
@@ -867,6 +875,7 @@ export class ImageKit {
 ImageKit.CustomMetadataFields = CustomMetadataFields;
 ImageKit.Files = Files;
 ImageKit.SavedExtensions = SavedExtensions;
+ImageKit.NamedTransformations = NamedTransformations;
 ImageKit.Assets = Assets;
 ImageKit.Cache = Cache;
 ImageKit.Folders = Folders;
@@ -910,6 +919,14 @@ export declare namespace ImageKit {
     type SavedExtensionListResponse as SavedExtensionListResponse,
     type SavedExtensionCreateParams as SavedExtensionCreateParams,
     type SavedExtensionUpdateParams as SavedExtensionUpdateParams,
+  };
+
+  export {
+    NamedTransformations as NamedTransformations,
+    type NamedTransformationListResponse as NamedTransformationListResponse,
+    type NamedTransformationDeleteResponse as NamedTransformationDeleteResponse,
+    type NamedTransformationCreateParams as NamedTransformationCreateParams,
+    type NamedTransformationUpdateParams as NamedTransformationUpdateParams,
   };
 
   export {
@@ -962,6 +979,7 @@ export declare namespace ImageKit {
   export type Extensions = API.Extensions;
   export type GetImageAttributesOptions = API.GetImageAttributesOptions;
   export type ImageOverlay = API.ImageOverlay;
+  export type NamedTransformation = API.NamedTransformation;
   export type Overlay = API.Overlay;
   export type OverlayPosition = API.OverlayPosition;
   export type OverlayTiming = API.OverlayTiming;
