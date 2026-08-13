@@ -47,6 +47,7 @@ export {
 export {
   NamedTransformations,
   type NamedTransformationListResponse,
+  type NamedTransformationDeleteResponse,
   type NamedTransformationCreateParams,
   type NamedTransformationUpdateParams,
 } from './named-transformations';

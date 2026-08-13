@@ -47,7 +47,7 @@ describe('resource namedTransformations', () => {
 
   // Mock server tests are disabled
   test.skip('get', async () => {
-    const responsePromise = client.namedTransformations.get('id');
+    const responsePromise = client.namedTransformations.get('6bZ9x2ZUx');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -59,7 +59,7 @@ describe('resource namedTransformations', () => {
 
   // Mock server tests are disabled
   test.skip('update', async () => {
-    const responsePromise = client.namedTransformations.update('id', {});
+    const responsePromise = client.namedTransformations.update('6bZ9x2ZUx', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -71,7 +71,7 @@ describe('resource namedTransformations', () => {
 
   // Mock server tests are disabled
   test.skip('delete', async () => {
-    const responsePromise = client.namedTransformations.delete('id');
+    const responsePromise = client.namedTransformations.delete('6bZ9x2ZUx');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

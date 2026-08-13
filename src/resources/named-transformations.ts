@@ -53,7 +53,7 @@ export class NamedTransformations extends APIResource {
    * @example
    * ```ts
    * const namedTransformation =
-   *   await client.namedTransformations.get('id');
+   *   await client.namedTransformations.get('6bZ9x2ZUx');
    * ```
    */
   get(id: string, options?: RequestOptions): APIPromise<Shared.NamedTransformation> {
@@ -73,7 +73,7 @@ export class NamedTransformations extends APIResource {
    * @example
    * ```ts
    * const namedTransformation =
-   *   await client.namedTransformations.update('id', {
+   *   await client.namedTransformations.update('6bZ9x2ZUx', {
    *     transformation: 'w-200,h-200,fo-center,cm-resize',
    *   });
    * ```
@@ -87,8 +87,7 @@ export class NamedTransformations extends APIResource {
   }
 
   /**
-   * Permanently deletes the named transformation identified by `id` and returns the
-   * deleted object.
+   * Permanently deletes the named transformation identified by `id`.
    *
    * Deletion fails with a `409` error if the named transformation is still
    * referenced (via the `n-<name>` token) by an upload pre-transformation or
@@ -98,15 +97,17 @@ export class NamedTransformations extends APIResource {
    * @example
    * ```ts
    * const namedTransformation =
-   *   await client.namedTransformations.delete('id');
+   *   await client.namedTransformations.delete('6bZ9x2ZUx');
    * ```
    */
-  delete(id: string, options?: RequestOptions): APIPromise<Shared.NamedTransformation> {
+  delete(id: string, options?: RequestOptions): APIPromise<NamedTransformationDeleteResponse> {
     return this._client.delete(path`/v1/named-transformations/${id}`, options);
   }
 }
 
 export type NamedTransformationListResponse = Array<Shared.NamedTransformation>;
+
+export interface NamedTransformationDeleteResponse {}
 
 export interface NamedTransformationCreateParams {
   /**
@@ -118,18 +119,17 @@ export interface NamedTransformationCreateParams {
 
   /**
    * The transformation string this name refers to, for example
-   * `w-150,h-150,fo-center,cm-resize`. The `tr:` prefix is optional — it's added
-   * automatically if missing, and validated if present. The string must be a valid
-   * ImageKit transformation and cannot itself reference another named transformation
-   * (no nesting). Learn more about the
+   * `w-150,h-150,fo-center,cm-resize`. The `tr:` prefix is optional; if present, it
+   * is validated. The string must be a valid ImageKit transformation and cannot
+   * itself reference another named transformation (no nesting). Learn more about the
    * [transformation syntax](https://imagekit.io/docs/transformations).
    */
   transformation: string;
 
   /**
-   * Whether the named transformation is enabled. Set to `false` to disable it
-   * without deleting it; requests using a disabled named transformation fail at
-   * delivery time.
+   * Whether the named transformation is currently enabled. When this is set to
+   * `false`, requests using such disabled named transformations fail at delivery
+   * time.
    */
   enabled?: boolean;
 }
@@ -150,10 +150,9 @@ export interface NamedTransformationUpdateParams {
 
   /**
    * The transformation string this name refers to, for example
-   * `w-150,h-150,fo-center,cm-resize`. The `tr:` prefix is optional — it's added
-   * automatically if missing, and validated if present. The string must be a valid
-   * ImageKit transformation and cannot itself reference another named transformation
-   * (no nesting). Learn more about the
+   * `w-150,h-150,fo-center,cm-resize`. The `tr:` prefix is optional; if present, it
+   * is validated. The string must be a valid ImageKit transformation and cannot
+   * itself reference another named transformation (no nesting). Learn more about the
    * [transformation syntax](https://imagekit.io/docs/transformations).
    */
   transformation?: string;
@@ -162,6 +161,7 @@ export interface NamedTransformationUpdateParams {
 export declare namespace NamedTransformations {
   export {
     type NamedTransformationListResponse as NamedTransformationListResponse,
+    type NamedTransformationDeleteResponse as NamedTransformationDeleteResponse,
     type NamedTransformationCreateParams as NamedTransformationCreateParams,
     type NamedTransformationUpdateParams as NamedTransformationUpdateParams,
   };
