@@ -1554,6 +1554,281 @@ const EMBEDDED_METHODS: MethodEntry[] = [
   },
   {
     name: 'list',
+    endpoint: '/v1/named-transformations',
+    httpMethod: 'get',
+    summary: 'List named transformations',
+    description: 'Returns an array of all named transformations configured for your account.\n',
+    stainlessPath: '(resource) namedTransformations > (method) list',
+    qualified: 'client.namedTransformations.list',
+    response:
+      '{ id?: string; createdAt?: string; enabled?: boolean; name?: string; transformation?: string; }[]',
+    markdown:
+      "## list\n\n`client.namedTransformations.list(): object[]`\n\n**get** `/v1/named-transformations`\n\nReturns an array of all named transformations configured for your account.\n\n\n### Returns\n\n- `{ id?: string; createdAt?: string; enabled?: boolean; name?: string; transformation?: string; }[]`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst namedTransformations = await client.namedTransformations.list();\n\nconsole.log(namedTransformations);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.NamedTransformations.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go/v2"\n\t"github.com/imagekit-developer/imagekit-go/v2/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tnamedTransformations, err := client.NamedTransformations.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", namedTransformations)\n}\n',
+      },
+      java: {
+        method: 'namedTransformations().list',
+        example:
+          'package io.imagekit.example;\n\nimport io.imagekit.client.ImageKitClient;\nimport io.imagekit.client.okhttp.ImageKitOkHttpClient;\nimport io.imagekit.models.NamedTransformation;\nimport io.imagekit.models.namedtransformations.NamedTransformationListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        List<NamedTransformation> namedTransformations = client.namedTransformations().list();\n    }\n}',
+      },
+      python: {
+        method: 'named_transformations.list',
+        example:
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nnamed_transformations = client.named_transformations.list()\nprint(named_transformations)',
+      },
+      ruby: {
+        method: 'named_transformations.list',
+        example:
+          'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nnamed_transformations = image_kit.named_transformations.list\n\nputs(named_transformations)',
+      },
+      typescript: {
+        method: 'client.namedTransformations.list',
+        example:
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst namedTransformations = await client.namedTransformations.list();\n\nconsole.log(namedTransformations);",
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/named-transformations \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+      },
+      php: {
+        method: 'namedTransformations->list',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$namedTransformations = $client->namedTransformations->list();\n\nvar_dump($namedTransformations);",
+      },
+      csharp: {
+        method: 'NamedTransformations.List',
+        example:
+          'NamedTransformationListParams parameters = new();\n\nvar namedTransformations = await client.NamedTransformations.List(parameters);\n\nConsole.WriteLine(namedTransformations);',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/v1/named-transformations',
+    httpMethod: 'post',
+    summary: 'Create named transformation',
+    description:
+      'Creates a new named transformation and returns the created object.\n\nA named transformation is a short, reusable name for a transformation string. Use it in image and video URLs as `tr:n-<name>`, and update the underlying transformation later without changing existing URLs. Learn more about [named transformations](https://imagekit.io/docs/transformations#named-transformations).\n\nYou can create up to 250 named transformations per account.\n',
+    stainlessPath: '(resource) namedTransformations > (method) create',
+    qualified: 'client.namedTransformations.create',
+    params: ['name: string;', 'transformation: string;', 'enabled?: boolean;'],
+    response:
+      '{ id?: string; createdAt?: string; enabled?: boolean; name?: string; transformation?: string; }',
+    markdown:
+      "## create\n\n`client.namedTransformations.create(name: string, transformation: string, enabled?: boolean): { id?: string; createdAt?: string; enabled?: boolean; name?: string; transformation?: string; }`\n\n**post** `/v1/named-transformations`\n\nCreates a new named transformation and returns the created object.\n\nA named transformation is a short, reusable name for a transformation string. Use it in image and video URLs as `tr:n-<name>`, and update the underlying transformation later without changing existing URLs. Learn more about [named transformations](https://imagekit.io/docs/transformations#named-transformations).\n\nYou can create up to 250 named transformations per account.\n\n\n### Parameters\n\n- `name: string`\n  Alias for the transformation string, used in URLs as `tr:n-<name>`. This is case-sensitive, contains only alphanumeric characters or `_` (underscore), and is unique across all named transformations for your account.\n\n\n- `transformation: string`\n  The transformation string this named transformation refers to. Learn more about the [transformation string syntax](https://imagekit.io/docs/transformations).\n\n\n- `enabled?: boolean`\n  Whether the named transformation is currently enabled. When set to `false`, requests using this named transformation fail at delivery time.\n\n### Returns\n\n- `{ id?: string; createdAt?: string; enabled?: boolean; name?: string; transformation?: string; }`\n  A named transformation is an alias for a transformation string, letting you apply and later update complex transformations without changing your image or video URLs. Learn more about [named transformations](https://imagekit.io/docs/transformations#named-transformations).\n\n\n  - `id?: string`\n  - `createdAt?: string`\n  - `enabled?: boolean`\n  - `name?: string`\n  - `transformation?: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst namedTransformation = await client.namedTransformations.create({ name: 'small_thumbnail', transformation: 'w-150,h-150,fo-center,cm-pad_resize' });\n\nconsole.log(namedTransformation);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.NamedTransformations.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go/v2"\n\t"github.com/imagekit-developer/imagekit-go/v2/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tnamedTransformation, err := client.NamedTransformations.New(context.TODO(), imagekit.NamedTransformationNewParams{\n\t\tName:           "small_thumbnail",\n\t\tTransformation: "w-150,h-150,fo-center,cm-pad_resize",\n\t\tEnabled:        imagekit.Bool(true),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", namedTransformation.ID)\n}\n',
+      },
+      java: {
+        method: 'namedTransformations().create',
+        example:
+          'package io.imagekit.example;\n\nimport io.imagekit.client.ImageKitClient;\nimport io.imagekit.client.okhttp.ImageKitOkHttpClient;\nimport io.imagekit.models.NamedTransformation;\nimport io.imagekit.models.namedtransformations.NamedTransformationCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        NamedTransformationCreateParams params = NamedTransformationCreateParams.builder()\n            .name("small_thumbnail")\n            .transformation("w-150,h-150,fo-center,cm-pad_resize")\n            .build();\n        NamedTransformation namedTransformation = client.namedTransformations().create(params);\n    }\n}',
+      },
+      python: {
+        method: 'named_transformations.create',
+        example:
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nnamed_transformation = client.named_transformations.create(\n    name="small_thumbnail",\n    transformation="w-150,h-150,fo-center,cm-pad_resize",\n    enabled=True,\n)\nprint(named_transformation.id)',
+      },
+      ruby: {
+        method: 'named_transformations.create',
+        example:
+          'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nnamed_transformation = image_kit.named_transformations.create(\n  name: "small_thumbnail",\n  transformation: "w-150,h-150,fo-center,cm-pad_resize"\n)\n\nputs(named_transformation)',
+      },
+      typescript: {
+        method: 'client.namedTransformations.create',
+        example:
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst namedTransformation = await client.namedTransformations.create({\n  name: 'small_thumbnail',\n  transformation: 'w-150,h-150,fo-center,cm-pad_resize',\n  enabled: true,\n});\n\nconsole.log(namedTransformation.id);",
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/named-transformations \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "name": "small_thumbnail",\n          "transformation": "w-150,h-150,fo-center,cm-pad_resize",\n          "enabled": true\n        }\'',
+      },
+      php: {
+        method: 'namedTransformations->create',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$namedTransformation = $client->namedTransformations->create(\n  name: 'small_thumbnail',\n  transformation: 'w-150,h-150,fo-center,cm-pad_resize',\n  enabled: true,\n);\n\nvar_dump($namedTransformation);",
+      },
+      csharp: {
+        method: 'NamedTransformations.Create',
+        example:
+          'NamedTransformationCreateParams parameters = new()\n{\n    Name = "small_thumbnail",\n    Transformation = "w-150,h-150,fo-center,cm-pad_resize",\n};\n\nvar namedTransformation = await client.NamedTransformations.Create(parameters);\n\nConsole.WriteLine(namedTransformation);',
+      },
+    },
+  },
+  {
+    name: 'get',
+    endpoint: '/v1/named-transformations/{id}',
+    httpMethod: 'get',
+    summary: 'Get named transformation',
+    description: 'Retrieves the named transformation identified by `id`.',
+    stainlessPath: '(resource) namedTransformations > (method) get',
+    qualified: 'client.namedTransformations.get',
+    params: ['id: string;'],
+    response:
+      '{ id?: string; createdAt?: string; enabled?: boolean; name?: string; transformation?: string; }',
+    markdown:
+      "## get\n\n`client.namedTransformations.get(id: string): { id?: string; createdAt?: string; enabled?: boolean; name?: string; transformation?: string; }`\n\n**get** `/v1/named-transformations/{id}`\n\nRetrieves the named transformation identified by `id`.\n\n### Parameters\n\n- `id: string`\n  Unique identifier for a named transformation.\n\n### Returns\n\n- `{ id?: string; createdAt?: string; enabled?: boolean; name?: string; transformation?: string; }`\n  A named transformation is an alias for a transformation string, letting you apply and later update complex transformations without changing your image or video URLs. Learn more about [named transformations](https://imagekit.io/docs/transformations#named-transformations).\n\n\n  - `id?: string`\n  - `createdAt?: string`\n  - `enabled?: boolean`\n  - `name?: string`\n  - `transformation?: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst namedTransformation = await client.namedTransformations.get('6bZ9x2ZUx');\n\nconsole.log(namedTransformation);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.NamedTransformations.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go/v2"\n\t"github.com/imagekit-developer/imagekit-go/v2/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tnamedTransformation, err := client.NamedTransformations.Get(context.TODO(), "6bZ9x2ZUx")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", namedTransformation.ID)\n}\n',
+      },
+      java: {
+        method: 'namedTransformations().get',
+        example:
+          'package io.imagekit.example;\n\nimport io.imagekit.client.ImageKitClient;\nimport io.imagekit.client.okhttp.ImageKitOkHttpClient;\nimport io.imagekit.models.NamedTransformation;\nimport io.imagekit.models.namedtransformations.NamedTransformationGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        NamedTransformation namedTransformation = client.namedTransformations().get("6bZ9x2ZUx");\n    }\n}',
+      },
+      python: {
+        method: 'named_transformations.get',
+        example:
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nnamed_transformation = client.named_transformations.get(\n    "6bZ9x2ZUx",\n)\nprint(named_transformation.id)',
+      },
+      ruby: {
+        method: 'named_transformations.get',
+        example:
+          'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nnamed_transformation = image_kit.named_transformations.get("6bZ9x2ZUx")\n\nputs(named_transformation)',
+      },
+      typescript: {
+        method: 'client.namedTransformations.get',
+        example:
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst namedTransformation = await client.namedTransformations.get('6bZ9x2ZUx');\n\nconsole.log(namedTransformation.id);",
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/named-transformations/$ID \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+      },
+      php: {
+        method: 'namedTransformations->get',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$namedTransformation = $client->namedTransformations->get('6bZ9x2ZUx');\n\nvar_dump($namedTransformation);",
+      },
+      csharp: {
+        method: 'NamedTransformations.Get',
+        example:
+          'NamedTransformationGetParams parameters = new() { ID = "6bZ9x2ZUx" };\n\nvar namedTransformation = await client.NamedTransformations.Get(parameters);\n\nConsole.WriteLine(namedTransformation);',
+      },
+    },
+  },
+  {
+    name: 'update',
+    endpoint: '/v1/named-transformations/{id}',
+    httpMethod: 'patch',
+    summary: 'Update named transformation',
+    description:
+      "Updates the named transformation identified by `id` and returns the updated object. Only the fields present in the request body are updated; other fields stay unchanged.\n\nRenaming or disabling a named transformation fails with a `409` error if it is still referenced (via the `n-<name>` token) by an upload pre-transformation or post-transformation setting. This check is best-effort and can't detect references in your own application code or in previously generated URLs.\n",
+    stainlessPath: '(resource) namedTransformations > (method) update',
+    qualified: 'client.namedTransformations.update',
+    params: ['id: string;', 'enabled?: boolean;', 'name?: string;', 'transformation?: string;'],
+    response:
+      '{ id?: string; createdAt?: string; enabled?: boolean; name?: string; transformation?: string; }',
+    markdown:
+      "## update\n\n`client.namedTransformations.update(id: string, enabled?: boolean, name?: string, transformation?: string): { id?: string; createdAt?: string; enabled?: boolean; name?: string; transformation?: string; }`\n\n**patch** `/v1/named-transformations/{id}`\n\nUpdates the named transformation identified by `id` and returns the updated object. Only the fields present in the request body are updated; other fields stay unchanged.\n\nRenaming or disabling a named transformation fails with a `409` error if it is still referenced (via the `n-<name>` token) by an upload pre-transformation or post-transformation setting. This check is best-effort and can't detect references in your own application code or in previously generated URLs.\n\n\n### Parameters\n\n- `id: string`\n  Unique identifier for a named transformation.\n\n- `enabled?: boolean`\n  Whether the named transformation is enabled. Omit to leave the current value unchanged.\n\n\n- `name?: string`\n  Alias for the transformation string, used in URLs as `tr:n-<name>`. This is case-sensitive, contains only alphanumeric characters or `_` (underscore), and is unique across all named transformations for your account.\n\n\n- `transformation?: string`\n  The transformation string this named transformation refers to. Learn more about the [transformation string syntax](https://imagekit.io/docs/transformations).\n\n\n### Returns\n\n- `{ id?: string; createdAt?: string; enabled?: boolean; name?: string; transformation?: string; }`\n  A named transformation is an alias for a transformation string, letting you apply and later update complex transformations without changing your image or video URLs. Learn more about [named transformations](https://imagekit.io/docs/transformations#named-transformations).\n\n\n  - `id?: string`\n  - `createdAt?: string`\n  - `enabled?: boolean`\n  - `name?: string`\n  - `transformation?: string`\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nconst namedTransformation = await client.namedTransformations.update('6bZ9x2ZUx');\n\nconsole.log(namedTransformation);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.NamedTransformations.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/imagekit-developer/imagekit-go/v2"\n\t"github.com/imagekit-developer/imagekit-go/v2/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\tnamedTransformation, err := client.NamedTransformations.Update(\n\t\tcontext.TODO(),\n\t\t"6bZ9x2ZUx",\n\t\timagekit.NamedTransformationUpdateParams{\n\t\t\tTransformation: imagekit.String("w-200,h-200,fo-center,cm-pad_resize"),\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", namedTransformation.ID)\n}\n',
+      },
+      java: {
+        method: 'namedTransformations().update',
+        example:
+          'package io.imagekit.example;\n\nimport io.imagekit.client.ImageKitClient;\nimport io.imagekit.client.okhttp.ImageKitOkHttpClient;\nimport io.imagekit.models.NamedTransformation;\nimport io.imagekit.models.namedtransformations.NamedTransformationUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        NamedTransformation namedTransformation = client.namedTransformations().update("6bZ9x2ZUx");\n    }\n}',
+      },
+      python: {
+        method: 'named_transformations.update',
+        example:
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nnamed_transformation = client.named_transformations.update(\n    id="6bZ9x2ZUx",\n    enabled=False,\n    transformation="w-200,h-200,fo-center,cm-pad_resize",\n)\nprint(named_transformation.id)',
+      },
+      ruby: {
+        method: 'named_transformations.update',
+        example:
+          'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nnamed_transformation = image_kit.named_transformations.update("6bZ9x2ZUx")\n\nputs(named_transformation)',
+      },
+      typescript: {
+        method: 'client.namedTransformations.update',
+        example:
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nconst namedTransformation = await client.namedTransformations.update('6bZ9x2ZUx', {\n  transformation: 'w-200,h-200,fo-center,cm-pad_resize',\n});\n\nconsole.log(namedTransformation.id);",
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/named-transformations/$ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS" \\\n    -d \'{\n          "enabled": false,\n          "name": "small_thumbnail",\n          "transformation": "w-200,h-200,fo-center,cm-pad_resize"\n        }\'',
+      },
+      php: {
+        method: 'namedTransformations->update',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$namedTransformation = $client->namedTransformations->update(\n  '6bZ9x2ZUx',\n  enabled: false,\n  name: 'small_thumbnail',\n  transformation: 'w-200,h-200,fo-center,cm-pad_resize',\n);\n\nvar_dump($namedTransformation);",
+      },
+      csharp: {
+        method: 'NamedTransformations.Update',
+        example:
+          'NamedTransformationUpdateParams parameters = new() { ID = "6bZ9x2ZUx" };\n\nvar namedTransformation = await client.NamedTransformations.Update(parameters);\n\nConsole.WriteLine(namedTransformation);',
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/v1/named-transformations/{id}',
+    httpMethod: 'delete',
+    summary: 'Delete named transformation',
+    description:
+      "Permanently deletes the named transformation identified by `id`.\n\nDeletion fails with a `409` error if the named transformation is still referenced (via the `n-<name>` token) by an upload pre-transformation or post-transformation setting. This check is best-effort and can't detect references in your own application code or in previously generated URLs.\n",
+    stainlessPath: '(resource) namedTransformations > (method) delete',
+    qualified: 'client.namedTransformations.delete',
+    params: ['id: string;'],
+    markdown:
+      "## delete\n\n`client.namedTransformations.delete(id: string): void`\n\n**delete** `/v1/named-transformations/{id}`\n\nPermanently deletes the named transformation identified by `id`.\n\nDeletion fails with a `409` error if the named transformation is still referenced (via the `n-<name>` token) by an upload pre-transformation or post-transformation setting. This check is best-effort and can't detect references in your own application code or in previously generated URLs.\n\n\n### Parameters\n\n- `id: string`\n  Unique identifier for a named transformation.\n\n### Example\n\n```typescript\nimport ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit();\n\nawait client.namedTransformations.delete('6bZ9x2ZUx')\n```",
+    perLanguage: {
+      go: {
+        method: 'client.NamedTransformations.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/imagekit-developer/imagekit-go/v2"\n\t"github.com/imagekit-developer/imagekit-go/v2/option"\n)\n\nfunc main() {\n\tclient := imagekit.NewClient(\n\t\toption.WithPrivateKey("My Private Key"),\n\t\toption.WithPassword("My Password"),\n\t)\n\terr := client.NamedTransformations.Delete(context.TODO(), "6bZ9x2ZUx")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      java: {
+        method: 'namedTransformations().delete',
+        example:
+          'package io.imagekit.example;\n\nimport io.imagekit.client.ImageKitClient;\nimport io.imagekit.client.okhttp.ImageKitOkHttpClient;\nimport io.imagekit.models.namedtransformations.NamedTransformationDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        ImageKitClient client = ImageKitOkHttpClient.fromEnv();\n\n        client.namedTransformations().delete("6bZ9x2ZUx");\n    }\n}',
+      },
+      python: {
+        method: 'named_transformations.delete',
+        example:
+          'import os\nfrom imagekitio import ImageKit\n\nclient = ImageKit(\n    private_key=os.environ.get("IMAGEKIT_PRIVATE_KEY"),  # This is the default and can be omitted\n    password=os.environ.get("OPTIONAL_IMAGEKIT_IGNORES_THIS"),  # This is the default and can be omitted\n)\nclient.named_transformations.delete(\n    "6bZ9x2ZUx",\n)',
+      },
+      ruby: {
+        method: 'named_transformations.delete',
+        example:
+          'require "imagekitio"\n\nimage_kit = Imagekitio::Client.new(private_key: "My Private Key", password: "My Password")\n\nresult = image_kit.named_transformations.delete("6bZ9x2ZUx")\n\nputs(result)',
+      },
+      typescript: {
+        method: 'client.namedTransformations.delete',
+        example:
+          "import ImageKit from '@imagekit/nodejs';\n\nconst client = new ImageKit({\n  privateKey: process.env['IMAGEKIT_PRIVATE_KEY'], // This is the default and can be omitted\n  password: process.env['OPTIONAL_IMAGEKIT_IGNORES_THIS'], // This is the default and can be omitted\n});\n\nawait client.namedTransformations.delete('6bZ9x2ZUx');",
+      },
+      http: {
+        example:
+          'curl https://api.imagekit.io/v1/named-transformations/$ID \\\n    -X DELETE \\\n    -u "$IMAGEKIT_PRIVATE_KEY:OPTIONAL_IMAGEKIT_IGNORES_THIS"',
+      },
+      php: {
+        method: 'namedTransformations->delete',
+        example:
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(privateKey: 'My Private Key', password: 'My Password');\n\n$result = $client->namedTransformations->delete('6bZ9x2ZUx');\n\nvar_dump($result);",
+      },
+      csharp: {
+        method: 'NamedTransformations.Delete',
+        example:
+          'NamedTransformationDeleteParams parameters = new() { ID = "6bZ9x2ZUx" };\n\nawait client.NamedTransformations.Delete(parameters);',
+      },
+    },
+  },
+  {
+    name: 'list',
     endpoint: '/v1/files',
     httpMethod: 'get',
     summary: 'List and search assets',
