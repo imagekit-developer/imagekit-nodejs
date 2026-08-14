@@ -36,7 +36,7 @@ export class NamedTransformations extends APIResource {
    * const namedTransformation =
    *   await client.namedTransformations.create({
    *     name: 'small_thumbnail',
-   *     transformation: 'w-150,h-150,fo-center,cm-resize',
+   *     transformation: 'w-150,h-150,fo-center,cm-pad_resize',
    *     enabled: true,
    *   });
    * ```
@@ -75,7 +75,7 @@ export class NamedTransformations extends APIResource {
    * ```ts
    * const namedTransformation =
    *   await client.namedTransformations.update('6bZ9x2ZUx', {
-   *     transformation: 'w-200,h-200,fo-center,cm-resize',
+   *     transformation: 'w-200,h-200,fo-center,cm-pad_resize',
    *   });
    * ```
    */
