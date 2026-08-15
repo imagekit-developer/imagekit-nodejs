@@ -9,19 +9,6 @@ import { path } from '../internal/utils/path';
 
 export class NamedTransformations extends APIResource {
   /**
-   * Returns an array of all named transformations configured for your account.
-   *
-   * @example
-   * ```ts
-   * const namedTransformations =
-   *   await client.namedTransformations.list();
-   * ```
-   */
-  list(options?: RequestOptions): APIPromise<NamedTransformationListResponse> {
-    return this._client.get('/v1/named-transformations', options);
-  }
-
-  /**
    * Creates a new named transformation and returns the created object.
    *
    * A named transformation is a short, reusable name for a transformation string.
@@ -46,19 +33,6 @@ export class NamedTransformations extends APIResource {
     options?: RequestOptions,
   ): APIPromise<Shared.NamedTransformation> {
     return this._client.post('/v1/named-transformations', { body, ...options });
-  }
-
-  /**
-   * Retrieves the named transformation identified by `id`.
-   *
-   * @example
-   * ```ts
-   * const namedTransformation =
-   *   await client.namedTransformations.get('6bZ9x2ZUx');
-   * ```
-   */
-  get(id: string, options?: RequestOptions): APIPromise<Shared.NamedTransformation> {
-    return this._client.get(path`/v1/named-transformations/${id}`, options);
   }
 
   /**
@@ -88,6 +62,19 @@ export class NamedTransformations extends APIResource {
   }
 
   /**
+   * Returns an array of all named transformations configured for your account.
+   *
+   * @example
+   * ```ts
+   * const namedTransformations =
+   *   await client.namedTransformations.list();
+   * ```
+   */
+  list(options?: RequestOptions): APIPromise<NamedTransformationListResponse> {
+    return this._client.get('/v1/named-transformations', options);
+  }
+
+  /**
    * Permanently deletes the named transformation identified by `id`.
    *
    * Deletion fails with a `409` error if the named transformation is still
@@ -105,6 +92,19 @@ export class NamedTransformations extends APIResource {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
+  }
+
+  /**
+   * Retrieves the named transformation identified by `id`.
+   *
+   * @example
+   * ```ts
+   * const namedTransformation =
+   *   await client.namedTransformations.get('6bZ9x2ZUx');
+   * ```
+   */
+  get(id: string, options?: RequestOptions): APIPromise<Shared.NamedTransformation> {
+    return this._client.get(path`/v1/named-transformations/${id}`, options);
   }
 }
 

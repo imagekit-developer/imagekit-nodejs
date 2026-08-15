@@ -891,8 +891,8 @@ export declare namespace ImageKit {
     type CustomMetadataFieldListResponse as CustomMetadataFieldListResponse,
     type CustomMetadataFieldDeleteResponse as CustomMetadataFieldDeleteResponse,
     type CustomMetadataFieldCreateParams as CustomMetadataFieldCreateParams,
-    type CustomMetadataFieldListParams as CustomMetadataFieldListParams,
     type CustomMetadataFieldUpdateParams as CustomMetadataFieldUpdateParams,
+    type CustomMetadataFieldListParams as CustomMetadataFieldListParams,
   };
 
   export {
@@ -906,11 +906,11 @@ export declare namespace ImageKit {
     type FileMoveResponse as FileMoveResponse,
     type FileRenameResponse as FileRenameResponse,
     type FileUploadResponse as FileUploadResponse,
-    type FileUploadParams as FileUploadParams,
     type FileUpdateParams as FileUpdateParams,
     type FileCopyParams as FileCopyParams,
     type FileMoveParams as FileMoveParams,
     type FileRenameParams as FileRenameParams,
+    type FileUploadParams as FileUploadParams,
   };
 
   export {

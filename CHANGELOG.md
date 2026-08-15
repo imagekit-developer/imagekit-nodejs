@@ -1,5 +1,19 @@
 # Changelog
 
+## [7.11.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.10.0...v7.11.0) (2026-08-15)
+
+
+### Features
+
+* add description field in custom metadata field api ([7c9d0f4](https://github.com/imagekit-developer/imagekit-nodejs/commit/7c9d0f47ceb8afd597dcc581e875af44179136dc))
+* **api:** Named Transformations ([a3ceebe](https://github.com/imagekit-developer/imagekit-nodejs/commit/a3ceebe495c64cf0a211c4526916868a7cb71392))
+
+
+### Chores
+
+* codegen update ([a078f58](https://github.com/imagekit-developer/imagekit-nodejs/commit/a078f581e3eb9257babe079385d884107ae962ef))
+* pin next release ([28b00ef](https://github.com/imagekit-developer/imagekit-nodejs/commit/28b00efde32ba26f369b9ab2bbf259de746bf2f3))
+
 ## [7.10.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.9.1...v7.10.0) (2026-07-14)
 
 
