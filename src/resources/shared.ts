@@ -783,6 +783,43 @@ export interface ImageOverlay extends BaseOverlay {
 }
 
 /**
+ * A named transformation is an alias for a transformation string, letting you
+ * apply and later update complex transformations without changing your image or
+ * video URLs. Learn more about
+ * [named transformations](https://imagekit.io/docs/transformations#named-transformations).
+ */
+export interface NamedTransformation {
+  /**
+   * Unique identifier for a named transformation.
+   */
+  id?: string;
+
+  /**
+   * ISO 8601 timestamp of when the named transformation was created.
+   */
+  createdAt?: string;
+
+  /**
+   * Whether the named transformation is currently enabled. When set to `false`,
+   * requests using this named transformation fail at delivery time.
+   */
+  enabled?: boolean;
+
+  /**
+   * Alias for the transformation string, used in URLs as `tr:n-<name>`. This is
+   * case-sensitive, contains only alphanumeric characters or `_` (underscore), and
+   * is unique across all named transformations for your account.
+   */
+  name?: string;
+
+  /**
+   * The transformation string this named transformation refers to. Learn more about
+   * the [transformation string syntax](https://imagekit.io/docs/transformations).
+   */
+  transformation?: string;
+}
+
+/**
  * Specifies an overlay to be applied on the parent image or video. ImageKit
  * supports overlays including images, text, videos, subtitles, and solid colors.
  * See
