@@ -9,20 +9,6 @@ import { path } from '../../internal/utils/path';
 export class Origins extends APIResource {
   /**
    * **Note:** This API is currently in beta.
-   * Returns an array of all configured origins for the current account.
-   *
-   * @example
-   * ```ts
-   * const originResponses =
-   *   await client.accounts.origins.list();
-   * ```
-   */
-  list(options?: RequestOptions): APIPromise<OriginListResponse> {
-    return this._client.get('/v1/accounts/origins', options);
-  }
-
-  /**
-   * **Note:** This API is currently in beta.
    * Creates a new origin and returns the origin object.
    *
    * @example
@@ -40,21 +26,6 @@ export class Origins extends APIResource {
    */
   create(body: OriginCreateParams, options?: RequestOptions): APIPromise<OriginResponse> {
     return this._client.post('/v1/accounts/origins', { body, ...options });
-  }
-
-  /**
-   * **Note:** This API is currently in beta.
-   * Retrieves the origin identified by `id`.
-   *
-   * @example
-   * ```ts
-   * const originResponse = await client.accounts.origins.get(
-   *   'id',
-   * );
-   * ```
-   */
-  get(id: string, options?: RequestOptions): APIPromise<OriginResponse> {
-    return this._client.get(path`/v1/accounts/origins/${id}`, options);
   }
 
   /**
@@ -81,6 +52,20 @@ export class Origins extends APIResource {
 
   /**
    * **Note:** This API is currently in beta.
+   * Returns an array of all configured origins for the current account.
+   *
+   * @example
+   * ```ts
+   * const originResponses =
+   *   await client.accounts.origins.list();
+   * ```
+   */
+  list(options?: RequestOptions): APIPromise<OriginListResponse> {
+    return this._client.get('/v1/accounts/origins', options);
+  }
+
+  /**
+   * **Note:** This API is currently in beta.
    * Permanently removes the origin identified by `id`. If the origin is in use by
    * any URL‑endpoints, the API will return an error.
    *
@@ -94,6 +79,21 @@ export class Origins extends APIResource {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
+  }
+
+  /**
+   * **Note:** This API is currently in beta.
+   * Retrieves the origin identified by `id`.
+   *
+   * @example
+   * ```ts
+   * const originResponse = await client.accounts.origins.get(
+   *   'id',
+   * );
+   * ```
+   */
+  get(id: string, options?: RequestOptions): APIPromise<OriginResponse> {
+    return this._client.get(path`/v1/accounts/origins/${id}`, options);
   }
 }
 

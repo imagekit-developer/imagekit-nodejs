@@ -20,21 +20,6 @@ export class Versions extends APIResource {
   }
 
   /**
-   * This API returns an object with details or attributes of a file version.
-   *
-   * @example
-   * ```ts
-   * const file = await client.files.versions.get('versionId', {
-   *   fileId: 'fileId',
-   * });
-   * ```
-   */
-  get(versionID: string, params: VersionGetParams, options?: RequestOptions): APIPromise<FilesAPI.File> {
-    const { fileId } = params;
-    return this._client.get(path`/v1/files/${fileId}/versions/${versionID}`, options);
-  }
-
-  /**
    * This API deletes a non-current file version permanently. The API returns an
    * empty response.
    *
@@ -55,6 +40,21 @@ export class Versions extends APIResource {
   ): APIPromise<VersionDeleteResponse> {
     const { fileId } = params;
     return this._client.delete(path`/v1/files/${fileId}/versions/${versionID}`, options);
+  }
+
+  /**
+   * This API returns an object with details or attributes of a file version.
+   *
+   * @example
+   * ```ts
+   * const file = await client.files.versions.get('versionId', {
+   *   fileId: 'fileId',
+   * });
+   * ```
+   */
+  get(versionID: string, params: VersionGetParams, options?: RequestOptions): APIPromise<FilesAPI.File> {
+    const { fileId } = params;
+    return this._client.get(path`/v1/files/${fileId}/versions/${versionID}`, options);
   }
 
   /**
@@ -82,7 +82,7 @@ export type VersionListResponse = Array<FilesAPI.File>;
 
 export interface VersionDeleteResponse {}
 
-export interface VersionGetParams {
+export interface VersionDeleteParams {
   /**
    * The unique `fileId` of the uploaded file. `fileId` is returned in list and
    * search assets API and upload API.
@@ -90,7 +90,7 @@ export interface VersionGetParams {
   fileId: string;
 }
 
-export interface VersionDeleteParams {
+export interface VersionGetParams {
   /**
    * The unique `fileId` of the uploaded file. `fileId` is returned in list and
    * search assets API and upload API.
@@ -110,8 +110,8 @@ export declare namespace Versions {
   export {
     type VersionListResponse as VersionListResponse,
     type VersionDeleteResponse as VersionDeleteResponse,
-    type VersionGetParams as VersionGetParams,
     type VersionDeleteParams as VersionDeleteParams,
+    type VersionGetParams as VersionGetParams,
     type VersionRestoreParams as VersionRestoreParams,
   };
 }

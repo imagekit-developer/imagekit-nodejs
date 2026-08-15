@@ -10,18 +10,6 @@ const client = new ImageKit({
 
 describe('resource namedTransformations', () => {
   // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.namedTransformations.list();
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.namedTransformations.create({
       name: 'small_thumbnail',
@@ -46,18 +34,6 @@ describe('resource namedTransformations', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('get', async () => {
-    const responsePromise = client.namedTransformations.get('6bZ9x2ZUx');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.namedTransformations.update('6bZ9x2ZUx', {});
     const rawResponse = await responsePromise.asResponse();
@@ -70,8 +46,32 @@ describe('resource namedTransformations', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('list', async () => {
+    const responsePromise = client.namedTransformations.list();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.namedTransformations.delete('6bZ9x2ZUx');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('get', async () => {
+    const responsePromise = client.namedTransformations.get('6bZ9x2ZUx');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
