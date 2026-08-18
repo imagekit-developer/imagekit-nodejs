@@ -17,6 +17,11 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
+import {
+  AIFilterSearch,
+  AIFilterSearchCreateParams,
+  AIFilterSearchCreateResponse,
+} from './resources/ai-filter-search';
 import { AssetListParams, AssetListResponse, Assets } from './resources/assets';
 import {
   CustomMetadataField,
@@ -864,6 +869,7 @@ export class ImageKit {
   savedExtensions: API.SavedExtensions = new API.SavedExtensions(this);
   namedTransformations: API.NamedTransformations = new API.NamedTransformations(this);
   assets: API.Assets = new API.Assets(this);
+  aiFilterSearch: API.AIFilterSearch = new API.AIFilterSearch(this);
   cache: API.Cache = new API.Cache(this);
   folders: API.Folders = new API.Folders(this);
   accounts: API.Accounts = new API.Accounts(this);
@@ -877,6 +883,7 @@ ImageKit.Files = Files;
 ImageKit.SavedExtensions = SavedExtensions;
 ImageKit.NamedTransformations = NamedTransformations;
 ImageKit.Assets = Assets;
+ImageKit.AIFilterSearch = AIFilterSearch;
 ImageKit.Cache = Cache;
 ImageKit.Folders = Folders;
 ImageKit.Accounts = Accounts;
@@ -932,6 +939,12 @@ export declare namespace ImageKit {
     Assets as Assets,
     type AssetListResponse as AssetListResponse,
     type AssetListParams as AssetListParams,
+  };
+
+  export {
+    AIFilterSearch as AIFilterSearch,
+    type AIFilterSearchCreateResponse as AIFilterSearchCreateResponse,
+    type AIFilterSearchCreateParams as AIFilterSearchCreateParams,
   };
 
   export { Cache as Cache };

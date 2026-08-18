@@ -203,6 +203,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/files',
   },
   {
+    clientCallName: 'client.aiFilterSearch.create',
+    fullyQualifiedName: 'aiFilterSearch.create',
+    httpMethod: 'post',
+    httpPath: '/v1/ai-filter-search',
+  },
+  {
     clientCallName: 'client.cache.invalidation.create',
     fullyQualifiedName: 'cache.invalidation.create',
     httpMethod: 'post',

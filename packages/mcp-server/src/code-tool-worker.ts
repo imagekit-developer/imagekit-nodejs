@@ -140,6 +140,7 @@ const fuse = new Fuse(
     'client.namedTransformations.list',
     'client.namedTransformations.update',
     'client.assets.list',
+    'client.aiFilterSearch.create',
     'client.cache.invalidation.create',
     'client.cache.invalidation.get',
     'client.folders.copy',
