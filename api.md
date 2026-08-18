@@ -139,6 +139,16 @@ Methods:
 
 - <code title="get /v1/files">client.assets.<a href="./src/resources/assets.ts">list</a>({ ...params }) -> AssetListResponse</code>
 
+# AIFilterSearch
+
+Types:
+
+- <code><a href="./src/resources/ai-filter-search.ts">AIFilterSearchCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/ai-filter-search">client.aiFilterSearch.<a href="./src/resources/ai-filter-search.ts">create</a>({ ...params }) -> AIFilterSearchCreateResponse</code>
+
 # Cache
 
 ## Invalidation
