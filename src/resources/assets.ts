@@ -87,7 +87,11 @@ export interface AssetListParams {
     | 'ASC_SIZE'
     | 'DESC_SIZE'
     | 'ASC_RELEVANCE'
-    | 'DESC_RELEVANCE';
+    | 'DESC_RELEVANCE'
+    | 'ASC_DURATION'
+    | 'DESC_DURATION'
+    | 'ASC_ORIGINAL_CREATION_DATE'
+    | 'DESC_ORIGINAL_CREATION_DATE';
 
   /**
    * Filter results by asset type.
