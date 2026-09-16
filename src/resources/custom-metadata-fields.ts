@@ -122,6 +122,12 @@ export interface CustomMetadataField {
    * value on an asset in the media library UI.
    */
   description?: string;
+
+  /**
+   * Present and set to `true` when the field is reserved. Omitted for regular
+   * fields. Reserved fields cannot be deleted.
+   */
+  reserved?: boolean;
 }
 
 export namespace CustomMetadataField {

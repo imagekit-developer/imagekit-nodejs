@@ -1529,6 +1529,16 @@ export interface Transformation {
   defaultImage?: string;
 
   /**
+   * Sets the output image density in dots per inch (DPI). Accepts an integer from 1
+   * to 1200 or an arithmetic expression using the `idn` variable, such as
+   * `idn_mul_2`. For raster images, this updates density metadata without changing
+   * dimensions. For vector images, it controls the DPI used during rasterization.
+   * Cannot be used inside layers. See
+   * [Density](https://imagekit.io/docs/image-optimization#density---dn).
+   */
+  density?: number | string;
+
+  /**
    * Distorts the shape of an image. Supports two modes:
    *
    * - Perspective distortion: `p-x1_y1_x2_y2_x3_y3_x4_y4` changes the position of
