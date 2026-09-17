@@ -1,5 +1,22 @@
 # Changelog
 
+## [7.12.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.11.0...v7.12.0) (2026-09-16)
+
+
+### Features
+
+* serialize density as dn in SDK URL builders ([560a326](https://github.com/imagekit-developer/imagekit-nodejs/commit/560a326ea3166c7d0e4a24bff5458293f2bd3893))
+
+
+### Chores
+
+* update github workflow ([06e2f43](https://github.com/imagekit-developer/imagekit-nodejs/commit/06e2f43df65220b81b82a568f7814f79fd13d8d0))
+
+
+### Documentation
+
+* remove MCP server section ([0163985](https://github.com/imagekit-developer/imagekit-nodejs/commit/01639852b0fecf56b39e8473796f8c9b2660252b))
+
 ## [7.11.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.10.0...v7.11.0) (2026-08-15)
 
 
