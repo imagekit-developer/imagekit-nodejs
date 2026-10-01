@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.12.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.12.0...v7.12.1) (2026-09-17)
+
+
+### Bug Fixes
+
+* lint ([2c1c741](https://github.com/imagekit-developer/imagekit-nodejs/commit/2c1c741694f214464a2dfea4dd7a5a121d734c1d))
+
 ## [7.12.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.11.0...v7.12.0) (2026-09-16)
 
 
