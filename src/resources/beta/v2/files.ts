@@ -403,7 +403,11 @@ export interface FileUploadParams {
 
   /**
    * JSON key-value pairs to associate with the asset. Create the custom metadata
-   * fields before setting these values.
+   * fields before setting these values. To preserve the original creation date of an
+   * asset migrated from another system, set the reserved
+   * `_internal_original_created_datetime` key to an ISO 8601 date string. This key
+   * is available once the original creation date setting is enabled in the media
+   * library settings.
    */
   customMetadata?: { [key: string]: unknown };
 
