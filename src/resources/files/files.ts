@@ -19,7 +19,6 @@ import { MetadataGetFromURLParams } from './metadata';
 import * as VersionsAPI from './versions';
 import {
   VersionDeleteParams,
-  VersionDeleteResponse,
   VersionGetParams,
   VersionListResponse,
   VersionRestoreParams,
@@ -143,14 +142,18 @@ export class Files extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.files.copy({
+   * await client.files.copy({
    *   destinationPath: '/folder/to/copy/into/',
    *   sourceFilePath: '/path/to/file.jpg',
    * });
    * ```
    */
-  copy(body: FileCopyParams, options?: RequestOptions): APIPromise<FileCopyResponse> {
-    return this._client.post('/v1/files/copy', { body, ...options });
+  copy(body: FileCopyParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.post('/v1/files/copy', {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -161,14 +164,18 @@ export class Files extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.files.move({
+   * await client.files.move({
    *   destinationPath: '/folder/to/move/into/',
    *   sourceFilePath: '/path/to/file.jpg',
    * });
    * ```
    */
-  move(body: FileMoveParams, options?: RequestOptions): APIPromise<FileMoveResponse> {
-    return this._client.post('/v1/files/move', { body, ...options });
+  move(body: FileMoveParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.post('/v1/files/move', {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -883,10 +890,6 @@ export namespace FileUpdateResponse {
     'remove-bg'?: 'success' | 'pending' | 'failed';
   }
 }
-
-export interface FileCopyResponse {}
-
-export interface FileMoveResponse {}
 
 export interface FileRenameResponse {
   /**
@@ -1647,8 +1650,6 @@ export declare namespace Files {
     type Metadata as Metadata,
     type UpdateFileRequest as UpdateFileRequest,
     type FileUpdateResponse as FileUpdateResponse,
-    type FileCopyResponse as FileCopyResponse,
-    type FileMoveResponse as FileMoveResponse,
     type FileRenameResponse as FileRenameResponse,
     type FileUploadResponse as FileUploadResponse,
     type FileUploadParams as FileUploadParams,
@@ -1673,7 +1674,6 @@ export declare namespace Files {
   export {
     Versions as Versions,
     type VersionListResponse as VersionListResponse,
-    type VersionDeleteResponse as VersionDeleteResponse,
     type VersionGetParams as VersionGetParams,
     type VersionDeleteParams as VersionDeleteParams,
     type VersionRestoreParams as VersionRestoreParams,

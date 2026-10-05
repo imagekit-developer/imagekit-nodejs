@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -80,12 +81,14 @@ export class CustomMetadataFields extends APIResource {
    *
    * @example
    * ```ts
-   * const customMetadataField =
-   *   await client.customMetadataFields.delete('id');
+   * await client.customMetadataFields.delete('id');
    * ```
    */
-  delete(id: string, options?: RequestOptions): APIPromise<CustomMetadataFieldDeleteResponse> {
-    return this._client.delete(path`/v1/customMetadataFields/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/v1/customMetadataFields/${id}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -196,8 +199,6 @@ export namespace CustomMetadataField {
 }
 
 export type CustomMetadataFieldListResponse = Array<CustomMetadataField>;
-
-export interface CustomMetadataFieldDeleteResponse {}
 
 export interface CustomMetadataFieldCreateParams {
   /**
@@ -384,7 +385,6 @@ export declare namespace CustomMetadataFields {
   export {
     type CustomMetadataField as CustomMetadataField,
     type CustomMetadataFieldListResponse as CustomMetadataFieldListResponse,
-    type CustomMetadataFieldDeleteResponse as CustomMetadataFieldDeleteResponse,
     type CustomMetadataFieldCreateParams as CustomMetadataFieldCreateParams,
     type CustomMetadataFieldUpdateParams as CustomMetadataFieldUpdateParams,
     type CustomMetadataFieldListParams as CustomMetadataFieldListParams,

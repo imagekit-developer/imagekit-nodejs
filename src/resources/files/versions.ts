@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as FilesAPI from './files';
 import { APIPromise } from '../../core/api-promise';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -27,19 +28,17 @@ export class Versions extends APIResource {
    *
    * @example
    * ```ts
-   * const version = await client.files.versions.delete(
-   *   'versionId',
-   *   { fileId: 'fileId' },
-   * );
+   * await client.files.versions.delete('versionId', {
+   *   fileId: 'fileId',
+   * });
    * ```
    */
-  delete(
-    versionID: string,
-    params: VersionDeleteParams,
-    options?: RequestOptions,
-  ): APIPromise<VersionDeleteResponse> {
+  delete(versionID: string, params: VersionDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { fileId } = params;
-    return this._client.delete(path`/v1/files/${fileId}/versions/${versionID}`, options);
+    return this._client.delete(path`/v1/files/${fileId}/versions/${versionID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -80,8 +79,6 @@ export class Versions extends APIResource {
 
 export type VersionListResponse = Array<FilesAPI.File>;
 
-export interface VersionDeleteResponse {}
-
 export interface VersionDeleteParams {
   /**
    * The unique `fileId` of the uploaded file. `fileId` is returned in list and
@@ -109,7 +106,6 @@ export interface VersionRestoreParams {
 export declare namespace Versions {
   export {
     type VersionListResponse as VersionListResponse,
-    type VersionDeleteResponse as VersionDeleteResponse,
     type VersionDeleteParams as VersionDeleteParams,
     type VersionGetParams as VersionGetParams,
     type VersionRestoreParams as VersionRestoreParams,

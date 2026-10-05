@@ -3,7 +3,6 @@
 export {
   Folders,
   type FolderCreateResponse,
-  type FolderDeleteResponse,
   type FolderCopyResponse,
   type FolderMoveResponse,
   type FolderRenameResponse,
