@@ -31,14 +31,13 @@ Types:
 
 - <code><a href="./src/resources/custom-metadata-fields.ts">CustomMetadataField</a></code>
 - <code><a href="./src/resources/custom-metadata-fields.ts">CustomMetadataFieldListResponse</a></code>
-- <code><a href="./src/resources/custom-metadata-fields.ts">CustomMetadataFieldDeleteResponse</a></code>
 
 Methods:
 
 - <code title="post /v1/customMetadataFields">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">create</a>({ ...params }) -> CustomMetadataField</code>
 - <code title="patch /v1/customMetadataFields/{id}">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">update</a>(id, { ...params }) -> CustomMetadataField</code>
 - <code title="get /v1/customMetadataFields">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">list</a>({ ...params }) -> CustomMetadataFieldListResponse</code>
-- <code title="delete /v1/customMetadataFields/{id}">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">delete</a>(id) -> CustomMetadataFieldDeleteResponse</code>
+- <code title="delete /v1/customMetadataFields/{id}">client.customMetadataFields.<a href="./src/resources/custom-metadata-fields.ts">delete</a>(id) -> void</code>
 
 # Files
 
@@ -49,8 +48,6 @@ Types:
 - <code><a href="./src/resources/files/files.ts">Metadata</a></code>
 - <code><a href="./src/resources/files/files.ts">UpdateFileRequest</a></code>
 - <code><a href="./src/resources/files/files.ts">FileUpdateResponse</a></code>
-- <code><a href="./src/resources/files/files.ts">FileCopyResponse</a></code>
-- <code><a href="./src/resources/files/files.ts">FileMoveResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileRenameResponse</a></code>
 - <code><a href="./src/resources/files/files.ts">FileUploadResponse</a></code>
 
@@ -58,9 +55,9 @@ Methods:
 
 - <code title="patch /v1/files/{fileId}/details">client.files.<a href="./src/resources/files/files.ts">update</a>(fileID, { ...params }) -> FileUpdateResponse</code>
 - <code title="delete /v1/files/{fileId}">client.files.<a href="./src/resources/files/files.ts">delete</a>(fileID) -> void</code>
-- <code title="post /v1/files/copy">client.files.<a href="./src/resources/files/files.ts">copy</a>({ ...params }) -> FileCopyResponse</code>
+- <code title="post /v1/files/copy">client.files.<a href="./src/resources/files/files.ts">copy</a>({ ...params }) -> void</code>
 - <code title="get /v1/files/{fileId}/details">client.files.<a href="./src/resources/files/files.ts">get</a>(fileID) -> File</code>
-- <code title="post /v1/files/move">client.files.<a href="./src/resources/files/files.ts">move</a>({ ...params }) -> FileMoveResponse</code>
+- <code title="post /v1/files/move">client.files.<a href="./src/resources/files/files.ts">move</a>({ ...params }) -> void</code>
 - <code title="put /v1/files/rename">client.files.<a href="./src/resources/files/files.ts">rename</a>({ ...params }) -> FileRenameResponse</code>
 - <code title="post /api/v1/files/upload">client.files.<a href="./src/resources/files/files.ts">upload</a>({ ...params }) -> FileUploadResponse</code>
 
@@ -85,12 +82,11 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/files/versions.ts">VersionListResponse</a></code>
-- <code><a href="./src/resources/files/versions.ts">VersionDeleteResponse</a></code>
 
 Methods:
 
 - <code title="get /v1/files/{fileId}/versions">client.files.versions.<a href="./src/resources/files/versions.ts">list</a>(fileID) -> VersionListResponse</code>
-- <code title="delete /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">delete</a>(versionID, { ...params }) -> VersionDeleteResponse</code>
+- <code title="delete /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">delete</a>(versionID, { ...params }) -> void</code>
 - <code title="get /v1/files/{fileId}/versions/{versionId}">client.files.versions.<a href="./src/resources/files/versions.ts">get</a>(versionID, { ...params }) -> File</code>
 - <code title="put /v1/files/{fileId}/versions/{versionId}/restore">client.files.versions.<a href="./src/resources/files/versions.ts">restore</a>(versionID, { ...params }) -> File</code>
 
@@ -158,7 +154,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/folders/folders.ts">FolderCreateResponse</a></code>
-- <code><a href="./src/resources/folders/folders.ts">FolderDeleteResponse</a></code>
 - <code><a href="./src/resources/folders/folders.ts">FolderCopyResponse</a></code>
 - <code><a href="./src/resources/folders/folders.ts">FolderMoveResponse</a></code>
 - <code><a href="./src/resources/folders/folders.ts">FolderRenameResponse</a></code>
@@ -166,7 +161,7 @@ Types:
 Methods:
 
 - <code title="post /v1/folder">client.folders.<a href="./src/resources/folders/folders.ts">create</a>({ ...params }) -> FolderCreateResponse</code>
-- <code title="delete /v1/folder">client.folders.<a href="./src/resources/folders/folders.ts">delete</a>({ ...params }) -> FolderDeleteResponse</code>
+- <code title="delete /v1/folder">client.folders.<a href="./src/resources/folders/folders.ts">delete</a>({ ...params }) -> void</code>
 - <code title="post /v1/bulkJobs/copyFolder">client.folders.<a href="./src/resources/folders/folders.ts">copy</a>({ ...params }) -> FolderCopyResponse</code>
 - <code title="post /v1/bulkJobs/moveFolder">client.folders.<a href="./src/resources/folders/folders.ts">move</a>({ ...params }) -> FolderMoveResponse</code>
 - <code title="post /v1/bulkJobs/renameFolder">client.folders.<a href="./src/resources/folders/folders.ts">rename</a>({ ...params }) -> FolderRenameResponse</code>

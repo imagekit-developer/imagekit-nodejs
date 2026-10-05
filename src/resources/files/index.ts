@@ -18,8 +18,6 @@ export {
   type Metadata,
   type UpdateFileRequest,
   type FileUpdateResponse,
-  type FileCopyResponse,
-  type FileMoveResponse,
   type FileRenameResponse,
   type FileUploadResponse,
   type FileUpdateParams,
@@ -31,7 +29,6 @@ export {
 export {
   Versions,
   type VersionListResponse,
-  type VersionDeleteResponse,
   type VersionDeleteParams,
   type VersionGetParams,
   type VersionRestoreParams,

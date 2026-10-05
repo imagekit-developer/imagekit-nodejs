@@ -4,6 +4,7 @@ import { APIResource } from '../../core/resource';
 import * as JobAPI from './job';
 import { Job, JobGetResponse } from './job';
 import { APIPromise } from '../../core/api-promise';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 
 export class Folders extends APIResource {
@@ -31,13 +32,17 @@ export class Folders extends APIResource {
    *
    * @example
    * ```ts
-   * const folder = await client.folders.delete({
+   * await client.folders.delete({
    *   folderPath: '/folder/to/delete/',
    * });
    * ```
    */
-  delete(body: FolderDeleteParams, options?: RequestOptions): APIPromise<FolderDeleteResponse> {
-    return this._client.delete('/v1/folder', { body, ...options });
+  delete(body: FolderDeleteParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete('/v1/folder', {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -96,8 +101,6 @@ export class Folders extends APIResource {
 }
 
 export interface FolderCreateResponse {}
-
-export interface FolderDeleteResponse {}
 
 /**
  * Job submitted successfully. A `jobId` will be returned.
@@ -234,7 +237,6 @@ Folders.Job = Job;
 export declare namespace Folders {
   export {
     type FolderCreateResponse as FolderCreateResponse,
-    type FolderDeleteResponse as FolderDeleteResponse,
     type FolderCopyResponse as FolderCopyResponse,
     type FolderMoveResponse as FolderMoveResponse,
     type FolderRenameResponse as FolderRenameResponse,
