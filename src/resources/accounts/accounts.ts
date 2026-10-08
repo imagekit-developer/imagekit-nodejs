@@ -28,18 +28,29 @@ import {
   UsageAnalyticsGetParams,
   UsageAnalyticsResponse,
 } from './usage-analytics';
+import * as WebhooksAPI from './webhooks';
+import {
+  Webhook,
+  WebhookCreateParams,
+  WebhookEventType,
+  WebhookListResponse,
+  WebhookUpdateParams,
+  Webhooks,
+} from './webhooks';
 
 export class Accounts extends APIResource {
   usage: UsageAPI.Usage = new UsageAPI.Usage(this._client);
   usageAnalytics: UsageAnalyticsAPI.UsageAnalytics = new UsageAnalyticsAPI.UsageAnalytics(this._client);
   origins: OriginsAPI.Origins = new OriginsAPI.Origins(this._client);
   urlEndpoints: URLEndpointsAPI.URLEndpoints = new URLEndpointsAPI.URLEndpoints(this._client);
+  webhooks: WebhooksAPI.Webhooks = new WebhooksAPI.Webhooks(this._client);
 }
 
 Accounts.Usage = Usage;
 Accounts.UsageAnalytics = UsageAnalytics;
 Accounts.Origins = Origins;
 Accounts.URLEndpoints = URLEndpoints;
+Accounts.Webhooks = Webhooks;
 
 export declare namespace Accounts {
   export { Usage as Usage, type UsageGetResponse as UsageGetResponse, type UsageGetParams as UsageGetParams };
@@ -67,5 +78,14 @@ export declare namespace Accounts {
     type URLEndpointListResponse as URLEndpointListResponse,
     type URLEndpointCreateParams as URLEndpointCreateParams,
     type URLEndpointUpdateParams as URLEndpointUpdateParams,
+  };
+
+  export {
+    Webhooks as Webhooks,
+    type Webhook as Webhook,
+    type WebhookEventType as WebhookEventType,
+    type WebhookListResponse as WebhookListResponse,
+    type WebhookCreateParams as WebhookCreateParams,
+    type WebhookUpdateParams as WebhookUpdateParams,
   };
 }
