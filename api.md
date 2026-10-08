@@ -231,6 +231,22 @@ Methods:
 - <code title="delete /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">delete</a>(id) -> void</code>
 - <code title="get /v1/accounts/url-endpoints/{id}">client.accounts.urlEndpoints.<a href="./src/resources/accounts/url-endpoints.ts">get</a>(id) -> URLEndpointResponse</code>
 
+## Webhooks
+
+Types:
+
+- <code><a href="./src/resources/accounts/webhooks.ts">Webhook</a></code>
+- <code><a href="./src/resources/accounts/webhooks.ts">WebhookEventType</a></code>
+- <code><a href="./src/resources/accounts/webhooks.ts">WebhookListResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/accounts/webhooks">client.accounts.webhooks.<a href="./src/resources/accounts/webhooks.ts">create</a>({ ...params }) -> Webhook</code>
+- <code title="patch /v1/accounts/webhooks/{id}">client.accounts.webhooks.<a href="./src/resources/accounts/webhooks.ts">update</a>(id, { ...params }) -> Webhook</code>
+- <code title="get /v1/accounts/webhooks">client.accounts.webhooks.<a href="./src/resources/accounts/webhooks.ts">list</a>() -> WebhookListResponse</code>
+- <code title="delete /v1/accounts/webhooks/{id}">client.accounts.webhooks.<a href="./src/resources/accounts/webhooks.ts">delete</a>(id) -> void</code>
+- <code title="get /v1/accounts/webhooks/{id}">client.accounts.webhooks.<a href="./src/resources/accounts/webhooks.ts">get</a>(id) -> Webhook</code>
+
 # Beta
 
 ## V2
