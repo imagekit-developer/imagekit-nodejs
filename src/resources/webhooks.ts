@@ -153,6 +153,66 @@ export namespace FileVersionDeleteEvent {
 }
 
 /**
+ * Triggered when a folder is created.
+ */
+export interface FolderCreateEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: FilesAPI.Folder;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'folder.created';
+}
+
+/**
+ * Triggered when a folder is deleted.
+ */
+export interface FolderDeleteEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: FolderDeleteEvent.Data;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'folder.deleted';
+}
+
+export namespace FolderDeleteEvent {
+  export interface Data {
+    /**
+     * The unique identifier of the deleted folder.
+     */
+    id: string;
+  }
+}
+
+/**
+ * Triggered when a folder is updated.
+ */
+export interface FolderUpdateEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: FilesAPI.Folder;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'folder.updated';
+}
+
+/**
  * Triggered when a post-transformation fails. The original file remains available,
  * but the requested transformation could not be generated.
  */
@@ -1164,7 +1224,10 @@ export type UnsafeUnwrapWebhookEvent =
   | FileUpdateEvent
   | FileDeleteEvent
   | FileVersionCreateEvent
-  | FileVersionDeleteEvent;
+  | FileVersionDeleteEvent
+  | FolderCreateEvent
+  | FolderUpdateEvent
+  | FolderDeleteEvent;
 
 /**
  * Triggered when a new video transformation request is accepted for processing.
@@ -1183,7 +1246,10 @@ export type UnwrapWebhookEvent =
   | FileUpdateEvent
   | FileDeleteEvent
   | FileVersionCreateEvent
-  | FileVersionDeleteEvent;
+  | FileVersionDeleteEvent
+  | FolderCreateEvent
+  | FolderUpdateEvent
+  | FolderDeleteEvent;
 
 export declare namespace Webhooks {
   export {
@@ -1193,6 +1259,9 @@ export declare namespace Webhooks {
     type FileUpdateEvent as FileUpdateEvent,
     type FileVersionCreateEvent as FileVersionCreateEvent,
     type FileVersionDeleteEvent as FileVersionDeleteEvent,
+    type FolderCreateEvent as FolderCreateEvent,
+    type FolderDeleteEvent as FolderDeleteEvent,
+    type FolderUpdateEvent as FolderUpdateEvent,
     type UploadPostTransformErrorEvent as UploadPostTransformErrorEvent,
     type UploadPostTransformSuccessEvent as UploadPostTransformSuccessEvent,
     type UploadPreTransformErrorEvent as UploadPreTransformErrorEvent,
