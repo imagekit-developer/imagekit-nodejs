@@ -255,6 +255,9 @@ Types:
 - <code><a href="./src/resources/webhooks.ts">FileUpdateEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">FileVersionCreateEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">FileVersionDeleteEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FolderCreateEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FolderDeleteEvent</a></code>
+- <code><a href="./src/resources/webhooks.ts">FolderUpdateEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UploadPostTransformErrorEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UploadPostTransformSuccessEvent</a></code>
 - <code><a href="./src/resources/webhooks.ts">UploadPreTransformErrorEvent</a></code>
