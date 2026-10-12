@@ -190,9 +190,9 @@ export interface FolderDeleteEvent extends BaseWebhookEvent {
 export namespace FolderDeleteEvent {
   export interface Data {
     /**
-     * The unique identifier of the deleted folder.
+     * The unique `folderId` of the deleted folder.
      */
-    id: string;
+    folderId: string;
   }
 }
 
