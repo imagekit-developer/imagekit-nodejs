@@ -1,5 +1,27 @@
 # Changelog
 
+## [7.13.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.12.1...v7.13.0) (2026-10-19)
+
+
+### Features
+
+* webhook crud api ([33c991e](https://github.com/imagekit-developer/imagekit-nodejs/commit/33c991eca838696c0a7fe788e3ce75f3b367bcd5))
+
+
+### Bug Fixes
+
+* don't parse empty 204 responses for copy, move and delete methods ([6d45a0e](https://github.com/imagekit-developer/imagekit-nodejs/commit/6d45a0e5b1e2d752dfb889ad1fac8adf1815558f))
+
+
+### Chores
+
+* pin next release ([41a29ff](https://github.com/imagekit-developer/imagekit-nodejs/commit/41a29ff77fdd5d3e8faba14456303eb59a35bf19))
+
+
+### Documentation
+
+* describe reserved original creation date field ([db7e2e0](https://github.com/imagekit-developer/imagekit-nodejs/commit/db7e2e0d0ee67f562bc25c45e32805715ff7dc29))
+
 ## [7.12.1](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.12.0...v7.12.1) (2026-09-17)
 
 
