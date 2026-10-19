@@ -24,3 +24,11 @@ export {
   type UsageAnalyticsResponse,
   type UsageAnalyticsGetParams,
 } from './usage-analytics';
+export {
+  Webhooks,
+  type Webhook,
+  type WebhookEventType,
+  type WebhookListResponse,
+  type WebhookCreateParams,
+  type WebhookUpdateParams,
+} from './webhooks';
