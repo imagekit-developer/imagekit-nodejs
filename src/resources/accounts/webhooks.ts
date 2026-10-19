@@ -163,7 +163,10 @@ export type WebhookEventType =
   | 'file.updated'
   | 'file.deleted'
   | 'file-version.created'
-  | 'file-version.deleted';
+  | 'file-version.deleted'
+  | 'folder.created'
+  | 'folder.updated'
+  | 'folder.deleted';
 
 export type WebhookListResponse = Array<Webhook>;
 
