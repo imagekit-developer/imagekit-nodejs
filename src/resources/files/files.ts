@@ -463,6 +463,12 @@ export interface Folder {
   createdAt?: string;
 
   /**
+   * Details of the user who created the folder. Present only when this information
+   * is available. The `name` is the name of the user at the time of folder creation.
+   */
+  createdBy?: Folder.CreatedBy;
+
+  /**
    * An object with custom metadata for the folder. Returns empty object if no custom
    * metadata is set.
    */
@@ -496,6 +502,24 @@ export interface Folder {
    * format.
    */
   updatedAt?: string;
+}
+
+export namespace Folder {
+  /**
+   * Details of the user who created the folder. Present only when this information
+   * is available. The `name` is the name of the user at the time of folder creation.
+   */
+  export interface CreatedBy {
+    /**
+     * Email of the user who created the folder.
+     */
+    email?: string;
+
+    /**
+     * Name of the user who created the folder.
+     */
+    name?: string;
+  }
 }
 
 /**
