@@ -153,6 +153,73 @@ export namespace FileVersionDeleteEvent {
 }
 
 /**
+ * Triggered when a folder is created, whether explicitly, by copying or moving a
+ * folder, or implicitly when an upload creates missing parent folders. Copying or
+ * moving a folder tree sends one event per folder in the tree.
+ */
+export interface FolderCreateEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: FilesAPI.Folder;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'folder.created';
+}
+
+/**
+ * Triggered when a folder is deleted. Deleting a folder tree sends one event per
+ * folder in the tree; the files inside it send `file.deleted` events. Moving a
+ * folder sends this event for the old `folderId` and `folder.created` for the new
+ * one.
+ */
+export interface FolderDeleteEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: FolderDeleteEvent.Data;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'folder.deleted';
+}
+
+export namespace FolderDeleteEvent {
+  export interface Data {
+    /**
+     * The unique `folderId` of the deleted folder.
+     */
+    folderId: string;
+  }
+}
+
+/**
+ * Triggered when a folder is updated, for example when its custom metadata changes
+ * or it is renamed. Renaming a folder sends one event per folder in the tree, each
+ * with its new `folderPath`.
+ */
+export interface FolderUpdateEvent extends BaseWebhookEvent {
+  /**
+   * Timestamp of when the event occurred in ISO8601 format.
+   */
+  created_at: string;
+
+  data: FilesAPI.Folder;
+
+  /**
+   * Type of the webhook event.
+   */
+  type: 'folder.updated';
+}
+
+/**
  * Triggered when a post-transformation fails. The original file remains available,
  * but the requested transformation could not be generated.
  */
@@ -1164,7 +1231,10 @@ export type UnsafeUnwrapWebhookEvent =
   | FileUpdateEvent
   | FileDeleteEvent
   | FileVersionCreateEvent
-  | FileVersionDeleteEvent;
+  | FileVersionDeleteEvent
+  | FolderCreateEvent
+  | FolderUpdateEvent
+  | FolderDeleteEvent;
 
 /**
  * Triggered when a new video transformation request is accepted for processing.
@@ -1183,7 +1253,10 @@ export type UnwrapWebhookEvent =
   | FileUpdateEvent
   | FileDeleteEvent
   | FileVersionCreateEvent
-  | FileVersionDeleteEvent;
+  | FileVersionDeleteEvent
+  | FolderCreateEvent
+  | FolderUpdateEvent
+  | FolderDeleteEvent;
 
 export declare namespace Webhooks {
   export {
@@ -1193,6 +1266,9 @@ export declare namespace Webhooks {
     type FileUpdateEvent as FileUpdateEvent,
     type FileVersionCreateEvent as FileVersionCreateEvent,
     type FileVersionDeleteEvent as FileVersionDeleteEvent,
+    type FolderCreateEvent as FolderCreateEvent,
+    type FolderDeleteEvent as FolderDeleteEvent,
+    type FolderUpdateEvent as FolderUpdateEvent,
     type UploadPostTransformErrorEvent as UploadPostTransformErrorEvent,
     type UploadPostTransformSuccessEvent as UploadPostTransformSuccessEvent,
     type UploadPreTransformErrorEvent as UploadPreTransformErrorEvent,
