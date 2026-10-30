@@ -1,6 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as ContractAPI from './contract';
+import { Contract, ContractGetResponse, ContractUnits } from './contract';
 import * as OriginsAPI from './origins';
 import {
   OriginCreateParams,
@@ -41,6 +43,7 @@ import {
 export class Accounts extends APIResource {
   usage: UsageAPI.Usage = new UsageAPI.Usage(this._client);
   usageAnalytics: UsageAnalyticsAPI.UsageAnalytics = new UsageAnalyticsAPI.UsageAnalytics(this._client);
+  contract: ContractAPI.Contract = new ContractAPI.Contract(this._client);
   origins: OriginsAPI.Origins = new OriginsAPI.Origins(this._client);
   urlEndpoints: URLEndpointsAPI.URLEndpoints = new URLEndpointsAPI.URLEndpoints(this._client);
   webhooks: WebhooksAPI.Webhooks = new WebhooksAPI.Webhooks(this._client);
@@ -48,6 +51,7 @@ export class Accounts extends APIResource {
 
 Accounts.Usage = Usage;
 Accounts.UsageAnalytics = UsageAnalytics;
+Accounts.Contract = Contract;
 Accounts.Origins = Origins;
 Accounts.URLEndpoints = URLEndpoints;
 Accounts.Webhooks = Webhooks;
@@ -60,6 +64,12 @@ export declare namespace Accounts {
     type RequestBandwidthEntry as RequestBandwidthEntry,
     type UsageAnalyticsResponse as UsageAnalyticsResponse,
     type UsageAnalyticsGetParams as UsageAnalyticsGetParams,
+  };
+
+  export {
+    Contract as Contract,
+    type ContractUnits as ContractUnits,
+    type ContractGetResponse as ContractGetResponse,
   };
 
   export {
