@@ -14,6 +14,8 @@ import * as Opts from './internal/request-options';
 import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import { AbstractPage, type CursorParams, CursorResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
@@ -38,6 +40,7 @@ import {
   SavedExtensionUpdateParams,
   SavedExtensions,
 } from './resources/saved-extensions';
+import { Tag, TagListParams, Tags, TagsCursor } from './resources/tags';
 import {
   BaseWebhookEvent,
   FileCreateEvent,
@@ -603,6 +606,30 @@ export class ImageKit {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: PromiseOrValue<RequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(
+      Page,
+      opts && 'then' in opts ?
+        opts.then((opts) => ({ method: 'get', path, ...opts }))
+      : { method: 'get', path, ...opts },
+    );
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: PromiseOrValue<FinalRequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as ImageKit, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -863,6 +890,7 @@ export class ImageKit {
   savedExtensions: API.SavedExtensions = new API.SavedExtensions(this);
   namedTransformations: API.NamedTransformations = new API.NamedTransformations(this);
   assets: API.Assets = new API.Assets(this);
+  tags: API.Tags = new API.Tags(this);
   cache: API.Cache = new API.Cache(this);
   folders: API.Folders = new API.Folders(this);
   accounts: API.Accounts = new API.Accounts(this);
@@ -875,6 +903,7 @@ ImageKit.Files = Files;
 ImageKit.SavedExtensions = SavedExtensions;
 ImageKit.NamedTransformations = NamedTransformations;
 ImageKit.Assets = Assets;
+ImageKit.Tags = Tags;
 ImageKit.Cache = Cache;
 ImageKit.Folders = Folders;
 ImageKit.Accounts = Accounts;
@@ -883,6 +912,9 @@ ImageKit.Webhooks = Webhooks;
 
 export declare namespace ImageKit {
   export type RequestOptions = Opts.RequestOptions;
+
+  export import Cursor = Pagination.Cursor;
+  export { type CursorParams as CursorParams, type CursorResponse as CursorResponse };
 
   export {
     CustomMetadataFields as CustomMetadataFields,
@@ -927,6 +959,13 @@ export declare namespace ImageKit {
     Assets as Assets,
     type AssetListResponse as AssetListResponse,
     type AssetListParams as AssetListParams,
+  };
+
+  export {
+    Tags as Tags,
+    type Tag as Tag,
+    type TagsCursor as TagsCursor,
+    type TagListParams as TagListParams,
   };
 
   export { Cache as Cache };
