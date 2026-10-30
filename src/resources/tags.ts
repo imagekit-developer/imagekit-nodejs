@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import { APIPromise } from '../core/api-promise';
+import { Cursor, type CursorParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 
 export class Tags extends APIResource {
@@ -20,10 +20,12 @@ export class Tags extends APIResource {
    * in this list within about a minute, but can take longer during heavy tagging
    * activity, so a tag you just added or removed may not be reflected immediately.
    */
-  list(query: TagListParams | null | undefined = {}, options?: RequestOptions): APIPromise<TagListResponse> {
-    return this._client.get('/v1/tags', { query, ...options });
+  list(query: TagListParams | null | undefined = {}, options?: RequestOptions): PagePromise<TagsCursor, Tag> {
+    return this._client.getAPIList('/v1/tags', Cursor<Tag>, { query, ...options });
   }
 }
+
+export type TagsCursor = Cursor<Tag>;
 
 /**
  * A tag in use in your media library, aggregated case-insensitively across the
@@ -56,26 +58,7 @@ export interface Tag {
   name: string;
 }
 
-export interface TagListResponse {
-  /**
-   * Cursor for the next page, or `null` when there are no more tags.
-   */
-  nextCursor: string | null;
-
-  /**
-   * Tags matching the request, in the requested order.
-   */
-  tags: Array<Tag>;
-}
-
-export interface TagListParams {
-  /**
-   * The `nextCursor` value from the previous response, to fetch the next page. A
-   * cursor is bound to the `tagSource`, `fileType`, `sort`, `search` and `prefix` it
-   * was issued with; sending it with different values returns a 400.
-   */
-  cursor?: string;
-
+export interface TagListParams extends CursorParams {
   /**
    * Filter tags by the type of asset they are applied to.
    *
@@ -86,11 +69,6 @@ export interface TagListParams {
    * - `all` — tags in use on any asset
    */
   fileType?: 'image' | 'video' | 'static' | 'all';
-
-  /**
-   * The maximum number of tags to return in response.
-   */
-  limit?: number;
 
   /**
    * Only return tags that begin with this value. Matching is case-insensitive.
@@ -124,5 +102,5 @@ export interface TagListParams {
 }
 
 export declare namespace Tags {
-  export { type Tag as Tag, type TagListResponse as TagListResponse, type TagListParams as TagListParams };
+  export { type Tag as Tag, type TagsCursor as TagsCursor, type TagListParams as TagListParams };
 }
