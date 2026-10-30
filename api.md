@@ -199,6 +199,17 @@ Methods:
 
 - <code title="get /v1/accounts/usage-analytics">client.accounts.usageAnalytics.<a href="./src/resources/accounts/usage-analytics.ts">get</a>({ ...params }) -> UsageAnalyticsResponse</code>
 
+## Contract
+
+Types:
+
+- <code><a href="./src/resources/accounts/contract.ts">ContractUnits</a></code>
+- <code><a href="./src/resources/accounts/contract.ts">ContractGetResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/accounts/contract">client.accounts.contract.<a href="./src/resources/accounts/contract.ts">get</a>() -> ContractGetResponse</code>
+
 ## Origins
 
 Types:

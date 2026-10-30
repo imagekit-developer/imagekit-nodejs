@@ -27,7 +27,11 @@ describe('resource urlEndpoints', () => {
       description: 'My custom URL endpoint',
       origins: ['origin-id-1'],
       urlPrefix: 'product-images',
-      urlRewriter: { type: 'CLOUDINARY', preserveAssetDeliveryTypes: true },
+      urlRewriter: {
+        type: 'CLOUDINARY',
+        preserveAssetDeliveryTypes: true,
+        useImprovedLayerSpec: true,
+      },
     });
   });
 
@@ -51,7 +55,11 @@ describe('resource urlEndpoints', () => {
       description: 'My custom URL endpoint',
       origins: ['origin-id-1'],
       urlPrefix: 'product-images',
-      urlRewriter: { type: 'CLOUDINARY', preserveAssetDeliveryTypes: true },
+      urlRewriter: {
+        type: 'CLOUDINARY',
+        preserveAssetDeliveryTypes: true,
+        useImprovedLayerSpec: true,
+      },
     });
   });
 
