@@ -38,6 +38,7 @@ import {
   SavedExtensionUpdateParams,
   SavedExtensions,
 } from './resources/saved-extensions';
+import { Tag, TagListParams, TagListResponse, Tags } from './resources/tags';
 import {
   BaseWebhookEvent,
   FileCreateEvent,
@@ -863,6 +864,7 @@ export class ImageKit {
   savedExtensions: API.SavedExtensions = new API.SavedExtensions(this);
   namedTransformations: API.NamedTransformations = new API.NamedTransformations(this);
   assets: API.Assets = new API.Assets(this);
+  tags: API.Tags = new API.Tags(this);
   cache: API.Cache = new API.Cache(this);
   folders: API.Folders = new API.Folders(this);
   accounts: API.Accounts = new API.Accounts(this);
@@ -875,6 +877,7 @@ ImageKit.Files = Files;
 ImageKit.SavedExtensions = SavedExtensions;
 ImageKit.NamedTransformations = NamedTransformations;
 ImageKit.Assets = Assets;
+ImageKit.Tags = Tags;
 ImageKit.Cache = Cache;
 ImageKit.Folders = Folders;
 ImageKit.Accounts = Accounts;
@@ -927,6 +930,13 @@ export declare namespace ImageKit {
     Assets as Assets,
     type AssetListResponse as AssetListResponse,
     type AssetListParams as AssetListParams,
+  };
+
+  export {
+    Tags as Tags,
+    type Tag as Tag,
+    type TagListResponse as TagListResponse,
+    type TagListParams as TagListParams,
   };
 
   export { Cache as Cache };
