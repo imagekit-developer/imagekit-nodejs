@@ -1,5 +1,13 @@
 # Changelog
 
+## [7.14.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.13.0...v7.14.0) (2026-10-30)
+
+
+### Features
+
+* **api:** add accounts.contract.get() for contract consumption ([5ef7416](https://github.com/imagekit-developer/imagekit-nodejs/commit/5ef7416a93ab84fe9c94cf7dd47825f967a83f9d))
+* **api:** add useImprovedLayerSpec to the Cloudinary URL rewriter ([5ef7416](https://github.com/imagekit-developer/imagekit-nodejs/commit/5ef7416a93ab84fe9c94cf7dd47825f967a83f9d))
+
 ## [7.13.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.12.1...v7.13.0) (2026-10-19)
 
 
