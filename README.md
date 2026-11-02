@@ -29,6 +29,7 @@ If you are looking to integrate file uploads in browsers, use one of our [fronte
 - [Handling errors](#handling-errors)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
+- [Auto-pagination](#auto-pagination)
 - [Advanced Usage](#advanced-usage)
   - [Accessing raw Response data (e.g., headers)](#accessing-raw-response-data-eg-headers)
   - [Logging](#logging)
@@ -421,7 +422,7 @@ Note that requests which time out will be [retried twice by default](#retries).
 
 ## Auto-pagination
 
-List methods in the ImageKit API are paginated.
+The `tags.list()` method is paginated.
 You can use the `for await … of` syntax to iterate through items across all pages:
 
 ```ts
