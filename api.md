@@ -135,6 +135,16 @@ Methods:
 
 - <code title="get /v1/files">client.assets.<a href="./src/resources/assets.ts">list</a>({ ...params }) -> AssetListResponse</code>
 
+# Tags
+
+Types:
+
+- <code><a href="./src/resources/tags.ts">Tag</a></code>
+
+Methods:
+
+- <code title="get /v1/tags">client.tags.<a href="./src/resources/tags.ts">list</a>({ ...params }) -> TagsCursor</code>
+
 # Cache
 
 ## Invalidation
