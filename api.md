@@ -143,7 +143,7 @@ Types:
 
 Methods:
 
-- <code title="get /v1/tags">client.tags.<a href="./src/resources/tags.ts">list</a>({ ...params }) -> TagsCursor</code>
+- <code title="get /v1/tags">client.tags.<a href="./src/resources/tags.ts">list</a>({ ...params }) -> TagsTagCursor</code>
 
 # Cache
 

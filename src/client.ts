@@ -15,7 +15,7 @@ import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
-import { AbstractPage, type CursorParams, CursorResponse } from './core/pagination';
+import { AbstractPage, type TagCursorParams, TagCursorResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
@@ -40,7 +40,7 @@ import {
   SavedExtensionUpdateParams,
   SavedExtensions,
 } from './resources/saved-extensions';
-import { Tag, TagListParams, Tags, TagsCursor } from './resources/tags';
+import { Tag, TagListParams, Tags, TagsTagCursor } from './resources/tags';
 import {
   BaseWebhookEvent,
   FileCreateEvent,
@@ -914,8 +914,8 @@ ImageKit.Webhooks = Webhooks;
 export declare namespace ImageKit {
   export type RequestOptions = Opts.RequestOptions;
 
-  export import Cursor = Pagination.Cursor;
-  export { type CursorParams as CursorParams, type CursorResponse as CursorResponse };
+  export import TagCursor = Pagination.TagCursor;
+  export { type TagCursorParams as TagCursorParams, type TagCursorResponse as TagCursorResponse };
 
   export {
     CustomMetadataFields as CustomMetadataFields,
@@ -965,7 +965,7 @@ export declare namespace ImageKit {
   export {
     Tags as Tags,
     type Tag as Tag,
-    type TagsCursor as TagsCursor,
+    type TagsTagCursor as TagsTagCursor,
     type TagListParams as TagListParams,
   };
 

@@ -107,19 +107,19 @@ export class PagePromise<
   }
 }
 
-export interface CursorResponse<Item> {
+export interface TagCursorResponse<Item> {
   tags: Array<Item>;
 
   nextCursor: string | null;
 }
 
-export interface CursorParams {
+export interface TagCursorParams {
   cursor?: string;
 
   limit?: number;
 }
 
-export class Cursor<Item> extends AbstractPage<Item> implements CursorResponse<Item> {
+export class TagCursor<Item> extends AbstractPage<Item> implements TagCursorResponse<Item> {
   tags: Array<Item>;
 
   nextCursor: string | null;
@@ -127,7 +127,7 @@ export class Cursor<Item> extends AbstractPage<Item> implements CursorResponse<I
   constructor(
     client: ImageKit,
     response: Response,
-    body: CursorResponse<Item>,
+    body: TagCursorResponse<Item>,
     options: FinalRequestOptions,
   ) {
     super(client, response, body, options);

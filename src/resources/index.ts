@@ -52,7 +52,7 @@ export {
   type SavedExtensionCreateParams,
   type SavedExtensionUpdateParams,
 } from './saved-extensions';
-export { Tags, type Tag, type TagListParams, type TagsCursor } from './tags';
+export { Tags, type Tag, type TagListParams, type TagsTagCursor } from './tags';
 export {
   Webhooks,
   type BaseWebhookEvent,

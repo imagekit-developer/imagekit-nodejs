@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import { Cursor, type CursorParams, PagePromise } from '../core/pagination';
+import { PagePromise, TagCursor, type TagCursorParams } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 
 export class Tags extends APIResource {
@@ -20,12 +20,15 @@ export class Tags extends APIResource {
    * in this list within about a minute, but can take longer during heavy tagging
    * activity, so a tag you just added or removed may not be reflected immediately.
    */
-  list(query: TagListParams | null | undefined = {}, options?: RequestOptions): PagePromise<TagsCursor, Tag> {
-    return this._client.getAPIList('/v1/tags', Cursor<Tag>, { query, ...options });
+  list(
+    query: TagListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<TagsTagCursor, Tag> {
+    return this._client.getAPIList('/v1/tags', TagCursor<Tag>, { query, ...options });
   }
 }
 
-export type TagsCursor = Cursor<Tag>;
+export type TagsTagCursor = TagCursor<Tag>;
 
 /**
  * A tag in use in your media library, aggregated case-insensitively across the
@@ -58,7 +61,7 @@ export interface Tag {
   name: string;
 }
 
-export interface TagListParams extends CursorParams {
+export interface TagListParams extends TagCursorParams {
   /**
    * Filter tags by the type of asset they are applied to.
    *
@@ -102,5 +105,5 @@ export interface TagListParams extends CursorParams {
 }
 
 export declare namespace Tags {
-  export { type Tag as Tag, type TagsCursor as TagsCursor, type TagListParams as TagListParams };
+  export { type Tag as Tag, type TagsTagCursor as TagsTagCursor, type TagListParams as TagListParams };
 }
