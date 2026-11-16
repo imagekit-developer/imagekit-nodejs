@@ -316,16 +316,16 @@ function processOverlay(overlay: Transformation['overlay']): string | undefined 
 
   const { x, y, xCenter, yCenter, focus, anchorPoint } = position;
   if (x) {
-    entries.push(`lx-${x}`);
+    entries.push(`lx-${encodeNegativeNumber(x)}`);
   }
   if (y) {
-    entries.push(`ly-${y}`);
+    entries.push(`ly-${encodeNegativeNumber(y)}`);
   }
   if (xCenter) {
-    entries.push(`lxc-${xCenter}`);
+    entries.push(`lxc-${encodeNegativeNumber(xCenter)}`);
   }
   if (yCenter) {
-    entries.push(`lyc-${yCenter}`);
+    entries.push(`lyc-${encodeNegativeNumber(yCenter)}`);
   }
   if (focus) {
     entries.push(`lfo-${focus}`);
@@ -354,6 +354,11 @@ function processOverlay(overlay: Transformation['overlay']): string | undefined 
   entries.push('l-end');
 
   return entries.join(transformationUtils.getTransformDelimiter());
+}
+
+// `-` separates a key from its value in the URL, so negative numbers use the `N` prefix, e.g. -40 becomes N40.
+function encodeNegativeNumber<T>(value: T): T | string {
+  return typeof value === 'number' && value < 0 ? `N${Math.abs(value)}` : value;
 }
 
 function buildTransformationString(transformation: Transformation[] | undefined): string {
@@ -421,6 +426,9 @@ function buildTransformationString(transformation: Transformation[] | undefined)
         }
         if (transformKey === 'sr' && Array.isArray(value)) {
           value = value.join('_');
+        }
+        if (['rt', 'x', 'y', 'e-saturation'].includes(transformKey)) {
+          value = encodeNegativeNumber(value);
         }
         // Special case for trim with empty string - should be treated as true
         if (transformKey === 't' && value.toString().trim() === '') {
