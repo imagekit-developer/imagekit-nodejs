@@ -1,5 +1,19 @@
 # Changelog
 
+## [7.14.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.13.0...v7.14.0) (2026-11-02)
+
+
+### Features
+
+* add GET /v1/tags to list media library tags ([dd918b1](https://github.com/imagekit-developer/imagekit-nodejs/commit/dd918b15e3305818bf27c989ccaf7b348a59fc10))
+* **api:** add accounts.contract.get() for contract consumption ([5ef7416](https://github.com/imagekit-developer/imagekit-nodejs/commit/5ef7416a93ab84fe9c94cf7dd47825f967a83f9d))
+* **api:** add useImprovedLayerSpec to the Cloudinary URL rewriter ([5ef7416](https://github.com/imagekit-developer/imagekit-nodejs/commit/5ef7416a93ab84fe9c94cf7dd47825f967a83f9d))
+
+
+### Documentation
+
+* add pagination example ([2c4ae8e](https://github.com/imagekit-developer/imagekit-nodejs/commit/2c4ae8e49f09abfd1d420e4839a4eed93d2bb0ac))
+
 ## [7.13.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.12.1...v7.13.0) (2026-10-19)
 
 
