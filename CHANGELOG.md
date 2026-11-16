@@ -1,5 +1,13 @@
 # Changelog
 
+## [7.15.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.14.0...v7.15.0) (2026-11-16)
+
+
+### Features
+
+* **transformation:** add saturation and encode negative numbers with the N prefix in URL generation ([102d566](https://github.com/imagekit-developer/imagekit-nodejs/commit/102d566a1020d55885fdbfaa000f3841193db5c4))
+* **webhooks:** add folder paths to folder.deleted and folder.updated events ([1352b36](https://github.com/imagekit-developer/imagekit-nodejs/commit/1352b36077571e786e67b9365f62f8c65452d211))
+
 ## [7.14.0](https://github.com/imagekit-developer/imagekit-nodejs/compare/v7.13.0...v7.14.0) (2026-11-02)
 
 
