@@ -1345,6 +1345,7 @@ describe('URL generation', function () {
           gradient: 'from-red_to-white',
           // New transformation parameters
           colorize: 'co-FF0000_in-15',
+          saturation: 50,
           colorReplace: 'FF0000_50_00FF00',
           distort: 'p-50_50_150_50_150_150_50_150',
           original: true,
@@ -1355,7 +1356,7 @@ describe('URL generation', function () {
     });
 
     expect(url).toBe(
-      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400,ar-4-3,q-40,c-force,cm-extract,fo-left,f-jpeg,r-50,bg-A94D34,b-5-A94D34,rt-90,bl-10,n-some_name,pr-true,lo-true,t-5,md-true,cp-true,dn-72,di-folder@@file.jpg,dpr-3,x-10,y-20,xc-30,yc-40,fl-h,o-0.8,z-2,vc-h264,ac-aac,so-5,eo-15,du-10,sr-1440_1080,e-grayscale,e-upscale,e-retouch,e-genvar,e-dropshadow,e-changebg-prompt-car,e-edit-prompt-make it vintage,e-bgremove,e-contrast,e-shadow-bl-15_st-40_x-10_y-N5,e-sharpen-10,e-usm-2-2-0.8-0.024,e-gradient-from-red_to-white,e-colorize-co-FF0000_in-15,cr-FF0000_50_00FF00,e-distort-p-50_50_150_50_150_150_50_150,orig-true,pg-2_4,h-200,w-300,l-image,i-logo.png,l-end`,
+      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=h-300,w-400,ar-4-3,q-40,c-force,cm-extract,fo-left,f-jpeg,r-50,bg-A94D34,b-5-A94D34,rt-90,bl-10,n-some_name,pr-true,lo-true,t-5,md-true,cp-true,dn-72,di-folder@@file.jpg,dpr-3,x-10,y-20,xc-30,yc-40,fl-h,o-0.8,z-2,vc-h264,ac-aac,so-5,eo-15,du-10,sr-1440_1080,e-grayscale,e-upscale,e-retouch,e-genvar,e-dropshadow,e-changebg-prompt-car,e-edit-prompt-make it vintage,e-bgremove,e-contrast,e-shadow-bl-15_st-40_x-10_y-N5,e-sharpen-10,e-usm-2-2-0.8-0.024,e-gradient-from-red_to-white,e-colorize-co-FF0000_in-15,e-saturation-50,cr-FF0000_50_00FF00,e-distort-p-50_50_150_50_150_150_50_150,orig-true,pg-2_4,h-200,w-300,l-image,i-logo.png,l-end`,
     );
   });
 
@@ -1374,5 +1375,29 @@ describe('URL generation', function () {
     });
 
     expect(url).toBe(`https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=w-400,h-300,r-10_max_20_30`);
+  });
+
+  it('should encode negative numbers with the N prefix and keep N-prefixed strings as is', function () {
+    const url = client.helper.buildSrc({
+      urlEndpoint: 'https://ik.imagekit.io/test_url_endpoint',
+      transformationPosition: 'query',
+      src: '/test_path.jpg',
+      transformation: [
+        { rotation: -40, x: -10, y: -20.5, saturation: -50 },
+        { rotation: 'N40', x: 'N10', y: 10, saturation: 0 },
+        {
+          overlay: {
+            type: 'image',
+            input: 'logo.png',
+            position: { x: -10, y: 'N20', xCenter: -30, yCenter: -40.5 },
+            transformation: [{ rotation: -15, saturation: -100 }],
+          },
+        },
+      ],
+    });
+
+    expect(url).toBe(
+      `https://ik.imagekit.io/test_url_endpoint/test_path.jpg?tr=rt-N40,x-N10,y-N20.5,e-saturation-N50:rt-N40,x-N10,y-10,e-saturation-0:l-image,i-logo.png,lx-N10,ly-N20,lxc-N30,lyc-N40.5,rt-N15,e-saturation-N100,l-end`,
+    );
   });
 });

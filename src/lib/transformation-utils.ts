@@ -62,6 +62,7 @@ export const supportedTransforms: { [key: string]: string } = {
   gradient: 'e-gradient',
   colorReplace: 'cr',
   colorize: 'e-colorize',
+  saturation: 'e-saturation',
   distort: 'e-distort',
 
   // Other flags & finishing
