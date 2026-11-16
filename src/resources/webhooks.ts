@@ -198,13 +198,20 @@ export namespace FolderDeleteEvent {
      * The unique `folderId` of the deleted folder.
      */
     folderId: string;
+
+    /**
+     * Path of the deleted folder. For a moved folder, this is its path before the
+     * move.
+     */
+    folderPath?: string;
   }
 }
 
 /**
  * Triggered when a folder is updated, for example when its custom metadata changes
- * or it is renamed. Renaming a folder sends one event per folder in the tree, each
- * with its new `folderPath`.
+ * or it is renamed. Renaming a folder sends one event per folder in the tree. In
+ * each of these events, `data.folderPath` is the folder's new path and
+ * `previous.folderPath` is its path before the rename.
  */
 export interface FolderUpdateEvent extends BaseWebhookEvent {
   /**
@@ -218,6 +225,25 @@ export interface FolderUpdateEvent extends BaseWebhookEvent {
    * Type of the webhook event.
    */
   type: 'folder.updated';
+
+  /**
+   * Present only when the folder or one of its parent folders was renamed. Contains
+   * the folder's path before the rename.
+   */
+  previous?: FolderUpdateEvent.Previous;
+}
+
+export namespace FolderUpdateEvent {
+  /**
+   * Present only when the folder or one of its parent folders was renamed. Contains
+   * the folder's path before the rename.
+   */
+  export interface Previous {
+    /**
+     * Path of the folder before it was renamed.
+     */
+    folderPath: string;
+  }
 }
 
 /**
